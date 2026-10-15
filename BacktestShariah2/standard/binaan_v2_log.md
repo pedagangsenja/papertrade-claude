@@ -251,3 +251,11 @@
 - db: `papertrade/senarai_beli` v4, `papertrade/watchlist` v4 (ruang padat: medan kosong dan beberapa lajur gred terperinci tidak disalin ke db watchlist; CSV lengkap), `harian/status` v12.
 - Rutin: tiga rutin baharu menembak ke sesi Sonnet yang sudah dilampirkan repo (tiada add_repo); rutin lama dinyahaktifkan.
 - Tiada order. Tiada wang sebenar.
+
+## 2026-10-15 ~11:30 MYT — Pemangkin (P) diisi secara manual untuk senarai beli & watchlist 14 Okt
+- Sumber: Moomoo `quote_news_search` (size 10, sort masa, en) + `quote_financials_earnings_price_history` (gred.py earnings) bagi 268 saham unik; SST `institutional_flow` BUYING/SELLING (20+20). SST `search_news` ralat pelayan (Internal server error) → tidak diguna. Yahoo Finance disekat proksi sesi → tidak diguna.
+- Penapis relevan: carian Moomoo ialah kata kunci; berita disimpan hanya jika tajuk menyebut "(T)"/"T.US" atau teks sorotan mengandungi nama syarikat (815 berita tidak berkaitan dibuang, cth. AS, SITE, EYE, MOS, TECH).
+- volum_nisbah/naik_5h tidak dikira (stor harga tempatan hanya 10 hari); S/I/R kekal daripada gred 14 Okt. QR dikemas kini kepada "anggaran" (earnings lalu + 91 hari) jika SST tiada tarikh, seperti gred.py.
+- senarai_beli: 375/375 baris (P: B 36, C 158, D 153, E 28). watchlist: 183/183 (P: B 14, C 61, D 88, E 20).
+- db: `papertrade/watchlist` v7 (dengan pemangkin_url). `papertrade/senarai_beli` db TIDAK dikemas kini: dokumen menjadi 390 KB > had 256 KB setiap dokumen apabila pemangkin_url ditambah (senarai untuk belian 14 Okt, sudah lepas). Imbasan 8:02 perlu penyelesaian saiz (cth. pecah dokumen) sebelum P boleh ditolak untuk senarai beli besar.
+- Tiada order. Tiada wang sebenar.
