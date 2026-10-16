@@ -728,9 +728,11 @@ const adaGred=r=>GDIM.some(([k])=>GORD[r[k]]!=null);
 const grNil=v=>v==null||v===''?null:Number(v);
 const grSel1=(g,body)=>GORD[g]!=null?`<div class="grc">${grB(g)}<div class="grt">${body}</div></div>`:'<span class="mut">–</span>';
 /* prestasi 1 bulan sektor/industri semasa daripada tab Sector (padanan nama) */
+/* peta disimpan di luar objek db: objek data langsung boleh dibekukan (iPhone), jadi jangan tulis medan padanya */
+const skPetaC=new WeakMap();
 function skPerf(jenis,nama){const sk=S.sektor;if(!nama||!sk||!Array.isArray(sk.rows))return null;
-  if(!sk._peta||sk._peta.src!==sk.rows){const m={};sk.rows.forEach(x=>{m[x.jenis+'|'+x.nama]=x;});sk._peta={src:sk.rows,m};}
-  return sk._peta.m[jenis+'|'+nama]||null;}
+  let m=skPetaC.get(sk.rows);if(!m){m={};sk.rows.forEach(x=>{m[x.jenis+'|'+x.nama]=x;});skPetaC.set(sk.rows,m);}
+  return m[jenis+'|'+nama]||null;}
 function grKump(r,jenis){const g=r[jenis==='Sektor'?'gred_sektor':'gred_industri'],sk=grNil(r[jenis==='Sektor'?'skor_sektor':'skor_industri']);
   const asal=jenis==='Sektor'?r.sektor:r.industri,us=jenis==='Sektor'?r.sektor_us:r.industri_us;const x=skPerf(jenis,us||asal);
   if(GORD[g]==null)return asal?`<span class="grt">${esc(asal)}</span>`:'<span class="mut">belum</span>';
