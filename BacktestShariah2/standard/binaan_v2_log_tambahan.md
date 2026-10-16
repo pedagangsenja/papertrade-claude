@@ -114,3 +114,10 @@
 - Prestasi (baris sah): M 200 dagangan +0.08%; C 1,669 −0.07%; Combine 1,869 −0.05%. HENTIKAN: C — M08; Combine — M14, M08. Tiada TERUSKAN; selebihnya BELUM CUKUP DATA atau PERHATI.
 - sahkan.py --betulkan: 0 ralat, 0 amaran (1,877 posisi dibeli). Db: papertrade/moomoo v8, claude v8, claude_2 v8, claude_3 v3, claude_4 v2, claude_5 v2, watchlist v9, sektor/snapshot v10, prestasi/mae v9, prestasi/ringkasan v8, harian/status v15.
 - Nota: db `papertrade/claude_3` 259 KB, `claude` 241 KB (lebih had ~250 KB bagi claude_3).
+
+## 16 Okt 2026 — dashboard v44: penapis Prestasi & kelajuan
+- Panel "Semua dagangan" (Prestasi M/C/Combine): penapis kaedah/sektor/industri/carian, susun lajur dan "Papar 100 lagi" kini melukis semula panel itu sahaja (`renderPrAll`), bukan seluruh tab. Masa JS bagi satu tukar penapis (CPU ×4): ~470–600 ms → ~70 ms.
+- Data langsung: banyak dokumen yang tiba serentak (claude, claude_2…N) digabung kepada satu render setiap bingkai (`renderSoon`).
+- `ptmRows`/`ptcRows`/`prSrc`/`prStats` di-memo; dikira semula hanya bila dokumen db berubah.
+- Jadual Paper Trade M dan Papertrade C: 100 baris dahulu + butang "Papar 100 lagi" (sebelum ini semua 1,600+ baris dilukis).
+- Diuji Playwright dengan salinan db sebenar (1400px, 390px): setiap pilihan kaedah di 5 jadual, tiada ralat.
