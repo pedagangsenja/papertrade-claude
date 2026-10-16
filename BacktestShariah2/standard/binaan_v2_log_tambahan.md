@@ -121,3 +121,4 @@
 - `ptmRows`/`ptcRows`/`prSrc`/`prStats` di-memo; dikira semula hanya bila dokumen db berubah.
 - Jadual Paper Trade M dan Papertrade C: 100 baris dahulu + butang "Papar 100 lagi" (sebelum ini semua 1,600+ baris dilukis).
 - Diuji Playwright dengan salinan db sebenar (1400px, 390px): setiap pilihan kaedah di 5 jadual, tiada ralat.
+- v45 (16 Okt 2026): laporan iPhone — tab kosong. Tidak berulang di Chromium dengan db penuh. Ditambah: ralat render dipapar dalam tab (mesej + 3 baris stack); penjadual render guna setTimeout 30 ms (bukan requestAnimationFrame, yang boleh tertangguh dalam iframe iOS); pemilih CSS `.tablewrap:has(td.grd)` diganti kelas `.tw-grd` (`:has()` mahal bagi WebKit pada DOM besar).

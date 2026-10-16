@@ -37,15 +37,15 @@ h1{font-size:1.2rem;font-weight:800;letter-spacing:-.01em;margin:0;text-wrap:bal
 .gr small{font-weight:500;opacity:.75;margin-right:1px}
 .nw{white-space:nowrap}
 /* jadual bergred: angka dan perkataan tidak dipecah; skrol mendatar dalam jadual jika terlalu lebar */
-.tablewrap:has(td.grd){overflow-x:auto}.tablewrap:has(td.grd) td,.tablewrap:has(td.grd) th{overflow-wrap:break-word;padding-inline:4px}
-td.grd{min-width:0}.tablewrap:has(td.grd) td.wrap{min-width:150px}td.grd .vv{font-size:.72rem}td.grp{min-width:320px}.tablewrap td .nw{white-space:nowrap}
+.tablewrap.tw-grd{overflow-x:auto}.tablewrap.tw-grd td,.tablewrap.tw-grd th{overflow-wrap:break-word;padding-inline:4px}
+td.grd{min-width:0}.tablewrap.tw-grd td.wrap{min-width:150px}td.grd .vv{font-size:.72rem}td.grp{min-width:320px}.tablewrap td .nw{white-space:nowrap}
 .grc{display:inline-flex;gap:8px;align-items:center;text-align:left;vertical-align:middle}
 .grc>.gr{flex:none;display:flex;align-items:center;justify-content:center;min-width:2em;height:2.1em;margin:0;padding:0 6px;font-size:1.05rem;border-radius:6px}
 .grt{min-width:0;display:flex;flex-direction:column;justify-content:center}.grt b{color:var(--fg)}.grt .pill{align-self:flex-start}
 td.grd{text-align:center;vertical-align:middle}
 td.ctr,th[data-tip="hari_watch"]{text-align:center}
-.tablewrap:has(td.grd) td{vertical-align:middle}
-.tablewrap:has(td.grd) th[data-tip^="g_"],.tablewrap:has(td.grd) th[data-tip="gred"]{text-align:center}
+.tablewrap.tw-grd td{vertical-align:middle}
+.tablewrap.tw-grd th[data-tip^="g_"],.tablewrap.tw-grd th[data-tip="gred"]{text-align:center}
 td.grd .vv.nm1{white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-width:110px;overflow-wrap:normal}
 a.berita{color:var(--accent);text-decoration:none;margin-top:2px}a.berita:hover{text-decoration:underline}
 .g-A{background:var(--pos-soft);color:var(--pos)}.g-B{background:var(--accent-soft);color:var(--accent)}.g-C{background:var(--sunk);color:var(--fg-2);box-shadow:inset 0 0 0 1px var(--line)}.g-D{background:var(--warn-soft);color:var(--warn)}.g-E{background:var(--neg-soft);color:var(--neg)}.g-x{background:var(--sunk);color:var(--muted)}
@@ -305,7 +305,7 @@ const avgOf=a=>{const v=a.filter(x=>x!=null&&!isNaN(x));return v.length?v.reduce
 /* memo: kira semula hanya bila objek sumber berubah (data langsung menggantikan objek dokumen) */
 const memo=fn=>{let k=null,v;return (...d)=>{if(k&&d.length===k.length&&d.every((x,i)=>x===k[i]))return v;k=d;v=fn(...d);return v;};};
 /* satu render bagi setiap bingkai walaupun banyak dokumen tiba serentak */
-let rafR=0;const renderSoon=()=>{if(!rafR)rafR=requestAnimationFrame(()=>{rafR=0;renderAll();});};
+let tmR=0;const renderSoon=()=>{if(!tmR)tmR=setTimeout(()=>{tmR=0;renderAll();},30);};
 function allRows(){const out=[];for(const d of Object.values(S.docs)){for(const r of (d.rows||[]))out.push(r);}return out;}
 function rowsForSet(set){return allRows().filter(r=>r.set===set);}
 function bench(set){const m=S.meta||{};return{ew:m.ew?.[set],spy:m.spy?.[set],qqq:m.qqq?.[set],ewmdd:m.ew_mdd?.[set]};}
@@ -327,7 +327,8 @@ function sortTable(o){
   if(o.limit)rows=rows.slice(0,o.limit);
   const th=o.cols.map(c=>`<th class="${c.l?'l':''} ${c.frz?'frz':''}"${c.ns?'':` data-k="${c.k}" data-d="${c.l?'asc':'desc'}" aria-sort="${st.k===c.k?(st.dir<0?'descending':'ascending'):'none'}"`}${c.tip?` data-tip="${c.tip}"`:''}><span>${c.t}</span></th>`).join('');
   const tb=rows.map((r,i)=>`<tr${o.attr?' '+o.attr(r):''} class="${o.rcls?o.rcls(r):''}">${o.cols.map(c=>`<td class="${c.l?'l':''} ${c.frz?'frz':''} ${c.c?c.c(r):''}">${c.f?c.f(r,i):esc(isNil(r[c.k])?'–':r[c.k])}</td>`).join('')}</tr>`).join('');
-  return `<div class="tablewrap"><table data-st="${o.id}"><thead><tr>${th}</tr></thead><tbody>${tb}</tbody></table>${total?'':`<p class="empty">${o.empty||'Tiada data.'}</p>`}</div>`+(o.foot?o.foot(Math.min(total,rows.length),total):'');
+  const grd=o.cols.some(c=>c.c&&/\bgrd\b/.test(c.c({})||''));
+  return `<div class="tablewrap${grd?' tw-grd':''}"><table data-st="${o.id}"><thead><tr>${th}</tr></thead><tbody>${tb}</tbody></table>${total?'':`<p class="empty">${o.empty||'Tiada data.'}</p>`}</div>`+(o.foot?o.foot(Math.min(total,rows.length),total):'');
 }
 document.addEventListener('click',e=>{const th=e.target.closest&&e.target.closest('table[data-st] th[data-k]');if(!th)return;
   const id=th.closest('table').dataset.st;const st=SORT[id];if(!st)return;const k=th.dataset.k;
@@ -1056,7 +1057,8 @@ function topScrolls(root){
 const R={ringkasan:renderRingkasan,papan:renderPapan,banding:renderBanding,sektor:renderSektor,watch:renderWatch,ptm:renderPtm,ptc:renderPtc,'pr-m':()=>renderPrestasi('m'),'pr-c':()=>renderPrestasi('c'),'pr-gab':()=>renderPrestasi('gab')};
 function renderAll(){const vid=viewId();const el=document.getElementById(vid);
   const sx={};el.querySelectorAll('table[data-st]').forEach(t=>{sx[t.dataset.st]=t.parentElement.scrollLeft;});
-  R[vid.slice(2)]();applyFold(el);applyTips(el);
+  try{R[vid.slice(2)]();}catch(err){el.innerHTML=`<div class="panel empty" style="text-align:left"><b class="neg">Ralat memapar tab ini.</b><br>${esc(err&&err.message||err)}<br><span class="mut">${esc(String(err&&err.stack||'').split('\n').slice(0,3).join(' | '))}</span></div>`;return;}
+  applyFold(el);applyTips(el);
   requestAnimationFrame(()=>{topScrolls(el);el.querySelectorAll('table[data-st]').forEach(t=>{if(sx[t.dataset.st])t.parentElement.scrollLeft=sx[t.dataset.st];});});}
 let rz,lw=window.innerWidth;window.addEventListener('resize',()=>{if(Math.abs(window.innerWidth-lw)<40)return;lw=window.innerWidth;clearTimeout(rz);rz=setTimeout(renderAll,200);});
 
