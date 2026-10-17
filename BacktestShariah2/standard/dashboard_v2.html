@@ -41,7 +41,7 @@ h1{font-size:1.2rem;font-weight:800;letter-spacing:-.01em;margin:0;text-wrap:bal
 td.grd{min-width:0}.tablewrap.tw-grd td.wrap{min-width:150px}td.grd .vv{font-size:.72rem}td.grp{min-width:320px}.tablewrap td .nw{white-space:nowrap}
 .grc{display:inline-flex;gap:8px;align-items:center;text-align:left;vertical-align:middle}
 .grc>.gr{flex:none;display:flex;align-items:center;justify-content:center;min-width:2em;height:2.1em;margin:0;padding:0 6px;font-size:1.05rem;border-radius:6px}
-.lrb{flex:none;display:flex;align-items:center;justify-content:center;height:2.1em;padding:0 7px;border-radius:6px;font-weight:700;font-size:.72rem;letter-spacing:.02em}.lrp{font-size:1.05rem;line-height:1.2;white-space:nowrap}.grt b.lrp.pos{color:var(--pos)}.grt b.lrp.neg{color:var(--neg)}.grt b.lrp.mut{color:var(--muted)}
+.lrk{flex:none;display:flex;flex-direction:column;align-items:center;gap:2px}.lrb{flex:none;display:flex;align-items:center;justify-content:center;height:1.8em;padding:0 7px;border-radius:6px;font-weight:700;font-size:.72rem;letter-spacing:.02em}.lrp{font-size:1.05rem;line-height:1.2;white-space:nowrap}.lrk b.lrp.pos{color:var(--pos)}.lrk b.lrp.neg{color:var(--neg)}.lrk b.lrp.mut{color:var(--muted)}
 .grt{min-width:0;display:flex;flex-direction:column;justify-content:center}.grt b{color:var(--fg)}.grt .pill{align-self:flex-start}
 td.grd{text-align:center;vertical-align:middle}
 td.ctr,th[data-tip="hari_watch"]{text-align:center}
@@ -735,7 +735,7 @@ const tkO=t=>/^\d{4}-\d\d-\d\d/.test(t||'')?(+t.slice(8,10))+' '+BLN[+t.slice(5,
 function selLorong(r,l){const [k,t,h,u,st]=LORONG[l];if(r.tidak_dibeli)return '<span class="mut">–</span>';
   /* gaya lajur sektor: lencana status di kiri, peratus untung sebagai tajuk, butiran kecil di bawah */
   const pct=v=>v==null?'<b class="lrp mut">–</b>':`<b class="lrp ${cls(v)}">${sg2(v)}</b>`;
-  const kotak=(c,t,b)=>`<div class="grc lr"><span class="lrb ${c}">${t}</span><div class="grt">${b}</div></div>`;
+  const kotak=(c,t,b)=>{const i=b.indexOf('</b>')+4;return `<div class="grc lr"><div class="lrk">${b.slice(0,i)}<span class="lrb ${c}">${t}</span></div><div class="grt">${b.slice(i)}</div></div>`;};
   if(r[k]){const hr=hariAntara(r.tarikh_beli,r[t]),sb=(r[st]||'').replace(/^Keluar:? ?/,'').replace(/ \([^)]*\)\s*$/,'');
     return kotak('p-exit','Keluar',`${pct(r[u])}<span class="vv nw">${esc(tkO(r[t]))} @ ${fx(r[h],2)}${hr!=null?' · '+hr+' hari':''}</span>${sb?`<span class="vv">${esc(sb)}</span>`:''}`);}
   if(!r[st])return kotak('p-mute','Belum',`${pct(r.untung_pct)}<span class="vv">belum dinilai</span>`);
