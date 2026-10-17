@@ -44,6 +44,7 @@ td.grd{min-width:0}.tablewrap.tw-grd td.wrap{min-width:150px}td.grd .vv{font-siz
 .lrk{flex:none;display:flex;flex-direction:column;align-items:center;gap:2px}.lrb{flex:none;display:flex;align-items:center;justify-content:center;height:1.8em;padding:0 7px;border-radius:6px;font-weight:700;font-size:.72rem;letter-spacing:.02em}.lrp{font-size:1.05rem;line-height:1.2;white-space:nowrap}.lrk b.lrp.pos{color:var(--pos)}.lrk b.lrp.neg{color:var(--neg)}.lrk b.lrp.mut{color:var(--muted)}
 .grt{min-width:0;display:flex;flex-direction:column;justify-content:center}.grt b{color:var(--fg)}.grt .pill{align-self:flex-start}
 td.grd{text-align:center;vertical-align:middle}
+@media (min-width:761px){td.kdh{width:1%;max-width:76px;white-space:normal}td.kdh .vv{white-space:normal;overflow-wrap:normal}}
 td.ctr,th[data-tip="hari_watch"],th[data-tip="hari_pt"]{text-align:center}
 .tablewrap.tw-grd td{vertical-align:middle}
 .tablewrap.tw-grd th[data-tip^="g_"],.tablewrap.tw-grd th[data-tip="gred"]{text-align:center}
@@ -787,7 +788,7 @@ const rclsPT=r=>(r.tidak_sah?'void ':'')+((r.tutup_semua??r.keluar)?'exit':'');
 function ptCols(akaun){return [
   {k:'tarikh_beli',t:'Tarikh beli',tip:'tarikh_beli',l:1,f:r=>esc(r.tarikh_beli||'–')},
   {k:'saham',t:'Saham',tip:'saham',l:1,frz:1,f:r=>`<b>${esc(r.saham)}</b>${akaun&&r.akaun?` <span class="pill p-mute" title="${r.akaun==='M'?'Moomoo':'Claude'}">${r.akaun}</span>`:''}`,c:()=>'tk'},
-  {k:'kaedah',t:'Kaedah',tip:'kaedah_pt',l:1,f:r=>`${esc(r.kaedah)}${r.kaedah_kongsi&&r.kaedah_kongsi.length?`<span class="vv">kongsi: ${esc(r.kaedah_kongsi.join(', '))}</span>`:''}`},
+  {k:'kaedah',t:'Kaedah',tip:'kaedah_pt',l:1,f:r=>`${esc(r.kaedah)}${r.kaedah_kongsi&&r.kaedah_kongsi.length?`<span class="vv">kongsi: ${esc(r.kaedah_kongsi.join('+').split(/\s*[+,;]\s*/).filter(Boolean).join(' '))}</span>`:''}`,c:()=>'kdh'},
   {k:'harga_beli',t:'Harga beli',tip:'harga_beli',f:r=>fx(r.harga_beli,2)},
   {k:'unit',t:'Unit',tip:'unit',f:r=>fx(r.unit,0)},
   {k:'harga_terkini',t:'Harga terkini',tip:'harga_terkini_pt',f:r=>fx(r.harga_terkini,2)},
