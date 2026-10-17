@@ -306,3 +306,4 @@
 
 ## 17 Okt 2026 — Lajur lorong gaya sektor (permintaan pengguna)
 `selLorong`: lajur Keluar kaedah dan Pegang selagi naik kini mengikut gaya lajur Sektor — di kiri peratus untung besar berwarna di atas lencana status (Pegang/Tunggu/Keluar/Belum) (semasa jika dipegang, akhir jika keluar), butiran kecil di bawah. Kelas CSS baharu `.lrk`, `.lrb`, `.lrp`. Diterbitkan ke artifact dashboard (versi 1792211786-66e7).
+Lajur "Hari dipegang" (Papertrade M/C) dipusatkan (tajuk dan sel); versi 1792211910-730f.

@@ -44,7 +44,7 @@ td.grd{min-width:0}.tablewrap.tw-grd td.wrap{min-width:150px}td.grd .vv{font-siz
 .lrk{flex:none;display:flex;flex-direction:column;align-items:center;gap:2px}.lrb{flex:none;display:flex;align-items:center;justify-content:center;height:1.8em;padding:0 7px;border-radius:6px;font-weight:700;font-size:.72rem;letter-spacing:.02em}.lrp{font-size:1.05rem;line-height:1.2;white-space:nowrap}.lrk b.lrp.pos{color:var(--pos)}.lrk b.lrp.neg{color:var(--neg)}.lrk b.lrp.mut{color:var(--muted)}
 .grt{min-width:0;display:flex;flex-direction:column;justify-content:center}.grt b{color:var(--fg)}.grt .pill{align-self:flex-start}
 td.grd{text-align:center;vertical-align:middle}
-td.ctr,th[data-tip="hari_watch"]{text-align:center}
+td.ctr,th[data-tip="hari_watch"],th[data-tip="hari_pt"]{text-align:center}
 .tablewrap.tw-grd td{vertical-align:middle}
 .tablewrap.tw-grd th[data-tip^="g_"],.tablewrap.tw-grd th[data-tip="gred"]{text-align:center}
 td.grd .vv.nm1{white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-width:110px;overflow-wrap:normal}
@@ -792,7 +792,7 @@ function ptCols(akaun){return [
   {k:'unit',t:'Unit',tip:'unit',f:r=>fx(r.unit,0)},
   {k:'harga_terkini',t:'Harga terkini',tip:'harga_terkini_pt',f:r=>fx(r.harga_terkini,2)},
   {k:'untung_pct',t:'Untung %',tip:'untung_pct',f:r=>`<b class="${cls(r.untung_pct)}">${sg2(r.untung_pct)}</b>`},
-  {k:'hari',t:'Hari dipegang',tip:'hari_pt',f:r=>fx(r.hari,0)},
+  {k:'hari',t:'Hari dipegang',tip:'hari_pt',f:r=>fx(r.hari,0),c:()=>'ctr'},
   {k:'isyarat_keluar',t:'Keluar kaedah',tip:'isyarat_keluar',l:1,v:r=>hasilL(r,'kaedah'),f:r=>`${r.tidak_sah?`<span class="pill p-warn" title="${esc(r.sebab_tidak_sah||'')}">${r.tidak_dibeli?'Tidak dibeli':'Luar peraturan'}</span> `:''}${selLorong(r,'kaedah')}${r.tidak_sah&&r.sebab_tidak_sah?`<span class="vv">${esc(r.sebab_tidak_sah)}</span>`:''}`,c:()=>'wrap lrg'},
   {k:'untung_henti_pct',t:'Pegang selagi naik',tip:'keluar_henti',l:1,v:r=>hasilL(r,'henti'),f:r=>selLorong(r,'henti'),c:()=>'wrap lrg'},
   ...grCols()];}
