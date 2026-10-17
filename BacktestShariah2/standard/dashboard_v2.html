@@ -722,7 +722,8 @@ function normPT(r){const keluar=!!(r.keluar||r.tarikh_keluar);const kk=r.kaedah_
   untung_akhir_pct:keluar?(r.untung_akhir_pct??r.untung_pct):null,
   harga_terkini:keluar&&r.harga_keluar!=null?r.harga_keluar:r.harga_terkini,tidak_sah:!!r.tidak_sah,
   keluar_henti:benar(r.keluar_henti),
-  tutup_semua:r.tutup_semua==null||r.tutup_semua===''?null:benar(r.tutup_semua),
+  /* tutup sepenuhnya hanya apabila kedua-dua lorong keluar; tanpa data lorong 2 (baris lama) ikut lorong kaedah */
+  tutup_semua:r.tutup_semua!=null&&r.tutup_semua!==''?benar(r.tutup_semua):(r.status_henti||r.keluar_henti!=null&&r.keluar_henti!=='')?keluar&&benar(r.keluar_henti):keluar,
   untung_henti_pct:nomb(r.untung_henti_pct),harga_keluar_henti:nomb(r.harga_keluar_henti)});}
 /* dua lorong keluar (sejak 17 Okt 2026): 1 kaedah, 2 pegang selagi naik (standard/keluar_lorong.py) */
 const LORONG={kaedah:['keluar','tarikh_keluar','harga_keluar','untung_akhir_pct','isyarat_keluar'],henti:['keluar_henti','tarikh_keluar_henti','harga_keluar_henti','untung_henti_pct','status_henti']};
@@ -784,7 +785,7 @@ const grCols=()=>[
   {k:'hari_ke_earnings',t:'QR',tip:'g_q',l:1,c:()=>'grd',v:r=>GORD[r.gred_qr]??9,f:grQR},
   {k:'gred_pemangkin',t:'Pemangkin',tip:'g_p',l:1,v:r=>GORD[r.gred_pemangkin]??9,f:grPem,c:()=>'grd grp'},
   {k:'gred_keseluruhan',t:'Gred',tip:'gred',l:1,v:r=>GORD[r.gred_keseluruhan]??9,f:r=>grSel1(r.gred_keseluruhan,'')}];
-const rclsPT=r=>(r.tidak_sah?'void ':'')+((r.tutup_semua??r.keluar)?'exit':'');
+const rclsPT=r=>(r.tidak_sah?'void ':'')+(r.tutup_semua?'exit':'');
 function ptCols(akaun){return [
   {k:'tarikh_beli',t:'Tarikh beli',tip:'tarikh_beli',l:1,f:r=>esc(r.tarikh_beli||'–')},
   {k:'saham',t:'Saham',tip:'saham',l:1,frz:1,f:r=>`<b>${esc(r.saham)}</b>${akaun&&r.akaun?` <span class="pill p-mute" title="${r.akaun==='M'?'Moomoo':'Claude'}">${r.akaun}</span>`:''}`,c:()=>'tk'},
@@ -1016,7 +1017,7 @@ function teruk(list,title,tip,val,fmt,bad,sub){
 /* panel "Semua dagangan": penapis, susun dan "papar lagi" hanya melukis semula panel ini, bukan seluruh tab */
 function prAllHtml(which,src){const fb=ptFilterBar('pr'+which,src,()=>renderPrAll(which));const trows=fb.apply(src);
   return `<div class="panel"><div class="panel-h"><h2>Semua dagangan</h2><span class="sub">${trows.length} dagangan · lajur sama seperti Paper Trade M / Papertrade C${which==='gab'?' · M/C di bawah simbol':''}</span></div>
-    ${fb.html}${sortTable({id:'prall-'+which,rows:trows,cols:ptCols(which==='gab'),def:{k:'untung_pct',dir:-1},limit:fb.st.shown||LAGI,rcls:r=>r.keluar?'exit':'',rerender:()=>renderPrAll(which),empty:'Tiada dagangan sepadan dengan penapis ini.',foot:kakiLagi('prMore'+which)})}</div>`;}
+    ${fb.html}${sortTable({id:'prall-'+which,rows:trows,cols:ptCols(which==='gab'),def:{k:'untung_pct',dir:-1},limit:fb.st.shown||LAGI,rcls:rclsPT,rerender:()=>renderPrAll(which),empty:'Tiada dagangan sepadan dengan penapis ini.',foot:kakiLagi('prMore'+which)})}</div>`;}
 function bindPrAll(which,src){const fb=ptFilterBar('pr'+which,src,()=>renderPrAll(which));fb.bind();bindLagi('prMore'+which,fb.st,()=>renderPrAll(which));}
 function renderPrAll(which){const w=$('#prAllW'+which);if(!w||viewId()!=='v-pr-'+which){renderAll();return;}const src=prSrc(which);
   const ae=document.activeElement,fid=ae&&w.contains(ae)?ae.id:null;
