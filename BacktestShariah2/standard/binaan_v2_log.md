@@ -303,3 +303,6 @@
 
 ## Analisis mingguan 2026-10-17 (Sabtu)
 - `WFO/kod/analisis_sebenar.py`: 111 kaedah; AMARAN 0, SELARI 0, data belum cukup 111 (tiada kaedah matang). Kaedah AMARAN: tiada. db `analisis/sebenar` ditulis. Tiada order. Tiada wang sebenar.
+
+## 17 Okt 2026 — Lajur lorong gaya sektor (permintaan pengguna)
+`selLorong`: lajur Keluar kaedah dan Pegang selagi naik kini mengikut gaya lajur Sektor — lencana status di kiri (Pegang/Tunggu/Keluar/Belum), peratus untung sebagai tajuk besar berwarna (semasa jika dipegang, akhir jika keluar), butiran kecil di bawah. Kelas CSS baharu `.lrb`, `.lrp`. Diterbitkan ke artifact dashboard (versi 1792211714-b590).

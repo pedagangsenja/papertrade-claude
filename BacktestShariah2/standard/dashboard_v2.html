@@ -41,6 +41,7 @@ h1{font-size:1.2rem;font-weight:800;letter-spacing:-.01em;margin:0;text-wrap:bal
 td.grd{min-width:0}.tablewrap.tw-grd td.wrap{min-width:150px}td.grd .vv{font-size:.72rem}td.grp{min-width:320px}.tablewrap td .nw{white-space:nowrap}
 .grc{display:inline-flex;gap:8px;align-items:center;text-align:left;vertical-align:middle}
 .grc>.gr{flex:none;display:flex;align-items:center;justify-content:center;min-width:2em;height:2.1em;margin:0;padding:0 6px;font-size:1.05rem;border-radius:6px}
+.lrb{flex:none;display:flex;align-items:center;justify-content:center;height:2.1em;padding:0 7px;border-radius:6px;font-weight:700;font-size:.72rem;letter-spacing:.02em}.lrp{font-size:1.05rem;line-height:1.2;white-space:nowrap}.grt b.lrp.pos{color:var(--pos)}.grt b.lrp.neg{color:var(--neg)}.grt b.lrp.mut{color:var(--muted)}
 .grt{min-width:0;display:flex;flex-direction:column;justify-content:center}.grt b{color:var(--fg)}.grt .pill{align-self:flex-start}
 td.grd{text-align:center;vertical-align:middle}
 td.ctr,th[data-tip="hari_watch"]{text-align:center}
@@ -732,11 +733,14 @@ function hariAntara(a,b){const x=Date.parse((a||'')+'T00:00:00Z'),y=Date.parse((
 const tkO=t=>/^\d{4}-\d\d-\d\d/.test(t||'')?(+t.slice(8,10))+' '+BLN[+t.slice(5,7)-1]:'';
 /* satu sel bagi setiap lorong, format seragam: status · tarikh @ harga · untung · sebab */
 function selLorong(r,l){const [k,t,h,u,st]=LORONG[l];if(r.tidak_dibeli)return '<span class="mut">–</span>';
-  const kini=r.untung_pct==null?'':`<span class="vv">kini <span class="${cls(r.untung_pct)}">${sg2(r.untung_pct)}</span></span>`;
-  if(r[k])return `<span class="pill p-exit">Keluar ${esc(tkO(r[t]))}</span><span class="vv nw">@ ${fx(r[h],2)} · <b class="${cls(r[u])}">${sg2(r[u])}</b>${hariAntara(r.tarikh_beli,r[t])!=null?' · '+hariAntara(r.tarikh_beli,r[t])+' hari':''}</span><span class="vv">${esc((r[st]||'').replace(/^Keluar:? ?/,'').replace(/ \([^)]*\)\s*$/,''))}</span>`;
-  if(!r[st])return `<span class="mut">belum dinilai</span>${kini}`;
+  /* gaya lajur sektor: lencana status di kiri, peratus untung sebagai tajuk, butiran kecil di bawah */
+  const pct=v=>v==null?'<b class="lrp mut">–</b>':`<b class="lrp ${cls(v)}">${sg2(v)}</b>`;
+  const kotak=(c,t,b)=>`<div class="grc lr"><span class="lrb ${c}">${t}</span><div class="grt">${b}</div></div>`;
+  if(r[k]){const hr=hariAntara(r.tarikh_beli,r[t]),sb=(r[st]||'').replace(/^Keluar:? ?/,'').replace(/ \([^)]*\)\s*$/,'');
+    return kotak('p-exit','Keluar',`${pct(r[u])}<span class="vv nw">${esc(tkO(r[t]))} @ ${fx(r[h],2)}${hr!=null?' · '+hr+' hari':''}</span>${sb?`<span class="vv">${esc(sb)}</span>`:''}`);}
+  if(!r[st])return kotak('p-mute','Belum',`${pct(r.untung_pct)}<span class="vv">belum dinilai</span>`);
   const tunggu=/menunggu/.test(r[st]),m=/\(([^)]*)\)\s*$/.exec(r[st]);
-  return `<span class="pill ${tunggu?'p-warn':'p-hold'}">${tunggu?'Menunggu':'Pegang'}</span>${r[st]==='Pegang'?'':`<span class="vv">${esc(tunggu||!m?r[st].replace(/ \(menunggu\)$/,''):m[1])}</span>`}${kini}`;}
+  return kotak(tunggu?'p-warn':'p-hold',tunggu?'Tunggu':'Pegang',`${pct(r.untung_pct)}${r[st]==='Pegang'?'':`<span class="vv">${esc(tunggu||!m?r[st].replace(/ \(menunggu\)$/,''):m[1])}</span>`}`);}
 const sahSahaja=rs=>rs.filter(r=>!r.tidak_sah);
 function benar(v){return v===true||v==='True'||v==='true';}
 function nomb(v){return v==null||v===''||isNaN(+v)?null:+v;}
