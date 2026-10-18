@@ -48,6 +48,18 @@ def muat_turun(tickers, mula, saiz=200, rehat=2.0):
         V.append(v.drop(columns=[t for t in kosong if t in v.columns]).astype('float32'))
         print(f'{i + len(kump)}/{len(tickers)} gagal {len(gagal)}', flush=True)
         time.sleep(rehat)
+    return C, V, gagal
+
+
+def muat_turun_penuh(tickers, mula):
+    """Muat turun, kemudian cuba semula ticker gagal (had kadar Yahoo) dalam kumpulan kecil dengan rehat lebih lama."""
+    C, V, gagal = muat_turun(tickers, mula)
+    for pusingan, (saiz, rehat) in enumerate([(50, 8.0), (20, 15.0), (10, 30.0)]):
+        if not gagal:
+            break
+        print(f'cuba semula {pusingan + 1}: {len(gagal)} ticker', flush=True); time.sleep(60)
+        c2, v2, gagal = muat_turun(gagal, mula, saiz=saiz, rehat=rehat)
+        C += c2; V += v2
     C = pd.concat(C, axis=1).sort_index(); V = pd.concat(V, axis=1).sort_index()
     C = C.loc[:, ~C.columns.duplicated()]; V = V.loc[:, ~V.columns.duplicated()]
     return C, V, gagal
@@ -120,7 +132,7 @@ def main(argv=None):
     peta = pd.read_csv(os.path.join(BS2, 'papertrade', 'peta_industri.csv'), keep_default_na=False).drop_duplicates('ticker').set_index('ticker')
     peta['sektor'] = peta.industri.map(SEKTOR_INDUSTRI).fillna('Lain-lain')
     tickers = sorted(peta.index.astype(str))[: a.had or None]
-    C, V, gagal = muat_turun(tickers, a.mula)
+    C, V, gagal = muat_turun_penuh(tickers, a.mula)
     os.makedirs(OUT, exist_ok=True)
     K, P = kira(C, peta.loc[[t for t in peta.index if t in C.columns]], V)
     K.round(5).to_csv(os.path.join(OUT, 'kumpulan_harian.csv.gz'), index=False, compression='gzip')
