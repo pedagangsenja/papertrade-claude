@@ -86,6 +86,7 @@ ADAMM,REIT - Mortgage,Real Estate,1758,2019-10-18,2026-10-16,292951.0
 ADAMN,REIT - Mortgage,Real Estate,2253,2017-10-30,2026-10-16,161660.0
 ADAMZ,REIT - Mortgage,Real Estate,1232,2021-11-18,2026-10-16,150367.0
 ADBE,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.1195095e+09
+ADBT,Software - Application,Technology,38,2026-08-25,2026-10-16,1.943724e+06
 ADCT,Drug Manufacturers - Specialty & Generic,Healthcare,1613,2020-05-18,2026-10-16,1.464255e+06
 ADEA,Software - Application,Technology,2358,2017-06-01,2026-10-16,2.5095226e+07
 ADGM,Medical Devices,Healthcare,555,2024-08-01,2026-10-16,170903.0
@@ -575,7 +576,7 @@ BBAI,Information Technology Services,Technology,1392,2021-04-05,2026-10-16,5.043
 BBAR,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,8.21457e+06
 BBCI,Software - Infrastructure,Technology,8,2026-10-07,2026-10-16,642982.0
 BBCP,Engineering & Construction,Industrials,2302,2017-08-21,2026-10-16,1.480463e+06
-BBD,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.0118062e+08
+BBD,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.01180616e+08
 BBDC,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,5.155192e+06
 BBDO,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,228769.0
 BBGI,Broadcasting,Communication Services,2358,2017-06-01,2026-10-16,479688.0
@@ -848,7 +849,7 @@ BUDA,Beverages - Non-Alcoholic,Consumer Defensive,195,2026-01-08,2026-10-16,4605
 BULL,Software - Application,Technology,1043,2022-08-22,2026-10-16,8.920774e+07
 BUR,Asset Management,Financial Services,1506,2020-10-19,2026-10-16,7.325236e+06
 BURL,Apparel Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,3.1909747e+08
-BURU,Specialty Industrial Machinery,Industrials,1495,2020-10-23,2026-10-16,475280.0
+BURU,Specialty Industrial Machinery,Industrials,1494,2020-10-23,2026-10-16,495224.0
 BUSE,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.0842886e+07
 BUUU,Specialty Business Services,Industrials,296,2025-08-14,2026-10-16,2.726614e+06
 BV,Specialty Business Services,Industrials,2087,2018-06-28,2026-10-16,9.848088e+06
@@ -2607,7 +2608,7 @@ IRS,Real Estate Services,Real Estate,2358,2017-06-01,2026-10-16,2.064185e+06
 IRTC,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,5.5110548e+07
 IRWD,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,7.077952e+06
 ISBA,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.792654e+06
-ISNR,Shell Companies,Financial Services,56,2026-07-30,2026-10-16,496.0
+ISNR,Shell Companies,Financial Services,55,2026-07-30,2026-10-16,0.0
 ISOU,Uranium,Energy,2358,2017-06-01,2026-10-16,1.0858e+06
 ISPC,Diagnostics & Research,Healthcare,1340,2021-06-17,2026-10-16,114816.0
 ISPR,Tobacco,Consumer Defensive,888,2023-04-04,2026-10-16,27029.0
@@ -2624,7 +2625,7 @@ ITRG,Other Precious Metals & Mining,Basic Materials,1561,2020-07-31,2026-10-16,4
 ITRI,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,4.7934788e+07
 ITRN,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,5.664932e+06
 ITT,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,1.499442e+08
-ITUB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.7662203e+08
+ITUB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.7662205e+08
 ITW,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,3.108724e+08
 IVA,Biotechnology,Healthcare,1576,2020-07-10,2026-10-16,4.997215e+06
 IVAI,Asset Management,Financial Services,13,2026-09-30,2026-10-16,3.59661e+06
@@ -2787,7 +2788,6 @@ KRAQ,Shell Companies,Financial Services,146,2026-03-20,2026-10-16,29029.0
 KRKR,Advertising Agencies,Communication Services,1743,2019-11-08,2026-10-16,11359.0
 KRMD,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,646272.0
 KRMN,Aerospace & Defense,Industrials,421,2025-02-13,2026-10-16,1.26179416e+08
-KRNT,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,4.649535e+06
 KRNY,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,4.673832e+06
 KRO,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,2.618673e+06
 KROS,Biotechnology,Healthcare,1640,2020-04-08,2026-10-16,1.831725e+06
@@ -2873,7 +2873,6 @@ LEN.B,Residential Construction,Consumer Cyclical,2358,2017-06-01,2026-10-16,7.54
 LENZ,Biotechnology,Healthcare,1334,2021-06-25,2026-10-16,3.149712e+06
 LEU,Uranium,Energy,2358,2017-06-01,2026-10-16,1.0912561e+08
 LEVI,Apparel Manufacturing,Consumer Cyclical,1905,2019-03-21,2026-10-16,4.862055e+07
-LEXX,Biotechnology,Healthcare,1448,2021-01-12,2026-10-16,242575.0
 LFAC,Shell Companies,Financial Services,184,2026-01-26,2026-10-16,0.0
 LFCR,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,645362.0
 LFMD,Health Information Services,Healthcare,2358,2017-06-01,2026-10-16,2.236881e+06
@@ -2892,7 +2891,6 @@ LGIH,Residential Construction,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.559
 LGL,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,68400.0
 LGN,Engineering & Construction,Industrials,276,2025-09-12,2026-10-16,5.8714132e+07
 LGND,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,6.721215e+07
-LGO,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,283995.0
 LGPS,Conglomerates,Industrials,394,2025-03-25,2026-10-16,42976.0
 LGVN,Biotechnology,Healthcare,1426,2021-02-12,2026-10-16,275124.0
 LH,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,2.1787603e+08
@@ -2915,7 +2913,6 @@ LINC,Education & Training Services,Consumer Defensive,2358,2017-06-01,2026-10-16
 LIND,Travel Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.287949e+07
 LINE,REIT - Industrial,Real Estate,560,2024-07-25,2026-10-16,3.487046e+07
 LINK,Electronic Components,Technology,2358,2017-06-01,2026-10-16,105156.0
-LION,Entertainment,Communication Services,1163,2022-03-01,2026-10-16,2.6196576e+07
 LIQT,Pollution & Treatment Controls,Industrials,2358,2017-06-01,2026-10-16,62159.0
 LITB,Internet Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,12300.0
 LITE,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,3.8815434e+09
@@ -2952,399 +2949,66 @@ LOCL,Farm Products,Consumer Defensive,1382,2021-04-19,2026-10-16,17473.0
 LOCO,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,3.188734e+06
 LODE,Other Precious Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,3.287076e+06
 LOGI,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,7.827046e+07
-LOMA,Building Materials,Basic Materials,2251,2017-11-01,2026-10-16,3.763188e+06
 LONA,Biotechnology,Healthcare,1527,2020-09-18,2026-10-16,174051.0
-LOOP,Specialty Chemicals,Basic Materials,2238,2017-11-20,2026-10-16,57743.0
-LOPE,Education & Training Services,Consumer Defensive,2358,2017-06-01,2026-10-16,4.3343972e+07
-LOT,Auto Manufacturers,Consumer Cyclical,1369,2021-05-06,2026-10-16,130865.0
-LOVE,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2088,2018-06-27,2026-10-16,3.009573e+06
 LOW,Home Improvement Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,6.220732e+08
-LPA,Real Estate - Development,Real Estate,641,2024-03-28,2026-10-16,61693.0
-LPAA,Shell Companies,Financial Services,533,2024-09-03,2026-10-16,0.0
-LPBB,Shell Companies,Financial Services,471,2024-11-29,2026-10-16,106722.0
-LPCN,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,69080.0
 LPCV,Shell Companies,Financial Services,174,2026-02-09,2026-10-16,0.0
-LPG,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,2.9577276e+07
-LPL,Consumer Electronics,Technology,2358,2017-06-01,2026-10-16,7.290886e+06
 LPLA,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,2.222376e+08
-LPTH,Electronic Components,Technology,2358,2017-06-01,2026-10-16,2.8718176e+07
-LPX,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,7.650087e+07
-LQDA,Drug Manufacturers - Specialty & Generic,Healthcare,2068,2018-07-26,2026-10-16,9.824321e+07
-LQDT,Internet Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,8.474364e+06
-LRCX,Semiconductor Equipment & Materials,Technology,2358,2017-06-01,2026-10-16,2.5913718e+09
-LRE,Real Estate - Development,Real Estate,767,2023-09-27,2026-10-16,8646.0
 LRHC,Real Estate Services,Real Estate,758,2023-10-09,2026-10-16,91918.0
-LRMR,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,3.951608e+06
 LRN,Education & Training Services,Consumer Defensive,2358,2017-06-01,2026-10-16,5.750822e+07
-LSAK,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,590934.0
-LSBK,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,219264.0
-LSCC,Semiconductors,Technology,2358,2017-06-01,2026-10-16,1.8647198e+08
-LSE,Oil & Gas Equipment & Services,Energy,457,2024-12-19,2026-10-16,16863.0
-LSF,Packaged Foods,Consumer Defensive,1524,2020-09-23,2026-10-16,103005.0
-LSPD,Software - Application,Technology,1532,2020-09-11,2026-10-16,6.843018e+06
-LSTA,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,150282.0
-LSTR,Integrated Freight & Logistics,Industrials,2358,2017-06-01,2026-10-16,6.664005e+07
-LTBR,Electrical Equipment & Parts,Industrials,2358,2017-06-01,2026-10-16,4.78972e+06
-LTGO,Biotechnology,Healthcare,50,2026-08-07,2026-10-16,4.911334e+06
-LTGR,Shell Companies,Financial Services,59,2026-07-27,2026-10-16,0.0
-LTH,Leisure,Consumer Cyclical,1262,2021-10-07,2026-10-16,1.1041813e+08
-LTM,Airlines,Industrials,560,2024-07-25,2026-10-16,3.4843932e+07
-LTRN,Biotechnology,Healthcare,1596,2020-06-11,2026-10-16,259534.0
-LTRX,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,4.506942e+06
-LU,Credit Services,Financial Services,1497,2020-10-30,2026-10-16,1.163193e+06
-LUCD,Medical Devices,Healthcare,1257,2021-10-14,2026-10-16,981618.0
-LUCK,Leisure,Consumer Cyclical,1378,2021-04-23,2026-10-16,376904.0
-LUCY,Medical Instruments & Supplies,Healthcare,1048,2022-08-15,2026-10-16,140070.0
 LUD,Steel,Basic Materials,412,2025-02-27,2026-10-16,20935.0
-LULU,Apparel Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,3.9753405e+08
-LUMN,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,7.446595e+07
-LUNG,Medical Devices,Healthcare,1518,2020-10-01,2026-10-16,642066.0
-LUNR,Aerospace & Defense,Industrials,1233,2021-11-17,2026-10-16,1.1602802e+08
-LUV,Airlines,Industrials,2358,2017-06-01,2026-10-16,2.128679e+08
-LUXE,Luxury Goods,Consumer Cyclical,1442,2021-01-21,2026-10-16,1.077369e+06
-LVLU,Apparel Retail,Consumer Cyclical,1237,2021-11-11,2026-10-16,345950.0
-LVO,Internet Content & Information,Communication Services,2303,2017-08-18,2026-10-16,211204.0
 LVS,Resorts & Casinos,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.2071694e+08
 LVWR,Recreational Vehicles,Consumer Cyclical,1480,2020-11-24,2026-10-16,476470.0
-LW,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,7.546675e+07
-LWAC,Shell Companies,Financial Services,295,2025-08-15,2026-10-16,0.0
-LWAY,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,2.729402e+06
-LWLG,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,1.6711248e+07
-LX,Credit Services,Financial Services,2216,2017-12-21,2026-10-16,1.852644e+06
-LXEH,Education & Training Services,Consumer Defensive,1518,2020-10-01,2026-10-16,20368.0
-LXEO,Biotechnology,Healthcare,740,2023-11-03,2026-10-16,4.043088e+06
-LXFR,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,4.96242e+06
-LXRX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,5.417568e+06
 LXU,Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,8.064656e+06
 LYB,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,2.1855272e+08
-LYEL,Biotechnology,Healthcare,1340,2021-06-17,2026-10-16,1.506681e+06
-LYFT,Software - Application,Technology,1899,2019-03-29,2026-10-16,1.5840438e+08
-LYG,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,8.585959e+07
-LYNX,Aerospace & Defense,Industrials,42,2026-08-19,2026-10-16,6.149286e+06
-LYTS,Electronic Components,Technology,2358,2017-06-01,2026-10-16,6.776149e+06
-LYV,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,3.070277e+08
-LZ,Specialty Business Services,Industrials,1331,2021-06-30,2026-10-16,1.488971e+07
-LZB,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2358,2017-06-01,2026-10-16,1.9644546e+07
 LZM,Other Industrial Metals & Mining,Basic Materials,1216,2021-12-13,2026-10-16,1.346026e+06
-LZMH,Information Technology Services,Technology,412,2025-02-27,2026-10-16,36533.0
-M,Department Stores,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.2715539e+08
-MA,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,1.5778952e+09
-MAAS,Information Technology Services,Technology,1899,2019-03-29,2026-10-16,1.859193e+06
-MACI,Shell Companies,Financial Services,566,2024-07-17,2026-10-16,5475.0
-MAGH,Engineering & Construction,Industrials,298,2025-08-12,2026-10-16,0.0
-MAGN,Household & Personal Products,Consumer Defensive,2358,2017-06-01,2026-10-16,4.470858e+06
-MAIA,Biotechnology,Healthcare,1060,2022-07-28,2026-10-16,493308.0
-MAIN,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,2.7064838e+07
-MAIR,Building Products & Equipment,Industrials,128,2026-04-16,2026-10-16,5.4806652e+07
-MAKO,Gold,Basic Materials,2358,2017-06-01,2026-10-16,1.41918e+06
-MAMA,Packaged Foods,Consumer Defensive,1319,2021-07-19,2026-10-16,8.345716e+06
-MAMK,Conglomerates,Industrials,324,2025-07-07,2026-10-16,0.0
-MAMO,Recreational Vehicles,Consumer Cyclical,639,2024-04-02,2026-10-16,17576.0
-MAN,Staffing & Employment Services,Industrials,2358,2017-06-01,2026-10-16,4.9579344e+07
 MANE,Biotechnology,Healthcare,177,2026-02-04,2026-10-16,6.75396e+07
-MANH,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.3305347e+08
-MANU,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,6.409667e+06
 MAR,Lodging,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.0273786e+08
-MARA,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,4.617848e+08
-MARPS,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,14260.0
 MAS,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,1.4622534e+08
-MASK,Software - Application,Technology,445,2025-01-08,2026-10-16,127124.0
-MASS,Medical Devices,Healthcare,1463,2020-12-18,2026-10-16,3.74504e+06
-MAT,Leisure,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.7707652e+07
-MATH,Capital Markets,Financial Services,2259,2017-10-20,2026-10-16,40657.0
-MATV,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,5.05821e+06
 MATW,Conglomerates,Industrials,2358,2017-06-01,2026-10-16,1.4941825e+07
-MATX,Marine Shipping,Industrials,2358,2017-06-01,2026-10-16,5.8109228e+07
-MAX,Internet Content & Information,Communication Services,1499,2020-10-28,2026-10-16,8.9217e+06
 MAYS,Real Estate Services,Real Estate,2358,2017-06-01,2026-10-16,0.0
 MAZE,Biotechnology,Healthcare,430,2025-01-31,2026-10-16,1.157563e+07
-MB,Restaurants,Consumer Cyclical,382,2025-04-10,2026-10-16,31652.0
-MBAI,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,99973.0
-MBBC,Banks - Regional,Financial Services,1381,2021-04-20,2026-10-16,19657.0
-MBC,"Furnishings, Fixtures & Appliances",Consumer Cyclical,966,2022-12-09,2026-10-16,1.6645806e+07
-MBGL,Software - Infrastructure,Technology,79,2026-06-26,2026-10-16,7.420023e+07
-MBI,Insurance - Specialty,Financial Services,2358,2017-06-01,2026-10-16,1.975986e+06
-MBIN,Banks - Regional,Financial Services,2254,2017-10-27,2026-10-16,7.831428e+06
-MBINM,Banks - Regional,Financial Services,1019,2022-09-26,2026-10-16,142958.0
-MBINN,Banks - Regional,Financial Services,1404,2021-03-17,2026-10-16,128956.0
-MBIO,Biotechnology,Healthcare,2301,2017-08-22,2026-10-16,12315.0
 MBLY,Auto Parts,Consumer Cyclical,997,2022-10-26,2026-10-16,4.057716e+07
-MBOT,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,758560.0
-MBRX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,359350.0
 MBUU,Recreational Vehicles,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.281305e+06
-MBVI,Shell Companies,Financial Services,251,2025-10-17,2026-10-16,20480.0
-MBWM,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,6.187089e+06
 MBX,Biotechnology,Healthcare,525,2024-09-13,2026-10-16,3.0705156e+07
-MC,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,5.226102e+07
-MCAH,Shell Companies,Financial Services,83,2026-06-22,2026-10-16,2004.0
-MCB,Banks - Regional,Financial Services,2246,2017-11-08,2026-10-16,1.055488e+07
-MCBS,Banks - Regional,Financial Services,1789,2019-09-05,2026-10-16,2.697435e+06
-MCD,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.2410708e+09
-MCFT,Recreational Vehicles,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.077072e+06
-MCGA,Shell Companies,Financial Services,310,2025-07-25,2026-10-16,203577.0
-MCHB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,7.630378e+06
-MCHP,Semiconductors,Technology,2358,2017-06-01,2026-10-16,6.5050394e+08
 MCHX,Advertising Agencies,Communication Services,2358,2017-06-01,2026-10-16,29082.0
-MCK,Medical Distribution,Healthcare,2358,2017-06-01,2026-10-16,7.251541e+08
-MCO,Financial Data & Stock Exchanges,Financial Services,2358,2017-06-01,2026-10-16,3.56047e+08
-MCRB,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,215174.0
-MCRI,Resorts & Casinos,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.7491278e+07
-MCRP,Computer Hardware,Technology,406,2025-03-07,2026-10-16,169856.0
-MCS,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,5.961588e+06
-MCTA,Medical Care Facilities,Healthcare,249,2025-10-21,2026-10-16,0.0
-MCY,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,2.85651e+07
-MD,Medical Care Facilities,Healthcare,2358,2017-06-01,2026-10-16,1.7610518e+07
-MDA,Aerospace & Defense,Industrials,152,2026-03-12,2026-10-16,3.353568e+07
 MDAI,Medical Devices,Healthcare,1391,2021-04-06,2026-10-16,216216.0
-MDB,Software - Infrastructure,Technology,2260,2017-10-19,2026-10-16,6.1153914e+08
 MDBH,Capital Markets,Financial Services,771,2023-09-21,2026-10-16,5120.0
-MDCX,Drug Manufacturers - General,Healthcare,481,2024-11-14,2026-10-16,430890.0
-MDGL,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.3806067e+08
-MDIA,Broadcasting,Communication Services,1705,2020-01-06,2026-10-16,10030.0
 MDLN,Medical Instruments & Supplies,Healthcare,209,2025-12-17,2026-10-16,2.5456083e+08
 MDLZ,Confectioners,Consumer Defensive,2358,2017-06-01,2026-10-16,4.566734e+08
-MDRR,Real Estate Services,Real Estate,1981,2018-11-28,2026-10-16,3284.0
-MDT,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,7.464177e+08
-MDU,Utilities - Regulated Gas,Utilities,2358,2017-06-01,2026-10-16,2.8101758e+07
-MDWD,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.026513e+06
-MDXG,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,4.827836e+06
-MDXH,Diagnostics & Research,Healthcare,1242,2021-11-04,2026-10-16,147041.0
 MEC,Metal Fabrication,Industrials,1871,2019-05-09,2026-10-16,9.89764e+06
-MED,Personal Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.32323e+06
-MEDP,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,1.3959187e+08
-MEDS,Medical Distribution,Healthcare,416,2025-02-21,2026-10-16,391776.0
-MEGL,Capital Markets,Financial Services,1054,2022-08-05,2026-10-16,12240.0
-MEI,Electronic Components,Technology,2358,2017-06-01,2026-10-16,8.290501e+06
-MELI,Internet Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,8.077707e+08
-MENS,Biotechnology,Healthcare,336,2025-06-17,2026-10-16,77380.0
-MEOH,Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,3.977246e+07
-MERC,Paper & Paper Products,Basic Materials,2358,2017-06-01,2026-10-16,204608.0
-MESH,Shell Companies,Financial Services,180,2026-01-30,2026-10-16,121200.0
-MESO,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,2.91242e+06
 MET,Insurance - Life,Financial Services,2358,2017-06-01,2026-10-16,2.978028e+08
-META,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,1.0550606e+10
-METC,Coking Coal,Basic Materials,2358,2017-06-01,2026-10-16,1.998912e+07
-METCB,Coking Coal,Basic Materials,837,2023-06-16,2026-10-16,409262.0
 MEVO,Shell Companies,Financial Services,167,2026-02-19,2026-10-16,28084.0
-MF,Advertising Agencies,Communication Services,641,2024-03-28,2026-10-16,1.319565e+06
-MFC,Insurance - Life,Financial Services,2358,2017-06-01,2026-10-16,6.8024824e+07
-MFG,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,3.2799346e+07
-MFI,Software - Application,Technology,625,2024-04-22,2026-10-16,43146.0
-MFIC,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,4.771582e+06
-MFIN,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,729025.0
-MFP,Specialty Industrial Machinery,Industrials,79,2026-06-26,2026-10-16,2.3574754e+07
-MG,Security & Protection Services,Industrials,2358,2017-06-01,2026-10-16,4.922456e+06
-MGA,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,7.445987e+07
-MGEE,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,1.1836437e+07
-MGIH,Packaging & Containers,Consumer Cyclical,888,2023-04-04,2026-10-16,23660.0
-MGLD,Asset Management,Financial Services,1154,2022-03-14,2026-10-16,11536.0
-MGM,Resorts & Casinos,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.0680497e+08
-MGN,Engineering & Construction,Industrials,266,2025-09-26,2026-10-16,287914.0
-MGNI,Advertising Agencies,Communication Services,2358,2017-06-01,2026-10-16,4.6932988e+07
-MGNX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.94788e+06
-MGPI,Beverages - Wineries & Distilleries,Consumer Defensive,2358,2017-06-01,2026-10-16,3.562272e+06
-MGRC,Rental & Leasing Services,Industrials,2358,2017-06-01,2026-10-16,1.6106185e+07
 MGRT,Information Technology Services,Technology,317,2025-07-16,2026-10-16,1.02595e+06
-MGRX,Health Information Services,Healthcare,898,2023-03-21,2026-10-16,258726.0
-MGTX,Biotechnology,Healthcare,2101,2018-06-08,2026-10-16,9.19032e+06
 MGX,Biotechnology,Healthcare,674,2024-02-09,2026-10-16,150480.0
-MGY,Oil & Gas E&P,Energy,2338,2017-06-29,2026-10-16,9.9994024e+07
-MGYR,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,40446.0
-MH,Education & Training Services,Consumer Defensive,311,2025-07-24,2026-10-16,6.454954e+06
-MHH,Staffing & Employment Services,Industrials,2358,2017-06-01,2026-10-16,58000.0
 MHK,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2358,2017-06-01,2026-10-16,1.2227355e+08
 MHO,Residential Construction,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.7589698e+07
-MI,Internet Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,119856.0
-MIAC,Shell Companies,Financial Services,39,2026-08-24,2026-10-16,133688.0
-MIAX,Capital Markets,Financial Services,296,2025-08-14,2026-10-16,5.1816644e+07
 MICC,Packaged Foods,Consumer Defensive,216,2025-12-08,2026-10-16,1.5188785e+07
-MIDD,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,5.952994e+07
 MIMI,Engineering & Construction,Industrials,6,2026-10-09,2026-10-16,326301.0
-MIND,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,353855.0
-MINE,Gold,Basic Materials,183,2026-01-27,2026-10-16,452331.0
-MIR,Specialty Industrial Machinery,Industrials,1547,2020-08-20,2026-10-16,5.6277936e+07
 MIRA,Drug Manufacturers - General,Healthcare,805,2023-08-03,2026-10-16,60925.0
-MIRM,Biotechnology,Healthcare,1823,2019-07-18,2026-10-16,6.0889904e+07
-MIST,Biotechnology,Healthcare,1871,2019-05-09,2026-10-16,1.180374e+06
-MITK,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.0261165e+07
-MITQ,Communication Equipment,Technology,1326,2021-07-08,2026-10-16,14310.0
-MKC,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,1.4878909e+08
-MKC.V,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,184932.0
-MKDW,Auto Parts,Consumer Cyclical,893,2023-03-28,2026-10-16,40145.0
-MKL,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,1.0803727e+08
-MKLY,Shell Companies,Financial Services,262,2025-10-02,2026-10-16,117135.0
 MKSI,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,3.410022e+08
-MKTW,Financial Data & Stock Exchanges,Financial Services,1531,2020-09-14,2026-10-16,255959.0
-MKTX,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,1.3953357e+08
-MKZR,REIT - Diversified,Real Estate,572,2024-07-09,2026-10-16,10886.0
-MLAA,Shell Companies,Financial Services,147,2026-03-19,2026-10-16,60060.0
-MLAB,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,1.5046366e+07
-MLCI,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,41148.0
 MLCO,Resorts & Casinos,Consumer Cyclical,2358,2017-06-01,2026-10-16,7.41519e+06
-MLEC,Biotechnology,Healthcare,1415,2021-03-02,2026-10-16,54723.0
-MLGO,Software - Infrastructure,Technology,1386,2021-04-13,2026-10-16,133560.0
-MLI,Metal Fabrication,Industrials,2358,2017-06-01,2026-10-16,7.9320536e+07
 MLKN,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2358,2017-06-01,2026-10-16,1.2243915e+07
-MLM,Building Materials,Basic Materials,2358,2017-06-01,2026-10-16,3.5757738e+08
-MLP,Real Estate Services,Real Estate,2358,2017-06-01,2026-10-16,248094.0
-MLR,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.300788e+06
-MLSS,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,36036.0
-MLTX,Biotechnology,Healthcare,1505,2020-10-20,2026-10-16,1.9628176e+07
-MLYS,Biotechnology,Healthcare,924,2023-02-10,2026-10-16,2.30445e+07
-MMA,Leisure,Consumer Cyclical,641,2024-03-28,2026-10-16,80841.0
-MMED,Medical Instruments & Supplies,Healthcare,156,2026-03-06,2026-10-16,3.6136052e+07
-MMI,Real Estate Services,Real Estate,2358,2017-06-01,2026-10-16,4.07404e+06
-MMLP,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,18640.0
-MMM,Conglomerates,Industrials,2358,2017-06-01,2026-10-16,4.81266e+08
-MMS,Specialty Business Services,Industrials,2358,2017-06-01,2026-10-16,3.4739316e+07
-MMSI,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,6.045149e+07
-MMTX,Shell Companies,Financial Services,211,2025-12-15,2026-10-16,27270.0
-MMYT,Travel Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,3.7580268e+07
-MNDO,Software - Application,Technology,2358,2017-06-01,2026-10-16,34561.0
-MNDR,Health Information Services,Healthcare,633,2024-04-10,2026-10-16,120930.0
-MNDY,Software - Application,Technology,1345,2021-06-10,2026-10-16,1.04355624e+08
-MNKD,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.381072e+07
 MNOV,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,88968.0
-MNPR,Biotechnology,Healthcare,1715,2019-12-19,2026-10-16,1.802932e+07
-MNR,Oil & Gas E&P,Energy,747,2023-10-25,2026-10-16,4.672457e+06
-MNRO,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.1677552e+07
-MNSB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,660130.0
-MNSBP,Banks - Regional,Financial Services,1529,2020-09-16,2026-10-16,9800.0
 MNSO,Specialty Retail,Consumer Cyclical,1508,2020-10-15,2026-10-16,8.300948e+06
-MNST,Beverages - Non-Alcoholic,Consumer Defensive,2358,2017-06-01,2026-10-16,4.2775626e+08
-MNTK,Specialty Chemicals,Basic Materials,1441,2021-01-22,2026-10-16,630265.0
 MNTN,Software - Application,Technology,353,2025-05-22,2026-10-16,8.704702e+06
-MNTS,Aerospace & Defense,Industrials,1707,2020-01-02,2026-10-16,2.724966e+06
-MNY,Internet Content & Information,Communication Services,1472,2020-12-07,2026-10-16,8978.0
-MO,Tobacco,Consumer Defensive,2358,2017-06-01,2026-10-16,5.61501e+08
-MOB,Aerospace & Defense,Industrials,1040,2022-08-25,2026-10-16,488475.0
-MOBI,Medical Devices,Healthcare,112,2026-05-08,2026-10-16,1.3133e+06
-MOBX,Semiconductors,Technology,1300,2021-08-13,2026-10-16,1.154868e+06
-MOD,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.4315318e+08
-MODD,Medical Devices,Healthcare,1175,2022-02-10,2026-10-16,365810.0
-MOG.A,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,9.936049e+07
-MOG.B,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,41155.0
-MOGU,Internet Retail,Consumer Cyclical,1976,2018-12-06,2026-10-16,2621.0
-MOH,Healthcare Plans,Healthcare,2358,2017-06-01,2026-10-16,1.2631087e+08
-MOLN,Biotechnology,Healthcare,1341,2021-06-16,2026-10-16,2492.0
 MOMO,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,3.059558e+06
-MORN,Financial Data & Stock Exchanges,Financial Services,2358,2017-06-01,2026-10-16,5.6952324e+07
 MOS,Agricultural Inputs,Basic Materials,2358,2017-06-01,2026-10-16,1.7780685e+08
 MOV,Luxury Goods,Consumer Cyclical,2358,2017-06-01,2026-10-16,6.373236e+06
-MOVE,Software - Infrastructure,Technology,1400,2021-03-23,2026-10-16,1.06834e+06
-MP,Other Industrial Metals & Mining,Basic Materials,1589,2020-06-22,2026-10-16,2.7480125e+08
-MPAA,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.144836e+06
-MPB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,3.893888e+06
-MPC,Oil & Gas Refining & Marketing,Energy,2358,2017-06-01,2026-10-16,8.171637e+08
-MPLT,Biotechnology,Healthcare,245,2025-10-27,2026-10-16,6.179588e+06
 MPLX,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,8.000163e+07
-MPT,REIT - Healthcare Facilities,Real Estate,2358,2017-06-01,2026-10-16,3.389568e+07
-MPTI,Electronic Components,Technology,1014,2022-10-03,2026-10-16,7.205328e+06
-MPU,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,25498.0
-MPWR,Semiconductors,Technology,2358,2017-06-01,2026-10-16,8.866141e+08
-MQ,Software - Infrastructure,Technology,1346,2021-06-09,2026-10-16,1.4709438e+07
-MRAM,Semiconductors,Technology,2358,2017-06-01,2026-10-16,1.4530455e+07
-MRBK,Banks - Regional,Financial Services,2247,2017-11-07,2026-10-16,1.380122e+06
-MRCO,Shell Companies,Financial Services,44,2026-08-17,2026-10-16,12320.0
-MRCY,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,4.963968e+07
-MRDN,Gambling,Consumer Cyclical,2358,2017-06-01,2026-10-16,773352.0
-MREO,Biotechnology,Healthcare,1882,2019-04-24,2026-10-16,398610.0
-MRK,Drug Manufacturers - General,Healthcare,2358,2017-06-01,2026-10-16,1.2332077e+09
-MRKR,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,66600.0
-MRLN,Aerospace & Defense,Industrials,470,2024-12-02,2026-10-16,4.333995e+06
 MRM,Personal Services,Consumer Cyclical,1457,2020-12-29,2026-10-16,9353.0
 MRNA,Biotechnology,Healthcare,1975,2018-12-07,2026-10-16,2.4978962e+09
-MRNO,Real Estate - Development,Real Estate,1152,2022-03-16,2026-10-16,55507.0
-MRP,REIT - Residential,Real Estate,427,2025-02-05,2026-10-16,3.4093136e+07
-MRSH,Insurance Brokers,Financial Services,2358,2017-06-01,2026-10-16,4.410048e+08
-MRT,Software - Application,Technology,1289,2021-08-30,2026-10-16,79560.0
-MRTN,Trucking,Industrials,2358,2017-06-01,2026-10-16,9.361981e+06
-MRVI,Biotechnology,Healthcare,1482,2020-11-20,2026-10-16,1.6735397e+07
 MRVL,Semiconductors,Technology,2358,2017-06-01,2026-10-16,4.646533e+09
-MRX,Capital Markets,Financial Services,622,2024-04-25,2026-10-16,4.60411e+07
 MS,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,9.3639917e+08
-MSA,Security & Protection Services,Industrials,2358,2017-06-01,2026-10-16,4.0375556e+07
-MSAI,Electronic Components,Technology,1234,2021-11-16,2026-10-16,58254.0
-MSBI,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,4.829937e+06
 MSBIP,Banks - Regional,Financial Services,1038,2022-08-29,2026-10-16,61927.0
-MSC,Resorts & Casinos,Consumer Cyclical,2009,2018-10-18,2026-10-16,13125.0
-MSCI,Financial Data & Stock Exchanges,Financial Services,2358,2017-06-01,2026-10-16,3.2601504e+08
-MSEX,Utilities - Regulated Water,Utilities,2358,2017-06-01,2026-10-16,7.10173e+06
-MSFT,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,1.0964503e+10
-MSGE,Entertainment,Communication Services,880,2023-04-17,2026-10-16,2.7447596e+07
 MSGM,Electronic Gaming & Multimedia,Communication Services,1447,2021-01-13,2026-10-16,274040.0
-MSGS,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,9.587332e+07
-MSGY,Engineering & Construction,Industrials,323,2025-07-08,2026-10-16,138595.0
-MSI,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,3.7977856e+08
-MSIF,Asset Management,Financial Services,432,2025-01-29,2026-10-16,2.509704e+06
-MSLE,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,306306.0
-MSM,Industrial Distribution,Industrials,2358,2017-06-01,2026-10-16,7.577785e+07
-MSN,Consumer Electronics,Technology,2358,2017-06-01,2026-10-16,52065.0
-MSS,Grocery Stores,Consumer Defensive,761,2023-10-05,2026-10-16,370788.0
-MSTR,Software - Application,Technology,2358,2017-06-01,2026-10-16,2.5721933e+09
-MT,Steel,Basic Materials,2358,2017-06-01,2026-10-16,9.462801e+07
 MTA,Other Precious Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,2.970625e+06
-MTAK,Shell Companies,Financial Services,22,2026-09-17,2026-10-16,102494.0
 MTAL,Shell Companies,Financial Services,129,2026-04-15,2026-10-16,61915.0
-MTB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.3034549e+08
-MTC,Capital Markets,Financial Services,1954,2019-01-09,2026-10-16,54000.0
-MTCH,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,1.19963256e+08
-MTD,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,2.491117e+08
-MTDR,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,9.904771e+07
-MTEK,Electronic Components,Technology,1181,2022-02-02,2026-10-16,60160.0
-MTEN,Metal Fabrication,Industrials,626,2024-04-19,2026-10-16,206064.0
-MTEX,Food Distribution,Consumer Defensive,2358,2017-06-01,2026-10-16,67098.0
 MTG,Insurance - Specialty,Financial Services,2358,2017-06-01,2026-10-16,5.1382212e+07
-MTH,Residential Construction,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.2719424e+07
-MTLS,Software - Application,Technology,2358,2017-06-01,2026-10-16,772695.0
-MTN,Resorts & Casinos,Consumer Cyclical,2358,2017-06-01,2026-10-16,9.512119e+07
-MTNB,Biotechnology,Healthcare,2357,2017-06-01,2026-10-16,165864.0
-MTNE,Shell Companies,Financial Services,83,2026-06-22,2026-10-16,0.0
-MTRN,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,6.6340132e+07
-MTRX,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,3.77253e+06
 MTSI,Semiconductors,Technology,2358,2017-06-01,2026-10-16,3.675869e+08
-MTUS,Steel,Basic Materials,2358,2017-06-01,2026-10-16,6.653088e+06
-MTVA,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,88408.0
-MTW,Farm & Heavy Construction Machinery,Industrials,2358,2017-06-01,2026-10-16,7.443754e+06
-MTX,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,1.1544546e+07
-MTZ,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,3.4296048e+08
 MU,Semiconductors,Technology,2358,2017-06-01,2026-10-16,2.6970999e+10
-MUFG,Banks - Diversified,Financial Services,2358,2017-06-01,2026-10-16,6.2376664e+07
-MUR,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,5.6363588e+07
-MUSA,Specialty Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.337949e+08
-MUX,Other Precious Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,1.7029156e+07
-MUZE,Shell Companies,Financial Services,145,2026-03-23,2026-10-16,2000.0
 MVBF,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.552188e+06
-MVIS,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,1.912712e+06
-MVST,Auto Parts,Consumer Cyclical,1901,2019-03-27,2026-10-16,3.759752e+06
-MWA,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,2.7683192e+07
-MWC,Auto Parts,Consumer Cyclical,108,2026-05-14,2026-10-16,257681.0
-MWG,Rental & Leasing Services,Industrials,889,2023-04-03,2026-10-16,3900.0
-MWH,Utilities - Renewable,Utilities,171,2026-02-12,2026-10-16,4.0275936e+07
 MWYN,"Furnishings, Fixtures & Appliances",Consumer Cyclical,402,2025-03-13,2026-10-16,110532.0
-MX,Semiconductors,Technology,2358,2017-06-01,2026-10-16,2.235082e+06
-MXC,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,85573.0
-MXCT,Medical Devices,Healthcare,1310,2021-07-30,2026-10-16,545184.0
-MXL,Semiconductors,Technology,2358,2017-06-01,2026-10-16,2.0157634e+08
-MYE,Packaging & Containers,Consumer Cyclical,2358,2017-06-01,2026-10-16,9.618546e+06
-MYFW,Banks - Regional,Financial Services,2073,2018-07-19,2026-10-16,1.275534e+06
-MYGN,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,6.209448e+06
-MYND,Education & Training Services,Consumer Defensive,2276,2017-09-27,2026-10-16,4633.0
-MYO,Medical Devices,Healthcare,2351,2017-06-12,2026-10-16,494560.0
 MYPS,Electronic Gaming & Multimedia,Communication Services,1462,2020-12-21,2026-10-16,161999.0
-MYRG,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,8.099691e+07
-MYSE,Software - Application,Technology,1300,2021-08-13,2026-10-16,164052.0
-MYSZ,Apparel Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,70238.0
-MYX,Shell Companies,Financial Services,107,2026-05-15,2026-10-16,0.0
-MZTI,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,3.869569e+07
-MZYX,Shell Companies,Financial Services,125,2026-04-21,2026-10-16,17946.0
-NA,Semiconductors,Technology,1072,2022-07-12,2026-10-16,55407.0
-NAAS,Specialty Retail,Consumer Cyclical,2259,2017-10-20,2026-10-16,57120.0
-NABL,Information Technology Services,Technology,1319,2021-07-19,2026-10-16,8.32887e+06
-NAGE,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,1.383942e+06
-NAII,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,23544.0
-NAK,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,5.443701e+06
-NAKA,Capital Markets,Financial Services,597,2024-05-31,2026-10-16,1.214952e+06
 NAMI,Internet Content & Information,Communication Services,466,2024-12-06,2026-10-16,65043.0
 NAMM,Gold,Basic Materials,343,2025-06-06,2026-10-16,581889.0
 NAMS,Biotechnology,Healthcare,1429,2021-02-09,2026-10-16,2.9448666e+07
@@ -3352,12 +3016,10 @@ NAT,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,2.9795204e+07
 NATH,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.289924e+06
 NATL,Software - Application,Technology,757,2023-10-11,2026-10-16,3.0850562e+07
 NATR,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,2.0144e+06
-NAUT,Biotechnology,Healthcare,1556,2020-08-07,2026-10-16,841995.0
 NAVI,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,1.0666823e+07
 NAVN,Software - Application,Technology,242,2025-10-30,2026-10-16,6.705836e+07
 NB,Other Industrial Metals & Mining,Basic Materials,898,2023-03-21,2026-10-16,1.0015357e+07
 NBBK,Banks - Regional,Financial Services,703,2023-12-28,2026-10-16,6.377154e+06
-NBHC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.5827088e+07
 NBIS,Internet Content & Information,Communication Services,499,2024-10-21,2026-10-16,3.6495483e+09
 NBIX,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,1.8486005e+08
 NBN,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.4079823e+07
@@ -3367,8 +3029,6 @@ NBRG,Shell Companies,Financial Services,145,2026-03-23,2026-10-16,0.0
 NBTB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.5912366e+07
 NBTX,Biotechnology,Healthcare,1468,2020-12-11,2026-10-16,4.784782e+06
 NC,Thermal Coal,Energy,2358,2017-06-01,2026-10-16,640737.0
-NCDL,Asset Management,Financial Services,685,2024-01-25,2026-10-16,2.275963e+06
-NCEL,Biotechnology,Healthcare,1436,2021-01-29,2026-10-16,21319.0
 NCEW,Integrated Freight & Logistics,Industrials,458,2024-12-18,2026-10-16,0.0
 NCI,Apparel Manufacturing,Consumer Cyclical,624,2024-04-23,2026-10-16,4.343872e+06
 NCLH,Travel Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.6275888e+08
@@ -3398,7 +3058,6 @@ NEPH,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,87108.
 NERV,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,486200.0
 NESR,Oil & Gas Equipment & Services,Energy,572,2024-07-09,2026-10-16,5.927368e+07
 NET,Software - Infrastructure,Technology,1783,2019-09-13,2026-10-16,9.556766e+08
-NEU,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,1.0933241e+08
 NEUP,Biotechnology,Healthcare,1213,2021-12-16,2026-10-16,88550.0
 NEWP,Silver,Basic Materials,2358,2017-06-01,2026-10-16,3.983952e+06
 NEWT,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.703301e+06
@@ -3416,13 +3075,11 @@ NGEN,Biotechnology,Healthcare,1896,2019-04-03,2026-10-16,798210.0
 NGG,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,6.420791e+07
 NGL,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,3.18072e+06
 NGNE,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,6.389628e+06
-NGS,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,4.078305e+06
 NGVC,Grocery Stores,Consumer Defensive,2358,2017-06-01,2026-10-16,3.474432e+06
 NGVT,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,1.693106e+07
-NHC,Medical Care Facilities,Healthcare,2358,2017-06-01,2026-10-16,2.1251404e+07
 NHIV,Shell Companies,Financial Services,92,2026-06-08,2026-10-16,0.0
 NHP,REIT - Healthcare Facilities,Real Estate,124,2026-04-22,2026-10-16,7.64887e+06
-NHPBP,REIT - Healthcare Facilities,Real Estate,10,2026-07-29,2026-10-12,3586.0
+NHPBP,REIT - Healthcare Facilities,Real Estate,11,2026-07-29,2026-10-12,7172.0
 NHTC,Internet Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,60300.0
 NI,Utilities - Regulated Gas,Utilities,2358,2017-06-01,2026-10-16,2.1490091e+08
 NIC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.594079e+07
@@ -3434,7 +3091,6 @@ NIO,Auto Manufacturers,Consumer Cyclical,2035,2018-09-12,2026-10-16,1.11289e+08
 NIPG,Entertainment,Communication Services,559,2024-07-26,2026-10-16,220800.0
 NIQ,Software - Application,Technology,312,2025-07-23,2026-10-16,2.048282e+07
 NIU,Auto Manufacturers,Consumer Cyclical,2008,2018-10-19,2026-10-16,313310.0
-NIVF,Medical Care Facilities,Healthcare,1150,2022-03-18,2026-10-16,190577.0
 NIXX,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,248034.0
 NJR,Utilities - Regulated Gas,Utilities,2358,2017-06-01,2026-10-16,3.3329614e+07
 NKE,Footwear & Accessories,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.0800488e+09
@@ -3447,7 +3103,6 @@ NLOP,REIT - Office,Real Estate,745,2023-10-27,2026-10-16,1.293195e+06
 NMAD,Electrical Equipment & Parts,Industrials,2358,2017-06-01,2026-10-16,833160.0
 NMAX,Broadcasting,Communication Services,390,2025-03-31,2026-10-16,8.019634e+06
 NMFC,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,3.399842e+06
-NMG,Other Industrial Metals & Mining,Basic Materials,1450,2021-01-08,2026-10-16,487500.0
 NMIH,Insurance - Specialty,Financial Services,2358,2017-06-01,2026-10-16,2.042096e+07
 NMM,Marine Shipping,Industrials,2358,2017-06-01,2026-10-16,1.3342523e+07
 NMP,Shell Companies,Financial Services,283,2025-09-03,2026-10-16,0.0
@@ -3456,13 +3111,11 @@ NMRA,Biotechnology,Healthcare,776,2023-09-14,2026-10-16,993112.0
 NMRK,Real Estate Services,Real Estate,2220,2017-12-15,2026-10-16,2.2105134e+07
 NMTC,Medical Devices,Healthcare,2160,2018-03-15,2026-10-16,119286.0
 NN,Software - Infrastructure,Technology,1496,2020-11-02,2026-10-16,3.5421624e+07
-NNBR,Conglomerates,Industrials,2358,2017-06-01,2026-10-16,6.014868e+06
 NNDM,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,2.310883e+06
 NNE,Specialty Industrial Machinery,Industrials,613,2024-05-08,2026-10-16,3.1082472e+07
 NNI,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,1.6529408e+07
 NNNN,Medical Instruments & Supplies,Healthcare,418,2025-02-19,2026-10-16,602229.0
 NNOX,Medical Devices,Healthcare,1546,2020-08-21,2026-10-16,709776.0
-NNVC,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,422660.0
 NOA,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,1.001511e+06
 NOAH,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,829472.0
 NOC,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,4.097e+08
@@ -3472,7 +3125,6 @@ NOG,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,4.9799904e+07
 NOK,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,7.808461e+08
 NOMA,Leisure,Consumer Cyclical,240,2025-11-03,2026-10-16,30400.0
 NOMD,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,1.479698e+07
-NOV,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,6.250435e+07
 NOVT,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,5.142671e+07
 NOW,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.8719384e+09
 NP,Insurance Brokers,Financial Services,263,2025-10-01,2026-10-16,1.4109396e+07
@@ -3481,7 +3133,6 @@ NPB,Banks - Regional,Financial Services,419,2025-02-18,2026-10-16,3.522172e+06
 NPCE,Medical Devices,Healthcare,1379,2021-04-22,2026-10-16,2.035929e+06
 NPK,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,1.3327458e+07
 NPKI,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,9.411075e+06
-NPO,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,5.0333508e+07
 NPT,Specialty Retail,Consumer Cyclical,248,2025-10-22,2026-10-16,46002.0
 NPWR,Specialty Industrial Machinery,Industrials,1305,2021-08-06,2026-10-16,897408.0
 NRC,Health Information Services,Healthcare,2358,2017-06-01,2026-10-16,2.283212e+06
@@ -3492,7 +3143,6 @@ NRGV,Utilities - Renewable,Utilities,1396,2021-03-29,2026-10-16,1.3277002e+07
 NRIM,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,3.249243e+06
 NRIX,Biotechnology,Healthcare,1566,2020-07-24,2026-10-16,3.1701286e+07
 NRP,Thermal Coal,Energy,2358,2017-06-01,2026-10-16,2.88774e+06
-NRSN,Biotechnology,Healthcare,1218,2021-12-09,2026-10-16,87132.0
 NRXP,Biotechnology,Healthcare,2229,2017-12-04,2026-10-16,2.38788e+06
 NRXS,Biotechnology,Healthcare,801,2023-08-09,2026-10-16,472860.0
 NSC,Railroads,Industrials,2358,2017-06-01,2026-10-16,3.2152637e+08
@@ -3503,24 +3153,16 @@ NSPR,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,43516.0
 NSRX,Drug Manufacturers - General,Healthcare,297,2025-08-13,2026-10-16,42294.0
 NSSC,Security & Protection Services,Industrials,2358,2017-06-01,2026-10-16,1.0675522e+07
 NSTR,Aerospace & Defense,Industrials,11,2026-10-02,2026-10-16,403348.0
-NSTS,Banks - Regional,Financial Services,7,2026-07-29,2026-10-05,50922.0
-NSYS,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,109512.0
-NTAP,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,4.5901302e+08
 NTB,Banks - Diversified,Financial Services,2358,2017-06-01,2026-10-16,9.192942e+06
 NTCL,Software - Application,Technology,461,2024-12-13,2026-10-16,54707.0
 NTCT,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,2.1375984e+07
 NTES,Electronic Gaming & Multimedia,Communication Services,2358,2017-06-01,2026-10-16,8.330921e+07
 NTGR,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,6.712662e+06
-NTHI,Biotechnology,Healthcare,393,2025-03-26,2026-10-16,515072.0
-NTIC,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,30800.0
 NTIP,Specialty Business Services,Industrials,2358,2017-06-01,2026-10-16,22152.0
 NTLA,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,4.560504e+07
 NTNX,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,1.591589e+08
 NTR,Agricultural Inputs,Basic Materials,2210,2018-01-02,2026-10-16,1.8658354e+08
 NTRA,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,4.1350064e+08
-NTRB,Biotechnology,Healthcare,1266,2021-10-01,2026-10-16,173538.0
-NTRP,Travel Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,96500.0
-NTRS,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,1.8154251e+08
 NTRSO,Asset Management,Financial Services,1750,2019-10-30,2026-10-16,653544.0
 NTSK,Software - Infrastructure,Technology,272,2025-09-18,2026-10-16,8.271385e+07
 NTWK,Software - Application,Technology,2358,2017-06-01,2026-10-16,94142.0
@@ -3533,7 +3175,6 @@ NUE,Steel,Basic Materials,2358,2017-06-01,2026-10-16,2.8760864e+08
 NUR,Communication Equipment,Technology,49,2026-08-10,2026-10-16,141266.0
 NUS,Household & Personal Products,Consumer Defensive,2358,2017-06-01,2026-10-16,2.344125e+06
 NUTR,Travel Services,Consumer Cyclical,273,2025-08-15,2026-10-15,0.0
-NUTX,Medical Care Facilities,Healthcare,1139,2022-04-04,2026-10-16,2.7484136e+07
 NUVB,Biotechnology,Healthcare,1543,2020-08-26,2026-10-16,3.190117e+07
 NUWE,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,248346.0
 NVA,Other Industrial Metals & Mining,Basic Materials,561,2024-07-24,2026-10-16,1.89056e+06
@@ -3543,405 +3184,61 @@ NVCT,Biotechnology,Healthcare,1179,2022-02-04,2026-10-16,3.772368e+06
 NVDA,Semiconductors,Technology,2358,2017-06-01,2026-10-16,2.4923963e+10
 NVEC,Semiconductors,Technology,2358,2017-06-01,2026-10-16,1.274625e+07
 NVGS,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,9.357006e+06
-NVMI,Semiconductor Equipment & Materials,Technology,2358,2017-06-01,2026-10-16,1.624602e+08
-NVNO,Medical Devices,Healthcare,2107,2018-05-31,2026-10-16,126840.0
-NVO,Drug Manufacturers - General,Healthcare,2358,2017-06-01,2026-10-16,4.699271e+08
-NVR,Residential Construction,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.2918026e+08
-NVRI,Waste Management,Industrials,2358,2017-06-01,2026-10-16,5.723726e+06
-NVS,Drug Manufacturers - General,Healthcare,2358,2017-06-01,2026-10-16,2.5610642e+08
 NVST,Medical Instruments & Supplies,Healthcare,1780,2019-09-18,2026-10-16,6.3876676e+07
-NVT,Electrical Equipment & Parts,Industrials,2133,2018-04-24,2026-10-16,2.92163e+08
-NVTS,Semiconductors,Technology,1253,2021-10-20,2026-10-16,1.586414e+08
-NVX,Electrical Equipment & Parts,Industrials,1181,2022-02-02,2026-10-16,59080.0
-NWAX,Shell Companies,Financial Services,184,2026-01-26,2026-10-16,398664.0
-NWBI,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.500264e+07
-NWCL,Specialty Industrial Machinery,Industrials,377,2025-04-17,2026-10-16,1.013255e+06
-NWE,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,2.8546556e+07
-NWFL,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.07351e+06
 NWG,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,5.8644464e+07
-NWGL,Lumber & Wood Production,Basic Materials,778,2023-09-12,2026-10-16,252470.0
-NWL,Household & Personal Products,Consumer Defensive,2358,2017-06-01,2026-10-16,3.5061696e+07
-NWN,Utilities - Regulated Gas,Utilities,2358,2017-06-01,2026-10-16,1.1359359e+07
-NWPX,Steel,Basic Materials,2358,2017-06-01,2026-10-16,1.3504792e+07
-NWS,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,3.1998036e+07
-NWSA,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,9.946968e+07
 NWTG,Leisure,Consumer Cyclical,797,2023-08-15,2026-10-16,22127.0
-NX,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,6.632348e+06
-NXAT,Conglomerates,Industrials,359,2025-05-14,2026-10-16,132796.0
-NXB,Auto & Truck Dealerships,Consumer Cyclical,232,2025-11-13,2026-10-16,53261.0
-NXDR,Internet Content & Information,Communication Services,1,2026-10-16,2026-10-16,4.70598e+06
-NXE,Uranium,Energy,2358,2017-06-01,2026-10-16,4.2300876e+07
-NXGL,Medical Instruments & Supplies,Healthcare,1209,2021-12-22,2026-10-16,57038.0
-NXH,Internet Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,9.191484e+06
-NXL,Medical Devices,Healthcare,1025,2022-09-16,2026-10-16,55672.0
-NXPI,Semiconductors,Technology,2358,2017-06-01,2026-10-16,7.406382e+08
-NXPL,Software - Application,Technology,2358,2017-06-01,2026-10-16,129168.0
-NXST,Broadcasting,Communication Services,2358,2017-06-01,2026-10-16,5.630565e+07
-NXT,Solar,Technology,925,2023-02-09,2026-10-16,1.7745963e+08
-NXTC,Biotechnology,Healthcare,1871,2019-05-09,2026-10-16,799900.0
-NXTS,Agricultural Inputs,Basic Materials,2358,2017-06-01,2026-10-16,33660.0
-NXTT,Software - Application,Technology,1067,2022-07-19,2026-10-16,187264.0
 NXXT,Utilities - Renewable,Utilities,1278,2021-09-15,2026-10-16,352327.0
-NYAX,Software - Infrastructure,Technology,1022,2022-09-21,2026-10-16,886108.0
-NYC,Real Estate Services,Real Estate,1549,2020-08-18,2026-10-16,76375.0
-NYT,Publishing,Communication Services,2358,2017-06-01,2026-10-16,1.35008e+08
-NYXH,Medical Devices,Healthcare,1375,2021-04-28,2026-10-16,189295.0
 OABI,Biotechnology,Healthcare,1267,2021-09-30,2026-10-16,5.129088e+06
-OACC,Shell Companies,Financial Services,460,2024-12-16,2026-10-16,8612.0
-OACCU,Shell Companies,Financial Services,496,2024-10-24,2026-10-16,0.0
 OBA,Shell Companies,Financial Services,295,2025-08-15,2026-10-16,0.0
-OBAI,Software - Infrastructure,Technology,1,2026-10-16,2026-10-16,103288.0
-OBDC,Asset Management,Financial Services,1823,2019-07-18,2026-10-16,3.4356148e+07
-OBE,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,7.607224e+06
-OBIO,Biotechnology,Healthcare,1559,2020-08-04,2026-10-16,1.364335e+06
-OBK,Banks - Regional,Financial Services,2123,2018-05-08,2026-10-16,9.353139e+06
-OBT,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.018802e+06
-OBX,Biotechnology,Healthcare,59,2026-07-27,2026-10-16,3.11211e+06
-OC,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,1.2557745e+08
-OCAC,Shell Companies,Financial Services,54,2026-08-03,2026-10-16,26798.0
-OCC,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,2.41653e+06
-OCFC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.774724e+07
-OCG,Internet Retail,Consumer Cyclical,1466,2020-12-15,2026-10-16,100947.0
-OCGN,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,5.503056e+06
 OCLT,Shell Companies,Financial Services,26,2026-09-11,2026-10-16,105435.0
-OCS,Biotechnology,Healthcare,1361,2021-05-18,2026-10-16,2.439924e+06
-OCSL,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,5.380638e+06
 OCTV,Software - Application,Technology,103,2026-05-21,2026-10-16,3.4162188e+07
 OCUL,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,2.1278752e+07
-ODC,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,1.0214424e+07
-ODD,Household & Personal Products,Consumer Defensive,816,2023-07-19,2026-10-16,1.2218024e+07
-ODFL,Trucking,Industrials,2358,2017-06-01,2026-10-16,3.1561363e+08
-ODTX,Biotechnology,Healthcare,112,2026-05-08,2026-10-16,4.293851e+06
-ODYS,Scientific & Technical Instruments,Technology,1450,2021-01-08,2026-10-16,53240.0
-OEC,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,2.384608e+06
 OESX,Electrical Equipment & Parts,Industrials,2358,2017-06-01,2026-10-16,1.304462e+06
-OFAL,Engineering & Construction,Industrials,354,2025-05-21,2026-10-16,256690.0
-OFG,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.2486245e+07
-OFIX,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,3.125367e+06
-OFLX,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,857232.0
-OFRM,Packaged Foods,Consumer Defensive,175,2026-02-06,2026-10-16,5.771076e+06
-OFS,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,201654.0
-OGC,Gold,Basic Materials,2358,2017-06-01,2026-10-16,1.3908194e+07
-OGCP,REIT - Office,Real Estate,2358,2017-06-01,2026-10-16,942.0
-OGE,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,7.159464e+07
-OGEN,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,11750.0
-OGG,Gold,Basic Materials,2358,2017-06-01,2026-10-16,3.745273e+06
-OGI,Drug Manufacturers - Specialty & Generic,Healthcare,1863,2019-05-21,2026-10-16,426120.0
-OGN,Drug Manufacturers - General,Healthcare,1363,2021-05-14,2026-10-16,3.044832e+07
-OGS,Utilities - Regulated Gas,Utilities,2358,2017-06-01,2026-10-16,4.0743064e+07
-OHAC,Shell Companies,Financial Services,93,2026-06-05,2026-10-16,5964.0
-OI,Packaging & Containers,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.0360068e+07
-OIG,Insurance - Property & Casualty,Financial Services,21,2026-09-18,2026-10-16,4.130944e+06
-OII,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,4.015201e+07
-OIM,Shell Companies,Financial Services,155,2026-03-09,2026-10-16,0.0
-OIO,Waste Management,Industrials,1136,2022-04-07,2026-10-16,196470.0
-OIS,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,4.669956e+06
-OKE,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,3.063266e+08
-OKLO,Utilities - Independent Power Producers,Utilities,1326,2021-07-08,2026-10-16,3.4077216e+08
-OKTA,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,5.2822406e+08
-OKUR,Biotechnology,Healthcare,1389,2021-04-08,2026-10-16,550995.0
-OKYO,Biotechnology,Healthcare,1109,2022-05-17,2026-10-16,93912.0
-OLB,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,107843.0
-OLED,Electronic Components,Technology,2358,2017-06-01,2026-10-16,5.6080216e+07
-OLLI,Discount Stores,Consumer Defensive,2358,2017-06-01,2026-10-16,1.2833938e+08
-OLMA,Biotechnology,Healthcare,1483,2020-11-19,2026-10-16,9.219784e+06
 OLN,Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,5.215436e+07
-OLOX,Metal Fabrication,Industrials,2343,2017-06-22,2026-10-16,285071.0
-OM,Medical Devices,Healthcare,1530,2020-09-15,2026-10-16,487760.0
 OMAB,Airports & Air Services,Industrials,2358,2017-06-01,2026-10-16,8.92825e+06
-OMC,Advertising Agencies,Communication Services,2358,2017-06-01,2026-10-16,1.8674382e+08
-OMCL,Health Information Services,Healthcare,2358,2017-06-01,2026-10-16,2.0090826e+07
-OMDA,Health Information Services,Healthcare,343,2025-06-06,2026-10-16,2.5147198e+07
-OMER,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,2.1282396e+07
-OMEX,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,206536.0
 OMF,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,5.215452e+07
-OMH,Real Estate Services,Real Estate,897,2023-03-22,2026-10-16,289971.0
-OMSE,Oil & Gas Equipment & Services,Energy,360,2025-05-13,2026-10-16,67942.0
-ON,Semiconductors,Technology,2358,2017-06-01,2026-10-16,7.5457376e+08
-ONB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.0175959e+08
-ONBPP,Banks - Regional,Financial Services,1613,2020-05-18,2026-10-16,140000.0
-ONC,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.259955e+08
-ONCH,Shell Companies,Financial Services,276,2025-09-12,2026-10-16,26728.0
 ONCO,Biotechnology,Healthcare,1169,2022-02-18,2026-10-16,180486.0
-ONCY,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,605988.0
 ONDS,Communication Equipment,Technology,1473,2020-12-04,2026-10-16,4.871408e+08
-ONEG,Engineering & Construction,Industrials,450,2024-12-31,2026-10-16,30502.0
-ONEN,Utilities - Independent Power Producers,Utilities,426,2025-02-06,2026-10-16,318143.0
-ONEW,Specialty Retail,Consumer Cyclical,1682,2020-02-07,2026-10-16,913638.0
-ONFO,Internet Content & Information,Communication Services,1039,2022-08-26,2026-10-16,243815.0
-ONIT,Mortgage Finance,Financial Services,2358,2017-06-01,2026-10-16,2.383766e+06
-ONL,REIT - Office,Real Estate,1229,2021-11-23,2026-10-16,595872.0
-ONMD,Health Information Services,Healthcare,1335,2021-06-24,2026-10-16,189827.0
-ONON,Footwear & Accessories,Consumer Cyclical,1278,2021-09-15,2026-10-16,2.4980978e+08
-ONT,Waste Management,Industrials,1567,2020-07-23,2026-10-16,9.475034e+06
 ONTO,Semiconductor Equipment & Materials,Technology,1752,2019-10-28,2026-10-16,2.512618e+08
-OOMA,Software - Application,Technology,2358,2017-06-01,2026-10-16,8.329111e+06
 OPAD,Real Estate Services,Real Estate,1468,2020-12-11,2026-10-16,112871.0
-OPAL,Engineering & Construction,Industrials,1357,2021-05-24,2026-10-16,370928.0
-OPBK,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,679905.0
-OPCH,Medical Care Facilities,Healthcare,2358,2017-06-01,2026-10-16,4.67754e+07
-OPEN,Real Estate Services,Real Estate,1591,2020-06-18,2026-10-16,9.860738e+07
-OPFI,Credit Services,Financial Services,1482,2020-11-20,2026-10-16,4.211788e+06
-OPHC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,901800.0
-OPI,REIT - Office,Real Estate,84,2026-06-18,2026-10-16,1.052919e+06
-OPK,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,3.583424e+06
-OPLN,Auto & Truck Dealerships,Consumer Cyclical,2358,2017-06-01,2026-10-16,3.9072652e+07
-OPNW,Information Technology Services,Technology,2358,2017-06-01,2026-10-16,28512.0
-OPRA,Internet Content & Information,Communication Services,2067,2018-07-27,2026-10-16,5.483012e+06
-OPRT,Credit Services,Financial Services,1774,2019-09-26,2026-10-16,3.637734e+06
-OPRX,Health Information Services,Healthcare,2358,2017-06-01,2026-10-16,1.302435e+06
-OPTH,Drug Manufacturers - Specialty & Generic,Healthcare,104,2026-05-20,2026-10-16,125560.0
-OPTT,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,773550.0
-OPTU,Telecom Services,Communication Services,2343,2017-06-22,2026-10-16,1.791195e+06
 OPTX,Electronic Components,Technology,1186,2022-01-26,2026-10-16,2.14248e+06
-OPXS,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,194555.0
-OPY,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,1.2762125e+07
-OR,Gold,Basic Materials,2358,2017-06-01,2026-10-16,2.947733e+07
-ORA,Utilities - Renewable,Utilities,2358,2017-06-01,2026-10-16,7.882907e+07
-ORBS,Packaging & Containers,Consumer Cyclical,1108,2022-05-18,2026-10-16,1.0796523e+07
-ORCL,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,3.8045015e+09
-ORGO,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,1.098048e+06
-ORI,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,5.1039964e+07
-ORIC,Biotechnology,Healthcare,1629,2020-04-24,2026-10-16,1.5630667e+07
 ORIO,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,38559.0
 ORIQ,Shell Companies,Financial Services,279,2025-09-09,2026-10-16,0.0
 ORKA,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,7.320284e+07
-ORKT,Software - Application,Technology,560,2024-07-25,2026-10-16,104609.0
-ORLY,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.4663706e+08
-ORMP,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,697425.0
-ORN,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,4.109976e+06
-ORRF,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,3.618254e+06
 OSBC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.1720208e+07
-OSCR,Healthcare Plans,Healthcare,1414,2021-03-03,2026-10-16,1.5783765e+08
-OSG,Insurance - Specialty,Financial Services,2358,2017-06-01,2026-10-16,2.08196e+06
-OSIS,Electronic Components,Technology,2358,2017-06-01,2026-10-16,3.956144e+07
-OSK,Farm & Heavy Construction Machinery,Industrials,2358,2017-06-01,2026-10-16,8.1963816e+07
-OSPN,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,6.90081e+06
-OSPR,Shell Companies,Financial Services,40,2026-08-21,2026-10-16,133758.0
-OSS,Computer Hardware,Technology,2189,2018-02-01,2026-10-16,8.336664e+06
-OST,Electronic Components,Technology,1123,2022-04-27,2026-10-16,0.0
-OSTX,Biotechnology,Healthcare,555,2024-08-01,2026-10-16,601974.0
-OSUR,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,1.723875e+06
-OSW,Leisure,Consumer Cyclical,2239,2017-11-17,2026-10-16,1.9314412e+07
-OTAI,Shell Companies,Financial Services,78,2026-06-29,2026-10-16,44132.0
-OTEX,Software - Application,Technology,2358,2017-06-01,2026-10-16,3.1296286e+07
-OTF,Asset Management,Financial Services,339,2025-06-12,2026-10-16,2.17932e+07
-OTGA,Shell Companies,Financial Services,240,2025-11-03,2026-10-16,34782.0
 OTIS,Specialty Industrial Machinery,Industrials,1654,2020-03-19,2026-10-16,2.5956298e+08
-OTLK,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,4.265932e+06
-OTLY,Packaged Foods,Consumer Defensive,1359,2021-05-20,2026-10-16,855440.0
-OTTR,Conglomerates,Industrials,2358,2017-06-01,2026-10-16,1.7579632e+07
-OUST,Electronic Components,Technology,1512,2020-10-09,2026-10-16,9.474298e+07
-OVBC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.25901e+06
 OVID,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,3.511747e+06
 OVLY,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,679600.0
-OVV,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,1.8934582e+08
-OWL,Asset Management,Financial Services,1467,2020-12-14,2026-10-16,1.7183712e+08
-OWLS,Software - Infrastructure,Technology,252,2025-10-16,2026-10-16,112980.0
-OWLT,Medical Devices,Healthcare,1493,2020-11-05,2026-10-16,706922.0
-OXBR,Insurance - Reinsurance,Financial Services,2358,2017-06-01,2026-10-16,14915.0
-OXLCM,Asset Management,Financial Services,148,2026-03-13,2026-10-16,182238.0
-OXLCN,Asset Management,Financial Services,1092,2022-06-10,2026-10-16,46287.0
-OXLCO,Asset Management,Financial Services,1302,2021-08-11,2026-10-16,30895.0
-OXM,Apparel Manufacturing,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.196322e+07
 OXSQ,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,1.739065e+06
-OXY,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,4.7279798e+08
-OYSE,Shell Companies,Financial Services,320,2025-07-11,2026-10-16,4152.0
-OZ,Real Estate - Development,Real Estate,1255,2021-10-18,2026-10-16,427050.0
-OZK,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,5.326e+07
-OZKAP,Banks - Regional,Financial Services,1246,2021-10-29,2026-10-16,455940.0
-P,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,3.524021e+08
-PAA,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,5.971963e+07
-PAAC,Shell Companies,Financial Services,136,2026-04-06,2026-10-16,996.0
-PAAI,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,179820.0
-PAAS,Gold,Basic Materials,2358,2017-06-01,2026-10-16,1.6464738e+08
-PAC,Airports & Air Services,Industrials,2358,2017-06-01,2026-10-16,2.603982e+07
-PACB,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,9.60596e+06
 PACH,Shell Companies,Financial Services,295,2025-08-15,2026-10-16,26962.0
-PACK,Packaging & Containers,Consumer Cyclical,2162,2018-03-13,2026-10-16,2.10367e+06
 PACS,Medical Care Facilities,Healthcare,632,2024-04-11,2026-10-16,3.305522e+07
-PAG,Auto & Truck Dealerships,Consumer Cyclical,2358,2017-06-01,2026-10-16,7.93271e+07
-PAGP,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,4.4142932e+07
-PAGS,Software - Infrastructure,Technology,2195,2018-01-24,2026-10-16,2.644231e+07
-PAHC,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,7.1706e+06
-PAII,Shell Companies,Financial Services,277,2025-09-11,2026-10-16,19627.0
-PAL,Integrated Freight & Logistics,Industrials,612,2024-05-09,2026-10-16,1.992192e+06
-PALI,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,3.52146e+06
-PALO,Shell Companies,Financial Services,130,2026-04-14,2026-10-16,0.0
-PAM,Conglomerates,Industrials,2358,2017-06-01,2026-10-16,1.3404959e+07
-PAMT,Trucking,Industrials,2358,2017-06-01,2026-10-16,253146.0
-PANL,Marine Shipping,Industrials,2358,2017-06-01,2026-10-16,3.03145e+06
-PANW,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,2.0009239e+09
-PAPL,Mortgage Finance,Financial Services,742,2023-11-01,2026-10-16,86180.0
-PAR,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.377436e+07
-PARA,Software - Application,Technology,1426,2021-02-12,2026-10-16,175958.0
-PARK,Medical Care Facilities,Healthcare,219,2025-12-03,2026-10-16,402437.0
-PARR,Oil & Gas Refining & Marketing,Energy,2358,2017-06-01,2026-10-16,7.811347e+07
-PASG,Biotechnology,Healthcare,1668,2020-02-28,2026-10-16,55320.0
-PASW,Textile Manufacturing,Consumer Cyclical,315,2025-07-18,2026-10-16,30901.0
-PATH,Software - Infrastructure,Technology,1380,2021-04-21,2026-10-16,7.878155e+08
-PATK,Recreational Vehicles,Consumer Cyclical,2358,2017-06-01,2026-10-16,3.74394e+07
-PAVM,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,48880.0
-PAVS,Packaged Foods,Consumer Defensive,1753,2019-10-25,2026-10-16,104548.0
-PAX,Asset Management,Financial Services,1441,2021-01-22,2026-10-16,1.23671e+07
-PAY,Software - Infrastructure,Technology,1355,2021-05-26,2026-10-16,3.323942e+07
-PAYC,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.4380538e+08
-PAYO,Software - Infrastructure,Technology,1507,2020-10-16,2026-10-16,1.8064378e+07
-PAYP,Software - Infrastructure,Technology,152,2026-03-12,2026-10-16,1.0449968e+07
-PAYS,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,9.381342e+06
-PAYX,Software - Application,Technology,2358,2017-06-01,2026-10-16,3.1640723e+08
 PB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,6.2741956e+07
-PBA,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,4.099277e+07
 PBAM,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,4.32054e+06
-PBF,Oil & Gas Refining & Marketing,Energy,2358,2017-06-01,2026-10-16,2.1729586e+08
 PBFS,Banks - Regional,Financial Services,1823,2019-07-18,2026-10-16,196344.0
-PBH,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,2.5027198e+07
-PBHC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,33200.0
-PBI,Integrated Freight & Logistics,Industrials,2358,2017-06-01,2026-10-16,2.496796e+07
-PBK,Utilities - Renewable,Utilities,635,2024-04-08,2026-10-16,204785.0
-PBLS,Biotechnology,Healthcare,90,2026-06-10,2026-10-16,1.6998862e+07
-PBM,Biotechnology,Healthcare,1217,2021-12-10,2026-10-16,184032.0
-PBR,Oil & Gas Integrated,Energy,2358,2017-06-01,2026-10-16,3.778556e+08
-PBR.A,Oil & Gas Integrated,Energy,2358,2017-06-01,2026-10-16,1.2878011e+08
-PBYI,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,2.820232e+06
 PC,Specialty Business Services,Industrials,517,2024-09-25,2026-10-16,0.0
-PCAP,Shell Companies,Financial Services,320,2025-07-11,2026-10-16,19722.0
-PCAR,Farm & Heavy Construction Machinery,Industrials,2358,2017-06-01,2026-10-16,3.5093552e+08
-PCB,Banks - Regional,Financial Services,2057,2018-08-10,2026-10-16,979560.0
-PCG,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,4.900996e+08
-PCLA,Telecom Services,Communication Services,440,2025-01-16,2026-10-16,324198.0
-PCOR,Software - Application,Technology,1359,2021-05-20,2026-10-16,1.5483045e+08
 PCRX,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,1.48373e+07
-PCSA,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,74774.0
-PCT,Pollution & Treatment Controls,Industrials,1574,2020-07-14,2026-10-16,2.4053552e+07
-PCTY,Software - Application,Technology,2358,2017-06-01,2026-10-16,8.765875e+07
-PCVX,Biotechnology,Healthcare,1595,2020-06-12,2026-10-16,7.112635e+07
-PCYO,Utilities - Regulated Water,Utilities,2358,2017-06-01,2026-10-16,733920.0
-PD,Software - Application,Technology,1890,2019-04-11,2026-10-16,1.8425494e+07
-PDC,Software - Application,Technology,812,2023-07-25,2026-10-16,72128.0
 PDCC,Asset Management,Financial Services,565,2024-07-18,2026-10-16,17209.0
-PDD,Internet Retail,Consumer Cyclical,2068,2018-07-26,2026-10-16,4.820979e+08
-PDEX,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,3.98905e+06
-PDFS,Software - Application,Technology,2358,2017-06-01,2026-10-16,2.6134968e+07
-PDLB,Banks - Regional,Financial Services,2273,2017-10-02,2026-10-16,1.348542e+06
-PDM,REIT - Office,Real Estate,2358,2017-06-01,2026-10-16,1.03246e+07
-PDS,Oil & Gas Drilling,Energy,2358,2017-06-01,2026-10-16,8.92277e+06
-PDSB,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.021519e+06
-PDYN,Software - Infrastructure,Technology,1270,2021-09-27,2026-10-16,4.408248e+06
-PEBK,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.012647e+06
-PEBO,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.1041239e+07
-PECE,Shell Companies,Financial Services,94,2026-06-04,2026-10-16,19980.0
-PECO,REIT - Retail,Real Estate,1418,2021-02-25,2026-10-16,3.6841976e+07
-PED,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,229250.0
-PEG,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,2.2010037e+08
-PEGA,Software - Application,Technology,2358,2017-06-01,2026-10-16,6.651743e+07
-PEN,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,9.3370664e+07
-PENG,Information Technology Services,Technology,2358,2017-06-01,2026-10-16,9.267568e+07
 PENN,Resorts & Casinos,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.7464884e+07
-PEP,Beverages - Non-Alcoholic,Consumer Defensive,2358,2017-06-01,2026-10-16,1.0640132e+09
-PEPG,Biotechnology,Healthcare,1116,2022-05-06,2026-10-16,1.761832e+06
-PERF,Software - Application,Technology,994,2022-10-31,2026-10-16,282489.0
-PERI,Advertising Agencies,Communication Services,2358,2017-06-01,2026-10-16,2.48417e+06
-PESI,Waste Management,Industrials,2358,2017-06-01,2026-10-16,5.37176e+06
-PETS,Pharmaceutical Retailers,Healthcare,2358,2017-06-01,2026-10-16,126819.0
-PETZ,Real Estate Services,Real Estate,2280,2017-09-21,2026-10-16,12610.0
-PEW,Aerospace & Defense,Industrials,694,2024-01-11,2026-10-16,506920.0
-PFAI,Farm Products,Consumer Defensive,376,2025-04-21,2026-10-16,3685.0
 PFBC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.0276265e+07
-PFE,Drug Manufacturers - General,Healthcare,2358,2017-06-01,2026-10-16,8.829689e+08
 PFG,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,1.3805787e+08
-PFGC,Food Distribution,Consumer Defensive,2358,2017-06-01,2026-10-16,1.4099686e+08
-PFIS,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,3.49103e+06
-PFLT,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,5.714697e+06
-PFS,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.9166972e+07
-PFSA,Medical Devices,Healthcare,320,2025-07-11,2026-10-16,551808.0
-PFSI,Mortgage Finance,Financial Services,2358,2017-06-01,2026-10-16,3.9993548e+07
-PFX,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,111792.0
-PG,Household & Personal Products,Consumer Defensive,2358,2017-06-01,2026-10-16,1.1524883e+09
-PGAC,Shell Companies,Financial Services,433,2025-01-28,2026-10-16,0.0
-PGC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,5.99298e+06
-PGEN,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,3.127969e+07
-PGNY,Healthcare Plans,Healthcare,1753,2019-10-25,2026-10-16,2.761992e+07
-PGR,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,5.156828e+08
-PGY,Software - Infrastructure,Technology,1380,2021-04-21,2026-10-16,4.313317e+07
-PH,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,5.565725e+08
-PHAR,Biotechnology,Healthcare,1460,2020-12-23,2026-10-16,132737.0
 PHAT,Biotechnology,Healthcare,1753,2019-10-25,2026-10-16,1.053025e+07
-PHG,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,2.1872484e+07
 PHI,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,2.595464e+06
-PHIN,Auto Parts,Consumer Cyclical,830,2023-06-28,2026-10-16,2.2860016e+07
-PHIO,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,102485.0
-PHM,Residential Construction,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.8223357e+08
-PHOE,Engineering & Construction,Industrials,372,2025-04-25,2026-10-16,128650.0
-PHOS,Other Industrial Metals & Mining,Basic Materials,53,2026-08-04,2026-10-16,469500.0
-PHR,Health Information Services,Healthcare,1823,2019-07-18,2026-10-16,7.1657e+06
 PHUN,Software - Application,Technology,2358,2017-06-01,2026-10-16,159358.0
-PHVS,Biotechnology,Healthcare,1431,2021-02-05,2026-10-16,2.0289844e+07
 PI,Semiconductors,Technology,2358,2017-06-01,2026-10-16,6.5675544e+07
-PICS,Software - Infrastructure,Technology,181,2026-01-29,2026-10-16,4.219072e+06
-PII,Recreational Vehicles,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.5812896e+07
-PIII,Medical Care Facilities,Healthcare,1391,2021-04-06,2026-10-16,140010.0
-PINS,Internet Content & Information,Communication Services,1885,2019-04-18,2026-10-16,2.3891582e+08
-PIPR,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,4.26322e+07
-PJT,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,6.3093908e+07
-PKBK,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.320228e+06
-PKE,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,7.62223e+06
-PKG,Packaging & Containers,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.2502819e+08
-PKOH,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,3.321738e+06
-PKX,Steel,Basic Materials,2358,2017-06-01,2026-10-16,1.2177834e+07
-PL,Aerospace & Defense,Industrials,1377,2021-04-26,2026-10-16,1.3620378e+08
 PLAB,Semiconductor Equipment & Materials,Technology,2358,2017-06-01,2026-10-16,2.5185688e+07
-PLAG,Conglomerates,Industrials,2358,2017-06-01,2026-10-16,227838.0
-PLAY,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,1.460198e+07
-PLBC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.950161e+06
-PLBL,Department Stores,Consumer Cyclical,300,2025-08-08,2026-10-16,894200.0
-PLBY,Apparel Manufacturing,Consumer Cyclical,1540,2020-08-31,2026-10-16,612302.0
-PLCE,Apparel Manufacturing,Consumer Cyclical,2358,2017-06-01,2026-10-16,442746.0
-PLCI,Shell Companies,Financial Services,47,2026-08-12,2026-10-16,3968.0
-PLG,Other Precious Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,1.408968e+06
-PLGO,Insurance - Diversified,Financial Services,829,2023-06-29,2026-10-16,9.328396e+06
 PLMK,Shell Companies,Financial Services,430,2025-01-31,2026-10-16,5360.0
-PLMKU,Shell Companies,Financial Services,441,2025-01-15,2026-10-16,0.0
-PLMR,Insurance - Property & Casualty,Financial Services,1886,2019-04-17,2026-10-16,2.9317526e+07
-PLNT,Leisure,Consumer Cyclical,2358,2017-06-01,2026-10-16,9.378668e+07
-PLOW,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,8.270016e+06
-PLPC,Electrical Equipment & Parts,Industrials,2358,2017-06-01,2026-10-16,3.0410126e+07
-PLRX,Biotechnology,Healthcare,1602,2020-06-03,2026-10-16,370158.0
-PLRZ,Biotechnology,Healthcare,493,2024-10-29,2026-10-16,465430.0
-PLSE,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,2.18867e+07
-PLSM,Medical Devices,Healthcare,187,2026-01-21,2026-10-16,93525.0
-PLTK,Electronic Gaming & Multimedia,Communication Services,1444,2021-01-19,2026-10-16,2.745568e+06
-PLTR,Software - Infrastructure,Technology,1519,2020-09-30,2026-10-16,4.806945e+09
 PLUG,Electrical Equipment & Parts,Industrials,2358,2017-06-01,2026-10-16,1.0079834e+08
-PLUN,Shell Companies,Financial Services,84,2026-06-18,2026-10-16,4024.0
-PLUR,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,17278.0
-PLUS,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.8031448e+07
-PLUT,Capital Markets,Financial Services,427,2025-02-05,2026-10-16,765.0
-PLX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.99326e+06
-PLXS,Electronic Components,Technology,2358,2017-06-01,2026-10-16,5.7575804e+07
-PLYX,Biotechnology,Healthcare,179,2026-02-02,2026-10-16,98346.0
-PM,Tobacco,Consumer Defensive,2358,2017-06-01,2026-10-16,8.2365274e+08
 PMA,Engineering & Construction,Industrials,475,2024-11-22,2026-10-16,31375.0
-PMAX,Capital Markets,Financial Services,531,2024-09-05,2026-10-16,55596.0
-PMCB,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,47727.0
 PMEC,Specialty Business Services,Industrials,759,2023-10-09,2026-10-16,8360.0
-PMI,Medical Devices,Healthcare,285,2025-08-29,2026-10-16,946728.0
 PMN,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,357934.0
-PMTR,Shell Companies,Financial Services,334,2025-06-20,2026-10-16,53091.0
-PMTS,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,2.83935e+06
-PMVP,Biotechnology,Healthcare,1522,2020-09-25,2026-10-16,519200.0
-PN,Solar,Technology,409,2025-03-04,2026-10-16,403971.0
 PNAQ,Shell Companies,Financial Services,16,2026-09-25,2026-10-16,43340.0
-PNBK,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,137908.0
 PNC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,3.831487e+08
 PNFP,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,9.46446e+07
 PNNT,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,1.630476e+06
 PNR,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,1.5707704e+08
 PNRG,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,1.5407613e+07
 PNTG,Medical Care Facilities,Healthcare,1771,2019-10-01,2026-10-16,9.6993e+06
-PNW,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,1.1456442e+08
 POAS,Medical Devices,Healthcare,232,2025-11-13,2026-10-16,30914.0
-POCI,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,170771.0
 PODC,Internet Content & Information,Communication Services,780,2023-09-08,2026-10-16,206016.0
 PODD,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,2.0417312e+08
 POET,Semiconductors,Technology,2358,2017-06-01,2026-10-16,6.7107924e+07
@@ -3949,773 +3246,202 @@ POLA,Electrical Equipment & Parts,Industrials,2358,2017-06-01,2026-10-16,123367.
 POLE,Shell Companies,Financial Services,494,2024-10-28,2026-10-16,18241.0
 POM,Pharmaceutical Retailers,Healthcare,258,2025-10-08,2026-10-16,20010.0
 PONO,Shell Companies,Financial Services,115,2026-05-05,2026-10-16,0.0
-PONY,Information Technology Services,Technology,472,2024-11-27,2026-10-16,2.4595922e+07
-POOL,Industrial Distribution,Industrials,2358,2017-06-01,2026-10-16,1.2461384e+08
-POR,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,5.646192e+07
-POST,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,7.042945e+07
-POWI,Semiconductors,Technology,2358,2017-06-01,2026-10-16,3.7674344e+07
 POWL,Electrical Equipment & Parts,Industrials,2358,2017-06-01,2026-10-16,1.0481578e+08
 POWW,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,1.03488e+06
 POWWP,Aerospace & Defense,Industrials,1358,2021-05-21,2026-10-16,45252.0
-PPBT,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,38709.0
-PPC,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,3.9053716e+07
-PPCB,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,92266.0
-PPG,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,1.6881054e+08
 PPHC,Consulting Services,Industrials,182,2026-01-28,2026-10-16,1.188915e+06
 PPIH,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,1.859364e+06
-PPL,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,2.3639602e+08
-PPLI,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,3.8400656e+07
 PPSI,Electrical Equipment & Parts,Industrials,2358,2017-06-01,2026-10-16,211446.0
 PPTA,Other Precious Metals & Mining,Basic Materials,1423,2021-02-18,2026-10-16,2.3320834e+07
-PR,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,1.9479315e+08
-PRAA,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,6.81372e+06
-PRAX,Biotechnology,Healthcare,1507,2020-10-16,2026-10-16,1.2415458e+08
-PRCH,Insurance - Property & Casualty,Financial Services,1700,2020-01-13,2026-10-16,2.2275994e+07
-PRCT,Medical Devices,Healthcare,1278,2021-09-15,2026-10-16,2.281244e+07
-PRDO,Education & Training Services,Consumer Defensive,2358,2017-06-01,2026-10-16,1.9953136e+07
-PRE,Packaged Foods,Consumer Defensive,1320,2021-07-16,2026-10-16,3.377333e+06
 PRFX,Drug Manufacturers - Specialty & Generic,Healthcare,1539,2020-09-01,2026-10-16,67198.0
-PRG,Rental & Leasing Services,Industrials,2358,2017-06-01,2026-10-16,1.9268292e+07
-PRGO,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,3.1187112e+07
-PRGS,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,1.9264704e+07
 PRHI,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,74734.0
-PRI,Insurance - Life,Financial Services,2358,2017-06-01,2026-10-16,5.237654e+07
-PRIM,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,9.538956e+07
 PRK,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.5829276e+07
-PRKS,Leisure,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.271196e+07
-PRLB,Metal Fabrication,Industrials,2358,2017-06-01,2026-10-16,1.4985025e+07
 PRLD,Biotechnology,Healthcare,1522,2020-09-25,2026-10-16,1.83441e+06
-PRM,Specialty Chemicals,Basic Materials,1239,2021-11-09,2026-10-16,3.583052e+07
-PRMB,Beverages - Non-Alcoholic,Consumer Defensive,2358,2017-06-01,2026-10-16,8.446961e+07
-PRME,Biotechnology,Healthcare,1001,2022-10-20,2026-10-16,9.556443e+06
-PROF,Medical Devices,Healthcare,1751,2019-10-29,2026-10-16,746263.0
-PROK,Biotechnology,Healthcare,1331,2021-06-30,2026-10-16,1.881444e+06
 PROP,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,694173.0
 PROV,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,218484.0
 PRPL,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2358,2017-06-01,2026-10-16,99424.0
-PRPO,Diagnostics & Research,Healthcare,2337,2017-06-30,2026-10-16,2.01687e+06
-PRQR,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.137815e+06
 PRSO,Semiconductors,Technology,2358,2017-06-01,2026-10-16,113425.0
-PRSU,Travel Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.0123848e+07
 PRTA,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,3.903634e+06
-PRTH,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,2.64537e+06
-PRTS,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,229293.0
 PRU,Insurance - Life,Financial Services,2358,2017-06-01,2026-10-16,1.8023667e+08
-PRVA,Health Information Services,Healthcare,1375,2021-04-28,2026-10-16,2.4882648e+07
-PRZO,Aerospace & Defense,Industrials,810,2023-07-27,2026-10-16,235615.0
-PS,Asset Management,Financial Services,119,2026-04-29,2026-10-16,9.721646e+06
 PSBD,Asset Management,Financial Services,690,2024-01-18,2026-10-16,827140.0
-PSEC,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,9.017382e+06
 PSFE,Software - Infrastructure,Technology,1512,2020-10-09,2026-10-16,2.232962e+06
-PSHG,Marine Shipping,Industrials,2358,2017-06-01,2026-10-16,64430.0
 PSIG,Integrated Freight & Logistics,Industrials,564,2024-07-19,2026-10-16,870825.0
 PSIX,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,1.4051231e+07
-PSMT,Discount Stores,Consumer Defensive,2358,2017-06-01,2026-10-16,3.7204264e+07
 PSN,Information Technology Services,Technology,1872,2019-05-08,2026-10-16,5.058768e+07
-PSNL,Diagnostics & Research,Healthcare,1842,2019-06-20,2026-10-16,3.714217e+07
 PSNY,Auto Manufacturers,Consumer Cyclical,1361,2021-05-18,2026-10-16,1.717338e+06
 PSNYW,Auto Manufacturers,Consumer Cyclical,256,2025-10-10,2026-10-16,65928.0
 PSO,Publishing,Communication Services,2358,2017-06-01,2026-10-16,1.0030026e+07
-PSQH,Software - Application,Technology,1327,2021-07-07,2026-10-16,217074.0
-PSQL,Computer Hardware,Technology,182,2026-01-28,2026-10-16,3.75104e+06
-PSX,Oil & Gas Refining & Marketing,Energy,2358,2017-06-01,2026-10-16,6.6057574e+08
-PTAC,Shell Companies,Financial Services,74,2026-07-06,2026-10-16,0.0
 PTC,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.9896885e+08
-PTCT,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,6.772982e+07
-PTEN,Oil & Gas Drilling,Energy,2358,2017-06-01,2026-10-16,8.830034e+07
-PTGX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,8.042034e+07
-PTHS,Biotechnology,Healthcare,669,2024-02-16,2026-10-16,1.020236e+06
-PTLE,Specialty Retail,Consumer Cyclical,502,2024-10-16,2026-10-16,90024.0
 PTLO,Restaurants,Consumer Cyclical,1252,2021-10-21,2026-10-16,5.7405e+06
-PTN,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,236475.0
 PTON,Leisure,Consumer Cyclical,1774,2019-09-26,2026-10-16,4.2015868e+07
 PTOR,Shell Companies,Financial Services,150,2026-03-16,2026-10-16,149850.0
 PTRN,Internet Retail,Consumer Cyclical,271,2025-09-19,2026-10-16,2.9893544e+07
 PUBM,Software - Application,Technology,1470,2020-12-09,2026-10-16,1.0442194e+07
-PUK,Insurance - Life,Financial Services,2358,2017-06-01,2026-10-16,2.6986772e+07
 PULM,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,19824.0
-PUMP,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,3.669038e+07
 PURR,Capital Markets,Financial Services,219,2025-12-03,2026-10-16,1.7421318e+08
 PUSA,Aerospace & Defense,Industrials,422,2025-02-12,2026-10-16,1.750262e+06
 PVH,Apparel Manufacturing,Consumer Cyclical,2358,2017-06-01,2026-10-16,6.6919828e+07
-PVLA,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,2.7037558e+07
-PW,REIT - Specialty,Real Estate,2358,2017-06-01,2026-10-16,34380.0
 PWCM,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,230550.0
-PWP,Capital Markets,Financial Services,1480,2020-11-24,2026-10-16,1.9684654e+07
 PWR,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,5.991892e+08
-PWRL,Asset Management,Financial Services,100,2026-05-27,2026-10-16,1.5561e+06
-PXED,Education & Training Services,Consumer Defensive,257,2025-10-09,2026-10-16,2.529666e+06
-PXLW,Semiconductors,Technology,2358,2017-06-01,2026-10-16,194322.0
-PXS,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,405000.0
 PYPD,Biotechnology,Healthcare,1585,2020-06-26,2026-10-16,579336.0
 PYPL,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,5.797692e+08
 PYXS,Biotechnology,Healthcare,1261,2021-10-08,2026-10-16,2.232594e+06
-PZG,Gold,Basic Materials,2358,2017-06-01,2026-10-16,393790.0
-PZZA,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.8061198e+07
-Q,Semiconductor Equipment & Materials,Technology,245,2025-10-27,2026-10-16,1.9018469e+08
-QADR,Shell Companies,Financial Services,104,2026-05-20,2026-10-16,0.0
-QBTS,Computer Hardware,Technology,1468,2020-12-11,2026-10-16,2.5381531e+08
 QCLS,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,433608.0
-QCOM,Semiconductors,Technology,2358,2017-06-01,2026-10-16,1.8426648e+09
-QCRH,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.1154364e+07
 QDEL,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,1.8514598e+07
-QETA,Shell Companies,Financial Services,722,2023-11-30,2026-10-16,0.0
 QFIN,Credit Services,Financial Services,1970,2018-12-14,2026-10-16,1.371088e+07
 QGEN,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,8.588759e+07
-QH,Software - Application,Technology,1576,2020-07-10,2026-10-16,31080.0
-QLEP,Shell Companies,Financial Services,82,2026-06-23,2026-10-16,12072.0
-QLYS,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,1.2257922e+08
 QMCO,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,2.828682e+07
 QMLS,Software - Infrastructure,Technology,66,2026-07-16,2026-10-16,1.913486e+06
-QNBC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,516405.0
-QNC,Software - Infrastructure,Technology,164,2026-02-24,2026-10-16,1.196208e+06
-QNME,Integrated Freight & Logistics,Industrials,578,2024-06-28,2026-10-16,200459.0
-QNRX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,169646.0
-QNST,Advertising Agencies,Communication Services,2358,2017-06-01,2026-10-16,1.3718592e+07
-QNT,Software - Application,Technology,94,2026-06-04,2026-10-16,8.33737e+07
-QNTM,Biotechnology,Healthcare,2101,2018-06-08,2026-10-16,456872.0
-QRED,Shell Companies,Financial Services,113,2026-05-07,2026-10-16,43172.0
 QRHC,Waste Management,Industrials,2358,2017-06-01,2026-10-16,20424.0
-QRVO,Semiconductors,Technology,1,2026-10-02,2026-10-02,9.5235974e+08
-QS,Auto Parts,Consumer Cyclical,1550,2020-08-17,2026-10-16,7.239654e+07
-QSEA,Shell Companies,Financial Services,361,2025-05-12,2026-10-16,3189.0
 QSI,Medical Devices,Healthcare,1487,2020-11-13,2026-10-16,2.0189e+06
-QSR,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.902233e+08
-QTEX,Computer Hardware,Technology,1322,2021-07-14,2026-10-16,1.60734e+06
-QTI,Medical Devices,Healthcare,1242,2021-11-04,2026-10-16,69138.0
-QTRX,Medical Devices,Healthcare,2226,2017-12-07,2026-10-16,1.677291e+06
-QTTB,Biotechnology,Healthcare,2151,2018-03-28,2026-10-16,6.729925e+06
 QTWO,Software - Application,Technology,2358,2017-06-01,2026-10-16,3.911634e+07
-QUAD,Specialty Business Services,Industrials,2358,2017-06-01,2026-10-16,3.03525e+06
-QUBT,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,6.097788e+07
-QUCY,Diagnostics & Research,Healthcare,1241,2021-11-05,2026-10-16,671528.0
-QUIK,Semiconductors,Technology,2358,2017-06-01,2026-10-16,2.576162e+06
 QUMS,Shell Companies,Financial Services,264,2025-09-30,2026-10-16,3105.0
 QURE,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,5.184107e+07
 QVCG,Specialty Retail,Consumer Cyclical,49,2026-08-10,2026-10-16,2.635218e+06
-QXL,Information Technology Services,Technology,2358,2017-06-01,2026-10-16,176478.0
-QXO,Industrial Distribution,Industrials,2358,2017-06-01,2026-10-16,2.3794162e+08
-R,Rental & Leasing Services,Industrials,2358,2017-06-01,2026-10-16,6.675425e+07
-RAC,Shell Companies,Financial Services,376,2025-04-21,2026-10-16,17969.0
 RACC,Shell Companies,Financial Services,104,2026-05-20,2026-10-16,429600.0
 RACD,Shell Companies,Financial Services,69,2026-07-13,2026-10-16,26450.0
-RACE,Auto Manufacturers,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.509389e+08
 RADX,Biotechnology,Healthcare,467,2024-12-05,2026-10-16,94581.0
-RAIL,Railroads,Industrials,2358,2017-06-01,2026-10-16,1.26546e+06
-RAIN,Pollution & Treatment Controls,Industrials,449,2025-01-02,2026-10-16,85696.0
-RAL,Electronic Components,Technology,331,2025-06-25,2026-10-16,9.1534616e+07
-RAMP,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,3.7457376e+07
-RAND,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,12861.0
 RANG,Shell Companies,Financial Services,442,2025-01-14,2026-10-16,0.0
-RANI,Biotechnology,Healthcare,1310,2021-07-30,2026-10-16,413570.0
 RAPP,Biotechnology,Healthcare,592,2024-06-07,2026-10-16,1.2487284e+07
-RARE,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,5.9061212e+07
-RAVE,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,78736.0
-RAYA,Electrical Equipment & Parts,Industrials,963,2022-12-14,2026-10-16,19602.0
-RBA,Specialty Business Services,Industrials,2358,2017-06-01,2026-10-16,1.4939096e+08
 RBB,Banks - Regional,Financial Services,2320,2017-07-26,2026-10-16,2.45364e+06
-RBBN,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.554921e+06
-RBC,Tools & Accessories,Industrials,2358,2017-06-01,2026-10-16,1.3654205e+08
 RBCAA,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,9.34423e+06
 RBKB,Banks - Regional,Financial Services,1948,2019-01-17,2026-10-16,1.374175e+06
-RBLX,Electronic Gaming & Multimedia,Communication Services,1409,2021-03-10,2026-10-16,4.3082093e+08
-RBNE,Oil & Gas Midstream,Energy,381,2025-04-11,2026-10-16,71530.0
-RBRK,Software - Infrastructure,Technology,622,2024-04-25,2026-10-16,3.0759347e+08
-RCAT,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,5.197329e+07
 RCBC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.903292e+06
-RCEL,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,3.23604e+06
-RCI,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,4.2416572e+07
-RCKT,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,4.55577e+06
-RCKY,Footwear & Accessories,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.967552e+06
-RCL,Travel Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.542145e+08
-RCMT,Conglomerates,Industrials,2358,2017-06-01,2026-10-16,2.27824e+06
-RCON,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,376134.0
-RCT,Software - Application,Technology,396,2025-03-21,2026-10-16,82148.0
-RCUS,Biotechnology,Healthcare,2160,2018-03-15,2026-10-16,3.256692e+07
 RDAC,Shell Companies,Financial Services,470,2024-12-02,2026-10-16,83820.0
-RDAG,Shell Companies,Financial Services,333,2025-06-23,2026-10-16,15510.0
 RDCM,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,1.117452e+06
-RDDT,Internet Content & Information,Communication Services,646,2024-03-21,2026-10-16,6.9677965e+08
-RDGT,Pharmaceutical Retailers,Healthcare,2358,2017-06-01,2026-10-16,79488.0
-RDHL,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,41015.0
-RDI,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,81030.0
-RDIB,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,116022.0
 RDN,Insurance - Specialty,Financial Services,2358,2017-06-01,2026-10-16,4.08065e+07
 RDNT,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,4.1707108e+07
-RDNW,Auto & Truck Dealerships,Consumer Cyclical,2358,2017-06-01,2026-10-16,343782.0
-RDVT,Software - Application,Technology,2152,2018-03-27,2026-10-16,1.4642472e+07
-RDW,Aerospace & Defense,Industrials,1446,2021-01-14,2026-10-16,1.4232094e+08
 RDWR,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,7.583555e+06
 RDY,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,3.432318e+07
-RDZN,Software - Application,Technology,1194,2022-01-13,2026-10-16,378544.0
 REA,Other Industrial Metals & Mining,Basic Materials,115,2026-05-05,2026-10-16,1.199824e+06
-REAL,Luxury Goods,Consumer Cyclical,1836,2019-06-28,2026-10-16,2.6962018e+07
 REAX,Real Estate Services,Real Estate,1450,2021-01-08,2026-10-16,1.335204e+07
-REBN,Restaurants,Consumer Cyclical,1049,2022-08-12,2026-10-16,74814.0
-RECT,Specialty Retail,Consumer Cyclical,583,2024-06-21,2026-10-16,4588.0
 REED,Beverages - Non-Alcoholic,Consumer Defensive,2358,2017-06-01,2026-10-16,18404.0
-REF,Apparel Retail,Consumer Cyclical,56,2026-07-30,2026-10-16,5.956005e+06
-REFI,REIT - Mortgage,Real Estate,1219,2021-12-08,2026-10-16,1.77214e+06
-REFR,Electronic Components,Technology,2358,2017-06-01,2026-10-16,60298.0
-REGCO,REIT - Retail,Real Estate,792,2023-08-22,2026-10-16,38734.0
-REGCP,REIT - Retail,Real Estate,793,2023-08-21,2026-10-16,33904.0
-REGN,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,5.1674858e+08
-REI,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,4.134824e+06
-REKR,Software - Application,Technology,2296,2017-08-29,2026-10-16,653793.0
-RELL,Electronic Components,Technology,2358,2017-06-01,2026-10-16,3.191122e+06
 RELX,Specialty Business Services,Industrials,2358,2017-06-01,2026-10-16,7.324215e+07
 RELY,Software - Infrastructure,Technology,1272,2021-09-23,2026-10-16,7.4210216e+07
-RENT,Apparel Retail,Consumer Cyclical,1248,2021-10-27,2026-10-16,199390.0
-RENX,Real Estate - Development,Real Estate,773,2023-09-19,2026-10-16,133500.0
-REPL,Biotechnology,Healthcare,2072,2018-07-20,2026-10-16,3.178422e+07
-REPX,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,8.03239e+06
-RERE,Internet Retail,Consumer Cyclical,1339,2021-06-18,2026-10-16,2.476656e+06
 RES,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,9.807148e+06
 RETO,Building Materials,Basic Materials,2232,2017-11-29,2026-10-16,415881.0
-REVB,Biotechnology,Healthcare,1485,2020-11-17,2026-10-16,24872.0
-REX,Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,8.222484e+06
-REYN,Packaging & Containers,Consumer Cyclical,1687,2020-01-31,2026-10-16,3.0821776e+07
-REZI,Industrial Distribution,Industrials,2002,2018-10-29,2026-10-16,4.174179e+07
-RF,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.49984e+08
-RFAI,Shell Companies,Financial Services,574,2024-07-05,2026-10-16,259095.0
 RFAM,Shell Companies,Financial Services,162,2026-02-26,2026-10-16,12961.0
-RFIL,Electrical Equipment & Parts,Industrials,2358,2017-06-01,2026-10-16,2.243397e+06
 RFL,Real Estate Services,Real Estate,2152,2018-03-27,2026-10-16,190931.0
-RGA,Insurance - Reinsurance,Financial Services,2358,2017-06-01,2026-10-16,8.108205e+07
-RGC,Drug Manufacturers - Specialty & Generic,Healthcare,1320,2021-07-16,2026-10-16,927784.0
-RGCO,Utilities - Regulated Gas,Utilities,2358,2017-06-01,2026-10-16,282011.0
-RGEN,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,1.9210773e+08
 RGLD,Gold,Basic Materials,2358,2017-06-01,2026-10-16,1.5437542e+08
-RGNT,Medical Instruments & Supplies,Healthcare,218,2025-12-04,2026-10-16,71708.0
 RGNX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.046656e+07
 RGP,Consulting Services,Industrials,2358,2017-06-01,2026-10-16,1.260714e+06
-RGR,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,5.4626e+06
-RGS,Personal Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,143850.0
-RGTI,Computer Hardware,Technology,1379,2021-04-22,2026-10-16,2.4904299e+08
-RH,Specialty Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.0366317e+08
-RHI,Staffing & Employment Services,Industrials,2358,2017-06-01,2026-10-16,7.539723e+07
 RHLD,Specialty Business Services,Industrials,415,2025-02-24,2026-10-16,1.751136e+07
-RIBB,Shell Companies,Financial Services,406,2025-03-07,2026-10-16,10875.0
 RICK,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.12348e+06
-RIG,Oil & Gas Drilling,Energy,2358,2017-06-01,2026-10-16,2.3271315e+08
-RIGL,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.0070272e+07
-RILY,Financial Conglomerates,Financial Services,2358,2017-06-01,2026-10-16,3.57544e+06
-RILYL,Financial Conglomerates,Financial Services,1535,2020-09-08,2026-10-16,83614.0
 RILYP,Financial Conglomerates,Financial Services,1768,2019-10-04,2026-10-16,93555.0
-RIME,Consumer Electronics,Technology,2358,2017-06-01,2026-10-16,227000.0
-RIO,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,2.0103456e+08
-RIOT,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,3.3503546e+08
-RIVN,Auto Manufacturers,Consumer Cyclical,1238,2021-11-10,2026-10-16,3.1499264e+08
 RJET,Airlines,Industrials,2057,2018-08-10,2026-10-16,1.370529e+06
 RJF,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,1.8997686e+08
-RKDA,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,34474.0
-RKLB,Aerospace & Defense,Industrials,1480,2020-11-24,2026-10-16,1.2448984e+09
-RKT,Mortgage Finance,Financial Services,1557,2020-08-06,2026-10-16,3.7989258e+08
 RKTO,Software - Infrastructure,Technology,1928,2019-02-15,2026-10-16,211237.0
-RL,Apparel Manufacturing,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.110625e+08
-RLAY,Biotechnology,Healthcare,1572,2020-07-16,2026-10-16,5.010181e+07
-RLGT,Integrated Freight & Logistics,Industrials,2358,2017-06-01,2026-10-16,1.161344e+06
 RLI,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,3.9436652e+07
 RLMD,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,4.866225e+06
-RLX,Tobacco,Consumer Defensive,1441,2021-01-22,2026-10-16,3.78252e+06
-RLYB,Biotechnology,Healthcare,1311,2021-07-29,2026-10-16,172731.0
 RM,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,2.743265e+06
-RMBI,Banks - Regional,Financial Services,1834,2019-07-02,2026-10-16,814733.0
 RMBS,Semiconductors,Technology,2358,2017-06-01,2026-10-16,1.806184e+08
 RMCF,Confectioners,Consumer Defensive,2358,2017-06-01,2026-10-16,34400.0
 RMCO,Asset Management,Financial Services,1370,2021-05-05,2026-10-16,20446.0
-RMD,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,2.5880982e+08
-RMIX,Building Materials,Basic Materials,137,2026-04-02,2026-10-16,4.93325e+06
 RML,Other Industrial Metals & Mining,Basic Materials,28,2026-09-09,2026-10-16,75040.0
-RMNI,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.608201e+06
 RMR,Real Estate Services,Real Estate,2358,2017-06-01,2026-10-16,2.10018e+06
 RMSG,Software - Application,Technology,1266,2021-10-01,2026-10-16,93310.0
 RMTI,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,139531.0
-RNA,Biotechnology,Healthcare,161,2026-02-27,2026-10-16,2.06976e+06
-RNAC,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,997866.0
 RNAQ,Shell Companies,Financial Services,24,2026-09-15,2026-10-16,16104.0
-RNAZ,Biotechnology,Healthcare,1326,2021-07-08,2026-10-16,71604.0
 RNG,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.09098984e+08
 RNGR,Oil & Gas Equipment & Services,Energy,2308,2017-08-11,2026-10-16,2.425426e+06
 RNGT,Shell Companies,Financial Services,225,2025-11-24,2026-10-16,0.0
 RNR,Insurance - Reinsurance,Financial Services,2358,2017-06-01,2026-10-16,9.335978e+07
-RNST,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.4430194e+07
 RNTX,Biotechnology,Healthcare,2338,2017-06-29,2026-10-16,270601.0
-RNW,Utilities - Renewable,Utilities,1435,2021-02-01,2026-10-16,9.7008e+06
 RNXT,Biotechnology,Healthcare,1291,2021-08-26,2026-10-16,797640.0
-ROAD,Engineering & Construction,Industrials,2125,2018-05-04,2026-10-16,6.4321704e+07
 ROC,Software - Infrastructure,Technology,165,2026-02-23,2026-10-16,101906.0
-ROCK,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,1.3652989e+07
-ROG,Electronic Components,Technology,2358,2017-06-01,2026-10-16,2.9205118e+07
-ROIV,Biotechnology,Healthcare,1471,2020-12-08,2026-10-16,2.0592346e+08
-ROK,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,3.2091942e+08
 ROKU,Entertainment,Communication Services,2275,2017-09-28,2026-10-16,3.0101747e+08
-ROL,Personal Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.0942107e+08
-ROLR,Gambling,Consumer Cyclical,497,2024-10-23,2026-10-16,236628.0
 ROMA,Consulting Services,Industrials,696,2024-01-09,2026-10-16,24081.0
-ROOT,Insurance - Property & Casualty,Financial Services,1499,2020-10-28,2026-10-16,1.0158176e+07
 ROP,Software - Application,Technology,2358,2017-06-01,2026-10-16,2.738941e+08
 ROST,Apparel Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.1510938e+08
-RPAY,Software - Infrastructure,Technology,2075,2018-07-17,2026-10-16,1.454592e+06
 RPC,Asset Management,Financial Services,1252,2021-10-21,2026-10-16,4.274956e+06
-RPD,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,2.1065e+07
-RPGL,Software - Application,Technology,254,2025-10-14,2026-10-16,185840.0
-RPID,Medical Devices,Healthcare,1321,2021-07-15,2026-10-16,269236.0
-RPM,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,1.0984367e+08
-RPRX,Biotechnology,Healthcare,1593,2020-06-16,2026-10-16,1.616679e+08
-RPT,REIT - Mortgage,Real Estate,2358,2017-06-01,2026-10-16,251865.0
-RR,Specialty Industrial Machinery,Industrials,730,2023-11-17,2026-10-16,7.46144e+06
 RRBI,Banks - Regional,Financial Services,1875,2019-05-03,2026-10-16,5.947042e+06
 RRC,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,1.01663944e+08
-RREV,Shell Companies,Financial Services,104,2026-05-20,2026-10-16,0.0
-RRGB,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.808049e+06
-RRR,Resorts & Casinos,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.431272e+07
-RRX,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,1.8687134e+08
-RS,Steel,Basic Materials,2358,2017-06-01,2026-10-16,1.09324664e+08
-RSG,Waste Management,Industrials,2358,2017-06-01,2026-10-16,3.0132086e+08
-RSI,Gambling,Consumer Cyclical,1628,2020-04-27,2026-10-16,6.0485724e+07
-RSKD,Software - Application,Technology,1311,2021-07-29,2026-10-16,9.113104e+06
-RSSS,Software - Application,Technology,2358,2017-06-01,2026-10-16,58903.0
-RSVR,Entertainment,Communication Services,1453,2021-01-05,2026-10-16,391035.0
-RTAC,Shell Companies,Financial Services,342,2025-06-09,2026-10-16,575736.0
 RTB,Software - Application,Technology,2358,2017-06-01,2026-10-16,656304.0
-RTO,Specialty Business Services,Industrials,2358,2017-06-01,2026-10-16,3.8508108e+07
-RTSN,Biotechnology,Healthcare,6,2026-10-09,2026-10-16,1.784418e+06
-RTX,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,8.031537e+08
-RUBI,Marine Shipping,Industrials,304,2025-08-04,2026-10-16,204750.0
 RUM,Internet Content & Information,Communication Services,1385,2021-04-14,2026-10-16,2.8120572e+07
-RUN,Solar,Technology,2358,2017-06-01,2026-10-16,6.765575e+07
 RUSHA,Auto & Truck Dealerships,Consumer Cyclical,2358,2017-06-01,2026-10-16,3.066925e+07
-RUSHB,Auto & Truck Dealerships,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.562352e+06
-RVLV,Internet Retail,Consumer Cyclical,1851,2019-06-07,2026-10-16,1.7867574e+07
-RVMD,Biotechnology,Healthcare,1678,2020-02-13,2026-10-16,3.520941e+08
 RVP,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,12240.0
 RVSB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,318446.0
-RVSN,Railroads,Industrials,1141,2022-03-31,2026-10-16,47320.0
-RVTY,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,2.216819e+08
 RWAY,Asset Management,Financial Services,1252,2021-10-21,2026-10-16,2.304485e+06
-RXO,Trucking,Industrials,996,2022-10-27,2026-10-16,3.8512696e+07
-RXRX,Biotechnology,Healthcare,1383,2021-04-16,2026-10-16,5.3323676e+07
-RXST,Medical Devices,Healthcare,1310,2021-07-30,2026-10-16,4.197729e+06
-RXT,Software - Infrastructure,Technology,1558,2020-08-05,2026-10-16,2.278646e+07
-RY,Banks - Diversified,Financial Services,2358,2017-06-01,2026-10-16,2.2019266e+08
-RYAAY,Airlines,Industrials,2358,2017-06-01,2026-10-16,7.6586296e+07
-RYAM,Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,6.638177e+06
-RYAN,Insurance Brokers,Financial Services,1316,2021-07-22,2026-10-16,7.201863e+07
 RYDE,Software - Application,Technology,657,2024-03-06,2026-10-16,70281.0
-RYET,Education & Training Services,Consumer Defensive,384,2025-04-08,2026-10-16,21400.0
-RYM,Tobacco,Consumer Defensive,1437,2021-01-28,2026-10-16,216320.0
 RYOJ,Consulting Services,Industrials,296,2025-08-14,2026-10-16,71424.0
-RYTM,Biotechnology,Healthcare,2268,2017-10-09,2026-10-16,6.064209e+07
-RYZ,Metal Fabrication,Industrials,2358,2017-06-01,2026-10-16,1.1113507e+07
-RZAI,Software - Infrastructure,Technology,13,2026-09-30,2026-10-16,1.988385e+06
 RZLT,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,5.759344e+06
 RZLV,Software - Infrastructure,Technology,1238,2021-11-10,2026-10-16,2.0536262e+07
-S,Software - Infrastructure,Technology,1331,2021-06-30,2026-10-16,1.6006917e+08
-SA,Gold,Basic Materials,2358,2017-06-01,2026-10-16,1.6175368e+07
 SAAQ,Shell Companies,Financial Services,146,2026-03-20,2026-10-16,112776.0
-SABR,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,8.246996e+06
-SABS,Biotechnology,Healthcare,1429,2021-02-09,2026-10-16,1.31075e+06
-SAC,Shell Companies,Financial Services,184,2026-01-26,2026-10-16,90900.0
-SAFE,REIT - Diversified,Real Estate,2358,2017-06-01,2026-10-16,5.525159e+06
-SAFT,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,1.3573149e+07
-SAFX,Utilities - Renewable,Utilities,449,2025-01-02,2026-10-16,1.113354e+06
 SAGT,Software - Application,Technology,406,2025-03-07,2026-10-16,103563.0
 SAGU,Shell Companies,Financial Services,102,2026-05-22,2026-10-16,2973.0
-SAH,Auto & Truck Dealerships,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.1360686e+07
-SAIA,Trucking,Industrials,2358,2017-06-01,2026-10-16,1.3298046e+08
 SAIC,Information Technology Services,Technology,2358,2017-06-01,2026-10-16,5.146839e+07
-SAIH,Information Technology Services,Technology,1333,2021-06-28,2026-10-16,279950.0
-SAIL,Software - Infrastructure,Technology,421,2025-02-13,2026-10-16,7.26829e+07
-SAIQ,Aerospace & Defense,Industrials,400,2025-03-17,2026-10-16,120175.0
-SAM,Beverages - Brewers,Consumer Defensive,2358,2017-06-01,2026-10-16,3.4199464e+07
-SAMG,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,690100.0
-SAMO,Shell Companies,Financial Services,34,2026-08-31,2026-10-16,5399.0
 SAN,Banks - Diversified,Financial Services,2358,2017-06-01,2026-10-16,1.2831996e+08
-SANA,Biotechnology,Healthcare,1432,2021-02-04,2026-10-16,8.854548e+06
-SANG,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,28956.0
-SANM,Electronic Components,Technology,2358,2017-06-01,2026-10-16,1.2941921e+08
 SAP,Software - Application,Technology,2358,2017-06-01,2026-10-16,4.9432278e+08
-SAR,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,2.195579e+06
 SARO,Aerospace & Defense,Industrials,512,2024-10-02,2026-10-16,7.988698e+07
-SATA,Asset Management,Financial Services,237,2025-11-06,2026-10-16,4.3460416e+07
-SATL,Aerospace & Defense,Industrials,1397,2021-03-26,2026-10-16,2.261351e+07
-SB,Marine Shipping,Industrials,2358,2017-06-01,2026-10-16,8.194758e+06
-SBC,Consulting Services,Industrials,1019,2022-09-26,2026-10-16,720104.0
-SBCF,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.8719184e+07
 SBET,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,5.849958e+07
-SBFG,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,416269.0
-SBFM,Drug Manufacturers - Specialty & Generic,Healthcare,1172,2022-02-15,2026-10-16,151164.0
-SBGI,Broadcasting,Communication Services,2358,2017-06-01,2026-10-16,5.992734e+06
-SBH,Specialty Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.996086e+07
 SBLK,Marine Shipping,Industrials,2358,2017-06-01,2026-10-16,4.513804e+07
 SBMT,Other Industrial Metals & Mining,Basic Materials,118,2026-04-30,2026-10-16,540960.0
-SBS,Utilities - Regulated Water,Utilities,2358,2017-06-01,2026-10-16,4.1193824e+07
-SBSI,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,3.993064e+06
 SBSW,Other Precious Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,4.864781e+07
-SBUX,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,6.610532e+08
-SBXE,Shell Companies,Financial Services,185,2026-01-23,2026-10-16,1017.0
-SCAG,Farm & Heavy Construction Machinery,Industrials,329,2025-06-27,2026-10-16,38482.0
-SCAT,Shell Companies,Financial Services,7,2026-10-08,2026-10-16,884260.0
-SCCO,Copper,Basic Materials,2358,2017-06-01,2026-10-16,1.9654464e+08
-SCHL,Publishing,Communication Services,2358,2017-06-01,2026-10-16,1.5463681e+07
-SCHW,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,7.4549786e+08
-SCI,Personal Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,7.14252e+07
-SCII,Shell Companies,Financial Services,188,2026-01-20,2026-10-16,0.0
-SCKT,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,63386.0
-SCL,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,7.886752e+06
-SCLX,Drug Manufacturers - General,Healthcare,1412,2021-03-05,2026-10-16,211497.0
 SCM,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,1.048725e+06
-SCNI,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,115083.0
 SCNX,Pharmaceutical Retailers,Healthcare,2358,2017-06-01,2026-10-16,114595.0
 SCOR,Software - Application,Technology,2358,2017-06-01,2026-10-16,161130.0
-SCPQ,Shell Companies,Financial Services,171,2026-02-12,2026-10-16,0.0
-SCSC,Electronics & Computer Distribution,Technology,2358,2017-06-01,2026-10-16,1.3675123e+07
-SCTX,Biotechnology,Healthcare,59,2026-07-27,2026-10-16,6.681213e+06
-SCWO,Pollution & Treatment Controls,Industrials,2358,2017-06-01,2026-10-16,119556.0
 SCYX,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,315950.0
-SCZM,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,3.776846e+06
-SD,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,4.359696e+06
-SDA,Auto & Truck Dealerships,Consumer Cyclical,1383,2021-04-16,2026-10-16,54920.0
-SDEV,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,272448.0
-SDGR,Health Information Services,Healthcare,1683,2020-02-06,2026-10-16,2.5770094e+07
-SDHC,Real Estate - Development,Real Estate,694,2024-01-11,2026-10-16,536922.0
-SDHI,Shell Companies,Financial Services,345,2025-06-04,2026-10-16,1048.0
-SDOT,Farm Products,Consumer Defensive,1678,2020-02-13,2026-10-16,1.05183e+06
-SDRL,Oil & Gas Drilling,Energy,1005,2022-10-14,2026-10-16,2.6116166e+07
 SDST,Electrical Equipment & Parts,Industrials,1412,2021-03-05,2026-10-16,677649.0
-SE,Internet Retail,Consumer Cyclical,2259,2017-10-20,2026-10-16,4.347044e+08
 SEAT,Internet Content & Information,Communication Services,1253,2021-10-20,2026-10-16,369271.0
-SEB,Conglomerates,Industrials,2358,2017-06-01,2026-10-16,4.7108344e+07
-SECZ,Software - Application,Technology,75,2026-07-02,2026-10-16,1.6636168e+07
-SEDG,Solar,Technology,2358,2017-06-01,2026-10-16,8.746445e+07
-SEED,Agricultural Inputs,Basic Materials,2358,2017-06-01,2026-10-16,10700.0
-SEER,Biotechnology,Healthcare,1473,2020-12-04,2026-10-16,416484.0
-SEG,Real Estate Services,Real Estate,557,2024-07-30,2026-10-16,1.879082e+06
 SEGG,Gambling,Consumer Cyclical,838,2023-06-15,2026-10-16,127764.0
-SEI,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,1.6880626e+08
 SEIC,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,7.155741e+07
-SENEA,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,1.6645386e+07
-SENEB,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,0.0
-SENS,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,5.580762e+06
-SEPN,Biotechnology,Healthcare,495,2024-10-25,2026-10-16,1.2785925e+07
 SER,Biotechnology,Healthcare,1980,2018-11-29,2026-10-16,74495.0
 SERA,Medical Devices,Healthcare,1321,2021-07-15,2026-10-16,33600.0
-SERV,Integrated Freight & Logistics,Industrials,655,2024-03-08,2026-10-16,1.5172431e+07
-SES,Auto Parts,Consumer Cyclical,1416,2021-03-01,2026-10-16,1.09563e+07
-SEV,Auto Manufacturers,Consumer Cyclical,252,2025-10-16,2026-10-16,419230.0
-SEZL,Credit Services,Financial Services,777,2023-09-13,2026-10-16,6.131378e+07
-SF,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,8.684322e+07
-SFBC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,153153.0
-SFBS,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.2142268e+07
-SFD,Farm Products,Consumer Defensive,433,2025-01-28,2026-10-16,3.3272528e+07
-SFHG,Specialty Business Services,Industrials,503,2024-10-15,2026-10-16,18216.0
-SFIX,Apparel Retail,Consumer Cyclical,2239,2017-11-17,2026-10-16,5.67276e+06
-SFL,Marine Shipping,Industrials,2358,2017-06-01,2026-10-16,1.6086064e+07
-SFM,Grocery Stores,Consumer Defensive,2358,2017-06-01,2026-10-16,1.3792746e+08
-SFNC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.84366e+07
-SFST,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,5.25845e+06
-SFWL,Integrated Freight & Logistics,Industrials,890,2023-03-31,2026-10-16,10366.0
-SG,Restaurants,Consumer Cyclical,1232,2021-11-18,2026-10-16,3.7273388e+07
-SGA,Broadcasting,Communication Services,2358,2017-06-01,2026-10-16,87847.0
-SGC,Apparel Manufacturing,Consumer Cyclical,2358,2017-06-01,2026-10-16,439950.0
-SGHC,Gambling,Consumer Cyclical,1481,2020-11-23,2026-10-16,2.8875736e+07
-SGHT,Medical Devices,Healthcare,1321,2021-07-15,2026-10-16,1.977745e+06
 SGI,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2358,2017-06-01,2026-10-16,1.9152547e+08
-SGLD,Gold,Basic Materials,33,2026-09-01,2026-10-16,296682.0
-SGLY,Integrated Freight & Logistics,Industrials,2358,2017-06-01,2026-10-16,307869.0
-SGML,Other Industrial Metals & Mining,Basic Materials,2084,2018-07-03,2026-10-16,1.8492632e+07
-SGMT,Biotechnology,Healthcare,819,2023-07-14,2026-10-16,1.037369e+07
-SGP,Biotechnology,Healthcare,175,2026-02-06,2026-10-16,2.012136e+06
 SGRX,Information Technology Services,Technology,1803,2019-08-15,2026-10-16,231088.0
-SGRY,Medical Care Facilities,Healthcare,2358,2017-06-01,2026-10-16,2.538432e+07
-SGU,Oil & Gas Refining & Marketing,Energy,2358,2017-06-01,2026-10-16,221936.0
 SHAK,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,8.8238536e+07
 SHAZ,Information Technology Services,Technology,168,2026-02-18,2026-10-16,8.397739e+07
 SHBI,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,4.54404e+06
 SHC,Diagnostics & Research,Healthcare,1482,2020-11-20,2026-10-16,3.7519908e+07
-SHEL,Oil & Gas Integrated,Energy,2358,2017-06-01,2026-10-16,6.0405056e+08
-SHEN,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,7.15149e+06
-SHFS,Banks - Regional,Financial Services,1295,2021-08-20,2026-10-16,69073.0
-SHG,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.2997712e+07
-SHIM,Engineering & Construction,Industrials,733,2023-11-14,2026-10-16,322292.0
-SHIP,Marine Shipping,Industrials,2358,2017-06-01,2026-10-16,5.55972e+06
-SHLS,Solar,Technology,1437,2021-01-28,2026-10-16,3.5251664e+07
 SHMD,Specialty Industrial Machinery,Industrials,618,2024-05-01,2026-10-16,1.959021e+06
-SHOE,Apparel Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.107694e+07
-SHOO,Footwear & Accessories,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.54518e+07
-SHOP,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.1737535e+09
-SHOT,Shell Companies,Financial Services,65,2026-07-17,2026-10-16,9860.0
-SHPH,Drug Manufacturers - Specialty & Generic,Healthcare,1036,2022-08-31,2026-10-16,145299.0
-SHW,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,5.627894e+08
-SI,Medical Devices,Healthcare,306,2025-07-31,2026-10-16,1.875302e+06
-SIBN,Medical Devices,Healthcare,2010,2018-10-17,2026-10-16,1.03037e+07
 SID,Steel,Basic Materials,2358,2017-06-01,2026-10-16,5.198644e+06
-SIDU,Aerospace & Defense,Industrials,1215,2021-12-14,2026-10-16,7.653635e+06
 SIEB,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,58534.0
-SIF,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,1.78932e+06
-SIFY,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,362752.0
-SIG,Luxury Goods,Consumer Cyclical,2358,2017-06-01,2026-10-16,6.726966e+07
-SIGA,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,2.07034e+06
-SIGI,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,3.7194884e+07
 SIGIP,Insurance - Property & Casualty,Financial Services,1474,2020-12-03,2026-10-16,93718.0
 SII,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,1.691124e+07
 SILC,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,6.950336e+06
-SILO,Biotechnology,Healthcare,1450,2021-01-08,2026-10-16,77760.0
-SIM,Steel,Basic Materials,2358,2017-06-01,2026-10-16,24224.0
-SIMA,Shell Companies,Financial Services,534,2024-08-30,2026-10-16,6552.0
-SIMO,Semiconductors,Technology,2358,2017-06-01,2026-10-16,2.0463504e+08
-SIND,Other Precious Metals & Mining,Basic Materials,79,2026-06-26,2026-10-16,1.42554e+06
 SINT,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,57768.0
-SION,Biotechnology,Healthcare,425,2025-02-07,2026-10-16,9.999556e+06
-SIRI,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,1.0908808e+08
-SITC,REIT - Retail,Real Estate,2358,2017-06-01,2026-10-16,2.460208e+06
-SITE,Industrial Distribution,Industrials,2358,2017-06-01,2026-10-16,8.269963e+07
-SITM,Semiconductors,Technology,1735,2019-11-20,2026-10-16,2.4720917e+08
-SJ,Internet Content & Information,Communication Services,1915,2019-03-07,2026-10-16,12920.0
-SJM,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,1.476387e+08
-SKE,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,1.424504e+07
-SKHY,Semiconductors,Technology,70,2026-07-10,2026-10-16,3.5037962e+09
 SKIL,Education & Training Services,Consumer Defensive,1817,2019-07-26,2026-10-16,349980.0
-SKIN,Household & Personal Products,Consumer Defensive,1477,2020-11-24,2026-10-16,245432.0
-SKM,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,4.7923988e+07
 SKWD,Insurance - Property & Casualty,Financial Services,943,2023-01-13,2026-10-16,2.1101712e+07
-SKY,Residential Construction,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.636731e+07
 SKYA,Software - Infrastructure,Technology,1131,2022-04-14,2026-10-16,389714.0
 SKYD,Entertainment,Communication Services,2358,2017-06-01,2026-10-16,1.3378601e+08
-SKYE,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,93060.0
-SKYH,Real Estate - Development,Real Estate,1471,2020-12-08,2026-10-16,1.488018e+06
-SKYQ,Oil & Gas Integrated,Energy,506,2024-10-10,2026-10-16,2.817117e+06
-SKYW,Airlines,Industrials,2358,2017-06-01,2026-10-16,3.02604e+07
-SKYX,Electrical Equipment & Parts,Industrials,1175,2022-02-10,2026-10-16,833523.0
-SLAB,Semiconductors,Technology,2358,2017-06-01,2026-10-16,6.092175e+07
 SLB,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,5.860112e+08
 SLBT,Biotechnology,Healthcare,427,2025-02-05,2026-10-16,110700.0
-SLDB,Biotechnology,Healthcare,2193,2018-01-26,2026-10-16,8.521389e+06
-SLDE,Insurance - Property & Casualty,Financial Services,335,2025-06-18,2026-10-16,2.36436e+07
-SLDP,Auto Parts,Consumer Cyclical,1361,2021-05-18,2026-10-16,6.637694e+06
-SLE,Internet Content & Information,Communication Services,1922,2019-02-26,2026-10-16,441288.0
-SLF,Insurance - Diversified,Financial Services,2358,2017-06-01,2026-10-16,4.1363364e+07
-SLGB,Integrated Freight & Logistics,Industrials,253,2025-10-15,2026-10-16,218413.0
-SLGL,Biotechnology,Healthcare,2189,2018-02-01,2026-10-16,3.65019e+06
-SLGN,Packaging & Containers,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.089191e+07
-SLI,Other Industrial Metals & Mining,Basic Materials,2167,2018-03-06,2026-10-16,3.354005e+06
-SLM,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,5.1399516e+07
 SLMBP,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,132570.0
-SLMT,Software - Infrastructure,Technology,934,2023-01-27,2026-10-16,170419.0
 SLN,Biotechnology,Healthcare,1535,2020-09-08,2026-10-16,9.55152e+06
-SLND,Engineering & Construction,Industrials,1208,2021-12-23,2026-10-16,130642.0
 SLNG,Oil & Gas Integrated,Energy,2358,2017-06-01,2026-10-16,121788.0
-SLNH,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,9.036296e+06
 SLNHP,Capital Markets,Financial Services,1295,2021-08-20,2026-10-16,18832.0
-SLP,Health Information Services,Healthcare,1,2026-10-07,2026-10-07,0.0
-SLQT,Insurance Brokers,Financial Services,1610,2020-05-21,2026-10-16,415116.0
 SLRC,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,4.175526e+06
-SLS,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,6.507818e+07
-SLSN,Household & Personal Products,Consumer Defensive,2358,2017-06-01,2026-10-16,18387.0
-SLSR,Other Precious Metals & Mining,Basic Materials,1552,2020-08-13,2026-10-16,1.123551e+06
-SLVM,Paper & Paper Products,Basic Materials,1272,2021-09-23,2026-10-16,9.898804e+06
-SLXN,Biotechnology,Healthcare,1390,2021-04-07,2026-10-16,225846.0
-SM,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,1.15764616e+08
-SMA,REIT - Industrial,Real Estate,388,2025-04-02,2026-10-16,2.2802726e+07
-SMBC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,6.245001e+06
 SMBK,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,5.40222e+06
-SMC,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,1.974176e+06
 SMCI,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,1.3120961e+09
-SMFG,Banks - Diversified,Financial Services,2358,2017-06-01,2026-10-16,3.498211e+07
-SMG,Agricultural Inputs,Basic Materials,2358,2017-06-01,2026-10-16,5.153408e+07
-SMHI,Marine Shipping,Industrials,2357,2017-06-02,2026-10-16,813960.0
-SMID,Building Materials,Basic Materials,2358,2017-06-01,2026-10-16,317566.0
 SMJF,Textile Manufacturing,Consumer Cyclical,218,2025-12-04,2026-10-16,2.761604e+06
-SMMT,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,7.502976e+07
-SMP,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.081542e+06
-SMPL,Packaged Foods,Consumer Defensive,2332,2017-07-10,2026-10-16,2.2169848e+07
-SMR,Specialty Industrial Machinery,Industrials,1163,2022-03-01,2026-10-16,2.8255376e+08
-SMRT,Software - Application,Technology,1292,2021-08-25,2026-10-16,923083.0
-SMSI,Software - Application,Technology,2358,2017-06-01,2026-10-16,43890.0
 SMTC,Semiconductors,Technology,2358,2017-06-01,2026-10-16,4.0233773e+08
-SMTI,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,7.905326e+06
-SMTK,Semiconductor Equipment & Materials,Technology,597,2024-05-31,2026-10-16,368707.0
 SMWB,Software - Application,Technology,1365,2021-05-12,2026-10-16,4.62692e+06
-SMX,Specialty Business Services,Industrials,1218,2021-12-09,2026-10-16,350911.0
-SMXT,Solar,Technology,663,2024-02-27,2026-10-16,57596.0
-SN,"Furnishings, Fixtures & Appliances",Consumer Cyclical,808,2023-07-31,2026-10-16,2.704351e+08
-SNA,Tools & Accessories,Industrials,2358,2017-06-01,2026-10-16,1.0682789e+08
-SNAL,Electronic Gaming & Multimedia,Communication Services,986,2022-11-10,2026-10-16,118079.0
-SNAP,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,1.7141243e+08
 SND,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,1.114835e+06
-SNDA,Medical Care Facilities,Healthcare,2358,2017-06-01,2026-10-16,1.559376e+07
 SNDK,Computer Hardware,Technology,421,2025-02-13,2026-10-16,1.6205013e+10
 SNDL,Beverages - Wineries & Distilleries,Consumer Defensive,1813,2019-08-01,2026-10-16,1.72665e+06
-SNDR,Trucking,Industrials,2358,2017-06-01,2026-10-16,2.1786634e+07
 SNDX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,2.6938486e+07
-SNES,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,45894.0
-SNEX,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,6.147976e+07
-SNFCA,Insurance - Life,Financial Services,2358,2017-06-01,2026-10-16,222396.0
-SNGX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,54986.0
-SNN,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,3.6633412e+07
-SNOA,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,60639.0
-SNOW,Software - Application,Technology,1529,2020-09-16,2026-10-16,1.4082345e+09
-SNPS,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,7.326577e+08
-SNSC,Solar,Technology,47,2026-08-12,2026-10-16,71980.0
 SNT,Security & Protection Services,Industrials,2358,2017-06-01,2026-10-16,15708.0
-SNTG,Credit Services,Financial Services,1326,2021-07-08,2026-10-16,14448.0
-SNTI,Biotechnology,Healthcare,1355,2021-05-26,2026-10-16,58176.0
-SNWV,Medical Devices,Healthcare,500,2024-10-18,2026-10-16,291713.0
-SNX,Electronics & Computer Distribution,Technology,2358,2017-06-01,2026-10-16,1.6761518e+08
-SNY,Drug Manufacturers - General,Healthcare,2358,2017-06-01,2026-10-16,1.1691509e+08
 SO,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,4.9321094e+08
-SOAR,Airports & Air Services,Industrials,1189,2022-01-21,2026-10-16,1.07136e+06
-SOBO,Oil & Gas Midstream,Energy,511,2024-10-03,2026-10-16,1.855776e+07
-SOC,Oil & Gas Drilling,Energy,1382,2021-04-19,2026-10-16,3.157735e+07
-SOCA,Shell Companies,Financial Services,281,2025-09-05,2026-10-16,0.0
-SOFI,Credit Services,Financial Services,1454,2021-01-04,2026-10-16,7.8146816e+08
-SOGP,Internet Content & Information,Communication Services,1696,2020-01-17,2026-10-16,78464.0
-SOHU,Electronic Gaming & Multimedia,Communication Services,2358,2017-06-01,2026-10-16,641628.0
-SOLS,Specialty Chemicals,Basic Materials,250,2025-10-20,2026-10-16,1.2722614e+08
-SOLV,Medical Instruments & Supplies,Healthcare,643,2024-03-26,2026-10-16,8.435798e+07
-SON,Packaging & Containers,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.063934e+07
-SONM,Capital Markets,Financial Services,1870,2019-05-10,2026-10-16,31824.0
-SONO,Consumer Electronics,Technology,2063,2018-08-02,2026-10-16,2.7380136e+07
-SONY,Consumer Electronics,Technology,2358,2017-06-01,2026-10-16,9.255518e+07
-SOPH,Health Information Services,Healthcare,1315,2021-07-23,2026-10-16,3.544024e+06
-SOR,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,367604.0
-SORA,Luxury Goods,Consumer Cyclical,388,2025-04-02,2026-10-16,76272.0
-SORN,Shell Companies,Financial Services,161,2026-02-27,2026-10-16,0.0
-SOS,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,64313.0
-SOTK,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,225951.0
 SOUL,Shell Companies,Financial Services,352,2025-05-23,2026-10-16,27222.0
-SOUN,Software - Application,Technology,1122,2022-04-28,2026-10-16,1.5289112e+08
 SOWG,Confectioners,Consumer Defensive,2358,2017-06-01,2026-10-16,19215.0
-SPAI,Aerospace & Defense,Industrials,536,2024-08-28,2026-10-16,452920.0
-SPB,Household & Personal Products,Consumer Defensive,2358,2017-06-01,2026-10-16,2.7232176e+07
-SPCB,Security & Protection Services,Industrials,2358,2017-06-01,2026-10-16,646753.0
-SPCE,Aerospace & Defense,Industrials,2274,2017-09-29,2026-10-16,1.593708e+07
-SPCX,Aerospace & Defense,Industrials,88,2026-06-12,2026-10-16,1.154463e+10
-SPEG,Shell Companies,Financial Services,279,2025-09-09,2026-10-16,1035.0
-SPFI,Banks - Regional,Financial Services,1871,2019-05-09,2026-10-16,4.515388e+06
-SPGI,Financial Data & Stock Exchanges,Financial Services,2358,2017-06-01,2026-10-16,7.0099174e+08
-SPH,Utilities - Regulated Gas,Utilities,2358,2017-06-01,2026-10-16,3.070606e+06
-SPHL,Residential Construction,Consumer Cyclical,500,2024-10-18,2026-10-16,27664.0
-SPHR,Entertainment,Communication Services,1639,2020-04-09,2026-10-16,8.927467e+07
-SPIR,Specialty Business Services,Industrials,1495,2020-11-03,2026-10-16,6.66915e+06
-SPNT,Insurance - Reinsurance,Financial Services,2358,2017-06-01,2026-10-16,1.5801135e+07
-SPOK,Health Information Services,Healthcare,2358,2017-06-01,2026-10-16,1.449932e+06
 SPOT,Internet Content & Information,Communication Services,2148,2018-04-03,2026-10-16,7.811713e+08
 SPPL,Specialty Industrial Machinery,Industrials,777,2023-09-13,2026-10-16,77112.0
-SPRB,Biotechnology,Healthcare,1512,2020-10-09,2026-10-16,3.23036e+06
-SPRC,Biotechnology,Healthcare,1289,2021-08-30,2026-10-16,85250.0
 SPRO,Biotechnology,Healthcare,2250,2017-11-02,2026-10-16,578340.0
 SPRU,Solar,Technology,1791,2019-09-03,2026-10-16,109649.0
-SPRY,Biotechnology,Healthcare,1473,2020-12-04,2026-10-16,7.750638e+06
-SPSC,Software - Application,Technology,2358,2017-06-01,2026-10-16,3.7721308e+07
-SPT,Software - Application,Technology,1719,2019-12-13,2026-10-16,1.0041712e+07
-SPTX,Biotechnology,Healthcare,117,2026-05-01,2026-10-16,3.132228e+06
-SPWH,Specialty Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,315868.0
-SPWR,Solar,Technology,951,2023-01-03,2026-10-16,962172.0
-SPXC,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,8.6515256e+07
-SQFT,REIT - Diversified,Real Estate,1514,2020-10-07,2026-10-16,10508.0
-SQFTP,REIT - Diversified,Real Estate,1346,2021-06-09,2026-10-16,17082.0
-SQM,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,6.1776584e+07
-SQNS,Semiconductors,Technology,2358,2017-06-01,2026-10-16,115360.0
-SR,Utilities - Regulated Gas,Utilities,2358,2017-06-01,2026-10-16,3.7759588e+07
-SRAD,Software - Application,Technology,1279,2021-09-14,2026-10-16,2.325186e+07
-SRBK,Banks - Regional,Financial Services,772,2023-09-20,2026-10-16,407034.0
-SRCE,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,9.393711e+06
-SRE,Utilities - Diversified,Utilities,2358,2017-06-01,2026-10-16,2.8003818e+08
-SRFM,Airlines,Industrials,810,2023-07-27,2026-10-16,1.792575e+06
-SRG,Real Estate Services,Real Estate,2358,2017-06-01,2026-10-16,261288.0
 SRI,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,959139.0
-SRL,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,30876.0
-SRPT,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,4.9585744e+07
-SRRK,Biotechnology,Healthcare,2110,2018-05-25,2026-10-16,6.209603e+07
-SRTA,Medical Care Facilities,Healthcare,1746,2019-11-05,2026-10-16,4.670145e+06
-SRTS,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,58006.0
-SRXH,Packaged Foods,Consumer Defensive,2358,2017-06-01,2026-10-16,1.365078e+06
-SRZN,Biotechnology,Healthcare,1449,2021-01-11,2026-10-16,5.11584e+06
-SSAC,Shell Companies,Financial Services,161,2026-02-27,2026-10-16,200990.0
-SSB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,7.557749e+07
-SSBI,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,29760.0
-SSD,Lumber & Wood Production,Basic Materials,2358,2017-06-01,2026-10-16,4.700221e+07
-SSEA,Shell Companies,Financial Services,262,2025-10-02,2026-10-16,2068.0
-SSII,Medical Devices,Healthcare,551,2024-08-07,2026-10-16,165093.0
-SSL,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,1.735524e+07
 SSM,Auto Manufacturers,Consumer Cyclical,1233,2021-11-17,2026-10-16,180625.0
 SSMR,Other Industrial Metals & Mining,Basic Materials,94,2026-06-04,2026-10-16,4.239183e+06
-SSNC,Software - Application,Technology,2358,2017-06-01,2026-10-16,1.126788e+08
-SSP,Broadcasting,Communication Services,2358,2017-06-01,2026-10-16,1.596384e+06
-SSRM,Gold,Basic Materials,2358,2017-06-01,2026-10-16,7.94016e+07
-SST,Specialty Business Services,Industrials,1556,2020-08-07,2026-10-16,212649.0
-SSTI,Software - Application,Technology,2354,2017-06-07,2026-10-16,590004.0
-SSTK,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,4.503447e+06
-SSYS,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,5.05126e+06
-ST,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,5.2325628e+07
 STAA,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,1.7436328e+07
-STAK,Oil & Gas Equipment & Services,Energy,413,2025-02-26,2026-10-16,619380.0
 STBA,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.183801e+07
-STC,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,1.5565275e+07
-STDN,Specialty Chemicals,Basic Materials,66,2026-07-16,2026-10-16,6.54896e+06
-STE,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,1.4107731e+08
-STEM,Utilities - Renewable,Utilities,1513,2020-10-08,2026-10-16,562776.0
-STEP,Asset Management,Financial Services,1529,2020-09-16,2026-10-16,5.145478e+07
 STEX,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,558197.0
-STFS,Advertising Agencies,Communication Services,505,2024-10-11,2026-10-16,265240.0
-STG,Education & Training Services,Consumer Defensive,2154,2018-03-23,2026-10-16,9300.0
-STGW,Advertising Agencies,Communication Services,2358,2017-06-01,2026-10-16,1.1450538e+07
-STHO,Real Estate Services,Real Estate,893,2023-03-28,2026-10-16,131140.0
-STI,Electrical Equipment & Parts,Industrials,1120,2022-05-02,2026-10-16,585029.0
-STIM,Medical Devices,Healthcare,2087,2018-06-28,2026-10-16,2.417128e+06
-STKE,Capital Markets,Financial Services,1450,2021-01-08,2026-10-16,230520.0
-STKH,Packaged Foods,Consumer Defensive,1407,2021-03-12,2026-10-16,251370.0
-STKS,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,27540.0
-STLA,Auto Manufacturers,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.178077e+08
 STLD,Steel,Basic Materials,2358,2017-06-01,2026-10-16,2.3133368e+08
-STLN,Medical Care Facilities,Healthcare,1601,2020-06-04,2026-10-16,7.528614e+06
-STM,Semiconductors,Technology,2358,2017-06-01,2026-10-16,4.5024182e+08
-STN,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,2.3795348e+07
-STNE,Software - Infrastructure,Technology,2004,2018-10-25,2026-10-16,4.436597e+07
-STNG,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,7.0336584e+07
-STOK,Biotechnology,Healthcare,1843,2019-06-19,2026-10-16,2.1272018e+07
-STRA,Education & Training Services,Consumer Defensive,2358,2017-06-01,2026-10-16,2.137359e+07
-STRC,Software - Application,Technology,307,2025-07-30,2026-10-16,1.3412465e+08
 STRD,Software - Application,Technology,343,2025-06-06,2026-10-16,6.018992e+06
-STRF,Software - Application,Technology,393,2025-03-26,2026-10-16,5.792488e+06
-STRK,Software - Application,Technology,429,2025-02-03,2026-10-16,5.8255e+06
-STRL,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,2.907395e+08
-STRO,Biotechnology,Healthcare,2024,2018-09-27,2026-10-16,3.99341e+06
-STRR,Staffing & Employment Services,Industrials,2358,2017-06-01,2026-10-16,28647.0
-STRRP,Staffing & Employment Services,Industrials,1783,2019-09-13,2026-10-16,16542.0
 STRT,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,5.992044e+06
-STRW,REIT - Healthcare Facilities,Real Estate,917,2023-02-22,2026-10-16,504423.0
-STRZ,Entertainment,Communication Services,364,2025-05-07,2026-10-16,4.76982e+06
-STT,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,3.0836992e+08
-STTK,Biotechnology,Healthcare,1512,2020-10-09,2026-10-16,6.264918e+06
-STUB,Internet Content & Information,Communication Services,273,2025-09-17,2026-10-16,3.6147496e+07
-STVN,Medical Instruments & Supplies,Healthcare,1320,2021-07-16,2026-10-16,6.564306e+06
-STX,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,3.673419e+09
 STXS,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,771807.0
 STZ,Beverages - Brewers,Consumer Defensive,2358,2017-06-01,2026-10-16,2.4633912e+08
-SU,Oil & Gas Integrated,Energy,2358,2017-06-01,2026-10-16,2.6060413e+08
-SUGP,Security & Protection Services,Industrials,686,2024-01-24,2026-10-16,473280.0
-SUIG,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,527960.0
 SUJA,Beverages - Non-Alcoholic,Consumer Defensive,113,2026-05-07,2026-10-16,3.1563e+06
-SUMA,Shell Companies,Financial Services,126,2026-04-20,2026-10-16,0.0
-SUN,Oil & Gas Refining & Marketing,Energy,2356,2017-06-01,2026-10-16,3.542754e+07
-SUNB,Rental & Leasing Services,Industrials,160,2026-03-02,2026-10-16,2.4459203e+08
-SUNC,Oil & Gas Midstream,Energy,235,2025-11-06,2026-10-16,3.3054084e+07
 SUNE,Solar,Technology,2358,2017-06-01,2026-10-16,303616.0
-SUNS,REIT - Mortgage,Real Estate,572,2024-07-09,2026-10-16,488097.0
-SUPN,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,2.7624576e+07
-SUPV,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,4.170671e+06
-SUPX,Software - Infrastructure,Technology,628,2024-04-17,2026-10-16,2.557248e+06
-SURG,Telecom Services,Communication Services,2200,2018-01-17,2026-10-16,511736.0
-SUZ,Paper & Paper Products,Basic Materials,2358,2017-06-01,2026-10-16,2.294947e+07
-SVA,Biotechnology,Healthcare,1,2026-10-14,2026-10-14,0.0
-SVAQ,Shell Companies,Financial Services,171,2026-02-12,2026-10-16,109436.0
 SVCC,Shell Companies,Financial Services,395,2025-03-24,2026-10-16,3190.0
-SVCCU,Shell Companies,Financial Services,431,2025-01-30,2026-10-16,0.0
-SVCO,Software - Application,Technology,612,2024-05-09,2026-10-16,2.62756e+06
-SVIA,Capital Markets,Financial Services,342,2025-06-09,2026-10-16,2.725723e+06
 SVIV,Shell Companies,Financial Services,160,2026-03-02,2026-10-16,5110.0
 SVM,Silver,Basic Materials,2358,2017-06-01,2026-10-16,2.1492624e+07
 SVRA,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,8.739068e+06
@@ -5116,99 +3842,55 @@ UTSI,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,8680.0
 UTZ,Packaged Foods,Consumer Defensive,1983,2018-11-26,2026-10-16,2.4729992e+07
 UUU,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,89600.0
 UUUU,Uranium,Energy,2358,2017-06-01,2026-10-16,8.542249e+07
-UVE,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,7.064036e+06
-UVSP,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,8.914725e+06
-UVV,Tobacco,Consumer Defensive,2358,2017-06-01,2026-10-16,1.2969997e+07
-UWMC,Mortgage Finance,Financial Services,1624,2020-05-01,2026-10-16,1.7597856e+07
-UXIN,Auto & Truck Dealerships,Consumer Cyclical,2088,2018-06-27,2026-10-16,106288.0
 UYSC,Shell Companies,Financial Services,351,2025-05-27,2026-10-16,0.0
 UZX,Internet Retail,Consumer Cyclical,709,2023-12-19,2026-10-16,87715.0
-V,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,2.2311608e+09
 VABK,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,296640.0
 VAC,Resorts & Casinos,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.2768932e+07
-VAI,Rental & Leasing Services,Industrials,2158,2018-03-19,2026-10-16,76320.0
 VAL,Oil & Gas Drilling,Energy,1372,2021-05-03,2026-10-16,8.733223e+07
 VALE,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,3.599697e+08
-VALN,Biotechnology,Healthcare,1370,2021-05-05,2026-10-16,148500.0
 VALU,Financial Data & Stock Exchanges,Financial Services,2358,2017-06-01,2026-10-16,88803.0
 VANI,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,212898.0
 VATE,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,711396.0
 VBIO,Biotechnology,Healthcare,1237,2021-11-11,2026-10-16,428079.0
-VBNK,Banks - Regional,Financial Services,1290,2021-08-27,2026-10-16,2.281766e+06
-VC,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.06308e+07
-VCEL,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,2.062151e+07
-VCIG,Consulting Services,Industrials,882,2023-04-13,2026-10-16,263700.0
-VCRE,Biotechnology,Healthcare,74,2026-07-06,2026-10-16,139062.0
-VCTR,Asset Management,Financial Services,2184,2018-02-08,2026-10-16,6.664326e+07
 VCYT,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,5.447541e+07
-VECA,Shell Companies,Financial Services,105,2026-05-19,2026-10-16,0.0
 VECO,Semiconductor Equipment & Materials,Technology,2358,2017-06-01,2026-10-16,3.30885e+07
 VEEA,Information Technology Services,Technology,1369,2021-05-06,2026-10-16,293068.0
 VEEE,Recreational Vehicles,Consumer Cyclical,1317,2021-07-21,2026-10-16,352157.0
 VEEV,Health Information Services,Healthcare,2358,2017-06-01,2026-10-16,3.6865453e+08
 VEL,Mortgage Finance,Financial Services,1696,2020-01-17,2026-10-16,2.300064e+06
-VELO,Computer Hardware,Technology,1440,2021-01-25,2026-10-16,1.2586948e+07
 VENU,Restaurants,Consumer Cyclical,472,2024-11-27,2026-10-16,784216.0
-VEON,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,7.68971e+06
-VERA,Biotechnology,Healthcare,1363,2021-05-14,2026-10-16,5.237074e+07
 VERI,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,3.022086e+06
 VERU,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,397332.0
-VERX,Software - Application,Technology,1563,2020-07-29,2026-10-16,1.9134856e+07
 VET,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,1.5604994e+07
-VFC,Apparel Manufacturing,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.053483e+08
-VFF,Farm Products,Consumer Defensive,1925,2019-02-21,2026-10-16,1.890048e+06
 VFS,Auto Manufacturers,Consumer Cyclical,1284,2021-09-07,2026-10-16,931084.0
 VG,Oil & Gas Midstream,Energy,435,2025-01-24,2026-10-16,1.8370787e+08
 VGAS,Utilities - Renewable,Utilities,1265,2021-10-04,2026-10-16,19044.0
-VGNT,Auto Parts,Consumer Cyclical,141,2026-03-27,2026-10-16,3.1683146e+07
 VGZ,Gold,Basic Materials,2358,2017-06-01,2026-10-16,2.873632e+06
-VHC,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,303604.0
 VHCP,Shell Companies,Financial Services,174,2026-02-09,2026-10-16,0.0
-VHI,Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,171100.0
-VHUB,Grocery Stores,Consumer Defensive,180,2026-01-30,2026-10-16,56280.0
 VIA,Software - Application,Technology,276,2025-09-12,2026-10-16,1.7657912e+07
 VIAV,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,1.7964021e+08
-VICR,Electronic Components,Technology,2358,2017-06-01,2026-10-16,1.9683251e+08
-VIDA,Software - Application,Technology,107,2026-05-15,2026-10-16,117096.0
 VII,Shell Companies,Financial Services,64,2026-07-20,2026-10-16,31488.0
 VIK,Travel Services,Consumer Cyclical,618,2024-05-01,2026-10-16,2.826295e+08
 VINP,Asset Management,Financial Services,1437,2021-01-28,2026-10-16,382044.0
-VIOT,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2026,2018-09-25,2026-10-16,130620.0
-VIP,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,244872.0
 VIPS,Internet Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,3.3078492e+07
-VIR,Biotechnology,Healthcare,1763,2019-10-11,2026-10-16,1.8684432e+07
-VIRC,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2358,2017-06-01,2026-10-16,120113.0
 VIRT,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,6.4344708e+07
-VISN,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,4.05449e+07
-VIST,Oil & Gas E&P,Energy,1817,2019-07-26,2026-10-16,6.713575e+07
 VITL,Farm Products,Consumer Defensive,1561,2020-07-31,2026-10-16,1.526514e+07
-VIV,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,1.5601697e+07
-VIVK,Oil & Gas Integrated,Energy,2358,2017-06-01,2026-10-16,1.470315e+06
 VIVO,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,1.504755e+06
-VIVS,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,195132.0
 VJET,Airports & Air Services,Industrials,2024,2018-09-27,2026-10-16,234045.0
 VKTX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,7.160323e+07
 VLGEA,Grocery Stores,Consumer Defensive,2358,2017-06-01,2026-10-16,1.872162e+06
 VLN,Semiconductors,Technology,1267,2021-09-30,2026-10-16,1.0648e+06
 VLO,Oil & Gas Refining & Marketing,Energy,2358,2017-06-01,2026-10-16,9.868617e+08
-VLOS,Shell Companies,Financial Services,519,2024-09-23,2026-10-16,6414.0
-VLRS,Airlines,Industrials,2358,2017-06-01,2026-10-16,2.597616e+06
 VLTO,Pollution & Treatment Controls,Industrials,762,2023-10-04,2026-10-16,1.4921992e+08
 VLY,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,9.207975e+07
 VLYPN,Banks - Regional,Financial Services,557,2024-07-30,2026-10-16,222551.0
 VLYPO,Banks - Regional,Financial Services,2014,2018-10-11,2026-10-16,111870.0
 VLYPP,Banks - Regional,Financial Services,2014,2018-10-11,2026-10-16,106984.0
 VMAR,Recreational Vehicles,Consumer Cyclical,1480,2020-11-24,2026-10-16,358691.0
-VMC,Building Materials,Basic Materials,2358,2017-06-01,2026-10-16,2.6008114e+08
 VMD,Medical Devices,Healthcare,1807,2019-08-09,2026-10-16,2.949924e+06
 VMET,Other Precious Metals & Mining,Basic Materials,160,2026-03-02,2026-10-16,2.219958e+06
-VMI,Conglomerates,Industrials,2358,2017-06-01,2026-10-16,8.509529e+07
-VMRK,REIT - Residential,Real Estate,2358,2017-06-01,2026-10-16,3.0762224e+08
 VNCE,Apparel Manufacturing,Consumer Cyclical,2358,2017-06-01,2026-10-16,785200.0
-VNDA,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,4.21167e+06
-VNET,Information Technology Services,Technology,2358,2017-06-01,2026-10-16,2.5724024e+07
 VNME,Shell Companies,Financial Services,290,2025-08-22,2026-10-16,0.0
-VNOM,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,7.167496e+07
 VNRX,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,375674.0
 VNT,Scientific & Technical Instruments,Technology,1523,2020-09-24,2026-10-16,4.1210324e+07
 VNTG,Marine Shipping,Industrials,340,2025-06-11,2026-10-16,28225.0
@@ -5216,300 +3898,68 @@ VOC,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,186576.0
 VOD,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,5.619172e+07
 VOGX,Biotechnology,Healthcare,47,2026-08-12,2026-10-16,2.99493e+06
 VOR,Biotechnology,Healthcare,1431,2021-02-05,2026-10-16,1.784892e+07
-VOXR,Other Precious Metals & Mining,Basic Materials,1559,2020-08-04,2026-10-16,2.190915e+06
 VOYA,Financial Conglomerates,Financial Services,2358,2017-06-01,2026-10-16,8.999617e+07
 VOYG,Aerospace & Defense,Industrials,340,2025-06-11,2026-10-16,4.7415604e+07
 VPG,Scientific & Technical Instruments,Technology,2358,2017-06-01,2026-10-16,2.6666484e+07
-VRA,Footwear & Accessories,Consumer Cyclical,2358,2017-06-01,2026-10-16,454578.0
 VRAX,Biotechnology,Healthcare,1065,2022-07-21,2026-10-16,104559.0
 VRCA,Biotechnology,Healthcare,2096,2018-06-15,2026-10-16,212512.0
 VRDN,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,3.5113156e+07
-VREX,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,1.0295178e+07
-VRM,Credit Services,Financial Services,417,2025-02-20,2026-10-16,57436.0
 VRNS,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,7.1652504e+07
-VRRM,Information Technology Services,Technology,2358,2017-06-01,2026-10-16,1.709685e+07
-VRSK,Consulting Services,Industrials,2358,2017-06-01,2026-10-16,2.2515083e+08
 VRSN,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,2.0990426e+08
-VRT,Electrical Equipment & Parts,Industrials,2063,2018-08-02,2026-10-16,1.1038049e+09
 VRTS,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,1.8057956e+07
-VRTX,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,5.6428915e+08
 VRXA,Biotechnology,Healthcare,514,2024-09-30,2026-10-16,180432.0
 VS,Software - Application,Technology,2358,2017-06-01,2026-10-16,11397.0
 VSA,Education & Training Services,Consumer Defensive,2358,2017-06-01,2026-10-16,61490.0
 VSAT,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,1.2431842e+08
 VSEC,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,7.510351e+07
-VSH,Semiconductors,Technology,2358,2017-06-01,2026-10-16,1.1430185e+08
-VSME,Advertising Agencies,Communication Services,767,2023-09-27,2026-10-16,36504.0
-VSNT,Entertainment,Communication Services,211,2025-12-15,2026-10-16,5.6807436e+07
 VST,Utilities - Independent Power Producers,Utilities,2358,2017-06-01,2026-10-16,6.6714675e+08
 VSTM,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.5192e+07
-VSTS,Rental & Leasing Services,Industrials,767,2023-09-27,2026-10-16,1.698606e+07
 VSXY,Apparel Retail,Consumer Cyclical,1317,2021-07-21,2026-10-16,1.33055864e+08
 VTEX,Software - Application,Technology,1317,2021-07-21,2026-10-16,2.794375e+06
-VTGN,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,193650.0
-VTIX,Computer Hardware,Technology,183,2026-01-27,2026-10-16,379864.0
 VTMX,Real Estate - Diversified,Real Estate,828,2023-06-30,2026-10-16,1.726936e+06
 VTOL,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,9.312457e+06
 VTRS,Drug Manufacturers - Specialty & Generic,Healthcare,2358,2017-06-01,2026-10-16,1.4523149e+08
-VTS,Oil & Gas E&P,Energy,946,2023-01-10,2026-10-16,7.945626e+06
-VTSI,Software - Application,Technology,2358,2017-06-01,2026-10-16,74273.0
 VTVT,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.379838e+06
-VUZI,Consumer Electronics,Technology,2358,2017-06-01,2026-10-16,2.15215e+06
 VVOS,Medical Devices,Healthcare,1468,2020-12-11,2026-10-16,214659.0
-VVV,Auto & Truck Dealerships,Consumer Cyclical,2358,2017-06-01,2026-10-16,7.159373e+07
 VVX,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,3.9474736e+07
 VWAV,Aerospace & Defense,Industrials,318,2025-07-15,2026-10-16,1.4658e+06
 VYGR,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.582259e+06
 VYLR,Shell Companies,Financial Services,12,2026-10-01,2026-10-16,4.700756e+08
 VYX,Information Technology Services,Technology,2358,2017-06-01,2026-10-16,1.9361888e+07
-VZ,Telecom Services,Communication Services,2358,2017-06-01,2026-10-16,9.589604e+08
 VZLA,Other Industrial Metals & Mining,Basic Materials,1189,2022-01-21,2026-10-16,1.7605496e+07
 W,Internet Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.412156e+08
-WAB,Railroads,Industrials,2358,2017-06-01,2026-10-16,2.4201928e+08
-WABC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,9.064588e+06
-WAFD,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.4663122e+07
-WAFDP,Banks - Regional,Financial Services,1434,2021-02-02,2026-10-16,225853.0
-WAFU,Education & Training Services,Consumer Defensive,1878,2019-04-30,2026-10-16,53428.0
 WAL,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,7.595738e+07
-WASH,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,4.691854e+06
 WAT,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,3.0693786e+08
 WATR,Industrial Distribution,Industrials,337,2025-06-16,2026-10-16,189357.0
 WATT,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,1.782636e+06
-WAVE,Utilities - Renewable,Utilities,1330,2021-07-01,2026-10-16,61778.0
-WAY,Health Information Services,Healthcare,592,2024-06-07,2026-10-16,5.218349e+07
 WB,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,5.77944e+06
-WBD,Entertainment,Communication Services,1,2026-10-05,2026-10-05,1238.0
 WBI,Oil & Gas Equipment & Services,Energy,273,2025-09-17,2026-10-16,1.6564231e+07
 WBTN,Internet Content & Information,Communication Services,579,2024-06-27,2026-10-16,3.745956e+06
 WBUY,Internet Retail,Consumer Cyclical,751,2023-10-19,2026-10-16,92080.0
 WBX,Electrical Equipment & Parts,Industrials,1382,2021-04-19,2026-10-16,41044.0
 WCC,Industrial Distribution,Industrials,2358,2017-06-01,2026-10-16,1.8647797e+08
 WCCB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,238000.0
-WCN,Waste Management,Industrials,2358,2017-06-01,2026-10-16,2.2014411e+08
-WCT,Software - Application,Technology,511,2024-10-02,2026-10-16,262215.0
-WD,Mortgage Finance,Financial Services,2358,2017-06-01,2026-10-16,1.7758286e+07
-WDAY,Software - Application,Technology,2358,2017-06-01,2026-10-16,5.6667814e+08
 WDC,Computer Hardware,Technology,2358,2017-06-01,2026-10-16,3.175317e+09
-WDFC,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,2.297953e+07
 WDH,Insurance - Diversified,Financial Services,1368,2021-05-07,2026-10-16,207801.0
 WDS,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,1.2231575e+07
-WEAV,Health Information Services,Healthcare,1237,2021-11-11,2026-10-16,9.278832e+06
-WEC,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,2.5070634e+08
 WELL,REIT - Healthcare Facilities,Real Estate,2358,2017-06-01,2026-10-16,6.0045946e+08
-WEN,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,4.276395e+07
 WENC,Shell Companies,Financial Services,109,2026-05-13,2026-10-16,1000.0
-WENN,Shell Companies,Financial Services,324,2025-07-07,2026-10-16,6234.0
-WERN,Trucking,Industrials,2358,2017-06-01,2026-10-16,2.9809568e+07
 WES,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,3.820701e+07
 WEST,Packaged Foods,Consumer Defensive,1253,2021-10-20,2026-10-16,2.642432e+06
-WETH,Electronic Components,Technology,667,2024-02-21,2026-10-16,61100.0
 WETO,Software - Infrastructure,Technology,412,2025-02-27,2026-10-16,3.93509e+06
 WEX,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,9.723867e+07
-WEYS,Footwear & Accessories,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.122002e+06
-WF,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,5.508386e+06
-WFC,Banks - Diversified,Financial Services,2358,2017-06-01,2026-10-16,1.1492009e+09
-WFCF,Specialty Business Services,Industrials,2358,2017-06-01,2026-10-16,28490.0
-WFF,Specialty Industrial Machinery,Industrials,392,2025-03-27,2026-10-16,393155.0
-WFG,Lumber & Wood Production,Basic Materials,2358,2017-06-01,2026-10-16,1.3687907e+07
 WFRD,Oil & Gas Equipment & Services,Energy,1454,2021-01-04,2026-10-16,7.453846e+07
 WGO,Recreational Vehicles,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.5091897e+07
-WGS,Diagnostics & Research,Healthcare,1494,2020-11-04,2026-10-16,4.64225e+07
-WH,Lodging,Consumer Cyclical,2114,2018-05-21,2026-10-16,8.651965e+07
-WHD,Oil & Gas Equipment & Services,Energy,2184,2018-02-08,2026-10-16,4.1668304e+07
-WHF,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,402980.0
-WHG,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,272129.0
-WHK,Oil & Gas Midstream,Energy,91,2026-06-09,2026-10-16,4.060397e+06
-WHLR,REIT - Retail,Real Estate,2358,2017-06-01,2026-10-16,467509.0
-WHLRD,REIT - Retail,Real Estate,2323,2017-07-21,2026-10-16,0.0
-WHLRP,REIT - Retail,Real Estate,2358,2017-06-01,2026-10-16,4632.0
-WHR,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2358,2017-06-01,2026-10-16,8.604732e+07
-WHWK,Biotechnology,Healthcare,2178,2018-02-16,2026-10-16,1.165185e+06
-WIMI,Advertising Agencies,Communication Services,1645,2020-04-01,2026-10-16,127332.0
-WINA,Specialty Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.8427478e+07
-WING,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.435035e+08
-WIT,Information Technology Services,Technology,2358,2017-06-01,2026-10-16,1.206014e+07
-WIX,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,8.803147e+07
-WK,Software - Application,Technology,2358,2017-06-01,2026-10-16,6.1909704e+07
-WKC,Oil & Gas Refining & Marketing,Energy,2358,2017-06-01,2026-10-16,3.4803216e+07
-WKHS,Auto Manufacturers,Consumer Cyclical,2358,2017-06-01,2026-10-16,210490.0
-WKSP,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,162372.0
 WLCO,Shell Companies,Financial Services,49,2026-08-10,2026-10-16,4925.0
-WLDN,Engineering & Construction,Industrials,2358,2017-06-01,2026-10-16,1.564101e+07
-WLDS,Consumer Electronics,Technology,1028,2022-09-13,2026-10-16,245410.0
-WLFC,Rental & Leasing Services,Industrials,2358,2017-06-01,2026-10-16,1.1462865e+07
-WLII,Shell Companies,Financial Services,136,2026-04-06,2026-10-16,0.0
-WLK,Specialty Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,6.053229e+07
-WLKP,Chemicals,Basic Materials,2358,2017-06-01,2026-10-16,519587.0
 WLTH,Software - Application,Technology,211,2025-12-15,2026-10-16,1.3496868e+07
-WLY,Publishing,Communication Services,2358,2017-06-01,2026-10-16,2.09477e+07
-WLYB,Publishing,Communication Services,2358,2017-06-01,2026-10-16,8867.0
-WM,Waste Management,Industrials,2358,2017-06-01,2026-10-16,4.7315056e+08
-WMB,Oil & Gas Midstream,Energy,2358,2017-06-01,2026-10-16,4.9369e+08
-WMG,Entertainment,Communication Services,1602,2020-06-03,2026-10-16,5.084378e+07
-WMK,Grocery Stores,Consumer Defensive,2358,2017-06-01,2026-10-16,1.1442352e+07
-WMS,Building Products & Equipment,Industrials,2358,2017-06-01,2026-10-16,9.362799e+07
-WMT,Discount Stores,Consumer Defensive,2358,2017-06-01,2026-10-16,2.4267036e+09
-WNC,Farm & Heavy Construction Machinery,Industrials,2358,2017-06-01,2026-10-16,9.744116e+06
-WNEB,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,632031.0
 WNW,Internet Retail,Consumer Cyclical,1466,2020-12-15,2026-10-16,111384.0
-WOK,Medical Devices,Healthcare,539,2024-08-23,2026-10-16,123648.0
-WOLF,Semiconductors,Technology,265,2025-09-29,2026-10-16,9.494914e+07
-WOOF,Specialty Retail,Consumer Cyclical,1446,2021-01-14,2026-10-16,4.64602e+06
-WOR,Metal Fabrication,Industrials,2358,2017-06-01,2026-10-16,1.4098976e+07
-WORX,Health Information Services,Healthcare,2354,2017-06-01,2026-10-16,2800.0
-WPAC,Shell Companies,Financial Services,164,2026-02-24,2026-10-16,0.0
-WPM,Gold,Basic Materials,2358,2017-06-01,2026-10-16,2.353237e+08
-WPP,Advertising Agencies,Communication Services,2358,2017-06-01,2026-10-16,7.846108e+06
-WPRT,Auto Parts,Consumer Cyclical,2358,2017-06-01,2026-10-16,92988.0
-WQEY,Software - Application,Technology,10,2026-10-05,2026-10-16,668699.0
-WRAP,Scientific & Technical Instruments,Technology,2109,2018-05-29,2026-10-16,828749.0
-WRB,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,1.4368291e+08
-WRBY,Medical Instruments & Supplies,Healthcare,1268,2021-09-29,2026-10-16,6.5713908e+07
-WRD,Software - Application,Technology,495,2024-10-25,2026-10-16,1.244984e+07
-WRLD,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,1.1647e+07
-WRN,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,2.477189e+06
-WS,Steel,Basic Materials,724,2023-11-28,2026-10-16,9.049095e+06
-WSBC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,3.1991866e+07
 WSBCO,Banks - Regional,Financial Services,277,2025-09-11,2026-10-16,126450.0
-WSBF,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.326115e+06
-WSBK,Banks - Regional,Financial Services,367,2025-05-02,2026-10-16,69006.0
-WSC,Rental & Leasing Services,Industrials,2358,2017-06-01,2026-10-16,5.167009e+07
-WSE,Information Technology Services,Technology,111,2026-05-11,2026-10-16,1.7142924e+07
-WSFS,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,2.6869012e+07
-WSHP,Internet Content & Information,Communication Services,231,2025-11-14,2026-10-16,347529.0
-WSM,Specialty Retail,Consumer Cyclical,2358,2017-06-01,2026-10-16,2.3543493e+08
-WSO,Industrial Distribution,Industrials,2358,2017-06-01,2026-10-16,1.4007214e+08
-WSO.B,Industrial Distribution,Industrials,2358,2017-06-01,2026-10-16,0.0
-WST,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,1.8045918e+08
-WSTN,Shell Companies,Financial Services,200,2025-12-31,2026-10-16,2029.0
-WT,Asset Management,Financial Services,2358,2017-06-01,2026-10-16,5.3772164e+07
-WTBA,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,1.57152e+06
-WTF,Capital Markets,Financial Services,389,2025-04-01,2026-10-16,6342.0
-WTFC,Banks - Regional,Financial Services,2358,2017-06-01,2026-10-16,7.2701496e+07
-WTFCN,Banks - Regional,Financial Services,362,2025-05-09,2026-10-16,349551.0
-WTG,Shell Companies,Financial Services,314,2025-07-21,2026-10-16,24334.0
 WTI,Oil & Gas E&P,Energy,2358,2017-06-01,2026-10-16,1.3101675e+07
-WTM,Insurance - Property & Casualty,Financial Services,2358,2017-06-01,2026-10-16,4.1196576e+07
-WTRG,Utilities - Regulated Water,Utilities,2358,2017-06-01,2026-10-16,8.891019e+07
-WTS,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,6.4742012e+07
-WTTR,Oil & Gas Equipment & Services,Energy,2341,2017-06-26,2026-10-16,3.002082e+07
-WTW,Insurance Brokers,Financial Services,2358,2017-06-01,2026-10-16,1.4833427e+08
-WU,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,5.302684e+07
-WULF,Capital Markets,Financial Services,2358,2017-06-01,2026-10-16,4.6884947e+08
-WVE,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,1.3488058e+07
-WVVI,Beverages - Wineries & Distilleries,Consumer Defensive,2358,2017-06-01,2026-10-16,16100.0
-WVVIP,Beverages - Wineries & Distilleries,Consumer Defensive,2358,2017-06-01,2026-10-16,39000.0
-WW,Medical Care Facilities,Healthcare,329,2025-06-27,2026-10-16,2.77952e+06
-WWD,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,1.9600402e+08
-WWR,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,379215.0
-WWW,Footwear & Accessories,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.445048e+07
-WXM,Industrial Distribution,Industrials,389,2025-04-01,2026-10-16,70494.0
-WYFI,Information Technology Services,Technology,301,2025-08-07,2026-10-16,2.9403498e+07
-WYHG,Packaged Foods,Consumer Defensive,473,2024-11-26,2026-10-16,186140.0
-WYNN,Resorts & Casinos,Consumer Cyclical,2358,2017-06-01,2026-10-16,1.5464214e+08
 WYY,Information Technology Services,Technology,2358,2017-06-01,2026-10-16,1.128962e+06
-XAIR,Medical Devices,Healthcare,2099,2018-06-12,2026-10-16,122430.0
-XBIO,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,80851.0
-XBIT,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,69324.0
-XBP,Software - Infrastructure,Technology,1370,2021-05-05,2026-10-16,33320.0
-XCBE,Shell Companies,Financial Services,151,2026-03-13,2026-10-16,1990.0
-XCH,Electrical Equipment & Parts,Industrials,528,2024-09-10,2026-10-16,32160.0
-XCUR,Biotechnology,Healthcare,2113,2018-05-22,2026-10-16,33250.0
-XE,Specialty Industrial Machinery,Industrials,122,2026-04-24,2026-10-16,9.106409e+07
-XEL,Utilities - Regulated Electric,Utilities,2358,2017-06-01,2026-10-16,3.9138026e+08
-XELB,Apparel Manufacturing,Consumer Cyclical,2358,2017-06-01,2026-10-16,37035.0
-XENE,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,4.207923e+07
-XERS,Drug Manufacturers - Specialty & Generic,Healthcare,2092,2018-06-21,2026-10-16,1.5099083e+07
-XFLH,Shell Companies,Financial Services,155,2026-03-09,2026-10-16,4000.0
-XFOR,Biotechnology,Healthcare,2240,2017-11-16,2026-10-16,2.333835e+06
-XGN,Diagnostics & Research,Healthcare,1779,2019-09-19,2026-10-16,1.993464e+06
-XHG,Insurance Brokers,Financial Services,1746,2019-11-05,2026-10-16,31255.0
-XHLD,Broadcasting,Communication Services,421,2025-02-13,2026-10-16,9.709679e+06
-XIFR,Utilities - Renewable,Utilities,2358,2017-06-01,2026-10-16,9.611245e+06
-XLAB,Software - Infrastructure,Technology,292,2025-08-20,2026-10-16,302640.0
-XLO,Biotechnology,Healthcare,1251,2021-10-22,2026-10-16,89100.0
-XMAX,"Furnishings, Fixtures & Appliances",Consumer Cyclical,2358,2017-06-01,2026-10-16,4.809468e+06
-XMTR,Industrial Distribution,Industrials,1331,2021-06-30,2026-10-16,6.181164e+07
-XNCR,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,2.8206276e+07
-XNDU,Software - Infrastructure,Technology,145,2026-03-23,2026-10-16,1.3729784e+07
-XNET,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,1.067838e+06
-XOM,Oil & Gas Integrated,Energy,2358,2017-06-01,2026-10-16,2.1159635e+09
-XOS,Farm & Heavy Construction Machinery,Industrials,1471,2020-12-08,2026-10-16,528632.0
-XP,Capital Markets,Financial Services,1721,2019-12-11,2026-10-16,1.0731447e+08
-XPEL,Auto Parts,Consumer Cyclical,1835,2019-07-01,2026-10-16,8.425252e+06
-XPER,Software - Application,Technology,1023,2022-09-20,2026-10-16,2.31874e+06
-XPEV,Auto Manufacturers,Consumer Cyclical,1542,2020-08-27,2026-10-16,6.748562e+07
-XPL,Other Industrial Metals & Mining,Basic Materials,2358,2017-06-01,2026-10-16,58149.0
-XPO,Trucking,Industrials,2358,2017-06-01,2026-10-16,1.878553e+08
-XPOF,Leisure,Consumer Cyclical,1315,2021-07-23,2026-10-16,3.519695e+06
-XPON,Electrical Equipment & Parts,Industrials,1140,2022-04-01,2026-10-16,164088.0
-XPRO,Oil & Gas Equipment & Services,Energy,2358,2017-06-01,2026-10-16,1.4128368e+07
-XRAY,Medical Instruments & Supplies,Healthcare,2358,2017-06-01,2026-10-16,4.5764124e+07
-XRN,REIT - Healthcare Facilities,Real Estate,2358,2017-06-01,2026-10-16,3.3418e+06
-XRPN,Capital Markets,Financial Services,332,2025-06-24,2026-10-16,767312.0
-XRTX,Biotechnology,Healthcare,1272,2021-09-23,2026-10-16,37866.0
-XRX,Business Equipment & Supplies,Industrials,2358,2017-06-01,2026-10-16,6.580848e+06
-XSLL,Shell Companies,Financial Services,148,2026-03-18,2026-10-16,1982.0
-XTER,Shell Companies,Financial Services,36,2026-08-27,2026-10-16,89179.0
-XTIA,Aerospace & Defense,Industrials,2358,2017-06-01,2026-10-16,776871.0
-XTLB,Biotechnology,Healthcare,2358,2017-06-01,2026-10-16,9280.0
-XTND,Computer Hardware,Technology,30,2026-09-04,2026-10-16,3.253249e+06
-XTNT,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,45952.0
 XWEL,Diagnostics & Research,Healthcare,2358,2017-06-01,2026-10-16,26230.0
-XXI,Education & Training Services,Consumer Defensive,547,2024-08-13,2026-10-16,8.768784e+06
-XXII,Tobacco,Consumer Defensive,2358,2017-06-01,2026-10-16,45962.0
-XYF,Credit Services,Financial Services,2030,2018-09-19,2026-10-16,253172.0
-XYL,Specialty Industrial Machinery,Industrials,2358,2017-06-01,2026-10-16,2.2229618e+08
-XYZ,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,3.265881e+08
-XZO,Insurance - Diversified,Financial Services,238,2025-11-05,2026-10-16,3.152301e+06
-YAAS,Software - Application,Technology,456,2024-12-20,2026-10-16,40690.0
-YALA,Software - Application,Technology,1519,2020-09-30,2026-10-16,1.495008e+06
-YARW,Biotechnology,Healthcare,2194,2018-01-25,2026-10-16,1.400296e+06
-YB,Software - Application,Technology,369,2025-04-30,2026-10-16,293394.0
-YCBD,Drug Manufacturers - Specialty & Generic,Healthcare,2239,2017-11-17,2026-10-16,51750.0
-YCY,Shell Companies,Financial Services,243,2025-10-29,2026-10-16,1023.0
-YDDL,Waste Management,Industrials,257,2025-10-09,2026-10-16,30772.0
-YDES,Biotechnology,Healthcare,288,2025-08-26,2026-10-16,799092.0
-YDKG,Advertising Agencies,Communication Services,2358,2017-06-01,2026-10-16,12367.0
-YELP,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,2.482166e+07
-YETI,Leisure,Consumer Cyclical,2004,2018-10-25,2026-10-16,6.738135e+07
-YEXT,Software - Infrastructure,Technology,2358,2017-06-01,2026-10-16,4.973248e+06
-YFOR,Specialty Business Services,Industrials,625,2024-04-22,2026-10-16,587840.0
-YHC,Beverages - Wineries & Distilleries,Consumer Defensive,800,2023-08-10,2026-10-16,100284.0
-YHGJ,Packaging & Containers,Consumer Cyclical,2358,2017-06-01,2026-10-16,6446.0
-YHNA,Shell Companies,Financial Services,485,2024-11-08,2026-10-16,1119.0
-YI,Medical Distribution,Healthcare,2035,2018-09-12,2026-10-16,19215.0
-YIBO,Computer Hardware,Technology,685,2024-01-25,2026-10-16,2714.0
-YICC,Shell Companies,Financial Services,69,2026-07-13,2026-10-16,5958.0
-YJ,Internet Retail,Consumer Cyclical,1875,2019-05-03,2026-10-16,135828.0
 YMAT,Specialty Chemicals,Basic Materials,307,2025-07-30,2026-10-16,72540.0
-YMM,Software - Application,Technology,1336,2021-06-23,2026-10-16,5.292505e+07
-YMT,Software - Application,Technology,293,2025-08-19,2026-10-16,170688.0
-YORW,Utilities - Regulated Water,Utilities,2358,2017-06-01,2026-10-16,3.933956e+06
-YOU,Software - Application,Technology,1331,2021-06-30,2026-10-16,7.399425e+07
-YOUL,Education & Training Services,Consumer Defensive,321,2025-07-10,2026-10-16,28883.0
-YPF,Oil & Gas Integrated,Energy,2358,2017-06-01,2026-10-16,5.16716e+07
-YQ,Education & Training Services,Consumer Defensive,1473,2020-12-04,2026-10-16,14760.0
-YRD,Credit Services,Financial Services,2358,2017-06-01,2026-10-16,51058.0
-YSG,Household & Personal Products,Consumer Defensive,1483,2020-11-19,2026-10-16,187782.0
 YSS,Aerospace & Defense,Industrials,181,2026-01-29,2026-10-16,2.2802546e+07
-YSWY,Grocery Stores,Consumer Defensive,124,2026-04-22,2026-10-16,6.410694e+06
-YSXT,Specialty Business Services,Industrials,458,2024-12-18,2026-10-16,10584.0
-YTRA,Travel Services,Consumer Cyclical,2358,2017-06-01,2026-10-16,23436.0
-YUM,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,3.278436e+08
-YUMC,Restaurants,Consumer Cyclical,2358,2017-06-01,2026-10-16,6.368536e+07
-YXT,Software - Application,Technology,544,2024-08-16,2026-10-16,51460.0
-YYAI,Software - Infrastructure,Technology,1450,2021-01-08,2026-10-16,396753.0
-Z,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,1.1889938e+08
-ZBAO,Insurance Brokers,Financial Services,639,2024-04-02,2026-10-16,580230.0
-ZBH,Medical Devices,Healthcare,2358,2017-06-01,2026-10-16,1.7541466e+08
 ZBIO,Biotechnology,Healthcare,525,2024-09-13,2026-10-16,1.6951514e+07
-ZBRA,Communication Equipment,Technology,2358,2017-06-01,2026-10-16,1.9989226e+08
-ZCMD,Health Information Services,Healthcare,1671,2020-02-25,2026-10-16,344310.0
-ZD,Advertising Agencies,Communication Services,2358,2017-06-01,2026-10-16,2.9543856e+07
-ZDAI,Engineering & Construction,Industrials,562,2024-07-23,2026-10-16,14322.0
-ZDGE,Internet Content & Information,Communication Services,2358,2017-06-01,2026-10-16,132240.0
-ZENA,Software - Infrastructure,Technology,513,2024-10-01,2026-10-16,2.66288e+06
 ZEO,Solar,Technology,1213,2021-12-16,2026-10-16,121466.0
 ZEPP,Consumer Electronics,Technology,2184,2018-02-08,2026-10-16,132264.0
 ZETA,Software - Infrastructure,Technology,1345,2021-06-10,2026-10-16,1.6728341e+08
