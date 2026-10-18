@@ -1,0 +1,48 @@
+# Kajian gred sektor/industri (18 Okt 2026): sejarah kekuatan kumpulan seluruh pasaran AS (BacktestShariah2/kajian/gred_pasaran.py).
+# Sekali jalan, cawangan kajian-gred sahaja; tidak menyentuh main, papertrade atau lejar.
+name: Kajian gred
+
+on:
+  push:
+    branches: [kajian-gred]
+    paths:
+      - 'BacktestShariah2/kajian/gred_pasaran.py'
+      - '.github/workflows/kajian_gred.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kajian-gred
+  cancel-in-progress: true
+
+jobs:
+  kajian:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kajian-gred
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pasang pakej
+        run: pip install -q pandas numpy pyarrow yfinance
+      - name: Muat turun dan kira kumpulan
+        run: python3 BacktestShariah2/kajian/gred_pasaran.py
+      - name: Simpan harga penuh (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: harga_penuh
+          path: BacktestShariah2/kajian/harga_penuh.parquet
+          retention-days: 30
+      - name: Commit dan push
+        run: |
+          git config user.name "kajian[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add BacktestShariah2/kajian/data
+          if git diff --cached --quiet; then echo "tiada perubahan"; exit 0; fi
+          git commit -q -m "Kajian gred: data kumpulan seluruh pasaran AS"
+          git push -q origin HEAD:kajian-gred
