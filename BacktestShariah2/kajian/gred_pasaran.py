@@ -6,6 +6,10 @@
 # Keluaran (BacktestShariah2/kajian/data/):
 #   kumpulan_harian.csv.gz — setiap (tarikh, jenis Sektor/Industri, nama): n saham layak (tutup >= USD5), indeks sama rata,
 #     median pulangan 1M/1W/3M/6M/12M, segmen suku q2–q4 (gaya IBD), breadth 1M, % > SMA50 / SMA200, median pangkat RS saham.
+#     Tambahan (kajian 2): hi52 (% saham >= 98% paras tertinggi 52 minggu, Minervini), dekat_hi (median tutup / paras
+#     tertinggi 52 minggu, George–Hwang), rs80 (% saham RS >= 80, O'Neil), top3_rs (purata RS 3 saham teratas), udv (median
+#     nisbah volum naik/turun 50 hari, O'Neil).
+#   panel_20sesi.csv.gz — setiap 20 sesi, semua saham layak: pulangan hadapan 20 sesi, r5/r1m/r3m, RS, dekat_hi, a50/a200, dolar.
 #   meta_saham.csv — ticker, industri, sektor, bar, tarikh pertama/akhir (audit); gagal.txt — ticker tanpa data.
 # Guna: python3 gred_pasaran.py [--mula 2017-06-01] [--had N]
 import argparse, os, sys, time
@@ -49,7 +53,7 @@ def muat_turun(tickers, mula, saiz=200, rehat=2.0):
     return C, V, gagal
 
 
-def kira(C, peta):
+def kira(C, peta, V=None):
     C = C.dropna(how='all')
     R = C.pct_change(fill_method=None).clip(-0.5, 1.0)
     layak = C.shift(1) >= HARGA_MIN                      # tapis harga pada tutup semalam
@@ -60,6 +64,12 @@ def kira(C, peta):
     a50 = C > C.rolling(50).mean(); a200 = C > C.rolling(200).mean()
     skor_rs = 0.4 * ret[63] + 0.2 * q[2] + 0.2 * q[3] + 0.2 * q[4]
     pangkat = skor_rs.where(layak).rank(axis=1, pct=True) * 98 + 1          # RS 1–99 seluruh pasaran
+    hi = C.rolling(252, min_periods=200).max(); dekat = C / hi
+    udv = None
+    if V is not None:                                                       # nisbah volum naik/turun 50 hari (O'Neil)
+        V = V.reindex(C.index)
+        naik = (V.where(R > 0, 0)).rolling(50).sum(); turun = (V.where(R < 0, 0)).rolling(50).sum()
+        udv = (naik / turun.replace(0, np.nan)).clip(0, 10)
     out = []
     for jenis, kol in [('Sektor', 'sektor'), ('Industri', 'industri')]:
         for nama, g in peta.groupby(kol):
@@ -76,12 +86,30 @@ def kira(C, peta):
                                'br1m': (r21 > 0).sum(axis=1) / r21.notna().sum(axis=1).replace(0, np.nan),
                                'a50': a50[c].where(L).sum(axis=1) / n.replace(0, np.nan),
                                'a200': a200[c].where(L).sum(axis=1) / n.replace(0, np.nan),
-                               'rs_med': pangkat[c].median(axis=1)})
+                               'rs_med': pangkat[c].median(axis=1),
+                               'hi52': (dekat[c] >= 0.98).where(L).sum(axis=1) / n.replace(0, np.nan),
+                               'dekat_hi': dekat[c].where(L).median(axis=1),
+                               'rs80': (pangkat[c] >= 80).sum(axis=1) / n.replace(0, np.nan),
+                               'top3_rs': pd.Series(np.sort(np.nan_to_num(pangkat[c].values, nan=-1), axis=1)[:, -3:].mean(axis=1),
+                                                     index=C.index).where(pangkat[c].notna().sum(axis=1) >= 3),
+                               'udv': udv[c].where(L).median(axis=1) if udv is not None else np.nan})
             df.insert(0, 'nama', nama); df.insert(0, 'jenis', jenis)
             out.append(df[df.n >= MIN_SAHAM])
     K = pd.concat(out).rename_axis('tarikh').reset_index()
     K['tarikh'] = pd.to_datetime(K.tarikh).dt.strftime('%Y-%m-%d')
-    return K
+    # panel saham setiap 20 sesi (pulangan hadapan 20 sesi tidak bertindih) untuk ujian seluruh pasaran
+    tt = C.index[(C.index >= '2018-06-01')][::20]
+    fwd = C.shift(-20) / C - 1
+    dol = (C * V).rolling(20).median() if V is not None else C * np.nan
+    P = []
+    for t in tt:
+        ok = layak.loc[t] & C.loc[t].notna()
+        x = pd.DataFrame({'fwd20': fwd.loc[t], 'r5': ret[5].loc[t], 'r1m': ret[21].loc[t], 'r3m': ret[63].loc[t],
+                          'rs': pangkat.loc[t], 'dekat_hi': dekat.loc[t], 'a50': a50.loc[t].astype(int),
+                          'a200': a200.loc[t].astype(int), 'dolar': dol.loc[t]})[ok]
+        x.insert(0, 'tarikh', t.strftime('%Y-%m-%d')); P.append(x)
+    P = pd.concat(P).rename_axis('ticker').reset_index()
+    return K, P
 
 
 def main(argv=None):
@@ -94,8 +122,9 @@ def main(argv=None):
     tickers = sorted(peta.index.astype(str))[: a.had or None]
     C, V, gagal = muat_turun(tickers, a.mula)
     os.makedirs(OUT, exist_ok=True)
-    K = kira(C, peta.loc[[t for t in peta.index if t in C.columns]])
+    K, P = kira(C, peta.loc[[t for t in peta.index if t in C.columns]], V)
     K.round(5).to_csv(os.path.join(OUT, 'kumpulan_harian.csv.gz'), index=False, compression='gzip')
+    P.round(4).to_csv(os.path.join(OUT, 'panel_20sesi.csv.gz'), index=False, compression='gzip')
     meta = pd.DataFrame({'industri': peta.industri, 'sektor': peta.sektor}).loc[list(C.columns)]
     meta['bar'] = C.notna().sum().values
     meta['mula'] = [C[t].first_valid_index() for t in C.columns]; meta['akhir'] = [C[t].last_valid_index() for t in C.columns]
