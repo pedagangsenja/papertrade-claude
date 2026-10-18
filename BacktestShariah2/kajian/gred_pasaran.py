@@ -89,7 +89,7 @@ def main(argv=None):
     ap.add_argument('--mula', default='2017-06-01')
     ap.add_argument('--had', type=int, default=0)
     a = ap.parse_args(argv)
-    peta = pd.read_csv(os.path.join(BS2, 'papertrade', 'peta_industri.csv')).drop_duplicates('ticker').set_index('ticker')
+    peta = pd.read_csv(os.path.join(BS2, 'papertrade', 'peta_industri.csv'), keep_default_na=False).drop_duplicates('ticker').set_index('ticker')
     peta['sektor'] = peta.industri.map(SEKTOR_INDUSTRI).fillna('Lain-lain')
     tickers = sorted(peta.index.astype(str))[: a.had or None]
     C, V, gagal = muat_turun(tickers, a.mula)
