@@ -1,0 +1,108 @@
+# Ujian luar sampel kajian portfolio 10 slot (kajian/KAJIAN_PORTFOLIO.md): saham AS bukan set 431, 2009–2026 (yfinance).
+# Sesi Claude tidak boleh capai Yahoo; runner GitHub boleh. Skrip: BacktestShariah2/kajian/portfolio_luar/kaji_luar.py.
+# Kerja: data (tarik) -> matriks dagangan 134 kaedah (jana) -> gabung (ciri, sim) -> commit keputusan kecil ke cawangan larian.
+# Data harga dan dagangan hanya artifact (tidak dicommit).
+name: Kajian portfolio luar sampel
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/kajian-portfolio-luar]
+    paths:
+      - '.github/workflows/kajian_portfolio_luar.yml'
+      - 'BacktestShariah2/kajian/portfolio_luar/kaji_luar.py'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kajian-portfolio-luar
+  cancel-in-progress: true
+
+env:
+  BAHAGIAN: 10
+
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pasang pakej
+        run: pip install -q pandas numpy yfinance
+      - name: Tarik harga (yfinance, sejak 2009)
+        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py tarik --keluar /tmp/luar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: data-harga
+          path: /tmp/luar/harga.pkl
+          retention-days: 3
+          compression-level: 6
+
+  dagangan:
+    needs: data
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        bahagian: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pasang pakej
+        run: pip install -q pandas numpy numba
+      - uses: actions/download-artifact@v4
+        with:
+          name: data-harga
+          path: /tmp/luar
+      - name: Dagangan kaedah (bahagian matriks)
+        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py jana --data /tmp/luar/harga.pkl --bahagian ${{ matrix.bahagian }}/${{ env.BAHAGIAN }} --keluar /tmp/luar/T --proses 4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dagangan-${{ matrix.bahagian }}
+          path: /tmp/luar/T
+          retention-days: 3
+
+  gabung:
+    needs: dagangan
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pasang pakej
+        run: pip install -q pandas numpy numba
+      - uses: actions/download-artifact@v4
+        with:
+          name: data-harga
+          path: /tmp/luar
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dagangan-*
+          path: /tmp/luar/T
+          merge-multiple: true
+      - name: Calon dan ukuran hari isyarat
+        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py ciri --data /tmp/luar/harga.pkl --dagangan /tmp/luar/T --keluar /tmp/luar
+      - name: Simulasi portfolio 10 slot
+        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py sim --data /tmp/luar/harga.pkl --calon /tmp/luar/calon.pkl --keluar BacktestShariah2/kajian/portfolio_luar
+      - name: Commit dan push keputusan
+        run: |
+          git config user.name "kajian-portfolio-luar[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add BacktestShariah2/kajian/portfolio_luar
+          if git diff --cached --quiet; then echo "tiada perubahan"; exit 0; fi
+          git commit -q -m "Kajian portfolio luar sampel: keputusan $(date -u +%Y-%m-%d)"
+          for n in 1 2 3; do
+            if git pull -q --rebase origin "${{ github.ref_name }}" && git push -q origin "HEAD:${{ github.ref_name }}"; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((n * 15))
+          done
+          exit 1
