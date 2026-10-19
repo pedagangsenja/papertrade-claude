@@ -61,12 +61,16 @@ jobs:
         with:
           name: data-harga
           path: /tmp/luar
-      - name: Dagangan kaedah (bahagian matriks)
-        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py jana --data /tmp/luar/harga.pkl --bahagian ${{ matrix.bahagian }}/${{ env.BAHAGIAN }} --keluar /tmp/luar/T --proses 4
+      - name: Dagangan kaedah, alam luar (bahagian matriks)
+        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py jana --data /tmp/luar/harga.pkl --alam luar --bahagian ${{ matrix.bahagian }}/${{ env.BAHAGIAN }} --keluar /tmp/luar/T --proses 4
+      - name: Dagangan kaedah, kawalan set 431 (data dan tempoh sama)
+        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py jana --data /tmp/luar/harga.pkl --alam 431 --bahagian ${{ matrix.bahagian }}/${{ env.BAHAGIAN }} --keluar /tmp/luar/T431 --proses 4
       - uses: actions/upload-artifact@v4
         with:
           name: dagangan-${{ matrix.bahagian }}
-          path: /tmp/luar/T
+          path: |
+            /tmp/luar/T
+            /tmp/luar/T431
           retention-days: 3
 
   gabung:
@@ -87,12 +91,17 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           pattern: dagangan-*
-          path: /tmp/luar/T
+          path: /tmp/luar
           merge-multiple: true
-      - name: Calon dan ukuran hari isyarat
-        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py ciri --data /tmp/luar/harga.pkl --dagangan /tmp/luar/T --keluar /tmp/luar
-      - name: Simulasi portfolio 10 slot
-        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py sim --data /tmp/luar/harga.pkl --calon /tmp/luar/calon.pkl --keluar BacktestShariah2/kajian/portfolio_luar
+      - name: Calon dan ukuran hari isyarat (alam luar; kawalan 431)
+        run: |
+          ls /tmp/luar/T | wc -l; ls /tmp/luar/T431 | wc -l
+          python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py ciri --data /tmp/luar/harga.pkl --alam luar --dagangan /tmp/luar/T --keluar /tmp/luar
+          python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py ciri --data /tmp/luar/harga.pkl --alam 431 --dagangan /tmp/luar/T431 --keluar /tmp/luar
+      - name: Simulasi portfolio 10 slot, alam luar
+        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py sim --data /tmp/luar/harga.pkl --alam luar --calon /tmp/luar/calon_luar.pkl --keluar BacktestShariah2/kajian/portfolio_luar
+      - name: Simulasi portfolio 10 slot, kawalan set 431
+        run: python3 BacktestShariah2/kajian/portfolio_luar/kaji_luar.py sim --data /tmp/luar/harga.pkl --alam 431 --calon /tmp/luar/calon_431.pkl --keluar BacktestShariah2/kajian/portfolio_luar/kawalan_431
       - name: Commit dan push keputusan
         run: |
           git config user.name "kajian-portfolio-luar[bot]"

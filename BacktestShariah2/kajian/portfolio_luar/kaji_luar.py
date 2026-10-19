@@ -6,13 +6,15 @@
 # sejak 2009 (auto_adjust=False), SPY dan QQQ untuk `idx`. Calon = dagangan enjin v1.2 134 kaedah; isyarat layak hanya jika
 # tutup hari isyarat >= USD10 dan purata nilai dagangan 50 hari >= USD5 juta. Keluar L1 = kaedah, L2 = Chandelier tutup 4xATR14
 # paras naik tanpa henti kaedah. Enjin portfolio, metrik, skor walk-forward dan peraturan diimport daripada kaji_portfolio.py.
+# Kawalan: `--alam 431` mengulang semuanya atas set 431 dengan data yfinance dan tempoh yang sama (kawalan_431/), supaya
+# beza alam luar lawan set 431 tidak dikelirukan oleh beza sumber data atau tempoh.
 # Dijalankan oleh GitHub Actions `.github/workflows/kajian_portfolio_luar.yml` (sesi Claude tidak boleh capai Yahoo):
 #   python3 kaji_luar.py tarik --keluar <folder>                       -> <folder>/harga.pkl (artifact, tidak dicommit)
-#   python3 kaji_luar.py jana  --data <folder>/harga.pkl --bahagian i/n --keluar <folder>/T   (matriks; artifact)
-#   python3 kaji_luar.py ciri  --data <folder>/harga.pkl --dagangan <folder>/T --keluar <folder>   -> calon.pkl
-#   python3 kaji_luar.py sim   --data <folder>/harga.pkl --calon <folder>/calon.pkl --keluar BacktestShariah2/kajian/portfolio_luar
+#   python3 kaji_luar.py jana  --data <folder>/harga.pkl --alam luar --bahagian i/n --keluar <folder>/T   (matriks; artifact)
+#   python3 kaji_luar.py ciri  --data <folder>/harga.pkl --alam luar --dagangan <folder>/T --keluar <folder>   -> calon_luar.pkl
+#   python3 kaji_luar.py sim   --data <folder>/harga.pkl --alam luar --calon <folder>/calon_luar.pkl --keluar BacktestShariah2/kajian/portfolio_luar
 #   python3 kaji_luar.py ringkas --keluar BacktestShariah2/kajian/portfolio_luar
-# Ujian setempat (data set 431 sebagai alam): tarik --dataset data_mentah ... ; sim --mula 2020-11-02 --h1 2023-10-31.
+# Ujian setempat (data set 431 sebagai alam luar): tarik --dataset data_mentah ... ; sim --mula 2020-11-02 --h1 2023-10-31.
 import argparse, glob, importlib, json, os, pickle, sys, time
 import numpy as np, pandas as pd
 
@@ -87,10 +89,11 @@ def cmd_tarik(a):
                       'hingga': str(D['c'].index[-1].date()), 'gagal': len(gagal), 'pelik_dibuang': pelik}))
 
 
-def muat_data(path):
+def muat_data(path, alam='luar'):
     """Bersihkan data (lonjakan sehari `kajian_rs.bersih`, OHLC tidak konsisten) dan bina fr/idx seperti dataset_S.
-    Pulang fr (saham luar sahaja), idx (SPY, QQQ), c (tutup bersih semua saham untuk RS), v (volum), meta."""
-    D = pd.read_pickle(path)
+    alam = 'luar' (saham bukan set 431) atau '431' (kawalan: set 431 dengan data dan tempoh yang sama).
+    Pulang fr (saham alam sahaja), idx (SPY, QQQ), c (tutup bersih semua saham untuk RS), v (volum), meta."""
+    D = pd.read_pickle(path); senarai = D['luar'] if alam == 'luar' else D['s431']
     c0 = D['c'].astype('float64'); c = kajian_rs.bersih(c0); lonjak = (c0.notna() & c.isna()).sum()
     o, h, l, v = (D[k].astype('float64')[c.columns] for k in 'ohlv')
     ok = (c.notna() & o.notna() & h.notna() & l.notna() & (l > 0) & (h >= l) & (c <= h * 1.002) & (c >= l * 0.998)
@@ -104,10 +107,11 @@ def muat_data(path):
         j = c.columns.get_loc(t); m = okn[:, j]
         g = pd.DataFrame({'open': on[m, j], 'high': hn[m, j], 'low': ln[m, j], 'close': cn[m, j], 'volume': vn[m, j]}, index=dates[m])
         g['turnover'] = g.close * g.volume; return g
-    buang = set(rosak); fr = {t: bina(t) for t in D['luar'] if t not in buang}
+    buang = set(rosak); fr = {t: bina(t) for t in senarai if t not in buang}
     idx = {k: bina(k) for k in ('SPY', 'QQQ') if k in c.columns}
     saham = [t for t in c.columns if t not in buang and t not in ('SPY', 'QQQ')]
-    meta = {'luar': len(fr), 's431': len([t for t in D['s431'] if t not in buang]), 'rosak': rosak, 'gagal_tarik': len(D.get('gagal', [])),
+    meta = {'alam': alam, 'saham_alam': len(fr), 'luar': len([t for t in D['luar'] if t not in buang]),
+            's431': len([t for t in D['s431'] if t not in buang]), 'rosak': rosak, 'gagal_tarik': len(D.get('gagal', [])),
             'pelik_dibuang': int(D.get('pelik', 0)), 'bar': int(len(dates)), 'dari': str(dates[0].date()), 'hingga': str(dates[-1].date())}
     return fr, idx, c[saham], v[saham], meta
 
@@ -151,9 +155,9 @@ def cmd_jana(a):
     OUT = a.keluar; os.makedirs(OUT, exist_ok=True); sys.path.insert(0, KOD)
     i, n = (int(x) for x in a.bahagian.split('/'))
     mids = sorted(os.path.basename(p)[:-3] for p in glob.glob(f'{KOD}/kaedah/M*.py'))[i::n]
-    FR, IDX, _, _, meta = muat_data(a.data)
+    FR, IDX, _, _, meta = muat_data(a.data, a.alam)
     LAYAK = {t: layak_siri(g.close, g.volume).to_numpy() for t, g in FR.items()}
-    print('bahagian', a.bahagian, 'kaedah', mids, '| saham', len(FR), '| rosak', len(meta['rosak']), flush=True)
+    print('alam', a.alam, 'bahagian', a.bahagian, 'kaedah', mids, '| saham', len(FR), '| rosak', len(meta['rosak']), flush=True)
     with get_context('fork').Pool(a.proses) as p:
         for mid, n1, n0, s in p.imap_unordered(_kerja, mids): print(f'{mid}: {n1} layak / {n0} dagangan, {s:.0f}s', flush=True)
 
@@ -170,7 +174,7 @@ def rs_pasaran(c):
 def cmd_ciri(a):
     from kaji_lorong2 import COST, sim, tatasusunan
     T = pd.concat([pd.read_pickle(f) for f in sorted(glob.glob(f'{a.dagangan}/*.pkl'))], ignore_index=True)
-    fr, idx, c_all, _, meta = muat_data(a.data); so, sc = idx['SPY'].open, idx['SPY'].close
+    fr, idx, c_all, _, meta = muat_data(a.data, a.alam); so, sc = idx['SPY'].open, idx['SPY'].close
     n = len(T); print('dagangan', n, 'kaedah', T.mid.nunique(), 'saham', T.ticker.nunique(), flush=True)
     F = {k: np.full(n, np.nan) for k in ('buka', 'ret2', 'mom126', 'mutlak12', 'mansfield', 'atrp')}
     ex2 = np.empty(n, 'datetime64[ns]'); akhir2 = np.zeros(n, bool)
@@ -196,8 +200,20 @@ def cmd_ciri(a):
     v = rs.to_numpy()[np.maximum(di, 0), np.maximum(tj, 0)]; v[(di < 0) | (tj < 0)] = np.nan; T['rs'] = v
     T['ind_skor'] = np.nan                                  # tiada gred industri sejarah bagi alam luar
     T['konsensus'] = T.groupby(['ticker', 'sig']).mid.transform('nunique')
-    os.makedirs(a.keluar, exist_ok=True); T.to_pickle(os.path.join(a.keluar, 'calon.pkl'))
+    os.makedirs(a.keluar, exist_ok=True); T.to_pickle(os.path.join(a.keluar, f'calon_{a.alam}.pkl'))
     print('liputan: rs %.1f%%, mansfield %.1f%%, spy_atas %.1f%%' % tuple(100 * T[k].notna().mean() for k in ('rs', 'mansfield', 'spy_atas')))
+
+
+def dagangan_ikut_rs(P, h1_akhir):
+    """Diagnostik: hasil setiap dagangan calon (tempoh portfolio) mengikut gred RS pasaran hari isyarat, L1 dan L2, kedua-dua era."""
+    T = P.T; gred = pd.cut(T.rs, [0, 59, 79, 89, 94, 99], labels=['01-59', '60-79', '80-89', '90-94', '95-99'])
+    era = np.where(T.ent <= h1_akhir, 'era 1', 'era 2'); rows = []
+    for L in (1, 2):
+        r = P.ret[L]; x = r - T[f'spy{L}'].to_numpy(); d = P.ex_i[L] - P.ent_i + 1
+        for (e, g), ix in pd.Series(np.arange(len(T))).groupby([era, gred], observed=True).indices.items():
+            rows.append(dict(L=L, era=e, rs=g, n=len(ix), purata=r[ix].mean(), median=np.median(r[ix]), menang=(r[ix] > 0).mean(),
+                             p5=np.percentile(r[ix], 5), lebih_spy=np.nanmean(x[ix]), hari=d[ix].mean(), rugi50=(r[ix] <= -0.5).mean()))
+    return pd.DataFrame(rows)
 
 
 # ---------------------------------------------------------------- 4. simulasi portfolio (enjin kaji_portfolio)
@@ -227,9 +243,10 @@ def tahunan(cv):
 def cmd_sim(a):
     import kaji_portfolio as kp
     mula, h1_akhir = pd.Timestamp(a.mula), pd.Timestamp(a.h1); kp.H1_AKHIR = h1_akhir
-    T = pd.read_pickle(a.calon); fr, idx, c_all, v_all, meta = muat_data(a.data)
+    T = pd.read_pickle(a.calon); fr, idx, c_all, v_all, meta = muat_data(a.data, a.alam)
     P = kp.Pasar(T, fr, mula=mula); os.makedirs(a.keluar, exist_ok=True)
-    print('calon portfolio', len(P.T), 'hari', len(P.hari), P.hari[0].date(), '->', P.hari[-1].date(), flush=True)
+    print('alam', a.alam, 'calon portfolio', len(P.T), 'hari', len(P.hari), P.hari[0].date(), '->', P.hari[-1].date(), flush=True)
+    dagangan_ikut_rs(P, h1_akhir).to_csv(os.path.join(a.keluar, 'dagangan_rs.csv'), index=False, float_format='%.5f')
     rows, thn, pct = [], {}, {}
     def rekod(nama, L, slots, benih, cv, npos, ambil):
         m = kp.metrik(cv, npos, P, L, ambil); rows.append(dict(peraturan=nama, benih=benih, L=L, slot_n=slots, **m)); return m, cv
@@ -276,13 +293,15 @@ def cmd_sim(a):
                 u = pd.Series(kp.portfolio.amaun * P.ret[L][ambil]).groupby(P.T.ticker.to_numpy()[ambil]).sum()
                 rows.append(dict(L=L, buang=nb, peraturan=nama, **m, tumpuan5=u.nlargest(5).sum() / u.sum(),
                                  **{f'{k}_pct_rawak': 100 * (r[k] < m[k]).mean() for k in ('cagr', 'h1', 'h2')},
-                                 atas5=', '.join(u.nlargest(5).index)))
+                                 atas5=', '.join(u.nlargest(5).index), bawah5=', '.join(u.nsmallest(5).index),
+                                 untung_atas5=u.nlargest(5).sum(), rugi_bawah5=u.nsmallest(5).sum(), untung_bersih=u.sum()))
             print('ketahanan L', L, 'buang', nb, 'siap', flush=True)
     pd.DataFrame(rows).to_csv(os.path.join(a.keluar, 'ketahanan.csv'), index=False, float_format='%.5f')
     meta.update(dagangan=int(len(T)), calon_portfolio=int(len(P.T)), kaedah=int(T.mid.nunique()), saham_dagangan=int(P.T.ticker.nunique()),
                 mula=str(mula.date()), h1_akhir=str(h1_akhir.date()), hingga_portfolio=str(P.hari[-1].date()),
                 pemenang_40=', '.join(f'{t} {100 * jum[t]:.0f}%' for t in atas[:40]), harga_min=HARGA_MIN, nilai_min=NILAI_MIN,
-                dijana=pd.Timestamp.utcnow().strftime('%Y-%m-%d %H:%M UTC'))
+                rugi50_pct={f'L{L}': round(100 * float((P.ret[L] <= -0.5).mean()), 3) for L in (1, 2)},
+                dijana=pd.Timestamp.now('UTC').strftime('%Y-%m-%d %H:%M UTC'))
     json.dump(meta, open(os.path.join(a.keluar, 'meta.json'), 'w'), indent=1)
     cmd_ringkas(a)
 
@@ -306,18 +325,21 @@ def cmd_ringkas(a):
         Y = G.drop(columns=['L', 'buang']).copy()
         for c in ('cagr', 'mdd', 'h1', 'h2', 'menang', 'purata', 'lebih_spy', 'tumpuan5'): Y[c] = 100 * Y[c]
         print(f'\n== Ketahanan L{L}, buang {nb} saham teratas')
-        print(Y[['peraturan', 'cagr', 'mdd', 'mar', 'h1', 'h2', 'n', 'tumpuan5', 'cagr_pct_rawak', 'h1_pct_rawak', 'h2_pct_rawak', 'atas5']].set_index('peraturan').round(1).to_string())
+        print(Y[['peraturan', 'cagr', 'mdd', 'mar', 'h1', 'h2', 'n', 'tumpuan5', 'cagr_pct_rawak', 'h1_pct_rawak', 'h2_pct_rawak', 'atas5', 'bawah5']].set_index('peraturan').round(1).to_string())
     print('\n== Pulangan tahunan %'); print(pd.read_csv(os.path.join(a.keluar, 'tahunan.csv'), index_col=0).to_string())
+    R = pd.read_csv(os.path.join(a.keluar, 'dagangan_rs.csv'))
+    for c in ('purata', 'median', 'menang', 'p5', 'lebih_spy', 'rugi50'): R[c] = 100 * R[c]
+    print('\n== Dagangan calon ikut gred RS pasaran (%)'); print(R.round(2).to_string(index=False))
 
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); s = ap.add_subparsers(dest='cmd', required=True)
     x = s.add_parser('tarik'); x.add_argument('--keluar', required=True); x.add_argument('--dataset'); x.set_defaults(f=cmd_tarik)
-    x = s.add_parser('jana'); x.add_argument('--data', required=True); x.add_argument('--bahagian', default='0/1')
+    x = s.add_parser('jana'); x.add_argument('--data', required=True); x.add_argument('--bahagian', default='0/1'); x.add_argument('--alam', default='luar', choices=['luar', '431'])
     x.add_argument('--keluar', required=True); x.add_argument('--proses', type=int, default=4); x.set_defaults(f=cmd_jana)
-    x = s.add_parser('ciri'); x.add_argument('--data', required=True); x.add_argument('--dagangan', required=True)
+    x = s.add_parser('ciri'); x.add_argument('--data', required=True); x.add_argument('--dagangan', required=True); x.add_argument('--alam', default='luar', choices=['luar', '431'])
     x.add_argument('--keluar', required=True); x.set_defaults(f=cmd_ciri)
-    x = s.add_parser('sim'); x.add_argument('--data', required=True); x.add_argument('--calon', required=True)
+    x = s.add_parser('sim'); x.add_argument('--data', required=True); x.add_argument('--calon', required=True); x.add_argument('--alam', default='luar', choices=['luar', '431'])
     x.add_argument('--keluar', default=HERE); x.add_argument('--mula', default=str(MULA.date())); x.add_argument('--h1', default=str(H1_AKHIR.date()))
     x.set_defaults(f=cmd_sim)
     x = s.add_parser('ringkas'); x.add_argument('--keluar', default=HERE); x.set_defaults(f=cmd_ringkas)
