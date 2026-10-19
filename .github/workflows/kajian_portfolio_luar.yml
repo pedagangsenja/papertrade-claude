@@ -1,16 +1,11 @@
 # Ujian luar sampel kajian portfolio 10 slot (kajian/KAJIAN_PORTFOLIO.md): saham AS bukan set 431, 2009–2026 (yfinance).
 # Sesi Claude tidak boleh capai Yahoo; runner GitHub boleh. Skrip: BacktestShariah2/kajian/portfolio_luar/kaji_luar.py.
 # Kerja: data (tarik) -> matriks dagangan 134 kaedah (jana) -> gabung (ciri, sim) -> commit keputusan kecil ke cawangan larian.
-# Data harga dan dagangan hanya artifact (tidak dicommit).
+# Data harga dan dagangan hanya artifact (tidak dicommit). Manual sahaja (workflow_dispatch); ~30 minit.
 name: Kajian portfolio luar sampel
 
 on:
   workflow_dispatch:
-  push:
-    branches: [claude/kajian-portfolio-luar]
-    paths:
-      - '.github/workflows/kajian_portfolio_luar.yml'
-      - 'BacktestShariah2/kajian/portfolio_luar/kaji_luar.py'
 
 permissions:
   contents: write

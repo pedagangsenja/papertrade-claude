@@ -116,3 +116,141 @@ pertama lejar). Hasil dalam `BacktestShariah2/portfolio_slot/`: `RINGKASAN.md`, 
 - Tiada had kecairan atau slippage selain kos 0.1%. Masuk pada harga buka.
 - Satu tempoh sahaja (Nov 2020 – Okt 2026), yang termasuk ledakan semikonduktor/AI 2023–2026. Persentil rawak bersifat kasar
   (30 benih; 10 bagi 5/20 slot; 20 dalam ujian ketahanan).
+
+## Ujian luar sampel (saham bukan set 431, 2011–2026)
+Soalan (19 Okt 2026): adakah peraturan pemilihan di atas, terutama RS pasaran + Chandelier, masih mengatasi rawak apabila
+alamnya bukan set 431 (senarai Shariah hari ini yang dipilih dengan melihat pemenang) dan tempohnya lebih panjang, termasuk
+2011–2019 sebelum kaedah-kaedah ini direka? Skrip `kajian/portfolio_luar/kaji_luar.py`, dijalankan oleh GitHub Actions
+`kajian_portfolio_luar.yml` (sesi Claude tidak boleh capai Yahoo): tarik data → matriks 10 kerja dagangan 134 kaedah →
+gabung (ciri, simulasi). Hasil: `kajian/portfolio_luar/` (`keputusan.csv`, `penanda.csv`, `ketahanan.csv`, `tahunan.csv`,
+`dagangan_rs.csv`, `meta.json`) dan kawalan `kajian/portfolio_luar/kawalan_431/`. Enjin portfolio, metrik, skor kaedah
+walk-forward dan peraturan diimport daripada `kaji_portfolio.py` tanpa ubah. Data harga dan dagangan hanya artifact Actions.
+
+### Data dan kaedah
+- Alam luar: saham dalam `data/skrin/tv_us.csv` tolak set 431, tolak simbol pelik (757: ETF, dana, saham keutamaan/depositari,
+  waran, hak, unit, SPAC "Acquisition", nota/debentur, simbol dengan `/`). yfinance 2009-01-02 hingga 2026-10-16
+  (`auto_adjust=False`: terlaras pecahan, tidak terlaras dividen), OHLCV, `turnover` = tutup × volum; SPY dan QQQ untuk `idx`.
+  2,998 saham dimuat turun, 0 gagal; 208 dibuang (lonjakan sehari `kajian_rs.bersih` > 5 kali, OHLC tidak konsisten > 1% bar,
+  atau < 300 bar) → 2,790 saham.
+- Calon: dagangan enjin v1.2 semua 134 kaedah (`sedia` setiap kaedah, `enjin.trades`; kaedah silang merentas seluruh alam
+  luar). Isyarat layak hanya jika tutup hari isyarat ≥ USD10 (seperti lejar) dan purata nilai dagangan 50 hari ≥ USD5 juta:
+  5,364,868 dagangan atas 2,407 saham; 5,102,357 calon masuk sejak 3 Jan 2011 (dagangan 2009–2010 hanya sejarah skor
+  walk-forward). L1 = keluar kaedah, L2 = Chandelier tutup 4×ATR14 paras naik tanpa henti kaedah (`kaji_lorong2.sim`).
+- RS pasaran dikira sendiri setiap hari (formula `kajian_rs.py`: 40% r63 + 20% tiga suku sebelumnya, persentil 1–99 antara
+  semua saham yang dimuat turun termasuk set 431, tutup ≥ USD5 dan ≥ 253 bar), nilai hari isyarat sahaja; liputan 97.4%.
+  Industri v2 dan Gabungan tiada (tiada gred industri sejarah bagi alam ini).
+- Portfolio 10 slot seperti di atas (saiz min(tunai, ekuiti semalam × 10%), satu posisi setiap saham, masuk buka esok, kos 0.1%
+  setiap belah). Tempoh 3 Jan 2011 – 16 Okt 2026; era 1 = 2011–2019 (sebelum kaedah direka), era 2 = 2020–2026. Rawak 30 benih
+  (20 dalam ujian buang pemenang); persentil = % benih rawak yang dikalahkan bagi CAGR/era 1/era 2.
+- Penanda aras: SPY; beli dan pegang sama rata saham layak pada 3 Jan 2011 (690 saham); sama rata saham layak imbang semula
+  setiap 21 hari (purata 1,211 saham; saham tersenarai kemudian masuk apabila layak).
+- Kawalan: semuanya diulang atas set 431 dengan data yfinance dan tempoh yang sama (422 saham; 1,368,811 dagangan), supaya
+  beza alam tidak dikelirukan oleh beza sumber data atau tempoh.
+
+### Keputusan alam luar (10 slot; persentil lawan rawak CAGR/era 1/era 2)
+| Peraturan | L1 CAGR % | L1 MDD % | L1 era 1/era 2 % | L1 persentil | L2 CAGR % | L2 MDD % | L2 era 1/era 2 % | L2 persentil |
+|---|---|---|---|---|---|---|---|---|
+| Rawak (median 30 benih; p5–p95 L1 −2.8–7.1, L2 1.1–9.8) | 2.2 | −52.9 | 4.7/−1.3 | – | 4.9 | −48.8 | 8.4/1.7 | – |
+| Konsensus kaedah | −0.6 | −56.4 | 6.4/−9.2 | 13/73/7 | 4.1 | −49.3 | 4.3/3.8 | 40/7/60 |
+| RS pasaran | 3.8 | −73.7 | −0.0/9.1 | 63/0/87 | −6.2 | −87.0 | 2.3/−16.4 | 0/3/0 |
+| RS disahkan dahulu | 4.6 | −64.4 | 8.0/0.3 | 67/90/57 | 1.4 | −72.7 | 5.0/−3.1 | 7/10/23 |
+| Kaedah walk-forward 12 bulan | 6.2 | −55.7 | 8.1/3.7 | 90/93/77 | 1.1 | −56.3 | 5.4/−4.3 | 7/10/23 |
+| Momentum 6 bulan | −11.4 | −90.1 | −8.5/−15.2 | 0/0/0 | −11.8 | −97.0 | 6.2/−31.0 | 0/23/0 |
+| Volatiliti rendah | −3.2 | −60.4 | −0.9/−6.2 | 7/0/20 | 2.2 | −36.1 | 3.5/0.6 | 17/3/47 |
+| Volatiliti tinggi | −9.1 | −89.5 | −7.3/−11.5 | 0/0/3 | −26.3 | −99.5 | −8.2/−44.8 | 0/0/0 |
+
+| Penanda aras (tempoh sama) | CAGR % | MDD % | Era 1 % | Era 2 % |
+|---|---|---|---|---|
+| SPY | 12.0 | −34.1 | 10.9 | 13.6 |
+| Beli dan pegang sama rata (690 saham layak 3 Jan 2011) | 9.3 | −39.3 | 10.2 | 8.1 |
+| Sama rata saham layak, imbang semula 21 hari (purata 1,211 saham) | 8.9 | −42.4 | 10.0 | 7.4 |
+
+- Dagangan yang diambil (10 slot): rawak L1 2,146 dagangan, menang 37%, purata +0.3%, pegang 19 hari; rawak L2 862, 41%,
+  +1.4%, 47 hari. RS pasaran L1 2,005, 36%, +1.0%, 18 hari; RS pasaran L2 992, 36%, +0.2%, 41 hari. Kaedah walk-forward L1
+  929, 36%, +1.9%, 44 hari. Volatiliti tinggi L2 1,041, 30%, −4.3%, 39 hari.
+- Tiada satu pun peraturan, termasuk rawak, mencapai SPY (12.0%) atau sama rata (8.9–9.3%). Pemilihan rawak hanya 2.2% (L1) dan
+  4.9% (L2) dengan MDD −49% hingga −53%: isyarat kaedah atas alam luar mengekori pasaran dengan lebihan SPY negatif setiap
+  dagangan (−0.6% hingga −1.0%).
+- RS pasaran + L2 ialah peraturan terburuk kedua: CAGR −6.2%, MDD −87%, persentil 0/3/0, dan di bawah rawak dalam kedua-dua era
+  (era 1 2.3% lawan rawak 8.4%; era 2 −16.4% lawan 1.7%). Dengan L1 ia 3.8% (persentil 63), tetapi era 1 −0.0% (persentil 0)
+  dan MDD −74%. 20 slot tidak membantu (RS L1 −0.7%, L2 −0.8%; rawak 2.9% dan 5.6%).
+- Satu-satunya peraturan yang di atas rawak dalam kedua-dua era ialah Kaedah walk-forward 12 bulan dengan L1 (6.2%; persentil
+  90/93/77), tetapi masih di bawah SPY dan sama rata, dan dengan L2 ia 1.1% (persentil 7). Momentum 6 bulan dan volatiliti
+  tinggi musnah (MDD −90% hingga −99.5%). Volatiliti rendah + L2 ialah satu-satunya dengan MDD lebih cetek daripada SPY (−36%)
+  tetapi CAGR 2.2%.
+- Pulangan tahunan RS pasaran L2 (luar): 2013 +78%, 2016 −53%, 2019 +68%, 2024 +42%, 2025 −44%, 2026 −61%. Saham RS 95–99
+  seluruh pasaran ialah saham lonjakan spekulatif (NVAX, CLDX, VKTX, RIOT, AXSM, GME, HYMC, CLSK): untung lima teratas 207%
+  modal awal, rugi lima terbawah −67%, bersih −65%.
+
+### Kawalan: set 431 dengan data dan tempoh yang sama
+| Peraturan | L1 CAGR % | L1 MDD % | L1 era 1/era 2 % | L1 persentil | L2 CAGR % | L2 MDD % | L2 era 1/era 2 % | L2 persentil |
+|---|---|---|---|---|---|---|---|---|
+| Rawak (median 30 benih; p5–p95 L1 3.6–11.4, L2 6.3–14.1) | 7.6 | −43.5 | 4.8/12.6 | – | 10.0 | −39.7 | 7.5/14.2 | – |
+| Konsensus kaedah | 10.1 | −37.0 | 4.6/17.9 | 73/50/87 | 16.2 | −34.7 | 10.0/25.1 | 100/83/100 |
+| RS pasaran | 18.1 | −43.0 | 9.1/31.1 | 100/93/100 | 24.1 | −44.9 | 9.8/45.9 | 100/80/100 |
+| RS disahkan dahulu | 18.9 | −45.4 | 9.0/33.5 | 100/93/100 | 25.8 | −45.2 | 12.0/46.9 | 100/97/100 |
+| Kaedah walk-forward 12 bulan | 12.3 | −33.6 | 7.8/18.6 | 97/73/87 | 5.3 | −46.5 | 1.5/10.6 | 3/7/27 |
+| Momentum 6 bulan | 15.1 | −46.1 | 9.1/23.5 | 100/93/97 | 24.0 | −44.4 | 15.1/36.8 | 100/100/100 |
+| Volatiliti rendah | 4.7 | −33.2 | 6.8/2.0 | 10/70/0 | 7.5 | −24.2 | 9.7/4.6 | 20/80/3 |
+| Volatiliti tinggi | 8.9 | −71.4 | 9.7/7.7 | 70/93/27 | 17.2 | −66.3 | 4.9/35.7 | 100/20/100 |
+
+Penanda aras set 431 (tempoh sama): beli dan pegang sama rata 203 saham layak 3 Jan 2011 CAGR 10.2% (era 9.0/11.8), sama rata
+imbang semula 21 hari 12.9% (9.8/17.2). Dagangan RS pasaran L2: 881, menang 42%, purata +6.3%, pegang 46 hari (lawan +0.2% dalam
+alam luar). Dengan data dan kod yang sama, set 431 mengulang corak kajian asal: RS pasaran + L2 24.1% (persentil 100/80/100),
+kekal 19.8% (100/100/100) selepas 100 pemenang terbesar dibuang (rawak 5.7%). Dalam era 1 (2011–2019, sebelum kaedah direka),
+RS + L2 dalam set 431 masih 9.8% lawan rawak 7.5% (persentil 80), tetapi hampir sama dengan sama rata 9.0–9.8%.
+
+### Ketahanan: buang 40 / 100 saham pulangan tertinggi 2011–2026 (alam luar; rawak 20 benih)
+| Peraturan (CAGR %; persentil CAGR/era 1/era 2) | L2 buang 0 | L2 buang 40 | L2 buang 100 | L1 buang 0 | L1 buang 40 | L1 buang 100 |
+|---|---|---|---|---|---|---|
+| Rawak (median) | 5.0 | 4.6 | 3.6 | 1.9 | 2.6 | 2.0 |
+| RS pasaran | −6.2 (0/5/0) | −1.1 (0/10/10) | −5.4 (0/0/0) | 3.8 (70/0/85) | −3.0 (0/90/0) | −12.7 (0/0/0) |
+| Momentum 6 bulan | −11.8 (0/25/0) | −10.5 (0/30/0) | −4.6 (0/45/0) | −11.4 (0/0/0) | −17.4 (0/0/0) | −21.4 (0/0/0) |
+| Volatiliti tinggi | −26.3 (0/0/0) | −26.4 (0/0/0) | −23.8 (0/0/0) | −9.1 (0/0/5) | −0.7 (15/40/35) | −14.1 (0/0/0) |
+
+Pemenang yang dibuang (CELH, TSLA, IESC, PARR, PAYS, PATK, FIX, TPL, MPWR …) hampir tidak mengubah rawak (5.0% → 3.6%): dalam
+alam luar, peraturan pemilihan tidak pernah bergantung pada pemenang besar; ia memilih saham lonjakan yang kemudian runtuh.
+Kawalan set 431 pula: RS pasaran L2 24.1% → 18.8% (buang 40) → 19.8% (buang 100), persentil 100 dalam semua ujian; momentum
+6 bulan 24.0% → 18.9% → 19.3%.
+
+### Hasil setiap dagangan calon ikut gred RS pasaran hari isyarat (L2; purata % / lebihan SPY %)
+| RS | Luar era 1 | Luar era 2 | Set 431 era 1 | Set 431 era 2 |
+|---|---|---|---|---|
+| 01–59 | +0.77 / −0.75 | +0.75 / −1.35 | +0.58 / −0.89 | +1.94 / +0.05 |
+| 60–79 | +1.01 / −0.36 | +1.10 / −0.94 | +0.90 / −0.21 | +2.61 / +0.50 |
+| 80–89 | +1.29 / −0.19 | +1.58 / −0.65 | +0.67 / −0.26 | +3.02 / +0.79 |
+| 90–94 | +1.22 / −0.19 | +2.43 / −0.05 | +1.49 / +0.29 | +4.16 / +2.45 |
+| 95–99 | +0.32 / −0.86 | −0.17 / −2.56 | +2.16 / +0.77 | +6.99 / +5.61 |
+
+Dalam alam luar, RS 95–99 ialah gred terburuk (median −5.0% dan −8.6%, menang 33–36%), dan tiada gred yang mengatasi SPY;
+RS 90–94 sedikit lebih baik daripada gred rendah tetapi masih di bawah SPY. Dalam set 431, hasil naik secara monoton dengan RS
+dalam kedua-dua era, dan gred 95–99 paling baik (+7.0% setiap dagangan era 2). Ini sepadan dengan `kajian/rs/RINGKASAN.md` §1
+dan §11 (RS 95–99 seluruh pasaran: median ≈ 0; lebihan dalam set 431 ≈ 5 kali ganda saham lain).
+
+### Kesimpulan
+- **RS pasaran + Chandelier tidak mengatasi rawak di luar set 431.** Atas 2,790 saham AS bukan set 431, 2011–2026, ia CAGR
+  −6.2%, MDD −87%, persentil 0 lawan rawak dalam CAGR dan kedua-dua era, dan kekal di bawah rawak dalam semua ujian buang
+  pemenang. Ia juga tidak mengatasi sama rata (8.9–9.3%) mahupun SPY (12.0%).
+- **Tiada peraturan konsisten merentas kedua-dua era** kecuali Kaedah walk-forward 12 bulan dengan keluar L1 (persentil
+  90/93/77), dan itupun CAGR 6.2%, di bawah sama rata dan SPY. Dengan L2 ia gagal (persentil 7).
+- **Beza alam, bukan beza data atau tempoh.** Dengan data yfinance dan tempoh yang sama, set 431 mengulang corak kajian
+  asal (RS + L2 24.1%, persentil 100, tahan buang 100 pemenang). Kelebihan RS yang dilaporkan di atas ialah sifat senarai
+  431 (saham berkualiti yang dipilih pada 2026 dengan melihat hasilnya; RS tinggi dalam senarai itu ialah pemenang berkualiti),
+  bukan sifat RS secara umum: dalam seluruh pasaran, RS 95–99 ialah saham lonjakan spekulatif yang purata hasilnya negatif.
+- **Isyarat kaedah sendiri tidak menambah nilai di luar set 431**: walaupun alam ini mempunyai bias kemandirian yang
+  menguntungkan (hanya saham yang masih tersenarai hari ini), pemilihan rawak daripada isyarat 134 kaedah hanya 2–5% setahun
+  dengan MDD −50%, jauh di bawah beli dan pegang alam yang sama.
+- Cadangan "10 slot RS + Chandelier" di atas tidak mempunyai bukti luar set 431. Jejak hadapan RS_10 lawan RAWAK_10
+  (`portfolio_slot/`) mengimbas alam Shariah ≥ USD10 yang lebih luas daripada set 431; hasilnya perlu dibaca dengan jangkaan
+  bahawa RS 95–99 seluruh pasaran bukan kelebihan. Tiada peraturan papertrade diubah.
+
+### Bias dan batasan yang masih ada
+- yfinance tiada saham yang sudah dinyahsenarai: alam = senarai hari ini (bias kemandirian memihak kepada semua strategi, namun
+  hasilnya tetap lemah). Saham yang muflis atau diambil alih sebelum 2026 tiada.
+- Harga tidak terlaras dividen/pecahan korporat: dividen khas dan pemisahan (spin-off) kelihatan sebagai jatuh harga, yang
+  merugikan posisi L2 dan penanda aras beli-pegang sama-sama. Penapis ≥ USD10 memakai harga terlaras pecahan, jadi tempoh
+  sebelum pecahan songsang boleh lulus penapis.
+- Alam tv_us.csv ialah saham AS semasa dengan tapisan simbol pelik berdasarkan nama (757 dibuang); 208 saham dibuang kerana data
+  rosak atau pendek. RS dipangkat antara 3,212 saham yang dimuat turun, bukan ~3,800 seperti `kajian_rs.py`.
+- Kaedah-kaedah dibina atas set 431 2019–2026; era 1 (2011–2019) benar-benar di luar masa, era 2 bertindih dengan tempoh
+  reka bentuk. Tiada gelinciran selain kos 0.1%; persentil rawak kasar (30 benih; 20 dalam ujian buang pemenang).
