@@ -486,9 +486,10 @@ td .sbk{max-width:260px}
 .mkn>div{display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px}
 .mkn>div>span:first-child{color:var(--muted)}
 .mkn .pill{font-size:.64rem;padding:0 6px}
-.kli{list-style:none;margin:0;padding:0;display:grid;gap:2px}.kli li{position:relative;padding-left:11px;line-height:1.38;color:var(--fg-2)}.kli li::before{content:"";position:absolute;left:1px;top:.62em;width:4px;height:4px;border-radius:50%;background:var(--line-2)}
+.kli{list-style:none;margin:0;padding:0;display:grid;gap:4px}.kli li{position:relative;padding-left:12px;line-height:1.35;color:var(--fg-2)}.kli li::before{content:"";position:absolute;left:1px;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--muted)}
 .kli li.mut{color:var(--muted)}.kli b{font-weight:700;color:var(--fg)}.kli.k-henti b{color:var(--neg-tx)}.kli.k-pegang b{color:var(--warn)}
 .kbk{min-width:0}@media (min-width:761px){td.knm{min-width:230px}}.mkn .kpl{margin-bottom:3px}
+.kasal{margin-top:10px;font-size:.84rem;color:var(--muted)}.kasal summary{cursor:pointer;color:var(--fg-2);font-weight:600}.kasal .dl{margin-top:8px;font-size:.84rem}.kasal dd{color:var(--muted)}
 .kpl{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 5px}.kpl .pill{font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;padding:1px 7px}
 .kring{display:block;margin-top:5px;padding:3px 0 3px 8px;border-left:2px solid var(--accent);color:var(--fg-2);font-size:.8rem;line-height:1.38;white-space:normal}.klg{display:flex;flex-wrap:wrap;align-items:center;gap:5px 6px;font-size:.78rem;color:var(--muted);margin:0 0 10px}.klg .pill{font-size:.62rem;letter-spacing:.04em;padding:1px 6px}.klg span.sp{margin-right:6px}
 
@@ -1749,7 +1750,8 @@ function katPilOf(k,it){const P=[],j=it.join(' ');let r=it;
     else{const m=/(\d+(?:[.,]\d+)?\s*%)|(\d+(?:[.,]\d+)?\s*×\s*ATR\d*)/.exec(j);P.push(katPil('henti','■ '+(m?m[0].replace(/\s+/g,''):'Paras harga')));}}
   return [P,r];}
 const katNombor=t=>t.replace(/(^|[^A-Za-z0-9\/])(\d+(?:[.,]\d+)?(?:\s*(?:%|×|R\b))?)/g,'$1<b>$2</b>');
-function katSenarai(k,s){const it=katPecah(s);if(!it.length)return '<span class="mut">–</span>';const[P,r]=katPilOf(k,it);
+/* baris = r.baris[k] (baris pendek disusun semula; pil tetap dari teks asal); tiada → teks asal dipecah */
+function katSenarai(k,s,baris){const it=katPecah(s);if(!it.length)return '<span class="mut">–</span>';let[P,r]=katPilOf(k,it);if(Array.isArray(baris))r=baris;
   return `<div class="kbk"><div class="kpl">${P.join('')}</div>${r.length?`<ul class="kli k-${k}">${r.map(x=>`<li class="${/^(langkau|batal|tiada|hanya)/i.test(x)?'mut':''}">${katNombor(esc(x))}</li>`).join('')}</ul>`:''}</div>`;}
 const KAT_LBL={masuk:'Masuk',keluar:'Keluar',pegang:'Pegang',henti:'Henti rugi'};
 const KAT_LEGENDA=`<div class="klg">${katPil('beli','● Beli')}<span class="sp">bila beli</span>${katPil('sasaran','◎ Sasaran')}<span class="sp">jual pada paras untung</span>${katPil('isyarat','▼ Isyarat jual')}<span class="sp">jual bila syarat kena</span>${katPil('had','⏱ Maks')}<span class="sp">had masa</span>${katPil('tiada','∞ Tiada had')}${katPil('henti','■ Henti')}<span class="sp">paras potong rugi</span></div>`;
@@ -1769,7 +1771,7 @@ function renderKaedah(){
   if(!k||!Array.isArray(k.rows)||!k.rows.length){el.innerHTML=`<div class="panel empty">${S.live?'Belum ada katalog kaedah dalam pangkalan data.':'Memuatkan katalog kaedah…'}</div>`;return;}
   const kf=S.kf;const all=katGabung(k.rows);let rows=all;
   const nBt=all.filter(r=>r.bt).length,nPt=all.filter(r=>r.pt).length,ptN=all.reduce((t,r)=>t+(r.pt?r.pt.n:0),0);
-  if(kf.q){const q=kf.q.toLowerCase();rows=rows.filter(r=>[r.id,r.nama,r.varian,r.ringkas,r.pencipta,r.sumber,r.masuk,r.keluar,r.pegang,r.henti].join(' ').toLowerCase().includes(q));}
+  if(kf.q){const q=kf.q.toLowerCase();rows=rows.filter(r=>[r.id,r.nama,r.varian,r.ringkas,r.pencipta,r.sumber,r.masuk,r.keluar,r.pegang,r.henti,JSON.stringify(r.baris||'')].join(' ').toLowerCase().includes(q));}
   const tiada=all.filter(r=>/^tidak dinyatakan/i.test(r.pencipta||'')).length;
   const tmax=all.filter(r=>/maks/i.test(r.pegang||'')).length;
   const wrap=r=>'wrap',ptT='Papertrade C';
@@ -1779,10 +1781,10 @@ function renderKaedah(){
     btCol={k:'bt',t:'Backtest (set 431)',tip:'kat_bt',v:r=>r.bt?r.bt.cagr:null,f:selBt,c:()=>'wrap lrg'},
     ptCol={k:'pt',t:ptT,tip:'kat_pt',v:r=>r.pt?r.pt.avg:null,f:selPt,c:()=>'wrap lrg'};
   const cols=lajurOf('kat')==='ringkas'?[{k:'id',t:'Kaedah',tip:'kaedah',l:1,v:r=>+String(r.id).replace(/\D/g,''),f:r=>`<b>${esc(r.id)}</b>${esc(r.nama)}<span class="vv">${esc(r.varian||'')}</span>${katRing(r)}`,c:()=>'name'},Object.assign({},btCol,{c:()=>'sel'}),Object.assign({},ptCol,{c:()=>'sel'}),asalCol]:[idCol,namaCol,asalCol,
-      {k:'masuk',t:KAT_LBL.masuk,tip:'kat_masuk',l:1,ns:1,f:r=>katSenarai('masuk',r.masuk),c:wrap},
-      {k:'keluar',t:KAT_LBL.keluar,tip:'kat_keluar',l:1,ns:1,f:r=>katSenarai('keluar',r.keluar),c:wrap},
-      {k:'pegang',t:KAT_LBL.pegang,tip:'kat_pegang',l:1,f:r=>katSenarai('pegang',r.pegang),c:()=>'wrap lrg'},
-      {k:'henti',t:KAT_LBL.henti,tip:'kat_henti',l:1,ns:1,f:r=>katSenarai('henti',r.henti),c:wrap},btCol,ptCol];
+      {k:'masuk',t:KAT_LBL.masuk,tip:'kat_masuk',l:1,ns:1,f:r=>katSenarai('masuk',r.masuk,r.baris&&r.baris.masuk),c:wrap},
+      {k:'keluar',t:KAT_LBL.keluar,tip:'kat_keluar',l:1,ns:1,f:r=>katSenarai('keluar',r.keluar,r.baris&&r.baris.keluar),c:wrap},
+      {k:'pegang',t:KAT_LBL.pegang,tip:'kat_pegang',l:1,f:r=>katSenarai('pegang',r.pegang,r.baris&&r.baris.pegang),c:()=>'wrap lrg'},
+      {k:'henti',t:KAT_LBL.henti,tip:'kat_henti',l:1,ns:1,f:r=>katSenarai('henti',r.henti,r.baris&&r.baris.henti),c:wrap},btCol,ptCol];
   el.innerHTML=`
   <p class="headline">Katalog <b>${all.length}</b> kaedah aktif yang diimbas setiap malam dan dibeli maya dalam Papertrade C. Setiap baris ialah varian yang <b>sedang digunakan</b> dalam kod: dari mana asalnya, bila beli, bila jual, berapa lama pegang dan di mana henti rugi. Ketik baris untuk butiran penuh.</p>
   <div class="kpis">
@@ -2062,7 +2064,7 @@ const LP_KAT={key:r=>r.id,btn:1,
   line:r=>{const o=btOf(r.id);return `<b>${esc(r.id)}</b>${o&&r.bt&&o.r.varian===r.bt.varian?kpLencana(o):''}<span class="mlx">${esc(r.nama)}</span><b class="mlr ${cls(r.pt&&r.pt.avg)}">${r.pt?sg2(r.pt.avg):'–'}</b>${mlC}`;},
   kad:r=>`<div class="mk"><div class="mk1"><span class="mkt"><b>${esc(r.id)}</b><span class="mkk">${esc(r.nama)}</span></span><b class="mku ${cls(r.pt&&r.pt.avg)}">${r.pt?sg2(r.pt.avg):'–'}</b></div>
     <div class="mkr">${esc(r.varian||'')}${r.pencipta?` · ${esc(r.pencipta)}`:''}${katRing(r)}</div>
-    <div class="mkz mkn">${['masuk','keluar','pegang','henti'].map(k=>`<div><span>${KAT_LBL[k]}</span>${katSenarai(k,r[k])}</div>`).join('')}</div>
+    <div class="mkz mkn">${['masuk','keluar','pegang','henti'].map(k=>`<div><span>${KAT_LBL[k]}</span>${katSenarai(k,r[k],r.baris&&r.baris[k])}</div>`).join('')}</div>
     <div class="mkn"><div><span data-tip="kat_bt">Backtest</span><span>${selBt(r)}</span></div><div><span data-tip="kat_pt">Papertrade</span><span>${selPt(r)}</span></div></div></div>`};
 const LP_SK={key:r=>r.jenis+'|'+r.nama,
   line:(r,i)=>`<span class="mut">${i+1}</span><b class="mlx" style="color:var(--fg);font-size:.9rem">${esc(r.nama)}</b>${fasaPill(r.fasa)}<b class="mlr ${cls(r.prestasi_1m)}">${sg2(r.prestasi_1m)}</b>${mlC}`,
@@ -2126,7 +2128,7 @@ function openKaedah(id){const k=(S.kat&&S.kat.rows||[]).find(x=>x.id===id)||null
     <p class="ln">RM10,000 → <b>${rm(kpRm(b))}</b> dalam 6.9 tahun (<b class="${cls(b.r.cagr)}">${pct(b.r.cagr)}</b> setahun) · jatuh terburuk <b class="neg">${pct(b.r.mdd,0)}</b> · menang <b>${b.r.win==null?'–':Math.round(b.r.win*10)}/10</b> · pegang <b>${fx(b.r.days,0)}</b> hari</p>${kadSaringan(b.dk)}`:'<p class="ln mut">Tiada keputusan backtest set 431.</p>';
   sheet(`<div class="lbl">${esc(id)}${k&&k.varian?' · '+esc(k.varian):''}</div><h3 id="shTitle">${esc(k?k.nama:b?b.nama:id)}</h3>
     <div class="pills">${p?kptPill(p.kep)+awalPill(p):'<span class="pill p-mute">Tiada dagangan</span>'}${pg}</div>
-    ${k?`<div class="sec"><h4>Cara kaedah ini berfungsi</h4>${k.ringkas?`<p class="ln kring" style="font-size:.92rem">${esc(k.ringkas)}</p>`:''}<dl class="dl">${['masuk','keluar','henti','pegang'].map(x=>`<dt>${KAT_LBL[x]}</dt><dd>${katSenarai(x,k[x])}</dd>`).join('')}<dt>Asal</dt><dd>${esc(k.pencipta||'–')}${k.sumber?` <span class="mut">· ${esc(k.sumber)}</span>`:''}</dd></dl></div>`:''}
+    ${k?`<div class="sec"><h4>Cara kaedah ini berfungsi</h4>${k.ringkas?`<p class="ln kring" style="font-size:.92rem">${esc(k.ringkas)}</p>`:''}<dl class="dl">${['masuk','keluar','henti','pegang'].map(x=>`<dt>${KAT_LBL[x]}</dt><dd>${katSenarai(x,k[x],k.baris&&k.baris[x])}</dd>`).join('')}<dt>Asal</dt><dd>${esc(k.pencipta||'–')}${k.sumber?` <span class="mut">· ${esc(k.sumber)}</span>`:''}</dd></dl>${k.baris?`<details class="kasal"><summary>Teks spesifikasi asal</summary><dl class="dl">${['masuk','keluar','henti','pegang'].map(x=>`<dt>${KAT_LBL[x]}</dt><dd>${esc(k[x]||'–')}</dd>`).join('')}</dl></details>`:''}</div>`:''}
     <div class="sec"><h4>Papertrade · ${esc(AKN[ak])}</h4>${ptH}</div>
     ${bvH}
     <div class="sec"><h4>Backtest (ujian data lama)</h4>${btH}</div>
