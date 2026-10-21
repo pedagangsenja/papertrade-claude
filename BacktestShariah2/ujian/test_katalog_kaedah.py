@@ -2,7 +2,7 @@ import csv, glob, json, os, re, unittest
 
 BS2 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 KATALOG = os.path.join(BS2, 'standard', 'katalog_kaedah.json')
-MEDAN = ['id', 'nama', 'varian', 'varian_kod', 'pencipta', 'sumber', 'masuk', 'keluar', 'pegang', 'henti']
+MEDAN = ['id', 'nama', 'varian', 'ringkas', 'varian_kod', 'pencipta', 'sumber', 'masuk', 'keluar', 'pegang', 'henti']
 
 
 class TestKatalogKaedah(unittest.TestCase):
