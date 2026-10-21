@@ -25,6 +25,18 @@ class TestKatalogKaedah(unittest.TestCase):
             for m in MEDAN:
                 self.assertTrue(str(r.get(m, '')).strip(), f'{r.get("id")}: medan {m} kosong')
 
+    def test_baris_pendek(self):
+        # baris = syarat disusun semula untuk tab Kaedah: 4 lajur, senarai rentetan pendek
+        for r in self.doc['rows']:
+            b = r.get('baris')
+            self.assertIsInstance(b, dict, r['id'])
+            self.assertEqual(sorted(b), ['henti', 'keluar', 'masuk', 'pegang'], r['id'])
+            for k, v in b.items():
+                self.assertIsInstance(v, list, f'{r["id"]}: {k}')
+                for x in v:
+                    self.assertTrue(isinstance(x, str) and x.strip(), f'{r["id"]}: {k}')
+                    self.assertLessEqual(len(x), 60, f'{r["id"]}: {k}: {x}')
+
     def test_nama_sama_dengan_kod(self):
         for r in self.doc['rows']:
             with open(os.path.join(BS2, 'kod', 'kaedah', r['id'] + '.py'), encoding='utf-8') as f:
