@@ -486,9 +486,11 @@ td .sbk{max-width:260px}
 .mkn>div{display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px}
 .mkn>div>span:first-child{color:var(--muted)}
 .mkn .pill{font-size:.64rem;padding:0 6px}
-.kli{list-style:none;margin:0;padding:0;display:grid;gap:3px}.kli li{display:grid;grid-template-columns:1.35em minmax(0,1fr);gap:3px;line-height:1.35}.kli li>i{font-style:normal;text-align:center}
-.kli li.act>span{font-weight:600;color:var(--fg)}.kli li.mut>span{color:var(--muted)}.kli li.warn>span{color:var(--warn);font-weight:600}.kli b{color:var(--fg)}
-.kring{display:block;margin-top:3px;color:var(--fg-2);font-size:.8rem;line-height:1.35;white-space:normal}.klg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.78rem;color:var(--muted);margin:0 0 10px}
+.kli{list-style:none;margin:0;padding:0;display:grid;gap:2px}.kli li{position:relative;padding-left:11px;line-height:1.38;color:var(--fg-2)}.kli li::before{content:"";position:absolute;left:1px;top:.62em;width:4px;height:4px;border-radius:50%;background:var(--line-2)}
+.kli li.mut{color:var(--muted)}.kli b{font-weight:700;color:var(--fg)}.kli.k-henti b{color:var(--neg-tx)}.kli.k-pegang b{color:var(--warn)}
+.kbk{min-width:0}@media (min-width:761px){td.knm{min-width:230px}}.mkn .kpl{margin-bottom:3px}
+.kpl{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 5px}.kpl .pill{font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;padding:1px 7px}
+.kring{display:block;margin-top:5px;padding:3px 0 3px 8px;border-left:2px solid var(--accent);color:var(--fg-2);font-size:.8rem;line-height:1.38;white-space:normal}.klg{display:flex;flex-wrap:wrap;align-items:center;gap:5px 6px;font-size:.78rem;color:var(--muted);margin:0 0 10px}.klg .pill{font-size:.62rem;letter-spacing:.04em;padding:1px 6px}.klg span.sp{margin-right:6px}
 
 /* v3 (20 Okt 2026): elemen bacaan pantas — satu simbol satu maksud (Panduan › Petunjuk simbol) */
 .tt{display:inline-block;width:1.05em;text-align:center;margin-right:4px;font-size:.78rem;line-height:1}.tt.pos{color:var(--pos)}.tt.wrn{color:var(--warn)}.tt.neg{color:var(--neg)}.tt.mut{color:var(--muted)}
@@ -1731,17 +1733,27 @@ function katPecah(s){const o=[];let d=0,b='';s=String(s||'').trim().replace(/\.$
   for(let i=0;i<s.length;i++){const c=s[i];if(c==='('||c==='[')d++;else if((c===')'||c===']')&&d)d--;
     if(!d&&(c===';'||(c==='.'&&/\s/.test(s[i+1]||'')&&/[A-ZÀ-Ý]/.test((s.slice(i+1).trim()[0])||'')))&&/\s/.test(s[i+1]||'')){o.push(b);b='';continue;}b+=c;}
   o.push(b);return o.map(x=>x.trim()).filter(Boolean).map(x=>x[0].toUpperCase()+x.slice(1));}
-function katIkon(k,x){
-  if(k==='masuk')return /^(beli|masuk)\b/i.test(x)?['➜','act']:/^(langkau|batal)/i.test(x)?['⏭','mut']:['✓',''];
-  if(k==='keluar')return /^tiada\b/i.test(x)?['➖','mut']:/sasaran|\b\d+R\b|mencecah|dicapai/i.test(x)?['🎯','']:['📉',''];
-  if(k==='pegang')return /tiada had/i.test(x)?['♾️','']:/maks|hari ke-|\d+ hari/i.test(x)?['⏳','']:['•','mut'];
-  return /^tiada henti/i.test(x)?['⚠️','warn']:['🛑',''];}
-function katSenarai(k,s){let it=katPecah(s);if(k==='keluar'&&/^tiada$/i.test(it[0]||''))it=[it.join('; ')];if(!it.length)return '<span class="mut">–</span>';
-  return `<ul class="kli">${it.map(x=>{const[i,c]=katIkon(k,x);let t=esc(x);if(k==='pegang')t=t.replace(/(Maks(?:imum)? [\d.,–-]+ (?:hari|minggu|bulan)(?: dagangan)?)/i,'<b>$1</b>');
-    return `<li class="${c}"><i aria-hidden="true">${i}</i><span>${t}</span></li>`;}).join('')}</ul>`;}
-const KAT_LBL={masuk:'🟢 Masuk',keluar:'🚪 Keluar',pegang:'⏳ Pegang',henti:'🛑 Henti rugi'};
-const KAT_LEGENDA='<div class="klg"><span>✓ syarat (semua mesti benar)</span><span>➜ tindakan beli</span><span>🎯 sasaran untung</span><span>📉 isyarat jual</span><span>⏳ had masa</span><span>♾️ tiada had masa</span><span>🛑 henti rugi</span><span>⚠️ tiada henti</span><span>💡 ringkasan</span></div>';
-const katRing=r=>r.ringkas?`<span class="kring">💡 ${esc(r.ringkas)}</span>`:'';
+/* pil jenis peraturan (warna tema) + butiran kelabu dengan nombor ditebalkan; henti merah, had masa kuning */
+const KAT_PIL={beli:'p-buy',sasaran:'p-hold',isyarat:'p-near',had:'p-warn',tiada:'p-mute',henti:'p-exit'};
+const katPil=(c,t)=>`<span class="pill ${KAT_PIL[c]}">${esc(t)}</span>`;
+function katPilOf(k,it){const P=[],j=it.join(' ');let r=it;
+  if(k==='masuk'){const a=it.find(x=>/^(beli|masuk)\b/i.test(x));P.push(katPil('beli',/lusa/i.test(a||'')?'● Beli buka lusa':'● Beli buka esok'));
+    if(/hujung bulan|akhir bulan/i.test(j))P.push(katPil('isyarat','Hujung bulan'));else if(/setiap minggu|mingguan.*semak|\(rabu\)/i.test(j))P.push(katPil('isyarat','Mingguan'));else if(/suku tahun/i.test(j))P.push(katPil('isyarat','Suku tahun'));
+    r=it.filter(x=>!/^beli (pada )?(harga )?buka (esok|lusa)$/i.test(x));}
+  else if(k==='keluar'){if(/^tiada$/i.test(it[0]||'')){P.push(katPil('tiada','– Tiada isyarat jual'));r=it.slice(1);}
+    else{const sa=it.some(x=>/sasaran|\b\d+R\b|mencecah|dicapai|\bATH\b/i.test(x)),is=it.some(x=>!/^sasaran/i.test(x)&&!/^jual apabila (harga )?mencecah/i.test(x));
+      if(sa)P.push(katPil('sasaran','◎ Sasaran'));if(is||!sa)P.push(katPil('isyarat','▼ Isyarat jual'));}}
+  else if(k==='pegang'){const m=/maks(?:imum)?\s+([\d.,–-]+)\s+(hari|minggu|bulan)/i.exec(j);
+    if(m)P.push(katPil('had',`⏱ Maks ${m[1]} ${m[2]}`));else if(/tiada had/i.test(j)){P.push(katPil('tiada','∞ Tiada had'));r=it.filter(x=>!/^tiada had masa$/i.test(x));}else if(/akhir bulan|hujung bulan|setiap minggu|suku tahun/i.test(j))P.push(katPil('tiada','↻ Berkala'));}
+  else{if(/^tiada henti/i.test(it[0]||''))P.push(katPil('henti','⚠ Tiada henti'));
+    else{const m=/(\d+(?:[.,]\d+)?\s*%)|(\d+(?:[.,]\d+)?\s*×\s*ATR\d*)/.exec(j);P.push(katPil('henti','■ '+(m?m[0].replace(/\s+/g,''):'Paras harga')));}}
+  return [P,r];}
+const katNombor=t=>t.replace(/(^|[^A-Za-z0-9\/])(\d+(?:[.,]\d+)?(?:\s*(?:%|×|R\b))?)/g,'$1<b>$2</b>');
+function katSenarai(k,s){const it=katPecah(s);if(!it.length)return '<span class="mut">–</span>';const[P,r]=katPilOf(k,it);
+  return `<div class="kbk"><div class="kpl">${P.join('')}</div>${r.length?`<ul class="kli k-${k}">${r.map(x=>`<li class="${/^(langkau|batal|tiada|hanya)/i.test(x)?'mut':''}">${katNombor(esc(x))}</li>`).join('')}</ul>`:''}</div>`;}
+const KAT_LBL={masuk:'Masuk',keluar:'Keluar',pegang:'Pegang',henti:'Henti rugi'};
+const KAT_LEGENDA=`<div class="klg">${katPil('beli','● Beli')}<span class="sp">bila beli</span>${katPil('sasaran','◎ Sasaran')}<span class="sp">jual pada paras untung</span>${katPil('isyarat','▼ Isyarat jual')}<span class="sp">jual bila syarat kena</span>${katPil('had','⏱ Maks')}<span class="sp">had masa</span>${katPil('tiada','∞ Tiada had')}${katPil('henti','■ Henti')}<span class="sp">paras potong rugi</span></div>`;
+const katRing=r=>r.ringkas?`<span class="kring">${esc(r.ringkas)}</span>`:'';
 const katGabungM=memo((rows,docs,src)=>{const bt={};for(const d of Object.values(docs))for(const x of (d.rows||[]))if(x.set==='431')bt[x.id+'|'+x.varian]=x;
   let pt={};if(src.length){let st=prStatsC.get(src);if(!st){st=prStats(src);prStatsC.set(src,st);}st.forEach(o=>{pt[o.kaedah]=o;});
     src.forEach(r=>{const o=pt[r.kaedah];if(o){o.nM=(o.nM||0)+(r.akaun==='M');o.nC=(o.nC||0)+(r.akaun==='C');}});}
@@ -1762,7 +1774,7 @@ function renderKaedah(){
   const tmax=all.filter(r=>/maks/i.test(r.pegang||'')).length;
   const wrap=r=>'wrap',ptT='Papertrade C';
   const idCol={k:'id',t:'ID',tip:'kaedah',l:1,v:r=>+String(r.id).replace(/\D/g,''),f:r=>`<b class="nw">${esc(r.id)}</b>`,c:()=>'tk'},
-    namaCol={k:'nama',t:'Kaedah',l:1,f:r=>`<b style="color:var(--fg)">${esc(r.nama)}</b><span class="vv">${esc(r.varian||'')}</span>${katRing(r)}`,c:()=>'wrap'},
+    namaCol={k:'nama',t:'Kaedah',l:1,f:r=>`<b style="color:var(--fg)">${esc(r.nama)}</b><span class="vv">${esc(r.varian||'')}</span>${katRing(r)}`,c:()=>'wrap knm'},
     asalCol={k:'pencipta',t:'Asal',tip:'kat_asal',l:1,f:r=>`<b style="color:var(--fg)">${esc(r.pencipta||'–')}</b><span class="vv">${esc(r.sumber||'')}</span>`,c:()=>'wrap lrg'},
     btCol={k:'bt',t:'Backtest (set 431)',tip:'kat_bt',v:r=>r.bt?r.bt.cagr:null,f:selBt,c:()=>'wrap lrg'},
     ptCol={k:'pt',t:ptT,tip:'kat_pt',v:r=>r.pt?r.pt.avg:null,f:selPt,c:()=>'wrap lrg'};
@@ -2114,7 +2126,7 @@ function openKaedah(id){const k=(S.kat&&S.kat.rows||[]).find(x=>x.id===id)||null
     <p class="ln">RM10,000 → <b>${rm(kpRm(b))}</b> dalam 6.9 tahun (<b class="${cls(b.r.cagr)}">${pct(b.r.cagr)}</b> setahun) · jatuh terburuk <b class="neg">${pct(b.r.mdd,0)}</b> · menang <b>${b.r.win==null?'–':Math.round(b.r.win*10)}/10</b> · pegang <b>${fx(b.r.days,0)}</b> hari</p>${kadSaringan(b.dk)}`:'<p class="ln mut">Tiada keputusan backtest set 431.</p>';
   sheet(`<div class="lbl">${esc(id)}${k&&k.varian?' · '+esc(k.varian):''}</div><h3 id="shTitle">${esc(k?k.nama:b?b.nama:id)}</h3>
     <div class="pills">${p?kptPill(p.kep)+awalPill(p):'<span class="pill p-mute">Tiada dagangan</span>'}${pg}</div>
-    ${k?`<div class="sec"><h4>Cara kaedah ini berfungsi</h4>${k.ringkas?`<p class="ln">💡 <b>${esc(k.ringkas)}</b></p>`:''}<dl class="dl">${['masuk','keluar','henti','pegang'].map(x=>`<dt>${KAT_LBL[x]}</dt><dd>${katSenarai(x,k[x])}</dd>`).join('')}<dt>Asal</dt><dd>${esc(k.pencipta||'–')}${k.sumber?` <span class="mut">· ${esc(k.sumber)}</span>`:''}</dd></dl></div>`:''}
+    ${k?`<div class="sec"><h4>Cara kaedah ini berfungsi</h4>${k.ringkas?`<p class="ln kring" style="font-size:.92rem">${esc(k.ringkas)}</p>`:''}<dl class="dl">${['masuk','keluar','henti','pegang'].map(x=>`<dt>${KAT_LBL[x]}</dt><dd>${katSenarai(x,k[x])}</dd>`).join('')}<dt>Asal</dt><dd>${esc(k.pencipta||'–')}${k.sumber?` <span class="mut">· ${esc(k.sumber)}</span>`:''}</dd></dl></div>`:''}
     <div class="sec"><h4>Papertrade · ${esc(AKN[ak])}</h4>${ptH}</div>
     ${bvH}
     <div class="sec"><h4>Backtest (ujian data lama)</h4>${btH}</div>
