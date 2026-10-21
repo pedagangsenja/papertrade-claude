@@ -486,7 +486,7 @@ td .sbk{max-width:260px}
 .mkn>div{display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px}
 .mkn>div>span:first-child{color:var(--muted)}
 .mkn .pill{font-size:.64rem;padding:0 6px}
-.kli{list-style:none;margin:0;padding:0;display:grid;gap:4px}.kli li{position:relative;padding-left:12px;line-height:1.35;color:var(--fg-2)}.kli li::before{content:"";position:absolute;left:1px;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--muted)}
+.kli{list-style:none;margin:0;padding:0;display:grid;gap:5px}.kli li{position:relative;padding-left:18px;line-height:1.35;color:var(--fg-2)}.kli li::before{position:absolute;left:0;top:0;width:14px;text-align:center;font-weight:800;font-size:.85em;line-height:1.6}/* penanda baris ikut warna pil: masuk ✓ hijau, keluar → ungu, pegang • kuning, henti ▪ merah; baris nota kelabu */.k-masuk li::before{content:"✓";color:var(--pos)}.k-keluar li::before{content:"→";color:#c4b5fd}.k-pegang li::before{content:"•";color:var(--warn);font-size:1.1em;line-height:1.25}.k-henti li::before{content:"▪";color:var(--neg-tx);font-size:1.15em;line-height:1.3}.kli li.mut::before{content:"–";color:var(--muted)}
 .kli li.mut{color:var(--muted)}.kli b{font-weight:700;color:var(--fg)}.kli.k-henti b{color:var(--neg-tx)}.kli.k-pegang b{color:var(--warn)}
 .kbk{min-width:0}@media (min-width:761px){td.knm{min-width:230px}}.mkn .kpl{margin-bottom:3px}
 .kasal{margin-top:10px;font-size:.84rem;color:var(--muted)}.kasal summary{cursor:pointer;color:var(--fg-2);font-weight:600}.kasal .dl{margin-top:8px;font-size:.84rem}.kasal dd{color:var(--muted)}
@@ -1752,7 +1752,7 @@ function katPilOf(k,it){const P=[],j=it.join(' ');let r=it;
 const katNombor=t=>t.replace(/(^|[^A-Za-z0-9\/])(\d+(?:[.,]\d+)?(?:\s*(?:%|×|R\b))?)/g,'$1<b>$2</b>');
 /* baris = r.baris[k] (baris pendek disusun semula; pil tetap dari teks asal); tiada → teks asal dipecah */
 function katSenarai(k,s,baris){const it=katPecah(s);if(!it.length)return '<span class="mut">–</span>';let[P,r]=katPilOf(k,it);if(Array.isArray(baris))r=baris;
-  return `<div class="kbk"><div class="kpl">${P.join('')}</div>${r.length?`<ul class="kli k-${k}">${r.map(x=>`<li class="${/^(langkau|batal|tiada|hanya)/i.test(x)?'mut':''}">${katNombor(esc(x))}</li>`).join('')}</ul>`:''}</div>`;}
+  return `<div class="kbk"><div class="kpl">${P.join('')}</div>${r.length?`<ul class="kli k-${k}">${r.map(x=>`<li class="${/^(langkau|batal|tiada|hanya|sumber tidak|keluar hanya|keluar melalui|disemak)/i.test(x)?'mut':''}">${katNombor(esc(x))}</li>`).join('')}</ul>`:''}</div>`;}
 const KAT_LBL={masuk:'Masuk',keluar:'Keluar',pegang:'Pegang',henti:'Henti rugi'};
 const KAT_LEGENDA=`<div class="klg">${katPil('beli','● Beli')}<span class="sp">bila beli</span>${katPil('sasaran','◎ Sasaran')}<span class="sp">jual pada paras untung</span>${katPil('isyarat','▼ Isyarat jual')}<span class="sp">jual bila syarat kena</span>${katPil('had','⏱ Maks')}<span class="sp">had masa</span>${katPil('tiada','∞ Tiada had')}${katPil('henti','■ Henti')}<span class="sp">paras potong rugi</span></div>`;
 const katRing=r=>r.ringkas?`<span class="kring">${esc(r.ringkas)}</span>`:'';
