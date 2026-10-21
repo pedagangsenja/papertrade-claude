@@ -490,6 +490,8 @@ td .sbk{max-width:260px}
 .kli li.mut{color:var(--muted)}.kli b{font-weight:700;color:var(--fg)}.kli.k-henti b{color:var(--neg-tx)}.kli.k-pegang b{color:var(--warn)}
 .kbk{min-width:0}@media (min-width:761px){td.knm{min-width:230px}}.mkn .kpl{margin-bottom:3px}
 .kasal{margin-top:10px;font-size:.84rem;color:var(--muted)}.kasal summary{cursor:pointer;color:var(--fg-2);font-weight:600}.kasal .dl{margin-top:8px;font-size:.84rem}.kasal dd{color:var(--muted)}
+/* tab Kaedah mod penuh: lebar lajur tetap supaya semua baris sejajar; isi sel bermula di atas */
+@media (min-width:761px){.katpenuh table{table-layout:fixed}.katpenuh th:nth-child(1){width:58px}.katpenuh th:nth-child(2){width:20%}.katpenuh th:nth-child(3){width:12%}.katpenuh th:nth-child(4){width:22%}.katpenuh th:nth-child(5){width:17%}.katpenuh th:nth-child(6){width:13%}.katpenuh th:nth-child(7){width:16%}.katpenuh tbody td{vertical-align:top;padding:12px 10px;overflow-wrap:break-word}.katpenuh th{padding:8px 10px;text-align:left}.katpenuh td.knm,.katpenuh td.wrap{min-width:0;max-width:none}}
 .kpl{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 5px}.kpl .pill{font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;padding:1px 7px}
 .kring{display:block;margin-top:5px;padding:3px 0 3px 8px;border-left:2px solid var(--accent);color:var(--fg-2);font-size:.8rem;line-height:1.38;white-space:normal}.klg{display:flex;flex-wrap:wrap;align-items:center;gap:5px 6px;font-size:.78rem;color:var(--muted);margin:0 0 10px}.klg .pill{font-size:.62rem;letter-spacing:.04em;padding:1px 6px}.klg span.sp{margin-right:6px}
 
@@ -1784,7 +1786,7 @@ function renderKaedah(){
       {k:'masuk',t:KAT_LBL.masuk,tip:'kat_masuk',l:1,ns:1,f:r=>katSenarai('masuk',r.masuk,r.baris&&r.baris.masuk),c:wrap},
       {k:'keluar',t:KAT_LBL.keluar,tip:'kat_keluar',l:1,ns:1,f:r=>katSenarai('keluar',r.keluar,r.baris&&r.baris.keluar),c:wrap},
       {k:'pegang',t:KAT_LBL.pegang,tip:'kat_pegang',l:1,f:r=>katSenarai('pegang',r.pegang,r.baris&&r.baris.pegang),c:()=>'wrap lrg'},
-      {k:'henti',t:KAT_LBL.henti,tip:'kat_henti',l:1,ns:1,f:r=>katSenarai('henti',r.henti,r.baris&&r.baris.henti),c:wrap},btCol,ptCol];
+      {k:'henti',t:KAT_LBL.henti,tip:'kat_henti',l:1,ns:1,f:r=>katSenarai('henti',r.henti,r.baris&&r.baris.henti),c:wrap}];
   el.innerHTML=`
   <p class="headline">Katalog <b>${all.length}</b> kaedah aktif yang diimbas setiap malam dan dibeli maya dalam Papertrade C. Setiap baris ialah varian yang <b>sedang digunakan</b> dalam kod: dari mana asalnya, bila beli, bila jual, berapa lama pegang dan di mana henti rugi. Ketik baris untuk butiran penuh.</p>
   <div class="kpis">
@@ -1794,7 +1796,7 @@ function renderKaedah(){
     <div class="kpi"><div class="lbl" data-tip="kat_umum">Beli</div><div class="v" style="font-size:1.25rem">Buka esok</div><div class="s">Isyarat pada harga tutup hari ini · 1 unit maya</div></div>
     <div class="kpi"><div class="lbl" data-tip="dua_lorong">Dua lorong keluar</div><div class="v" style="font-size:1.25rem">Kaedah + selagi naik</div><div class="s">Lorong 2 sama untuk semua kaedah</div></div>
   </div>
-  <div class="panel"><div class="panel-h"><h2>Semua kaedah</h2><span class="sub">${rows.length} daripada ${all.length} · ketik baris untuk butiran · ketik tajuk lajur untuk susun</span></div>
+  <div class="panel${lajurOf('kat')==='ringkas'?'':' katpenuh'}"><div class="panel-h"><h2>Semua kaedah</h2><span class="sub">${rows.length} daripada ${all.length} · ketik baris untuk butiran · ketik tajuk lajur untuk susun</span></div>
     <div class="filters" style="margin-bottom:10px">${lajurSeg('kat')}<input type="search" id="katQ" placeholder="Cari ID, nama, pencipta atau teknik, cth. M18, Minervini, EMA" value="${esc(kf.q)}" aria-label="Cari kaedah"></div>
     ${KAT_LEGENDA}
     ${sortTable({id:'katalog',rows,lp:LP_KAT,def:{k:'id',dir:1},limit:kf.shown,attr:r=>`data-kd="${esc(r.id)}" tabindex="0"`,rcls:()=>'click',empty:'Tiada kaedah sepadan dengan carian ini.',foot:kakiLagi('katMore'),cols})}
@@ -2061,11 +2063,11 @@ const LP_KP={key:o=>o.dk,btn:1,
       ${mkS('Jatuh terburuk',`<span class="${o.r.mdd!=null&&o.r.mdd<-0.45?'neg':''}">${pct(o.r.mdd,0)}</span>`,'kp_jatuh')}${mkS('Menang',o.r.win==null?'–':`${Math.round(o.r.win*10)}/10 <span class="mut">${pct(o.r.win,0)}</span>`,'kp_menang')}
       ${mkS('Pegang',`${fx(o.r.days,0)} hari <span class="mut">${fx(o.r.dagangan_setahun,0)} dag/thn</span>`,'kp_pegang')}${mkS('Papertrade C',o.pt?`<span class="${cls(o.pt.avg)}">${sg2(o.pt.avg)}</span> <span class="mut">${o.pt.n} dag · ${o.pt.ex} keluar</span>`:'<span class="mut">belum</span>','kp_pt')}</div></div>`};
 const LP_KAT={key:r=>r.id,btn:1,
-  line:r=>{const o=btOf(r.id);return `<b>${esc(r.id)}</b>${o&&r.bt&&o.r.varian===r.bt.varian?kpLencana(o):''}<span class="mlx">${esc(r.nama)}</span><b class="mlr ${cls(r.pt&&r.pt.avg)}">${r.pt?sg2(r.pt.avg):'–'}</b>${mlC}`;},
-  kad:r=>`<div class="mk"><div class="mk1"><span class="mkt"><b>${esc(r.id)}</b><span class="mkk">${esc(r.nama)}</span></span><b class="mku ${cls(r.pt&&r.pt.avg)}">${r.pt?sg2(r.pt.avg):'–'}</b></div>
+  line:r=>{const o=btOf(r.id);return `<b>${esc(r.id)}</b>${o&&r.bt&&o.r.varian===r.bt.varian?kpLencana(o):''}<span class="mlx">${esc(r.nama)}</span>${mlC}`;},
+  kad:r=>`<div class="mk"><div class="mk1"><span class="mkt"><b>${esc(r.id)}</b><span class="mkk">${esc(r.nama)}</span></span></div>
     <div class="mkr">${esc(r.varian||'')}${r.pencipta?` · ${esc(r.pencipta)}`:''}${katRing(r)}</div>
     <div class="mkz mkn">${['masuk','keluar','pegang','henti'].map(k=>`<div><span>${KAT_LBL[k]}</span>${katSenarai(k,r[k],r.baris&&r.baris[k])}</div>`).join('')}</div>
-    <div class="mkn"><div><span data-tip="kat_bt">Backtest</span><span>${selBt(r)}</span></div><div><span data-tip="kat_pt">Papertrade</span><span>${selPt(r)}</span></div></div></div>`};
+</div>`};
 const LP_SK={key:r=>r.jenis+'|'+r.nama,
   line:(r,i)=>`<span class="mut">${i+1}</span><b class="mlx" style="color:var(--fg);font-size:.9rem">${esc(r.nama)}</b>${fasaPill(r.fasa)}<b class="mlr ${cls(r.prestasi_1m)}">${sg2(r.prestasi_1m)}</b>${mlC}`,
   kad:r=>`<div class="mk"><div class="mk1"><span class="mkt"><b>${esc(r.nama)}</b>${fasaPill(r.fasa)}</span><b class="mku ${cls(r.prestasi_1m)}">${sg2(r.prestasi_1m)}<small class="mut"> 1M</small></b></div>
