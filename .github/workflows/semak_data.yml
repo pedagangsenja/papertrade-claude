@@ -1,4 +1,5 @@
-# Semakan automatik setiap push ke main: ujian unit + sahkan.py (semak sahaja, tanpa --betulkan).
+# Semakan automatik setiap push ke main: ujian unit + sahkan.py (semak sahaja, tanpa --betulkan); job `halaman` (sejak 24 Okt
+# 2026): ujian regresi halaman dashboard (Playwright, db tiruan BacktestShariah2/ujian/halaman/; angka KPI = jangka.json).
 # Gagal = data atau kod rosak; GitHub menghantar e-mel kegagalan kepada pemilik repo.
 # Commit bot harga harian (GITHUB_TOKEN) tidak mencetus workflow ini.
 name: Semak data
@@ -38,3 +39,18 @@ jobs:
         run: python3 BacktestShariah2/standard/pecah_claude.py
       - name: Integriti Lejar Penuh (lejar.py semak)
         run: python3 BacktestShariah2/standard/lejar.py semak
+
+  halaman:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Pasang Playwright dan Chromium (versi dipin)
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Ujian halaman dashboard (db tiruan, 1400 px dan 390 px)
+        run: node BacktestShariah2/ujian/halaman/uji_halaman.js

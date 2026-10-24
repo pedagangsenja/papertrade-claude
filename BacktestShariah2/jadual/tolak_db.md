@@ -20,6 +20,10 @@ Dashboard: https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e
    Tulis `<scratchpad>/versi.json` = {"papertrade/claude": versi, …} untuk SEMUA dokumen yang disenaraikan.
 4. `python3 BacktestShariah2/standard/jana_db.py --keluar <scratchpad>/db --versi <scratchpad>/versi.json`
    (pecah_claude/bahagi_db sudah dijalankan oleh Actions; skrip gagal jika mana-mana dokumen melebihi had 262,144 bait).
+4a. Kira semula bebas (sejak 24 Okt 2026): salin `BacktestShariah2/data/semakan/*.json` (sahkan, sampel daripada rutin 6:02) ke
+   `<scratchpad>/semakan/`, jalankan `python3 BacktestShariah2/standard/kira_semula.py --db <scratchpad>/db --json <scratchpad>/semakan/kira_semula.json`
+   (kod 1 = beza: teruskan, catat dalam notifikasi), kemudian `python3 BacktestShariah2/standard/jana_db.py --keluar <scratchpad>/db --semakan-sahaja --semakan-dir <scratchpad>/semakan`
+   (batch merujuk file_path, jadi tolakan membawa `harian/status.semakan` baharu). Fail repo tidak diubah.
 5. Bagi setiap fail `batch_N.json` yang dicetak: `ArtifactData` `batch`, `writes` = kandungan fail itu (setiap entri sudah
    ada `file_path` dan `if_version`). Ditolak kerana versi berubah → ulang langkah 3–5 sekali.
 6. Notifikasi (langkah terakhir, juga jika gagal): `PushNotification`, status "proactive", satu baris < 200 aksara:

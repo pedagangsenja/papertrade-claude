@@ -1,0 +1,150 @@
+{
+ "tarikh": "2026-10-23",
+ "dibina": "2026-10-24 16:28 MYT",
+ "status": "ok",
+ "n_semak": 82378,
+ "n_beza": 0,
+ "beza": [],
+ "nilai": {
+  "sesi": "2026-10-23",
+  "db_tanda": {
+   "ringkas_c": "9f015428dab7",
+   "ringkas_m": "5268f4df4be3",
+   "watchlist": "5d102d0c2b67",
+   "harian_kaedah": "1a024dab382f",
+   "papan": "2026-10-24 15:57 MYT",
+   "sesi": "2026-10-23"
+  },
+  "baris": {
+   "c": 5711,
+   "c_db": 5711,
+   "sumber_c": "papertrade/ringkas_c",
+   "fail_c": 72,
+   "m": 208,
+   "m_db": 208
+  },
+  "posisi": {
+   "semua": 5647,
+   "sah": 5516,
+   "tidak_sah": 131,
+   "pegang": 4150,
+   "l2_sahaja": 1268,
+   "tutup": 98,
+   "tidak_dibeli": 64
+  },
+  "pegang": {
+   "posisi": 4150,
+   "saham": 603,
+   "kaedah": 121,
+   "belum_direalisasi": 3.285,
+   "pct_sedang_untung": 73.7831,
+   "ikut_saham": 0.9591
+  },
+  "direalisasi": {
+   "posisi": 1366,
+   "purata": -2.8487,
+   "ikut_saham": -2.2287,
+   "pct_menang": 16.7643
+  },
+  "aktiviti": {
+   "tarikh_beli": "2026-10-23",
+   "dibeli": 760,
+   "tarikh_keluar": "2026-10-23",
+   "keluar": 175
+  },
+  "esok": {
+   "jual_posisi": 62,
+   "jual_saham": 46
+  },
+  "watchlist": {
+   "baris": 173,
+   "hampir": 173,
+   "lengkap": 92,
+   "lengkap_menunggu": 92,
+   "tarikh_data": "2026-10-23"
+  },
+  "harga": {
+   "sesi_stor": "2026-10-23",
+   "terbuka": 4169,
+   "disemak": 4018,
+   "tanpa_bar_sesi": 151,
+   "saham_tanpa_bar": [
+    "AMN",
+    "AR",
+    "AWI",
+    "CNR",
+    "CNX",
+    "CRC",
+    "CWT",
+    "FEDU",
+    "FTV",
+    "INR",
+    "KFRC",
+    "MAN",
+    "MNR",
+    "MOV",
+    "MTH",
+    "MUR",
+    "NC",
+    "NE",
+    "PDS",
+    "SDRL",
+    "SITE",
+    "SRE",
+    "STNG",
+    "VAL",
+    "WAT",
+    "WLYB",
+    "WSO",
+    "XPRO",
+    "ZTO"
+   ],
+   "bil_saham_tanpa_bar": 29
+  },
+  "penganalisis": {
+   "kaedah": 134,
+   "berkedudukan": 74,
+   "swing": 75,
+   "matang_hadapan": 10,
+   "jumlah_hadapan": 9810,
+   "kini": "2026-10-22",
+   "autotune": true,
+   "sumber": "db analisis/papan"
+  },
+  "pintu": {
+   "aktif": 134,
+   "swing": 75,
+   "berkedudukan": 74,
+   "tidak_ditolak": 50,
+   "autotune": 0,
+   "bersih_atasi_spy": 0,
+   "kuat": 0
+  },
+  "semak": {
+   "baris": [
+    71030,
+    0
+   ],
+   "earn_kini": [
+    5481,
+    0
+   ],
+   "agregat": [
+    273,
+    0
+   ],
+   "watchlist": [
+    693,
+    0
+   ],
+   "harga": [
+    4018,
+    0
+   ],
+   "penganalisis": [
+    883,
+    0
+   ]
+  }
+ }
+}

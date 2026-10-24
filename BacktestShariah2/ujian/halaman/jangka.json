@@ -1,0 +1,42 @@
+{
+ "nota": "Angka dijangka bagi fikstur_db.json, dikira dengan tangan (fikstur.py). Dipakai oleh uji_halaman.js (teks yang dipapar halaman) dan test_kira_semula.py (nilai kira_semula.py). Posisi C bukan tidak_dibeli = 9 (HHH tidak dibeli); tidak sah = GGG; dipegang lorong kaedah = AAA x2, BBB, CCC, FFF, III; lorong 2 sahaja = DDD; tutup kedua-dua = EEE. Belum direalisasi = (10 + 5.77 - 10 + 5 + 5 + 1.67) / 6 = 2.9067; sedang untung 5/6 = 83%; ikut saham = (7.885 - 10 + 5 + 5 + 1.67) / 5 = 1.911. Direalisasi = (10 - 5) / 2 = 2.50, menang 1/2. Dibeli pada 23 Okt = FFF sahaja (GGG tidak sah, HHH tidak dibeli dan tidak sah); keluar lorong kaedah 23 Okt = EEE. Esok: dijual pada buka = BBB (lorong kaedah menunggu) + CCC (lorong 2 menunggu); isyarat lengkap menunggu belian = JJJ (AAA M03 masih dipegang -> dilangkau); earnings <= 10 hari dagangan = AAA 28 Okt (3 hari: 26, 27, 28), 2 posisi; tanpa tarikh earnings = BBB, DDD, FFF, III. Pintu: 5 aktif -> 4 swing (M99 bukan) -> 3 berkedudukan (M20 tiada) -> 2 tidak DITOLAK (M12) -> 2 AUTOTUNE SEDERHANA/TINGGI -> 1 bersih 0.15 > SPY 0.1204 (M07 0.10) -> 1 KUAT (M03).",
+ "halaman": {
+  "hari": {
+   "aktiviti": "1 dibeli · 1 keluar · 1 dilangkau",
+   "bukti_hadapan": "6 / 12",
+   "berubah": {"Dibeli": "1 pada 23 Okt", "Keluar lorong kaedah": "1 pada 23 Okt"},
+   "esok": {
+    "Dijual pada buka": "2 posisi · 2 saham",
+    "Isyarat lengkap dalam watchlist": "1 calon · 1 saham · watchlist meliputi 3 kaedah",
+    "Hampir henti kaedah": "0 posisi · 0 saham",
+    "Earnings ≤ 10 hari dagangan": "1 saham · 2 posisi · 4 saham tanpa tarikh earnings"
+   }
+  },
+  "pilih": {
+   "corong": [5, 4, 3, 2, 2, 1, 1],
+   "lulus": "1 kaedah lulus"
+  },
+  "posisi": {
+   "segmen": ["Dipegang · lorong kaedah (6)", "Lorong 2 sahaja (1)", "Tutup kedua-dua lorong (1)", "Semua (8)", "Tidak sah (1)"],
+   "pegang": {
+    "Posisi dipapar": ["6", "5 saham · 3 kaedah"],
+    "Belum direalisasi (lorong kaedah)": ["+2.91%", "6 posisi · 83% sedang untung · ikut saham +1.91%"]
+   },
+   "semua": {
+    "Posisi dipapar": ["8", "7 saham · 3 kaedah"],
+    "Direalisasi (lorong kaedah)": ["+2.50%", "2 keluar · menang 50% · ikut saham +2.50%"],
+    "Belum direalisasi (lorong kaedah)": ["+2.91%", "6 posisi · 83% sedang untung · ikut saham +1.91%"]
+   }
+  }
+ },
+ "kira_semula": {
+  "posisi": {"semua": 9, "sah": 8, "tidak_sah": 1, "pegang": 6, "l2_sahaja": 1, "tutup": 1, "tidak_dibeli": 1},
+  "pegang": {"posisi": 6, "saham": 5, "kaedah": 3, "belum_direalisasi": 2.9067, "pct_sedang_untung": 83.3333, "ikut_saham": 1.911},
+  "direalisasi": {"posisi": 2, "purata": 2.5, "ikut_saham": 2.5, "pct_menang": 50.0},
+  "aktiviti": {"tarikh_beli": "2026-10-23", "dibeli": 1, "tarikh_keluar": "2026-10-23", "keluar": 1},
+  "esok": {"jual_posisi": 2, "jual_saham": 2},
+  "watchlist": {"baris": 5, "hampir": 4, "lengkap": 2, "lengkap_menunggu": 1, "tarikh_data": "2026-10-23"},
+  "harga": {"sesi_stor": "2026-10-23", "terbuka": 7, "disemak": 6, "tanpa_bar_sesi": 1, "saham_tanpa_bar": ["III"], "bil_saham_tanpa_bar": 1},
+  "pintu": {"aktif": 5, "swing": 4, "berkedudukan": 3, "tidak_ditolak": 2, "autotune": 2, "bersih_atasi_spy": 1, "kuat": 1}
+ }
+}

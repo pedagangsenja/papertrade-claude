@@ -13,6 +13,9 @@
 # [[kunci, %]]); prestasi/maefe_l2 (MAE/MFE tempoh lorong 2); papertrade/langkau (langkauan belian 9:35 NY); medan baris db
 # kualiti, sasaran_dinamik, jenis_tidak_sah, earn_kini/earn_kini_h/earn_lalu; harian/status ralat (dokumen melebihi had
 # dilangkau, bukan SystemExit), mod, sumber_harga (--sumber), saluran, beli_langkau.
+# harian/status.semakan (24 Okt 2026): ringkasan data/semakan/kira_semula.json, sahkan.json, sampel.json + baris "semakan: …"
+# dalam ralat. Susunan: jana_db --keluar <db> -> kira_semula.py --db <db> -> jana_db --keluar <db> --semakan-sahaja
+# (tulis semula harian/status.json sahaja) -> tolak batch (standard/dashboard.md "Pengiraan semula bebas").
 import argparse, csv, glob, hashlib, json, os, re, statistics as stt, sys
 
 import numpy as np
@@ -778,6 +781,135 @@ def saring_saiz(semua, ralat, had=None):
     return out
 
 
+# ---------------------------------------------------------------- semakan bebas (lampu sistem; 24 Okt 2026)
+SEMAKAN = os.path.join(BS2, 'data', 'semakan')
+HAD_SEMAKAN = 10          # beza/ringkas setiap semakan dalam harian/status (saiz dokumen kecil)
+
+
+def _pendek(x, n=160):
+    if isinstance(x, str):
+        return x if len(x) <= n else x[:n - 1] + '…'
+    if isinstance(x, (dict, list)):
+        s = json.dumps(x, ensure_ascii=False)
+        return x if len(s) <= n else s[:n - 1] + '…'
+    return x
+
+
+def _beza_pendek(b):
+    if isinstance(b, dict):
+        return {k: _pendek(v) for k, v in b.items()}
+    return _pendek(b if isinstance(b, str) else json.dumps(b, ensure_ascii=False))
+
+
+def _beza_teks(b):
+    """Satu beza -> teks pendek: kira_semula {medan, dijangka, didapati}; sampel {saham, kaedah, tarikh_beli, medan, csv, moomoo}."""
+    if not isinstance(b, dict):
+        return str(b)
+    if 'dijangka' in b or 'didapati' in b:
+        return f"{b.get('medan', '')}: dijangka {b.get('dijangka')}, didapati {b.get('didapati')}"
+    id_ = ('saham', 'kaedah', 'tarikh_beli', 'medan')
+    kepala = ' '.join(str(b[k]) for k in id_ if b.get(k) not in (None, ''))
+    lain = ', '.join(f'{k} {v}' for k, v in b.items() if k not in id_)
+    return f'{kepala}: {lain}' if kepala and lain else kepala or lain
+
+
+def semakan_status(folder, tanda=None):
+    """harian/status.semakan + baris harian/status.ralat daripada fail semakan dalam `folder` (lalai data/semakan):
+    kira_semula.json (standard/kira_semula.py), sahkan.json (standard/sahkan.py), sampel.json (standard/sampel_semak.py).
+    Fail tiada -> {status: 'tiada'} tanpa ralat. Ralat (lampu merah): 'semakan: …' jika kira_semula beza/gagal, sahkan ralat
+    atau sampel beza. Amaran (kuning): 'amaran: semakan: …' jika kira_semula lapuk (cap jari db nilai.db_tanda berbeza daripada
+    `tanda` dokumen yang ditolak, iaitu kira_semula belum dijalankan atas db ini). -> (semakan, [baris ralat])."""
+    def baca(n):
+        try:
+            with open(os.path.join(folder, n), encoding='utf-8') as f:
+                return json.load(f)
+        except (OSError, ValueError):
+            return None
+    out, ral = {}, []
+    k = baca('kira_semula.json')
+    if not isinstance(k, dict):
+        out['kira_semula'] = dict(status='tiada')
+    else:
+        nl = k.get('nilai') or {}
+        x = {f: k.get(f) for f in ('status', 'tarikh', 'dibina', 'n_semak', 'n_beza')}
+        x['beza'] = [_beza_pendek(b) for b in (k.get('beza') or [])[:HAD_SEMAKAN]]
+        if nl.get('semak'):
+            x['kategori'] = nl['semak']
+        if nl.get('harga'):
+            x['harga'] = {f: nl['harga'].get(f) for f in ('sesi_stor', 'disemak', 'tanpa_bar_sesi', 'bil_saham_tanpa_bar')}
+        x['lapuk'] = bool(tanda) and nl.get('db_tanda') != tanda
+        out['kira_semula'] = x
+        if x['lapuk']:
+            ral.append(f"amaran: semakan: kira_semula {x.get('tarikh') or '–'} ({x.get('status')}) bukan bagi db ini; jalankan "
+                       'kira_semula.py --db <folder> kemudian jana_db.py --semakan-sahaja')
+        elif x['status'] in ('beza', 'gagal'):
+            b0 = (k.get('beza') or [None])[0]
+            ral.append(_pendek(f"semakan: kira_semula {x['status']}: {x.get('n_beza')} beza daripada {x.get('n_semak')} semakan"
+                               + (f" (cth. {_beza_teks(b0)})" if b0 else ''), 300))
+    s = baca('sahkan.json')
+    if not isinstance(s, dict):
+        out['sumber'] = dict(status='tiada')
+    else:
+        out['sumber'] = dict({f: s.get(f) for f in ('status', 'tarikh', 'dibina', 'n_ralat', 'n_amaran')},
+                             ringkas=[_beza_pendek(b) for b in (s.get('ringkas') or [])[:HAD_SEMAKAN]])
+        if s.get('status') == 'ralat':
+            rk = s.get('ringkas') or []
+            r0 = next((x for x in rk if str(x).startswith('RALAT')), rk[0] if rk else None)
+            ral.append(_pendek(f"semakan: sahkan.py {s.get('n_ralat')} ralat data sumber" + (f' (cth. {_beza_teks(r0)})' if r0 else ''), 300))
+    p = baca('sampel.json')
+    if not isinstance(p, dict):
+        out['sampel'] = dict(status='tiada')
+    else:
+        out['sampel'] = dict({f: p.get(f) for f in ('status', 'tarikh', 'dibina', 'n', 'n_beza')},
+                             beza=[_beza_pendek(b) for b in (p.get('beza') or [])[:HAD_SEMAKAN]])
+        if p.get('status') == 'beza':
+            b0 = (p.get('beza') or [None])[0]
+            ral.append(_pendek(f"semakan: sampel {p.get('n_beza')}/{p.get('n')} beza lawan sumber kedua" + (f' (cth. {_beza_teks(b0)})' if b0 else ''), 300))
+    return out, ral
+
+
+def bukan_semakan(x):
+    """Baris ralat yang BUKAN daripada semakan_status (disimpan semasa --semakan-sahaja menulis semula)."""
+    return not (isinstance(x, str) and (x.startswith('semakan: ') or x.startswith('amaran: semakan: ')))
+
+
+def tanda_db(baca):
+    import kira_semula as KS
+    return KS.tanda_db(baca)
+
+
+def semakan_sahaja(keluar, folder):
+    """--semakan-sahaja: tulis semula <keluar>/harian/status.json sahaja (semakan + baris ralat 'semakan: …'); dokumen lain dan
+    fail batch tidak berubah (batch merujuk file_path, jadi tolakan membawa status baharu). Dijalankan selepas kira_semula.py."""
+    p = os.path.join(keluar, 'harian', 'status.json')
+    if not os.path.exists(p):
+        raise SystemExit(f'{p} tiada: jalankan jana_db.py --keluar {keluar} dahulu')
+
+    def baca(path):
+        q = os.path.join(keluar, path + '.json')
+        if not os.path.exists(q):
+            return None
+        with open(q, encoding='utf-8') as f:
+            return json.load(f)
+    st = baca('harian/status')
+    sem, ral = semakan_status(folder, tanda_db(baca))
+    st['ralat'] = [x for x in (st.get('ralat') or []) if bukan_semakan(x)] + ral
+    st['semakan'] = sem
+    with open(p, 'w', encoding='utf-8') as f:
+        f.write(padat(st))
+    rp = os.path.join(keluar, 'ringkas.json')
+    if os.path.exists(rp):
+        with open(rp, encoding='utf-8') as f:
+            ring = json.load(f)
+        ring['ralat'] = [x for x in (ring.get('ralat') or []) if bukan_semakan(x)] + ral
+        with open(rp, 'w', encoding='utf-8') as f:
+            json.dump(ring, f, ensure_ascii=False, indent=1)
+    out = dict(harian_status=p, bait=bait(st), semakan={k: v.get('status') for k, v in sem.items()},
+               lapuk=sem.get('kira_semula', {}).get('lapuk'), ralat_semakan=ral)
+    print(json.dumps(out, ensure_ascii=False, indent=1))
+    return out
+
+
 # ---------------------------------------------------------------- utama
 BAHAGI = ('senarai_beli', 'watchlist', 'garis', 'mfe', 'mae', 'mae_atr', 'maefe_l2', 'harian_kaedah', 'trend', 'lorong2', 'langkau')
 
@@ -788,7 +920,13 @@ def main(argv=None):
     ap.add_argument('--versi', help='JSON {"koleksi/doc": versi} bagi if_version'); ap.add_argument('--masa')
     ap.add_argument('--sumber', help='sumber harga sebenar larian ini (label jujur harga_pada / harian/status.sumber_harga), '
                                      'cth. "rutin Claude 6:02: yfinance 22:04 UTC + skrin Moomoo 31 saham"')
+    ap.add_argument('--semakan-dir', default=SEMAKAN, help='folder kira_semula.json / sahkan.json / sampel.json (harian/status.semakan)')
+    ap.add_argument('--semakan-sahaja', action='store_true',
+                    help='tulis semula <keluar>/harian/status.json sahaja (semakan + ralat), selepas kira_semula.py --db <keluar>')
     a = ap.parse_args(argv)
+    if a.semakan_sahaja:
+        semakan_sahaja(a.keluar, a.semakan_dir)
+        return
     masa = (pd.Timestamp(a.masa).tz_localize('Asia/Kuala_Lumpur') if a.masa else pd.Timestamp.now(tz='Asia/Kuala_Lumpur'))
     dibina = masa.strftime('%Y-%m-%d %H:%M') + ' MYT'
     st = json.load(open(os.path.join(a.folder, 'status_harian.json'), encoding='utf-8')) if os.path.exists(os.path.join(a.folder, 'status_harian.json')) else {}
@@ -979,6 +1117,13 @@ def main(argv=None):
         senarai_beli=dict(claude=len(sb), jumlah=len(sb), moomoo=0, saham_unik=len(lihat), watchlist=len(wl)),
         beli_dirancang=len(sb), beli_pada=beli.get('masa', ''), beli_ringkas=dict(direkod=beli.get('direkod', 0), dilangkau=beli.get('dilangkau', 0)),
         gred_pada=st.get('gred', {}).get('masa', ''), ralat=ralat, mod=mod, sumber_harga=sumber, saluran=saluran, beli_langkau=beli_langkau)
+    # semakan bebas (24 Okt 2026): kira_semula.json (lapuk jika cap jari db berbeza), sahkan.json, sampel.json -> status.semakan +
+    # baris 'semakan: …' dalam ralat. Susunan: jana_db -> kira_semula --db <keluar> -> jana_db --semakan-sahaja (dashboard.md)
+    ditulis = {f'{kol}/{doc_id}': dd for kol, doc_id, dd, _ in sedia}
+    ditulis['harian/status'] = status
+    sem, ral_sem = semakan_status(a.semakan_dir, tanda_db(ditulis.get))
+    status['semakan'] = sem
+    ralat.extend(ral_sem)
     docs['harian/status'] = status
     sedia.append(('harian', 'status', status, bait(status)))
     # tulis + batch
