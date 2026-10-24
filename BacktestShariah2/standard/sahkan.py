@@ -1,14 +1,39 @@
 # Semakan data papertrade sebelum commit (peraturan dalam papertrade/SKEMA.md)
 # Guna:  python3 BacktestShariah2/standard/sahkan.py            -> semak sahaja
 #        python3 BacktestShariah2/standard/sahkan.py --betulkan -> susun lajur ikut skema, kemudian semak
+#        ... --json [PATH]   -> tulis ringkasan ke PATH (lalai data/semakan/sahkan.json; skema dalam tulis_json)
+#        ... --lorong-n N    -> saiz sampel semakan semula lorong 2 (lalai 0 = semua posisi)
 # Kod keluar: 0 = lulus, 1 = ada RALAT (jangan push data), 2 = fail tiada / tidak boleh dibaca.
+#
+# Semakan sumber (lapisan 1, 24 Okt 2026; selain skema/aritmetik di bawah):
+#   harga_beli C lawan buka bar hari beli (RALAT > 0.3%; semak_buka)
+#   ambil alih (semak_ambil_alih): posisi C dibeli pada/selepas pengumuman dalam data/ambil_alih.csv tetapi tidak_sah
+#       kosong = RALAT; posisi C terbuka bagi saham berharga terkunci (ambil_alih.calon_kunci / corak tapis) yang tiada
+#       dalam senarai = AMARAN (sahkan dengan 8-K/berita, kemudian ambil_alih.py tambah)
+#   bar sesi terakhir (semak_bar_sesi): posisi dipegang bagi saham tanpa bar sesi terakhir dalam stor + terkini.csv = AMARAN
+#       (satu baris: bilangan + senarai); sesi posisi lebih baharu daripada data harga repo = AMARAN
+#   lorong 2 dikira semula secara bebas (semak_lorong2): sampel berketentuan (cincangan sesi) dibanding dengan
+#       keluar_henti/tarikh_keluar_henti/status_henti; beza keadaan = RALAT (AMARAN jika tutup dalam 0.5% paras keluar:
+#       beza vendor boleh menterbalikkan keputusan); harga_keluar_henti ≠ buka bar keluar = AMARAN (buka yfinance boleh
+#       berbeza daripada buka rasmi Moomoo; disahkan oleh standard/sampel_semak.py)
+#   untung_akhir_pct / untung_henti_pct / untung_pct = harga/harga_beli − 1 (RALAT > 0.02 mata peratus; semak_posisi)
 import json
-import sys, os, csv, glob, re, argparse
+import sys, os, csv, glob, re, argparse, hashlib
+from datetime import datetime, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+BS2 = os.path.dirname(HERE)
+KOD = os.path.join(BS2, 'kod')
 PT = os.path.join(os.path.dirname(HERE), 'papertrade')
 STOR = os.path.join(os.path.dirname(HERE), 'data', 'harga', 'stor')
+TERKINI = os.path.join(BS2, 'data', 'harga', 'terkini.csv')
+SEJARAH = os.path.join(BS2, 'data', 'harga', 'sejarah.csv')
+AMBIL_ALIH = os.path.join(BS2, 'data', 'ambil_alih.csv')
+SEMAKAN = os.path.join(BS2, 'data', 'semakan', 'sahkan.json')
 TOL_BUKA = 0.003   # harga_beli C lawan buka bar hari beli dalam stor (audit 24 Okt 2026: DAC M80/M90 164.162 lawan 170.19)
+TOL_SAMBUNG = 0.003  # tutup bar bertindih (stor lawan terkini.csv / sejarah.csv) mesti sepadan sebelum bar disambung
+LORONG_N = 0          # semakan semula lorong 2: 0 = semua posisi (semakan penuh +0.3 s; sampel kecil boleh terlepas kes jarang seperti VIAV/LITE)
+TOL_SEMPADAN = 0.005  # beza keadaan lorong 2 apabila tutup dalam 0.5% paras keluar -> AMARAN, bukan RALAT
 
 # Susunan lajur rasmi fail posisi (moomoo.csv, claude.csv, claude_N.csv)
 POSISI = ['tarikh_beli', 'saham', 'kaedah', 'id_kaedah', 'sektor', 'industri', 'harga_beli', 'unit',
@@ -159,24 +184,94 @@ def semak_posisi(nama, lajur, rows, ralat, amaran, kunci):
             kunci[k] = f'{nama}:{i}'
 
 
+def _baca_buka(p, D, saham=None):
+    if not os.path.exists(p):
+        return D
+    with open(p, newline='', encoding='utf-8') as f:
+        for r in csv.DictReader(f):
+            t = r.get('ticker')
+            if saham is not None and t not in saham:
+                continue
+            d, o = str(r.get('date') or ''), nombor(r.get('open'))
+            if len(d) == 8 and o:
+                D[(t, f'{d[:4]}-{d[4:6]}-{d[6:]}')] = o
+    return D
+
+
 def buka_stor(stor=STOR, saham=None):
     """(O, MM): O = {(saham, 'YYYY-MM-DD'): buka} daripada harga_A/B.csv stor (konvensyen stor; buka Moomoo rasmi sudah
     ditampal oleh lejar.py tampal_moomoo jika beza > 0.5%), MM = buka_moomoo.csv (buka rasmi kline Moomoo yang disahkan).
     saham: had kepada set ticker ini (bacaan lebih laju). Fail tiada -> {}."""
     O, MM = {}, {}
-    for nm, D in (('harga_A.csv', O), ('harga_B.csv', O), ('buka_moomoo.csv', MM)):
-        p = os.path.join(stor, nm)
-        if not os.path.exists(p):
-            continue
-        with open(p, newline='', encoding='utf-8') as f:
-            for r in csv.DictReader(f):
-                t = r.get('ticker')
-                if saham is not None and t not in saham:
-                    continue
-                d, o = str(r.get('date') or ''), nombor(r.get('open'))
-                if len(d) == 8 and o:
-                    D[(t, f'{d[:4]}-{d[4:6]}-{d[6:]}')] = o
+    for nm in ('harga_A.csv', 'harga_B.csv'):
+        _baca_buka(os.path.join(stor, nm), O, saham)
+    _baca_buka(os.path.join(stor, 'buka_moomoo.csv'), MM, saham)
     return O, MM
+
+
+def isy(d):
+    """20261023 / '20261023' / '2026-10-23' -> '2026-10-23'."""
+    s = str(d).strip().replace('-', '')[:8]
+    return f'{s[:4]}-{s[4:6]}-{s[6:]}' if len(s) == 8 and s.isdigit() else ''
+
+
+def muat_bar(stor, saham, terkini=None, sejarah=None):
+    """Bar harian bagi ticker dalam `saham` untuk semakan sumber (bacaan bebas; tidak memakai keluar_lorong/jana_db):
+    stor harga_A/B.csv (konvensyen backtest) + sejarah.csv di hadapan bar pertama stor + terkini.csv selepas bar terakhir
+    stor; sambungan hanya jika tutup bar bertindih sepadan (TOL_SAMBUNG; tidak sepadan = faktor belum dilaras, stor sahaja).
+    Pulang (F, sesi, O): F = {ticker: dict(ix=['YYYY-MM-DD'], o, h, l, c, v (numpy), sumber=['stor'|'terkini'|'sejarah'])},
+    sesi = tarikh bar terakhir merentas stor + terkini.csv (semua ticker) atau '', O = {(ticker, tarikh): buka} bar stor sahaja
+    (sama dengan buka_stor)."""
+    import numpy as np
+    import pandas as pd
+    L = ['ticker', 'date', 'open', 'high', 'low', 'close', 'volume']
+
+    def baca(paths):
+        d = [pd.read_csv(p, usecols=lambda c: c in L) for p in paths if p and os.path.exists(p)]
+        d = [x.reindex(columns=L) for x in d if len(x.columns) >= 6]
+        return pd.concat(d, ignore_index=True) if d else pd.DataFrame(columns=L)
+
+    S = baca([os.path.join(stor, f) for f in ('harga_A.csv', 'harga_B.csv')])
+    T = baca([terkini]) if terkini else S.iloc[:0]
+    J = baca([sejarah]) if sejarah else S.iloc[:0]
+    sesi = max([int(x.date.max()) for x in (S, T) if len(x)] or [0])
+    sesi = isy(sesi) if sesi else ''
+    saham = set(saham)
+    S, T, J = (x[x.ticker.isin(saham)].assign(date=lambda z: z.date.astype(int)).sort_values(['ticker', 'date'])
+               .drop_duplicates(['ticker', 'date'], keep='last') for x in (S, T, J))
+    S = S.assign(sumber='stor')
+    awal, akhir = S.groupby('ticker').date.min(), S.groupby('ticker').date.max()
+    bahagian = [S]
+    if len(J):   # sejarah sebelum bar pertama stor: hanya jika median nisbah tutup bertindih sepadan
+        sama = S.merge(J, on=['ticker', 'date'], suffixes=('', '_j'))
+        r = (sama.close / sama.close_j).groupby(sama.ticker).median()
+        ok = set(r.index[(r - 1).abs() <= TOL_SAMBUNG])
+        bahagian.append(J[J.ticker.isin(ok) & (J.date < J.ticker.map(awal))].assign(sumber='sejarah'))
+    if len(T):   # terkini.csv selepas bar terakhir stor: hanya jika bar bertindih terakhir sepadan
+        sama = S.merge(T, on=['ticker', 'date'], suffixes=('', '_k')).groupby('ticker').tail(1)
+        buruk = set(sama.ticker[((sama.close_k / sama.close) - 1).abs() > TOL_SAMBUNG])
+        bahagian.append(T[~T.ticker.isin(buruk) & (T.date > T.ticker.map(akhir).fillna(0))].assign(sumber='terkini'))
+    G = pd.concat(bahagian, ignore_index=True).sort_values(['ticker', 'date'], kind='stable')
+    peta = {d: isy(d) for d in G.date.unique()}
+    ds = [peta[d] for d in G.date.to_numpy()]
+    st = G.sumber.to_numpy()
+    O = {(t, d): float(o) for t, d, o, s_ in zip(G.ticker.to_numpy(), ds, G.open.to_numpy(float), st) if s_ == 'stor' and o > 0}
+    F = {}
+    tk = G.ticker.to_numpy()
+    if len(tk):
+        sempadan = np.flatnonzero(tk[1:] != tk[:-1]) + 1
+        mula = np.r_[0, sempadan]; tamat = np.r_[sempadan, len(tk)]
+        o, h, l, c, v = (G[x].to_numpy(float) for x in ('open', 'high', 'low', 'close', 'volume'))
+        for m, e in zip(mula, tamat):
+            F[tk[m]] = dict(ix=ds[m:e], o=o[m:e], h=h[m:e], l=l[m:e], c=c[m:e], v=v[m:e], sumber=list(st[m:e]))
+    return F, sesi, O
+
+
+def frame_pd(x):
+    """dict muat_bar -> DataFrame open/high/low/close/volume berindeks Timestamp (format kod/ambil_alih.py)."""
+    import pandas as pd
+    return pd.DataFrame(dict(open=x['o'], high=x['h'], low=x['l'], close=x['c'], volume=x['v']),
+                        index=pd.to_datetime(x['ix']))
 
 
 def beza_buka(r, O, MM, tol=TOL_BUKA):
@@ -227,6 +322,223 @@ def semak_lorong(t, r, hb, ralat, amaran):
         ralat.append(f'{t}: tutup_semua {r.get("tutup_semua")} != keluar & keluar_henti ({jangka})')
 
 
+# ---------------------------------------------------------------- semakan sumber (lapisan 1, 24 Okt 2026)
+def dibeli(r):
+    return not benar(r.get('tidak_dibeli')) and bool(nombor(r.get('harga_beli'))) and bool(r.get('tarikh_beli'))
+
+
+def dipegang(r):
+    """Posisi dibeli yang belum tutup kedua-dua lorong (tutup_semua kosong -> ikut lorong 1)."""
+    ts = r.get('tutup_semua')
+    return dibeli(r) and not benar(ts if not kosong(ts) else r.get('keluar'))
+
+
+def semak_ambil_alih(posisi, F, ralat, amaran, senarai=AMBIL_ALIH):
+    """posisi = [(nama fail, baris, r)] Papertrade C. (1) RALAT: dibeli pada/selepas tarikh_umum terawal saham dalam senarai sah
+    (bayaran bukan 'bukan') tetapi tidak_sah kosong (kod/tidak_layak.py posisi --tulis belum dijalankan). (2) AMARAN: posisi
+    terbuka (bukan tidak_sah) bagi saham TIADA dalam senarai yang harganya terkunci (ambil_alih.calon_kunci: median julat 10 bar
+    <= 0.6% dan ATR14 <= 0.5%) atau corak ambil alih automatik (ambil_alih.tapis). Pulang senarai saham amaran."""
+    sys.path.insert(0, KOD)
+    import ambil_alih as AA
+    sen = AA.baca_senarai(senarai)
+    dalam = {r['saham'] for r in sen}
+    umum = {}
+    for r in sen:
+        if (r.get('bayaran') or '').strip().lower() != 'bukan' and r.get('tarikh_umum'):
+            umum[r['saham']] = min(umum.get(r['saham'], r['tarikh_umum']), r['tarikh_umum'])
+    buka = {}
+    for nama, i, r in posisi:
+        if not dibeli(r):
+            continue
+        t = r['saham']
+        if t in umum and r['tarikh_beli'] >= umum[t] and not benar(r.get('tidak_sah')):
+            ralat.append(f'{nama}:{i} {t} {r["kaedah"]}: dibeli {r["tarikh_beli"]} pada/selepas pengumuman ambil alih {umum[t]} '
+                         '(data/ambil_alih.csv) tetapi tidak_sah kosong; jalankan kod/tidak_layak.py posisi --tulis')
+        if dipegang(r) and not benar(r.get('tidak_sah')) and t not in dalam:
+            buka.setdefault(t, []).append(r)
+    import numpy as np
+    pra_kunci, pra_corak = set(), set()   # pra-tapis numpy (syarat perlu sahaja; keputusan tetap oleh ambil_alih.py)
+    for t in buka:
+        x = F.get(t)
+        if not x or len(x['c']) < 15:
+            continue
+        o, h, l, c = x['o'], x['h'], x['l'], x['c']
+        with np.errstate(invalid='ignore', divide='ignore'):
+            jul = (h - l) / c
+            if 0 < np.median(jul[-AA.BAR_KUNCI:]) <= 0.006:
+                pra_kunci.add(t)
+            w = slice(max(1, len(c) - AA.CARI_BAR), len(c))
+            if len(c) >= 60 and np.any((o[w] / c[w.start - 1:-1] - 1 >= AA.JURANG_MIN) & (jul[w] <= AA.JULAT_UMUM_MAKS)):
+                pra_corak.add(t)
+    calon = {x['saham']: x for x in AA.calon_kunci({t: frame_pd(F[t]) for t in pra_kunci}, pra_kunci)}
+    corak = {t: x for t, x in AA.tapis({t: frame_pd(F[t]) for t in pra_corak}, None, senarai=[]).items()}
+    keluar = []
+    for t in sorted(set(calon) | set(corak)):
+        n = len(buka[t])
+        if t in corak:
+            u = corak[t]['tarikh_umum']; ns = sum(r['tarikh_beli'] >= u for r in buka[t])
+            sebab = f'corak ambil alih automatik (umum {u}; {ns} posisi dibeli selepasnya patut tidak_sah)'
+        else:
+            x = calon[t]
+            sebab = f"harga terkunci (median julat 10 bar {x['julat_med_pct']}%, ATR14 {x['atr_pct']}%, bar akhir {x['akhir']})"
+        amaran.append(f'ambil alih? {t}: {n} posisi C terbuka; {sebab}; tiada dalam data/ambil_alih.csv — sahkan dengan '
+                      '8-K/berita, kemudian kod/ambil_alih.py tambah (--bayaran tunai|saham|campuran|bukan)')
+        keluar.append(t)
+    return keluar
+
+
+def semak_bar_sesi(posisi, F, sesi, amaran, had=40):
+    """AMARAN (satu baris): posisi dipegang (M dan C) bagi saham tanpa bar sesi `sesi` dalam stor + terkini.csv — harga sesi itu
+    bukan daripada sumber repo (Moomoo rutin, atau basi). Juga AMARAN jika sesi posisi (tarikh beli/keluar terkini dalam CSV)
+    lebih baharu daripada `sesi`. Pulang {saham: (bar akhir, bil posisi)}."""
+    if not sesi:
+        return {}
+    tiada = {}
+    for _, _, r in posisi:
+        if not dipegang(r):
+            continue
+        t = r['saham']; x = F.get(t)
+        akhir = x['ix'][-1] if x else ''
+        if akhir < sesi:
+            a, n = tiada.get(t, (akhir, 0)); tiada[t] = (akhir, n + 1)
+    if tiada:
+        sen = [f'{t} ({a or "tiada bar"}, {n})' for t, (a, n) in sorted(tiada.items(), key=lambda z: (-z[1][1], z[0]))]
+        lagi = f' … dan {len(sen) - had} lagi' if len(sen) > had else ''
+        amaran.append(f'bar sesi {sesi}: {len(tiada)} saham ({sum(n for _, n in tiada.values())} posisi dipegang) tiada bar sesi '
+                      f'itu dalam stor + terkini.csv; harga sesi itu bukan daripada sumber repo (semak Moomoo / tunggu '
+                      f'harga_harian): ' + ', '.join(sen[:had]) + lagi)
+    sp = max((r.get(k) or '' for _, _, r in posisi if dibeli(r)
+              for k in ('tarikh_beli', 'tarikh_keluar', 'tarikh_keluar_henti')), default='')
+    if sp > sesi:
+        amaran.append(f'sesi posisi {sp} lebih baharu daripada data harga repo {sesi} (stor + terkini.csv belum dikemas kini): '
+                      'semakan sumber sesi itu tidak lengkap')
+    return tiada
+
+
+def chandelier(o, h, l, c, k, akhir, ganda, n_atr):
+    """Lorong 2 dikira semula secara bebas (bukan keluar_lorong.lorong_henti): ATR = purata mudah n_atr julat sebenar (bar
+    pertama = tinggi − rendah); bagi bar j = k..akhir: puncak = tutup tertinggi k..j, paras = maks(paras, puncak − ganda × ATR[j])
+    (ATR belum ada -> tiada paras); tutup[j] < paras -> jual buka j+1. Pulang (jenis 'keluar'|'menunggu'|'pegang', indeks bar
+    keluar (keluar) / bar isyarat (menunggu) / None, P = paras setiap bar 0..akhir (−inf sebelum k / tanpa ATR), indeks bar
+    isyarat atau None)."""
+    import numpy as np
+    c = np.asarray(c[:akhir + 1], float); h = np.asarray(h[:akhir + 1], float); l = np.asarray(l[:akhir + 1], float)
+    pc = np.r_[c[0], c[:-1]]
+    tr = np.maximum(h - l, np.maximum(np.abs(h - pc), np.abs(l - pc)))
+    tr[0] = h[0] - l[0]
+    cs = np.r_[0.0, np.cumsum(tr)]
+    a = np.full(len(c), np.nan)
+    if len(c) >= n_atr:
+        a[n_atr - 1:] = (cs[n_atr:] - cs[:-n_atr]) / n_atr
+    calon = np.maximum.accumulate(c[k:]) - ganda * a[k:]
+    P = np.full(len(c), -np.inf)
+    P[k:] = np.maximum.accumulate(np.where(np.isnan(calon), -np.inf, calon))
+    kena = np.flatnonzero(c[k:] < P[k:])
+    if not len(kena):
+        return 'pegang', None, P, None
+    j = k + int(kena[0])
+    return ('keluar', j + 1, P, j) if j + 1 <= akhir else ('menunggu', j, P, j)
+
+
+def margin_lorong(c, P, *bar):
+    """min |tutup − paras| ÷ tutup pada bar keputusan yang berbeza (bar isyarat kiraan semula dan bar isyarat CSV)."""
+    m = [abs(c[j] - P[j]) / c[j] for j in bar if j is not None and 0 <= j < len(P) and P[j] > -float('inf')]
+    return min(m) if m else float('inf')
+
+
+def keadaan_csv(r):
+    """Keadaan lorong 2 dalam CSV: ('keluar', tarikh) | ('menunggu', 'D Mmm') | ('pegang', None)."""
+    st = r.get('status_henti') or ''
+    if benar(r.get('keluar_henti')):
+        return 'keluar', r.get('tarikh_keluar_henti') or ''
+    m = re.match(r'Tutup [\d.]+ bawah .* pada (\d{1,2} \w{3})', st)
+    if m:
+        return 'menunggu', m.group(1)
+    return 'pegang', None
+
+
+def sampel_lorong(calon, sesi, n):
+    """Sampel berketentuan: separuh daripada posisi yang lorong 2 sudah keluar/menunggu, selebihnya posisi pegang; susunan
+    cincangan sha1(sesi|kunci). n <= 0 -> semua."""
+    if n <= 0 or len(calon) <= n:
+        return list(calon)
+    kunci = lambda x: hashlib.sha1(f'{sesi}|{x[0]}|{x[2]["saham"]}|{x[2]["kaedah"]}|{x[2]["tarikh_beli"]}'.encode()).hexdigest()
+    ada = sorted([x for x in calon if keadaan_csv(x[2])[0] != 'pegang'], key=kunci)
+    pegang = sorted([x for x in calon if keadaan_csv(x[2])[0] == 'pegang'], key=kunci)
+    q = min(len(ada), n // 2)
+    pilih = ada[:q] + pegang[:n - q]
+    if len(pilih) < n:
+        pilih += ada[q:q + n - len(pilih)]
+    return pilih
+
+
+def semak_lorong2(posisi, F, sesi, ralat, amaran, n=LORONG_N, rasmi=None, MM=None):
+    """Kira semula lorong 2 bagi sampel posisi (M dan C; status_henti peraturan semasa; keluar paksa isyarat palsu/delist
+    dilangkau) dan banding dengan CSV. Keadaan CSV mesti sama dengan pengiraan hingga bar terakhir data atau satu bar
+    sebelumnya (CSV boleh ketinggalan satu sesi); CSV yang mendahului data repo (saham tanpa bar sesi terakhir) tidak disemak.
+    Beza keadaan = RALAT (AMARAN jika margin < TOL_SEMPADAN atau CSV bertanda sejarah pendek). harga_keluar_henti lawan buka bar
+    keluar (stor, buka_moomoo.csv atau harga_beli C 'buka rasmi' sama hari) > TOL_BUKA = AMARAN. Pulang kiraan dict."""
+    sys.path.insert(0, HERE)
+    import keluar_lorong as KL   # pemalar peraturan sahaja (GANDA_ATR, TEMPOH_ATR, PENANDA, hb); logik dikira di sini
+    rasmi, MM = rasmi or {}, MM or {}
+    calon = [x for x in posisi if dibeli(x[2]) and KL.PENANDA in (x[2].get('status_henti') or '')
+             and not (x[2].get('status_henti') or '').startswith(('Keluar: isyarat palsu', 'Keluar: delist'))]
+    kira = dict(calon=len(calon), disemak=0, sama=0, beza=0, sempadan=0, harga=0, tidak_disemak=0)
+    for nama, i, r in sampel_lorong(calon, sesi, n):
+        t = f'{nama}:{i} {r["saham"]} {r["kaedah"]} {r["tarikh_beli"]}'
+        x = F.get(r['saham']); hbeli = nombor(r['harga_beli'])
+        if not x or r['tarikh_beli'] not in x['ix']:
+            kira['tidak_disemak'] += 1
+            continue
+        ix, o, h, l, c = x['ix'], x['o'], x['h'], x['l'], x['c']
+        k = ix.index(r['tarikh_beli'])
+        if not o[k] > 0 or abs(o[k] / hbeli - 1) > KL.BEZA_HARGA_MAKS:
+            kira['tidak_disemak'] += 1
+            continue
+        N = len(c) - 1
+        cv = keadaan_csv(r)
+        R = {}
+        for e in (N, N - 1):
+            if e >= k:
+                jn, j, P, js = chandelier(o, h, l, c, k, e, KL.GANDA_ATR, KL.TEMPOH_ATR)
+                R[e] = (jn, ix[j] if jn == 'keluar' else (KL.hb(ix[j]) if jn == 'menunggu' else None), P, js)
+        if any((v[0], v[1]) == cv for v in R.values()):
+            kira['disemak'] += 1; kira['sama'] += 1
+            if cv[0] == 'keluar':
+                j = ix.index(cv[1]); hk = nombor(r.get('harga_keluar_henti')); kk = (r['saham'], cv[1])
+                ok = [v for v in (o[j], MM.get(kk), rasmi.get(kk)) if v and hk and abs(hk / v - 1) <= TOL_BUKA]
+                if hk and not ok:
+                    kira['harga'] += 1
+                    amaran.append(f'{t}: harga_keluar_henti {r["harga_keluar_henti"]} ≠ buka bar {cv[1]} {o[j]:g} ({x["sumber"][j]}; '
+                                  f'beza {(hk / o[j] - 1) * 100:+.2f}%) — sahkan dengan kline Moomoo (standard/sampel_semak.py)')
+            continue
+        akhir = R.get(N)
+        dulu = akhir and (akhir[0] == 'pegang' and (
+            (cv[0] == 'menunggu' and cv[1] not in {KL.hb(d) for d in ix[k:]}) or (cv[0] == 'keluar' and cv[1] > ix[N]))
+            or akhir[0] == 'menunggu' and cv[0] == 'keluar' and cv[1] > ix[N])
+        if dulu:
+            kira['tidak_disemak'] += 1     # CSV memakai bar selepas data repo (Moomoo rutin): tidak boleh disemak di sini
+            continue
+        kira['disemak'] += 1
+        kira_r = akhir or next(iter(R.values()))
+        if cv[0] == 'keluar' and cv[1] in ix:
+            jc = ix.index(cv[1]) - 1                      # bar isyarat CSV = sehari sebelum keluar
+        elif cv[0] == 'menunggu':
+            jc = next((j for j in range(k, N + 1) if KL.hb(ix[j]) == cv[1]), None)
+        else:
+            jc = None
+        m = margin_lorong(c, kira_r[2], kira_r[3], jc)
+        teks = (f'{t}: lorong 2 CSV {cv[0]} {cv[1] or ""} ≠ kiraan semula {kira_r[0]} {kira_r[1] or ""} '
+                f'(data hingga {ix[N]}; margin tutup–paras {m * 100:.2f}%)')
+        if m < TOL_SEMPADAN or KL.TANDA_PENDEK in (r.get('status_henti') or ''):
+            kira['sempadan'] += 1
+            amaran.append(teks + ' — sempadan/sejarah pendek: beza data boleh menterbalikkan; semak manual')
+        else:
+            kira['beza'] += 1
+            ralat.append(teks + ' — jalankan keluar_lorong.py --saham ' + r['saham'] + ' dengan stor lengkap')
+    return kira
+
+
 def semak_senarai(p, ralat, amaran):
     nama = os.path.basename(p)
     lajur, rows = baca(p)
@@ -275,27 +587,66 @@ def semak_watch(p, ralat, amaran):
         lihat.add(k)
 
 
+def tulis_json(path, tarikh, ralat, amaran, info, n_posisi):
+    """Ringkasan untuk dashboard/rutin: {"tarikh": sesi data terakhir yang disemak (YYYY-MM-DD), "dibina": masa UTC,
+    "status": "ok"|"amaran"|"ralat", "n_ralat", "n_amaran", "ringkas": <= 20 baris pendek}."""
+    pendek = lambda s: s if len(s) <= 200 else s[:197] + '…'
+    rk = [f'{len(ralat)} ralat, {len(amaran)} amaran, {n_posisi} posisi dibeli diperiksa'] + [pendek(x) for x in info]
+    ruang = 20 - len(rk)
+    nr = min(len(ralat), max(ruang - (1 if amaran else 0) - (1 if len(ralat) > ruang else 0), 0))
+    rk += ['RALAT ' + pendek(x) for x in ralat[:nr]]
+    if len(ralat) > nr:
+        rk.append(f'RALAT … dan {len(ralat) - nr} lagi')
+    ruang = 20 - len(rk)
+    na = min(len(amaran), ruang if len(amaran) <= ruang else ruang - 1)
+    rk += ['AMARAN ' + pendek(x) for x in amaran[:na]]
+    if len(amaran) > na and len(rk) < 20:
+        rk.append(f'AMARAN … dan {len(amaran) - na} lagi')
+    out = dict(tarikh=tarikh or datetime.now(timezone.utc).strftime('%Y-%m-%d'),
+               dibina=datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'),
+               status='ralat' if ralat else ('amaran' if amaran else 'ok'), n_ralat=len(ralat), n_amaran=len(amaran),
+               ringkas=rk[:20])
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
+        f.write('\n')
+    return out
+
+
 def main(argv=None):
     global PT
     ap = argparse.ArgumentParser(description='Semak data papertrade ikut SKEMA.md')
     ap.add_argument('--betulkan', action='store_true', help='susun lajur fail posisi ikut skema sebelum semak')
     ap.add_argument('--folder', default=PT, help='folder papertrade (lalai: BacktestShariah2/papertrade)')
     ap.add_argument('--stor', default=STOR, help='folder stor harga (harga_A/B.csv, buka_moomoo.csv) bagi semakan harga beli C')
+    ap.add_argument('--terkini', help='terkini.csv (bar selepas stor; lalai data/harga/terkini.csv jika --stor = stor repo)')
+    ap.add_argument('--sejarah', help='sejarah.csv (bar sebelum stor; lalai data/harga/sejarah.csv jika --stor = stor repo)')
+    ap.add_argument('--ambil-alih', default=AMBIL_ALIH, help='senarai sah ambil alih (lalai data/ambil_alih.csv)')
+    ap.add_argument('--lorong-n', type=int, default=LORONG_N, help='saiz sampel lorong 2 dikira semula (0 = semua)')
+    ap.add_argument('--json', nargs='?', const=SEMAKAN, help='tulis ringkasan JSON (lalai data/semakan/sahkan.json)')
     a = ap.parse_args(argv)
     PT = a.folder
-    ralat, amaran, kunci = [], [], {}
+    ralat, amaran, kunci, info = [], [], {}, []
     data = {}
     for p in fail_posisi():
         if os.path.exists(p):
             data[p] = baca(p)
-    tc = {r.get('saham') for p, (_, rows) in data.items() if os.path.basename(p) != 'moomoo.csv' for r in rows}
+    semua = {r.get('saham') for _, rows in data.values() for r in rows if r.get('saham')}
     ada_stor = any(os.path.exists(os.path.join(a.stor, f)) for f in ('harga_A.csv', 'harga_B.csv'))
-    O, MM = buka_stor(a.stor, tc) if ada_stor else ({}, {})
-    if not ada_stor:
-        amaran.append(f'stor harga tiada ({a.stor}): semakan harga_beli lawan buka bar hari beli dilangkau')
+    repo = os.path.abspath(a.stor) == os.path.abspath(STOR)
+    terkini = a.terkini or (TERKINI if repo else None)
+    sejarah = a.sejarah or (SEJARAH if repo else None)
+    F, sesi, O, MM = {}, '', {}, {}
+    if ada_stor:
+        F, sesi, O = muat_bar(a.stor, semua, terkini, sejarah)
+        _baca_buka(os.path.join(a.stor, 'buka_moomoo.csv'), MM, semua)
+    else:
+        amaran.append(f'stor harga tiada ({a.stor}): semakan harga_beli lawan buka bar hari beli dan semakan sumber dilangkau')
     for p in fail_posisi():
         if p not in data:
             print(f'TIADA: {p}')
+            if a.json:
+                tulis_json(a.json, sesi, [f'TIADA: {p}'] + ralat, amaran, info, len(kunci))
             return 2
         lajur, rows = data[p]
         if a.betulkan:
@@ -313,13 +664,33 @@ def main(argv=None):
         if os.path.exists(p):
             fn(p, ralat, amaran)
             semak_gred(nm, baca(p)[1], ralat)
+    # semakan sumber (lapisan 1): ambil alih, bar sesi terakhir, lorong 2 dikira semula
+    posisi = [(os.path.basename(p), i, r) for p in fail_posisi() for i, r in enumerate(data[p][1], start=2)]
+    posisi_c = [x for x in posisi if x[0] != 'moomoo.csv']
+    sp = max((x[2].get(k) or '' for x in posisi if dibeli(x[2]) for k in ('tarikh_beli', 'tarikh_keluar', 'tarikh_keluar_henti')
+              if TARIKH.match(x[2].get(k) or '')), default='')
+    if ada_stor:
+        aa = semak_ambil_alih(posisi_c, F, ralat, amaran, a.ambil_alih)
+        tb = semak_bar_sesi(posisi, F, sesi, amaran)
+        rasmi = {(r['saham'], r['tarikh_beli']): nombor(r['harga_beli']) for _, _, r in posisi_c
+                 if dibeli(r) and 'buka rasmi' in (r.get('nota') or '')}
+        k2 = semak_lorong2(posisi, F, sesi, ralat, amaran, a.lorong_n, rasmi, MM)
+        info.append(f"sumber: data harga hingga {sesi or '-'}; lorong 2 dikira semula {k2['disemak']}/{k2['calon']} "
+                    f"(sampel {'semua' if a.lorong_n <= 0 else a.lorong_n}): sama {k2['sama']}, beza {k2['beza']}, "
+                    f"sempadan {k2['sempadan']}, harga keluar beza {k2['harga']}, tidak disemak {k2['tidak_disemak']}; "
+                    f"tanpa bar sesi {len(tb)} saham; calon ambil alih {len(aa)}")
     for x in amaran[:40]:
         print('AMARAN', x)
     if len(amaran) > 40:
         print(f'AMARAN ... dan {len(amaran) - 40} lagi')
     for x in ralat[:200]:
         print('RALAT', x)
+    for x in info:
+        print('SEMAK', x)
     print(f'Ringkasan: {len(ralat)} ralat, {len(amaran)} amaran, {len(kunci)} posisi dibeli diperiksa.')
+    if a.json:
+        tulis_json(a.json, max(sp, sesi), ralat, amaran, info, len(kunci))
+        print(f'JSON: {a.json}')
     return 1 if ralat else 0
 
 

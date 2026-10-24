@@ -43,7 +43,7 @@
 # meter bukti (g_matang/g_perlu, nb/nb_perlu, tarikh_sebenar), ditolak/lejar_n, ekor backtest (median_bt, pangkas5_bt, pct_top1),
 # kelompok korelasi (kalibrasi_skor.json) dan teks pantau (pantau_sasaran, pantau_ambang); aras atas: fasa, label_semakan,
 # gabungan_beku_nota. Formula: lihat fungsi peluang_pangkat(), nb_perlu(), tarikh_bukti(), kelompok_rows().
-import argparse, glob, json, math, os, re
+import argparse, glob, hashlib, inspect, json, math, os, re
 from datetime import datetime, timedelta, timezone
 from fractions import Fraction
 
@@ -80,6 +80,11 @@ TOL_LARAS_C = 0.2       # Papertrade C (harga Moomoo lawan stor yfinance): hanya
 SD_MIN = 5.0            # SD minimum setiap dagangan (%)
 PANGKAS = 0.05          # pecahan dipangkas setiap hujung (purata dipangkas: semakan sahaja sejak 22 Okt 2026)
 KALIBRASI = os.path.join(BS2, 'data', 'analisis', 'kalibrasi_skor.json')
+# versi formula ranking/skor/pantau (audit ketepatan data 24 Okt 2026, lapisan 4): naikkan VERSI_FORMULA dan tambah satu baris dalam
+# data/analisis/LOG_FORMULA.md bagi setiap perubahan cara skor, kedudukan, pantau atau P(5 teratas) dikira. cap_formula() mengesan
+# perubahan yang tidak direkod (parameter, kalibrasi_skor.json atau kod fungsi teras), supaya kedudukan tidak berubah senyap.
+VERSI_FORMULA = '3.1'
+LOG_FORMULA = os.path.join(BS2, 'data', 'analisis', 'LOG_FORMULA.md')
 PANTAU_DD = 1.5         # GANTUNG: kejatuhan ekuiti kohort > 1.5 x maks backtest (Davey 1.2–1.5x)
 PANTAU_P = 0.9          # BERSARA: P(mu <= 0) > 0.9 ...
 PANTAU_G = 20           # ... dengan >= 20 hari beli matang
@@ -1017,6 +1022,28 @@ def jana_md(rows, meta, ruj, pen, dibina):
     return '\n'.join(L) + '\n'
 
 
+def cap_formula(param, kalibrasi=KALIBRASI):
+    """Cap jari 10 aksara: parameter papan + kalibrasi_skor.json + kod fungsi teras (skor, status, kedudukan, pantau, MC, nb_perlu,
+    semakan). Berubah = kedudukan/status mungkin berubah kerana formula, bukan kerana prestasi."""
+    h = hashlib.sha256(json.dumps(param, sort_keys=True, default=str).encode())
+    try:
+        h.update(open(kalibrasi, 'rb').read())
+    except OSError:
+        pass
+    for f in (skor, status_kaedah, susun_kedudukan, peluang_pangkat, nb_perlu, pantau_kaedah, sasaran_cusum, berat_backtest, semakan):
+        h.update(inspect.getsource(f).encode())
+    return h.hexdigest()[:10]
+
+
+def log_formula(path=LOG_FORMULA):
+    """Baris terakhir log formula ('- vX (tarikh): perubahan'), '' jika tiada."""
+    try:
+        L = [x.strip() for x in open(path, encoding='utf-8') if x.startswith('- v')]
+        return L[-1][2:] if L else ''
+    except OSError:
+        return ''
+
+
 def kedudukan_sebelum(rows, kini, lama):
     """kedudukan_sebelum = kedudukan pada data sesi terdahulu (anak panah perubahan tab Analisis). Larian semula pada data
     yang sama mengekalkan rujukan lama, jadi anak panah tidak hilang apabila papan dijana dua kali sehari."""
@@ -1054,6 +1081,13 @@ def main(argv=None):
                penemuan=pen, rujukan=ruj, rows=rows,
                nota='Papan Penganalisis (standard/penganalisis.py). Skor = purata pulangan bersih setiap dagangan (%) gabungan backtest '
                     'dipotong dan posisi hadapan matang. Rekod analisis sahaja.')
+    cap = cap_formula(doc['parameter']); lf = (lama or {}).get('formula') or {}
+    doc['formula'] = dict(versi=VERSI_FORMULA, cap=cap, log=log_formula(), sebelum=lf.get('cap'), versi_sebelum=lf.get('versi'),
+                          berubah=bool(lf.get('cap')) and lf.get('cap') != cap)
+    doc['formula']['tanpa_log'] = doc['formula']['berubah'] and lf.get('versi') == VERSI_FORMULA   # berubah tanpa versi baharu
+    if doc['formula']['berubah']:   # anak panah kedudukan tidak bermakna apabila formula berubah
+        for r in rows:
+            r['kedudukan_sebelum'] = None
     try:   # kandungan sama (hanya masa dibina berbeza) -> fail tidak ditulis semula, jadi tiada commit
         if not a.lama and {k: v for k, v in lama.items() if k != 'dibina'} == \
                 json.loads(json.dumps({k: v for k, v in doc.items() if k != 'dibina'})) and os.path.exists(a.md):
