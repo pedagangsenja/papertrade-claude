@@ -347,5 +347,17 @@ class UjiGredPada(unittest.TestCase):
         self.assertEqual([r['gred_pada'] for r in rows], ['2026-10-22 (imbasan 2026-10-23)', '2026-10-23', '2026-10-22 (imbasan 2026-10-23)'])
 
 
+
+class TestHariDagNyse(unittest.TestCase):
+    """Audit swing trader P0 #4: hari dagangan ke earnings mengikut cuti NYSE (Thanksgiving, Krismas)."""
+    def test_cuti(self):
+        try:
+            import exchange_calendars  # noqa: F401
+        except ImportError:
+            self.skipTest('exchange_calendars tiada')
+        self.assertEqual(jd.hari_dag(date(2026, 11, 24), date(2026, 11, 30)), 3)    # 26 Nov Thanksgiving
+        self.assertEqual(jd.hari_dag(date(2026, 12, 21), date(2026, 12, 29)), 5)    # 25 Dis Krismas
+        self.assertEqual(jd.hari_dag(date(2026, 10, 26), date(2026, 10, 31)), 5)
+
 if __name__ == '__main__':
     unittest.main()

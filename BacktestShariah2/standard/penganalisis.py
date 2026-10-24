@@ -186,10 +186,11 @@ def muat_wfo(hasil=WFO_HASIL, laporan=WFO_LAPORAN):
 
 
 def muat_autotune(path=AUTOTUNE):
-    """{id: dict(label, cagr_a, spy_a, cagr_b, spy_b, cagr_kunci, spy_kunci, dsr, pbo)} — 2000 saham AS (A01)."""
+    """{id: dict(label, cagr_a, spy_a, cagr_b, spy_b, cagr_kunci, spy_kunci, cagr_bersih, spy_bersih, dsr, pbo)} — 2000 saham AS
+    (A01): OOS A/B 2013 – Sep 2024 (versi ditala), tempoh kunci Okt 2024 – Okt 2026, ujian bersih 2013–2018 (parameter asal)."""
     if not os.path.exists(path):
         return {}
-    k = ('label', 'cagr_a', 'spy_a', 'mdd_a', 'cagr_b', 'spy_b', 'cagr_kunci', 'spy_kunci', 'dsr', 'pbo')
+    k = ('label', 'cagr_a', 'spy_a', 'mdd_a', 'cagr_b', 'spy_b', 'cagr_kunci', 'spy_kunci', 'cagr_bersih', 'spy_bersih', 'dsr', 'pbo')
     return {r['id']: {x: r.get(x) for x in k} for r in json.load(open(path, encoding='utf-8')).get('kaedah', [])}
 
 
@@ -771,7 +772,9 @@ def analisis(kini=None):
             wfo_cagr=bulat(w and w['cagr'], 4), wfo_ew=bulat(w and w['ew'], 4), wfo_mdd=bulat(w and w['mdd'], 4),
             wfo_dsr=bulat(w and w['dsr'], 2), lulus_wfo=s_wfo,
             at_label=a and a.get('label'), at_cagr_a=bulat(a and a.get('cagr_a'), 4), at_cagr_b=bulat(a and a.get('cagr_b'), 4),
-            at_spy=bulat(a and a.get('spy_a'), 4), lulus_at=s_at, lulus=lulus, kekal=kekal, jangkaan=bulat(mu0, 2),
+            at_spy=bulat(a and a.get('spy_a'), 4), at_cagr_kunci=bulat(a and a.get('cagr_kunci'), 3),
+            at_cagr_bersih=bulat(a and a.get('cagr_bersih'), 3), at_dsr=bulat(a and a.get('dsr'), 3), at_pbo=bulat(a and a.get('pbo'), 2),
+            lulus_at=s_at, lulus=lulus, kekal=kekal, jangkaan=bulat(mu0, 2),
             h_posisi=hd['posisi'], h_tutup=hd['tutup'], h_matang=hd['matang'], h_purata=bulat(hd['purata'], 2),
             h_menang=bulat(hd['menang'], 4), h_purata_l2=bulat(hd['purata_l2'], 2), h_umur=hd['umur_hari'],
             h_pangkas=bulat(hd['pangkas'], 2), h_median=bulat(hd['median'], 2), h_n_berkesan=bulat(hd['n_berkesan'], 1),
@@ -835,6 +838,10 @@ def rujukan(rows, WF=None):
     out = dict(is_tempoh='1 Nov 2019 – 2 Okt 2026', is_ew=bulat(ew.iloc[0], 4) if len(ew) else None, is_spy=bulat(cagr_indeks(), 4),
                wfo_tempoh='1 Jan 2023 – 2 Okt 2026', wfo_ew=w and w['wfo_ew'], wfo_spy=None,
                at_tempoh='2013 – Sep 2024 (2000 saham AS)', at_spy=at and at['at_spy'], slot=None)
+    # AUTOTUNE: SPY tempoh kunci (Okt 2024 – Okt 2026) dan ujian bersih (2013–2018, parameter asal); sama bagi semua kaedah
+    A = next((v for v in muat_autotune().values() if v.get('spy_bersih') is not None), None) or {}
+    out.update(at_kunci_tempoh='Okt 2024 – Okt 2026', at_spy_kunci=bulat(A.get('spy_kunci'), 4),
+               at_bersih_tempoh='2013–2018 (parameter asal)', at_spy_bersih=bulat(A.get('spy_bersih'), 4))
     WF = WF if WF is not None else muat_wfo()
     sp = next((v['spy'] for v in WF.values() if v.get('spy') is not None), None)
     out['wfo_spy'] = bulat(sp, 4)

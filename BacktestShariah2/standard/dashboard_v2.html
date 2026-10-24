@@ -701,7 +701,8 @@ body.padat .tablewrap td .trA{flex-direction:row;align-items:center;gap:5px}
 .lampu.sal-lewat{border-color:color-mix(in srgb,var(--warn) 45%,var(--line))}.lampu.sal-basi{border-color:color-mix(in srgb,var(--neg) 45%,var(--line))}
 .lampu .lp-i{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;font-size:.86rem}.lampu .lp-i>b{color:var(--fg);font-size:.95rem}
 .lampu .lp-k{color:var(--muted);font-size:1.2rem}
-.sal-tunggu>b{color:var(--muted)}.salh.sal-tunggu b{color:var(--muted)}
+.sal-tunggu>b{color:var(--muted)}
+.lampu.sal-amaran .lp-d{background:var(--warn);box-shadow:0 0 0 4px var(--warn-soft)}.lampu.sal-amaran{border-color:color-mix(in srgb,var(--warn) 30%,var(--line))}.salh.sal-amaran b{color:var(--warn)}.salh.sal-tunggu b{color:var(--muted)}
 .fasa{display:flex;flex-direction:column;gap:3px;border:1px solid color-mix(in srgb,var(--warn) 45%,var(--line));background:linear-gradient(90deg,var(--warn-soft),transparent 75%);border-radius:var(--r);padding:12px 16px;margin:0 0 12px;font-size:.9rem;color:var(--fg-2)}
 .fasa>b{color:var(--warn);font-size:1.02rem}.fasa.fasa-ok{border-color:color-mix(in srgb,var(--pos) 45%,var(--line));background:linear-gradient(90deg,var(--pos-soft),transparent 75%)}.fasa.fasa-ok>b{color:var(--pos)}
 .kpis5{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
@@ -883,8 +884,8 @@ const LANGKAH=[
   {k:'rugi',p:1,t:'Rugi setiap dagangan kecil',g:'rugi setiap dagangan terlalu besar',x:'rugi dagangan',d:'Ada henti rugi dan purata rugi dagangan kalah tidak lebih teruk daripada −12%.'},
   {k:'masa',p:1,t:'Untung 2019–22 dan 2023–26',g:'rugi dalam satu separuh tempoh',x:'dua separuh tempoh',d:'Untung dalam kedua-dua separuh tempoh, bukan bergantung pada satu zaman pasaran.'},
   {k:'saham',p:2,t:'Atasi beli-semua dalam S1–S4',g:'tidak mengatasi EW dalam ≥ 3 daripada S1–S4',x:'S1–S4',d:'Varian sama mengatasi beli-semua (EW) dalam sekurang-kurangnya 3 daripada 4 kumpulan kecil daripada 431 (kestabilan DALAM sampel; sama dengan semakan Analisis).'},
-  {k:'u2',p:3,t:'Atasi SPY dalam Ujian 2',g:'tidak mengatasi SPY dalam Ujian 2 (2000 saham AS)',x:'Ujian 2',d:'AUTOTUNE atas 2000 saham AS lain, 2013–2018: CAGR melebihi SPY dalam kumpulan A dan B (satu-satunya ujian luar sampel; sama dengan semakan Analisis).'}];
-const PERINGKAT={1:'Ujian 1 · 431 saham Shariah · Nov 2019 – Okt 2026 (dalam sampel)',2:'Dalam sampel · S1–S4 (subset 431)',3:'Luar sampel · Ujian 2 · 2000 saham AS lain · 2013–2018'};
+  {k:'u2',p:3,t:'Atasi SPY dalam Ujian 2',g:'tidak mengatasi SPY dalam Ujian 2 (2000 saham AS)',x:'Ujian 2',d:'AUTOTUNE atas 2000 saham AS lain, OOS 2013 – Sep 2024 (versi ditala): CAGR melebihi SPY dalam kumpulan A dan B (sama dengan semakan Analisis). Ujian bersih 2013–2018 parameter asal: lihat tab Kaedah.'}];
+const PERINGKAT={1:'Ujian 1 · 431 saham Shariah · Nov 2019 – Okt 2026 (dalam sampel)',2:'Dalam sampel · S1–S4 (subset 431)',3:'Luar sampel · Ujian 2 · 2000 saham AS lain · OOS 2013 – Sep 2024'};
 const PINGAT={'GUNA':['🥇','Emas','pg-GUNA'],'UJI KERTAS':['🥈','Perak','pg-UJI'],'SIMPAN':['🥉','Gangsa','pg-SIMPAN']};
 const PG_ORD={'GUNA':0,'UJI KERTAS':1,'SIMPAN':2};
 const rm=v=>v==null||!isFinite(v)?'–':'RM'+(Math.round(v/100)*100).toLocaleString('en-US');
@@ -1389,7 +1390,7 @@ const LORONG={kaedah:['keluar','tarikh_keluar','harga_keluar','untung_akhir_pct'
 const hasilL=(r,l)=>r[LORONG[l][0]]?r[LORONG[l][3]]:l==='henti'&&r.keluar?semasaL2(r):r.untung_pct;
 const BLN=['Jan','Feb','Mac','Apr','Mei','Jun','Jul','Ogo','Sep','Okt','Nov','Dis'];
 /* hari dagangan (Isn–Jum) dari tarikh beli hingga tarikh keluar */
-function hariAntara(a,b){const x=Date.parse((a||'')+'T00:00:00Z'),y=Date.parse((b||'')+'T00:00:00Z');if(isNaN(x)||isNaN(y)||y<x)return null;let n=0;for(let d=new Date(x+864e5);d<=y;d.setUTCDate(d.getUTCDate()+1)){const w=d.getUTCDay();if(w&&w<6)n++;}return n;}
+function hariAntara(a,b){const x=Date.parse((a||'')+'T00:00:00Z'),y=Date.parse((b||'')+'T00:00:00Z');if(isNaN(x)||isNaN(y)||y<x)return null;let n=0;for(let d=new Date(x+864e5);d<=y;d.setUTCDate(d.getUTCDate()+1)){const w=d.getUTCDay();if(w&&w<6&&!cutiNyse(d.toISOString().slice(0,10)))n++;}return n;}
 const tkO=t=>/^\d{4}-\d\d-\d\d/.test(t||'')?(+t.slice(8,10))+' '+BLN[+t.slice(5,7)-1]:'';
 /* satu sel bagi setiap lorong, format seragam: status · tarikh @ harga · untung · sebab */
 function selLorong(r,l){const [k,t,h,u,st]=LORONG[l];if(r.tidak_dibeli)return '<span class="mut">–</span>';
@@ -1475,7 +1476,7 @@ function ptcRows(){return ptcRowsM(S.ptc,...Object.keys(S.ptcN).map(Number).sort
 
 /* ================= Posisi: Papertrade C dan Moomoo lama (akaun C · M · Gabung) ================= */
 const posRowsM={};
-function posRows(a){return (posRowsM[a]||(posRowsM[a]=memo((M,C)=>{const tag=(p,k)=>p?p.rows.filter(r=>!r.tidak_dibeli).map((r,i)=>Object.assign({},r,{akaun:k,_p:k+'|'+i})):[];
+function posRows(a){return (posRowsM[a]||(posRowsM[a]=memo((M,C)=>{const tag=(p,k)=>p?p.rows.filter(r=>!r.tidak_dibeli).map((r,i)=>Object.assign({},r,{akaun:k,_p:k+'|'+i,sektor:r.sektor_us||r.sektor,industri:r.industri_us||r.industri})):[];
   return a==='m'?tag(M,'M'):a==='c'?tag(C,'C'):[...tag(M,'M'),...tag(C,'C')];})))(ptmRows(),ptcRows());}
 /* status lorong kaedah tanpa mengulang untung %: Pegang · henti, Tunggu (jual buka esok), Keluar tarikh @ harga · sebab */
 function lorongRingkas(r){const s=String(r.isyarat_keluar||'');
@@ -2234,25 +2235,9 @@ function labelBerubah(src){const sm=semalam(src);if(!sm)return [];const c=labelB
 
 /* status saluran data: tarikh data setiap saluran lawan sesi yang dijangka (cuti NYSE tidak diambil kira) */
 const hariKerjaSebelum=t=>{const d=new Date(t+'T00:00:00Z');do{d.setUTCDate(d.getUTCDate()-1);}while(d.getUTCDay()===0||d.getUTCDay()===6||cutiNyse(d.toISOString().slice(0,10)));return d.toISOString().slice(0,10);};
-const SAL={ok:['✓','pos','segar'],lewat:['!','wrn','lewat 1 sesi'],basi:['✗','neg','basi'],x:['?','mut','tiada data'],tunggu:['…','mut','menunggu jadual']};
+const SAL={ok:['✓','pos','segar'],lewat:['!','wrn','lewat 1 sesi'],basi:['✗','neg','basi'],x:['?','mut','tiada data'],tunggu:['…','mut','menunggu jadual'],amaran:['!','wrn','amaran sistem']};
 const salChip=x=>`<span class="sal sal-${x.st}" title="${esc(x.n)}: data ${x.v?esc(tkP(x.v)):'tiada'}${x.j?` · dijangka ${esc(tkP(x.j))}`:''} · ${SAL[x.st][2]} (${esc(x.src)})"><b>${SAL[x.st][0]}</b>${esc(x.n)} <span class="mut">${x.v?esc(tkO(x.v)):'–'}</span></span>`;
 /* Ringkasan: panel Esok dan Berubah sejak sesi lalu */
-function panelEsok(){const D=tarikhData(),nx=D?hariDagBerikut(D):'',pos=posRows('c').filter(r=>!r.tidak_dibeli);
-  const jual=pos.map(r=>({r,s:statusPos(r)})).filter(x=>x.s&&x.s[0]==='m').sort((a,b)=>(a.r.untung_pct??0)-(b.r.untung_pct??0));
-  const W=watchRows(),beli=W.map((r,i)=>({r,i})).filter(x=>wLengkap(x.r)&&wBeli(x.r).k==='tunggu');
-  const er=[...new Map(pos.filter(r=>!r.tutup_semua&&(hariKeEarn(r)??99)<=10).map(r=>[r.saham,r])).values()].sort((a,b)=>hariKeEarn(a)-hariKeEarn(b));
-  const hm=pos.map(r=>({r,s:statusPos(r)})).filter(x=>x.s&&x.s[0]==='h').sort((a,b)=>(jarakAtr(a.r)??9)-(jarakAtr(b.r)??9));
-  const HAD=TELEFON?12:24,lagi=(n,tab)=>n>HAD?`<button type="button" class="lnk" data-pergi="${tab}">+${n-HAD} lagi</button>`:'';
-  /* satu cip setiap saham: bilangan posisi (kaedah) dan untung purata; ketik membuka posisi pertama */
-  const kump=L=>{const m=new Map();L.forEach(x=>{const g=m.get(x.r.saham)||{x,n:0,u:[],k:new Set(),l1:0,l2:0};g.n++;g.u.push(x.r.untung_pct);g.k.add(x.r.kaedah);if(x.s&&x.s[2])g.l1=1;if(x.s&&x.s[3])g.l2=1;m.set(x.r.saham,g);});return [...m.values()];};
-  const cP=g=>{const u=avgOf(g.u);return `<button type="button" class="ec" data-pos="${esc(g.x.r._p)}" title="${esc([...g.k].join(', '))}">${g.l1?cipL('K'):''}${g.l2?cipL('2'):''}<b>${esc(g.x.r.saham)}</b><span class="mut">${g.n>1?'×'+g.n:esc(g.x.r.kaedah)}</span><span class="${cls(u)}">${sg2(u)}</span></button>`;};
-  const jualG=kump(jual),hmG=kump(hm);
-  const blok=(t,tip,n,isi,kosong)=>`<div class="esb"><div class="esh"${tip?` data-tip="${tip}"`:''}>${t} <b>${n}</b></div>${n?`<div class="ecs">${isi}</div>`:`<p class="mut" style="margin:0">${kosong}</p>`}</div>`;
-  return `<div class="panel"><div class="panel-h"><h2>Esok${nx?` · buka ${esc(tkO(nx))}`:''}</h2><span class="sub">Papertrade C · ketik saham untuk butiran</span></div>
-    ${blok(`${titikH('m')} Dijual pada buka`,'isyarat_keluar',jual.length,`<span class="mut ecn">${nf(jualG.length)} saham</span>`+jualG.slice(0,HAD).map(cP).join('')+lagi(jualG.length,'posisi'),'Tiada isyarat keluar baharu.')}
-    ${blok('Dibeli pada buka','isyarat_lengkap',beli.length,beli.slice(0,HAD).map(x=>`<button type="button" class="ec" data-wl="${x.i}"><b>${esc(x.r.saham)}</b><span class="mut">${esc(x.r.kaedah)}</span>${grB(x.r.gred_keseluruhan)}</button>`).join('')+lagi(beli.length,'watch'),'Tiada isyarat lengkap menunggu belian.')}
-    ${blok(`${titikH('h')} Hampir paras keluar (≤ ${HAMPIR_ATR} ATR)`,'jarak_atr',hm.length,`<span class="mut ecn">${nf(hmG.length)} saham</span>`+hmG.slice(0,HAD).map(cP).join('')+lagi(hmG.length,'posisi'),'Tiada posisi hampir paras keluar.')}
-    ${blok('📅 Earnings ≤ 10 hari dagangan','g_q',er.length,er.slice(0,HAD).map(r=>`<button type="button" class="ec" data-pos="${esc(r._p)}"><b>${esc(r.saham)}</b><span class="mut">${esc(tkO(earnTk(r)))} · ${hariKeEarn(r)}h</span></button>`).join('')+lagi(er.length,'posisi'),'Tiada earnings dalam 10 hari dagangan bagi posisi dipegang.')}</div>`;}
 function panelBerubah(src){const sm=semalam(src),dB=belianTerkini(src),nB=src.filter(r=>r.tarikh_beli===dB).length;
   const dK=src.reduce((m,r)=>r.keluar&&(r.tarikh_keluar||'')>m?r.tarikh_keluar:m,''),nK=src.filter(r=>r.keluar&&r.tarikh_keluar===dK).length;
   const d2=src.reduce((m,r)=>r.keluar_henti&&(r.tarikh_keluar_henti||'')>m?r.tarikh_keluar_henti:m,''),n2=src.filter(r=>r.keluar_henti&&r.tarikh_keluar_henti===d2).length;
@@ -2265,7 +2250,7 @@ function panelBerubah(src){const sm=semalam(src),dB=belianTerkini(src),nB=src.fi
     ${baris(`${cipL('K')} Keluar lorong kaedah`,`<b>${nf(nK)}</b> <span class="mut">pada ${esc(tkO(dK)||'–')}</span>`)}
     ${baris(`${cipL('2')} Keluar selagi naik`,`<b>${nf(n2)}</b> <span class="mut">pada ${esc(tkO(d2)||'–')}</span>`)}
     ${wb!=null?baris(`${BARU} Masuk Watchlist`,`<b>${nf(wb)}</b> <span class="mut">imbasan ${esc(tkO(String(w.tarikh_data||'').slice(0,10)))}</span>`):''}
-    ${baris('Kedudukan Analisis',!adaAnl?'<span class="mut">rujukan sesi sebelum belum ada (bermula sesi berikutnya)</span>':ra.length?ra.map(x=>`<b>${esc(x.id)}</b> <span class="${x.d>0?'pos':'neg'}">${x.d>0?'▲':'▼'}${Math.abs(x.d)}</span> <span class="mut">ke #${x.k}</span>`).join(' · '):'<span class="mut">tiada perubahan</span>')}
+    ${baris('Kedudukan skor (# skor)',!adaAnl?'<span class="mut">rujukan sesi sebelum belum ada (bermula sesi berikutnya)</span>':ra.length?ra.map(x=>`<b>${esc(x.id)}</b> <span class="${x.d>0?'pos':'neg'}">${x.d>0?'▲':'▼'}${Math.abs(x.d)}</span> <span class="mut">ke #${x.k}</span>`).join(' · '):'<span class="mut">tiada perubahan</span>')}
     <p class="sub" style="margin-top:8px">Kedudukan Analisis berbanding sesi sebelum. Gerakan pangkat kecil dalam julat pangkat 90% bukan isyarat.</p></div>`;}
 const salStrip=()=>{const L=saluran();return L.length?`<div class="salstrip" role="group" aria-label="Status data">${L.map(salChip).join('')}${L.some(x=>x.st!=='ok')?'<span class="pill p-exit">⚠ semak saluran yang lewat</span>':''}</div>`:'';};
 
@@ -3423,8 +3408,9 @@ function muatRegistryJika(){if(regMinta)return;regMinta=true;if(regMula)regMula(
 
 /* ================= kalendar NYSE dan kesegaran data (tindakan 8, 12) ================= */
 /* cuti penuh NYSE 2026–2027 (nyse.com/markets/hours-calendars); separuh hari tidak mengubah tarikh data */
-function cutiNyse(t){return ['2026-01-01','2026-01-19','2026-02-16','2026-04-03','2026-05-25','2026-06-19','2026-07-03','2026-09-07','2026-11-26','2026-12-25',
-  '2027-01-01','2027-01-18','2027-02-15','2027-03-26','2027-05-31','2027-06-18','2027-07-05','2027-09-06','2027-11-25','2027-12-24'].indexOf(t)>=0;}
+function cutiNyse(t){return (cutiNyse.S||(cutiNyse.S=new Set(['2026-01-01','2026-01-19','2026-02-16','2026-04-03','2026-05-25','2026-06-19','2026-07-03','2026-09-07','2026-11-26','2026-12-25',
+  '2027-01-01','2027-01-18','2027-02-15','2027-03-26','2027-05-31','2027-06-18','2027-07-05','2027-09-06','2027-11-25','2027-12-24',
+  '2028-01-17','2028-02-21','2028-04-14','2028-05-29','2028-06-19','2028-07-04','2028-09-04','2028-11-23','2028-12-25']))).has(t);}
 const hariDag=t=>{const w=new Date(t+'T00:00:00Z').getUTCDay();return w>0&&w<6&&!cutiNyse(t);};
 /* jam UTC bagi jam tempatan New York pada tarikh t (EDT = UTC−4, EST = UTC−5; DST tamat 1 Nov 2026) */
 function nyUtc(t,jam){let off=4;try{const z=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',timeZoneName:'short'}).formatToParts(new Date(t+'T16:00:00Z')).find(p=>p.type==='timeZoneName');off=z&&/EST|GMT-5/.test(z.value)?5:4;}catch(e){}return jam+off;}
@@ -3436,31 +3422,38 @@ const ralatOf=h=>{const r=h&&h.ralat;if(!r)return [];const L=Array.isArray(r)?r:
 /* harian/status.ralat: baris 'amaran: …' = amaran (kuning); selainnya ralat (merah) */
 const amaranOf=h=>ralatOf(h).filter(x=>/^amaran\b/i.test(x)),ralatSah=h=>ralatOf(h).filter(x=>!/^amaran\b/i.test(x));
 const belianC=()=>{const s=prSrc('c');return s.length?belianTerkini(s):'';};
+/* liputan harga: saham dipegang (mana-mana lorong) yang ada bar sesi trend terkini */
+function liputanHarga(){const m=trMap(),D=S.trend&&S.trend.tarikh;if(!m||!D)return null;const set=new Set();posRows('c').forEach(r=>{if(!r.tidak_sah&&!r.tutup_semua)set.add(r.saham);});
+  let n=0,N=0;set.forEach(s=>{const x=m.get(s);if(!x)return;N++;if(x.tarikh_data===D)n++;});return N?{n,N,D:String(D).replace(/^(\d{4})(\d\d)(\d\d)$/,'$1-$2-$3')}:null;}
 function saluran(){if(!S.live)return [];const h=S.hst||{},a=S.anl||{},sl=h.saluran||{},iso=t=>(/^\d{4}-\d\d-\d\d/.exec(String(t||'').replace(/^(\d{4})(\d\d)(\d\d)$/,'$1-$2-$3'))||[''])[0];
-  /* data malam ≈ 22:30 UTC hari sesi (6:30 MYT); belian 9:35 NY + 75 minit (ikut DST); Lejar/Analisis/slot: lejar.yml 06:17 UTC esoknya */
-  const js=jangkaSesi(23),jb=jangkaSesi(10.85,true),jl=jangkaSesi(31);
+  /* data malam ≈ 22:30 UTC hari sesi (6:30 MYT); belian 9:35 NY + 75 minit (ikut DST); Lejar/Analisis/slot sentiasa satu sesi di belakang
+     data harga (lejar.yml 06:17 UTC esoknya, ditolak rutin 6:02 MYT berikutnya); SST: ≤ 2 sesi (snapshot_sektor_db.py membuangnya selepas itu) */
+  const js=jangkaSesi(23),jb=jangkaSesi(10.85,true),jl=js?hariKerjaSebelum(js):'',j2=jl?hariKerjaSebelum(jl):'';
   const L=[['Harga & posisi',iso(h.harga_tutup_pada),js,'harian/status.harga_tutup_pada'],['Belian 9:35 NY',iso(h.beli_pada),jb,'beli → harian/status.beli_pada'],
     ['Posisi C (ringkas)',iso((S.ptc&&S.ptc.harga_pada)||sl.ringkas_c),js,'jana_db.py → papertrade/ringkas_c'],['Trend',iso(sl.trend||(S.trend&&S.trend.tarikh)),js,'harian.yml → harian/trend'],
     ['Lorong 2 (carta)',iso(sl.lorong2||(S.l2s&&S.l2s.harga_hingga)),js,'posisi/lorong2'],['Watchlist',iso(sl.watchlist||(S.watch&&S.watch.tarikh_data)),js,'imbasan malam → papertrade/watchlist'],
-    ['Harga tinggi/rendah',iso(sl.mfe||sl.garis||(S.mae&&S.mae.harga_hingga)),js,'prestasi/mae, prestasi/mfe'],['Lejar Penuh',iso(sl.lejar||a.lejar_sesi),jl,'lejar.yml → analisis/papan.lejar_sesi'],
-    ['Penganalisis',iso(sl.analisis||a.harga_pada),jl,'analisis.yml → analisis/papan'],['Portfolio 10 slot',iso(sl.slot||(S.pslot&&S.pslot.sesi_terakhir)),jl,'lejar.yml → prestasi/portfolio_slot'],
+    ['Harga tinggi/rendah',iso(sl.mfe||sl.garis||(S.mae&&S.mae.harga_hingga)),js,'prestasi/mae, prestasi/mfe'],['Lejar Penuh',iso(sl.lejar||a.lejar_sesi),jl,'lejar.yml → analisis/papan.lejar_sesi (satu sesi di belakang harga)'],
+    ['Penganalisis',iso(sl.analisis||a.harga_pada),jl,'analisis.yml → analisis/papan (satu sesi di belakang harga)'],['Portfolio 10 slot',iso(sl.slot||(S.pslot&&S.pslot.sesi_terakhir)),jl,'lejar.yml → prestasi/portfolio_slot (satu sesi di belakang harga)'],
     ['Sektor (mingguan)',iso((S.sektor&&S.sektor.dibina)||sl.sektor),null,'sektor/snapshot']];
-  const sst=(S.sektor&&S.sektor.sst_tarikh)||sl.sst;if(sst)L.push(['SST (sektor)',iso(sst),null,'sektor/snapshot.sst_tarikh']);
+  const sst=(S.sektor&&S.sektor.sst_tarikh)||sl.sst;if(sst)L.push(['SST (sektor)',iso(sst),j2||null,'sektor/snapshot.sst_tarikh (sah ≤ 2 sesi)']);
+  const lp=liputanHarga();if(lp)L.push([`Liputan harga ${nf(lp.n)}/${nf(lp.N)}`,lp.D,js,`saham dipegang yang ada bar ${tkO(lp.D)} (selebihnya harga sesi lebih awal)`,lp.n===lp.N?'ok':lp.n/lp.N>=0.9?'lewat':'basi']);
   /* belian yang direkod tetapi belum kelihatan dalam jadual posisi (rutin beli belum menolak ringkas_c) */
   const bd=iso(h.beli_pada),nd=h.beli_ringkas&&h.beli_ringkas.direkod;if(bd&&nd>0)L.push(['Belian dalam Posisi',belianC(),bd,'papertrade/ringkas_c lawan harian/status.beli_pada']);
-  return L.map(([n,v,j,src])=>{let st;if(!v)st='x';else if(j===null)st=(Date.now()-Date.parse(v+'T00:00:00Z'))/864e5<=8?'ok':'basi';
-    else if(v>=j)st=j===jl&&js&&v<js?'tunggu':'ok';else st=v>=hariKerjaSebelum(j)?'lewat':'basi';return {n,v,j,src,st};});}
-function renderSal(){const b=$('#salH');if(!b)return;const L=saluran();if(!L.length){b.hidden=true;return;}const ral=ralatSah(S.hst||{}),ok=L.filter(x=>x.st==='ok'||x.st==='tunggu').length,t=lampuTahap(L,ral);
-  b.hidden=false;b.className='salh sal-'+t;b.innerHTML=`<b>${SAL[t][0]}</b> Data ${ok}/${L.length}${ral.length?' · ralat':''}`;b.title=`${ok} daripada ${L.length} saluran data segar${ral.length?`, ${ral.length} ralat`:''} · ketik untuk butiran`;}
-function lampuTahap(L,ral){return ral.length||L.some(x=>x.st==='basi'||x.st==='x')?'basi':L.some(x=>x.st==='lewat')||amaranOf(S.hst||{}).length?'lewat':'ok';}
+  return L.map(([n,v,j,src,paksa])=>{let st;if(paksa&&v)st=v<j?'basi':paksa;else if(!v)st='x';else if(j===null)st=(Date.now()-Date.parse(v+'T00:00:00Z'))/864e5<=8?'ok':'basi';
+    else if(v>=j)st='ok';else st=v>=hariKerjaSebelum(j)?'lewat':'basi';return {n,v,j,src,st};});}
+function renderSal(){const b=$('#salH');if(!b)return;const L=saluran();if(!L.length){b.hidden=true;return;}const h=S.hst||{},ral=ralatSah(h),am=amaranOf(h),ok=L.filter(x=>x.st==='ok').length,t=lampuTahap(L,ral);
+  b.hidden=false;b.className='salh sal-'+t;b.innerHTML=`<b>${SAL[t][0]}</b> Data ${ok}/${L.length}${ral.length?' · ralat':am.length?' · amaran':''}`;b.title=`${ok} daripada ${L.length} saluran data segar${ral.length?`, ${ral.length} ralat`:''}${am.length?`, ${am.length} amaran sistem`:''} · ketik untuk butiran`;}
+/* tahap lampu: basi (ralat atau saluran basi/tiada) > lewat (saluran lewat) > amaran (amaran sistem sahaja; data segar) > ok */
+function lampuTahap(L,ral){return ral.length||L.some(x=>x.st==='basi'||x.st==='x')?'basi':L.some(x=>x.st==='lewat')?'lewat':amaranOf(S.hst||{}).length?'amaran':'ok';}
 function lampuHtml(){const L=saluran(),h=S.hst||{},ral=ralatSah(h),am=amaranOf(h);if(!L.length)return '';
-  const t=lampuTahap(L,ral),ok=L.filter(x=>x.st==='ok'||x.st==='tunggu').length,lw=L.filter(x=>x.st==='lewat'),bad=L.filter(x=>x.st==='basi'||x.st==='x'),tg=L.filter(x=>x.st==='tunggu');
-  return `<button type="button" class="lampu sal-${t}" data-sal><span class="lp-d" aria-hidden="true"></span><span class="lp-i"><b>${t==='ok'?'Sistem normal':t==='lewat'?'Ada data lewat':'Perlu semakan'}</b>
-    <span>${ok}/${L.length} saluran segar${ral.length?` · <b class="neg">${ral.length} ralat</b>`:''}${am.length?` · <b style="color:var(--warn)" title="${esc(am.join(' · '))}">${am.length} amaran</b>`:''}${lw.length?` · lewat: ${esc(lw.map(x=>x.n).join(', '))}`:''}${bad.length?` · basi/tiada: ${esc(bad.map(x=>x.n).join(', '))}`:''}${tg.length?` · menunggu jadual: ${esc(tg.map(x=>x.n).join(', '))}`:''}</span>
+  const t=lampuTahap(L,ral),ok=L.filter(x=>x.st==='ok').length,lw=L.filter(x=>x.st==='lewat'),bad=L.filter(x=>x.st==='basi'||x.st==='x');
+  const tajuk={ok:'Sistem normal',amaran:`Data segar · ${am.length} amaran sistem`,lewat:'Ada data lewat',basi:'Perlu semakan'}[t];
+  return `<button type="button" class="lampu sal-${t}" data-sal><span class="lp-d" aria-hidden="true"></span><span class="lp-i"><b>${tajuk}</b>
+    <span>${ok}/${L.length} saluran segar${ral.length?` · <b class="neg">${ral.length} ralat</b>`:''}${am.length?` · <b style="color:var(--warn)" title="${esc(am.join(' · '))}">${esc(am.length===1?am[0].replace(/^amaran:\s*/i,''):am.length+' amaran')}</b>`:''}${lw.length?` · lewat: ${esc(lw.map(x=>x.n).join(', '))}`:''}${bad.length?` · basi/tiada: ${esc(bad.map(x=>x.n).join(', '))}`:''}</span>
     <span class="mut">Data tutup ${esc(tkP(tarikhData()))} · mod Actions <b>${esc(h.mod||'–')}</b>${h.sumber_harga?` · <span title="${esc(h.sumber_harga)}">harga ${esc(String(h.sumber_harga).split(/[;(]/)[0].trim())}</span>`:''}</span></span><span class="lp-k" aria-hidden="true">›</span></button>`;}
 function openSal(){const L=saluran(),h=S.hst||{},ral=ralatOf(h);sheet(`<div class="lbl">Lampu sistem</div><h3 id="shTitle">Kesegaran setiap saluran data</h3>
   <div class="sec"><div class="salsenarai">${L.map(x=>`<div>${salChip(x)}<span class="mut">${x.j?'dijangka '+esc(tkP(x.j)):'≤ 8 hari'} · ${esc(x.src)}</span></div>`).join('')}</div>
-  <p class="ln mut">✓ segar · … menunggu jadual (Lejar sesi terkini belum dijalankan) · ! lewat satu sesi · ✗ basi · ? tiada data. Sesi dijangka ikut kalendar NYSE (cuti diambil kira) dan waktu New York (DST).</p></div>
+  <p class="ln mut">✓ segar · ! lewat satu sesi · ✗ basi · ? tiada data. Sesi dijangka ikut kalendar NYSE (cuti diambil kira) dan waktu New York (DST); Lejar, Penganalisis dan portfolio 10 slot sentiasa satu sesi di belakang data harga.</p></div>
   <div class="sec"><h4>Ralat tolakan terakhir</h4>${ral.length?`<ul class="utama3">${ral.map(x=>`<li class="${/^amaran\b/i.test(x)?'':'neg'}">${esc(x)}</li>`).join('')}</ul>`:'<p class="ln mut">Tiada ralat atau amaran direkod dalam harian/status.ralat.</p>'}
     <p class="ln">Mod Actions <b>${esc(h.mod||'–')}</b>${h.sumber_harga?` · sumber harga <b>${esc(h.sumber_harga)}</b>`:''} · dikemas kini ${esc(h.dikemaskini||'–')}</p></div>
   <div class="acts"><button type="button" class="btn" data-pergi="lagi:sistem">Buka Lagi › Sistem</button><button type="button" class="btn ghost" data-tutup>Tutup</button></div>`);}
@@ -3476,11 +3469,10 @@ function fasaInfo(){const a=S.anl||{};if(a.fasa)return a.fasa;const rows=a.rows|
     tarikh_sebenar_pertama:rows.map(r=>r.tarikh_sebenar).filter(Boolean).sort()[0]||null};}
 const tspOf=F=>{const x=F&&F.tarikh_sebenar_pertama;return !x?null:typeof x==='string'?{tarikh:x}:x;};
 const top5Txt=F=>{const x=F&&F.tarikh_top5;if(!x)return '';const a=Array.isArray(x)?x:[x];return a.length>1&&a[0]!==a[1]?`${tkP(a[0])} – ${tkP(a[1])}`:tkP(a[0]);};
-function bannerFasa(){if(!S.anl)return '';const F=fasaInfo(),n=F.kaedah_bukti||0,T=tspOf(F),t5=top5Txt(F);
-  return `<div class="fasa${n?' fasa-ok':''}"><b data-tip="fasa">${n?`${n} kaedah ada bukti hadapan`:'Belum ada kaedah terbukti'}</b>
-    <span>${nf(F.matang_hadapan)}/${nf(F.jumlah_hadapan)} posisi hadapan matang${T?` · status sebenar pertama ±<b>${esc(tkP(T.tarikh))}</b>${T.id?` (${esc(T.id)}${T.kedudukan?` #${T.kedudukan}`:''})`:''}`:''}${t5?` · status sebenar 5 teratas semasa: <b>${esc(t5)}</b>`:''}</span>
-    <span class="mut">${n?'Kaedah lain masih dinilai ikut backtest dipotong.':'Kedudukan kaedah kini = backtest dipotong (dalam sampel). Bukan asas untuk wang sebenar.'}</span></div>`;}
-
+function bannerFasa(){if(!S.anl)return '';const F=fasaInfo(),n=F.kaedah_bukti||0,T=tspOf(F),t5=top5Txt(F),P=pintuRingkas();
+  return `<div class="fasa${n?' fasa-ok':''}"><b data-tip="fasa">${P.lulus?`${P.lulus} kaedah melepasi pintu wang sebenar`:`Tiada calon melepasi pintu wang sebenar (0/${P.N})`}</b>
+    <span>${nf(F.matang_hadapan)}/${nf(F.jumlah_hadapan)} posisi hadapan matang · ${n?`${n} kaedah ada status sebenar`:'belum ada kaedah dengan status sebenar'}${T?` · keluar BELUM CUKUP pertama ±<b>${esc(tkP(T.tarikh))}</b>${T.id?` (${esc(T.id)})`:''} (anggaran; bukan tarikh bukti)`:''}${t5?` · 5 teratas P(5 teratas) keluar BELUM CUKUP: ${esc(t5)}`:''}</span>
+    <span class="mut">Kedudukan kini = backtest dipotong (dalam sampel). AUTOTUNE (2000 saham AS lain): ${P.at} kaedah SEDERHANA/TINGGI. Bukan asas untuk wang sebenar.</span></div>`;}
 /* ================= posisi matang C dan selang berkelompok (tindakan 19) ================= */
 /* matang = umur kalendar ≥ h_umur Papan Penganalisis kaedah itu (selainnya maks(14, 1.5 × hari pegang backtest × 7/5)) */
 const umurMatang=k=>{const an=anlRow(k);if(an&&an.h_umur!=null)return an.h_umur;return Math.max(SKW_UMUR_MIN,Math.ceil(1.5*(btHariOf(k)??10)*7/5));};
@@ -3495,10 +3487,13 @@ const wilson2=(k,n,z=1.96)=>{if(!n)return null;const p=k/n,d=1+z*z/n,c=(p+z*z/(2
 const ciTxt=c=>c&&c.lo!=null?`95%: ${sg2(c.lo)} … ${sg2(c.hi)}`:'selang perlu ≥ 2 hari beli';
 const wTxt=(k,n)=>{const w=wilson2(k,n);return n?`menang ${fx(k/n*100,0)}%${w?` <span class="mut">(${fx(w[0]*100,0)}–${fx(w[1]*100,0)}%)</span>`:''}`:'menang –';};
 /* beza dua lorong setiap posisi (selagi naik − kaedah) dengan SE berkelompok */
-function bezaLorong(rows){const p=rows.filter(r=>!r.tidak_sah).map(r=>{const a=hasilL(r,'kaedah'),b=hasilL(r,'henti');return a==null||b==null?null:{tarikh_beli:r.tarikh_beli,d:b-a};}).filter(Boolean);
-  return selangK(p,q=>q.d);}
-const bezaTxt=c=>!c?'<span class="mut">tiada data</span>':`<b class="${cls(c.m)}">${sg2(c.m)}</b>${c.se!=null?` <span class="mut">± ${fx(c.se,2)} SE</span>`:''} · ${c.lo!=null&&(c.lo>0||c.hi<0)?'<span class="pill p-buy">signifikan 95%</span>':'<span class="pill p-mute">belum signifikan</span>'}`;
-
+/* beza dua lorong (selagi naik − kaedah) dipecah ikut keadaan: kedua-dua tutup (direalisasi), lorong kaedah tutup tetapi lorong 2
+   terbuka (direalisasi lawan belum), kedua-dua terbuka (beza 0) */
+function bezaLorong(rows){const s=rows.filter(r=>!r.tidak_sah),d=r=>{const a=hasilL(r,'kaedah'),b=hasilL(r,'henti');return a==null||b==null?null:b-a;};
+  const T=s.filter(r=>r.keluar&&r.keluar_henti),B=s.filter(r=>r.keluar&&!r.keluar_henti),K=s.filter(r=>!r.keluar);
+  const st=L=>{const c=selangK(L.map(r=>({tarikh_beli:r.tarikh_beli,v:d(r)})).filter(x=>x.v!=null),x=>x.v);return c||{n:0,m:null,G:0};};
+  return {tutup:st(T),separuh:st(B),buka:{n:K.length}};}
+const bezaTxt=b=>!b?'<span class="mut">tiada data</span>':`kedua-dua lorong tutup <b class="${cls(b.tutup.m)}">${b.tutup.n?sg2(b.tutup.m):'–'}</b> <span class="mut">(n ${nf(b.tutup.n)}${b.tutup.n&&b.tutup.G<G_MIN?', belum cukup':''}; terdedah bias pemilihan)</span> · lorong kaedah tutup, lorong 2 terbuka <b class="${cls(b.separuh.m)}">${b.separuh.n?sg2(b.separuh.m):'–'}</b> <span class="mut">(n ${nf(b.separuh.n)}; belum direalisasi)</span> · kedua-dua terbuka <span class="mut">n ${nf(b.buka.n)} (beza 0)</span>`;
 /* ================= langkauan 9:35 NY (papertrade/langkau; tindakan 14) ================= */
 const langkauRows=()=>(S.langkau&&Array.isArray(S.langkau.rows))?S.langkau.rows:[];
 
@@ -3516,62 +3511,85 @@ function kpiAktiviti(src){const h=S.hst||{},dB=src.length?belianTerkini(src):'',
   const lk=L.length?`${nf(nL)} <span class="mut" style="font-size:.9rem">dilangkau</span>`:br.dilangkau!=null&&h.beli_pada?`${nf(br.dilangkau)} <span class="mut" style="font-size:.9rem">dilangkau</span>`:'';
   return `<div class="kpi"><div class="lbl" data-tip="aktiviti">Aktiviti terkini</div><div class="v" style="font-size:1.3rem;white-space:normal">${nf(nB)} <span class="mut" style="font-size:.9rem">dibeli</span> · ${nf(nK)} <span class="mut" style="font-size:.9rem">keluar</span>${lk?' · '+lk:''}</div>
     <div class="s">Belian ${esc(tkO(dB)||'–')} · keluar ${esc(tkO(dK)||'–')}${dL?` · langkau ${esc(tkO(dL))}`:''}</div></div>`;}
-function kpiMatang(src){const M=matangC(src),c=selangK(M,hasilPos),w=M.filter(r=>hasilPos(r)>0).length,buka=M.filter(r=>!r.keluar).length;
-  return `<div class="kpi"><div class="lbl" data-tip="c_matang">Posisi C matang</div><div class="v ${cls(c&&c.m)}">${c?sg2(c.m):'–'}</div>${M.length?'':'<span class="pill p-mute">belum ada</span>'}
-    <div class="s">${M.length?`${ciTxt(c)} · ${c.G} hari beli<br>${wTxt(w,M.length)} · ${nf(M.length)} matang, ${fx(buka/M.length*100,0)}% masih terbuka`:`0 daripada ${nf(src.length)} posisi cukup umur`} · ${nf(src.length-M.length)} belum matang</div></div>`;}
-function kpiBukti(){if(!S.anl)return '';const F=fasaInfo();
+/* statistik matang hanya selepas >= 10 hari beli matang (syarat sama dengan Penganalisis); kadar menang berkelompok hari beli */
+const G_MIN=10;
+const wTxtK=(rows,menang)=>{const c=selangK(rows,r=>menang(r)?100:0);return c?`menang ${fx(c.m,0)}%${c.G>=G_MIN&&c.lo!=null?` <span class="mut">(${fx(Math.max(0,c.lo),0)}–${fx(Math.min(100,c.hi),0)}%)</span>`:''}`:'menang –';};
+const belumCukupTxt=(M,c)=>`belum cukup: ${c?c.G:0}/${G_MIN} hari beli · ${nf(M.length)} posisi daripada ${new Set(M.map(r=>r.kaedah)).size} kaedah`;
+function kpiMatang(src){const M=matangC(src),c=selangK(M,hasilPos),buka=M.filter(r=>!r.keluar).length,cukup=c&&c.G>=G_MIN;
+  return `<div class="kpi"><div class="lbl" data-tip="c_matang">Posisi C matang</div><div class="v ${cukup?cls(c.m):'mut'}">${cukup?sg2(c.m):'–'}</div>${cukup?'':'<span class="pill p-mute">belum cukup</span>'}
+    <div class="s">${cukup?`${ciTxt(c)} · ${c.G} hari beli<br>${wTxtK(M,r=>hasilPos(r)>0)} · ${nf(M.length)} matang, ${fx(buka/M.length*100,0)}% masih terbuka`:belumCukupTxt(M,c)} · ${nf(src.length-M.length)} belum matang</div></div>`;}
+function kpiBukti(){if(!S.anl)return '';const F=fasaInfo(),T=tspOf(F);
   return `<div class="kpi"><div class="lbl" data-tip="anl_hadapan">Bukti hadapan (Lejar)</div><div class="v">${nf(F.matang_hadapan)}<span class="mut" style="font-size:1rem"> / ${nf(F.jumlah_hadapan)}</span></div>
-    <div class="s">posisi matang · ${nf(F.kaedah_bukti||0)} kaedah ada status sebenar${tspOf(F)?` · pertama ±${esc(tkO(tspOf(F).tarikh))}`:''}</div></div>`;}
+    <div class="s">posisi matang · ${nf(F.kaedah_bukti||0)} kaedah ada status sebenar${T?` · keluar BELUM CUKUP pertama ±${esc(tkO(T.tarikh))} (anggaran)`:''}</div></div>`;}
+const SASARAN_SESI=126;   /* ~6 bulan dagangan: tempoh minimum penilaian portfolio maya (KAJIAN_PORTFOLIO.md) */
 function kpiBeku(){const d=S.pslot,P=d&&d.portfolio||{},g=P.GABUNGAN_10,r=P.RAWAK_KAEDAH_10,bk=d&&d.beku;
   if(!g)return `<div class="kpi"><div class="lbl" data-tip="portfolio_slot">Portfolio gabungan beku</div><div class="v mut">–</div><div class="s">${S.live?'Belum ada data portfolio maya.':'Memuatkan…'}</div></div>`;
-  const ada=g.sesi>0;
-  return `<div class="kpi"><div class="lbl" data-tip="portfolio_slot">Portfolio gabungan beku <span class="pill p-warn">sementara</span></div><div class="v ${cls(g.pulangan_pct)}">${ada?sg2(g.pulangan_pct):'–'}</div>
-    <div class="s">${ada?`rawak kaedah <b class="${cls(r&&r.pulangan_pct)}">${r&&r.sesi?sg2(r.pulangan_pct):'–'}</b> · SPY <b class="${cls(g.spy_pct)}">${sg2(g.spy_pct)}</b> · ${g.sesi} sesi hingga ${esc(tkO(d.sesi_terakhir))}`:`jejak bermula ${esc(tkO(bk&&bk.mula_jejak||''))}; belum ada sesi`}</div></div>`;}
+  const n=g.sesi||0;
+  return `<div class="kpi"><div class="lbl" data-tip="portfolio_slot">Portfolio gabungan beku <span class="pill p-warn">sementara</span></div><div class="v">${nf(n)}<span class="mut" style="font-size:1rem"> / ~${SASARAN_SESI} sesi</span></div>
+    <div class="s">${n?`pulangan <b class="${cls(g.pulangan_pct)}">${sg2(g.pulangan_pct)}</b> · rawak kaedah <b class="${cls(r&&r.pulangan_pct)}">${r&&r.sesi?sg2(r.pulangan_pct):'–'}</b> · SPY <b class="${cls(g.spy_pct)}">${sg2(g.spy_pct)}</b> sejak ${esc(tkO(g.mula||bk&&bk.mula_jejak||''))}; terlalu awal untuk dinilai`:`jejak bermula ${esc(tkO(bk&&bk.mula_jejak||''))}; belum ada sesi`}</div></div>`;}
 /* susunan lalai ranking: had bawah julat skor sebulan (belum dibundar) */
 const lbOf=r=>r.lb_bulan??r.skor_bulan_bawah??null;
-function rankRows(){const a=S.anl;return a&&a.rows?a.rows.filter(r=>r.swing).slice().sort((x,y)=>(lbOf(y)??-1e9)-(lbOf(x)??-1e9)):[];}
-const benderaAnl=r=>`${r.ditolak?' <span class="pill p-exit" data-tip="anl_ditolak" title="Keputusan backtest: DITOLAK">⚑ DITOLAK</span>':''}${r.lejar_n===0?' <span class="pill p-mute" title="Tiada posisi dalam Lejar Penuh">0 Lejar</span>':''}${r.pantau&&!/^(OK|BELUM)/.test(r.pantau)?' '+pantauPill(r):''}`;
+/* pintu wang sebenar (audit swing trader 24 Okt 2026, P0 #1): peringkat berturut-turut; layak wang sebenar hanya jika lulus semua.
+   Gred dalam ranking = bilangan pintu berturut-turut yang dilepasi, kemudian P(5 teratas); bukan had bawah sebulan (ρ 0.93 dengan hari pegang). */
+const spyBersih=()=>((S.anl||{}).rujukan||{}).at_spy_bersih;
+const PINTU=[['swing','Swing 3–30 hari',r=>!!r.swing],['rank','Sampel backtest cukup (berkedudukan)',r=>r.kedudukan!=null],['tolak','Tidak DITOLAK backtest',r=>!r.ditolak],
+  ['at','AUTOTUNE SEDERHANA/TINGGI (2000 saham AS)',r=>r.at_label==='SEDERHANA'||r.at_label==='TINGGI'],
+  ['bersih','Ujian bersih 2013–2018 atasi SPY',r=>r.at_cagr_bersih!=null&&spyBersih()!=null&&r.at_cagr_bersih>spyBersih()],
+  ['hadapan','Bukti hadapan KUAT (Lejar matang)',r=>r.status==='KUAT']];
+const pintuOf=r=>{let i=0;while(i<PINTU.length&&PINTU[i][2](r))i++;return i;};
+const pintuM=memo(d=>{const all=(d&&d.rows)||[];let hidup=all;const C=PINTU.map(([k,t,f])=>{hidup=hidup.filter(f);return {k,t,n:hidup.length};});
+  const N=all.filter(r=>r.kedudukan!=null).length,jauh=all.length?Math.max(...all.map(pintuOf)):0;
+  return {all,C,N,lulus:C[C.length-1].n,at:all.filter(PINTU[3][2]).length,jauh,dip:all.filter(r=>pintuOf(r)===jauh&&r.kedudukan!=null).sort((a,b)=>(b.p_top5??-1)-(a.p_top5??-1))};});
+const pintuRingkas=()=>pintuM(S.anl);
+const atLbl=l=>l?`<span class="pill ${({TINGGI:'p-buy',SEDERHANA:'p-hold',RENDAH:'p-warn',GAGAL:'p-exit'})[l]||'p-mute'}">${esc(l)}</span>`:'<span class="mut">–</span>';
+function corongPintuHtml(){const P=pintuRingkas(),T=P.all.length||1;
+  return `<div class="corong">${[{t:'Kaedah aktif',n:P.all.length},...P.C].map((x,i)=>`<div class="crg" style="cursor:default"><span>${i?`<b style="color:var(--fg)">${i}.</b> `:''}${esc(x.t)}</span><span class="t"><i style="width:${(x.n/T*100).toFixed(1)}%"></i></span><span class="nm"><b>${nf(x.n)}</b></span></div>`).join('')}</div>`;}
+const benderaAnl=r=>`${r.ditolak?' <span class="pill p-exit" data-tip="anl_ditolak" title="Keputusan backtest: DITOLAK">⚑ DITOLAK</span>':''}${r.sampel_kecil?' <span class="pill p-mute" title="Sampel backtest kecil: tiada kedudukan dan tiada P(5 teratas)">sampel kecil</span>':''}${r.lejar_n===0?' <span class="pill p-mute" title="Tiada posisi dalam Lejar Penuh">0 Lejar</span>':''}${r.pantau&&!/^(OK|BELUM)/.test(r.pantau)?' '+pantauPill(r):''}`;
 const PANTAU_C={OK:'p-buy',AMARAN:'p-warn',GANTUNG:'p-exit',BERSARA:'p-exit','BELUM CUKUP':'p-mute'};
 const pantauPill=r=>`<span class="pill ${PANTAU_C[r.pantau]||'p-mute'}" title="${esc([r.p_sebab,r.pantau_ambang].filter(Boolean).join(' · ')||r.pantau||'')}">${esc((r.pantau||'–').toLowerCase())}</span>`;
 const pantauTxt=(v,d)=>v==null||v===''?'':typeof v==='number'?sg2(v):esc(String(v));
-function panelCalon(){const L=rankRows().slice(0,3);if(!S.anl)return `<div class="panel"><div class="panel-h"><h2>Calon teratas</h2></div><p class="empty">${S.live?'Papan penganalisis belum ada.':'Memuatkan…'}</p></div>`;
-  return `<div class="panel"><div class="panel-h"><h2 data-tip="anl_ptop">Calon teratas</h2><span class="sub">ranking tunggal · ketik untuk profil · <button type="button" class="lnk" data-pergi="pilih">Semua kaedah</button></span></div>
-    ${bannerFasaKecil()}
-    <div class="calon">${L.map((r,i)=>`<button type="button" class="cln" data-anl="${esc(r.id)}"><span class="cln-n">${i+1}</span><span class="cln-b"><b>${esc(r.id)}</b> ${esc(r.nama)}${benderaAnl(r)}
-      <span class="vv">${anlPill(r.status)} · P(5 teratas) <b>${r.p_top5==null?'–':fx(r.p_top5*100,0)+'%'}</b>${r.pangkat_p5!=null?` · pangkat ${r.pangkat_p5}–${r.pangkat_p95}`:''} · bukti ${nf(r.g_matang||0)}/${nf(r.g_perlu||10)} hari beli</span></span>
+function panelCalon(){if(!S.anl)return `<div class="panel"><div class="panel-h"><h2>Pintu wang sebenar</h2></div><p class="empty">${S.live?'Papan penganalisis belum ada.':'Memuatkan…'}</p></div>`;
+  const P=pintuRingkas(),L=P.dip.slice(0,3),gagal=PINTU[P.jauh];
+  return `<div class="panel"><div class="panel-h"><h2 data-tip="pintu">Pintu wang sebenar</h2><span class="sub">ketik untuk profil · <button type="button" class="lnk" data-pergi="pilih">Semua kaedah</button></span></div>
+    <p class="big">${P.lulus?`<b class="pos">${P.lulus}</b> kaedah melepasi semua pintu`:`<b>Tiada calon</b> melepasi pintu wang sebenar <span class="mut">(0/${P.N})</span>`}</p>
+    ${corongPintuHtml()}
+    ${gagal&&!P.lulus?`<p class="sub" style="margin:8px 0">Paling jauh: <b>${nf(P.dip.length)}</b> kaedah sampai pintu ${P.jauh}/${PINTU.length}; semua gagal di "${esc(gagal[1])}". Dipantau sahaja (bukan calon):</p>`:''}
+    <div class="calon">${L.map(r=>`<button type="button" class="cln" data-anl="${esc(r.id)}"><span class="cln-n">${pintuOf(r)}<small class="mut">/${PINTU.length}</small></span><span class="cln-b"><b>${esc(r.id)}</b> ${esc(r.nama)}${benderaAnl(r)}
+      <span class="vv">${atLbl(r.at_label)} ujian bersih ${pct(r.at_cagr_bersih)} lawan SPY ${pct(spyBersih())} · P(5 teratas) <b>${r.p_top5==null?'–':fx(r.p_top5*100,0)+'%'}</b></span></span>
       <span class="cln-v"><b class="${cls(r.skor_bulan)}">${sg2(r.skor_bulan)}</b><span class="vv">${sg2(r.skor_bulan_bawah)} … ${sg2(r.skor_bulan_atas)} /bulan</span></span></button>`).join('')}</div></div>`;}
-const bannerFasaKecil=()=>{const F=fasaInfo();return F.kaedah_bukti?'':`<p class="sub" style="margin:0 0 8px"><span class="pill p-warn">belum terbukti</span> Kedudukan = backtest dipotong; ${nf(F.matang_hadapan)} posisi hadapan matang.</p>`;};
+const bannerFasaKecil=()=>{const P=pintuRingkas();return P.lulus?'':`<p class="sub" style="margin:0 0 8px"><span class="pill p-warn">belum ada calon</span> 0/${P.N} kaedah melepasi pintu; senarai di bawah = paling jauh dalam pintu, dipantau sahaja.</p>`;};
 const PSLOT_K=[['GABUNGAN_10','Gabungan beku'],['TOP1_10','#1 sahaja'],['RAWAK_KAEDAH_10','Kaedah rawak (kawalan)'],['RS_10','RS tertinggi'],['RAWAK_10','Saham rawak (kawalan)']];
 function jadualSlot(){const d=S.pslot;if(!d||!d.portfolio)return `<p class="empty">${S.live?'Belum ada data portfolio maya.':'Memuatkan…'}</p>`;const P=d.portfolio;
-  return `<div class="tablewrap"><table class="slot"><thead><tr><th class="l">Portfolio</th><th>Pulangan</th><th>MDD</th><th>Dipegang</th><th>Keluar</th><th>Sesi</th></tr></thead><tbody>
-    ${PSLOT_K.filter(([k])=>P[k]).map(([k,n])=>{const p=P[k];return `<tr><td class="l"><b>${esc(n)}</b><span class="vv">${esc(k)}</span></td><td><b class="${cls(p.pulangan_pct)}">${p.sesi?sg2(p.pulangan_pct):'–'}</b></td><td>${p.sesi?fx(p.mdd_pct,1)+'%':'–'}</td><td>${nf(p.dipegang)}</td><td>${nf(p.keluar)}${p.keluar&&p.menang_pct!=null?`<span class="vv">menang ${fx(p.menang_pct,0)}%</span>`:''}</td><td>${nf(p.sesi||0)}${p.mula?`<span class="vv">sejak ${esc(tkO(p.mula))}</span>`:''}</td></tr>`;}).join('')}
-    <tr><td class="l">SPY</td><td><b class="${cls(d.spy_pct)}">${sg2(d.spy_pct)}</b></td><td colspan="4" class="mut l">sejak ${esc(tkO(d.mula||''))}</td></tr></tbody></table></div>
-    <p class="sub" style="margin-top:6px">Sesi terakhir <b>${esc(tkP(d.sesi_terakhir))}</b> (${nf(d.sesi||0)} sesi). ${esc(gabNota())}</p>`;}
-const gabNota=()=>(S.anl&&S.anl.gabungan_beku_nota)||'Gabungan beku ialah SEMENTARA: dipilih atas data Papertrade C yang belum matang; dibekukan semula selepas ≥ 20 hari beli matang (paling awal akhir Nov). Rekod sahaja.';
-function panelPosisiSaya(src){const c=bezaLorong(src);
+  return `<div class="tablewrap"><table class="slot"><thead><tr><th class="l">Portfolio</th><th>Pulangan</th><th>SPY sama tempoh</th><th>MDD</th><th>Dipegang</th><th>Keluar</th><th>Sesi</th></tr></thead><tbody>
+    ${PSLOT_K.filter(([k])=>P[k]).map(([k,n])=>{const p=P[k];return `<tr><td class="l"><b>${esc(n)}</b><span class="vv">${esc(k)}</span></td><td><b class="${cls(p.pulangan_pct)}">${p.sesi?sg2(p.pulangan_pct):'–'}</b></td><td class="${cls(p.spy_pct)}">${p.sesi?sg2(p.spy_pct):'–'}</td><td>${p.sesi?fx(p.mdd_pct,1)+'%':'–'}</td><td>${nf(p.dipegang)}</td><td>${nf(p.keluar)}${p.keluar&&p.menang_pct!=null?`<span class="vv">menang ${fx(p.menang_pct,0)}%</span>`:''}</td><td>${nf(p.sesi||0)}<span class="vv">${p.mula?`sejak ${esc(tkO(p.mula))} · `:''}sasaran ~${SASARAN_SESI}</span></td></tr>`;}).join('')}</tbody></table></div>
+    <p class="sub" style="margin-top:6px">Sesi terakhir <b>${esc(tkP(d.sesi_terakhir))}</b>. SPY diukur dari tarikh mula setiap portfolio. ${esc(gabNota())}</p>`;}
+/* nota gabungan beku: kedudukan semasa ahli dalam susunan yang sama dengan jadual (pintu, P(5 teratas)), bukan nombor skor */
+const gabNota=()=>{const K=(S.pslot&&S.pslot.beku&&S.pslot.beku.kaedah||[]).map(k=>k.id);const x=K.map(id=>{const r=anlRow(id);return r?`${id} pintu ${pintuOf(r)}/${PINTU.length}, P(5 teratas) ${r.p_top5==null?'–':fx(r.p_top5*100,0)+'%'}`:id;});
+  return `Gabungan beku ialah SEMENTARA: dipilih atas data Papertrade C yang belum matang${x.length?`; kini ${x.join(' · ')}`:''}. Dibekukan semula selepas ≥ 20 hari beli matang. Rekod sahaja.`;};
+function panelPosisiSaya(src){
   return `<div class="panel"><div class="panel-h"><h2 data-tip="portfolio_slot">Posisi saya · portfolio maya 10 slot</h2><span class="sub">daripada Lejar Penuh · lawan kawalan rawak dan SPY</span></div>
     ${jadualSlot()}
-    <p class="ln" style="margin-top:8px"><span data-tip="dua_lorong">Dua lorong (Papertrade C)</span>: selagi naik − kaedah ${bezaTxt(c)}${c?` <span class="mut">(${nf(c.n)} posisi, ${c.G} hari beli)</span>`:''}</p></div>`;}
-
+    <p class="ln" style="margin-top:8px"><span data-tip="dua_lorong">Dua lorong (Papertrade C, selagi naik − kaedah)</span>: ${bezaTxt(bezaLorong(src))}</p></div>`;}
 /* ================= Kaedah: ranking tunggal (tindakan 6, 16, 17, 18, 20) ================= */
-const LBL_SEM={s14:'S1–S4 = kestabilan dalam sampel (subset set 431)',wfo:'WFO = dalam tempoh pemilihan, versi ditala',at:'2000 AS = luar sampel sebenar (2013–2018)'};
+const LBL_SEM={s14:'S1–S4 = kestabilan dalam sampel (subset set 431)',wfo:'WFO = dalam tempoh pemilihan, versi ditala',at:'AUTOTUNE = 2000 saham AS lain, OOS 2013 – Sep 2024 (versi ditala)'};
 const semLbl=k=>((S.anl&&S.anl.label_semakan)||{})[k]||LBL_SEM[k];
 const anlSem2=r=>`<span title="${esc(semLbl('s14'))}">${anlTk(r.lulus_subset)}</span> <span title="${esc(semLbl('wfo'))}">${anlTk(r.lulus_wfo)}</span> <span title="${esc(semLbl('at'))}">${anlTk(r.lulus_at)}</span>`;
 const meterBukti=r=>{const g=r.g_matang||0,gp=r.g_perlu||10,nb=r.nb,np=r.nb_perlu;
-  return `<span class="prog" title="${g} daripada ${gp} hari beli matang"><i style="width:${Math.min(100,g/gp*100).toFixed(0)}%"></i></span><b>${g}</b><span class="mut sfx2">/${gp} hari</span>${nb!=null?`<span class="vv">nb ${fx(nb,1)}${np!=null?` / ${fx(np,0)} perlu`:''}</span>`:''}${r.tarikh_sebenar?`<span class="vv">status sebenar ±${esc(tkO(r.tarikh_sebenar))}</span>`:''}`;};
+  return `<span class="prog" title="${g} daripada ${gp} hari beli matang"><i style="width:${Math.min(100,g/gp*100).toFixed(0)}%"></i></span><b>${g}</b><span class="mut sfx2">/${gp} hari</span>${nb!=null?`<span class="vv">nb ${fx(nb,1)}${np!=null?` / ${nf(np)} perlu`:''}</span>`:''}${r.tarikh_sebenar?`<span class="vv" title="Anggaran tarikh kaedah keluar daripada BELUM CUKUP (≥ 20 matang dan ≥ 10 hari beli); bukan tarikh bukti">keluar BELUM CUKUP ±${esc(tkO(r.tarikh_sebenar))} (anggaran)</span>`:''}`;};
 function anlCols(ringkas){
-  const pC={k:'p_top5',t:'P(5 teratas)',tip:'anl_ptop',v:r=>r.p_top5,f:r=>r.p_top5==null?'<span class="mut">–</span>':`<b>${fx(r.p_top5*100,0)}%</b><span class="vv">#1 ${fx((r.p_top1||0)*100,0)}%</span>`,c:()=>'m0'};
-  const rgC={k:'pangkat_p5',t:'Pangkat 90%',tip:'anl_pangkat',v:r=>r.pangkat_p5,f:r=>r.pangkat_p5==null?'–':`<b class="nw">${r.pangkat_p5}–${r.pangkat_p95}</b>`};
+  const piC={k:'_pintu',t:'Pintu',tip:'pintu',v:r=>pintuOf(r)*10+(r.p_top5||0),f:r=>{const n=pintuOf(r);return `<b>${n}</b><span class="mut sfx">/${PINTU.length}</span><span class="vv">${n<PINTU.length?'gagal: '+esc(PINTU[n][1]):'lulus semua'}</span>`;},c:()=>'m0'};
+  const pC={k:'p_top5',t:'P(5 teratas)',tip:'anl_ptop',v:r=>r.p_top5,f:r=>r.p_top5==null?'<span class="mut">–</span>':`<b>${fx(r.p_top5*100,0)}%</b><span class="vv">#1 ${fx((r.p_top1||0)*100,0)}%</span>`};
+  const kdC={k:'kedudukan',t:'# skor',tip:'anl_bulan',v:r=>r.kedudukan==null?null:-r.kedudukan,f:r=>r.kedudukan==null?'<span class="mut">–</span>':`<b>${r.kedudukan}</b>${r.pangkat_p5!=null?`<span class="vv nw">90%: ${r.pangkat_p5}–${r.pangkat_p95}</span>`:''}`};
   const nmC={k:'id',t:'Kaedah',l:1,v:r=>+String(r.id).replace(/\D/g,''),f:r=>`<b>${esc(r.id)}</b> ${esc(r.nama)}${benderaAnl(r)}<span class="vv">${esc(r.varian||'')}${r.swing?'':' · bukan swing'}${r.kelompok!=null?` · kelompok ${esc(r.kelompok)}${r.kelompok_wakil&&r.kelompok_wakil!==r.id?` (wakil ${esc(r.kelompok_wakil)})`:''}`:''}</span>`,c:()=>'name'};
-  const blnC={k:'lb_bulan',t:'Skor/bulan',tip:'anl_bulan',v:lbOf,f:r=>anlJul(r.skor_bulan,r.skor_bulan_bawah,r.skor_bulan_atas)};
+  const atC={k:'at_cagr_bersih',t:'Ujian bebas',tip:'anl_bebas',l:1,v:r=>r.at_cagr_bersih,f:r=>`${atLbl(r.at_label)}<span class="vv nw">bersih ${pct(r.at_cagr_bersih)} lawan SPY ${pct(spyBersih())}</span><span class="vv nw">DSR ${r.at_dsr==null?'–':fx(r.at_dsr,2)} · PBO ${r.at_pbo==null?'–':fx(r.at_pbo,2)}</span>`};
+  const blnC={k:'skor_bulan',t:'Skor/bulan',tip:'anl_bulan',f:r=>anlJul(r.skor_bulan,r.skor_bulan_bawah,r.skor_bulan_atas)};
   const bkC={k:'g_matang',t:'Bukti hadapan',tip:'anl_bukti',l:1,v:r=>(r.g_matang||0)+(r.h_matang||0)/1e5,f:meterBukti};
   const stC={k:'status',t:'Status',tip:'anl_status',v:r=>STATUS_ORD[r.status],f:r=>anlPill(r.status)};
   const pnC={k:'pantau',t:'Pantau',tip:'anl_pantau',l:1,v:r=>({BERSARA:0,GANTUNG:1,AMARAN:2,OK:3})[r.pantau]??4,f:r=>`${pantauPill(r)}${r.pantau_sasaran!=null?`<span class="vv" title="${esc(String(r.pantau_ambang||''))}">sasaran ${pantauTxt(r.pantau_sasaran)}</span>`:''}`,c:()=>'wrap'};
   const smC={k:'lulus',t:'Semakan',tip:'anl_semakan',f:anlSem2};
   const ekC={k:'pct_top1',t:'Ekor backtest',tip:'anl_ekor',v:r=>r.pct_top1,f:r=>r.median_bt==null&&r.pct_top1==null?'–':`<span class="nw">median <b class="${cls(r.median_bt)}">${sg2(r.median_bt)}</b></span><span class="vv nw">pangkas 5% ${sg2(r.pangkas5_bt)}${r.pct_top1!=null?` · ${fx(r.pct_top1,0)}% untung drp 1% teratas`:''}</span>`};
   const btC={k:'bt_cagr',t:'Backtest 431',tip:'anl_dalam',f:r=>`<b class="${cls(r.bt_cagr)}">${pct(r.bt_cagr)}</b><span class="vv">MDD ${pct(r.bt_mdd,0)} · ${fx(r.hari,0)} hari · ${fx(r.bt_setahun,0)} dag/thn</span>`};
-  const jgC={k:'jangkaan',t:'Jangkaan',tip:'anl_jangkaan',f:r=>`<b class="${cls(r.jangkaan)}">${sg2(r.jangkaan)}</b><span class="vv">${Math.round((r.kekal||0)*100)}% bt</span>`};
-  return ringkas?[pC,nmC,blnC,bkC,stC,pnC]:[pC,rgC,nmC,blnC,bkC,stC,pnC,smC,ekC,btC,jgC];}
+  return ringkas?[piC,nmC,atC,pC,blnC,bkC]:[piC,nmC,atC,pC,kdC,blnC,bkC,stC,pnC,smC,ekC,btC];}
 const LP_ANL2={key:r=>r.id,btn:1,
   line:r=>`<span class="mut">${r.p_top5==null?'–':fx(r.p_top5*100,0)+'%'}</span><b>${esc(r.id)}</b>${anlPill(r.status)}<span class="mlx">${esc(r.nama)}</span><b class="mlr ${cls(r.skor_bulan)}">${sg2(r.skor_bulan)}</b>${mlC}`,
   kad:r=>`<div class="mk"><div class="mk1"><span class="mkt"><b>${esc(r.id)}</b><span class="mkk">${esc(r.nama)}</span></span><b class="mku ${cls(r.skor_bulan)}">${sg2(r.skor_bulan)}<small class="mut"> /bulan</small></b></div>
@@ -3590,17 +3608,19 @@ function renderPilih(){
   el.innerHTML=`${bannerFasa()}
   <div class="panel"><div class="panel-h"><h2>3 penemuan utama</h2><span class="sub">ditulis automatik · data ${esc(tkP(d.kini))}</span></div>
     <ol class="utama3">${(d.penemuan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>
+  <div class="panel"><div class="panel-h"><h2 data-tip="pintu">Pintu wang sebenar</h2><span class="sub">${pintuRingkas().lulus?pintuRingkas().lulus+' kaedah lulus':'0/'+pintuRingkas().N+' kaedah lulus · tiada calon wang sebenar'}</span></div>${corongPintuHtml()}
+    <p class="sub" style="margin-top:8px">AUTOTUNE: 2000 saham AS lain, OOS A/B 2013 – Sep 2024 (versi ditala), tempoh kunci Okt 2024 – Okt 2026, ujian bersih 2013–2018 (parameter asal; SPY ${pct(spyBersih())} setahun). Label SEDERHANA/TINGGI dikunci dalam AUTOTUNE/SPEC.md §5. Pintu 6 memerlukan status KUAT daripada posisi hadapan matang.</p></div>
   ${panelMatlamat(d,ruj)}
-  <div class="panel"><div class="panel-h"><h2>Kedudukan kaedah</h2><span class="sub">${rows.length} daripada ${all.length} · disusun ikut had bawah julat skor sebulan · ketik baris untuk profil</span></div>
+  <div class="panel"><div class="panel-h"><h2>Kedudukan kaedah</h2><span class="sub">${rows.length} daripada ${all.length} · disusun ikut pintu yang dilepasi, kemudian P(5 teratas) · ketik baris untuk profil</span></div>
     <div class="filters" style="margin-bottom:10px">${segH('anlLihat',f.lihat,[['swing','Swing'],['lain','Bukan swing'],['semua','Semua'],['masalah',`Bermasalah (${nMs})`]],'Tapis')}${lajurSeg('anl')}<input type="search" id="anlQ" placeholder="Cari ID, nama, status atau pantau" value="${esc(f.q)}" aria-label="Cari kaedah"></div>
-    ${sortTable({id:'pilih',rows,lp:LP_ANL2,def:{k:'lb_bulan',dir:-1},limit:f.shown,attr:r=>`data-anl="${esc(r.id)}" tabindex="0"`,rcls:r=>'click'+(r.ditolak?' tolak':''),empty:'Tiada kaedah sepadan.',foot:kakiLagi('anlMore'),cols:anlCols(lajurOf('anl')==='ringkas')})}
-    <p class="sub" style="margin-top:8px">P(5 teratas) dan pangkat 90% daripada simulasi Monte Carlo atas ketidakpastian skor. Lajur Papertrade C dan Lorong 2 disembunyikan sehingga ada posisi matang (lihat profil). ${D}</p></div>
+    ${sortTable({id:'pilih2',rows,lp:LP_ANL2,def:{k:'_pintu',dir:-1},limit:f.shown,attr:r=>`data-anl="${esc(r.id)}" tabindex="0"`,rcls:r=>'click'+(r.ditolak?' tolak':''),empty:'Tiada kaedah sepadan.',foot:kakiLagi('anlMore'),cols:anlCols(lajurOf('anl')==='ringkas')})}
+    <p class="sub" style="margin-top:8px">P(5 teratas) dan pangkat 90% daripada simulasi Monte Carlo atas ketidakpastian skor (kaedah dianggap bebas). "# skor" = kedudukan ikut skor sebulan; rujukan #n dalam Penganalisis memakai nombor ini. Lajur Papertrade C dan Lorong 2 disembunyikan sehingga ada posisi matang (lihat profil). ${D}</p></div>
   <div class="panel"><div class="panel-h"><h2>Cara skor dikira</h2><span class="sub">formula dan had</span></div>
     <ul class="utama3">
       <li><b>Jangkaan backtest</b> = purata pulangan bersih setiap dagangan, set 431 (2019–2026, dalam sampel), varian aktif; dikekalkan ${Math.round((pm.asas_kekal||.25)*100)}% + ${Math.round((pm.tambah_kekal||.25)*100)}% bagi setiap semakan yang lulus. ${esc(semLbl('s14'))}; ${esc(semLbl('wfo'))}; ${esc(semLbl('at'))}.</li>
       <li><b>Bukti hadapan</b> = posisi matang Lejar Penuh + Papertrade C sebelum Lejar (${d.c_pra_lejar||0} posisi). Matang = dibeli ≥ maks(${pm.umur_min||14} hari, 1.5 × hari pegang backtest) lalu. n berkesan (nb) dikira ikut hari beli, kerana posisi yang dibeli pada hari sama bergerak bersama.</li>
       <li><b>Skor</b> = (n0 × jangkaan + nb × purata matang) ÷ (n0 + nb), n0 maksimum ${pm.n0_maks||30}. Skor sebulan = skor ÷ hari pegang × ${pm.hari_bulan||21}. Susunan lalai = had bawah julat 95%.</li>
-      <li><b>Status sebenar</b> hanya selepas ≥ ${pm.n_min||20} posisi matang DAN ≥ 10 hari beli berbeza; sebelum itu BELUM CUKUP. KUAT = julat di atas 0 · LEMAH = julat di bawah 0 · AMARAN = purata jauh di bawah jangkaan.</li>
+      <li><b>Status sebenar</b> hanya selepas ≥ ${pm.n_min||20} posisi matang DAN ≥ 10 hari beli berbeza; sebelum itu BELUM CUKUP. Tarikh "keluar BELUM CUKUP" ialah anggaran bila syarat ini dicapai, bukan tarikh kaedah terbukti; nb perlu = n berkesan supaya julat 95% tidak merangkumi 0 (tanpa pelarasan ujian berbilang). KUAT = julat di atas 0 · LEMAH = julat di bawah 0 · AMARAN = purata jauh di bawah jangkaan.</li>
       <li><b>Pantau</b>: BERSARA / GANTUNG / AMARAN / OK dengan sasaran dan ambang dalam % (lajur Pantau). Label sahaja; tidak menghentikan belian.</li>
       <li><b>Had</b>: set 431 berat sebelah (senarai Shariah hari ini); SD backtest ialah anggaran bawah; skor sebulan menganggap modal dipusing semula. Rekod analisis sahaja: tiada order, tiada wang sebenar.</li>
     </ul></div>
@@ -3631,9 +3651,9 @@ function profilC(id){const src=prSrc('c').filter(r=>r.kaedah===id);if(!src.lengt
     l1:avgOf(src.map(r=>hasilL(r,'kaedah'))),l2:avgOf(src.map(r=>hasilL(r,'henti'))),bz:bezaLorong(src),xh:src.filter(r=>r.keluar_henti).length,spy:sp.length?avgOf(sp):null,nSpy:sp.length,
     henti,lk,mula:src.reduce((m,r)=>r.tarikh_beli&&(!m||r.tarikh_beli<m)?r.tarikh_beli:m,'')};}
 function profilCHtml(p){if(!p)return '<p class="ln mut">Belum ada posisi Papertrade C bagi kaedah ini.</p>';
-  return `<div class="mgrid">${mSel('Posisi',`<b>${nf(p.n)}</b> <span class="mut">sejak ${esc(tkO(p.mula))}</span>`)}${mSel('Matang',`<b>${nf(p.M.length)}</b>${p.cM?` · <b class="${cls(p.cM.m)}">${sg2(p.cM.m)}</b> <span class="mut">${ciTxt(p.cM)}</span>`:''}`,'c_matang')}
-    ${mSel('Direalisasi (keluar)',`<b class="${cls(p.uE)}">${sg2(p.uE)}</b> <span class="mut">${nf(p.ex.length)} · ${wTxt(p.wE,p.ex.length)}</span>`)}${mSel('Belum direalisasi',`<b class="${cls(p.uO)}">${sg2(p.uO)}</b> <span class="mut">${nf(p.op.length)} dipegang</span>`)}
-    ${mSel('Lorong kaedah / selagi naik',`<b class="${cls(p.l1)}">${sg2(p.l1)}</b> / <b class="${cls(p.l2)}">${sg2(p.l2)}</b> <span class="mut">${p.xh} keluar lorong 2</span>`,'dua_lorong')}${mSel('Beza lorong',bezaTxt(p.bz),'dua_lorong')}
+  return `<div class="mgrid">${mSel('Posisi',`<b>${nf(p.n)}</b> <span class="mut">sejak ${esc(tkO(p.mula))}</span>`)}${mSel('Matang',p.cM&&p.cM.G>=G_MIN?`<b>${nf(p.M.length)}</b> · <b class="${cls(p.cM.m)}">${sg2(p.cM.m)}</b> <span class="mut">${ciTxt(p.cM)}</span>`:`<span class="mut">${belumCukupTxt(p.M,p.cM)}</span>`,'c_matang')}
+    ${mSel('Direalisasi (keluar)',`<b class="${cls(p.uE)}">${sg2(p.uE)}</b> <span class="mut">${nf(p.ex.length)} · ${wTxtK(p.ex,r=>r.untung_akhir_pct>0)}</span>`)}${mSel('Belum direalisasi',`<b class="${cls(p.uO)}">${sg2(p.uO)}</b> <span class="mut">${nf(p.op.length)} dipegang</span>`)}
+    ${mSel('Lorong kaedah / selagi naik',`<b class="${cls(p.l1)}">${sg2(p.l1)}</b> / <b class="${cls(p.l2)}">${sg2(p.l2)}</b> <span class="mut">${p.xh} keluar lorong 2</span>`,'dua_lorong')}${mSel('Beza lorong (selagi naik − kaedah)',bezaTxt(p.bz),'dua_lorong')}
     ${mSel('Beza SPY tempoh sama',p.spy==null?'–':`<b class="${cls(p.spy)}">${sg2(p.spy)}</b> <span class="mut">${nf(p.nSpy)} posisi</span>`)}${mSel('Kena henti rugi',p.ex.length?`${fx(p.henti/p.ex.length*100,0)}% <span class="mut">${p.henti}/${p.ex.length} keluar</span>`:'–')}
     ${mSel('Dilangkau 9:35 NY',p.lk?`${p.lk} <span class="mut">${fx(p.lk/(p.lk+p.n)*100,0)}% isyarat</span>`:'0')}</div>`;}
 function skwDiagHtml(id){try{const src=prSrc('c');if(!src.length)return '';const D=skwOf(src,'c'),x=D.all.find(y=>y.kaedah===id);if(!x)return '';
@@ -3650,6 +3670,9 @@ function openProfil(id){const r=anlRow(id),k=katRow(id),b=kpM(S.docs,S.at,S.meta
       ${mSel('Kelompok korelasi',r.kelompok==null?'–':`${esc(r.kelompok)}${r.kelompok_wakil&&r.kelompok_wakil!==id?` <span class="mut">wakil ${esc(r.kelompok_wakil)}</span>`:' <span class="mut">(wakil)</span>'}`,'anl_ekor')}${mSel('Lejar matang',`<b>${r.h_matang}</b> <span class="mut">/ ${r.h_posisi} posisi${r.h_purata!=null?` · ${sg2(r.h_purata)}`:''}</span>`,'anl_hadapan')}${mSel('Pantau',`${pantauPill(r)}${r.pantau_sasaran!=null?` <span class="mut">sasaran ${pantauTxt(r.pantau_sasaran)}</span>`:''}${r.pantau_ambang?`<br><span class="mut">${pantauTxt(r.pantau_ambang)}</span>`:''}`,'anl_pantau')}</div>
       ${r.p_sebab?`<p class="ln mut">${esc(r.p_sebab)}</p>`:''}</div>
     <div class="sec"><h4 data-tip="anl_semakan">Semakan · ${r.lulus}/3</h4><div class="mgrid">${mSel(esc(semLbl('s14')),`${anlTk(r.lulus_subset)} ${esc(r.subset||'–')} atasi EW`)}${mSel(esc(semLbl('wfo')),`${anlTk(r.lulus_wfo)} ${pct(r.wfo_cagr)} <span class="mut">lawan EW ${pct(r.wfo_ew)} · DSR ${fx(r.wfo_dsr,2)}</span>`)}${mSel(esc(semLbl('at')),`${anlTk(r.lulus_at)} A ${pct(r.at_cagr_a)} · B ${pct(r.at_cagr_b)} <span class="mut">lawan SPY ${pct(r.at_spy)}</span>`)}</div></div>
+    <div class="sec"><h4 data-tip="pintu">Pintu wang sebenar · ${pintuOf(r)}/${PINTU.length}</h4><div class="kad">${PINTU.map(([k,tx,f],i)=>{const ok=f(r),sb=i<pintuOf(r);return `<div><span class="${ok&&sb?'y':ok?'q':'n'}">${ok&&sb?'✓':ok?'·':'✗'}</span><span><b style="color:var(--fg)">${i+1}. ${esc(tx)}</b></span></div>`;}).join('')}</div></div>
+    <div class="sec"><h4 data-tip="anl_bebas">Ujian bebas AUTOTUNE (2000 saham AS lain)</h4><div class="mgrid">${mSel('Label',atLbl(r.at_label))}${mSel('Ujian bersih 2013–2018 (parameter asal)',`<b class="${cls(r.at_cagr_bersih!=null&&spyBersih()!=null?r.at_cagr_bersih-spyBersih():null)}">${pct(r.at_cagr_bersih)}</b> <span class="mut">lawan SPY ${pct(spyBersih())}</span>`)}${mSel('OOS A / B 2013 – Sep 2024',`${pct(r.at_cagr_a)} / ${pct(r.at_cagr_b)} <span class="mut">lawan SPY ${pct(r.at_spy)}</span>`)}${mSel('Tempoh kunci Okt 2024 – Okt 2026',`${pct(r.at_cagr_kunci)} <span class="mut">lawan SPY ${pct(((S.anl||{}).rujukan||{}).at_spy_kunci)}</span>`)}${mSel('DSR',r.at_dsr==null?'–':fx(r.at_dsr,3))}${mSel('PBO',r.at_pbo==null?'–':fx(r.at_pbo,2))}</div>
+      <p class="ln mut">DSR = Sharpe ternyah (pelarasan percubaan berbilang); ≥ 0.95 diperlukan bagi TINGGI. PBO = kebarangkalian backtest terlebih padan; ≤ 0.30 bagi TINGGI.</p></div>
     <div class="sec"><h4 data-tip="anl_ekor">Backtest set 431 (dalam sampel)</h4><div class="mgrid">${mSel('CAGR',`<b class="${cls(r.bt_cagr)}">${pct(r.bt_cagr)}</b>`)}${mSel('MDD',pct(r.bt_mdd,0))}${mSel('Kadar menang',pct(r.bt_menang,0))}${mSel('Purata / median',`${sg2(r.bt_purata)} / ${sg2(r.median_bt)}`)}${mSel('Pangkas 5%',sg2(r.pangkas5_bt))}${mSel('Untung drp 1% teratas',r.pct_top1==null?'–':fx(r.pct_top1,0)+'%')}${mSel('Hari pegang',fx(r.hari,1))}${mSel('Dagangan',`${r.bt_n} <span class="mut">(${fx(r.bt_setahun,0)} setahun)</span>`)}${mSel('Keputusan',`${esc(r.bt_keputusan||'–')}${r.ditolak?' <span class="pill p-exit">⚑</span>':''}`)}</div></div>`:'';
   const btH=b?`<div class="sec"><h4 data-tip="kp_pingat">Saringan backtest (beku 17 Okt)</h4><p class="ln">${pg||kpStatus(b)} <span class="mut">${esc(b.r.varian)}</span></p>${kadSaringan(b.dk)}</div>`:(regMinta&&!Object.keys(S.docs).length?'<div class="sec"><h4>Saringan backtest</h4><p class="ln mut">Memuatkan registry backtest…</p></div>':'');
   const katH=k?`<div class="sec"><h4>Cara kaedah ini berfungsi</h4>${k.ringkas?`<p class="ln kring" style="font-size:.92rem">${esc(k.ringkas)}</p>`:''}<dl class="dl">${['masuk','keluar','henti','pegang'].map(x=>`<dt>${KAT_LBL[x]}</dt><dd>${katSenarai(x,k[x],k.baris&&k.baris[x])}</dd>`).join('')}<dt>Asal</dt><dd>${esc(k.pencipta||'–')}${k.sumber?` <span class="mut">· ${esc(k.sumber)}</span>`:''}</dd></dl>${k.tiada_keluar_had?'<p class="ln"><span class="pill p-warn">tiada keluar, tiada had masa</span> Posisi hanya ditutup oleh henti rugi atau lorong 2.</p>':''}</div>`:'';
@@ -3661,6 +3684,34 @@ function openProfil(id){const r=anlRow(id),k=katRow(id),b=kpM(S.docs,S.at,S.meta
     ${btH}
     ${katH}
     <div class="acts">${p?`<button type="button" class="btn" data-lihat="${esc(id)}" data-akaun="c">Lihat posisi ${esc(id)}</button>`:''}<button type="button" class="btn ghost" data-tutup>Tutup</button></div>`);}
+
+/* ================= panel Esok (audit swing trader P0 #3, #4) =================
+   Posisi tidak sah ditapis; setiap blok "n posisi · m saham"; Hampir dipecah: henti kaedah (intrahari) dan lorong 2 (ikut tutup);
+   "Dibeli" = isyarat lengkap dalam watchlist sahaja (senarai beli penuh dijana imbasan ~8 malam MYT). */
+function jarakAtrL(r){if(r.tidak_dibeli||r.tutup_semua)return null;const t=trendOf(r.saham);if(!t||t.atr_pct==null||!t.c)return null;const A=t.atr_pct/100*t.c;if(!(A>0))return null;
+  const h=nomb(r.harga_terkini),o={};if(!r.keluar){const p=parasL(r,'kaedah');if(p!=null&&h)o.kaedah=(h-p)/A;}const a=l2Info(r);if(a)o.henti=(a.h-a.paras)/A;return o;}
+const unitTxt=L=>`posisi · ${nf(new Set(L.map(x=>(x.r||x).saham)).size)} saham`;
+function panelEsok(){const D=tarikhData(),nx=D?hariDagBerikut(D):'',pos=posRows('c').filter(r=>!r.tidak_dibeli&&!r.tidak_sah);
+  const jual=pos.map(r=>({r,s:statusPos(r)})).filter(x=>x.s&&x.s[0]==='m').sort((a,b)=>(a.r.untung_pct??0)-(b.r.untung_pct??0));
+  const W=watchRows(),beli=W.map((r,i)=>({r,i})).filter(x=>wLengkap(x.r)&&wBeli(x.r).k==='tunggu'),kw=new Set((S.watch&&S.watch.rows||[]).map(r=>r.kaedah)).size,nKat=(S.kat&&S.kat.rows||[]).length;
+  const hb={};prSrc('c').forEach(r=>{if(r.tarikh_beli)hb[r.tarikh_beli]=(hb[r.tarikh_beli]||0)+1;});const hbL=Object.keys(hb).sort().slice(-5).map(k=>hb[k]),hbT=hbL.length?`${nf(Math.min(...hbL))}–${nf(Math.max(...hbL))}`:'–';
+  const ek=earnKiniAda(ptcRows()),peg=pos.filter(r=>!r.tutup_semua),erAll=peg.filter(r=>(hariKeEarn(r)??99)<=10),er=[...new Map(erAll.map(r=>[r.saham,r])).values()].sort((a,b)=>hariKeEarn(a)-hariKeEarn(b));
+  const tanpaE=ek?new Set(peg.filter(r=>!r.earn_kini).map(r=>r.saham)).size:0;
+  const hmK=[],hmL=[];peg.forEach(r=>{const s=statusPos(r);if(s&&s[0]==='m')return;const o=jarakAtrL(r);if(!o)return;if(o.kaedah!=null&&o.kaedah<=HAMPIR_ATR)hmK.push({r,j:o.kaedah});else if(o.henti!=null&&o.henti<=HAMPIR_ATR)hmL.push({r,j:o.henti});});
+  hmK.sort((a,b)=>a.j-b.j);hmL.sort((a,b)=>a.j-b.j);
+  const HAD=TELEFON?12:24,lagi=(n,tab)=>n>HAD?`<button type="button" class="lnk" data-pergi="${tab}">+${n-HAD} lagi</button>`:'';
+  const kump=L=>{const m=new Map();L.forEach(x=>{const g=m.get(x.r.saham)||{x,n:0,u:[],k:new Set(),l1:0,l2:0,j:x.j};g.n++;g.u.push(x.r.untung_pct);g.k.add(x.r.kaedah);if(x.s&&x.s[2])g.l1=1;if(x.s&&x.s[3])g.l2=1;if(x.j!=null&&x.j<g.j)g.j=x.j;m.set(x.r.saham,g);});return [...m.values()];};
+  const cP=g=>{const u=avgOf(g.u);return `<button type="button" class="ec" data-pos="${esc(g.x.r._p)}" title="${esc([...g.k].join(', '))}">${g.l1?cipL('K'):''}${g.l2?cipL('2'):''}<b>${esc(g.x.r.saham)}</b><span class="mut">${g.n>1?'×'+g.n:esc(g.x.r.kaedah)}</span>${g.j!=null?`<span class="mut">${fx(g.j,1)} ATR</span>`:''}<span class="${cls(u)}">${sg2(u)}</span></button>`;};
+  const jualG=kump(jual),hKG=kump(hmK),hLG=kump(hmL);
+  const blok=(t,tip,n,unit,isi,kosong)=>`<div class="esb"><div class="esh"${tip?` data-tip="${tip}"`:''}>${t} <b>${n}</b>${unit?` <span class="mut ecn">${unit}</span>`:''}</div>${n?`<div class="ecs">${isi}</div>`:`<p class="mut" style="margin:0">${kosong}</p>`}</div>`;
+  const eChip=r=>{const h=hariKeEarn(r);return `<button type="button" class="ec" data-pos="${esc(r._p)}"><b>${esc(r.saham)}</b><span class="mut">${h===0?'dilapor '+esc(tkO(earnTk(r))):`${esc(tkO(earnTk(r)))} · ${h}h`}</span></button>`;};
+  return `<div class="panel"><div class="panel-h"><h2>Esok${nx?` · buka ${esc(tkO(nx))}`:''}</h2><span class="sub">Papertrade C (tidak sah dikecualikan) · ketik saham untuk butiran</span></div>
+    ${blok(`${titikH('m')} Dijual pada buka`,'isyarat_keluar',jual.length,unitTxt(jual),jualG.slice(0,HAD).map(cP).join('')+lagi(jualG.length,'posisi'),'Tiada isyarat keluar baharu.')}
+    ${blok('Isyarat lengkap dalam watchlist','isyarat_lengkap',beli.length,`calon · ${nf(new Set(beli.map(x=>x.r.saham)).size)} saham · watchlist meliputi ${nf(kw)}${nKat?` daripada ${nf(nKat)}`:''} kaedah`,beli.slice(0,HAD).map(x=>`<button type="button" class="ec" data-wl="${x.i}"><b>${esc(x.r.saham)}</b><span class="mut">${esc(x.r.kaedah)}</span>${x.r.earn_kini_h!=null&&x.r.earn_kini_h<=5?`<span class="ern" title="Earnings ${esc(tkO(x.r.earn_kini))}">📅${x.r.earn_kini_h}</span>`:''}${grB(x.r.gred_keseluruhan)}</button>`).join('')+lagi(beli.length,'watch'),'Tiada isyarat lengkap dalam watchlist.')}
+    <p class="sub" style="margin:-4px 0 10px">Senarai beli penuh dijana imbasan ~8 malam MYT pada hari belian (5 hari terakhir: ${hbT} belian sehari); blok ini hanya calon watchlist.</p>
+    ${blok(`${titikH('h')} Hampir henti kaedah (≤ ${HAMPIR_ATR} ATR)`,'jarak_atr',hmK.length,unitTxt(hmK),hKG.slice(0,HAD).map(cP).join('')+lagi(hKG.length,'posisi'),'Tiada posisi hampir henti kaedah.')}
+    ${blok(`${titikH('h')} Hampir lorong 2 (≤ ${HAMPIR_ATR} ATR, ikut tutup)`,'jarak_atr',hmL.length,unitTxt(hmL),hLG.slice(0,HAD).map(cP).join('')+lagi(hLG.length,'posisi'),'Tiada posisi hampir paras lorong 2.')}
+    ${blok('📅 Earnings ≤ 10 hari dagangan','g_q',er.length,`saham · ${nf(erAll.length)} posisi${tanpaE?` · ${nf(tanpaE)} saham tanpa tarikh earnings`:''}`,er.slice(0,HAD).map(eChip).join('')+lagi(er.length,'posisi'),'Tiada earnings dalam 10 hari dagangan bagi posisi dipegang.')}</div>`;}
 
 /* ================= Posisi (tindakan 9, 10, 15, 22, 24) ================= */
 const HAMPIR_ATR=1;
@@ -3686,7 +3737,8 @@ const earnKiniAda=memo(p=>!!(p&&p.rows&&p.rows.some(r=>r.earn_kini)));
 const earnTk=r=>String((earnKiniAda(ptcRows())?r.earn_kini:r.tarikh_earnings)||'').slice(0,10);
 const hariKeEarn=r=>{const te=earnTk(r),D=tarikhData();if(!/^\d{4}-\d\d-\d\d$/.test(te)||!D||te<D)return null;return te===D?0:hariAntara(D,te);};
 const earnH=r=>{if(r.tutup_semua||r.tidak_dibeli)return '';const h=hariKeEarn(r),te=earnTk(r),D=tarikhData(),lalu=String(r.earn_lalu||'').slice(0,10),sm=!!(D&&lalu&&lalu===hariKerjaSebelum(D));
-  return (h!=null&&h<=10)||sm?`<span class="ern" title="Earnings ${esc(tkO(sm?lalu:te))}: ${sm?'semalam':h===0?'hari ini':h+' hari dagangan lagi'}. Hari reaksi earnings dalam 10 sesi menambah peluang jatuh > 8% (+6.5 hingga +13.9 mata dalam ujian 2020–2026).">📅${sm?'−1':h}</span>`:'';};
+  if(h===0)return `<span class="ern" title="Earnings dilapor pada sesi data ${esc(tkO(te))}: jika sebelum buka, reaksi sudah dalam harga; jika selepas tutup, reaksi pada buka seterusnya (waktu laporan tiada dalam data).">📅✓</span>`;
+  return (h!=null&&h<=10)||sm?`<span class="ern" title="Earnings ${esc(tkO(sm?lalu:te))}: ${sm?'semalam':h+' hari dagangan lagi'}. Hari reaksi earnings dalam 10 sesi menambah peluang jatuh > 8% (+6.5 hingga +13.9 mata dalam ujian 2020–2026).">📅${sm?'−1':h}</span>`:'';};
 const sahamSel=(r,akaun)=>`${titikPos(r)}<b>${esc(r.saham)}</b>${baruPos(r)}${earnH(r)}${r.tutup_semua?'':cipKeluar(r)}${kualitiH(r)}${akaun&&r.akaun?` <span class="pill p-mute">${r.akaun}</span>`:''}`;
 const kaedahSel=r=>{const kk=kongsiOf(r);return `${esc(r.kaedah)}${kk.length?`<span class="kng" aria-label="Isyarat sama daripada ${kk.length} kaedah lain">+${kk.length}</span><span class="vv kng-l">kongsi: ${esc(kk.join(' '))}</span><span class="kgd"><span class="kgh">Isyarat sama juga daripada ${kk.length} kaedah:</span>${kk.map(id=>`<span class="kgi"><b>${esc(id)}</b> ${esc(katNama(id))}${katMasuk(id)?`<span class="kgm">Masuk: ${esc(katMasuk(id))}</span>`:''}</span>`).join('')}</span>`:''}`;};
 function ptCols(akaun){return [
@@ -3721,16 +3773,21 @@ function posColsP(p,akaun){const sh={k:'saham',t:'Saham',tip:'saham',l:1,frz:1,f
 if(PANDANGAN==='gred')PANDANGAN='';
 const pandSeg=()=>`<div class="seg" data-pand role="group" aria-label="Pandangan jadual">${[['ringkas','Ringkas'],['penuh','Penuh'],['risiko','Risiko']].map(([v,t])=>`<button type="button" data-v="${v}" aria-pressed="${(pandOf()||lajurOf('pos'))===v}"${v==='risiko'?' data-tip="pand_risiko"':''}>${t}</button>`).join('')}</div>`;
 /* KPI ikut tapisan: penyebut sama dengan baris jadual (tidak sah dikecualikan dan dinyatakan) */
-function ptKpis2(rows){const sah=rows.filter(r=>!r.tidak_sah),nv=rows.length-sah.length,ex=sah.filter(r=>r.keluar&&r.untung_akhir_pct!=null),op=sah.filter(r=>!r.keluar&&r.untung_pct!=null);
-  const uE=avgOf(ex.map(r=>r.untung_akhir_pct)),uO=avgOf(op.map(r=>r.untung_pct)),wE=ex.filter(r=>r.untung_akhir_pct>0).length,pO=op.filter(r=>r.untung_pct>0).length;
-  const M=matangC(sah),cM=selangK(M,hasilPos),bz=bezaLorong(sah),kd=new Set(sah.map(r=>r.kaedah)).size;
+/* KPI ikut tapisan: purata setiap posisi (1 unit, sama berat) dan purata ikut saham; penyebut sama dengan baris jadual */
+const ikutSaham=(L,val)=>{const m={};L.forEach(r=>{const v=val(r);if(v==null)return;(m[r.saham]=m[r.saham]||[]).push(v);});const a=Object.values(m).map(avgOf);return a.length?avgOf(a):null;};
+function ptKpis2(rows,seg){const sah=rows.filter(r=>!r.tidak_sah),nv=rows.length-sah.length,ex=sah.filter(r=>r.keluar&&r.untung_akhir_pct!=null),op=sah.filter(r=>!r.keluar&&r.untung_pct!=null),l2=sah.filter(r=>r.keluar&&!r.keluar_henti);
+  const uE=avgOf(ex.map(r=>r.untung_akhir_pct)),uO=avgOf(op.map(r=>r.untung_pct)),u2=avgOf(l2.map(r=>hasilL(r,'henti'))),pO=op.filter(r=>r.untung_pct>0).length;
+  const M=matangC(sah),cM=selangK(M,hasilPos),cukup=cM&&cM.G>=G_MIN,kd=new Set(sah.map(r=>r.kaedah)).size,sh=new Set(sah.map(r=>r.saham)).size;
+  const ks=(v,L,val)=>`<span class="mut">ikut saham <b class="${cls(ikutSaham(L,val))}">${sg2(ikutSaham(L,val))}</b></span>`;
+  const kad3=seg==='l2'?`<div class="kpi"><div class="lbl" data-tip="keluar_henti">Lorong 2 belum direalisasi</div><div class="v ${cls(u2)}">${sg2(u2)}</div><div class="s">${nf(l2.length)} posisi · ${ks(u2,l2,r=>hasilL(r,'henti'))}</div></div>`
+    :`<div class="kpi"><div class="lbl" data-tip="dipegang">Belum direalisasi (lorong kaedah)</div><div class="v ${cls(uO)}">${sg2(uO)}</div><div class="s">${nf(op.length)} posisi · ${op.length?fx(pO/op.length*100,0):0}% sedang untung · ${ks(uO,op,r=>r.untung_pct)}</div></div>`;
   return `<div class="kpis kpis5">
-    <div class="kpi"><div class="lbl">Posisi dipapar</div><div class="v">${nf(sah.length)}</div><div class="s">${kd} kaedah · ${nf(op.length)} dipegang · ${nf(ex.length)} keluar${nv?` · ${nv} tidak sah (dikecualikan)`:''}</div></div>
-    <div class="kpi"><div class="lbl" data-tip="selesai">Direalisasi</div><div class="v ${cls(uE)}">${sg2(uE)}</div><div class="s">${nf(ex.length)} keluar lorong kaedah · ${wTxt(wE,ex.length)}</div></div>
-    <div class="kpi"><div class="lbl" data-tip="dipegang">Belum direalisasi</div><div class="v ${cls(uO)}">${sg2(uO)}</div><div class="s">${nf(op.length)} dipegang · ${op.length?fx(pO/op.length*100,0):0}% sedang untung</div></div>
-    <div class="kpi"><div class="lbl" data-tip="c_matang">Matang</div><div class="v ${cls(cM&&cM.m)}">${cM?sg2(cM.m):'–'}</div><div class="s">${nf(M.length)} matang${cM?` · ${ciTxt(cM)}`:''}</div></div>
-    <div class="kpi"><div class="lbl" data-tip="dua_lorong">Dua lorong</div><div class="v" style="font-size:1.05rem;white-space:normal">${['kaedah','henti'].map(l=>{const v=avgOf(sah.map(r=>hasilL(r,l)));return `<span class="${cls(v)}">${sg2(v)}</span>`;}).join('<span class="mut"> · </span>')}</div><div class="s">kaedah · selagi naik · beza ${bz?sg2(bz.m):'–'}${bz&&bz.lo!=null&&!(bz.lo>0||bz.hi<0)?' (belum signifikan)':''}</div></div>
-  </div>`;}
+    <div class="kpi"><div class="lbl">Posisi dipapar</div><div class="v">${nf(sah.length)}</div><div class="s">${nf(sh)} saham · ${kd} kaedah${nv?` · ${nv} tidak sah (dikecualikan)`:''}</div></div>
+    ${ex.length?'':'<!--'}<div class="kpi"><div class="lbl" data-tip="selesai">Direalisasi (lorong kaedah)</div><div class="v ${cls(uE)}">${sg2(uE)}</div><div class="s">${nf(ex.length)} keluar · ${wTxtK(ex,r=>r.untung_akhir_pct>0)}${ex.length?' · '+ks(uE,ex,r=>r.untung_akhir_pct):''}</div></div>${ex.length?'':'-->'}
+    ${kad3}
+    <div class="kpi"><div class="lbl" data-tip="c_matang">Matang</div><div class="v ${cukup?cls(cM.m):'mut'}">${cukup?sg2(cM.m):'–'}</div><div class="s">${cukup?`${nf(M.length)} matang · ${ciTxt(cM)}`:belumCukupTxt(M,cM)}</div></div>
+    <div class="kpi"><div class="lbl" data-tip="dua_lorong">Dua lorong</div><div class="v" style="font-size:1.05rem;white-space:normal">${['kaedah','henti'].map(l=>{const v=avgOf(sah.map(r=>hasilL(r,l)));return `<span class="${cls(v)}">${sg2(v)}</span>`;}).join('<span class="mut"> · </span>')}</div><div class="s">kaedah · selagi naik; beza dipecah dalam Lagi › Eksperimen</div></div>
+  </div><p class="sub" style="margin:-4px 0 12px">Purata setiap posisi (1 unit, sama berat) — bukan pulangan portfolio. "Ikut saham" mengira setiap saham sekali walaupun dibeli oleh beberapa kaedah.</p>`;}
 function ringkasKaedahPos(k){const p=profilC(k),r=anlRow(k);if(!p)return '';
   return `<div class="panel"><div class="panel-h"><h2>Ringkasan ${esc(k)}</h2><span class="sub">${esc(katNama(k))} · semua posisi C kaedah ini · <button type="button" class="lnk" data-kd="${esc(k)}">Profil kaedah</button></span></div>
     ${r?`<p class="ln">${anlPill(r.status)}${benderaAnl(r)} · P(5 teratas) <b>${r.p_top5==null?'–':fx(r.p_top5*100,0)+'%'}</b> · bukti ${nf(r.g_matang||0)}/${nf(r.g_perlu||10)} hari beli</p>`:''}${profilCHtml(p)}</div>`;}
@@ -3746,21 +3803,21 @@ function panelPeta(rows,st){const S1=petaSaham(rows);if(!S1.length)return '';con
 function renderPos(){
   const el=$('#v-pos'),a=S.akaun,ps=S.pos;const all=posRows(a);
   if(!all.length){el.innerHTML=`<div class="panel empty">${ptSiap(a)?'Belum ada posisi dalam pangkalan data.':'Memuatkan posisi…'}</div>`;return;}
-  if(!ps.mula){ps.mula=1;ps.st='pegang';}
-  const sah=all.filter(r=>!r.tidak_sah),ts=all.filter(r=>r.tidak_sah),peg=sah.filter(r=>!r.keluar),kel=sah.filter(r=>r.keluar);
+  if(!ps.mula){ps.mula=1;ps.st='pegang';}if(ps.st==='keluar')ps.st='tutup';
+  const sah=all.filter(r=>!r.tidak_sah),ts=all.filter(r=>r.tidak_sah),peg=sah.filter(r=>!r.keluar),l2=sah.filter(r=>r.keluar&&!r.keluar_henti),tut=sah.filter(r=>r.tutup_semua);
   if(ps.st==='tidaksah'&&!ts.length)ps.st='pegang';
-  const base=ps.st==='pegang'?peg:ps.st==='keluar'?kel:ps.st==='tidaksah'?ts:sah;
+  const base=ps.st==='pegang'?peg:ps.st==='l2'?l2:ps.st==='tutup'?tut:ps.st==='tidaksah'?ts:sah;
   const fb=ptFilterBar('pos'+a,base);const rows=fb.apply(base);const rk=lajurOf('pos')==='ringkas',pd=pandOf();
   const pm=ptmRows(),pc=ptcRows(),risiko=pd==='risiko';
-  const head=a==='m'?`<p class="headline">Arkib: akaun simulasi Moomoo <b>${esc(pm&&pm.d.akaun||'4135388')}</b>, tiada belian baharu sejak 13 Okt 2026 · harga pada <b>${esc(hargaPada(pm&&pm.d))}</b>. ${all.filter(r=>r.sumber==='luar').length} strategi luar dan ${all.filter(r=>r.sumber==='log_v1').length} warisan v1 tidak dikira dalam purata Arkib.</p>`
-   :`<p class="headline">Papertrade C (maya): 1 unit setiap isyarat pada harga buka sebenar · harga terkini <b>${esc(hargaPada(pc&&pc.d))}</b>. KPI di bawah mengikut tapisan dan segmen yang dipilih.</p>`;
-  const def=ps.st==='keluar'?{k:'tarikh_keluar',dir:-1}:ps.st==='pegang'?{k:'_atr',dir:1}:{k:'untung_pct',dir:-1};
+  const head=a==='m'?`<p class="headline">Arkib: akaun simulasi Moomoo <b>${esc(pm&&pm.d.akaun||'4135388')}</b>, tiada belian baharu sejak 13 Okt 2026 · harga pada <b title="${esc(hargaPada(pm&&pm.d))}">${esc(String(hargaPada(pm&&pm.d)).split(' (')[0])}</b>. ${all.filter(r=>r.sumber==='luar').length} strategi luar dan ${all.filter(r=>r.sumber==='log_v1').length} warisan v1 tidak dikira dalam purata Arkib.</p>`
+   :`<p class="headline">Papertrade C (maya): 1 unit setiap isyarat pada harga buka sebenar · harga terkini <b title="${esc(hargaPada(pc&&pc.d))}">${esc(String(hargaPada(pc&&pc.d)).split(' (')[0])}</b>. KPI di bawah mengikut tapisan dan segmen yang dipilih.</p>`;
+  const def=ps.st==='tutup'?{k:'tarikh_keluar',dir:-1}:ps.st==='pegang'||ps.st==='l2'?{k:'_atr',dir:1}:{k:'untung_pct',dir:-1};
   const cols=pd?posColsP(pd,false):rk?posColsR(false):ptCols(false);
-  if(ps.st==='keluar'&&!cols.some(c=>c.k==='tarikh_keluar'))cols.splice(1,0,{k:'tarikh_keluar',t:'Tarikh keluar',l:1,f:r=>`<span class="nw">${esc(tkO(r.tarikh_keluar))}</span>`});
+  if((ps.st==='tutup'||ps.st==='l2')&&!cols.some(c=>c.k==='tarikh_keluar'))cols.splice(1,0,{k:'tarikh_keluar',t:'Tarikh keluar',l:1,f:r=>`<span class="nw">${esc(tkO(r.tarikh_keluar))}</span>`});
   const tsH=()=>{const c={};rows.forEach(r=>{const k=TS_LBL[jenisTs(r)]||'Tidak sah';c[k]=(c[k]||0)+1;});return `<div class="strip"><b class="t">Tidak sah</b><span>${nf(rows.length)} posisi tidak dikira dalam mana-mana purata: ${Object.entries(c).sort((x,y)=>y[1]-x[1]).map(([k,n])=>`${esc(k)} <b>${n}</b>`).join(' · ')}. Posisi ambil alih ditutup; tidak cair dan kelas berganda kekal ditanda (penutupan selepas N sesi menunggu keputusan).</span></div>`;};
-  el.innerHTML=head+(ps.st==='tidaksah'?tsH():ptKpis2(a==='m'?rows.filter(r=>r.sumber!=='luar'&&r.sumber!=='log_v1'):rows))+(fb.st.k?ringkasKaedahPos(fb.st.k):'')+(risiko?panelPeta(a==='m'?all:posRows('c'),fb.st):'')+`
-  <div class="panel"><div class="panel-h"><h2>Posisi & keputusan</h2><span class="sub">${rows.length} posisi · ${ps.st==='pegang'?'disusun ikut jarak ke keluar (ATR)':'ketik tajuk lajur untuk susun'} · ketik baris untuk butiran</span></div>${rejimHtml()}
-    <div class="filters" style="margin-bottom:8px">${segH('posSt',ps.st,[['pegang',`Dipegang (${peg.length})`],['keluar',`Sudah keluar (${kel.length})`],['semua',`Semua (${sah.length})`],...(ts.length?[['tidaksah',`Tidak sah (${ts.length})`]]:[])],'Status')}${skrinKecil()?lajurSeg('pos'):pandSeg()}</div>
+  el.innerHTML=head+(ps.st==='tidaksah'?tsH():ptKpis2(a==='m'?rows.filter(r=>r.sumber!=='luar'&&r.sumber!=='log_v1'):rows,ps.st))+(fb.st.k?ringkasKaedahPos(fb.st.k):'')+(risiko?panelPeta(a==='m'?all:posRows('c'),fb.st):'')+`
+  <div class="panel"><div class="panel-h"><h2>Posisi & keputusan</h2><span class="sub">${rows.length} posisi · ${ps.st==='pegang'||ps.st==='l2'?'disusun ikut jarak ke keluar (ATR)':'ketik tajuk lajur untuk susun'} · ketik baris untuk butiran</span></div>${rejimHtml()}
+    <div class="filters" style="margin-bottom:8px">${segH('posSt',ps.st,[['pegang',`Dipegang · lorong kaedah (${peg.length})`],['l2',`Lorong 2 sahaja (${l2.length})`],['tutup',`Tutup kedua-dua lorong (${tut.length})`],['semua',`Semua (${sah.length})`],...(ts.length?[['tidaksah',`Tidak sah (${ts.length})`]]:[])],'Status')}${skrinKecil()?lajurSeg('pos'):pandSeg()}</div>
     ${fb.html}${sortTable({id:'pos'+a+ps.st,rows,cols,def,grd:1,rcls:r=>rclsPT(r)+' click'+bukaC('p'+r._p),limit:fb.st.shown,attr:r=>`data-pos="${esc(r._p)}" tabindex="0"`,foot:kakiLagi('posMore')})}
     <p class="sub" style="margin-top:6px">Ke keluar = jarak harga ke paras keluar terdekat (henti kaedah atau lorong 2) dalam unit ATR14; ≤ ${HAMPIR_ATR} ATR = hampir keluar (titik oren). Gred, trend, pemangkin dan kewangan dalam butiran posisi.</p></div>
   <div class="foot"><span>${a==='m'?'Arkib Moomoo lama':'Isyarat tidak dibeli dan langkauan 9:35 NY: Lagi › Sistem'}</span><span>Tiada order · tiada wang sebenar</span></div>`;
@@ -3795,7 +3852,7 @@ function renderEksperimen(){const el=$('#v-eksperimen'),src=prSrc('c');if(!src.l
   el.innerHTML=`<p class="headline">Eksperimen direkod untuk dinilai; tiada yang mengubah cara beli. Setiap keputusan perlu sampel matang sebelum dipercayai.</p>
   <div class="panel"><div class="panel-h"><h2 data-tip="portfolio_slot">Portfolio maya 10 slot</h2><span class="sub">lima portfolio daripada Lejar Penuh</span></div>${jadualSlot()}</div>
   <div class="panel"><div class="panel-h"><h2 data-tip="dua_lorong">Dua lorong keluar: beza keseluruhan</h2><span class="sub">selagi naik − kaedah setiap posisi C</span></div>
-    <p class="kesimpulan">Beza purata ${bezaTxt(c)}${c?` <span class="mut">(${nf(c.n)} posisi, ${c.G} hari beli; ${ciTxt(c)})</span>`:''}. Lorong kaedah kekal keputusan rasmi.</p></div>
+    <p class="kesimpulan">${bezaTxt(c)}. Hanya komponen "kedua-dua lorong tutup" sudah direalisasi, dan sampel itu condong kepada posisi yang jatuh. Lorong kaedah kekal keputusan rasmi.</p></div>
   ${prLorong(src)}
   ${prGred(src)}
   <div class="foot"><span>prestasi/portfolio_slot · Papertrade C</span><span>Tiada order · tiada wang sebenar</span></div>`;
@@ -3805,7 +3862,7 @@ function renderEksperimen(){const el=$('#v-eksperimen'),src=prSrc('c');if(!src.l
 function prKpis(rows){const v=rows.map(r=>r.hasil).filter(x=>x!=null),w=minOf(v),wr=rows.find(r=>r.hasil===w)||{},A=analisis(rows),ex=rows.filter(r=>r.keluar).length;
   return `<div class="kpis">
     <div class="kpi"><div class="lbl" data-tip="jumlah_dag">Jumlah dagangan</div><div class="v">${nf(rows.length)}</div><div class="s">${nf(ex)} selesai · ${nf(rows.length-ex)} dipegang</div></div>
-    <div class="kpi"><div class="lbl" data-tip="selesai">Dagangan selesai</div><div class="v ${cls(A.avgEx)}">${sg2(A.avgEx)}</div><div class="s">${wTxt(A.nW,A.nEx)} · ${nf(A.nEx)} dagangan</div></div>
+    <div class="kpi"><div class="lbl" data-tip="selesai">Dagangan selesai</div><div class="v ${cls(A.avgEx)}">${sg2(A.avgEx)}</div><div class="s">${wTxtK(rows.filter(r=>r.keluar&&r.untung_akhir_pct!=null),r=>r.untung_akhir_pct>0)} · ${nf(A.nEx)} dagangan</div></div>
     <div class="kpi"><div class="lbl" data-tip="dipegang">Masih dipegang (belum direalisasi)</div><div class="v ${cls(A.avgOp)}">${sg2(A.avgOp)}</div><div class="s">${A.upOp==null?'–':fx(A.upOp*100,0)+'%'} sedang untung · ${nf(A.nOp)} posisi</div></div>
     <div class="kpi"><div class="lbl" data-tip="kerugian_terbesar">Kerugian terbesar</div><div class="v neg">${sg2(w)}</div><div class="s">${esc(wr.saham||'–')} · ${esc(wr.kaedah||'')}</div></div>
   </div>`;}
@@ -3866,17 +3923,20 @@ Object.assign(TIPS,{
   anl_semakan:{t:'Semakan',d:'S1–S4 = kestabilan DALAM sampel (subset set 431 yang sama). WFO = dalam tempoh pemilihan kaedah, versi ditala. 2000 AS = AUTOTUNE atas 2000 saham AS lain 2013–2018: satu-satunya ujian luar sampel sebenar. ✓ lulus, ✗ gagal, – tiada data.'},
   anl_ptop:{t:'P(5 teratas)',d:'Kebarangkalian kaedah berada dalam 5 teratas ranking swing apabila ketidakpastian skor disimulasi (Monte Carlo). Lebih jujur daripada nombor kedudukan: kaedah #1 dengan P(5 teratas) 30% belum pasti terbaik.'},
   anl_pangkat:{t:'Selang pangkat 90%',d:'Julat kedudukan dalam 90% simulasi Monte Carlo. Julat lebar = kedudukan belum stabil.'},
-  anl_bukti:{t:'Bukti hadapan',d:'Hari beli matang berbeza / 10 yang diperlukan, n berkesan (nb) lawan nb yang diperlukan, dan anggaran tarikh status sebenar. Posisi yang dibeli pada hari sama bergerak bersama, jadi bukti dikira ikut hari beli.'},
+  anl_bukti:{t:'Bukti hadapan',d:'Hari beli matang berbeza / 10 yang diperlukan, n berkesan (nb) lawan nb yang diperlukan (tanpa pelarasan ujian berbilang), dan anggaran tarikh kaedah keluar daripada BELUM CUKUP (bukan tarikh bukti). Posisi yang dibeli pada hari sama bergerak bersama, jadi bukti dikira ikut hari beli.'},
   anl_pantau:{t:'Pantau',d:'BERSARA: P(purata ≤ 0) > 0.9 dengan ≥ 20 hari beli, atau ≥ 2 amaran CUSUM. GANTUNG: kejatuhan kohort > 1.5× atau tempoh di bawah puncak > maks backtest, atau purata 20 hari beli terakhir < p5 backtest. AMARAN: 1 amaran CUSUM. OK. BELUM CUKUP. Sasaran dan ambang dalam % ditunjuk di bawah label. Label sahaja.'},
   anl_ekor:{t:'Ekor backtest',d:'Median, purata dipangkas 5% dan % untung yang datang daripada 1% dagangan terbaik (dalam sampel). Kaedah yang bergantung pada beberapa dagangan besar lebih sukar dibuktikan dengan sampel hadapan kecil.'},
   anl_ditolak:{t:'⚑ DITOLAK',d:'Keputusan saringan backtest DITOLAK (gagal gate enjin). Kaedah masih dibeli dalam Lejar dan Papertrade C untuk perbandingan.'},
   anl_dalam:{t:'Backtest set 431 (dalam sampel)',d:'CAGR, MDD dan hari pegang atas set yang sama yang dipakai untuk memilih dan menala kaedah. Bukan bukti luar sampel.'},
   fasa:{t:'Fasa bukti',d:'Berapa banyak posisi hadapan sudah matang dan bila status sebenar pertama dijangka. Selagi tiada kaedah ada bukti hadapan, ranking = backtest dipotong.'},
   lampu:{t:'Lampu sistem',d:'Tarikh data setiap saluran lawan sesi NYSE yang dijangka (cuti dan DST diambil kira), ralat tolakan terakhir (harian/status.ralat), mod Actions (bayang/rasmi) dan sumber harga.'},
-  c_matang:{t:'Posisi C matang',d:'Purata pulangan posisi Papertrade C yang sudah cukup umur (≥ maks(14 hari, 1.5 × hari pegang backtest)); untung akhir jika keluar, semasa jika masih dipegang. Selang 95% berkelompok ikut hari beli dengan t(G − 1); kadar menang dengan selang Wilson.'},
+  c_matang:{t:'Posisi C matang',d:'Purata pulangan posisi Papertrade C yang sudah cukup umur (≥ maks(14 hari, 1.5 × hari pegang backtest)); untung akhir jika keluar, semasa jika masih dipegang. Dipapar hanya selepas ≥ 10 hari beli matang; selang 95% dan kadar menang berkelompok ikut hari beli dengan t(G − 1).'},
+  peta_portfolio:{t:'Peta risiko',d:'Saham yang masih dipegang (lorong kaedah atau lorong 2), setiap saham dikira sekali, dikumpul ikut sektor dan industri skema sektor_us. Saiz kotak = bilangan saham (bukan nilai atau risiko); warna = untung purata saham. Ketik kotak untuk menapis jadual.'},
   jarak_atr:{t:'Ke keluar (ATR)',d:'Jarak harga terkini ke paras keluar terdekat (henti kaedah atau paras lorong 2) dalam unit ATR14 semasa. ≤ 1 ATR = hampir keluar. Satu takrif untuk titik oren, jalur kad dan panel Esok.'},
   kualiti:{t:'Bendera kualiti data',d:'⚠ data: bar harga Moomoo sahaja, bar sintetik, harga beli berbeza daripada buka rasmi, atau keluar dibuka semula. Angka baris itu mungkin berubah apabila data dibetulkan.'},
   lawan_matlamat:{t:'Lawan matlamat',d:'Portfolio gabungan beku lawan kawalan (kaedah rawak) dan SPY, dengan rujukan EW/SPY backtest. Gabungan beku SEMENTARA sehingga dibekukan semula dengan data matang.'},
+  pintu:{t:'Pintu wang sebenar',d:'Enam pintu berturut-turut sebelum kaedah layak wang sebenar: (1) swing 3–30 hari, (2) sampel backtest cukup, (3) tidak DITOLAK backtest, (4) AUTOTUNE SEDERHANA/TINGGI atas 2000 saham AS lain (label dikunci dalam AUTOTUNE/SPEC.md), (5) ujian bersih 2013–2018 dengan parameter asal mengatasi SPY, (6) status KUAT daripada posisi hadapan matang. Ranking disusun ikut bilangan pintu yang dilepasi, kemudian P(5 teratas). Cadangan audit 24 Okt 2026; pintu inkubasi dan saiz berperingkat belum termasuk.'},
+  anl_bebas:{t:'Ujian bebas AUTOTUNE',d:'2000 saham AS di luar set 431. OOS A/B 2013 – Sep 2024 (versi ditala), tempoh kunci Okt 2024 – Okt 2026, dan ujian bersih 2013–2018 dengan parameter asal (sebelum penalaan). DSR = Sharpe ternyah selepas pelarasan percubaan berbilang; PBO = kebarangkalian backtest terlebih padan. Label: TINGGI, SEDERHANA, RENDAH, GAGAL.'},
   aktiviti:{t:'Aktiviti terkini',d:'Belian dan keluar lorong kaedah pada tarikh terkini, dan isyarat yang dilangkau oleh belian 9:35 NY (cth. jurang buka melebihi had).'}});
 
 renderNav();renderAll();

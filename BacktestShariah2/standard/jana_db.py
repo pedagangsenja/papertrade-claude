@@ -84,9 +84,26 @@ def earn_sebenar(db, r, K):
         return db
     te, sb = KE.seterusnya(K, r.get('saham') or r.get('Saham'), D)
     if te:
-        db.update(earn_seb=te.isoformat(), earn_seb_h=int(np.busday_count(D + timedelta(days=1), te + timedelta(days=1))) if te > D else 0,
+        db.update(earn_seb=te.isoformat(), earn_seb_h=hari_dag(D + timedelta(days=1), te + timedelta(days=1)) if te > D else 0,
                   earn_seb_sumber=sb)
     return db
+
+
+_CUTI = None
+
+
+def hari_dag(a, b):
+    """Bilangan hari dagangan NYSE dalam [a, b) (np.busday_count dengan cuti XNYS; exchange_calendars dipin kekangan.txt).
+    Tanpa exchange_calendars: hari bekerja sahaja (anggaran lama)."""
+    global _CUTI
+    if _CUTI is None:
+        try:
+            import exchange_calendars as xc
+            h = xc.get_calendar('XNYS').regular_holidays.holidays(pd.Timestamp('2000-01-01'), pd.Timestamp('2035-12-31'))
+            _CUTI = np.array([d.date() for d in h], dtype='datetime64[D]')
+        except Exception:
+            _CUTI = np.array([], dtype='datetime64[D]')
+    return int(np.busday_count(a, b, holidays=_CUTI))
 
 
 def earn_kini(db, t, S, K, cache=None):
@@ -102,9 +119,9 @@ def earn_kini(db, t, S, K, cache=None):
     D = date.fromisoformat(str(S)[:10]); x = {}
     te, _ = KE.seterusnya(K, t, D)
     if te:
-        x.update(earn_kini=te.isoformat(), earn_kini_h=int(np.busday_count(D + timedelta(days=1), te + timedelta(days=1))) if te > D else 0)
+        x.update(earn_kini=te.isoformat(), earn_kini_h=hari_dag(D + timedelta(days=1), te + timedelta(days=1)) if te > D else 0)
     tl, _ = KE.lalu(K, t, D)
-    if tl and int(np.busday_count(tl, D)) <= 3:
+    if tl and hari_dag(tl, D) <= 3:
         x['earn_lalu'] = tl.isoformat()
     if cache is not None:
         cache[t] = x
