@@ -9,6 +9,10 @@
 # papertrade/watchlist(+_2…), prestasi/ringkasan, prestasi/mae, prestasi/mae_atr (dibahagi), prestasi/harian_kaedah, prestasi/portfolio_slot, analisis/papan, harian/status,
 # harian/trend (trend_status.py), posisi/lorong2(+_2…; lorong2_siri.py). sektor/snapshot dijana oleh tugasan
 # mingguan (data/db/sektor_snapshot.json, jika ada; medan posisi dikemas kini di sini).
+# Sejak 24 Okt 2026 (audit dashboard tab demi tab; pratonton cawangan pratonton-audit): prestasi/mae dibahagi (rows senarai
+# [[kunci, %]]); prestasi/maefe_l2 (MAE/MFE tempoh lorong 2); papertrade/langkau (langkauan belian 9:35 NY); medan baris db
+# kualiti, sasaran_dinamik, jenis_tidak_sah, earn_kini/earn_kini_h/earn_lalu; harian/status ralat (dokumen melebihi had
+# dilangkau, bukan SystemExit), mod, sumber_harga (--sumber), saluran, beli_langkau.
 import argparse, csv, glob, hashlib, json, os, re, statistics as stt, sys
 
 import numpy as np
@@ -27,12 +31,25 @@ MIN_TUTUP = 20
 USD_POSISI = 1000
 HAD_BATCH = 900_000
 STATUS_HARGA = os.path.join(BS2, 'data', 'harga', 'status.json')
+HAD_BAHAGI = 200000      # saiz setiap bahagian dokumen yang dibahagi
+AMARAN_HAD = 0.8         # dokumen >= 80% had db -> amaran dalam harian/status.ralat
+MOD_ACTIONS = os.path.join(BS2, 'MOD_ACTIONS')
+LOG_RUTIN = os.path.join(HERE, 'binaan_v2_log_tambahan.md')
+LEJAR_STATUS = os.path.join(BS2, 'lejar', 'status.json')
+LANGKAU_MULA = '2026-10-14'   # rekod langkauan belian 9:35 NY (Papertrade C sahaja) bermula di sini
+LAJ = ['ticker', 'date', 'open', 'high', 'low', 'close', 'volume']
+# Kaedah yang sasaran keluarnya BERUBAH selepas hari isyarat (disemak dengan kod 24 Okt 2026): lajur `sasaran` CSV = paras
+# hari isyarat, jadi "capai sasaran" boleh berlaku pada paras lain. Gelung enjin memakai tgt bar semalam setiap hari.
+# Replika dengan sasaran dikunci pada hari isyarat (M19, M20 _kunci; M26 _isi_tgt; M47 _tgt_tetap; M100 _kunci_tgt) dan
+# M18 (ATH; berubah hanya apabila sasaran dicapai) BUKAN dinamik.
+SASARAN_DINAMIK = {'M01': 'SMA30 bergerak (bbm)', 'M02': 'buka masuk + 3 x (buka − henti); diketahui pada buka beli',
+                   'M03': 'BB atas bergerak', 'M28': 'VWAP bergerak'}
 
 PETA_WATCH = {'Saham': 'saham', 'Nama': 'nama', 'Kaedah': 'kaedah', 'Sektor': 'sektor', 'Industri': 'industri',
               'Harga': 'harga_terkini', '% hampir': 'pct_dipenuhi', 'Pencetus': 'pencetus', 'Keadaan semasa': 'sebab',
               'Syarat belum cukup': 'syarat_belum', 'Syarat dipenuhi': 'syarat_dipenuhi', 'Paras pencetus': 'paras',
               'Jarak %': 'jarak_pct', 'Tarikh masuk watchlist': 'ditambah', 'Hari dalam watchlist': 'hari', 'Skor': 'skor',
-              'Set': 'set', 'tarikh_data': None, 'dibina': None}
+              'Set': 'set', 'tarikh_data': 'tarikh_data', 'dibina': None, 'disentuh': 'disentuh'}
 
 
 def baris_db(r, peta=None):
@@ -45,7 +62,7 @@ def baris_db(r, peta=None):
             if k in peta and peta[k] is None:
                 continue
             k = peta.get(k, k)
-        out[k] = nilai(v) if k not in ('saham', 'nama', 'kaedah_kongsi', 'tarikh_isyarat', 'tarikh_beli') else v
+        out[k] = nilai(v) if k not in ('saham', 'nama', 'kaedah_kongsi', 'tarikh_isyarat', 'tarikh_beli', 'tarikh_data') else v
     return out
 
 
@@ -69,6 +86,124 @@ def earn_sebenar(db, r, K):
     if te:
         db.update(earn_seb=te.isoformat(), earn_seb_h=int(np.busday_count(D + timedelta(days=1), te + timedelta(days=1))) if te > D else 0,
                   earn_seb_sumber=sb)
+    return db
+
+
+def earn_kini(db, t, S, K, cache=None):
+    """Medan db (bukan CSV; 24 Okt 2026, ikon 📅 halaman): earn_kini = earnings seterusnya pada/selepas sesi data terakhir S
+    (bukan tarikh isyarat; kalendar_earnings.seterusnya), earn_kini_h = hari dagangan dari S (0 = pada S); earn_lalu =
+    earnings terakhir sebelum S jika <= 3 hari dagangan lalu (ikon "semalam"). cache: {saham: medan} (sama bagi semua baris)."""
+    if not S or not t:
+        return db
+    if cache is not None and t in cache:
+        db.update(cache[t]); return db
+    from datetime import date, timedelta
+    import kalendar_earnings as KE
+    D = date.fromisoformat(str(S)[:10]); x = {}
+    te, _ = KE.seterusnya(K, t, D)
+    if te:
+        x.update(earn_kini=te.isoformat(), earn_kini_h=int(np.busday_count(D + timedelta(days=1), te + timedelta(days=1))) if te > D else 0)
+    tl, _ = KE.lalu(K, t, D)
+    if tl and int(np.busday_count(tl, D)) <= 3:
+        x['earn_lalu'] = tl.isoformat()
+    if cache is not None:
+        cache[t] = x
+    db.update(x)
+    return db
+
+
+def jenis_tidak_sah(sebab):
+    """sebab_tidak_sah -> 'ambil_alih' | 'tidak_cair' | 'kelas_berganda' | 'delist' | 'lain' (label pil halaman)."""
+    s = (sebab or '').lower()
+    if 'diambil alih' in s or 'ambil alih' in s:
+        return 'ambil_alih'
+    if 'tidak cair' in s:
+        return 'tidak_cair'
+    if 'kelas berganda' in s:
+        return 'kelas_berganda'
+    if 'delist' in s:
+        return 'delist'
+    return 'lain'
+
+
+def bar_harga(stor, lajur=tuple(LAJ), terkini=None):
+    """Bar harian stor (harga_A/B.csv) + bar terkini.csv SELEPAS bar terakhir stor setiap ticker (sama dengan
+    trend_status.muat_harga; stor repo boleh ketinggalan satu sesi). DataFrame lajur `lajur`, date int."""
+    lajur = list(lajur)
+    fail = [os.path.join(stor, f) for f in ('harga_A.csv', 'harga_B.csv') if os.path.exists(os.path.join(stor, f))]
+    if not fail:
+        return pd.DataFrame(columns=lajur)
+    fr = pd.concat([pd.read_csv(f, usecols=lajur) for f in fail], ignore_index=True)
+    if terkini and os.path.exists(terkini):
+        t = pd.read_csv(terkini, usecols=lajur)
+        akhir = fr.groupby('ticker').date.max()
+        t = t[t.date > t.ticker.map(akhir).fillna(0)]
+        fr = pd.concat([fr, t], ignore_index=True)
+    fr['date'] = fr.date.astype(int)
+    return fr
+
+
+def aktif_pada(r, S):
+    """Posisi dibeli yang harganya dikemas kini pada sesi S: belum tutup kedua-dua lorong, atau beli/keluar pada S."""
+    if SH.benar(r.get('tidak_dibeli')) or not r.get('harga_beli'):
+        return False
+    ts = r.get('tutup_semua')
+    if not SH.benar(ts if ts not in (None, '') else r.get('keluar')):
+        return True
+    return S in (r.get('tarikh_beli'), r.get('tarikh_keluar'), r.get('tarikh_keluar_henti'))
+
+
+def kualiti(M, C, S, stor, terkini=None):
+    """{(akaun, saham, kaedah, tarikh_beli): [bendera…]} — kualiti data setiap baris (medan db `kualiti`; 24 Okt 2026):
+    'bar_moomoo'   posisi aktif pada S tetapi saham tiada bar S dalam yfinance data/harga/terkini.csv (harga S daripada
+                   skrin/kline Moomoo rutin; atau terkini.csv belum sesi S)
+    'bar_sintetik' bar S atau bar hari beli dalam stor yang dipakai: buka = tinggi = rendah = tutup dan volum 0/tiada
+    'beli_ne_buka' Papertrade C: harga_beli beza > 0.3% daripada buka bar hari beli dalam stor (sahkan.beza_buka)
+    'keluar_dibuka_semula' keluar lorong 1 dibatalkan semula (nota 'dibuka semula', atau 'keluar dinilai semula' oleh
+                   kod/dagangan.py dan kini terbuka)"""
+    Si = int(S.replace('-', '')) if S else 0
+    yf = set()
+    if TERKINI and os.path.exists(TERKINI):
+        tk = pd.read_csv(TERKINI, usecols=['ticker', 'date'])
+        yf = set(tk.ticker[tk.date == Si])
+    perlu = {Si} | {int(r['tarikh_beli'].replace('-', '')) for R in (M, C) for r in R if r.get('tarikh_beli')}
+    fr = bar_harga(stor, LAJ, terkini)
+    fr = fr[fr.date.isin(perlu)]
+    sint = {(t, d) for t, d, o, h, l, c, v in zip(fr.ticker, fr.date, fr.open, fr.high, fr.low, fr.close, fr.volume)
+            if o == h == l == c and not (v > 0)}
+    O, MM = SH.buka_stor(stor, {r.get('saham') for r in C})
+    out = {}
+    for ak, R in (('M', M), ('C', C)):
+        for r in R:
+            if SH.benar(r.get('tidak_dibeli')) or not r.get('harga_beli'):
+                continue
+            b = []
+            if S and aktif_pada(r, S) and r['saham'] not in yf:
+                b.append('bar_moomoo')
+            tb = int(r['tarikh_beli'].replace('-', '')) if r.get('tarikh_beli') else 0
+            if (r['saham'], tb) in sint or (aktif_pada(r, S) and (r['saham'], Si) in sint):
+                b.append('bar_sintetik')
+            if ak == 'C' and SH.beza_buka(r, O, MM):
+                b.append('beli_ne_buka')
+            n = r.get('nota') or ''
+            if 'dibuka semula' in n or ('keluar dinilai semula' in n and not SH.benar(r.get('keluar'))):
+                b.append('keluar_dibuka_semula')
+            if b:
+                out[(ak, r['saham'], r.get('kaedah'), r.get('tarikh_beli'))] = b
+    return out
+
+
+def baris_posisi(r, ak, KAL, S, kual, cache):
+    """Baris CSV posisi -> baris db ringkas_c/m dengan medan db sahaja: earn_seb*, earn_kini*, earn_lalu, kualiti,
+    sasaran_dinamik (True sahaja), jenis_tidak_sah (baris tidak_sah sahaja)."""
+    db = earn_kini(earn_sebenar(baris_db(r), r, KAL), r.get('saham'), S, KAL, cache)
+    k = kual.get((ak, r.get('saham'), r.get('kaedah'), r.get('tarikh_beli')))
+    if k:
+        db['kualiti'] = k
+    if (r.get('id_kaedah') or r.get('kaedah')) in SASARAN_DINAMIK:
+        db['sasaran_dinamik'] = True
+    if SH.benar(r.get('tidak_sah')):
+        db['jenis_tidak_sah'] = jenis_tidak_sah(r.get('sebab_tidak_sah'))
     return db
 
 
@@ -138,10 +273,10 @@ def prestasi(M, C, mae):
     return res
 
 
-def penurunan_maks(M, C, stor):
-    """prestasi/mae: (rendah terendah sejak hari beli hingga kini, atau hingga sehari sebelum keluar + harga keluar) ÷ harga beli − 1."""
-    fr = pd.concat([pd.read_csv(os.path.join(stor, f), usecols=['ticker', 'date', 'low']) for f in ('harga_A.csv', 'harga_B.csv')
-                    if os.path.exists(os.path.join(stor, f))])
+def penurunan_maks(M, C, stor, terkini=None):
+    """prestasi/mae: (rendah terendah sejak hari beli hingga kini, atau hingga sehari sebelum keluar + harga keluar) ÷ harga beli − 1.
+    terkini: bar data/harga/terkini.csv selepas stor (stor repo)."""
+    fr = bar_harga(stor, ('ticker', 'date', 'low'), terkini)
     L = {t: g.set_index('date')['low'] for t, g in fr.groupby('ticker')}
     out = {}
     for ak, R in (('M', M), ('C', C)):
@@ -249,14 +384,13 @@ def ringkas_pt(R, nama, meta, had=HAD_RINGKAS):
 SESI_GARIS = 60
 
 
-def garis_harga(M, C, stor):
+def garis_harga(M, C, stor, terkini=None):
     """prestasi/garis + prestasi/mfe (pratonton dashboard v3).
     garis: tarikh (<= 60 sesi terakhir stor), tutup setiap saham yang masih ada posisi terbuka atau keluar dalam sesi
     terakhir (carta kecil, harga sesi sebelum)
     dan spy [[tarikh, buka, tutup]] sejak belian terawal (banding pasaran). mfe: [[kunci, kenaikan maks %], …] =
     (tinggi tertinggi sejak hari beli hingga kini, atau hingga sehari sebelum keluar lorong kaedah + harga keluar) ÷ harga beli − 1, minimum 0."""
-    fr = pd.concat([pd.read_csv(os.path.join(stor, f), usecols=['ticker', 'date', 'high', 'close']) for f in ('harga_A.csv', 'harga_B.csv')
-                    if os.path.exists(os.path.join(stor, f))])
+    fr = bar_harga(stor, ('ticker', 'date', 'high', 'close'), terkini)
     G = {t: g.set_index('date') for t, g in fr.groupby('ticker')}
     hari = sorted(int(d) for d in fr.date.unique())[-SESI_GARIS:]
     mfe, terbuka, mula, mula_t = {}, set(), None, None
@@ -299,6 +433,118 @@ def garis_harga(M, C, stor):
         I = I[(I.ticker == 'SPY') & (I.date >= mula)].sort_values('date')
         spy = [[int(d), round(float(o), 2), round(float(c), 2)] for d, o, c in zip(I.date, I.open, I.close)]
     return dict(tarikh=hari, spy=spy, rows=rows), [[k, v] for k, v in sorted(mfe.items())]
+
+
+def maefe_l2(M, C, stor, terkini=None):
+    """prestasi/maefe_l2 (24 Okt 2026): MAE dan MFE % sepanjang tempoh LORONG 2 (pegang selagi naik) = rendah terendah / tinggi
+    tertinggi sejak hari beli hingga sehari sebelum keluar lorong 2 + harga keluar lorong 2 (atau hingga bar terakhir jika
+    lorong 2 masih dipegang) ÷ harga beli − 1; MAE maksimum 0, MFE minimum 0. Pulang [[kunci, mae, mfe]] (kunci sama dengan
+    prestasi/mae). prestasi/mae dan prestasi/mfe berhenti pada keluar lorong 1."""
+    fr = bar_harga(stor, ('ticker', 'date', 'high', 'low'), terkini)
+    G = {t: g.sort_values('date').set_index('date') for t, g in fr.groupby('ticker')}
+    out = {}
+    for ak, R in (('M', M), ('C', C)):
+        for r in R:
+            hbv = SH.nombor(r.get('harga_beli'))
+            if not hbv or SH.benar(r.get('tidak_dibeli')) or not r.get('tarikh_beli'):
+                continue
+            g = G.get(r['saham'])
+            if g is None:
+                continue
+            b = int(r['tarikh_beli'].replace('-', ''))
+            if SH.benar(r.get('keluar_henti')) and r.get('tarikh_keluar_henti'):
+                e = int(r['tarikh_keluar_henti'].replace('-', '')); w = g[(g.index >= b) & (g.index < e)]
+                lo, hi = w.low.tolist(), w.high.tolist()
+                hk = SH.nombor(r.get('harga_keluar_henti'))
+                if hk is not None:
+                    lo.append(hk); hi.append(hk)
+            else:
+                w = g[g.index >= b]; lo, hi = w.low.tolist(), w.high.tolist()
+            if not lo:
+                continue
+            k = f"{ak}|{r['saham']}|{r['kaedah']}|{r['tarikh_beli']}"
+            a = round(min(0.0, (min(lo) / hbv - 1) * 100), 2); f = round(max(0.0, (max(hi) / hbv - 1) * 100), 2)
+            if k in out:
+                a, f = min(a, out[k][0]), max(f, out[k][1])
+            out[k] = (a, f)
+    return [[k, a, f] for k, (a, f) in sorted(out.items())]
+
+
+# ---------------------------------------------------------------- langkauan belian 9:35 NY (papertrade/langkau)
+_R_KEPALA_RUTIN = re.compile(r'^## (\d{4}-\d{2}-\d{2}) \([^)]*NY\) — Beli maya')
+_R_KEPALA_ACT = re.compile(r'— GitHub Actions: beli maya (\d{4}-\d{2}-\d{2})')
+_R_SAHAM_KAEDAH = re.compile(r'([A-Z][A-Z0-9.\-]*) (M\d+)')
+
+
+def hurai_langkau_rutin(teks):
+    """'buka > buka_maks — FRPT M08, ROL M08; buka ≤ henti — COR M14, GGG M35, M117 & M149' (log rutin 9:35 NY) ->
+    ([(saham, kaedah, sebab)], [token tidak dihurai]). Kaedah tanpa saham = saham token sebelumnya."""
+    teks = teks.split('. ')[0].rstrip('.').strip()
+    out, tak = [], []
+    for kat in teks.split('; '):
+        if ' — ' not in kat:
+            tak.append(kat); continue
+        sebab, senarai = kat.split(' — ', 1)
+        t = None
+        for tok in re.split(r', | & ', senarai):
+            tok = tok.strip()
+            m = _R_SAHAM_KAEDAH.fullmatch(tok)
+            if m:
+                t, mid = m.groups()
+            elif re.fullmatch(r'M\d+', tok) and t:
+                mid = tok
+            else:
+                tak.append(tok); continue
+            out.append((t, mid, sebab.strip()))
+    return out, tak
+
+
+def hurai_langkau_actions(teks):
+    """'FRPT M08: buka 67.01 > buka_maks 66.15; SSNC M23: …' (status_harian.json beli.langkau / LOG Actions) -> [(saham, kaedah, sebab)]."""
+    out = []
+    for x in (teks if isinstance(teks, list) else teks.rstrip('.').split('; ')):
+        m = re.fullmatch(r'([A-Z][A-Z0-9.\-]*) (M\d+): (.+)', x.strip())
+        if m:
+            out.append(m.groups())
+    return out
+
+
+def langkau_beli(folder, st, log=None, mula=LANGKAU_MULA):
+    """papertrade/langkau (24 Okt 2026): isyarat senarai beli yang DILANGKAU semasa belian 9:35 NY (buka > buka_maks, buka <=
+    henti, belum didagangkan, isyarat batal) — tidak pernah direkod sebagai baris CSV. Sumber: log belian (rutin Claude
+    `binaan_v2_log_tambahan.md` "Dilangkau N: …"; folder bayang: `bayang/LOG.md` "Dilangkau: X M: sebab; …") sejak `mula`, dan
+    status_harian.json beli.langkau (senarai penuh; menggantikan log bagi tarikh itu). Pulang dict(rows, liputan)."""
+    if log is None:
+        d = os.path.dirname(os.path.abspath(folder))
+        log = os.path.join(d, 'LOG.md') if os.path.basename(d) == 'bayang' else LOG_RUTIN
+    rows, liputan, tarikh = [], {}, None
+    teks = open(log, encoding='utf-8').read().splitlines() if os.path.exists(log) else []
+    for baris in teks:
+        if baris.startswith('## '):
+            m = _R_KEPALA_RUTIN.match(baris) or _R_KEPALA_ACT.search(baris)
+            tarikh = m.group(1) if m else None
+            continue
+        if not tarikh or tarikh < mula or not baris.startswith('- Dilangkau'):
+            continue
+        m = re.match(r'- Dilangkau (\d+): (.*)', baris)
+        if m:
+            x, tak = hurai_langkau_rutin(m.group(2)); n = int(m.group(1))
+        else:
+            m = re.match(r'- Dilangkau: (.*)', baris)
+            if not m:
+                continue
+            x, tak, n = hurai_langkau_actions(m.group(1)), [], None
+        rows += [dict(tarikh=tarikh, saham=t, kaedah=k, sebab=s, sumber=os.path.basename(log)) for t, k, s in x]
+        liputan[tarikh] = dict(bil_log=n, bil=len(x), **({'tidak_dihurai': tak} if tak else {}))
+    b = (st or {}).get('beli') or {}
+    if b.get('tarikh') and b['tarikh'] >= mula and b.get('langkau') is not None:
+        rows = [r for r in rows if r['tarikh'] != b['tarikh']]
+        x = hurai_langkau_actions(b['langkau'])
+        rows += [dict(tarikh=b['tarikh'], saham=t, kaedah=k, sebab=s, sumber='status_harian.json') for t, k, s in x]
+        liputan[b['tarikh']] = dict(bil_log=b.get('dilangkau'), bil=len(x))
+    rows.sort(key=lambda r: (r['tarikh'], r['kaedah'], r['saham']))
+    return dict(rows=rows, liputan=dict(sorted(liputan.items())), mula=mula,
+                sumber=[os.path.relpath(log, BS2)] + (['status_harian.json'] if b.get('langkau') is not None else []))
 
 
 TERKINI = os.path.join(BS2, 'data', 'harga', 'terkini.csv')
@@ -437,20 +683,110 @@ def sesi_stor(path=STATUS_HARGA):
     return f'{s[:4]}-{s[4:6]}-{s[6:8]}' if len(s) == 8 and s.isdigit() else ''
 
 
+# ---------------------------------------------------------------- label jujur dan saluran (24 Okt 2026)
+def baca_mod(path=MOD_ACTIONS):
+    """Isi BacktestShariah2/MOD_ACTIONS ('bayang' | 'rasmi'), '' jika tiada."""
+    try:
+        return open(path, encoding='utf-8').read().strip()
+    except OSError:
+        return ''
+
+
+def penulis_data(folder, st, mod):
+    """Penulis fail posisi dalam `folder` (label jujur; audit 24 Okt 2026): GitHub Actions jika status_harian.json ada
+    (harian_c.py), rutin Claude 6:02 jika folder rasmi dalam mod bayang, selainnya tidak diketahui."""
+    if st:
+        return 'GitHub Actions (standard/harian_c.py)'
+    if mod == 'bayang' and os.path.abspath(folder) == os.path.abspath(PT):
+        return 'rutin Claude 6:02 MYT (jadual/kemas_kini_0602.md)'
+    return 'penulis tidak diketahui'
+
+
+def sumber_harga(sumber, penulis, stor, path=STATUS_HARGA):
+    """harian/status.sumber_harga: --sumber jika diberi; selainnya hanya fakta yang jana_db boleh tahu (tiada andaian)."""
+    if sumber:
+        return sumber
+    try:
+        tk = json.load(open(path, encoding='utf-8')).get('terkini', {})
+    except (OSError, ValueError, AttributeError):
+        tk = {}
+    yf = (f"data/harga/terkini.csv yfinance sesi {tk.get('sesi')} (dijana {tk.get('dijana')}; "
+          f"{tk.get('bil_tiada_bar_sesi', len(tk.get('tiada_bar_sesi') or []))} saham tanpa bar sesi itu)") if tk else 'terkini.csv tiada'
+    ss = 'stor repo + terkini.csv' if os.path.abspath(stor) == os.path.abspath(STOR) else f'stor kerja {stor}'
+    return f'{penulis}; jana_db: {ss}; {yf}; sumber bar posisi tidak dinyatakan (--sumber kosong)'
+
+
+def hingga_bar(stor, terkini=None):
+    """Sesi bar terakhir data harga yang dipakai (YYYY-MM-DD): tarikh terakhir yang ada bar bagi >= 50% bilangan maksimum
+    saham (sesi separa diabaikan); '' jika tiada."""
+    fr = bar_harga(stor, ('ticker', 'date'), terkini)
+    if not len(fr):
+        return ''
+    n = fr.date.value_counts()
+    d = str(max(x for x, k in n.items() if k >= 0.5 * n.max()))
+    return f'{d[:4]}-{d[4:6]}-{d[6:]}'
+
+
+def tarikh_sst(path):
+    """Tarikh snapshot SST terakhir dalam papertrade/sektor.csv ('' jika tiada; SST tidak tersedia sejak 20 Okt 2026)."""
+    try:
+        return max((r.get('tarikh') or '' for r in csv.DictReader(open(path, newline='', encoding='utf-8'))), default='')
+    except OSError:
+        return ''
+
+
+def sesi_lejar(path=LEJAR_STATUS):
+    try:
+        return json.load(open(path, encoding='utf-8')).get('sesi_terakhir', '')
+    except (OSError, ValueError, AttributeError):
+        return ''
+
+
+def saring_saiz(semua, ralat, had=None):
+    """[(koleksi, [(doc_id, dokumen)])] -> [(koleksi, doc_id, dokumen, bait)] yang boleh ditulis. Dokumen >= had db DILANGKAU
+    dan dicatat dalam `ralat` (24 Okt 2026; dahulu SystemExit menghentikan SEMUA tolakan, cth. prestasi/mae dijangka melepasi
+    had ~30 Okt); >= AMARAN_HAD x had -> amaran dalam `ralat`."""
+    had = had or HAD_DB
+    out = []
+    for kol, bahagian in semua:
+        for doc_id, dd in bahagian:
+            sz = bait(dd)
+            if sz >= had:
+                ralat.append(f'{kol}/{doc_id}: {sz} bait melebihi had db {had}; dokumen dilangkau (versi lama kekal dalam db)')
+                print(f'RALAT: {ralat[-1]}', file=sys.stderr)
+                continue
+            if sz >= AMARAN_HAD * had:
+                ralat.append(f'amaran: {kol}/{doc_id} {sz} bait = {sz / had:.0%} had db (bahagikan sebelum melebihi)')
+            out.append((kol, doc_id, dd, sz))
+    return out
+
+
 # ---------------------------------------------------------------- utama
+BAHAGI = ('senarai_beli', 'watchlist', 'garis', 'mfe', 'mae', 'mae_atr', 'maefe_l2', 'harian_kaedah', 'trend', 'lorong2', 'langkau')
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('--keluar', required=True); ap.add_argument('--folder', default=PT); ap.add_argument('--stor', default=STOR)
     ap.add_argument('--versi', help='JSON {"koleksi/doc": versi} bagi if_version'); ap.add_argument('--masa')
+    ap.add_argument('--sumber', help='sumber harga sebenar larian ini (label jujur harga_pada / harian/status.sumber_harga), '
+                                     'cth. "rutin Claude 6:02: yfinance 22:04 UTC + skrin Moomoo 31 saham"')
     a = ap.parse_args(argv)
     masa = (pd.Timestamp(a.masa).tz_localize('Asia/Kuala_Lumpur') if a.masa else pd.Timestamp.now(tz='Asia/Kuala_Lumpur'))
     dibina = masa.strftime('%Y-%m-%d %H:%M') + ' MYT'
     st = json.load(open(os.path.join(a.folder, 'status_harian.json'), encoding='utf-8')) if os.path.exists(os.path.join(a.folder, 'status_harian.json')) else {}
     malam = st.get('malam', {}); beli = st.get('beli', {}); S = malam.get('sesi', '') or sesi_stor()
-    harga_pada = f"{S} tutup (bar harian yfinance muktamad; GitHub Actions)" if S else ''
-    nota_pos = (f"Dikemas kini oleh GitHub Actions (standard/harian_c.py) {malam.get('masa', '')}: harga tutup {S}; keluar dinilai dengan "
+    mod = baca_mod(); penulis = penulis_data(a.folder, st, mod)
+    sumber = sumber_harga(a.sumber, penulis, a.stor)
+    # label jujur (audit 24 Okt 2026): dahulu "bar harian yfinance muktamad; GitHub Actions" tanpa mengira penulis sebenar
+    harga_pada = f"{S} tutup ({a.sumber or penulis + '; sumber bar tidak dinyatakan'})" if S else ''
+    nota_pos = (f"Dikemas kini oleh {penulis} {malam.get('masa', '')}: harga tutup {S}; keluar dinilai dengan "
                 'enjin rasmi; harga beli sementara dibetulkan kepada buka rasmi bar harian; baris keluar dibekukan; "menunggu" = '
                 'isyarat keluar pada tutup terakhir, harga keluar = buka sesi seterusnya.')
+    ralat = list((malam.get('ralat_kaedah') or [])[:20])
+    tk = TERKINI if a.stor == STOR else None   # stor repo boleh ketinggalan satu sesi: tambah bar terkini.csv
+    hingga = hingga_bar(a.stor, tk)
+    hingga_teks = f'{hingga} tutup' if hingga else f'{S} tutup'
     docs = {}
     M = baca_csv(os.path.join(a.folder, 'moomoo.csv'))
     docs['papertrade/moomoo'] = dict(akaun='4135388', dibina=dibina, harga_pada=harga_pada, nota=nota_pos, rows=[baris_db(r) for r in M])
@@ -498,57 +834,82 @@ def main(argv=None):
     # senarai beli: tidak ditolak ke db sejak 19 Okt 2026 (halaman tidak membacanya); kiraan untuk harian/status sahaja
     sb = baca_csv(os.path.join(a.folder, 'senarai_beli.csv'))
     lihat = {r['saham'] for r in sb}
-    # watchlist (dibahagi bawah had saiz)
+    # watchlist (dibahagi bawah had saiz). 24 Okt 2026: % hampir dihadkan 99.9 kecuali isyarat lengkap, `disentuh` (jarak 0
+    # tetapi isyarat belum lengkap; harian_c.normal_watch), tarikh_data setiap baris, earn_kini/earn_lalu
     import kalendar_earnings as KE
-    KAL = KE.muat()   # tarikh earnings sebenar (earn_sebenar) bagi ringkas_c/m dan watchlist
+    from harian_c import normal_watch
+    KAL = KE.muat()   # tarikh earnings sebenar (earn_sebenar, earn_kini) bagi ringkas_c/m dan watchlist
+    cache_e = {}
     wl = baca_csv(os.path.join(a.folder, 'watchlist.csv'))
+    wl_db = []
+    for r in wl:
+        x = dict(r); normal_watch(x)
+        wl_db.append(earn_kini(earn_sebenar(baris_db(x, PETA_WATCH), r, KAL), r.get('Saham'), S, KAL, cache_e))
     docs['papertrade/watchlist'] = dict(
         definisi='Hampir Signal: semua syarat entry selain pencetus dipenuhi; pencetus dalam <=2% (pct_dipenuhi = 100 - jarak_pct, '
-                 'maks 99.9). Maks 5 setiap kaedah. Terkeluar signal dibuang serta-merta (tugasan_v3 §3).',
+                 'maks 99.9; 100 = isyarat lengkap sahaja, syarat_belum "Tiada (isyarat sah)"; disentuh = jarak 0 tetapi isyarat '
+                 'belum lengkap). Maks 5 setiap kaedah. Terkeluar signal dibuang serta-merta (tugasan_v3 §3). tarikh_data setiap '
+                 'baris = sesi data harga baris itu; gred_pada baris = tarikh data gred (snapshot kumpulan/RS).',
         dibina=malam.get('masa', dibina), gred_pada=st.get('gred', {}).get('tarikh', ''), pemangkin_pada=st.get('gred', {}).get('tarikh', ''),
-        tarikh_data=wl[0]['tarikh_data'] if wl else S, rows=[earn_sebenar(baris_db(r, PETA_WATCH), r, KAL) for r in wl])
+        tarikh_data=wl[0]['tarikh_data'] if wl else S, rows=wl_db)
     # prestasi
-    mae = penurunan_maks(M, C, a.stor)
-    docs['prestasi/mae'] = dict(rows=mae, dibina=dibina, harga_hingga=f'{S} tutup',
-                                definisi='Penurunan maksimum % = (harga rendah terendah sejak hari beli hingga hari ini, atau sehingga keluar) ÷ harga beli − 1, maksimum 0. Bagi posisi keluar: rendah hari sebelum hari keluar dan harga keluar. Kunci: akaun|saham|kaedah|tarikh_beli (akaun M=Moomoo, C=Claude). ATR isyarat: prestasi/mae_atr.')
+    mae = penurunan_maks(M, C, a.stor, tk)
+    docs['prestasi/mae'] = dict(rows=[[k, v] for k, v in sorted(mae.items())], dibina=dibina, harga_hingga=hingga_teks,
+                                definisi='Penurunan maksimum % = (harga rendah terendah sejak hari beli hingga hari ini, atau sehingga keluar) ÷ harga beli − 1, maksimum 0. Bagi posisi keluar: rendah hari sebelum hari keluar dan harga keluar. Kunci: akaun|saham|kaedah|tarikh_beli (akaun M=Moomoo, C=Claude). rows: [[kunci, %]] (dibahagi sejak 24 Okt 2026). ATR isyarat: prestasi/mae_atr; tempoh lorong 2: prestasi/maefe_l2.')
     # 23 Okt 2026: atr dipindah ke dokumen sendiri (dibahagi) kerana mae + atr melebihi had satu dokumen
     docs['prestasi/mae_atr'] = dict(rows=sorted([k, v] for k, v in atr_isyarat(M, C, a.stor).items()), dibina=dibina,
-                                    harga_hingga=f'{S} tutup', definisi='ATR14 % pada hari isyarat (bar terakhir sebelum hari beli). '
+                                    harga_hingga=hingga_teks, definisi='ATR14 % pada hari isyarat (bar terakhir sebelum hari beli). '
                                     'rows: [akaun|saham|kaedah|tarikh_beli, %].')
+    docs['prestasi/maefe_l2'] = dict(rows=maefe_l2(M, C, a.stor, tk), dibina=dibina, harga_hingga=hingga_teks,
+                                     definisi='MAE/MFE % tempoh LORONG 2 (pegang selagi naik): rendah terendah / tinggi tertinggi sejak hari '
+                                              'beli hingga sehari sebelum keluar lorong 2 dan harga keluar lorong 2 (atau hingga bar terakhir jika '
+                                              'masih dipegang) ÷ harga beli − 1; MAE maks 0, MFE min 0. rows: [[akaun|saham|kaedah|tarikh_beli, '
+                                              'mae, mfe]]. prestasi/mae dan prestasi/mfe berhenti pada keluar lorong 1.')
     docs['prestasi/ringkasan'] = dict(prestasi(M, C, mae), dibina=dibina, harga_pada=f'{S} tutup',
                                       nota='Dikira oleh standard/jana_db.py (GitHub Actions + sesi tolak db) dengan peraturan skor & keputusan P4 (sama seperti halaman).')
-    # papertrade/ringkas_c, ringkas_m: semua baris dalam bentuk padat (halaman v90 membaca ini sahaja, bukan claude*)
+    # papertrade/langkau: langkauan belian 9:35 NY (tidak pernah direkod sebagai baris CSV)
+    lk = langkau_beli(a.folder, st)
+    docs['papertrade/langkau'] = dict(lk, dibina=dibina,
+                                      definisi='Isyarat senarai beli yang DILANGKAU semasa belian 9:35 NY (buka > buka_maks, buka <= henti, '
+                                               'belum didagangkan, isyarat batal pada buka). rows: {tarikh beli, saham, kaedah, sebab, sumber}. '
+                                               'liputan: setiap tarikh, bil_log = bilangan dinyatakan dalam log, bil = baris dihurai. Belum '
+                                               'diliputi: sebelum 14 Okt 2026 (mod Moomoo); log Actions dipotong 30 entri (status_harian.json '
+                                               'lengkap bagi belian terakhir). Sejak 22 Okt 2026 saham belum didagangkan direkod dengan buka '
+                                               'sementara (tidak dilangkau). Baris CSV tidak_dibeli (sedia() sig=False, mingguan) ialah rekod lain.')
+    # papertrade/ringkas_c, ringkas_m: semua baris dalam bentuk padat (halaman v90 membaca ini sahaja, bukan claude*);
+    # medan db sahaja (24 Okt 2026): kualiti, sasaran_dinamik, jenis_tidak_sah, earn_kini/earn_kini_h/earn_lalu
+    kual = kualiti(M, C, S, a.stor, tk)
     pra = {}
     dc = docs.get('papertrade/claude', {})
-    for kod, R, meta in (('c', [earn_sebenar(baris_db(r), r, KAL) for r in C], {k: dc[k] for k in ('dibina', 'harga_pada', 'nota', 'slot', 'batal') if k in dc}),
-                         ('m', [earn_sebenar(baris_db(r), r, KAL) for r in M], {k: v for k, v in docs['papertrade/moomoo'].items() if k not in ('rows', 'medan_digugurkan')})):
+    for kod, R, meta in (('c', [baris_posisi(r, 'C', KAL, S, kual, cache_e) for r in C], {k: dc[k] for k in ('dibina', 'harga_pada', 'nota', 'slot', 'batal') if k in dc}),
+                         ('m', [baris_posisi(r, 'M', KAL, S, kual, cache_e) for r in M], {k: v for k, v in docs['papertrade/moomoo'].items() if k not in ('rows', 'medan_digugurkan')})):
         for doc_id, d in ringkas_pt(R, f'ringkas_{kod}', meta):
             pra[f'papertrade/{doc_id}'] = d
-    garis, mfe = garis_harga(M, C, a.stor)
-    docs['prestasi/garis'] = dict(garis, dibina=dibina, harga_hingga=f'{S} tutup',
+    garis, mfe = garis_harga(M, C, a.stor, tk)
+    docs['prestasi/garis'] = dict(garis, dibina=dibina, harga_hingga=hingga_teks,
                                   definisi='rows: {s: saham, c: tutup sejajar dengan tarikh (null = tiada bar)} bagi saham yang masih ada '
                                            'posisi terbuka; spy: [tarikh, buka, tutup] sejak belian terawal.')
-    docs['prestasi/mfe'] = dict(rows=mfe, dibina=dibina, harga_hingga=f'{S} tutup',
+    docs['prestasi/mfe'] = dict(rows=mfe, dibina=dibina, harga_hingga=hingga_teks,
                                 definisi='Kenaikan maksimum % (MFE) = (harga tinggi tertinggi sejak hari beli hingga hari ini, atau sehingga '
                                          'sehari sebelum keluar lorong kaedah, dan harga keluar) ÷ harga beli − 1, minimum 0. '
                                          'rows: [akaun|saham|kaedah|tarikh_beli, %].')
-    docs['prestasi/harian_kaedah'] = dict(harian_kaedah(M, C, a.stor, TERKINI if a.stor == STOR else None), dibina=dibina, harga_hingga=f'{S} tutup',
+    docs['prestasi/harian_kaedah'] = dict(harian_kaedah(M, C, a.stor, tk), dibina=dibina, harga_hingga=f'{S} tutup',
                                           definisi='rows: {a: akaun M|C|G, k: kaedah, np: jumlah posisi, j: untung purata %, d: untung '
                                                    'harian % sejajar tarikh (null = tiada posisi), n: posisi dipegang, ev: [[indeks hari, beli, keluar untung, '
                                                    'keluar rugi]]}; k Semua = semua kaedah; spy: untung harian % SPY. Untung harian = '
                                                    'Σ perubahan nilai ÷ Σ nilai awal hari (posisi USD sama; keluar ikut lorong kaedah).')
     # harian/trend (pill Trend D10+H2, ATR14% + kuintil, rejim SPY) dan posisi/lorong2 (candlestick + paras lorong 2 setiap
-    # saham|tarikh_beli); kegagalan di sini tidak menghalang dokumen lain
+    # saham|tarikh_beli); kegagalan di sini tidak menghalang dokumen lain tetapi dicatat dalam harian/status.ralat
     try:
         import trend_status as TS, lorong2_siri as L2
-        tk = TERKINI if a.stor == STOR else None
         H, nota_h = TS.muat_harga(a.stor, tk)
         I, _ = TS.muat_harga(a.stor, tk, fail=('harga_idx.csv',))
         lama = json.load(open(TS.FAIL, encoding='utf-8')) if a.stor == STOR and os.path.exists(TS.FAIL) else None
         docs['harian/trend'] = dict(TS.bawa_semalam(TS.dokumen(H, TS.alam(a.folder, H), nota_h, I), lama), dibina=dibina)
-        docs['posisi/lorong2'] = dict(L2.dokumen(H, a.folder), dibina=dibina, harga_hingga=f'{S} tutup')
+        docs['posisi/lorong2'] = dict(L2.dokumen(H, a.folder), dibina=dibina, harga_hingga=hingga_teks)
     except Exception as e:  # noqa: BLE001
         print(f'amaran: harian/trend / posisi/lorong2 gagal: {e!r}', file=sys.stderr)
+        ralat.append(f'harian/trend / posisi/lorong2 tidak dijana: {e!r}'[:300])
     ps = portfolio_slot(dibina)
     if ps:
         docs['prestasi/portfolio_slot'] = ps
@@ -560,36 +921,59 @@ def main(argv=None):
     snap = os.path.join(BS2, 'data', 'db', 'sektor_snapshot.json')
     if os.path.exists(snap):
         docs['sektor/snapshot'] = json.load(open(snap, encoding='utf-8'))
+    # saiz: dokumen >= had db dilangkau dan dicatat (24 Okt 2026; dahulu SystemExit menghentikan SEMUA tolakan); >= 80% = amaran
+    os.makedirs(a.keluar, exist_ok=True)
+    versi = json.load(open(a.versi)) if a.versi else {}
+    semua = []
+    for nama, d in docs.items():
+        kol, doc = nama.split('/')
+        if doc in BAHAGI:
+            try:
+                semua.append((kol, bahagi(d, doc, HAD_BAHAGI)))
+            except SystemExit as e:
+                ralat.append(f'{nama}: tidak dapat dibahagi ({e}); dokumen dilangkau (versi lama kekal dalam db)')
+        else:
+            semua.append((kol, [(doc, d)]))
+    semua += [(nama.split('/')[0], [(nama.split('/')[1], d)]) for nama, d in pra.items()]   # sudah dibahagi (ringkas_pt)
+    sedia = saring_saiz(semua, ralat)
     # harian/status: kesegaran data (halaman: kemaskini_pagi, harga_tutup_pada, tarikh_data_pagi; header "Kemas kini terakhir")
+    # + lampu sistem (24 Okt 2026): ralat, mod, sumber_harga, saluran, beli_langkau
     rk = malam
-    docs['harian/status'] = dict(
-        dikemaskini=dibina, sumber='GitHub Actions (standard/harian_c.py) + sesi Claude tolak db', harga_tutup_pada=S, tarikh_data_pagi=S,
+    dt = lambda n: (docs.get(n) or {})
+    rc = pra.get('papertrade/ringkas_c', {})
+    tl = sorted(lk['liputan'])
+    if beli.get('tarikh'):
+        beli_langkau = int(beli.get('dilangkau') or 0)
+    else:
+        beli_langkau = sum(1 for r in lk['rows'] if tl and r['tarikh'] == tl[-1])
+    saluran = dict(ringkas_c=rc.get('dibina', ''), trend=dt('harian/trend').get('tarikh', ''), lorong2=dt('posisi/lorong2').get('harga_hingga', ''),
+                   garis=dt('prestasi/garis').get('harga_hingga', ''), mfe=dt('prestasi/mfe').get('harga_hingga', ''),
+                   sektor=dt('sektor/snapshot').get('dibina', ''),
+                   sst=tarikh_sst(os.path.join(a.folder, 'sektor.csv') if os.path.exists(os.path.join(a.folder, 'sektor.csv')) else os.path.join(PT, 'sektor.csv')),
+                   lejar=sesi_lejar(), analisis=dt('analisis/papan').get('harga_pada', ''),
+                   slot=dt('prestasi/portfolio_slot').get('sesi_terakhir', ''), watchlist=dt('papertrade/watchlist').get('tarikh_data', ''),
+                   langkau=tl[-1] if tl else '')
+    status = dict(
+        dikemaskini=dibina, sumber=f'{penulis} + standard/jana_db.py', harga_tutup_pada=S, tarikh_data_pagi=S,
         kemaskini_pagi=rk.get('masa', ''), tarikh_data=S, scan_malam=rk.get('masa', ''),
         kemaskini_pagi_ringkas=dict(C_keluar_baru=(rk.get('keluar_baru_jumlah') or {}).get('C', 0),
                                     M_keluar_baru=(rk.get('keluar_baru_jumlah') or {}).get('M', 0), menunggu_buka=rk.get('menunggu', 0),
                                     tidak_dibeli_baru=len(rk.get('tidak_dibeli') or []), watchlist_dibuang=rk.get('watchlist_dibuang', 0)),
         senarai_beli=dict(claude=len(sb), jumlah=len(sb), moomoo=0, saham_unik=len(lihat), watchlist=len(wl)),
         beli_dirancang=len(sb), beli_pada=beli.get('masa', ''), beli_ringkas=dict(direkod=beli.get('direkod', 0), dilangkau=beli.get('dilangkau', 0)),
-        gred_pada=st.get('gred', {}).get('masa', ''), ralat=(rk.get('ralat_kaedah') or [])[:20])
-    # tulis + bahagi + batch
-    os.makedirs(a.keluar, exist_ok=True)
-    versi = json.load(open(a.versi)) if a.versi else {}
+        gred_pada=st.get('gred', {}).get('masa', ''), ralat=ralat, mod=mod, sumber_harga=sumber, saluran=saluran, beli_langkau=beli_langkau)
+    docs['harian/status'] = status
+    sedia.append(('harian', 'status', status, bait(status)))
+    # tulis + batch
     tulis = []
-    semua = [(nama.split('/')[0], bahagi(d, nama.split('/')[1], 200000) if nama.split('/')[1] in ('senarai_beli', 'watchlist', 'garis', 'mfe', 'mae_atr', 'harian_kaedah', 'trend', 'lorong2')
-              else [(nama.split('/')[1], d)]) for nama, d in docs.items()]
-    semua += [(nama.split('/')[0], [(nama.split('/')[1], d)]) for nama, d in pra.items()]   # sudah dibahagi (ringkas_pt)
-    for kol, bahagian in semua:
-        for doc_id, dd in bahagian:
-            sz = bait(dd)
-            if sz >= HAD_DB:
-                raise SystemExit(f'{kol}/{doc_id}: {sz} bait melebihi had db {HAD_DB} (jalankan pecah_claude.py --pecah)')
-            p = os.path.join(a.keluar, kol, doc_id + '.json'); os.makedirs(os.path.dirname(p), exist_ok=True)
-            open(p, 'w', encoding='utf-8').write(padat(dd))
-            w = dict(op='set', collection=kol, doc_id=doc_id, file_path=os.path.abspath(p))
-            v = versi.get(f'{kol}/{doc_id}')
-            if v:
-                w['if_version'] = int(v)
-            tulis.append((w, sz))
+    for kol, doc_id, dd, sz in sedia:
+        p = os.path.join(a.keluar, kol, doc_id + '.json'); os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, 'w', encoding='utf-8').write(padat(dd))
+        w = dict(op='set', collection=kol, doc_id=doc_id, file_path=os.path.abspath(p))
+        v = versi.get(f'{kol}/{doc_id}')
+        if v:
+            w['if_version'] = int(v)
+        tulis.append((w, sz))
     batches, cur, size = [], [], 0
     for w, sz in tulis:
         if cur and (size + sz > HAD_BATCH or len(cur) >= 50):
@@ -601,7 +985,7 @@ def main(argv=None):
     for i, bt in enumerate(batches):
         p = os.path.join(a.keluar, f'batch_{i}.json'); json.dump(bt, open(p, 'w'), indent=1); fail.append(p)
     ring = dict(dibina=dibina, sesi=S, dokumen=len(tulis), batch=fail, tanpa_versi=[f"{w['collection']}/{w['doc_id']}" for w, _ in tulis if 'if_version' not in w],
-                pengawas=pengawas(st, masa))
+                pengawas=pengawas(st, masa), ralat=ralat)
     json.dump(ring, open(os.path.join(a.keluar, 'ringkas.json'), 'w'), ensure_ascii=False, indent=1)
     print(json.dumps(ring, ensure_ascii=False, indent=1))
 

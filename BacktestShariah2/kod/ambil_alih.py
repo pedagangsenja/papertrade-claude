@@ -18,6 +18,12 @@
 #   python3 kod/ambil_alih.py posisi [--folder PT] [--stor DIR] [--tulis]
 #       Posisi Papertrade C yang dibeli pada/selepas tarikh pengumuman = isyarat palsu: tidak_sah dan kedua-dua lorong
 #       ditutup pada tutup bar terakhir (tanda_posisi). Dijalankan setiap malam selepas kemas kini posisi. Tanpa --tulis = cuba.
+#   python3 kod/ambil_alih.py tambah --saham T --umum YYYY-MM-DD [--tamat YYYY-MM-DD] --pembeli X [--harga H]
+#       --bayaran tunai|saham|campuran|bukan --sumber URL      # tambah satu rekod sah ke data/ambil_alih.csv (24 Okt 2026)
+#   python3 kod/ambil_alih.py calon [--folder PT] [--stor DIR]
+#       Imbasan harga terkunci bagi posisi C terbuka (median julat 10 bar <= 0.6% dan ATR14 < 0.5%): calon untuk disemak
+#       dengan sumber (8-K / berita) sebelum ditambah. Tidak menulis apa-apa (24 Okt 2026; ACA terlepas kerana jurang
+#       pengumuman +6.7% < JURANG_MIN).
 import argparse, csv, json, os, sys
 
 import numpy as np
@@ -199,6 +205,71 @@ def tanda_posisi(folder, frames, tulis=True, senarai=None):
     return ubah_semua
 
 
+def tambah_rekod(saham, umum, pembeli, bayaran, sumber, tamat='', harga='', path=SENARAI):
+    """Tambah satu rekod sah ke senarai (bukti: 8-K / siaran akhbar dalam `sumber`). Rekod sama (saham + tarikh_umum)
+    tidak ditambah dua kali. Pulang True jika ditulis."""
+    if (bayaran or '').strip().lower() not in ('tunai', 'saham', 'campuran', 'bukan', 'edgar'):
+        raise SystemExit(f'bayaran tidak sah: {bayaran!r}')
+    for t in (umum, tamat):
+        if t and not (len(t) == 10 and t[4] == '-' and t[7] == '-'):
+            raise SystemExit(f'tarikh bukan YYYY-MM-DD: {t!r}')
+    lama = baca_senarai(path)
+    if any(r['saham'] == saham and r.get('tarikh_umum') == umum for r in lama):
+        return False
+    baru = not os.path.exists(path)
+    with open(path, 'a', newline='', encoding='utf-8') as f:
+        w = csv.DictWriter(f, fieldnames=LAJUR, lineterminator='\n')
+        if baru:
+            w.writeheader()
+        w.writerow(dict(saham=saham, tarikh_umum=umum, tarikh_tamat=tamat or '', pembeli=pembeli, harga_tawaran=harga or '',
+                        bayaran=bayaran, sumber=sumber))
+    return True
+
+
+def calon_kunci(frames, saham, julat_maks=0.006, atr_maks=0.5, bar=BAR_KUNCI):
+    """Saham (dalam `saham`) yang harganya kelihatan terkunci pada bar terakhir: median julat (tinggi − rendah) ÷ tutup 10 bar
+    <= julat_maks dan ATR14 % <= atr_maks. Pulang [dict(saham, julat_med_pct, atr_pct, tutup_julat_pct, akhir)] (julat
+    terendah dahulu). Calon sahaja: ambil alih mesti disahkan dengan sumber sebelum ditambah ke senarai."""
+    out = []
+    for t in sorted(saham):
+        g = frames.get(t)
+        if g is None or len(g) < max(bar, 15):
+            continue
+        c, h, l = g.close.values.astype(float), g.high.values.astype(float), g.low.values.astype(float)
+        w = slice(len(g) - bar, len(g))
+        jul = float(np.median((h[w] - l[w]) / c[w]))
+        if jul <= 0:
+            continue      # julat sifar = saham tidak cair (kod/tidak_layak.py), bukan harga terkunci
+        pc = np.r_[np.nan, c[:-1]]
+        tr = np.fmax(h - l, np.fmax(np.abs(h - pc), np.abs(l - pc)))
+        atr = float(pd.Series(tr).rolling(14).mean().iloc[-1] / c[-1] * 100)
+        if jul <= julat_maks and atr <= atr_maks:
+            out.append(dict(saham=t, julat_med_pct=round(jul * 100, 3), atr_pct=round(atr, 3),
+                            tutup_julat_pct=round(float(c[w].max() / c[w].min() - 1) * 100, 2), akhir=str(g.index[-1].date())))
+    return sorted(out, key=lambda x: x['julat_med_pct'])
+
+
+def cmd_tambah(a):
+    ok = tambah_rekod(a.saham, a.umum, a.pembeli, a.bayaran, a.sumber, a.tamat or '', a.harga or '')
+    print(json.dumps(dict(ditambah=ok, saham=a.saham, versi=versi()), ensure_ascii=False))
+
+
+def cmd_calon(a):
+    import sahkan as SH
+    fr = _frames(a.stor)
+    buka = set()
+    for f in sorted(os.listdir(a.folder)):
+        if f.startswith('claude') and f.endswith('.csv'):
+            for r in SH.baca(os.path.join(a.folder, f))[1]:
+                if r.get('harga_beli') and not SH.benar(r.get('tidak_dibeli')) and not SH.benar(r.get('tidak_sah')) and \
+                        not SH.benar(r.get('tutup_semua')):
+                    buka.add(r['saham'])
+    senarai = {r['saham'] for r in baca_senarai()}
+    for x in calon_kunci(fr, buka):
+        x['dalam_senarai'] = x['saham'] in senarai
+        print(json.dumps(x, ensure_ascii=False))
+
+
 def cmd_posisi(a):
     fr = _frames(a.stor)
     x = tanda_posisi(a.folder, fr, a.tulis)
@@ -215,8 +286,13 @@ def main(argv=None):
     s = sp.add_parser('senarai'); s.add_argument('--stor', default=os.path.join(BS2, 'data', 'harga', 'stor')); s.add_argument('--sesi')
     p = sp.add_parser('posisi'); p.add_argument('--folder', default=os.path.join(BS2, 'papertrade'))
     p.add_argument('--stor', default=os.path.join(BS2, 'data', 'harga', 'stor')); p.add_argument('--tulis', action='store_true')
+    t = sp.add_parser('tambah'); t.add_argument('--saham', required=True); t.add_argument('--umum', required=True)
+    t.add_argument('--tamat', default=''); t.add_argument('--pembeli', required=True); t.add_argument('--harga', default='')
+    t.add_argument('--bayaran', required=True); t.add_argument('--sumber', required=True)
+    c = sp.add_parser('calon'); c.add_argument('--folder', default=os.path.join(BS2, 'papertrade'))
+    c.add_argument('--stor', default=os.path.join(BS2, 'data', 'harga', 'stor'))
     a = ap.parse_args(argv)
-    return {'senarai': cmd_senarai, 'posisi': cmd_posisi}[a.cmd](a)
+    return {'senarai': cmd_senarai, 'posisi': cmd_posisi, 'tambah': cmd_tambah, 'calon': cmd_calon}[a.cmd](a)
 
 
 if __name__ == '__main__':

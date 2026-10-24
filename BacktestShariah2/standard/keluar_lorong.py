@@ -13,6 +13,13 @@
 #          kecuali baris yang keluar dengan peraturan lama — status_henti tanpa PENANDA — yang dikira semula secara automatik);
 #          lajur lorong 10% lama (LAJUR_BUANG) dibuang daripada fail
 #   --semula henti   -> kira semula lorong 2 walaupun sudah keluar (selepas peraturan lorong dipinda)
+#   --saham A,B      -> hadkan kepada saham ini (baris lain tidak disentuh; cth. pembetulan VIAV/LITE 24 Okt 2026)
+#
+# Sejarah sebelum beli (24 Okt 2026, audit VIAV/LITE): stor kerja rutin bagi ticker yang hanya ditarik melalui kline (bukan
+# Shariah, cth. VIAV, LITE) tiada sejarah sebelum hari beli, jadi ATR14 hanya wujud 13 bar selepas beli dan paras keluar lewat
+# seminggu — lalu dibekukan. Kini muat_harga() menambah sejarah lebih awal daripada stor repo dan data/harga/sejarah.csv
+# (hanya jika tutup bertindih sepadan), dan keluar yang dikira tanpa ATR pada bar beli ditanda TANDA_PENDEK dan TIDAK
+# dibekukan (dinilai semula setiap larian sehingga sejarah lengkap).
 import argparse, csv, glob, json, os, re, sys
 
 import numpy as np
@@ -28,6 +35,9 @@ TEMPOH_ATR = 14          # ATR seperti enjin.atr: purata mudah julat sebenar 14 
 VERSI = 'chandelier_tutup_4xATR14'   # peraturan lorong 2 semasa; Lejar Penuh dibina semula apabila nilai ini berubah
 PENANDA = 'paras keluar'             # ada dalam setiap status_henti peraturan semasa; tiada -> dikira dengan peraturan lama
 BEZA_HARGA_MAKS = 0.15   # buka stor pada hari beli lawan harga_beli; lebih -> data tidak sepadan (split/ticker lain), langkau
+TANDA_PENDEK = 'sejarah < 14 bar sebelum beli; dinilai semula'   # keluar tanpa ATR pada bar beli: tidak dibekukan
+SEJARAH = os.path.join(BS2, 'data', 'harga', 'sejarah.csv')
+TOL_SAMBUNG = 0.003      # tutup bar bertindih (stor kerja lawan sumber sejarah) mesti sepadan sebelum sejarah disambung
 
 LAJUR_HENTI = ['keluar_henti', 'tarikh_keluar_henti', 'harga_keluar_henti', 'untung_henti_pct', 'status_henti']
 LAJUR_LORONG = LAJUR_HENTI + ['tutup_semua']
@@ -94,9 +104,10 @@ def nilai_baris(ix, o, h, l, c, tarikh_beli, e):
     a = lorong_henti(o, h, l, c, k)
     L2 = dict.fromkeys(LAJUR_HENTI, '')
     if a['jenis'] == 'keluar':
+        pendek = f' — {TANDA_PENDEK}' if k < TEMPOH_ATR - 1 else ''   # ATR14 belum wujud pada bar beli
         L2.update(keluar_henti='True', tarikh_keluar_henti=ix[a['j']], harga_keluar_henti=r4(a['harga']),
                   untung_henti_pct=r2((a['harga'] / e - 1) * 100),
-                  status_henti=f"Keluar: {_teks(a['sebab'], ix)} ({hb(ix[a['j']])} @ {a['harga']:.2f})")
+                  status_henti=f"Keluar: {_teks(a['sebab'], ix)} ({hb(ix[a['j']])} @ {a['harga']:.2f}){pendek}")
     else:
         L2['keluar_henti'] = 'False'
         if a['jenis'] == 'menunggu':
@@ -126,10 +137,42 @@ def tutup_semua(r):
     return 'True' if benar(r.get('keluar')) and benar(r.get('keluar_henti')) else 'False'
 
 
-def muat_harga(stor):
+def sambung_sejarah(fr, sumber):
+    """fr, sumber: {ticker: DataFrame open/high/low/close berindeks tarikh}. Bagi ticker dalam fr yang bar pertamanya lebih
+    lewat daripada sumber, bar sumber SEBELUM bar pertama fr disambung di hadapan — hanya jika tutup bar bertindih sepadan
+    (median nisbah dalam TOL_SAMBUNG; konvensyen pelarasan sama). Pulang {ticker: bil bar ditambah}."""
+    tambah = {}
+    for t, g in fr.items():
+        s = sumber.get(t)
+        if s is None or not len(g) or not len(s) or s.index[0] >= g.index[0]:
+            continue
+        lama = s[s.index < g.index[0]]
+        sama = g.close.reindex(s.index).dropna()
+        if len(lama) < 1 or not len(sama):
+            continue
+        r = float((sama / s.close.reindex(sama.index)).median())
+        if abs(r - 1) > TOL_SAMBUNG:
+            continue
+        fr[t] = pd.concat([lama[g.columns.intersection(lama.columns)], g]).sort_index()
+        tambah[t] = len(lama)
+    return tambah
+
+
+def muat_harga(stor, sejarah=True):
+    """{ticker: (tarikh[], open, high, low, close)}. sejarah=True: sejarah sebelum bar pertama stor kerja disambung daripada
+    stor repo (STOR) dan data/harga/sejarah.csv (ticker kline sahaja dalam stor kerja rutin; audit VIAV/LITE 24 Okt 2026)."""
     sys.path.insert(0, os.path.join(BS2, 'kod'))
     from stor import muat, frames_dict
     fr, _ = frames_dict(muat(stor))
+    if sejarah:
+        sumber = []
+        if os.path.abspath(stor) != os.path.abspath(STOR) and os.path.isdir(STOR):
+            sumber.append(frames_dict(muat(STOR))[0])
+        if os.path.exists(SEJARAH):
+            sj = pd.read_csv(SEJARAH)
+            sumber.append(frames_dict({'harga_B.csv': sj})[0])
+        for sb in sumber:
+            sambung_sejarah(fr, sb)
     out = {}
     for t, g in fr.items():
         out[t] = ([str(x.date()) for x in g.index], g.open.values.astype(float), g.high.values.astype(float),
@@ -149,8 +192,9 @@ def kemas_baris(r, H, nota, semula=()):
         return False
     st = r.get('status_henti') or ''
     # keluar paksa (isyarat palsu ambil alih / delist; kod/tidak_layak.py) juga dibekukan — status tanpa PENANDA
+    # keluar yang dikira tanpa ATR pada bar beli (TANDA_PENDEK) tidak dibekukan: dinilai semula apabila sejarah lengkap
     beku = benar(r.get('keluar_henti')) and (PENANDA in st or st.startswith(('Keluar: isyarat palsu', 'Keluar: delist'))) \
-        and 'henti' not in semula
+        and 'henti' not in semula and TANDA_PENDEK not in st
     if not beku:
         d = H.get(r.get('saham'))
         if d is None:
@@ -178,15 +222,18 @@ def main(argv=None):
     ap.add_argument('--folder', default=PT, help='folder papertrade')
     ap.add_argument('--semula', action='append', default=[], choices=['henti'],
                     help='kira semula lorong ini walaupun sudah keluar (selepas peraturan dipinda)')
+    ap.add_argument('--saham', help='hadkan kepada ticker ini (dipisah koma); baris lain tidak disentuh')
     a = ap.parse_args(argv)
     H = muat_harga(a.stor)
+    hanya = set(a.saham.split(',')) if a.saham else None
     nota, ringkas = [], {}
     for p in fail_posisi(a.folder):
         with open(p, newline='', encoding='utf-8') as f:
             rd = csv.DictReader(f); lajur = list(rd.fieldnames or []); rows = list(rd)
         buang = [c for c in LAJUR_BUANG if c in lajur]
         lajur = [c for c in lajur if c not in buang] + [c for c in LAJUR_LORONG if c not in lajur]
-        ubah = sum(kemas_baris(r, H, nota, a.semula) for r in rows) + (len(rows) if buang else 0)
+        ubah = sum(kemas_baris(r, H, nota, a.semula) for r in rows if hanya is None or r.get('saham') in hanya) \
+            + (len(rows) if buang else 0)
         if ubah:
             with open(p, 'w', newline='', encoding='utf-8') as f:
                 w = csv.DictWriter(f, fieldnames=lajur); w.writeheader()

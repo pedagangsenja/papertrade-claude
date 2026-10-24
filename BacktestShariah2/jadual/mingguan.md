@@ -26,7 +26,8 @@ Alat (ToolSearch; jika `select:mcp__Moo_Moo__…` gagal, cari ikut nama alat, ct
 6. Snapshot sektor dashboard: `ArtifactData get` `sektor/snapshot` dengan out_dir (fail lama), kemudian
    `python3 BacktestShariah2/standard/snapshot_sektor_db.py --pasaran <sektor_pasaran.json> --lama <fail lama>
    --peta BacktestShariah2/papertrade/peta_industri.csv --papertrade BacktestShariah2/papertrade --dibina "<YYYY-MM-DD HH:MM> MYT"
-   --out BacktestShariah2/data/db/sektor_snapshot.json` (jana_db.py menolaknya bersama dokumen harian).
+   --out BacktestShariah2/data/db/sektor_snapshot.json` (jana_db.py menolaknya bersama dokumen harian). Jika langkah 5 menarik SST
+   baharu, tulis medannya ke fail lama dan tambah `--sst-tarikh <sesi data>`; medan SST lebih 2 sesi dibuang (`sst_tarikh`).
 7. Akaun simulasi Moomoo (baca sahaja): `sim_trade_position_list` acc_id "4135388", market 100; bandingkan dengan posisi aktif
    `papertrade/moomoo.csv`; catat perbezaan dalam log (jangan ubah CSV, jangan jual).
 7b. Kewangan (gred kewangan v7; dahulu `jadual/imbas_2002.md` langkah 5c setiap malam): ikut 5c tepat (alat, 2 panggilan

@@ -13,6 +13,8 @@
 #       Belian maya pada harga buka (yfinance semasa pasaran dibuka, atau fail ticker,open[,volume]). Rekod ke claude_N.csv.
 #   python3 harian_c.py db --keluar DIR
 #       Dokumen db dashboard (papertrade/*, prestasi/*, harian/status) + fail batch untuk ArtifactData (file_path).
+#   python3 harian_c.py watch [--folder PT]
+#       Normalkan watchlist.csv (24 Okt 2026; normal_watch): % hampir maks 99.9 kecuali isyarat lengkap, lajur `disentuh`.
 # Status larian: papertrade/status_harian.json (larian berulang bagi sesi/tarikh yang sama dilangkau: idempoten).
 import argparse, csv, glob, importlib, json, os, re, shutil, subprocess, sys, tempfile, time
 from collections import Counter
@@ -51,7 +53,8 @@ SENARAI_LAJUR = ['saham', 'nama', 'kaedah', 'sektor', 'industri', 'pct_dipenuhi'
                  'buka_maks', 'sasaran', 'destinasi', 'sumber', 'tarikh_isyarat', 'tarikh_imbasan', 'asal', 'belian_ke']
 WATCH_LAJUR = ['Saham', 'Nama', 'Kaedah', 'Sektor', 'Industri', 'Harga', '% hampir', 'Pencetus', 'Keadaan semasa',
                'Syarat belum cukup', 'Syarat dipenuhi', 'Paras pencetus', 'Jarak %', 'Tarikh masuk watchlist',
-               'Hari dalam watchlist', 'Skor', 'Set', 'tarikh_data', 'dibina']
+               'Hari dalam watchlist', 'Skor', 'Set', 'tarikh_data', 'dibina', 'disentuh']
+LENGKAP = 'Tiada (isyarat sah)'   # "Syarat belum cukup" baris watchlist yang isyaratnya sudah lengkap (kemas_kini_0602.md langkah 4)
 GRED_LAJUR = ['sektor_us', 'industri_us', 'gred_sektor', 'skor_sektor', 'gred_industri', 'skor_industri', 'rs_rating', 'gred_rs',
               'rs_sah', 'rs_tanda', 'rs_industri', 'rs_sumber', 'gred_pemangkin', 'mata_pemangkin', 'pemangkin', 'pemangkin_url', 'tarikh_earnings', 'hari_ke_earnings',
               'sumber_earnings', 'gred_qr', 'gred_keseluruhan', 'gred_pada',
@@ -545,6 +548,36 @@ def pct_hampir(jarak):
     return round(min(99.9, max(90.0, 100 - float(jarak))), 1)
 
 
+def normal_watch(r):
+    """Baris watchlist (lajur CSV) diubah di tempat (audit 24 Okt 2026: 9 baris "paras disentuh" bernilai 100 bercampur dengan
+    isyarat lengkap dalam KPI >= 99%): % hampir = 100 hanya bagi isyarat lengkap ("Syarat belum cukup" = LENGKAP); baris lain
+    dihadkan 99.9. `disentuh` = 'True' apabila jarak pencetus <= 0 (atau % hampir >= 100) tetapi isyarat belum lengkap
+    (cth. M102: jarak 0 ialah andaian kod, bukan paras yang benar-benar disentuh), selainnya ''. Pulang True jika berubah."""
+    lama = (r.get('% hampir'), r.get('disentuh'))
+    lengkap = (r.get('Syarat belum cukup') or '').strip() == LENGKAP
+    v, j = nombor(r.get('% hampir')), nombor(r.get('Jarak %'))
+    sentuh = not lengkap and ((j is not None and j <= 0) or (v is not None and v >= 100))
+    if not lengkap and v is not None and v > 99.9:
+        r['% hampir'] = '99.9'
+    r['disentuh'] = 'True' if sentuh else ''
+    return (r.get('% hampir'), r.get('disentuh')) != lama
+
+
+def cmd_watch(a):
+    p = os.path.join(a.folder, 'watchlist.csv')
+    if not os.path.exists(p):
+        print(json.dumps(dict(watchlist='tiada'))); return 0
+    lajur, rows = SH.baca(p)
+    ubah = sum(normal_watch(r) for r in rows)
+    if 'disentuh' not in lajur:
+        lajur = lajur + ['disentuh']
+    if ubah or len(lajur) != len(SH.baca(p)[0]):
+        SH.tulis(p, lajur, rows)
+    print(json.dumps(dict(baris=len(rows), diubah=ubah, disentuh=sum(r['disentuh'] == 'True' for r in rows),
+                          lengkap=sum((r.get('Syarat belum cukup') or '').strip() == LENGKAP for r in rows)), ensure_ascii=False))
+    return 0
+
+
 def imbas(folder, S, hasil, masa, ringkas, isyarat_dir):
     from scanner import pegangan_c, simpan_isyarat
     St = pd.Timestamp(S); Ss = str(St.date()); SES = [x for x in sesi_list() if x <= St]
@@ -610,6 +643,7 @@ def imbas(folder, S, hasil, masa, ringkas, isyarat_dir):
                  'Paras pencetus': c['paras'], 'Jarak %': c['jarak_pct'], 'Tarikh masuk watchlist': masuk,
                  'Hari dalam watchlist': hari_antara(masuk, Ss, SES), 'Skor': c['skor'], 'Set': c['sumber'],
                  'tarikh_data': Ss, 'dibina': dibina}
+            normal_watch(w)   # disentuh: jarak 0 tetapi isyarat belum lengkap (% hampir sudah <= 99.9)
             if w0:   # gred hari sebelumnya dibawa sehingga gred.py dijalankan semula
                 w.update({k: w0.get(k, '') for k in GRED_LAJUR})
             watch.append(w)
@@ -972,6 +1006,8 @@ def main(argv=None):
     x.set_defaults(f=cmd_beli)
     x = sp.add_parser('log'); x.add_argument('--folder', default=PT); x.add_argument('--peringkat', choices=['malam', 'beli'], required=True)
     x.add_argument('--log', default=LOG_HARIAN); x.set_defaults(f=cmd_log)
+    x = sp.add_parser('watch', help='normalkan watchlist.csv: % hampir maks 99.9 kecuali isyarat lengkap, lajur disentuh')
+    x.add_argument('--folder', default=PT); x.set_defaults(f=cmd_watch)
     a = ap.parse_args(argv)
     return a.f(a)
 

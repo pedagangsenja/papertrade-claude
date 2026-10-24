@@ -94,6 +94,8 @@ def betul_c(folder, frames, idx, tulis=True):
             if baru == lama:
                 continue
             nota = f"keluar dinilai semula {pd.Timestamp.now(tz='Asia/Kuala_Lumpur'):%d %b %Y} (dagangan sendiri, kod/dagangan.py)"
+            if lama and not baru:   # keluar lorong 1 dibatalkan: penanda tetap 'dibuka semula' (jana_db kualiti, 24 Okt 2026)
+                nota += f': keluar {lama} dibuka semula'
             if baru:
                 r.update(keluar='True', tarikh_keluar=baru, harga_keluar=f"{H.r4(x['p'])}", harga_terkini=f"{H.r4(x['p'])}",
                          untung_akhir_pct=f"{H.r2((x['p'] / hb - 1) * 100)}", untung_pct=f"{H.r2((x['p'] / hb - 1) * 100)}",

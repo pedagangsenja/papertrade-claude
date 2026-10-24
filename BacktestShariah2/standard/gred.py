@@ -213,6 +213,20 @@ def snapshot_kumpulan(peta, tarikh_baris, hari_ini):
     return peta[t] if (hari_ini - date.fromisoformat(t)).days <= HARI_KUMPULAN else ({}, {})
 
 
+def tarikh_gred(d_si, d_rs, imbas):
+    """gred_pada (sejak 24 Okt 2026, audit dashboard): tarikh DATA gred, bukan tarikh imbasan — sesi snapshot Sektor/Industri v2
+    dan sesi RS yang dipakai. Awalan = tarikh lebih awal (YYYY-MM-DD, dibaca halaman dan skrip isi semula); butiran dalam
+    kurungan: S/I dan RS jika berbeza, dan tarikh imbasan (rujukan QR/pemangkin) jika berbeza. Tiada kedua-duanya -> tarikh
+    imbasan ditanda."""
+    d = [x for x in (d_si, d_rs) if x]
+    if not d:
+        return f'{imbas} (tarikh imbasan; tiada data S/I/RS)'
+    b = [f'S/I {d_si}', f'RS {d_rs}'] if d_si and d_rs and d_si != d_rs else []
+    if imbas and imbas != min(d):
+        b.append(f'imbasan {imbas}')
+    return min(d) + (f" ({'; '.join(b)})" if b else '')
+
+
 def peta_jenis_kaedah(path_csv=None):
     """kod/jenis_kaedah.csv -> {kaedah: 'momentum'|'pantulan'} (pulangan median 20 hari sebelum isyarat > 0 = momentum)."""
     path_csv = path_csv or os.path.join(os.path.dirname(HERE_GRED), 'kod', 'jenis_kaedah.csv')
@@ -999,6 +1013,7 @@ def tambah(a):
     c, v = muat_harga(a.harga)
     spy = muat_spy(a.harga)
     rsd, spy_atas = rs_semua(c, spy, getattr(a, 'rs', None))
+    sesi_rs = str(c.index[-1].date()) if len(c.index) else None   # RS = bar terakhir stor (rs_pasaran.csv sesi sama)
     from sektor_pasaran import SEKTOR_INDUSTRI
     v2 = bool(getattr(a, 'kumpulan', None))
     pind = {}
@@ -1029,9 +1044,12 @@ def tambah(a):
         t = ambil(r, 'saham', 'Saham')
         iu = pind.get(t); su = SEKTOR_INDUSTRI.get(iu) if iu else None
         r['industri_us'] = iu or ''; r['sektor_us'] = su or ''; sandar = False
+        d_si = None
         if v2:
             ts = ambil(r, 'tarikh_isyarat', 'tarikh_data')
             ksek, kind = snapshot_kumpulan(kpeta, ts, hari_ini)
+            if ksek or kind:
+                d_si = str(ts)[:10] if ts else max(kpeta)
             if not kind:
                 ktiada[ts or '?'] = ktiada.get(ts or '?', 0) + 1
             s1, g1 = ksek.get(su, (None, TIADA)); s2, g2 = kind.get(iu, (None, TIADA))
@@ -1109,7 +1127,8 @@ def tambah(a):
             else:
                 r['gred_kewangan'] = TIADA; r['kewangan_ringkas'] = '– (tiada data kewangan)'
                 r['kewangan_tempoh'] = ''; r['kewangan_butiran'] = ''
-        r['gred_pada'] = a.tarikh + ('; ' + SANDARAN_INDUSTRI if sandar else '')
+        ada_rs = r.get('rs_rating') not in ('', None)   # isi_rs di atas: RS ada bagi sesi_rs
+        r['gred_pada'] = tarikh_gred(d_si, sesi_rs if ada_rs else None, a.tarikh) + ('; ' + SANDARAN_INDUSTRI if sandar else '')
     if v2 and ktiada:
         print(f'AMARAN: tiada snapshot gred_kumpulan bagi sesi {ktiada} (ada: {sorted(kpeta)[-3:]}); gred sektor/industri "–"')
     out = lajur + [k for k in LAJUR if k not in lajur]
@@ -1120,6 +1139,57 @@ def tambah(a):
     for k in ['gred_sektor', 'gred_industri', 'gred_rs', 'gred_pemangkin', 'gred_qr', 'gred_keseluruhan'] + \
             (['gred_kewangan'] if kew else []):
         print(k, dict(sorted(Counter(r[k] for r in rows).items())))
+
+
+def pada_data(rows, kpeta, rs, hari_maks=7):
+    """Baris calon lama (gred_pada = tarikh imbasan sahaja, sebelum 24 Okt 2026) -> gred_pada tarikh DATA (tarikh_gred), disahkan
+    dengan padanan nilai: S/I = snapshot gred_kumpulan terkini <= imbasan yang skor sektor_us DAN industri_us sama dengan baris;
+    RS = sesi rs_pasaran terkini <= imbasan yang rs saham itu sama. Tiada padanan -> baris tidak diubah. rs: DataFrame
+    tarikh/ticker/rs. Pulang (diubah, tidak_dipadan)."""
+    ubah = tak = 0
+    rsg = {t: g.sort_values('tarikh', ascending=False) for t, g in rs.groupby('ticker')} if rs is not None and len(rs) else {}
+    for r in rows:
+        m = re.fullmatch(r'(\d{4}-\d\d-\d\d)((?:; .*)?)', r.get('gred_pada') or '')
+        if not m:
+            continue
+        D, ekor = m.group(1), m.group(2)
+        bawah = (date.fromisoformat(D) - timedelta(days=hari_maks)).isoformat()
+        su, iu = r.get('sektor_us'), r.get('industri_us')
+        ss, si = r.get('skor_sektor'), r.get('skor_industri')
+        d_si = None
+        if su and ss not in ('', None):
+            for d in sorted((x for x in kpeta if bawah <= x <= D), reverse=True):
+                sek, ind = kpeta[d]
+                ok_s = su in sek and abs(round(sek[su][0], 1) - float(ss)) < 0.05
+                ok_i = si in ('', None) or (iu in ind and abs(round(ind[iu][0], 1) - float(si)) < 0.05) or \
+                    (SANDARAN_INDUSTRI in ekor and abs(float(si) - float(ss)) < 0.05)
+                if ok_s and ok_i:
+                    d_si = d; break
+        d_rs = None
+        t = r.get('saham') or r.get('Saham'); g = rsg.get(t)
+        if g is not None and r.get('rs_rating') not in ('', None) and r.get('rs_sumber') == 'pasaran':
+            x = g[(g.tarikh <= D) & (g.tarikh >= bawah) & (g.rs.astype(float) == float(r['rs_rating']))]
+            d_rs = x.tarikh.iloc[0] if len(x) else None
+        if not (d_si or d_rs):
+            tak += 1; continue
+        baru = tarikh_gred(d_si, d_rs, D) + ekor
+        if baru != r['gred_pada']:
+            r['gred_pada'] = baru; ubah += 1
+    return ubah, tak
+
+
+def cmd_pada(a):
+    lajur, rows = None, []
+    with open(a.csv, newline='', encoding='utf-8') as f:
+        rd = csv.DictReader(f); lajur = rd.fieldnames; rows = list(rd)
+    kpeta = peta_kumpulan(a.kumpulan, date.today())
+    p = os.path.join(a.rs, 'rs_pasaran.csv')
+    rs = pd.read_csv(p, dtype={'tarikh': str}, usecols=['tarikh', 'ticker', 'rs']) if os.path.exists(p) else None
+    ubah, tak = pada_data(rows, kpeta, rs)
+    if a.tulis and ubah:
+        with open(a.csv, 'w', newline='', encoding='utf-8') as f:
+            w = csv.DictWriter(f, fieldnames=lajur); w.writeheader(); w.writerows(rows)
+    print(json.dumps(dict(baris=len(rows), diubah=ubah, tidak_dipadan=tak, ditulis=bool(a.tulis)), ensure_ascii=False))
 
 
 def main(argv=None):
@@ -1148,6 +1218,11 @@ def main(argv=None):
     k.add_argument('--keluar', required=True, help='papertrade/pemangkin.json (digabung dengan entri sedia ada)')
     k.add_argument('--tarikh', required=True)
     k.add_argument('--sejak', help='ISO UTC: entri Yahoo yang diambil selepas masa ini dipakai (lalai 10:00 UTC --tarikh)')
+    q = sp.add_parser('pada', help='gred_pada baris calon lama (tarikh imbasan) -> tarikh data gred, disahkan padanan nilai (24 Okt 2026)')
+    q.add_argument('--csv', required=True)
+    q.add_argument('--kumpulan', default=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'kumpulan', 'gred_kumpulan.csv'))
+    q.add_argument('--rs', default=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'rs'))
+    q.add_argument('--tulis', action='store_true')
     e = sp.add_parser('earnings', help='ringkas fail Moomoo earnings_price_history -> JSON')
     e.add_argument('fail'); e.add_argument('--tarikh', required=True)
     a = ap.parse_args(argv)
@@ -1159,6 +1234,8 @@ def main(argv=None):
         if not a.folder and not a.yahoo:
             ap.error('kumpul memerlukan --folder atau --yahoo')
         kumpul(a)
+    elif a.cmd == 'pada':
+        cmd_pada(a)
     elif a.cmd == 'earnings':
         print(json.dumps(ringkas_earnings(a.fail, date.fromisoformat(a.tarikh))))
 

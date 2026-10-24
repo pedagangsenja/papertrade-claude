@@ -7,6 +7,8 @@ import sys, os, csv, glob, re, argparse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PT = os.path.join(os.path.dirname(HERE), 'papertrade')
+STOR = os.path.join(os.path.dirname(HERE), 'data', 'harga', 'stor')
+TOL_BUKA = 0.003   # harga_beli C lawan buka bar hari beli dalam stor (audit 24 Okt 2026: DAC M80/M90 164.162 lawan 170.19)
 
 # Susunan lajur rasmi fail posisi (moomoo.csv, claude.csv, claude_N.csv)
 POSISI = ['tarikh_beli', 'saham', 'kaedah', 'id_kaedah', 'sektor', 'industri', 'harga_beli', 'unit',
@@ -69,10 +71,14 @@ def susun(lajur):
     return POSISI + [c for c in lajur if c not in POSISI]
 
 
-def fail_posisi():
-    c = sorted(glob.glob(os.path.join(PT, 'claude*.csv')),
+def fail_posisi_dalam(folder):
+    c = sorted(glob.glob(os.path.join(folder, 'claude*.csv')),
                key=lambda p: int(re.search(r'claude_?(\d*)', os.path.basename(p)).group(1) or 1))
-    return [os.path.join(PT, 'moomoo.csv')] + c
+    return [os.path.join(folder, 'moomoo.csv')] + c
+
+
+def fail_posisi():
+    return fail_posisi_dalam(PT)
 
 
 def semak_gred(nama, rows, ralat):
@@ -153,6 +159,51 @@ def semak_posisi(nama, lajur, rows, ralat, amaran, kunci):
             kunci[k] = f'{nama}:{i}'
 
 
+def buka_stor(stor=STOR, saham=None):
+    """(O, MM): O = {(saham, 'YYYY-MM-DD'): buka} daripada harga_A/B.csv stor (konvensyen stor; buka Moomoo rasmi sudah
+    ditampal oleh lejar.py tampal_moomoo jika beza > 0.5%), MM = buka_moomoo.csv (buka rasmi kline Moomoo yang disahkan).
+    saham: had kepada set ticker ini (bacaan lebih laju). Fail tiada -> {}."""
+    O, MM = {}, {}
+    for nm, D in (('harga_A.csv', O), ('harga_B.csv', O), ('buka_moomoo.csv', MM)):
+        p = os.path.join(stor, nm)
+        if not os.path.exists(p):
+            continue
+        with open(p, newline='', encoding='utf-8') as f:
+            for r in csv.DictReader(f):
+                t = r.get('ticker')
+                if saham is not None and t not in saham:
+                    continue
+                d, o = str(r.get('date') or ''), nombor(r.get('open'))
+                if len(d) == 8 and o:
+                    D[(t, f'{d[:4]}-{d[4:6]}-{d[6:]}')] = o
+    return O, MM
+
+
+def beza_buka(r, O, MM, tol=TOL_BUKA):
+    """Beza harga_beli lawan buka bar hari beli (pecahan), atau None jika tidak disemak / sepadan: baris tidak_dibeli, tanpa
+    harga beli, harga beli sementara (nota 'buka sementara'), tiada bar dalam stor, atau sepadan dengan buka stor atau buka
+    Moomoo disahkan (buka_moomoo.csv) dalam toleransi. Pulang (beza, buka stor)."""
+    if benar(r.get('tidak_dibeli')) or 'buka sementara' in (r.get('nota') or ''):
+        return None
+    hb = nombor(r.get('harga_beli')); k = (r.get('saham'), r.get('tarikh_beli'))
+    o = O.get(k)
+    if not hb or not o:
+        return None
+    if abs(hb / o - 1) <= tol or (k in MM and abs(hb / MM[k] - 1) <= tol):
+        return None
+    return hb / o - 1, o
+
+
+def semak_buka(nama, rows, O, MM, ralat):
+    """Papertrade C: harga_beli = buka rasmi bar hari beli (SKEMA). Akaun M dikecualikan (harga isian sim)."""
+    for i, r in enumerate(rows, start=2):
+        x = beza_buka(r, O, MM)
+        if x:
+            ralat.append(f'{nama}:{i} {r["saham"]} {r["kaedah"]}: harga_beli {r["harga_beli"]} ≠ buka bar {r["tarikh_beli"]} '
+                         f'dalam stor {x[1]:g} (beza {x[0] * 100:+.2f}% > {TOL_BUKA * 100:g}%; betulkan dengan '
+                         'standard/betul_harga_beli.py)')
+
+
 def semak_lorong(t, r, hb, ralat, amaran):
     """Lorong 2 (pegang selagi naik): keluar_henti=True => tarikh/harga/untung lengkap dan konsisten;
     tutup_semua = keluar & keluar_henti. Lajur kosong = belum dinilai (amaran sahaja; diisi oleh keluar_lorong.py)."""
@@ -229,14 +280,24 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description='Semak data papertrade ikut SKEMA.md')
     ap.add_argument('--betulkan', action='store_true', help='susun lajur fail posisi ikut skema sebelum semak')
     ap.add_argument('--folder', default=PT, help='folder papertrade (lalai: BacktestShariah2/papertrade)')
+    ap.add_argument('--stor', default=STOR, help='folder stor harga (harga_A/B.csv, buka_moomoo.csv) bagi semakan harga beli C')
     a = ap.parse_args(argv)
     PT = a.folder
     ralat, amaran, kunci = [], [], {}
+    data = {}
     for p in fail_posisi():
-        if not os.path.exists(p):
+        if os.path.exists(p):
+            data[p] = baca(p)
+    tc = {r.get('saham') for p, (_, rows) in data.items() if os.path.basename(p) != 'moomoo.csv' for r in rows}
+    ada_stor = any(os.path.exists(os.path.join(a.stor, f)) for f in ('harga_A.csv', 'harga_B.csv'))
+    O, MM = buka_stor(a.stor, tc) if ada_stor else ({}, {})
+    if not ada_stor:
+        amaran.append(f'stor harga tiada ({a.stor}): semakan harga_beli lawan buka bar hari beli dilangkau')
+    for p in fail_posisi():
+        if p not in data:
             print(f'TIADA: {p}')
             return 2
-        lajur, rows = baca(p)
+        lajur, rows = data[p]
         if a.betulkan:
             baru = susun(lajur)
             if baru != lajur:
@@ -245,6 +306,8 @@ def main(argv=None):
                 lajur = baru
         semak_posisi(os.path.basename(p), lajur, rows, ralat, amaran, kunci)
         semak_gred(os.path.basename(p), rows, ralat)
+        if os.path.basename(p) != 'moomoo.csv':
+            semak_buka(os.path.basename(p), rows, O, MM, ralat)
     for nm, fn in [('senarai_beli.csv', semak_senarai), ('watchlist.csv', semak_watch)]:
         p = os.path.join(PT, nm)
         if os.path.exists(p):

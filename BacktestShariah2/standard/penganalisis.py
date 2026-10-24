@@ -1,8 +1,10 @@
 # penganalisis.py — Papan Penganalisis: satu jadual banding semua kaedah aktif, menggabungkan bukti backtest dan data hadapan
 # (keputusan pengguna 20 Okt 2026). Tanpa LLM; dijalankan oleh GitHub Actions `analisis.yml` sebaik `lejar.yml` siap.
 #
-#   python3 BacktestShariah2/standard/penganalisis.py [--kini YYYY-MM-DD]
+#   python3 BacktestShariah2/standard/penganalisis.py [--kini YYYY-MM-DD] [--json laluan] [--md laluan] [--lama papan_lama.json]
 #   -> BacktestShariah2/laporan/PENGANALISIS.md, BacktestShariah2/data/analisis/papan.json (= dokumen db dashboard analisis/papan)
+# Tarikh papan (kini) = sesi terakhir Lejar Penuh (lejar/status.json), dan harga penilaian diambil hingga sesi itu sahaja
+# (24 Okt 2026, audit item 6), supaya Lejar, harga dan posisi C satu vintaj.
 #
 # Sumber bukti setiap kaedah (varian aktif = katalog_kaedah.json varian_kod):
 #   1. Backtest dalam sampel set 431 (data/registry_M_gabung.csv): asas jangkaan, DIPOTONG kerana dipilih atas data sama.
@@ -31,8 +33,19 @@
 # 20 kohort backtest - (1 - kekal) x purata kohort backtest (bawah 5% jika kaedah berprestasi pada jangkaan); AMARAN = 1 amaran CUSUM bawah (k 0.5, h bootstrap ARL0 ~ 2 tahun; kohort diwinsor p5–p95 backtest,
 # sasaran = purata winsor - (1 - kekal) x purata kohort backtest, dibahagi sd winsor); OK; BELUM CUKUP < 5 kohort matang.
 # Parameter backtest: data/analisis/kalibrasi_skor.json 'pantau' (standard/kalibrasi_skor.py). Label sahaja: tiada order.
+# Pantau v3 (24 Okt 2026, audit dashboard tab demi tab item 18): sasaran CUSUM = min(purata winsor, kekal x purata winsor)
+# (winsor dengan winsor; dahulu purata winsor - (1 - kekal) x purata MENTAH, negatif bagi 68/75 kaedah swing); ambang GANTUNG
+# bergulir = p5 purata bergulir 20 kohort DIWINSOR backtest - (purata winsor - sasaran), dibanding purata 20 kohort hadapan diwinsor;
+# k CUSUM 0.25 dan h bootstrap blok bulanan (kalibrasi_skor.py v3); pengawal bukti minimum (>= 10 hari beli matang dan nb >= 10)
+# disemak SEBELUM BERSARA/GANTUNG/AMARAN (dahulu BERSARA disemak dahulu: 4 kohort boleh BERSARA).
+# Ranking tunggal (24 Okt 2026, audit item 6/16/17): kedudukan ikut skor sebulan TANPA bundar; setiap baris juga membawa
+# p_top1/p_top5 dan selang pangkat 90% (Monte Carlo berbiji), lb_bulan (had bawah julat skor sebulan; susunan lalai halaman),
+# meter bukti (g_matang/g_perlu, nb/nb_perlu, tarikh_sebenar), ditolak/lejar_n, ekor backtest (median_bt, pangkas5_bt, pct_top1),
+# kelompok korelasi (kalibrasi_skor.json) dan teks pantau (pantau_sasaran, pantau_ambang); aras atas: fasa, label_semakan,
+# gabungan_beku_nota. Formula: lihat fungsi peluang_pangkat(), nb_perlu(), tarikh_bukti(), kelompok_rows().
 import argparse, glob, json, math, os, re
 from datetime import datetime, timedelta, timezone
+from fractions import Fraction
 
 import numpy as np
 import pandas as pd
@@ -70,7 +83,17 @@ KALIBRASI = os.path.join(BS2, 'data', 'analisis', 'kalibrasi_skor.json')
 PANTAU_DD = 1.5         # GANTUNG: kejatuhan ekuiti kohort > 1.5 x maks backtest (Davey 1.2–1.5x)
 PANTAU_P = 0.9          # BERSARA: P(mu <= 0) > 0.9 ...
 PANTAU_G = 20           # ... dengan >= 20 hari beli matang
-PANTAU_KOHORT = 5       # kohort matang minimum sebelum pantau dinilai
+PANTAU_KOHORT = 10      # kohort (hari beli) matang minimum sebelum pantau dinilai (pengawal bukti; dahulu 5)
+NB_MIN = 10             # n berkesan minimum: pengawal bukti pantau/AMARAN dan lantai nb_perlu
+CUSUM_K = 0.25          # lalai jika kalibrasi tiada 'k' (kalibrasi_skor.py v3)
+MC_CABUTAN = 20000      # cabutan Monte Carlo peluang pangkat
+MC_BIJI = 20261024      # biji Monte Carlo (keputusan boleh diulang)
+TOP_N = 5               # p_top5
+Z95 = 1.96
+GABUNGAN_BEKU = os.path.join(BS2, 'data', 'analisis', 'gabungan_beku.json')
+LABEL_SEMAKAN = dict(s14='S1–S4 = kestabilan dalam sampel (subset 431 saham, tempoh sama)',
+                     wfo='WFO = dalam tempoh pemilihan, versi ditala',
+                     at='AUTOTUNE = 2000 saham AS lain (satu-satunya ujian bebas)')
 PANTAU_BERGULIR = 20    # GANTUNG hadapan: purata N kohort matang terakhir lawan p5 purata bergulir N kohort backtest
 PANTAU_STATUS = ['BERSARA', 'GANTUNG', 'AMARAN', 'OK', 'BELUM CUKUP']
 N_HARI_MIN = 10         # hari beli berbeza minimum sebelum status dinilai (R5)
@@ -181,10 +204,14 @@ def semakan(reg, wfo, at):
 
 
 # ---------------------------------------------------------------- hadapan
-def harga_akhir(path=TERKINI, stor=STOR):
+def harga_akhir(path=TERKINI, stor=STOR, hingga=None):
     """{ticker: tutup terakhir} dan tarikh data terkini (YYYY-MM-DD): data/harga/terkini.csv, dan bagi saham yang tiada di
-    situ, stor harga repo (harga_A/B.csv, sumber yang dipakai Lejar Penuh) hingga tarikh sama."""
+    situ, stor harga repo (harga_A/B.csv, sumber yang dipakai Lejar Penuh) hingga tarikh sama. hingga (YYYY-MM-DD, cth. sesi
+    terakhir Lejar): bar selepas tarikh itu diabaikan, supaya harga satu vintaj dengan Lejar."""
+    h = hingga.replace('-', '') if hingga else None
     d = [pd.read_csv(path, usecols=['ticker', 'date', 'close'], dtype={'date': str})] if os.path.exists(path) else []
+    if d and h:
+        d[0] = d[0][d[0].date <= h]
     t = d[0]['date'].max() if d and len(d[0]) else None
     ada = set(d[0].ticker) if d else set()
     for nm in ('harga_A.csv', 'harga_B.csv'):
@@ -192,8 +219,8 @@ def harga_akhir(path=TERKINI, stor=STOR):
         if os.path.exists(f):
             x = pd.read_csv(f, usecols=['ticker', 'date', 'close'], dtype={'date': str})
             x = x[~x.ticker.isin(ada)]
-            if t:
-                x = x[x.date <= t]
+            if t or h:
+                x = x[x.date <= (t or h)]
             d.append(x)
     if not d:
         return {}, None
@@ -253,8 +280,9 @@ def muat_lejar(akhir, lejar=LEJAR, buka=None):
 
 
 def muat_c(pt=PT, akhir=None, buka=None):
-    """Posisi sah Papertrade C (semua claude*.csv): lajur LAJUR_POS. Lorong 1 = untung C (akhir jika keluar, semasa jika dipegang;
-    harga_terkini C dibekukan selepas lorong 1 keluar). Lorong 2 yang masih dipegang dinilai pada tutup terakhir (akhir)."""
+    """Posisi sah Papertrade C (semua claude*.csv): lajur LAJUR_POS. Lorong 1 = untung C (akhir jika keluar; jika dipegang,
+    dinilai pada tutup terakhir `akhir` (harga hingga sesi Lejar, satu vintaj dengan Lejar), atau untung semasa C jika tiada
+    harga). Lorong 2 yang masih dipegang dinilai pada tutup terakhir (akhir)."""
     f = sorted(glob.glob(os.path.join(pt, 'claude*.csv')))
     if not f:
         return pd.DataFrame(columns=LAJUR_POS)
@@ -267,15 +295,16 @@ def muat_c(pt=PT, akhir=None, buka=None):
     rows = []
     for r in d.itertuples(index=False):
         t1 = B(r.keluar)
-        g = nombor(r.untung_akhir_pct) if t1 else nombor(r.untung_pct)
+        hb = laras_beli(nombor(r.harga_beli), r.saham, r.tarikh_beli, buka, TOL_LARAS_C)
+        kini = akhir.get(r.saham)
+        semasa = (kini / hb - 1) * 100 if hb and kini else None
+        g = nombor(r.untung_akhir_pct) if t1 else (semasa if semasa is not None else nombor(r.untung_pct))
         if r.keluar_henti:
             g2 = nombor(getattr(r, 'untung_henti_pct', None))
         elif not t1:
-            g2 = nombor(r.untung_pct)
+            g2 = g
         else:   # lorong 1 sudah keluar (harga_terkini beku), lorong 2 masih dipegang
-            hb = laras_beli(nombor(r.harga_beli), r.saham, r.tarikh_beli, buka, TOL_LARAS_C)
-            kini = akhir.get(r.saham)
-            g2 = (kini / hb - 1) * 100 if hb and kini else None
+            g2 = semasa
         rows.append(dict(id=r.id_kaedah or r.kaedah, saham=r.saham, tarikh_isyarat=getattr(r, 'tarikh_isyarat', ''), tarikh_beli=r.tarikh_beli,
                          tarikh_keluar=r.tarikh_keluar if t1 else '', tutup1=t1, hasil1=bersih(g) if g is not None else None,
                          hasil2=bersih(g2) if g2 is not None else None, sumber='C'))
@@ -374,22 +403,57 @@ def ringkas_hadapan(P, hari_bt, kini, earnings=None):
 
 
 # ---------------------------------------------------------------- pantau
-def muat_kalibrasi(path=KALIBRASI):
-    """({id: parameter pantau backtest}, k CUSUM); tiada fail -> ({}, 0.5)."""
+def muat_kalibrasi(path=KALIBRASI, semua=False):
+    """({id: parameter pantau backtest}, k CUSUM); tiada fail -> ({}, CUSUM_K). semua=True: juga {id: baris kalibrasi penuh}
+    (ekor dagangan, kelompok korelasi) sebagai unsur ketiga."""
     try:
         d = json.load(open(path, encoding='utf-8'))
     except (OSError, ValueError):
-        return {}, 0.5
-    return {m: r['pantau'] for m, r in d.get('kaedah', {}).items() if r.get('pantau')}, (d.get('pantau') or {}).get('k', 0.5)
+        return ({}, CUSUM_K, {}) if semua else ({}, CUSUM_K)
+    kal = {m: r['pantau'] for m, r in d.get('kaedah', {}).items() if r.get('pantau')}
+    k = (d.get('pantau') or {}).get('k', CUSUM_K)
+    return (kal, k, d.get('kaedah', {})) if semua else (kal, k)
 
 
 def phi(z):
     return 0.5 * (1 + math.erf(z / math.sqrt(2)))
 
 
-def pantau_kaedah(P, umur, kini, kal, kekal, mu, lo, hi, hari_beli, k=0.5):
-    """Status pantau satu kaedah daripada posisi hadapan P (lorong 1, hasil1 bersih) dan parameter backtest kal (atau None)."""
-    se = (hi - mu) / 1.96 if hi is not None and mu is not None else None
+def sasaran_cusum(kal, kekal):
+    """Sasaran kohort CUSUM (skala winsor): purata winsor backtest dipotong ikut kekal (winsor dengan winsor). Potongan hanya
+    menurunkan sasaran: min(purata winsor, kekal x purata winsor)."""
+    m = kal['mu_winsor']
+    return min(m, kekal * m)
+
+
+def teks_pantau(kal, kekal, k=CUSUM_K):
+    """(pantau_sasaran, pantau_ambang) sebagai teks % yang boleh dibaca; (None, None) tanpa kalibrasi."""
+    if not kal:
+        return None, None
+    sas = sasaran_cusum(kal, kekal); sd = max(kal['sd_winsor'], 1e-6); lo = kal['winsor'][0]
+    p5 = kal.get('p5_bergulir_winsor', kal.get('p5_bergulir'))
+    n = int(kal.get('n_bergulir', PANTAU_BERGULIR))
+    sasaran = f"{sas:+.2f}% setiap hari beli" + (' (negatif: ekor kanan)' if sas < 0 else '')
+    bah = []
+    if p5 is not None:
+        bah.append(f"GANTUNG: purata {n} hari beli < {p5 - (kal['mu_winsor'] - sas):+.2f}%")
+    if kal.get('arl_bootstrap', 1) is None:
+        bah.append('CUSUM tidak aktif')
+    else:   # paras kohort yang, jika berulang 10 hari beli berturut, mencetus amaran CUSUM (S naik (sas - x) / sd - k sehari)
+        x10 = sas - sd * (k + kal['h'] / 10)
+        if x10 >= lo:
+            bah.append(f"AMARAN: 10 hari beli berturut ≤ {x10:+.2f}%")
+        else:
+            d = (sas - lo) / sd - k
+            bah.append(f"AMARAN: {math.ceil(kal['h'] / d) if d > 0 else '∞'} hari beli berturut ≤ {lo:+.2f}%")
+    return sasaran, '; '.join(bah)
+
+
+def pantau_kaedah(P, umur, kini, kal, kekal, mu, lo, hi, hari_beli, k=CUSUM_K, nb=None):
+    """Status pantau satu kaedah daripada posisi hadapan P (lorong 1, hasil1 bersih) dan parameter backtest kal (atau None).
+    Pengawal bukti dahulu: < PANTAU_KOHORT hari beli matang atau n berkesan < NB_MIN -> BELUM CUKUP (pencetus yang sudah
+    dikira dilapor dalam p_sebab sebagai 'belum dinilai'); kemudian BERSARA, GANTUNG, AMARAN, OK."""
+    se = (hi - mu) / Z95 if hi is not None and mu is not None else None
     p_rugi = phi(-mu / se) if se and se > 0 else None
     out = dict(pantau='BELUM CUKUP', p_rugi=bulat(p_rugi, 3), p_kohort=0, p_dd=None, p_dd_had=None, p_dd_tempoh=None,
                p_dd_tempoh_had=None, p_bergulir=None, p_bergulir_had=None, p_cusum=None, p_h=None, p_amaran=0, p_sebab='')
@@ -400,6 +464,8 @@ def pantau_kaedah(P, umur, kini, kal, kekal, mu, lo, hi, hari_beli, k=0.5):
         M = P
     c = M.groupby('tarikh_beli').hasil1.mean().astype(float).sort_index() if len(M) else pd.Series(dtype=float)
     out['p_kohort'] = int(len(c))
+    if nb is None:
+        nb = n_berkesan(M.hasil1.astype(float).values, M.tarikh_beli.values) if len(M) else 0.0
     sebab = []
     if len(c) and kal:
         eq = c.cumsum().values; pk = np.maximum.accumulate(np.maximum(eq, 0.0))
@@ -412,9 +478,11 @@ def pantau_kaedah(P, umur, kini, kal, kekal, mu, lo, hi, hari_beli, k=0.5):
         if eq[-1] < tinggi:
             lama = max(lama, int(np.busday_count(t_pk, np.datetime64(str(kini)[:10], 'D'))))
         out['p_dd_tempoh'] = lama; out['p_dd_tempoh_had'] = int(kal['dd_tempoh'])
-        # CUSUM hanya jika bootstrap backtest boleh beramaran (taburan kohort sangat condong ke kanan: z bawah tidak melepasi k)
-        sasaran = kal['mu_winsor'] - (1 - kekal) * kal['mu_kohort']
-        z = (np.clip(c.values, *kal['winsor']) - sasaran) / max(kal['sd_winsor'], 1e-6)
+        # CUSUM bawah atas kohort diwinsor, sasaran winsor dipotong (winsor dengan winsor); hanya jika bootstrap backtest boleh
+        # beramaran (taburan kohort sangat condong ke kanan: z bawah tidak melepasi k)
+        sasaran = sasaran_cusum(kal, kekal)
+        cw = np.clip(c.values, *kal['winsor'])
+        z = (cw - sasaran) / max(kal['sd_winsor'], 1e-6)
         if kal.get('arl_bootstrap', 1) is not None:
             S = 0.0; n = 0
             for v in z:
@@ -427,20 +495,23 @@ def pantau_kaedah(P, umur, kini, kal, kekal, mu, lo, hi, hari_beli, k=0.5):
         if lama > kal['dd_tempoh']:
             sebab.append(f"tempoh di bawah puncak {lama} > {int(kal['dd_tempoh'])} hari")
         n = int(kal.get('n_bergulir', PANTAU_BERGULIR))
-        if kal.get('p5_bergulir') is not None and len(c) >= n:
-            out['p_bergulir'] = bulat(float(c.values[-n:].mean()), 2)
-            out['p_bergulir_had'] = bulat(kal['p5_bergulir'] - (1 - kekal) * kal['mu_kohort'], 2)
+        p5 = kal.get('p5_bergulir_winsor', kal.get('p5_bergulir'))
+        if p5 is not None and len(c) >= n:
+            out['p_bergulir'] = bulat(float(cw[-n:].mean()), 2)
+            out['p_bergulir_had'] = bulat(p5 - (kal['mu_winsor'] - sasaran), 2)
             if out['p_bergulir'] < out['p_bergulir_had']:
                 sebab.append(f"purata {n} hari beli {out['p_bergulir']:+.2f}% < p5 backtest {out['p_bergulir_had']:+.2f}%")
-    bersara = (p_rugi is not None and p_rugi > PANTAU_P and hari_beli >= PANTAU_G) or out['p_amaran'] >= 2
-    if p_rugi is not None and p_rugi > PANTAU_P and hari_beli >= PANTAU_G:
+    p_bersara = p_rugi is not None and p_rugi > PANTAU_P and hari_beli >= PANTAU_G
+    if p_bersara:
         sebab.insert(0, f"P(purata ≤ 0) {p_rugi:.2f} > {PANTAU_P}")
     if out['p_amaran']:
         sebab.insert(0, f"{out['p_amaran']} amaran CUSUM")
-    if bersara:
-        out['pantau'] = 'BERSARA'
-    elif len(c) < PANTAU_KOHORT:
+    if len(c) < PANTAU_KOHORT or nb < NB_MIN:   # pengawal bukti minimum SEBELUM BERSARA/GANTUNG/AMARAN
         out['pantau'] = 'BELUM CUKUP'
+        if sebab:
+            sebab.insert(0, f"belum dinilai ({len(c)} hari beli matang, nb {nb:.1f}; perlu ≥ {PANTAU_KOHORT} dan nb ≥ {NB_MIN})")
+    elif p_bersara or out['p_amaran'] >= 2:
+        out['pantau'] = 'BERSARA'
     elif any(x.startswith(('kejatuhan', 'tempoh', 'purata ')) for x in sebab):
         out['pantau'] = 'GANTUNG'
     elif out['p_amaran']:
@@ -468,29 +539,194 @@ def skor(mu0, sd0, n, xbar, sdf, n0=N0):
 
 
 def status_kaedah(n, xbar, sdf, mu0, lo, hi, hari=None, nb=None):
-    """AMARAN: >= 10 matang dan purata matang di bawah jangkaan (t < -2, ralat piawai ikut n berkesan nb jika diberi).
-    BELUM CUKUP: < 20 matang atau < 10 hari beli berbeza (hari). KUAT: julat 95% skor > 0. LEMAH: julat 95% skor < 0.
+    """AMARAN: >= 10 matang, >= 10 hari beli berbeza, nb >= NB_MIN dan purata matang di bawah jangkaan (t < -2, ralat piawai
+    ikut n berkesan nb jika diberi). BELUM CUKUP: < 20 matang atau < 10 hari beli berbeza (hari). KUAT: julat 95% skor > 0. LEMAH: julat 95% skor < 0.
     Selainnya PERHATI."""
     nb = n if nb is None else nb
-    if n >= N_AMARAN and nb >= 2 and sdf and sdf > 0 and (xbar - mu0) / (sdf / math.sqrt(nb)) < -2:
+    cukup = nb >= NB_MIN and (hari is None or hari >= N_HARI_MIN)   # pengawal bukti minimum sebelum AMARAN (24 Okt 2026)
+    if n >= N_AMARAN and cukup and sdf and sdf > 0 and (xbar - mu0) / (sdf / math.sqrt(nb)) < -2:
         return 'AMARAN'
     if n < N_MIN or (hari is not None and hari < N_HARI_MIN):
         return 'BELUM CUKUP'
     return 'KUAT' if lo > 0 else 'LEMAH' if hi < 0 else 'PERHATI'
 
 
+# ---------------------------------------------------------------- ranking tunggal (24 Okt 2026, audit item 6/16/17)
+def susun_kedudukan(rows):
+    """Kedudukan: kaedah swing dengan >= N_BT_MIN dagangan backtest ikut skor sebulan TANPA bundar (_kb; dahulu nilai dibundar 2
+    tempat perpuluhan, jadi seri disusun ikut katalog), kemudian swing sampel kecil dan bukan swing (tanpa nombor). Susunan
+    stabil. -> (swing berkedudukan, swing sampel kecil, bukan swing)."""
+    k = lambda r: -(r['_kb'] if r['_kb'] is not None else -1e9)
+    for r in rows:
+        r['sampel_kecil'] = (r['bt_n'] or 0) < N_BT_MIN
+    sw = sorted([r for r in rows if r['swing'] and not r['sampel_kecil']], key=k)
+    kecil = sorted([r for r in rows if r['swing'] and r['sampel_kecil']], key=k)
+    lain = sorted([r for r in rows if not r['swing']], key=k)
+    for i, r in enumerate(sw, 1):
+        r['kedudukan'] = i
+    for r in kecil + lain:
+        r['kedudukan'] = None
+    return sw, kecil, lain
+
+
+def peluang_pangkat(mu, se, cabutan=MC_CABUTAN, biji=MC_BIJI, top=TOP_N):
+    """Monte Carlo pangkat: skor sebulan setiap kaedah ~ Normal(mu, se) secara bebas, se = (had atas julat 95% - skor) / 1.96;
+    cabutan berbiji (boleh diulang); pangkat 1 = tertinggi. -> (P(pangkat 1), P(pangkat <= top), persentil ke-5 dan ke-95
+    pangkat = selang pangkat 90%) setiap kaedah. Korelasi antara kaedah diabaikan (anggaran)."""
+    mu = np.asarray(mu, float); se = np.maximum(np.asarray(se, float), 1e-9); n = len(mu)
+    if not n:
+        return np.zeros(0), np.zeros(0), np.zeros(0, int), np.zeros(0, int)
+    X = np.random.default_rng(biji).normal(mu, se, size=(cabutan, n))
+    pangkat = np.empty((cabutan, n), dtype=np.int32)
+    pangkat[np.arange(cabutan)[:, None], np.argsort(-X, axis=1)] = np.arange(1, n + 1, dtype=np.int32)
+    q = np.quantile(pangkat, [0.05, 0.95], axis=0, method='inverted_cdf')
+    return (pangkat == 1).mean(0), (pangkat <= top).mean(0), q[0].astype(int), q[1].astype(int)
+
+
+def nb_perlu(mu0, sd, n0):
+    """n berkesan hadapan yang diperlukan untuk BUKTI: julat 95% skor tidak merangkumi 0 jika purata hadapan = jangkaan dipotong
+    mu0, iaitu |mu0| - 1.96 x SD / sqrt(n0 + nb) > 0 -> nb = (1.96 x SD / |mu0|)^2 - n0 (SD seperti skor(): hadapan jika
+    >= 20 matang, jika tidak backtest; min SD_MIN). Lantai NB_MIN (pengawal bukti minimum; keluar BELUM CUKUP pula perlu
+    >= 20 matang dan >= 10 hari beli: g_matang/g_perlu dan tarikh_sebenar). None jika mu0 = 0."""
+    if not mu0:
+        return None
+    return int(max(NB_MIN, math.ceil((Z95 * max(SD_MIN, sd or SD_MIN) / abs(mu0)) ** 2 - n0)))
+
+
+def sesi_nyse(mula, akhir):
+    """Sesi NYSE mula..akhir (inklusif), 'YYYY-MM-DD': exchange_calendars XNYS (dipin kekangan.txt); di luar julat kalendar
+    atau tanpa pakej -> hari bekerja Isn–Jum."""
+    t0, t1 = pd.Timestamp(mula), pd.Timestamp(akhir)
+    out = []
+    try:
+        import exchange_calendars as xc
+        c = xc.get_calendar('XNYS')
+        a, b = max(t0, c.first_session), min(t1, c.last_session)
+        if a <= b:
+            out = [str(d.date()) for d in c.sessions_in_range(a, b)]
+    except (ImportError, ValueError, KeyError):
+        out = []
+    mula_bd = pd.Timestamp(out[-1]) + pd.Timedelta(days=1) if out else t0
+    return out + [str(d.date()) for d in pd.bdate_range(mula_bd, t1)]
+
+
+def tarikh_bukti(beli, umur, kadar, sehari, depan, sesi, n_min=N_MIN, g_min=N_HARI_MIN):
+    """Anggaran sesi pertama kaedah boleh keluar BELUM CUKUP (>= n_min posisi matang DAN >= g_min hari beli berbeza matang).
+    beli = {tarikh beli: bilangan posisi} (sedia ada + belian tertunda Lejar); kadar = pecahan sesi isyarat dengan belian
+    (Fraction; Lejar Penuh); sehari = posisi setiap hari beli (Fraction); depan = sesi akan datang selepas tarikh beli terakhir
+    yang diketahui; sesi = semua sesi NYSE (rujukan matang). Hari beli ke-j akan datang = depan[ceil(j / kadar) - 1]; tarikh =
+    sesi pertama >= tarikh beli hari beli syarat + umur hari kalendar (takrif matang). None jika kadar 0 atau di luar kalendar."""
+    n = g = 0; Bt = None
+    for t in sorted(beli):
+        n += beli[t]; g += 1
+        if n >= n_min and g >= g_min:
+            Bt = t; break
+    if Bt is None:
+        if not kadar or not sehari:
+            return None
+        k = max(g_min - g, math.ceil(Fraction(n_min - n) / sehari), 1)
+        i = math.ceil(Fraction(k) / kadar) - 1
+        if i >= len(depan):
+            return None
+        Bt = depan[i]
+    t = str((pd.Timestamp(Bt) + pd.Timedelta(days=umur)).date())
+    return next((x for x in sesi if x >= t), None)
+
+
+def muat_isyarat_lejar(lejar=LEJAR):
+    """(sesi isyarat Lejar [YYYY-MM-DD], belian tertunda DataFrame id/tarikh_isyarat bagi sesi terakhir) daripada status.json
+    dan tunggu.csv."""
+    try:
+        st = json.load(open(os.path.join(lejar, 'status.json'), encoding='utf-8'))
+    except (OSError, ValueError):
+        st = {}
+    sesi = sorted({x.get('sesi') for x in st.get('larian', []) if x.get('sesi')})
+    f = os.path.join(lejar, 'tunggu.csv')
+    T = pd.read_csv(f, dtype=str, usecols=['id_kaedah', 'tarikh_isyarat']) if os.path.exists(f) else \
+        pd.DataFrame(columns=['id_kaedah', 'tarikh_isyarat'])
+    akhir = st.get('sesi_terakhir') or (sesi[-1] if sesi else None)
+    T = T[T.tarikh_isyarat == akhir] if akhir else T.iloc[:0]
+    return sesi, T.rename(columns={'id_kaedah': 'id'})
+
+
+def kelompok_rows(rows, KALL):
+    """kelompok = nombor kelompok korelasi pulangan bulanan backtest (kalibrasi_skor.py: pautan lengkap, rho >= 0.7), dinombor
+    1.. ikut ahli terbaik; kelompok_wakil = ahli terbaik (kedudukan swing tertinggi; tanpa kedudukan: skor sebulan tertinggi)."""
+    lab = {r['id']: (KALL.get(r['id']) or {}).get('kelompok') for r in rows}
+    kunci = lambda r: (0, r['kedudukan']) if r.get('kedudukan') else (1, -(r['_kb'] if r['_kb'] is not None else -1e9))
+    kump = {}
+    for r in rows:
+        if lab[r['id']]:
+            kump.setdefault(lab[r['id']], []).append(r)
+    wakil = {g: min(rs, key=kunci) for g, rs in kump.items()}
+    no = {g: i for i, g in enumerate(sorted(kump, key=lambda g: kunci(wakil[g])), 1)}
+    for r in rows:
+        g = lab[r['id']]
+        r['kelompok'] = no.get(g); r['kelompok_wakil'] = wakil[g]['id'] if g else None
+
+
+def fasa_papan(rows):
+    """Fasa papan (banner): posisi hadapan matang, kaedah dengan bukti (keluar BELUM CUKUP), tarikh status sebenar pertama
+    dan julat tarikh 5 teratas."""
+    mat = sum(r['h_matang'] for r in rows); jum = sum(r['h_posisi'] for r in rows)
+    bukti = [r for r in rows if r['status'] != 'BELUM CUKUP']
+    calon = [r for r in rows if r.get('tarikh_sebenar')]
+    pt = min(calon, key=lambda r: (r['tarikh_sebenar'], r['kedudukan'] or 10 ** 6)) if calon else None
+    top = sorted((r for r in rows if r.get('kedudukan') and r['kedudukan'] <= TOP_N), key=lambda r: r['kedudukan'])
+    t5 = [r.get('tarikh_sebenar') for r in top]
+    t5 = [min((x for x in t5 if x), default=None), max(t5) if t5 and all(t5) else None]
+    pertama = dict(id=pt['id'], kedudukan=pt['kedudukan'], tarikh=pt['tarikh_sebenar']) if pt else None
+    kd = lambda r: f"#{r['kedudukan']}" if r['kedudukan'] else 'bukan swing/sampel kecil'
+    if not bukti:
+        teks = (f"Fasa 0 — kedudukan = backtest dipotong: 0 kaedah ada bukti hadapan ({mat:,} daripada {jum:,} posisi hadapan "
+                f"matang). Status sebenar pertama ±{tarikh_ms(pt['tarikh_sebenar']) if pt else '–'}"
+                + (f" ({pt['id']}, {kd(pt)})" if pt else '')
+                + f"; {TOP_N} teratas ±{tarikh_ms(t5[0])} – {tarikh_ms(t5[1]) if t5[1] else 'lebih lewat'}. Bukan cadangan wang sebenar.")
+    else:
+        teks = (f"Fasa 1 — {len(bukti)} kaedah ada bukti hadapan (≥ {N_MIN} matang, ≥ {N_HARI_MIN} hari beli); {mat:,} daripada "
+                f"{jum:,} posisi matang. Kaedah lain masih backtest dipotong. Bukan cadangan wang sebenar.")
+    return dict(matang_hadapan=int(mat), jumlah_hadapan=int(jum), kaedah_bukti=len(bukti), tarikh_sebenar_pertama=pertama,
+                tarikh_top5=t5, teks=teks)
+
+
+def nota_gabungan(rows, path=GABUNGAN_BEKU):
+    """Nota gabungan beku (item 20): SEMENTARA + kedudukan kini kaedah beku dalam ranking ini (fail beku tidak diubah)."""
+    try:
+        ids = [k['id'] for k in json.load(open(path, encoding='utf-8')).get('kaedah', [])]
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+    if not ids:
+        return None
+    kd = {r['id']: r.get('kedudukan') for r in rows}
+    pos = '/'.join(f"#{kd[i]}" if kd.get(i) else '–' for i in ids)
+    return f"SEMENTARA — dipilih atas data C belum matang; kedudukan kini {pos} dalam ranking ini ({'/'.join(ids)})"
+
+
 def analisis(kini=None):
     kat = muat_katalog()
     REG = muat_registry({i: v for i, _, v in kat})
     WF, AT = muat_wfo(), muat_autotune()
-    akhir, tarikh_harga = harga_akhir()
-    kini = kini or tarikh_harga or datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    sesi_lejar = _lejar_sesi()
+    akhir, tarikh_harga = harga_akhir(hingga=kini or sesi_lejar)   # harga hingga sesi Lejar sahaja (satu vintaj)
+    kini = kini or sesi_lejar or tarikh_harga or datetime.now(timezone.utc).strftime('%Y-%m-%d')
     L, C = muat_lejar(akhir), muat_c(akhir=akhir)
     H, mula_lejar, tindih = gabung_hadapan(L, C)
     ERN = muat_earnings()
-    KAL, K_CUSUM = muat_kalibrasi()
+    KAL, K_CUSUM, KALL = muat_kalibrasi(semua=True)
     Hg = dict(tuple(H.groupby('id'))) if len(H) else {}
     Cg = dict(tuple(C.groupby('id'))) if len(C) else {}
+    # kadar isyarat sebenar setiap kaedah dalam Lejar Penuh (sesi isyarat dengan sekurang-kurangnya satu belian/belian tertunda)
+    sesi_isy, TG = muat_isyarat_lejar()
+    I = pd.concat([L[['id', 'tarikh_isyarat']], TG[['id', 'tarikh_isyarat']]], ignore_index=True)
+    n_sesi = len(sesi_isy) or int(I.tarikh_isyarat.nunique())
+    hari_isy = I.groupby('id').tarikh_isyarat.nunique().to_dict() if len(I) else {}
+    pos_isy = I.groupby('id').size().to_dict() if len(I) else {}
+    lejar_n = L.groupby('id').size().to_dict() if len(L) else {}
+    SESI = sesi_nyse('2026-09-01', str((pd.Timestamp(kini) + pd.Timedelta(days=5 * 366)).date()))
+    beli_tunda = next((x for x in SESI if x > kini), None) if len(TG) else None   # belian sesi berikutnya (tunggu.csv)
+    akhir_tahu = beli_tunda or kini
+    DEPAN = [x for x in SESI if x > akhir_tahu]
+    tunda = TG.groupby('id').size().to_dict() if len(TG) else {}
     rows = []
     for mid, nama, var in kat:
         r = REG.get(mid) or {}
@@ -502,14 +738,30 @@ def analisis(kini=None):
         avg_bt = r['avg'] * 100 if r.get('avg') is not None else None
         mu0 = avg_bt * kekal if avg_bt is not None else 0.0
         sd0 = sd_backtest(r)
-        hd = ringkas_hadapan(Hg.get(mid, H.iloc[:0]), hari, kini, ERN)
+        Pm = Hg.get(mid, H.iloc[:0])
+        hd = ringkas_hadapan(Pm, hari, kini, ERN)
         n0 = berat_backtest(r.get('n'))
         # skor atas purata matang penuh dan n berkesan (R5); SD hadapan dipakai jika >= N_MIN matang
-        mu, lo, hi = skor(mu0, sd0, hd['n_berkesan'], hd['purata'] or 0.0, hd['sd'] if hd['matang'] >= N_MIN else None, n0)
+        sdf = hd['sd'] if hd['matang'] >= N_MIN else None
+        mu, lo, hi = skor(mu0, sd0, hd['n_berkesan'], hd['purata'] or 0.0, sdf, n0)
         st = status_kaedah(hd['matang'], hd['purata'] or 0.0, hd['sd'], mu0, lo, hi, hd['hari_beli'], hd['n_berkesan'])
         c = Cg.get(mid)
-        pt = pantau_kaedah(Hg.get(mid, H.iloc[:0]), hd['umur_hari'], kini, KAL.get(mid), kekal, mu, lo, hi, hd['hari_beli'], K_CUSUM)
+        kal = KAL.get(mid); ka = KALL.get(mid) or {}
+        pt = pantau_kaedah(Pm, hd['umur_hari'], kini, kal, kekal, mu, lo, hi, hd['hari_beli'], K_CUSUM, hd['n_berkesan'])
+        p_sas, p_amb = teks_pantau(kal, kekal, K_CUSUM)
         sebulan = (lambda v: v / hari * HARI_BULAN) if hari else (lambda v: None)
+        # meter bukti: tarikh sebenar ikut kadar isyarat Lejar (sandaran: kadar kohort backtest jika tiada isyarat Lejar)
+        beli = Pm.groupby('tarikh_beli').size().to_dict() if len(Pm) else {}
+        if tunda.get(mid):
+            beli[beli_tunda] = beli.get(beli_tunda, 0) + tunda[mid]
+        if hari_isy.get(mid):
+            kadar, sehari, asas = Fraction(hari_isy[mid], n_sesi), Fraction(pos_isy[mid], hari_isy[mid]), 'lejar'
+        elif kal and kal.get('kohort') and kal.get('kohort_setahun') and ka.get('n'):
+            kadar = Fraction(min(1.0, kal['kohort_setahun'] / 252)).limit_denominator(10 ** 4)
+            sehari, asas = Fraction(ka['n'] / kal['kohort']).limit_denominator(10 ** 4), 'backtest'
+        else:
+            kadar = sehari = None; asas = None
+        t_sebenar = tarikh_bukti(beli, hd['umur_hari'], kadar, sehari, DEPAN, SESI)
         rows.append(dict(
             id=mid, nama=nama, varian=var, swing=bool(hari is not None and SWING[0] <= hari <= SWING[1]),
             hari=bulat(hari, 1), bt_keputusan=r.get('keputusan'), bt_skor=bulat(r.get('skor'), 1), bt_cagr=bulat(r.get('cagr'), 4),
@@ -530,24 +782,30 @@ def analisis(kini=None):
             c_purata=bulat(c.hasil1.dropna().mean(), 2) if c is not None and c.hasil1.notna().any() else None,
             skor=bulat(mu, 2), skor_bawah=bulat(lo, 2), skor_atas=bulat(hi, 2),
             skor_bulan=bulat(sebulan(mu), 2), skor_bulan_bawah=bulat(sebulan(lo), 2), skor_bulan_atas=bulat(sebulan(hi), 2),
-            status=st, **pt))
-    # kedudukan: swing dengan >= N_BT_MIN dagangan backtest (ikut skor sebulan), swing sampel kecil, kemudian bukan swing
-    k = lambda r: (-(r['skor_bulan'] if r['skor_bulan'] is not None else -1e9))
-    for r in rows:
-        r['sampel_kecil'] = (r['bt_n'] or 0) < N_BT_MIN
-    sw = sorted([r for r in rows if r['swing'] and not r['sampel_kecil']], key=k)
-    kecil = sorted([r for r in rows if r['swing'] and r['sampel_kecil']], key=k)
-    lain = sorted([r for r in rows if not r['swing']], key=k)
-    for i, r in enumerate(sw, 1):
-        r['kedudukan'] = i
+            lb_bulan=bulat(sebulan(lo), 3),
+            g_matang=hd['hari_beli'], g_perlu=N_HARI_MIN, nb=bulat(hd['n_berkesan'], 1), nb_perlu=nb_perlu(mu0, sdf or sd0, n0),
+            tarikh_sebenar=t_sebenar, tarikh_asas=asas,
+            ditolak=r.get('keputusan') == 'DITOLAK', lejar_n=int(lejar_n.get(mid, 0)),
+            median_bt=bulat(ka.get('median'), 2), pangkas5_bt=bulat(ka.get('u1_pangkas'), 2), pct_top1=bulat(ka.get('pct_top1'), 1),
+            status=st, **pt, pantau_sasaran=p_sas, pantau_ambang=p_amb,
+            _kb=sebulan(mu), _se=(sebulan(hi) - sebulan(mu)) / Z95 if hari else None))
+    sw, kecil, lain = susun_kedudukan(rows)
+    # peluang pangkat (Monte Carlo) dalam set berkedudukan; selainnya None
+    p1, p5, q5, q95 = peluang_pangkat([r['_kb'] for r in sw], [r['_se'] for r in sw])
+    for r, a, b, c, d in zip(sw, p1, p5, q5, q95):
+        r.update(p_top1=round(float(a), 3), p_top5=round(float(b), 3), pangkat_p5=int(c), pangkat_p95=int(d))
     for r in kecil + lain:
-        r['kedudukan'] = None
-    sw += kecil
+        r.update(p_top1=None, p_top5=None, pangkat_p5=None, pangkat_p95=None)
+    semua = sw + kecil + lain
+    kelompok_rows(semua, KALL)
+    for r in semua:
+        r.pop('_kb'); r.pop('_se')
     meta = dict(kini=kini, harga_pada=tarikh_harga, mula_lejar=mula_lejar,
                 lejar_posisi=int(len(L)), lejar_tindih=tindih, c_posisi=int(len(C)),
                 c_pra_lejar=int((C.tarikh_beli < mula_lejar).sum()) if mula_lejar and len(C) else int(len(C)),
-                lejar_sesi=_lejar_sesi())
-    return sw + lain, meta
+                lejar_sesi=sesi_lejar, lejar_sesi_isyarat=n_sesi, beli_tertunda=beli_tunda,
+                fasa=fasa_papan(semua), label_semakan=LABEL_SEMAKAN, gabungan_beku_nota=nota_gabungan(semua))
+    return semua, meta
 
 
 def _lejar_sesi():
@@ -614,12 +872,14 @@ def penemuan(rows, meta, ruj):
     out = []
     if sw:
         t = sw[0]
+        lb = max(sw, key=lambda r: r['lb_bulan'] if r['lb_bulan'] is not None else -1e9)
         out.append(f"Swing teratas ikut skor gabungan: {t['id']} {t['nama']} — {sg(t['skor_bulan'])} sebulan "
                    f"setiap posisi (julat {sg(t['skor_bulan_bawah'])} hingga {sg(t['skor_bulan_atas'])}), {t['lulus']}/3 semakan luar sampel, "
                    f"status {t['status']}; CAGR backtest bersendirian {p(t['bt_cagr'])} ({t['bt_setahun']} dagangan setahun). "
-                   'Tiga seterusnya: ' + ', '.join(r['id'] for r in sw[1:4]) + '.')
+                   f"Tetapi P(benar-benar #1) hanya {p(t['p_top1'], 0)} dan selang pangkat 90% #{t['pangkat_p5']}–#{t['pangkat_p95']}"
+                   + (' (DITOLAK dalam registry)' if t['ditolak'] else '') + '. Tiga seterusnya: ' + ', '.join(r['id'] for r in sw[1:4])
+                   + f". Had bawah julat tertinggi: {lb['id']} ({sg(lb['lb_bulan'])} sebulan).")
     dinilai = [r for r in rows if r['h_matang'] >= N_MIN]
-    m20 = sorted(r['matang_20'] for r in rows if r['matang_20'])
     if dinilai:
         kuat = [r['id'] for r in dinilai if r['status'] == 'KUAT']
         amaran = [r['id'] for r in rows if r['status'] == 'AMARAN']
@@ -627,9 +887,11 @@ def penemuan(rows, meta, ruj):
                    f"AMARAN, jauh di bawah jangkaan ({len(amaran)}): {senarai(amaran)}.")
     else:
         mt = sum(r['h_matang'] for r in rows)
+        f = meta.get('fasa') or {}; t1 = f.get('tarikh_sebenar_pertama') or {}; t5 = f.get('tarikh_top5') or [None, None]
         out.append(f"Data hadapan belum matang: {mt} posisi matang daripada {sum(r['h_posisi'] for r in rows)} "
                    f"(Lejar sejak {tarikh_ms(meta['mula_lejar'])}, Papertrade C sejak 8 Okt 2026). Kedudukan kini = backtest dipotong. "
-                   f"Kaedah pertama dengan {N_MIN} posisi matang dijangka {tarikh_ms(m20[0]) if m20 else '–'}.")
+                   f"Status sebenar pertama (≥ {N_MIN} matang dan ≥ {N_HARI_MIN} hari beli) dijangka {tarikh_ms(t1.get('tarikh'))} "
+                   f"({t1.get('id', '–')}); {TOP_N} teratas {tarikh_ms(t5[0])} – {tarikh_ms(t5[1]) if t5[1] else 'lebih lewat'}.")
     pt = {k: [r['id'] for r in rows if r.get('pantau') == k] for k in ('BERSARA', 'GANTUNG', 'AMARAN')}
     if any(pt.values()) and out:   # kekal 3 penemuan: pantau ditambah pada penemuan data hadapan
         out[-1] += ' Pantau: ' + '; '.join(f'{k} ({len(v)}): {senarai(v)}' for k, v in pt.items() if v) + '.'
@@ -656,7 +918,10 @@ def jana_md(rows, meta, ruj, pen, dibina):
          f"Dijana {dibina} oleh `standard/penganalisis.py` (GitHub Actions `analisis.yml`, selepas Lejar Penuh). Data harga hingga "
          f"{tarikh_ms(meta['harga_pada'])}; Lejar sesi terakhir {tarikh_ms(meta['lejar_sesi'])}. Rekod analisis sahaja: tiada order, "
          'tiada wang sebenar. Dashboard: tab Analisis (db `analisis/papan`).', '',
-         '## 3 penemuan utama', ''] + [f'{i}. {x}' for i, x in enumerate(pen, 1)] + ['',
+         f"> **{(meta.get('fasa') or {}).get('teks', '')}**", '']
+    if meta.get('gabungan_beku_nota'):
+        L += [f"Gabungan beku (portfolio_slot GABUNGAN_10): {meta['gabungan_beku_nota']}.", '']
+    L += ['## 3 penemuan utama', ''] + [f'{i}. {x}' for i, x in enumerate(pen, 1)] + ['',
          '## Cara skor dikira', '',
          f'- Jangkaan backtest = purata pulangan bersih setiap dagangan, set 431 dalam sampel (varian aktif), dikekalkan '
          f'{int(ASAS_KEKAL * 100)}% + {int(TAMBAH_KEKAL * 100)}% bagi setiap semakan luar sampel yang lulus: S1–S4 (atasi EW dalam ≥ 3/4 '
@@ -671,13 +936,27 @@ def jana_md(rows, meta, ruj, pen, dibina):
          'yang dibeli pada hari sama bergerak bersama pasaran, jadi n dibahagi kesan reka bentuk berkelompok ikut hari beli '
          f'(< {HARI_KLUSTER_MIN} hari beli berbeza: nb = bilangan hari). Julat 95% = skor ± 1.96 × SD ÷ √(n0 + nb). Skor sebulan = skor ÷ '
          f'hari pegang backtest × {HARI_BULAN}, iaitu untung setiap posisi jika modal dipusing semula sebaik keluar.',
-         f'- Status: AMARAN = ≥ {N_AMARAN} matang dan purata matang jauh di bawah jangkaan (t < −2 atas nb); BELUM CUKUP = < {N_MIN} '
-         f'matang atau < {N_HARI_MIN} hari beli berbeza; KUAT = julat 95% di atas 0; LEMAH = julat 95% di bawah 0; selainnya PERHATI.',
-         f'- Pantau (label sahaja): BERSARA = P(purata ≤ 0) > {PANTAU_P} dengan ≥ {PANTAU_G} hari beli, atau ≥ 2 amaran CUSUM; GANTUNG = '
+         f'- Status: AMARAN = ≥ {N_AMARAN} matang, ≥ {N_HARI_MIN} hari beli, nb ≥ {NB_MIN} dan purata matang jauh di bawah jangkaan '
+         f'(t < −2 atas nb); BELUM CUKUP = < {N_MIN} matang atau < {N_HARI_MIN} hari beli berbeza; KUAT = julat 95% di atas 0; LEMAH = '
+         'julat 95% di bawah 0; selainnya PERHATI.',
+         f'- Pantau (label sahaja): pengawal bukti dahulu — BELUM CUKUP = < {PANTAU_KOHORT} hari beli matang atau nb < {NB_MIN}; '
+         f'kemudian BERSARA = P(purata ≤ 0) > {PANTAU_P} dengan ≥ {PANTAU_G} hari beli, atau ≥ 2 amaran CUSUM; GANTUNG = '
          f'kejatuhan ekuiti kohort harian > {PANTAU_DD} × maks backtest, tempoh di bawah puncak > maks backtest, atau purata '
-         f'{PANTAU_BERGULIR} hari beli matang terakhir < persentil ke-5 purata bergulir {PANTAU_BERGULIR} hari beli backtest (dilaras ke '
-         f'jangkaan); AMARAN = 1 amaran '
-         f'CUSUM bawah (h dikalibrasi bootstrap supaya amaran palsu ~ sekali dalam 2 tahun); BELUM CUKUP = < {PANTAU_KOHORT} kohort matang.',
+         f'{PANTAU_BERGULIR} hari beli matang terakhir (diwinsor) < persentil ke-5 purata bergulir {PANTAU_BERGULIR} hari beli backtest '
+         '(diwinsor, dilaras ke sasaran); AMARAN = 1 amaran CUSUM bawah (kohort diwinsor p5–p95 backtest; sasaran = min(purata winsor, '
+         'kekal × purata winsor); k 0.25; h dikalibrasi bootstrap blok bulanan supaya amaran palsu ~ sekali dalam 2 tahun). Sasaran dan '
+         'ambang setiap kaedah dipapar dalam % (pantau_sasaran, pantau_ambang).',
+         f'- Ranking tunggal: kedudukan = skor sebulan tanpa bundar; P(#1) dan P({TOP_N} teratas) serta selang pangkat 90% = Monte Carlo '
+         f'{MC_CABUTAN:,} cabutan berbiji ({MC_BIJI}), skor sebulan setiap kaedah ~ Normal(skor, (had atas − skor) ÷ 1.96), bebas; had bawah '
+         'julat sebulan (lb_bulan) = susunan lalai dashboard.',
+         f'- Meter bukti: hari beli matang / {N_HARI_MIN}; nb / nb perlu, nb perlu = maks({NB_MIN}, (1.96 × SD ÷ |jangkaan|)² − n0) = n '
+         'berkesan supaya julat 95% tidak merangkumi 0 jika purata hadapan = jangkaan; status sebenar (anggaran) = sesi NYSE pertama dengan '
+         f'≥ {N_MIN} matang DAN ≥ {N_HARI_MIN} hari beli matang, ikut kadar isyarat kaedah dalam Lejar Penuh (pecahan sesi isyarat '
+         'berbelian; posisi setiap hari beli) — tiada isyarat Lejar: kadar kohort backtest (ditanda B).',
+         '- Ekor backtest (dagangan backtest varian aktif, kalibrasi_skor.py): median, purata dipangkas 5% dan % jumlah untung daripada 1% '
+         'dagangan terbaik. Kelompok = korelasi purata pulangan bulanan backtest (ikut bulan masuk), pautan lengkap, ρ ≥ 0.7 antara setiap '
+         'pasangan; wakil = ahli berkedudukan tertinggi.',
+         f"- Label semakan: {LABEL_SEMAKAN['s14']}; {LABEL_SEMAKAN['wfo']}; {LABEL_SEMAKAN['at']}.",
          '- Lintas earnings = posisi matang yang dipegang melalui tarikh earnings (TradingView + sejarah Nasdaq/SST); purata tanpa '
          'posisi itu dipapar berasingan (tidak mengubah skor).',
          f'- Swing = purata pegang backtest {SWING[0]}–{SWING[1]} hari dagangan. Kaedah swing dengan < {N_BT_MIN} dagangan backtest '
@@ -693,8 +972,10 @@ def jana_md(rows, meta, ruj, pen, dibina):
                  '(`kajian/KAJIAN_PORTFOLIO.md`).')
     hd = ('| # | Kaedah | Hari | Dagangan/tahun | Backtest 431: CAGR · MDD · menang · purata | S1–S4 · WFO · 2000 AS | Jangkaan % | '
           'Hadapan: posisi · matang · purata · dipangkas · median · menang | nb · hari beli | Lintas earnings · purata tanpa | '
-          'Lorong 2 % | C: posisi · purata | Skor % [julat 95%] | Skor sebulan % | Status | 20 matang | Pantau |')
-    sep = '|' + '---|' * 17
+          'Lorong 2 % | C: posisi · purata | Skor % [julat 95%] | Skor sebulan % [had bawah] | P(#1) · P(5 teratas) · pangkat 90% | '
+          'Bukti: hari beli /10 · nb / nb perlu · status sebenar | Ekor bt: median · pangkas 5% · 1% teratas | Kelompok · wakil | '
+          'Lejar · registry | Status | Pantau | Sasaran · ambang pantau |')
+    sep = '|' + '---|' * 23
 
     def baris(r):
         return (f"| {r['kedudukan'] or '–'} | {r['id']} {r['nama']} | {r['hari'] if r['hari'] is not None else '–'} | "
@@ -704,11 +985,17 @@ def jana_md(rows, meta, ruj, pen, dibina):
                 f"{p(r['at_cagr_a'])}/{p(r['at_cagr_b'])} | {sg(r['jangkaan'])} | {r['h_posisi']} · {r['h_matang']} · {sg(r['h_purata'])} · "
                 f"{sg(r['h_pangkas'])} · {sg(r['h_median'])} · {p(r['h_menang'], 0)} | {r['h_n_berkesan']} · {r['h_hari_beli']} | "
                 f"{r['h_lintas_earnings']} · {sg(r['h_purata_tanpa_earnings'])} | {sg(r['h_purata_l2'])} | {r['c_posisi']} · {sg(r['c_purata'])} | "
-                f"{sg(r['skor'])} [{sg(r['skor_bawah'])}, {sg(r['skor_atas'])}] | {sg(r['skor_bulan'])} | {r['status']} | "
-                f"{tarikh_ms(r['matang_20'])} | {r['pantau']}{' (' + r['p_sebab'] + ')' if r['p_sebab'] else ''} |")
+                f"{sg(r['skor'])} [{sg(r['skor_bawah'])}, {sg(r['skor_atas'])}] | {sg(r['skor_bulan'])} [{sg(r['lb_bulan'])}] | "
+                + (f"{p(r['p_top1'])} · {p(r['p_top5'])} · #{r['pangkat_p5']}–#{r['pangkat_p95']}" if r['p_top1'] is not None else '–')
+                + f" | {r['g_matang']}/{r['g_perlu']} · {r['nb']} / {r['nb_perlu'] if r['nb_perlu'] is not None else '–'} · "
+                f"{tarikh_ms(r['tarikh_sebenar'])}{' (B)' if r['tarikh_asas'] == 'backtest' else ''} | "
+                f"{sg(r['median_bt'])} · {sg(r['pangkas5_bt'])} · {r['pct_top1'] if r['pct_top1'] is not None else '–'}% | "
+                f"K{r['kelompok'] or '–'} · {r['kelompok_wakil'] or '–'} | {r['lejar_n']} · {'⚑ DITOLAK' if r['ditolak'] else r['bt_keputusan'] or '–'} | "
+                f"{r['status']} | {r['pantau']}{' (' + r['p_sebab'] + ')' if r['p_sebab'] else ''} | "
+                f"{r['pantau_sasaran'] or '–'} · {r['pantau_ambang'] or '–'} |")
     sw = [r for r in rows if r['swing']]
     lain = [r for r in rows if not r['swing']]
-    L += ['', f'## Kaedah swing ({SWING[0]}–{SWING[1]} hari), susun ikut skor sebulan ({len(sw)} kaedah)', '', hd, sep] + [baris(r) for r in sw]
+    L += ['', f'## Kaedah swing ({SWING[0]}–{SWING[1]} hari), susun ikut skor sebulan tanpa bundar ({len(sw)} kaedah)', '', hd, sep] + [baris(r) for r in sw]
     L += ['', f'## Bukan swing (pegang < {SWING[0]} atau > {SWING[1]} hari; {len(lain)} kaedah)', '', hd, sep] + [baris(r) for r in lain]
     L += ['', '## Batasan', '',
           '- Set 431 ialah senarai Shariah hari ini (bias kemandirian); kaedah dibina dan ditapis atas data 2019–2026. Sebab itu jangkaan '
@@ -717,7 +1004,9 @@ def jana_md(rows, meta, ruj, pen, dibina):
           'matang lebih sempit daripada sebenar.',
           '- Skor sebulan menganggap modal dipusing semula sebaik keluar; kaedah dengan isyarat jarang tidak menggunakan modal sepenuhnya '
           '(lihat CAGR backtest).',
-          '- Moomoo lama (1–8 Okt 2026, varian v1) tidak dikira.']
+          '- Moomoo lama (1–8 Okt 2026, varian v1) tidak dikira.',
+          '- Peluang pangkat menganggap skor kaedah bebas antara satu sama lain (kaedah sekelompok sebenarnya bergerak bersama) dan '
+          'taburan normal; tarikh status sebenar ialah anggaran ikut kadar isyarat beberapa sesi Lejar sahaja.']
     return '\n'.join(L) + '\n'
 
 
@@ -735,14 +1024,15 @@ def kedudukan_sebelum(rows, kini, lama):
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument('--kini', help='tarikh data (YYYY-MM-DD); lalai = tarikh harga terkini')
+    ap.add_argument('--kini', help='tarikh data (YYYY-MM-DD); lalai = sesi terakhir Lejar Penuh (lejar/status.json)')
     ap.add_argument('--md', default=OUT_MD); ap.add_argument('--json', default=OUT_JSON)
+    ap.add_argument('--lama', help='papan terdahulu (kedudukan_sebelum; lalai = fail --json sedia ada), cth. untuk pratonton di luar repo')
     a = ap.parse_args(argv)
     rows, meta = analisis(a.kini)
     ruj = rujukan(rows)
     pen = penemuan(rows, meta, ruj)
     try:
-        lama = json.load(open(a.json, encoding='utf-8'))
+        lama = json.load(open(a.lama or a.json, encoding='utf-8'))
     except (OSError, ValueError):
         lama = None
     kedudukan_sebelum(rows, meta.get('kini'), lama)
@@ -752,13 +1042,14 @@ def main(argv=None):
                                                     n_min=N_MIN, n_amaran=N_AMARAN, umur_min=UMUR_MIN, hari_bulan=HARI_BULAN,
                                                     pangkas=PANGKAS, n_hari_min=N_HARI_MIN, hari_kluster_min=HARI_KLUSTER_MIN,
                                                     pantau=dict(dd=PANTAU_DD, p=PANTAU_P, g=PANTAU_G, kohort=PANTAU_KOHORT,
-                                                                bergulir=PANTAU_BERGULIR)),
+                                                                bergulir=PANTAU_BERGULIR, nb_min=NB_MIN, k=muat_kalibrasi()[1]),
+                                                    mc=dict(cabutan=MC_CABUTAN, biji=MC_BIJI, top=TOP_N)),
                penemuan=pen, rujukan=ruj, rows=rows,
                nota='Papan Penganalisis (standard/penganalisis.py). Skor = purata pulangan bersih setiap dagangan (%) gabungan backtest '
                     'dipotong dan posisi hadapan matang. Rekod analisis sahaja.')
     try:   # kandungan sama (hanya masa dibina berbeza) -> fail tidak ditulis semula, jadi tiada commit
-        if {k: v for k, v in lama.items() if k != 'dibina'} == json.loads(json.dumps({k: v for k, v in doc.items() if k != 'dibina'})) \
-                and os.path.exists(a.md):
+        if not a.lama and {k: v for k, v in lama.items() if k != 'dibina'} == \
+                json.loads(json.dumps({k: v for k, v in doc.items() if k != 'dibina'})) and os.path.exists(a.md):
             print(f"penganalisis: tiada perubahan sejak {lama.get('dibina')}"); return
     except (OSError, ValueError, AttributeError):
         pass
