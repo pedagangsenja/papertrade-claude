@@ -1195,6 +1195,7 @@ def portfolio_slot(dibina, folder=os.path.join(BS2, 'portfolio_slot'), ew_path=o
         return {t: float(x) for t, x in zip(s.index, v) if t in tarikh}
 
     J = baca(kajian) or {}; MJ = J.get('penuh', {})
+    ST = baca(os.path.join(folder, 'status.json')) or {}   # brek / kill_switch / tangguh PLAYBOOK (portfolio_slot.py)
     out, K, cache = {}, None, {}
     for k, nama in PS.PORTFOLIO.items():
         pe, pp = os.path.join(folder, f'{k}_ekuiti.csv'), os.path.join(folder, f'{k}_posisi.csv')
@@ -1225,6 +1226,9 @@ def portfolio_slot(dibina, folder=os.path.join(BS2, 'portfolio_slot'), ew_path=o
                       ekuiti=[[t, round(float(e), 5), round(float(sp), 5) if pd.notna(sp) else None,
                                round(ew[t], 5) if t in ew else None] for t, e, sp in zip(E.tarikh, E.ekuiti, E.spy)],
                       posisi=posisi)
+        for m in ('brek', 'kill_switch', 'tangguh'):
+            if m in (ST.get(k) or {}):
+                out[k][m] = ST[k][m]
     rs = out.get('RS_10')
     if not rs or not rs['sesi']:
         return None

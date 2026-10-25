@@ -644,14 +644,20 @@ def semak(db, folder=PT, stor=STOR, terkini=None, papan=None, autotune=AUTOTUNE,
     # --- penganalisis
     pp = papan or (os.path.join(db, 'analisis', 'papan.json') if os.path.exists(os.path.join(db, 'analisis', 'papan.json')) else PAPAN)
     if os.path.exists(pp):
-        with open(pp, encoding='utf-8') as f:
-            P = json.load(f)
+        dbp = os.path.join(db, 'analisis', 'papan.json')
+        if os.path.abspath(pp) == os.path.abspath(dbp):
+            # sejak Penganalisis v4 (25 Okt 2026) analisis/papan dibahagi (papan + papan_2…) seperti watchlist
+            P, hilang = gabung_bahagian(db, 'analisis/papan')
+            for h in hilang:
+                sm.beza_terus('penganalisis', h, 'bahagian ada', None, 'bahagian analisis/papan tiada atau induk lain')
+        else:
+            with open(pp, encoding='utf-8') as f:
+                P = json.load(f)
         A = None
         if autotune and os.path.exists(autotune):
             with open(autotune, encoding='utf-8') as f:
                 A = json.load(f)
         nilai['penganalisis'], nilai['pintu'] = semak_papan(sm, P, A)
-        dbp = os.path.join(db, 'analisis', 'papan.json')
         nilai['penganalisis'].update(autotune=bool(A), sumber='db analisis/papan' if os.path.abspath(pp) == os.path.abspath(dbp) else pp)
     nilai['semak'] = sm.kat
     return sm, nilai, S
