@@ -104,13 +104,11 @@ jobs:
           python3 BacktestShariah2/standard/sahkan.py --betulkan --folder "$F"
           python3 BacktestShariah2/standard/jana_db.py --folder "$F" --keluar /tmp/db_semak > /dev/null
           python3 BacktestShariah2/standard/harian_c.py log --folder "$F" --peringkat malam --log "${{ steps.mod.outputs.log }}"
-      - name: Banding mod selari (Actions lawan rutin Claude, tarikh MYT semalam)
+      - name: Banding mod selari (Actions lawan rutin Claude; SEMUA tarikh MYT yang belum dibanding hingga semalam)
+        # Dahulu "MYT semalam" sahaja: kemas kini Sabtu (sesi Jumaat) tidak pernah dibanding kerana harian.yml tidak berjalan
+        # Ahad/Isnin (tiada BANDING_2026-10-24; audit 25 Okt 2026). `belum` melangkau tarikh tanpa commit rutin Claude.
         if: steps.mod.outputs.mod == 'bayang'
-        run: |
-          D=$(TZ=Asia/Kuala_Lumpur date -d yesterday +%F)
-          if [ ! -f "BacktestShariah2/bayang/BANDING_$D.md" ]; then
-            python3 BacktestShariah2/standard/banding_bayang.py hari --tarikh "$D" || echo "::warning::banding $D gagal"
-          fi
+        run: python3 BacktestShariah2/standard/banding_bayang.py belum || echo "::warning::banding gagal"
       - name: Ujian unit
         continue-on-error: ${{ steps.mod.outputs.mod == 'bayang' }}   # mod selari: jangan halang push Lejar/harga
         run: pip install -q -c kekangan.txt -r requirements.txt && python3 -m unittest discover -s BacktestShariah2/ujian
@@ -123,10 +121,18 @@ jobs:
           git add "${{ steps.mod.outputs.folder }}" "${{ steps.mod.outputs.isyarat }}" "${{ steps.mod.outputs.pemangkin }}" "${{ steps.mod.outputs.log }}" 2>/dev/null || true
           if git diff --cached --quiet; then echo "tiada perubahan"; exit 0; fi
           git commit -q -m "Harian Actions (${{ steps.mod.outputs.mod }}): sesi ${{ steps.malam.outputs.sesi }}"
-          for n in 1 2 3 4; do
-            if git pull -q --rebase -X theirs origin main && git push -q origin HEAD:main; then exit 0; fi
-            git rebase --abort 2>/dev/null || true
+          # Rebase biasa (tanpa -X theirs; audit 25 Okt 2026): perubahan serentak pada fail sama TIDAK ditimpa. Konflik ->
+          # batal rebase, cuba semula (maks 3 kali), kemudian gagal dengan jelas (fail bercanggah dalam ::error::).
+          for n in 1 2 3; do
+            if git pull -q --rebase origin main; then
+              if git push -q origin HEAD:main; then exit 0; fi
+              echo "::warning::push ditolak (cubaan $n/3); cuba semula"
+            else
+              KONFLIK=$(git diff --name-only --diff-filter=U | tr '\n' ' ')
+              echo "::warning::rebase bercanggah (cubaan $n/3): ${KONFLIK:-tidak diketahui}"
+              git rebase --abort 2>/dev/null || true
+            fi
             sleep $((n * 20))
           done
-          echo "Push gagal; larian sandaran seterusnya memproses semula daripada keadaan repo." >&2
+          echo "::error::Push gagal selepas 3 cubaan rebase biasa (perubahan serentak pada fail sama; tiada fail ditimpa). Larian sandaran seterusnya memproses semula daripada keadaan repo."
           exit 1

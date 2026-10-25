@@ -1,40 +1,48 @@
 # Papertrade Claude (Backtest Shariah 2)
 
-Repo ini menggantikan Project claude.ai "Backtest Shariah 2" sebagai stor utama mulai 14 Okt 2026. Baca `BacktestShariah2/00_NOTA_SERAHAN.md` (latar belakang) dan `BacktestShariah2/standard/tugasan_v3.md` (peraturan tunggal harian) dahulu. `tugasan_v2.md` dan `papertrade_harian.md` TERBATAL.
+Swing momentum saham Shariah AS: backtest kaedah, kemudian papertrade maya (Papertrade C) setiap hari dagangan. Repo ini stor
+utama sejak 14 Okt 2026 (Project claude.ai dibekukan; jangan tulis ke sana). Baca dahulu: `BacktestShariah2/standard/tugasan_v3.md`
+(peraturan semasa, satu-satunya; §12 = cadangan menunggu kelulusan), `BacktestShariah2/papertrade/SKEMA.md`,
+`BacktestShariah2/jadual/README.md`. Sejarah keputusan bertarikh: `BacktestShariah2/standard/SEJARAH_KEPUTUSAN.md`.
+Latar belakang: `BacktestShariah2/00_NOTA_SERAHAN.md`. Laluan lama `standard/x`, `papertrade/x`, `spec/` = `BacktestShariah2/…`.
 
 ## Struktur
-- `BacktestShariah2/standard/` — peraturan (tugasan_v3.md; dashboard.md), log (binaan_v2_log.md, binaan_v2_log_tambahan.md), skrip harian, `sahkan.py` (semakan data), `bungkus_kod.py`, enjin P01/P02, sumber halaman dashboard_v2.html.
-- `BacktestShariah2/jadual/` — prosedur tiga tugasan berjadual (6:02 pagi, 7:47 malam, 9:35 NY).
-- `BacktestShariah2/kod/` — kod teras (scanner, enjin v1.2, kaedah/Mxx.py). Sumber kebenaran; aset kod dashboard hanya salinan.
-- `BacktestShariah2/ujian/` — ujian unit: `python3 -m unittest discover -s BacktestShariah2/ujian`.
-- `BacktestShariah2/papertrade/` — moomoo.csv, claude.csv, claude_2.csv (… claude_N.csv), senarai_beli.csv, watchlist.csv, sektor.csv. Skema: `papertrade/SKEMA.md`.
-- `BacktestShariah2/spec/SPEC_SEMUA_KAEDAH.md` — semua spec (cari tanda `FAIL ASAL`).
-- `BacktestShariah2/lejar/` — Lejar Penuh (sejak 16 Okt 2026): semua isyarat semua kaedah dibeli/dikeluarkan setiap malam oleh GitHub Actions `lejar.yml` (`standard/lejar.py`). Jangan ubah secara manual. Stor harga repo: `BacktestShariah2/data/harga/stor/` (rutin menyalinnya; jangan commit perubahan).
-- `BacktestShariah2/portfolio_slot/` — jejak hadapan portfolio maya 10 slot (sejak 19 Okt 2026; RS_10 = RS pasaran tertinggi, RAWAK_10 = kawalan; keluar lorong 2; sejak 22 Okt 2026 juga GABUNGAN_10 / TOP1_10 / RAWAK_KAEDAH_10 = gabungan kaedah beku `BacktestShariah2/data/analisis/gabungan_beku.json` (sementara; jangan ubah tanpa keputusan pengguna) lawan #1 sahaja lawan kaedah rawak, kuota slot, lorong terbaik setiap kaedah, log gantung `portfolio_slot/gantung.csv` daripada status pantau Papan Penganalisis) dibina semula daripada Lejar Penuh setiap malam oleh `lejar.yml` (`standard/portfolio_slot.py`). Rekod sahaja; jangan ubah manual. Kajian: `BacktestShariah2/kajian/KAJIAN_PORTFOLIO.md`.
-- `BacktestShariah2/data/trend/status.json` — status trend D10H2-r2 (Bullish/Neutral/Bearish susunan SMA 50/150/200, pengesahan 2 tutup, umur, titik mula, ATR14% + kuintil, rejim SPY) bagi semua saham stor, semua posisi C/Moomoo lama dan watchlist; ditulis Actions `harian.yml` (`standard/trend_status.py`); jangan ubah manual. Paparan sahaja (kajian 23 Okt 2026: tidak meramal pulangan 3–30 hari; bukan penapis atau peraturan jual). Dashboard v103 membaca db `harian/trend` dan `posisi/lorong2` (siri candlestick + paras lorong 2, `standard/lorong2_siri.py`), kedua-duanya dijana `jana_db.py` dan ditolak sesi tolak db.
-- Audit data dashboard (23 Okt 2026; keputusan pengguna: data tidak boleh dibiar kosong untuk analisis): skrip isi semula `standard/henti_isi.py` (henti daripada kod kaedah; M31 `HENTI_TUTUP`), `standard/isi_audit.py` (RS anggaran sejarah pendek `gred.rs_pendek`, industri < 3 saham -> sandaran sektor, tarikh_isyarat Moomoo lama), `standard/qr_isi.py` + `standard/kalendar_earnings.py` (QR/pemangkin '–' daripada kalendar gabungan; yang tidak boleh ditentukan ditanda `sumber_earnings` "tidak diketahui (sebab)"), `standard/gred_kewangan_isi.py` (gred kewangan point-in-time). Saham baharu tanpa sejarah harga -> `data/harga/perlu_sejarah.txt`.
-- `BacktestShariah2/data/rs/` — RS rating lawan seluruh pasaran AS setiap sesi (Actions `rs_pasaran.yml`; dibaca `gred.py`; jangan ubah manual). `BacktestShariah2/kajian/rs/` — bukti skema gred RS (Actions `kajian_rs.yml`).
-- `BacktestShariah2/laporan/` (papan: `standard/jana_papan.py`; Papan Penganalisis `PENGANALISIS.md` + `data/analisis/papan.json`: `standard/penganalisis.py`, Actions `analisis.yml`), `BacktestShariah2/data/` (registry gabungan, P01/P02, `lapisan/`), `BacktestShariah2/uji_kertas/log.csv`, `uji_kertas/jejak_M166.csv` (jejak kertas M166 V1 sahaja, tiada belian; hingga 15 Jan 2027).
-- `WFO/kaedah_baru/step2_<ID>.py` — skrip STEP-2 Rangka R (M162–M167, L01). Kaedah baharu: tambah `kod/registry/<ID>.csv`, baris ke `data/registry_M_gabung.csv`, db dashboard `registry/<ID>` (`standard/dashboard_kemaskini.py`), dan jana semula papan.
-- `data_mentah/` — dataset_S1–S4.csv, index_benchmark.csv (data backtest).
+- `BacktestShariah2/standard/` peraturan, skrip harian (`harian_c.py`, `jana_db.py`, `sahkan.py`, `notifikasi.py`), sumber
+  dashboard `dashboard_v2.html`; `jadual/` prosedur tugasan berjadual; `kod/` kod teras (sumber kebenaran; aset kod dashboard
+  hanya salinan, `kod/README.md`); `ujian/`; `papertrade/` CSV papertrade; `spec/SPEC_SEMUA_KAEDAH.md`; `kajian/`, `laporan/`.
+- Dijana automatik — JANGAN ubah manual: `lejar/`, `portfolio_slot/`, `bayang/`, `data/rs/`, `data/kumpulan/`, `data/trend/`,
+  `data/analisis/papan.json` + `laporan/PENGANALISIS.md`, `data/edgar/`. `data/harga/stor/`: rutin menyalinnya, jangan commit.
+  `data/analisis/gabungan_beku.json`: ubah hanya atas keputusan pengguna.
+- `WFO/`, `AUTOTUNE/`, `data_mentah/`: backtest dan semakan luar sampel. Kaedah baharu: langkah dalam tugasan_v3 §3
+  (moratorium dicadang, §12).
 
-Laluan lama dalam dokumen (`standard/x`, `papertrade/x`, `spec/`) = `BacktestShariah2/standard/x`, `BacktestShariah2/papertrade/x`, `BacktestShariah2/spec/SPEC_SEMUA_KAEDAH.md`.
-
-## Peraturan
-- Dashboard: artifact sedia ada https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e (db melalui ArtifactData). Jangan cipta artifact baharu. Stor harga dan status harian kekal dalam aset/db dashboard. Kod kaedah: sumber di `BacktestShariah2/kod/`, aset kod dashboard ialah salinan (lihat `kod/README.md`).
-- Papertrade C (Claude, maya) sahaja untuk belian baharu sejak 13 Okt 2026. Tiada order Moomoo, tiada wang sebenar.
+## Peraturan wajib
+- TIADA order Moomoo (simulasi atau sebenar), tiada wang sebenar; Papertrade C maya sahaja. Hook `.claude/settings.json`
+  (PreToolUse) menyekat semua alat order tanpa mengira awalan pelayan; SessionStart memasang `requirements.txt`. Jangan buang
+  atau longgarkan hook, `semak_data.yml` atau `penjaga_jadual.yml` (workflow berjadual baharu → tambah ke `JAGA`).
 - "Kalau tak beli, cakap tak beli." Data mesti betul; jangan reka.
-- Dua lorong keluar (17 Okt 2026): kaedah, dan pegang selagi naik (sejak 19 Okt 2026: Chandelier tutup — tutup < tutup tertinggi sejak beli − 4×ATR14 → jual buka esok, paras hanya naik, tanpa henti kaedah; lajur `*_henti`; kajian `BacktestShariah2/kajian/KAJIAN_LORONG2.md`) — direkod berasingan (`standard/keluar_lorong.py`, `papertrade/SKEMA.md`). Lorong 10% dibuang. Belian semula kaedah+saham sama selepas lorong kaedah keluar (sejak 19 Okt 2026; lorong 2 tidak menyekat dan boleh bertindih; `tutup_semua` = kedua-dua keluar).
-- Saham tidak layak (21 Okt 2026), satu pintu `kod/tidak_layak.py`: (1) diambil alih = isyarat palsu (`kod/ambil_alih.py`: corak harga terkunci + senarai sah `BacktestShariah2/data/ambil_alih.csv`); (2) tidak cair (20 bar: ≥ 3 tanpa julat, ≥ 2 tanpa volum, atau median nilai < USD100 ribu); (3) kelas berganda (22 Okt 2026; senarai `BacktestShariah2/data/kelas_berganda.csv`: hanya kelas paling cair diimbas; posisi C kaedah+hari sama yang membeli dua kelas → kelas kurang cair `tidak_sah`). Kedua-duanya ditapis daripada senarai beli, watchlist dan Lejar Penuh. Posisi C dibeli selepas pengumuman ambil alih → `tidak_sah` dan ditutup; posisi saham tanpa bar ≥ 10 sesi (delist; 5 sebelum 22 Okt 2026) → ditutup pada tutup akhir (`tidak_layak.py posisi --tulis`, rutin 6:02 langkah 2c dan `harian_c.py malam`; Lejar: sebab_keluar `delist`). Perjanjian baharu bayaran saham/campuran: tambah ke senarai. Sejak 22 Okt 2026 GitHub Actions `edgar.yml` (`standard/tawaran_edgar.py`) menambah sasaran daripada pemfailan SEC (SC TO-T, SC 14D9, SC 13E3, 425 satu subject; 25-NSE = tamat; proksi merger = `data/edgar/calon.csv`); rahsia repo `SEC_USER_AGENT` (nama + e-mel) diperlukan oleh SEC.
-- Kaedah replika (22 Okt 2026): exitc/tgt modul M02, M19, M20, M26, M31, M38, M41, M47, M76, M78, M81, M82, M100 milik dagangan replika enjin; posisi hadapan dinilai dengan lajur dagangan sendiri (`kod/dagangan.py`: Lejar, `harian_c.py`, rutin 6:02 langkah 2c `dagangan.py betul --tulis`).
-- Stor harga (22 Okt 2026; laporan `BacktestShariah2/kajian/reports/Pengesanan data tercemar yang tinggal.md`): konvensyen = data backtest (bar sebelum ~2 Okt 2026 dilaras hadapan termasuk dividen; yfinance selepasnya pecahan sahaja). Sejarah dilaras hanya jika nisbah bar bertindih seragam (`kod/stor.py nisbah_laras`; log `data/harga/stor/log_laras.csv`). Peristiwa besar (spin-off, dividen ≥ 2%, pengagihan) melalui `kod/peristiwa.py` + `data/harga/faktor.csv` (dividen yfinance automatik; calon jurang disahkan rutin 6:02 langkah 2d dengan Moomoo rehab). Versi pustaka dipin `kekangan.txt`.
+- Sebelum push data: `python3 BacktestShariah2/standard/sahkan.py --betulkan` mesti keluar 0; ujian:
+  `python3 -m unittest discover -s BacktestShariah2/ujian`.
+- Dashboard: artifact sedia ada https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e (db melalui ArtifactData;
+  dokumen dijana `jana_db.py`). Jangan cipta artifact baharu. Stor harga = repo `data/harga/stor/` (aset `harga_aset` dashboard
+  tersangkut 12 Okt 2026; jangan guna).
+- Notifikasi telefon: dalam SETIAP sesi, pada akhir giliran yang menyiapkan tugasan atau memerlukan keputusan pengguna, muatkan
+  `select:PushNotification` (ToolSearch) dan hantar satu baris < 200 aksara, status "proactive". Abaikan jika "not sent".
+- Tugasan berjadual guna model Sonnet 5.5 sahaja, menembak sesi yang sudah dilampirkan repo (jangan `add_repo`). Alat Moomoo/SST
+  mungkin berawalan lain: jika `select:mcp__Moo_Moo__…` gagal, cari ikut nama alat. Larangan order terpakai tanpa mengira awalan.
 - Penerangan teknikal dalam Bahasa Melayu baku.
-- Setiap larian berjadual: `git pull --rebase` dahulu, tulis fail di repo ini, kemudian commit dan push ke `main`. Jangan tulis lagi ke Project claude.ai (salinan di sana dibekukan pada 14 Okt 2026).
-- Sebelum push data: `python3 BacktestShariah2/standard/sahkan.py --betulkan` mesti keluar 0.
-- Automasi (sejak 16 Okt 2026): `.claude/settings.json` menyekat semua alat order (hook PreToolUse) dan memasang `requirements.txt` dalam sesi awan (SessionStart); `.github/workflows/semak_data.yml` menjalankan ujian unit dan `sahkan.py` pada setiap push ke `main`; `.github/workflows/penjaga_jadual.yml` (`standard/penjaga_jadual.py`, sejak 19 Okt 2026) mencetus workflow_dispatch jika cetusan cron 9 workflow berjadual (termasuk `edgar.yml` sejak 22 Okt 2026) hilang/lewat > 30 minit (dalam had masa setiap workflow; tambah workflow berjadual baharu ke `JAGA`); penjaga juga dicetus dari luar oleh tugasan berjadual Claude `trig_01N3Qx1S6bRhf9h5BEKk85bQ` (05:20, 06:20, 12:20, 14:20, 22:20, 23:20 UTC Isn–Sab) ke sesi Sonnet khas `session_018zpLxNRJ3rxZBvGT9yztVT` (hanya run_workflow, tanpa notifikasi). Jangan buang atau longgarkan.
-- Notifikasi telefon (permintaan pengguna 16 Okt 2026): dalam SETIAP sesi/chat, pada akhir setiap giliran yang menyiapkan tugasan atau memerlukan keputusan pengguna, muatkan `select:PushNotification` (ToolSearch) dan hantar satu baris < 200 aksara, status "proactive", yang menyatakan hasil atau apa yang perlu pengguna buat. Abaikan jika keputusan alat "not sent".
-- Papan Penganalisis (20 Okt 2026): satu jadual banding semua kaedah — skor gabungan backtest dipotong (set 431; dikekalkan 25% + 25% bagi setiap semakan luar sampel lulus: S1–S4, WFO W01, AUTOTUNE 2000 saham AS) dan posisi hadapan matang (Lejar Penuh + kohort Papertrade C sebelum Lejar). Swing = pegang 3–30 hari. Kukuh (22 Okt 2026): purata matang penuh (pangkas 5% semakan sahaja sejak 22 Okt), n berkesan ikut hari beli, BELUM CUKUP < 10 hari beli berbeza, lintas earnings dilapor. Pantau (22 Okt 2026; label sahaja): BERSARA (P(purata ≤ 0) > 0.9 dengan ≥ 20 hari beli, atau ≥ 2 amaran CUSUM), GANTUNG (kejatuhan ekuiti kohort > 1.5× atau tempoh di bawah puncak > maks backtest, atau purata 20 hari beli matang terakhir < p5 purata bergulir 20 hari beli backtest dilaras ke jangkaan), AMARAN (1 amaran CUSUM), OK, BELUM CUKUP; parameter backtest `data/analisis/kalibrasi_skor.json` (`standard/kalibrasi_skor.py`). Ranking tunggal + pantau v3 (24 Okt 2026, audit item 6/16–18/20; PRATONTON): kedudukan ikut skor sebulan tanpa bundar; `kini` = sesi Lejar (harga hingga sesi itu); setiap baris `p_top1`/`p_top5`/`pangkat_p5`–`pangkat_p95` (Monte Carlo berbiji 20,000), `lb_bulan` (susunan lalai), meter bukti `g_matang`/`g_perlu`, `nb`/`nb_perlu`, `tarikh_sebenar` (≥ 20 matang dan ≥ 10 hari beli; kadar isyarat Lejar, kalendar NYSE), `ditolak`, `lejar_n`, ekor `median_bt`/`pangkas5_bt`/`pct_top1`, `kelompok`/`kelompok_wakil` (korelasi bulanan backtest ρ ≥ 0.7, pautan lengkap), `pantau_sasaran`/`pantau_ambang`; aras atas `fasa`, `label_semakan`, `gabungan_beku_nota`. Pantau v3: sasaran CUSUM = min(purata winsor, kekal × purata winsor), k 0.25, h bootstrap blok bulanan (kalibrasi v3), ambang GANTUNG bergulir diwinsor, pengawal bukti (≥ 10 hari beli matang dan nb ≥ 10) sebelum BERSARA/GANTUNG/AMARAN. GitHub Actions `analisis.yml` dicetus sebaik `lejar.yml` siap (tanpa LLM); db `analisis/papan` ditolak bersama db harian (tab Analisis). Jangan ubah fail output secara manual.
-- Gred Sektor/Industri v2 (19 Okt 2026): GitHub Actions `gred_kumpulan.yml` (`standard/gred_kumpulan.py`) menulis `BacktestShariah2/data/kumpulan/` setiap hari; jangan ubah secara manual. Kajian: `BacktestShariah2/kajian/KAJIAN_GRED_KUMPULAN.md` (data: cawangan `kajian-gred`).
-- Tugasan berjadual guna model Sonnet 5.5 sahaja.
-- Peralihan ke GitHub Actions (17 Okt 2026, jimat token): `standard/harian_c.py` + workflow `harian.yml`, `beli.yml`, `petang.yml`. Mod dalam `BacktestShariah2/MOD_ACTIONS` (`bayang` = mod selari, Actions menulis ke `BacktestShariah2/bayang/` sahaja; `rasmi` = Actions menulis ke `papertrade/`). Langkah peralihan: `BacktestShariah2/jadual/PERALIHAN.md`. Jangan ubah fail `bayang/` secara manual.
-- Rutin berjadual (sejak 14 Okt 2026) menembak ke sesi Sonnet yang sudah dilampirkan repo ini; jangan guna `add_repo`. Dalam sesi itu alat Moomoo/SST mungkin berawalan lain (cth. `mcp__da8be8b4-…__quote_stock_quote`, bukan `mcp__Moo_Moo__…`): jika `select:mcp__Moo_Moo__…` gagal, cari dengan ToolSearch kata kunci nama alat (cth. "quote_stock_quote") dan guna alat yang ditemui. Larangan order terpakai tanpa mengira awalan.
+
+## Polisi git
+- Rutin berjadual dan bot Actions: `git pull --rebase` dahulu, push data ke `main`; tiada `--force`, tiada `-X theirs`
+  (konflik = gagal dengan jelas, cuba semula maks 3 kali).
+- Pembangunan (kod, workflow, peraturan, dashboard): cawangan + PR, ujian unit dan `sahkan.py` lulus sebelum merge. Tiada
+  push/merge kod ke `main` 05:00–13:30 UTC (tetingkap pengeluaran `harian.yml` → `beli.yml`; selepas DST tamat 1 Nov 2026
+  hingga 14:30 UTC).
+- Kiraan dalam log (`binaan_v2_log*.md`, laporan, notifikasi) dijana skrip (cth. `harian_c.py log`, output JSON skrip), bukan
+  ditaip LLM.
+
+## Status semasa (25 Okt 2026)
+- `BacktestShariah2/MOD_ACTIONS` = `bayang` (Actions menulis ke `bayang/`; rutin Claude rasmi). Peralihan: `jadual/PERALIHAN.md`;
+  jadual selepas peralihan dan DST: `jadual/CADANGAN_JADUAL.md` (cadangan).
+- EDGAR (`edgar.yml`) TIDAK AKTIF sehingga rahsia repo `SEC_USER_AGENT` (nama + e-mel) ditetapkan. Penyambung SST perlu
+  disahkan semula (tiada data SST baharu dalam repo selepas sesi 20 Okt 2026). Tindakan yang hanya pengguna boleh buat: `jadual/CADANGAN_JADUAL.md` §7.

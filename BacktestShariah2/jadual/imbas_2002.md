@@ -1,4 +1,7 @@
-# Imbas pasaran 8:02 malam MYT (Isnin–Jumaat)
+# Imbas pasaran 7:47 malam MYT (Isnin–Jumaat; dahulu 8:02, nama fail dan mesej commit "Imbas 8:02 malam" dikekalkan)
+
+> Prosedur rutin Claude: aktif hanya selagi `BacktestShariah2/MOD_ACTIONS` = `bayang`. Pada peralihan (`PERALIHAN.md`) tugasan
+> ini dimatikan dan kerjanya dibuat GitHub Actions (`harian_c.py`); jangan jalankan dalam mod `rasmi`.
 
 Automatik; jangan tanya soalan. Peraturan: `standard/tugasan_v3.md`, skema: `papertrade/SKEMA.md`, kod: `kod/` (`scanner.py`, `kaedah/Mxx.py`).
 Tugasan belian bermula 9:35 pagi New York: siapkan `senarai_beli.csv` dahulu (sasaran < 30 minit) dan push sebelum watchlist.

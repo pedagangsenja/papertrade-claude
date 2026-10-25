@@ -22,7 +22,8 @@ Alat (ToolSearch; jika `select:mcp__Moo_Moo__…` gagal, cari ikut nama alat, ct
    --tarikh <tutup Jumaat> --out BacktestShariah2/papertrade/sektor_pasaran.csv --json <scratchpad>/sektor_pasaran.json`.
 5. SST: `institutional_flow` dan `unusual_volume` (market US) → simpan JSON di `BacktestShariah2/data/sst/`;
    `market_events` (market US, daysLookahead 40) → `BacktestShariah2/data/pemangkin/market_events.json` (gred QR; dipakai
-   Actions sehingga 9 hari). Ralat SST → langkau dan catat.
+   Actions sehingga 9 hari). Ralat SST → langkau dan catat (penyambung SST tiada data baharu sejak sesi 20 Okt 2026: pengguna
+   perlu sahkan semula di tetapan penyambung claude.ai; `notifikasi.py --amaran` melaporkan "SST n hari").
 6. Snapshot sektor dashboard: `ArtifactData get` `sektor/snapshot` dengan out_dir (fail lama), kemudian
    `python3 BacktestShariah2/standard/snapshot_sektor_db.py --pasaran <sektor_pasaran.json> --lama <fail lama>
    --peta BacktestShariah2/papertrade/peta_industri.csv --papertrade BacktestShariah2/papertrade --dibina "<YYYY-MM-DD HH:MM> MYT"
@@ -37,7 +38,14 @@ Alat (ToolSearch; jika `select:mcp__Moo_Moo__…` gagal, cari ikut nama alat, ct
 7c. Peristiwa korporat besar (dahulu `jadual/kemas_kini_0602.md` langkah 2d setiap pagi): `python3 BacktestShariah2/kod/peristiwa.py calon`;
    bagi setiap calon semak `quote_corporate_actions_rehab` dan `tambah`/`tolak` seperti 2d (jangan reka faktor; alat tiada →
    biarkan calon dan catat). Posisi C dilaras oleh `harian_c.py malam` seterusnya (`tidak_layak.py posisi`), stor/Lejar oleh `lejar.py stor`.
+7d. Sampel lawan Moomoo (cadangan 25 Okt 2026; menggantikan semakan harian rutin 6:02 langkah 7a selepas peralihan; alat baca
+   sahaja `quote_history_kline`): `python3 BacktestShariah2/standard/sampel_semak.py pilih --keluar <scratchpad>/pilih.json`,
+   kline bagi setiap baris `ambil` (ktype 2, autype 0) disalin tepat ke `<scratchpad>/kline.csv`, kemudian
+   `python3 BacktestShariah2/standard/sampel_semak.py banding <scratchpad>/kline.csv --pilih <scratchpad>/pilih.json` →
+   `BacktestShariah2/data/semakan/sampel.json` (commit). Beza dilapor dalam log dan notifikasi; JANGAN ubah CSV secara automatik
+   (`standard/betul_harga_beli.py` hanya selepas disahkan). Bar yfinance muktamad kekal rasmi (tugasan_v3 §5.2).
 8. `python3 BacktestShariah2/standard/sahkan.py` → mesti 0. Catatan dalam `standard/binaan_v2_log.md`
    (bilangan universe, sektor_pasaran, SST, perbezaan Moomoo, kewangan, peristiwa). Commit `Mingguan Moomoo/SST <tarikh>: <ringkas>` + push.
 9. Notifikasi (langkah terakhir, juga jika gagal): `PushNotification`, status "proactive", satu baris < 200 aksara:
-   `Mingguan <tarikh>: universe <n>, sektor <tarikh>, SST <ok/ralat>, kewangan <n>, Moomoo <beza>`.
+   `Mingguan <tarikh>: universe <n>, sektor <tarikh>, SST <ok/ralat>, kewangan <n>, Moomoo <beza>, sampel <n_beza>` (nombor
+   disalin daripada output skrip).
