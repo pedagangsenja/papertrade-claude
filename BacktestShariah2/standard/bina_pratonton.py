@@ -27,7 +27,7 @@ PERLU = [('harian/status', ''), ('harian/hari_ini', ''), ('analisis/papan', 'B')
          ('prestasi/garis', 'B'), ('prestasi/mae', 'B'), ('prestasi/mfe', 'B'), ('prestasi/mae_atr', 'B'), ('prestasi/maefe_l2', 'B'),
          ('papertrade/langkau', 'B'), ('papertrade/watchlist', 'B'), ('prestasi/harian_kaedah', 'B'), ('kaedah/katalog', ''),
          ('registry/aktif', ''), ('meta/info', ''), ('sektor/snapshot', ''), ('jurnal/minggu', '')]
-HARI_INI = ['harian/status', 'harian/hari_ini', 'analisis/papan', 'prestasi/portfolio_slot', 'jurnal/minggu']
+HARI_INI = ['harian/status', 'harian/hari_ini', 'prestasi/portfolio_slot', 'jurnal/minggu']   # analisis/papan dimuat bila Kaedah dibuka
 LAMA = re.compile(r'^papertrade/(claude(_\d+)?|moomoo|moomoo_peta|senarai_beli(_\d+)?)$')
 
 

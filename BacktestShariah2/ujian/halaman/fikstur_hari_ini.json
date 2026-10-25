@@ -222,6 +222,56 @@
 "n": 0
 },
 "nota": "Pra-kira jana_db.py untuk tab Hari Ini (takrif sama dengan halaman). Cip = satu setiap saham: s saham, n posisi, k kaedah, u untung semasa purata %, j jarak minimum ke paras keluar (ATR14), l lorong (K kaedah, 2 Chandelier), sb sebab jual, eh/et earnings (hari dagangan/tarikh), q bendera data. Tiada order · tiada wang sebenar.",
+"papan": {
+"at_sederhana": 2,
+"berkedudukan": 3,
+"corong": null,
+"dibina": "2026-10-24 06:30 MYT",
+"fasa": {
+"jumlah_hadapan": 12,
+"kaedah_bukti": 1,
+"matang_hadapan": 6,
+"tarikh_sebenar_pertama": null,
+"tarikh_top5": [
+null,
+null
+],
+"teks": "Fasa 1 — fikstur ujian."
+},
+"formula": null,
+"harga_pada": "2026-10-22",
+"kaedah": {
+"M03": {
+"ditolak": false,
+"p_top5": 1.0,
+"pintu_lulus": null
+},
+"M07": {
+"ditolak": false,
+"p_top5": 1.0,
+"pintu_lulus": null
+},
+"M12": {
+"ditolak": true,
+"p_top5": 1.0,
+"pintu_lulus": null
+},
+"M20": {
+"ditolak": false,
+"p_top5": null,
+"pintu_lulus": null
+},
+"M99": {
+"ditolak": false,
+"p_top5": null,
+"pintu_lulus": null
+}
+},
+"kini": "2026-10-22",
+"kohort_backfill": null,
+"lejar_sesi": "2026-10-22",
+"lulus": null
+},
 "senarai_beli": null,
 "sesi": "2026-10-23",
 "sesi_sebelum": "2026-10-22",

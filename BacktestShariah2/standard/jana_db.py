@@ -894,6 +894,22 @@ def _blok(L, D, ada_kini, susun):
     return dict(n=len(L), saham=len(C), cip=C[:HAD_CIP], lagi=max(0, len(C) - HAD_CIP))
 
 
+def ringkas_papan(p):
+    """Ringkasan analisis/papan untuk Hari Ini (banner fasa, lampu, nota gabungan beku) supaya tab itu tidak memuat papan penuh
+    (~380 KB sejak Penganalisis v4): fasa, corong, lulus (calon wang sebenar), kaedah berkedudukan, AUTOTUNE SEDERHANA/TINGGI,
+    kohort backfill, formula, dan setiap kaedah {pintu_lulus, p_top5, ditolak}. None jika papan tiada."""
+    if not p:
+        return None
+    R = p.get('rows') or []
+    co = p.get('corong') if isinstance(p.get('corong'), list) and p.get('corong') else None
+    return dict(dibina=p.get('dibina'), kini=p.get('kini'), harga_pada=p.get('harga_pada'), lejar_sesi=p.get('lejar_sesi'), fasa=p.get('fasa'),
+                corong=co, lulus=co[-1].get('n') if co else None,
+                berkedudukan=sum(1 for r in R if r.get('kedudukan') is not None or r.get('susunan_pintu') is not None),
+                at_sederhana=sum(1 for r in R if r.get('at_label') in ('SEDERHANA', 'TINGGI')), kohort_backfill=p.get('kohort_backfill'),
+                formula=p.get('formula'),
+                kaedah={r['id']: dict(pintu_lulus=r.get('pintu_lulus'), p_top5=r.get('p_top5'), ditolak=r.get('ditolak')) for r in R if r.get('id')})
+
+
 def hari_ini(R, trend, wl_doc, hk, papan, lk, S, senarai_beli=None, ew=None, dibina=''):
     """harian/hari_ini: Buku hari ini, Esok tiga tahap (Wajib / Semak / Maklumat), Berubah, Aktiviti, Posisi C matang, siri EW.
     R = baris db papertrade/ringkas_c (sebelum padat); trend = harian/trend; wl_doc = papertrade/watchlist; hk =
@@ -1117,7 +1133,7 @@ def hari_ini(R, trend, wl_doc, hk, papan, lk, S, senarai_beli=None, ew=None, dib
     esok['wajib']['data'] = data
     return dict(versi=1, dibina=dibina, sesi=D, sesi_sebelum=P, buka_seterusnya=nx, buku=buku, esok=esok, berubah=berubah,
                 aktiviti=dict(beli=berubah['beli'], keluar=dict(tarikh=dK, n=len(kel)), langkau=dict(tarikh=dL, n=berubah['langkau']['n'])),
-                matang=matang, ew=ew,
+                matang=matang, ew=ew, papan=ringkas_papan(papan),
                 senarai_beli=dict(n=len(senarai_beli), tarikh_isyarat=max((r.get('tarikh_isyarat') or '' for r in senarai_beli), default='') or None)
                 if senarai_beli is not None else None,
                 takrif=dict(hampir_atr=HAMPIR_ATR, kritikal_atr=KRITIKAL_ATR, earn_calon=EARN_CALON, earn_maklumat=EARN_MAKLUMAT, had_cip=HAD_CIP),

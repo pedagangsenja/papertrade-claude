@@ -83,6 +83,7 @@ async function larian(b, fail, lebar, varian) {
       // dokumen posisi (~6 MB dalam db sebenar) tidak dimuat untuk Hari Ini apabila harian/hari_ini ada
       const dm = await p.evaluate(() => window.__diminta.slice());
       ok('Hari: tidak memuat papertrade/ringkas_c', false, dm.includes('papertrade/ringkas_c'));
+      ok('Hari: tidak memuat analisis/papan (ringkasan dalam harian/hari_ini)', false, dm.includes('analisis/papan'));
     }
     const bbr = (await p.$$eval('#v-hari .bbr', L => L.map(x => [...x.children].map(c => c.textContent)))).map(x => x.map(rata));
     for (const [k, v] of Object.entries(J.hari.berubah)) {
