@@ -4,11 +4,18 @@
 # rutin. Tiada fail papertrade sebenar diubah.
 #
 #   python3 banding_bayang.py hari --tarikh D [--keluar BacktestShariah2/bayang]   # semua rutin Claude bertarikh MYT D
+#   python3 banding_bayang.py belum [--mula 2026-10-16] [--hingga D] [--maks 2]       # SEMUA tarikh MYT tanpa BANDING_<D>.md
 #   python3 banding_bayang.py kemas --sasaran <commit> | imbas --sasaran <commit> | beli --sasaran <commit>
+# `belum` (audit 25 Okt 2026; dipakai harian.yml): dahulu harian.yml membanding "MYT semalam" sahaja, jadi kemas kini Sabtu
+# (sesi Jumaat) tidak pernah dibanding (harian.yml tidak berjalan Ahad/Isnin). Kini setiap tarikh MYT dari --mula hingga
+# semalam yang belum berlaporan dan ada commit rutin Claude diulang tayang (lama -> baharu; maks --maks tarikh setiap larian).
+# Rutin yang tidak dijadualkan pada tarikh itu (Sabtu: tiada imbas/beli; Isnin: tiada kemas kini; cuti NYSE) dicatat sebagai
+# nota, bukan ralat.
 # Laporan: bayang/BANDING_<D>.md (+ .json). Beza dijangka (bukan ralat): teks paparan, harga sementara 9:35 (Claude: quote
 # Moomoo; Actions: bar harian muktamad), gred P (data pemangkin diambil pada masa berbeza), sumber tarikh earnings.
 import argparse, csv, glob, io, json, os, re, shutil, subprocess, sys, tarfile, tempfile
 from collections import Counter
+from datetime import date, timedelta
 
 import pandas as pd
 
@@ -23,6 +30,8 @@ TARIKH = r'(\d{4}-\d{2}-\d{2}|\d{1,2} [A-Z][a-z]{2} \d{4})'   # 2026-10-22 atau 
 CORAK = {'kemas': r'^Kemas kini 6:02 pagi ' + TARIKH, 'imbas': r'^Imbas (?:malam|8:02 malam|7:47 malam) ' + TARIKH,
          'beli': r'^Beli 9:35 NY ' + TARIKH}
 BULAN = dict(Jan=1, Feb=2, Mac=3, Apr=4, Mei=5, Jun=6, Jul=7, Ogo=8, Sep=9, Okt=10, Nov=11, Dis=12)
+MULA_BANDING = '2026-10-16'   # laporan BANDING pertama (ulang tayang 16–17 Okt 2026)
+MAKS_BELUM = 2                # tarikh setiap larian `belum` (setiap tarikh ~10–15 minit ulang tayang; harian.yml had 150 minit)
 
 
 def padan(k, msg):
@@ -287,6 +296,8 @@ def laporan(D, hasil, keluar):
         L.append(f"## {h['peringkat']} ({h.get('commit')}, sesi {h.get('sesi') or h.get('tarikh')})")
         if h.get('ralat'):
             L += ['', f"RALAT: {h['ralat']}", '']; continue
+        if h.get('nota'):
+            L += ['', f"Nota: {h['nota']}", '']; continue
         L += ['', '```', json.dumps(h['stat'], ensure_ascii=False, indent=1), '```', '']
         for k, v in (h.get('beza') or {}).items():
             if v:
@@ -300,43 +311,111 @@ def laporan(D, hasil, keluar):
     return p
 
 
+def dijadual(D):
+    """Rutin Claude yang dijadualkan bagi tarikh MYT D: kemas kini 6:02 pagi memproses sesi NY sehari sebelumnya (Sel–Sab);
+    imbas 7:47 malam dan beli 9:35 NY bagi sesi NY D (Isn–Jum). Cuti NYSE = rutin berhenti dengan commit "cuti"."""
+    import exchange_calendars as xc
+    c = xc.get_calendar('XNYS'); d = pd.Timestamp(D)
+    return {'kemas': bool(c.is_session(d - pd.Timedelta(days=1))), 'imbas': bool(c.is_session(d)), 'beli': bool(c.is_session(d))}
+
+
+def tarikh_laporan(keluar):
+    """Tarikh yang sudah ada laporan BANDING_<D>.md dalam folder keluar."""
+    if not os.path.isdir(keluar):
+        return set()
+    out = set()
+    for f in os.listdir(keluar):
+        m = re.match(r'BANDING_(\d{4}-\d{2}-\d{2})\.md$', f)
+        if m:
+            out.add(m.group(1))
+    return out
+
+
+def tarikh_belum(mula, hingga, wujud):
+    """Tarikh MYT mula..hingga (inklusif, ISO) tanpa laporan (wujud = set tarikh berlaporan), lama -> baharu; Ahad dilangkau
+    (tiada rutin Claude pada Ahad MYT)."""
+    out, d, akhir = [], date.fromisoformat(mula), date.fromisoformat(hingga)
+    while d <= akhir:
+        if d.weekday() != 6 and d.isoformat() not in wujud:
+            out.append(d.isoformat())
+        d += timedelta(days=1)
+    return out
+
+
+def ada_rutin(cs):
+    return bool(cs.get('kemas') or cs.get('imbas') or cs.get('beli'))
+
+
+def banding_hari(D, keluar, kerja):
+    """Laporan BANDING_<D> (semua rutin Claude bertarikh MYT D). Pulang laluan laporan, atau None jika ditangguh (stor harga
+    belum ada bar D; beli D diulang tayang dengan bar harian D; larian seterusnya mengulang)."""
+    import exchange_calendars as xc
+    akhir = int(pd.read_csv(os.path.join(BS2, 'data/harga/stor/harga_idx.csv'), usecols=['date']).date.max())
+    if xc.get_calendar('XNYS').is_session(pd.Timestamp(D)) and akhir < int(D.replace('-', '')):
+        print(f'stor harga belum ada bar {D} (bar terakhir {akhir}); banding ditangguh')
+        return None
+    cs = cari_commit(D)
+    seterus = cari_commit(str((pd.Timestamp(D) + pd.Timedelta(days=1)).date())).get('kemas')
+    jd = dijadual(D)
+    tugas = [('kemas', cs.get('kemas')), ('imbas', cs['imbas'] or None), ('beli', cs.get('beli'))]
+    hasil = []
+    for k, c in tugas:
+        if not c:
+            hasil.append(dict(peringkat=k, ralat='tiada commit rutin Claude bagi tarikh ini') if jd[k] else
+                         dict(peringkat=k, nota='tiada rutin dijadualkan pada tarikh MYT ini (hujung minggu/cuti NYSE)'))
+            continue
+        d = os.path.join(kerja, f'{D}_{k}'); os.makedirs(d)
+        try:
+            hasil.append(peringkat_kemas(c, d) if k == 'kemas' else peringkat_imbas(c, d) if k == 'imbas'
+                         else peringkat_beli(c, d, seterus))
+        except Exception as e:
+            hasil.append(dict(peringkat=k, commit=str(c)[:20], ralat=f'{type(e).__name__}: {e}'))
+    p = laporan(D, hasil, keluar)
+    print(p)
+    for h in hasil:
+        print(h['peringkat'], json.dumps(h.get('stat') or h.get('ralat') or h.get('nota'), ensure_ascii=False))
+    return p
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     sp = ap.add_subparsers(dest='cmd', required=True)
     x = sp.add_parser('hari'); x.add_argument('--tarikh', required=True); x.add_argument('--keluar', default=os.path.join(BS2, 'bayang'))
+    b = sp.add_parser('belum', help='semua tarikh MYT tanpa laporan BANDING (harian.yml)')
+    b.add_argument('--mula', default=MULA_BANDING); b.add_argument('--hingga', help='lalai: semalam MYT')
+    b.add_argument('--maks', type=int, default=MAKS_BELUM); b.add_argument('--keluar', default=os.path.join(BS2, 'bayang'))
     for k in ('kemas', 'imbas', 'beli'):
         y = sp.add_parser(k); y.add_argument('--sasaran', required=True, nargs='+'); y.add_argument('--betul')
         y.add_argument('--keluar', default=os.path.join(BS2, 'bayang'))
     a = ap.parse_args(argv)
-    hasil = []
     kerja = tempfile.mkdtemp(prefix='bayang_')
     try:
         if a.cmd == 'hari':
-            # beli D diulang tayang dengan bar harian D: jika stor belum ada bar itu, jangan tulis laporan (larian
-            # seterusnya mengulang); laporan yang sudah wujud tidak ditulis semula oleh harian.yml
-            import exchange_calendars as xc
-            akhir = int(pd.read_csv(os.path.join(BS2, 'data/harga/stor/harga_idx.csv'), usecols=['date']).date.max())
-            if xc.get_calendar('XNYS').is_session(pd.Timestamp(a.tarikh)) and akhir < int(a.tarikh.replace('-', '')):
-                print(f'stor harga belum ada bar {a.tarikh} (bar terakhir {akhir}); banding ditangguh')
-                return
-            cs = cari_commit(a.tarikh)
-            seterus = cari_commit(str((pd.Timestamp(a.tarikh) + pd.Timedelta(days=1)).date())).get('kemas')
-            tugas = [('kemas', cs.get('kemas')), ('imbas', cs['imbas'] or None), ('beli', cs.get('beli'))]
-            D = a.tarikh
-        else:
-            tugas = [(a.cmd, a.sasaran if a.cmd == 'imbas' else a.sasaran[0])]
-            seterus = a.betul
-            D = 'manual'
-        for k, c in tugas:
-            if not c:
-                hasil.append(dict(peringkat=k, ralat='tiada commit rutin Claude bagi tarikh ini')); continue
-            d = os.path.join(kerja, k); os.makedirs(d)
-            try:
-                hasil.append(peringkat_kemas(c, d) if k == 'kemas' else peringkat_imbas(c, d) if k == 'imbas'
-                             else peringkat_beli(c, d, seterus))
-            except Exception as e:
-                hasil.append(dict(peringkat=k, commit=str(c)[:20], ralat=f'{type(e).__name__}: {e}'))
-        p = laporan(D, hasil, a.keluar)
+            banding_hari(a.tarikh, a.keluar, kerja)
+            return
+        if a.cmd == 'belum':
+            hingga = a.hingga or str((pd.Timestamp.now(tz='Asia/Kuala_Lumpur').normalize() - pd.Timedelta(days=1)).date())
+            calon = tarikh_belum(a.mula, hingga, tarikh_laporan(a.keluar))
+            print(json.dumps(dict(mula=a.mula, hingga=hingga, belum=calon), ensure_ascii=False))
+            n = 0
+            for D in calon:
+                if n >= a.maks:
+                    print(f'had --maks {a.maks} dicapai; baki pada larian seterusnya'); break
+                if not ada_rutin(cari_commit(D)):
+                    print(f'{D}: tiada commit rutin Claude; dilangkau'); continue
+                if banding_hari(D, a.keluar, kerja) is None:
+                    break           # stor belum ada bar D: tarikh selepasnya juga belum boleh
+                n += 1
+            return
+        hasil = []
+        c = a.sasaran if a.cmd == 'imbas' else a.sasaran[0]
+        d = os.path.join(kerja, a.cmd); os.makedirs(d)
+        try:
+            hasil.append(peringkat_kemas(c, d) if a.cmd == 'kemas' else peringkat_imbas(c, d) if a.cmd == 'imbas'
+                         else peringkat_beli(c, d, a.betul))
+        except Exception as e:
+            hasil.append(dict(peringkat=a.cmd, commit=str(c)[:20], ralat=f'{type(e).__name__}: {e}'))
+        p = laporan('manual', hasil, a.keluar)
         print(p)
         for h in hasil:
             print(h['peringkat'], json.dumps(h.get('stat') or h.get('ralat'), ensure_ascii=False))

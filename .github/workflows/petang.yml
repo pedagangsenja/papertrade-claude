@@ -66,9 +66,18 @@ jobs:
           git add "${{ steps.gred.outputs.folder }}" "${{ steps.gred.outputs.pemangkin }}"
           if git diff --cached --quiet; then echo "tiada perubahan"; exit 0; fi
           git commit -q -m "Gred petang Actions (${{ steps.gred.outputs.mod }}): $(date -u +%Y-%m-%d)"
-          for n in 1 2 3 4; do
-            if git pull -q --rebase -X theirs origin main && git push -q origin HEAD:main; then exit 0; fi
-            git rebase --abort 2>/dev/null || true
+          # Rebase biasa (tanpa -X theirs; audit 25 Okt 2026): perubahan serentak pada fail sama TIDAK ditimpa. Konflik ->
+          # batal rebase, cuba semula (maks 3 kali), kemudian gagal dengan jelas (fail bercanggah dalam ::error::).
+          for n in 1 2 3; do
+            if git pull -q --rebase origin main; then
+              if git push -q origin HEAD:main; then exit 0; fi
+              echo "::warning::push ditolak (cubaan $n/3); cuba semula"
+            else
+              KONFLIK=$(git diff --name-only --diff-filter=U | tr '\n' ' ')
+              echo "::warning::rebase bercanggah (cubaan $n/3): ${KONFLIK:-tidak diketahui}"
+              git rebase --abort 2>/dev/null || true
+            fi
             sleep $((n * 20))
           done
+          echo "::error::Push gagal selepas 3 cubaan rebase biasa (perubahan serentak pada fail sama; tiada fail ditimpa). Gred P sebelum buka kekal versi harian.yml."
           exit 1

@@ -13,8 +13,9 @@ Moomoo/SST boleh beri dikumpul seminggu sekali; (4) dashboard dikemas kini oleh 
 | Beli maya 9:35 NY | rutin 9:35 NY (quote Moomoo) | `beli.yml` 9:40 NY (yfinance; disahkan bar harian keesokannya) |
 | Harga | skrin Moomoo + yfinance | yfinance muktamad (tarikan ≥ 05:00 UTC sama dengan Moomoo; lihat log 17 Okt) |
 | Lejar Penuh | `lejar.yml` | `lejar.yml` 06:17 UTC (tidak berubah; pengawal data muktamad) |
-| Pengawas (6 semakan sehari) | sesi Sonnet | dibuang; sandaran jadual + `jana_db.py` pengawas + e-mel kegagalan GitHub |
-| Tolak db dashboard | dalam setiap rutin | `jadual/tolak_db.md` (sesi Claude baharu, Isn–Sab 10:20 NY) |
+| Pengawas (6 semakan sehari) | sesi Sonnet | dibuang; sandaran jadual + `penjaga_jadual.yml` + 2 slot tugasan berjadual penjaga (cadangan 25 Okt 2026: 13:41 MYT pasca-harian, 9:50 NY pra-beli; dahulu 6 slot UTC) + `notifikasi.py sedia` dalam tolakan db |
+| Tolak db dashboard | dalam setiap rutin | `jadual/tolak_db.md` A pasca-harian (14:47 MYT Sel–Sab, selepas harian + lejar + analisis) dan B pasca-beli (10:33 NY Isn–Jum) — cadangan 25 Okt 2026; jadual lama: satu tolakan 10:20 NY Isn–Sab |
+| Notifikasi | setiap rutin | tolakan A (`notifikasi.py malam --amaran`) dan B (`notifikasi.py beli --amaran`); `notifikasi_harian.md` 3:17 ptg MYT hanya jika jadual lama dikekalkan |
 | Jejak kertas M166 V1 (`uji_kertas/jejak_M166.csv`) | imbas 7:47 langkah 4b | `harian.yml` (mod rasmi sahaja) |
 | Universe Shariah, sektor seluruh pasaran, SST, akaun Moomoo | setiap hari | `jadual/mingguan.md` (Ahad) |
 | Kewangan Moomoo (gred kewangan v7), peristiwa korporat (rehab Moomoo) | imbas 7:47 langkah 5c; 6:02 langkah 2d | `jadual/mingguan.md` 7b, 7c |
@@ -44,19 +45,32 @@ membanding setiap hari dengan rutin Claude (`bayang/BANDING_<tarikh>.md`); `rasm
 
 ## Langkah peralihan (sesi Claude dengan alat claude-code-remote; selepas 3 laporan BANDING lulus dan pengguna setuju)
 1. Semak `bayang/BANDING_*.md` 3 hari dagangan: kemas kini ≥ 99% sama (beza hanya data), senarai beli dan belian sama
-   kecuali beza data yang dijelaskan, tiada kegagalan workflow (`mcp__github__actions_list`).
+   kecuali beza data yang dijelaskan, tiada kegagalan workflow (`mcp__github__actions_list`). Sebelum itu jalankan
+   `python3 BacktestShariah2/standard/banding_bayang.py belum` (dijana skrip; commit laporan bersama peralihan): `harian.yml`
+   lama hanya membanding "MYT semalam", jadi kemas kini Sabtu (sesi Jumaat, cth. `BANDING_2026-10-24`) belum pernah dibanding.
 2. Pilih masa di antara rutin Claude (bukan semasa rutin sedang berjalan). Tulis `BacktestShariah2/papertrade/status_harian.json`
    = keadaan terakhir rutin Claude: `{"malam": {"sesi": "<sesi yang sudah dikemas kini DAN diimbas>"}, "beli": {"tarikh": "<tarikh belian terakhir>"}}`
    (tinggalkan `malam` jika imbasan sesi terakhir belum dibuat).
 3. `echo rasmi > BacktestShariah2/MOD_ACTIONS`; jadual `harga_harian.yml` DIKEKALKAN (dijaga `penjaga_jadual`; dipakai workflow lain sebelum 05:07 UTC);
-   `git rm -r BacktestShariah2/bayang/papertrade BacktestShariah2/bayang/pemangkin BacktestShariah2/bayang/isyarat` (laporan BANDING kekal).
+   `git rm -r BacktestShariah2/bayang/papertrade BacktestShariah2/bayang/pemangkin BacktestShariah2/bayang/isyarat` (laporan BANDING kekal);
+   `beli.yml` input `cuba_folder` lalai → `BacktestShariah2/papertrade`.
 4. Matikan tugasan berjadual (`mcp__claude-code-remote__update_trigger`, enabled=false): tiga rutin "Papertrade – Kemas kini 6:02
    pagi / Imbas 7:47 malam / Beli 9:35 NY" (`trig_01R2RcT5GZ4xGkncK5xa1jnH`, `trig_012DQb9KbjfhpKuopsMByNDh`,
    `trig_018pfWtxtyMaC6aaThn7UDCo`; sahkan dengan `list_triggers`) dan pengawas yang masih aktif (`trig_018zyZSoegh4fQWpWGv3wS9m`,
    `trig_01AJf4h6GffXNmHXmQsVzzGF`, `trig_018eaPB3VHoodMscT1s8BiLs`; 22 Okt sudah tiada dalam senarai aktif).
-5. Cipta tiga tugasan berjadual baharu (`create_trigger`, `create_new_session_on_fire`=true, model `claude-sonnet-5-5`,
-   connectors yang perlu sahaja): tolak db `CRON_TZ=America/New_York 20 10 * * 1-6`, prompt "Ikut BacktestShariah2/jadual/tolak_db.md";
-   mingguan `CRON_TZ=Asia/Kuala_Lumpur 47 10 * * 0`, prompt "Ikut BacktestShariah2/jadual/mingguan.md"; notifikasi harian
-   `CRON_TZ=Asia/Kuala_Lumpur 17 15 * * 2-6`, prompt "Ikut BacktestShariah2/jadual/notifikasi_harian.md" (permintaan pengguna 24 Okt 2026).
-6. Kemas kini `standard/tugasan_v3.md` §2, `jadual/README.md` dan `CLAUDE.md` (rutin harian = Actions); catat dalam log; commit + push.
+5. Cipta tugasan berjadual baharu (`create_trigger`, `create_new_session_on_fire`=true, model `claude-sonnet-5-5`, connectors
+   yang perlu sahaja; Moomoo/SST hanya bagi mingguan). JIKA jadual cadangan (`jadual/CADANGAN_JADUAL.md` §4) diluluskan:
+   tolak db A `CRON_TZ=Asia/Kuala_Lumpur 47 14 * * 2-6`, prompt "Ikut BacktestShariah2/jadual/tolak_db.md bahagian A (pasca-harian)";
+   tolak db B `CRON_TZ=America/New_York 33 10 * * 1-5`, prompt "Ikut BacktestShariah2/jadual/tolak_db.md bahagian B (pasca-beli)";
+   mingguan `CRON_TZ=Asia/Kuala_Lumpur 47 10 * * 0`, prompt "Ikut BacktestShariah2/jadual/mingguan.md"; penjaga: kemas kini
+   `trig_01N3Qx1S6bRhf9h5BEKk85bQ` dan cipta slot pasca-harian (arahan tepat dalam CADANGAN_JADUAL.md §5). TIADA tugasan
+   notifikasi harian (digabung ke tolakan A).
+   JIKA belum diluluskan (jadual lama, keputusan pengguna 17 & 24 Okt 2026): tolak db `CRON_TZ=America/New_York 20 10 * * 1-6`
+   (prompt "Ikut BacktestShariah2/jadual/tolak_db.md; jadual lama: A kemudian B dalam sesi sama"), mingguan seperti di atas,
+   notifikasi harian `CRON_TZ=Asia/Kuala_Lumpur 17 15 * * 2-6` (prompt "Ikut BacktestShariah2/jadual/notifikasi_harian.md");
+   penjaga 6 slot UTC kekal — slot 14:20 UTC menjadi 9:20 EST selepas 1 Nov 2026 (sebelum gerbang beli 9:31), jadi belian
+   bergantung pada penjaga GitHub sahaja sehingga jadual cadangan dipakai.
+6. Kemas kini `standard/tugasan_v3.md` §2, `jadual/README.md` dan `CLAUDE.md` (status semasa: mod rasmi); catat dalam log dan
+   `standard/SEJARAH_KEPUTUSAN.md` (tarikh peralihan; hari pertama tempoh pembekuan §12.1 jika diluluskan); commit + push
+   (data/dokumen sahaja; perubahan kod melalui PR, polisi git `CLAUDE.md`).
 7. Jika `status_harian.json` tiada `malam` bagi sesi terakhir, tembak `harian.yml` sekali (workflow_dispatch).

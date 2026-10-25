@@ -1,6 +1,6 @@
 # Nota Serahan: Backtest Shariah → Backtest Shariah 2
 
-Tarikh: 13 Oktober 2026. Pemilik: Abd Azim Abu Hasan.
+Tarikh: 13 Oktober 2026. Pemilik: pemilik projek (nama penuh dibuang pada 25 Okt 2026 kerana repo awam; sejarah git masih menyimpannya; salinan PDF nota ini dibuang daripada repo).
 
 Project asal "Backtest Shariah" telah penuh. Ruang pengetahuannya sudah 99.2% digunakan (1.98 juta daripada 2.0 juta). Pakej ini memindahkan semua kerja yang masih diperlukan ke Project baharu dalam bentuk yang padat. Baca nota ini dahulu sebelum memulakan apa-apa tugasan dalam Project 2.
 
