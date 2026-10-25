@@ -98,4 +98,15 @@ pada 25 Okt 2026 (selepas berlaku, sebelum hasil dikira); **tempoh hadapan bersi
   Amaran: dalam sampel, alam penyintas.
 
 ## 9. Pindaan
-(tiada)
+- 25 Okt 2026, sebelum sebarang hasil (dalam sampel atau hadapan) dikira — penjelasan pelaksanaan, bukan perubahan peraturan:
+  1. Masa earnings bentuk HH:MM dalam `tarikh_pendapatan.csv`: < 09:30 = pra-pasaran, ≥ 16:00 = selepas pasaran, selainnya
+     tidak diketahui.
+  2. Jarak heat dihad kepada [0, 1] (paras ≤ 0 = seluruh nilai berisiko; tidak berlaku dengan ATR14% ≤ 6%).
+  3. Perincian risiko lima portfolio lama (paparan sahaja): paras keluar lorong kaedah = henti kaedah Lejar (`henti`);
+     tiada henti = seluruh nilai dikira berisiko.
+
+## 10. Catatan selepas ujian dalam sampel (25 Okt 2026; tiada perubahan peraturan)
+- K4 brek ("tiada belian baharu sehingga pulih ke −10%") bersifat kekal: tanpa belian, ekuiti tunai tidak boleh pulih selepas
+  posisi sedia ada keluar. Dalam sampel ia tercetus dalam 20/20 benih kedua-dua portfolio dan tidak dilepaskan
+  (`kajian/KAJIAN_PORTFOLIO.md`, bahagian Rangka risiko). Jejak hadapan kekal dengan peraturan ini; sebarang pembetulan
+  memerlukan keputusan pengguna dan portfolio baharu dengan pra-daftar baharu (§7).

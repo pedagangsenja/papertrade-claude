@@ -12,7 +12,10 @@
 #   KAJIAN_LORONG2=<folder> python3 BacktestShariah2/kajian/portfolio/kaji_portfolio.py sim
 #   KAJIAN_LORONG2=<folder> python3 BacktestShariah2/kajian/portfolio/kaji_portfolio.py ringkas
 #   KAJIAN_LORONG2=<folder> python3 BacktestShariah2/kajian/portfolio/kaji_portfolio.py tahan     -> ketahanan bias set 431
-import argparse, glob, os, pickle, sys
+#   KAJIAN_LORONG2=<folder> python3 BacktestShariah2/kajian/portfolio/kaji_portfolio.py playbook  -> PLAYBOOK_10 / RAWAK_PADAN_10
+#       (pra-daftar kajian/portfolio/PRA_DAFTAR_PLAYBOOK.md §8; enjin standard/portfolio_slot.bina_pb yang sama dengan jejak
+#       hadapan) -> playbook.csv, playbook_tahunan.csv, playbook_corong.csv, mdd_jangka.json
+import argparse, glob, json, os, pickle, sys
 import numpy as np, pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -247,6 +250,222 @@ def cmd_tahan(a):
                  'h2_pct_rawak', 'atas5']].set_index('peraturan').round(1).to_string())
 
 
+# ---------------------------------------------------------------- 2b. PLAYBOOK_10 / RAWAK_PADAN_10 dalam sampel
+def calon_playbook(T, fr, idx, PS):
+    """Calon dalam sampel (pra-daftar §8): satu calon setiap (saham, sesi masuk) daripada dagangan enjin, ciri pada tutup hari
+    isyarat (data_mentah), RS rs_pasaran_431, gred industri v2 daripada ind_skor (E = skor <= 20), earnings
+    tarikh_pendapatan.csv, rejim SPY index_benchmark. Pulang (semua calon dengan lajur gagal, calon lulus untuk bina_pb)."""
+    sys.path.insert(0, os.path.join(BS2, 'standard'))
+    from gred_kumpulan import gred
+    from sektor_pasaran import SEKTOR_INDUSTRI
+    T = T[(T.ent >= MULA) & ~T.ticker.isin(BERMASALAH)]
+    C = (T.groupby(['ticker', 'ent']).agg(sig=('sig', 'max'), buka=('buka', 'first'), rs=('rs', 'first'),
+                                          ind_skor=('ind_skor', 'first'), industri=('industri', 'first'),
+                                          bil_kaedah=('mid', 'nunique')).reset_index())
+    F = []
+    for t, g in C.groupby('ticker'):
+        F.append(PS.ciri_siri(fr[t]).reindex(g.sig.to_numpy()).set_axis(g.index))
+    C = C.join(pd.concat(F))
+    sc = idx['SPY'].close; sa = (sc > sc.rolling(200).mean())
+    C['spy_atas'] = sa.reindex(C.sig.to_numpy()).to_numpy()
+    C['gred_industri'] = [gred(x) for x in C.ind_skor]
+    C['industri_us'] = C.industri.fillna(''); C['sektor_us'] = [SEKTOR_INDUSTRI.get(i, '') for i in C.industri_us]
+    C['jurang'] = C.buka / C.tutup - 1
+    C['r_awal'] = (C.buka - (C.tutup - PS.PB['ganda'] * C.atr)) / C.buka
+    C['ambil_alih'] = False
+    E = pd.read_csv(os.path.join(BS2, 'data', 'pemangkin', 'tarikh_pendapatan.csv'), dtype=str)
+    EV = {t: sorted(zip(g.d0.str[:10], g.masa.fillna(''))) for t, g in E.groupby('ticker')}
+    sesi = [d.strftime('%Y-%m-%d') for d in sc.index]
+    s5 = {s: PS.sesi_selepas(s, PS.PB['earn_sesi'], sesi) for s in {d.strftime('%Y-%m-%d') for d in C.sig}}
+    st = []
+    for t, s in zip(C.ticker, C.sig.dt.strftime('%Y-%m-%d')):
+        if t not in EV:
+            st.append('tidak diketahui'); continue
+        w = s5[s]; ev = [x for x in EV[t] if s <= x[0] <= w[-1]]
+        st.append('ada' if PS.earnings_dekat(s, w, ev) else 'tiada')
+    C['earnings'] = st
+    C = C.join(PS.tapis_pb(C).add_prefix('gagal_')); C['lulus'] = ~C[[f'gagal_{k}' for k in PS.SEBAB_PB]].any(axis=1)
+    L = C[C.lulus]
+    L = pd.DataFrame(dict(saham=L.ticker, tarikh_beli=L.ent.dt.strftime('%Y-%m-%d'), tarikh_isyarat=L.sig.dt.strftime('%Y-%m-%d'),
+                          id_kaedah=L.bil_kaedah.astype(str), rs=L.rs, harga_beli=L.buka, r_awal=L.r_awal, sektor_us=L.sektor_us,
+                          industri_us=L.industri_us)).reset_index(drop=True)
+    return C, L
+
+
+def metrik_pb(R, E, harga, fj):
+    """Metrik satu larian bina_pb (dagangan terbuka di hujung dinilai pada tutup akhir)."""
+    cv = pd.Series(E.ekuiti.to_numpy(float), pd.to_datetime(E.tarikh))
+    h1 = cv[cv.index <= H1_AKHIR]; h2 = cv[cv.index > H1_AKHIR]; mdd = (cv / cv.cummax() - 1).min(); c = cagr(cv)
+    kel = R.status.eq('Keluar').to_numpy()
+    u = np.where(kel, R.untung_pct.to_numpy(float) / 100, R.harga_terkini.to_numpy(float) / R.harga_beli.to_numpy(float) * fj - 1)
+    rm = u / R.r_awal.to_numpy(float)
+    akhir = E.tarikh.iloc[-1]
+    hari = [harga[s].ix.get(t if k else akhir, len(harga[s].t) - 1) - harga[s].ix[b] + 1
+            for s, b, t, k in zip(R.saham, R.tarikh_beli, R.tarikh_keluar, kel)]
+    x = np.r_[1.0, cv.to_numpy()]; bawah = cur = 0
+    for v in x < np.maximum.accumulate(x) - 1e-12:
+        cur = cur + 1 if v else 0; bawah = max(bawah, cur)
+    un = pd.Series(R.amaun.to_numpy(float) * u).groupby(R.saham.to_numpy()).sum()
+    sb = R.sebab_keluar.fillna('').value_counts(normalize=True)
+    bk = E.tarikh[E.brek == 1]; ks = E.tarikh[E.kill_switch == 1]
+    return dict(cagr=c, mdd=mdd, mar=c / abs(mdd) if mdd < 0 else np.nan, h1=cagr(h1), h2=cagr(pd.concat([h1.iloc[-1:], h2])),
+                n=len(R), menang=(u > 0).mean(), purata=u.mean(), r_purata=rm.mean(), r_median=np.median(rm),
+                r_2=(rm >= 2).mean(), r_neg1=(rm <= -1).mean(), hari=np.mean(hari), slot=E.bil_posisi.mean(),
+                tunai=(E.tunai / E.ekuiti).mean(), heat_med=E.heat.median(), heat_p90=E.heat.quantile(0.9), heat_maks=E.heat.max(),
+                brek=E.brek.mean(), brek_mula=bk.iloc[0] if len(bk) else '', brek_hujung=int(E.brek.iloc[-1]),
+                bunuh=ks.iloc[0] if len(ks) else '', bawah_puncak=bawah,
+                tumpuan5=un.nlargest(5).sum() / un.sum() if un.sum() > 0 else np.nan,
+                k_chandelier=sb.get('chandelier', 0.0), k_masa=sb.get('masa', 0.0))
+
+
+def tahunan(cv):
+    cv = pd.Series(np.asarray(cv, float), pd.to_datetime(cv.index))
+    y = cv.resample('YE').last(); y = pd.concat([pd.Series([1.0], [cv.index[0] - pd.Timedelta(days=1)]), y]).pct_change().dropna()
+    return (100 * y).round(1).set_axis(y.index.year)
+
+
+def jadual_bayang(E, PS):
+    """Analisis kepekaan (BUKAN pra-daftar): brek dinilai pada lengkung bayang (portfolio sama tanpa brek/kill_switch): brek
+    belian pada sesi t+1 jika kejatuhan bayang pada tutup t <= -15%, dilepaskan selepas tutup dengan kejatuhan >= -10%."""
+    e = E.ekuiti.to_numpy(float); pk = np.maximum.accumulate(np.r_[1.0, e])[1:]; dd = e / pk - 1
+    s, out = False, {}
+    for i, t in enumerate(E.tarikh):
+        s = True if dd[i] <= PS.PB['brek'] else (False if s and dd[i] >= PS.PB['pulih'] else s)
+        if i + 1 < len(E):
+            out[E.tarikh.iloc[i + 1]] = s
+    return out
+
+
+VARIAN_PB = ('asas (pra-daftar)', 'tanpa brek dan kill_switch', 'brek lengkung bayang')
+_G = {}
+
+
+def _pb_kerja(t):
+    """Satu (set, jenis, benih): tiga varian. Asas = peraturan pra-daftar; dua lagi = analisis kepekaan."""
+    PS, lab, jenis, b = _G['PS'], *t
+    Ls, hari, harga, fj = _G['L'][lab], _G['hari'], _G['harga'], _G['fj']
+    out, kv = [], {}
+    R0, E0 = PS.bina_pb(Ls, hari, harga, jenis, benih=b, prm=dict(PS.PB, brek=-9.0, bunuh=-9.0))
+    for v in VARIAN_PB:
+        if v == VARIAN_PB[1]:
+            R, E = R0, E0
+        elif v == VARIAN_PB[2]:
+            R, E = PS.bina_pb(Ls, hari, harga, jenis, benih=b, prm=dict(PS.PB, brek_luar=jadual_bayang(E0, PS)))
+        else:
+            R, E = PS.bina_pb(Ls, hari, harga, jenis, benih=b)
+        out.append(dict(varian=v, jenis=jenis, set=lab, benih=b, **metrik_pb(R, E, harga, fj)))
+        kv[(v, jenis, lab, b)] = pd.Series(E.ekuiti.to_numpy(), pd.to_datetime(E.tarikh))
+    return out, kv
+
+
+def cmd_playbook(a):
+    sys.path.insert(0, os.path.join(BS2, 'standard'))
+    import portfolio_slot as PS
+    from multiprocessing import get_context
+    T = pd.read_pickle(f'{OUT}/calon.pkl'); fr, idx = muat()
+    C, L = calon_playbook(T, fr, idx, PS)
+    fj = (1 - PS.PB['kos']) / (1 + PS.PB['kos'])
+    hari = sorted({d.strftime('%Y-%m-%d') for g in fr.values() for d in g.index if d >= MULA})
+    harga = {t: PS.Siri(fr[t]) for t in L.saham.unique()}
+    jum = pd.Series({t: g.close.iloc[-1] / g.close[g.index >= MULA].iloc[0] - 1 for t, g in fr.items()
+                     if (g.index >= MULA).any() and t not in BERMASALAH})
+    atas = list(jum.sort_values(ascending=False).index[:40])
+    out = os.path.join(BS2, 'kajian', 'portfolio')
+    # corong penapis (calon = saham x sesi masuk; gagal tidak eksklusif)
+    hc = C.groupby('ent').lulus.sum()
+    cor = pd.DataFrame(dict(gagal_pct={k: 100 * C[f'gagal_{k}'].mean() for k in PS.SEBAB_PB}))
+    cor.loc['lulus (semua penapis)', 'gagal_pct'] = 100 * C.lulus.mean()
+    cor.loc['earnings tidak diketahui', 'gagal_pct'] = 100 * C.earnings.eq('tidak diketahui').mean()
+    cor.to_csv(os.path.join(out, 'playbook_corong.csv'), float_format='%.2f')
+    print('calon %d, lulus %d (%.2f%%); sesi dengan >= 1 lulus %.1f%%; lulus/sesi median %.0f p90 %.0f' % (
+        len(C), C.lulus.sum(), 100 * C.lulus.mean(), 100 * (hc > 0).mean(), hc.median(), hc.quantile(.9)), flush=True)
+    print(cor.round(1).to_string(), flush=True)
+    _G.update(PS=PS, L={'penuh': L, 'buang 40': L[~L.saham.isin(atas)].reset_index(drop=True)}, hari=hari, harga=harga, fj=fj)
+    kerja = [(lab, j, b) for lab in ('penuh', 'buang 40') for j in PS.PB_JENIS for b in range(a.benih)]
+    rows, kurva = [], {}
+    with get_context('fork').Pool(a.proses) as pool:
+        for r, kv in pool.imap_unordered(_pb_kerja, kerja):
+            rows += r; kurva.update(kv)
+    print('PLAYBOOK / RAWAK_PADAN siap', flush=True)
+    # rujukan: RS pasaran (seri rawak, benih 0..) dan rawak 10 x 10% lorong 2, kos 0.1% (peraturan RS_10 / RAWAK_10) dan 0.25%
+    P = Pasar(T, fr); r0 = P.ret[2].copy()
+    for kos in (COST, PS.PB['kos']):
+        P.ret[2] = (1 + r0) * (1 + COST) / (1 - COST) * (1 - kos) / (1 + kos) - 1
+        for lab, tp in (('penuh', None), ('buang 40', ~P.T.ticker.isin(atas).to_numpy())):
+            for nama, sk in (('RS_10 (RS pasaran 10x10%)', P.T.rs.fillna(50).to_numpy(float)), ('RAWAK_10 (rawak 10x10%)', np.zeros(len(P.T)))):
+                for b in range(a.benih):
+                    cv, npos, ambil = P.jalan(2, sk, tp, benih=b); m = metrik(cv, npos, P, 2, ambil)
+                    rows.append(dict(varian='rujukan', jenis=nama, set=lab, benih=b, kos=kos, cagr=m['cagr'], mdd=m['mdd'], mar=m['mar'],
+                                     h1=m['h1'], h2=m['h2'], n=m['n'], menang=m['menang'], purata=m['purata'], hari=m['hari'],
+                                     slot=m['slot']))
+                    kurva[(f'rujukan kos {100 * kos:.2f}%', nama, lab, b)] = cv
+        print('rujukan kos', kos, 'siap', flush=True)
+    P.ret[2] = r0
+    D = pd.DataFrame(rows); D['kos'] = D['kos'].fillna(PS.PB['kos'])
+    D = D.sort_values(['varian', 'jenis', 'set', 'kos', 'benih']).reset_index(drop=True)
+    D.to_csv(os.path.join(out, 'playbook.csv'), index=False, float_format='%.5f')
+    # ringkasan: median benih; persentil PLAYBOOK (benih 0) lawan 20 benih RAWAK_PADAN varian sama
+    S, MJ = [], {}
+    for (v, j, lab, kos), G in D.groupby(['varian', 'jenis', 'set', 'kos'], sort=False):
+        med = G.drop(columns=['varian', 'jenis', 'set', 'benih', 'kos', 'bunuh', 'brek_mula'], errors='ignore').median(numeric_only=True)
+        x = dict(varian=v, jenis=j, set=lab, kos=kos, **med.to_dict(), cagr_p5=G.cagr.quantile(.05), cagr_p95=G.cagr.quantile(.95),
+                 mdd_p5=G.mdd.quantile(.05), mdd_p50=G.mdd.quantile(.5), n_benih=len(G))
+        if 'bunuh' in G and v != 'rujukan':
+            x['bunuh_n'] = int(G.bunuh.fillna('').astype(str).ne('').sum())
+            x['brek_n'] = int(G.brek_mula.fillna('').astype(str).ne('').sum()); x['brek_hujung_n'] = int(G.brek_hujung.sum())
+            bm = G.brek_mula.fillna('').astype(str); bm = bm[bm != '']
+            x['brek_mula_bulan'] = ', '.join(sorted(bm.str[:7].unique())[:6])
+        S.append(x)
+        if v in ('asas (pra-daftar)', 'rujukan'):
+            MJ.setdefault(lab, {})[f'{j}|{kos}'] = [round(100 * G.mdd.quantile(.05), 1), round(100 * G.mdd.quantile(.5), 1)]
+    S = pd.DataFrame(S)
+    for v in VARIAN_PB:
+        for lab in ('penuh', 'buang 40'):
+            q = (S.varian == v) & (S.jenis == 'PLAYBOOK_10') & (S.set == lab)
+            pb0 = D[(D.varian == v) & (D.jenis == 'PLAYBOOK_10') & (D.set == lab) & (D.benih == 0)].iloc[0]
+            rp = D[(D.varian == v) & (D.jenis == 'RAWAK_PADAN_10') & (D.set == lab)]
+            S.loc[q, 'pb0_cagr'] = pb0.cagr; S.loc[q, 'pb0_mdd'] = pb0.mdd
+            for k in ('cagr', 'h1', 'h2', 'mar'):
+                S.loc[q, f'pct_{k}'] = 100 * (rp[k] < pb0[k]).mean()
+            S.loc[q, 'pct_mdd'] = 100 * (rp.mdd < pb0.mdd).mean()
+            print(f'== {v} | {lab}: PLAYBOOK_10 benih 0 CAGR {100 * pb0.cagr:.1f}% MDD {100 * pb0.mdd:.1f}% | persentil lawan '
+                  f'RAWAK_PADAN CAGR {100 * (rp.cagr < pb0.cagr).mean():.0f} H1 {100 * (rp.h1 < pb0.h1).mean():.0f} '
+                  f'H2 {100 * (rp.h2 < pb0.h2).mean():.0f} MDD (lebih cetek) {100 * (rp.mdd < pb0.mdd).mean():.0f}', flush=True)
+    S.to_csv(os.path.join(out, 'playbook_ringkas.csv'), index=False, float_format='%.5f')
+    pd.set_option('display.width', 300); pd.set_option('display.max_columns', 50)
+    Y = S.copy()
+    for c in ('cagr', 'mdd', 'h1', 'h2', 'menang', 'purata', 'tunai', 'heat_med', 'heat_p90', 'heat_maks', 'brek', 'cagr_p5',
+              'cagr_p95', 'mdd_p5', 'mdd_p50', 'tumpuan5', 'k_chandelier', 'k_masa', 'pb0_cagr', 'pb0_mdd', 'r_2', 'r_neg1'):
+        if c in Y:
+            Y[c] = 100 * Y[c]
+    print(Y.round(2).to_string(), flush=True)
+    th = {}
+    spy = idx['SPY'].close; spy = spy[spy.index >= MULA]
+    med = lambda key: pd.DataFrame({b: tahunan(kurva[key + (b,)]) for b in range(a.benih)}).median(axis=1)
+    for lab in ('penuh', 'buang 40'):
+        for v in VARIAN_PB:
+            th[f'PLAYBOOK_10 benih 0 | {v} | {lab}'] = tahunan(kurva[(v, 'PLAYBOOK_10', lab, 0)])
+            th[f'PLAYBOOK_10 median benih | {v} | {lab}'] = med((v, 'PLAYBOOK_10', lab))
+            th[f'RAWAK_PADAN_10 median benih | {v} | {lab}'] = med((v, 'RAWAK_PADAN_10', lab))
+        for nama in ('RS_10 (RS pasaran 10x10%)', 'RAWAK_10 (rawak 10x10%)'):
+            th[f'{nama} kos 0.25% median benih | {lab}'] = med(('rujukan kos 0.25%', nama, lab))
+    th['SPY'] = tahunan(spy / spy.iloc[0])
+    th = pd.DataFrame(th).T
+    th.to_csv(os.path.join(out, 'playbook_tahunan.csv'))
+    print('\n== Pulangan tahunan % (2020 = Nov–Dis; 2026 hingga Okt)'); print(th.round(1).to_string())
+    peta = {'PLAYBOOK_10': f'PLAYBOOK_10|{PS.PB["kos"]}', 'RAWAK_PADAN_10': f'RAWAK_PADAN_10|{PS.PB["kos"]}',
+            'RS_10': f'RS_10 (RS pasaran 10x10%)|{COST}', 'RAWAK_10': f'RAWAK_10 (rawak 10x10%)|{COST}'}
+    J = dict(dijana=pd.Timestamp.now(tz='Asia/Kuala_Lumpur').strftime('%Y-%m-%d %H:%M MYT'),
+             sumber='kajian/portfolio/kaji_portfolio.py playbook (dalam sampel, set 431 tolak 8, masuk Nov 2020 – Okt 2026; alam penyintas)',
+             takrif=f'MDD % keseluruhan tempoh Nov 2020 – Okt 2026 merentas {a.benih} benih (RAWAK: susunan; RS_10/PLAYBOOK: pecah seri): '
+                    '[p5, p50]. RS_10/RAWAK_10 = 10 x 10% lorong 2 kos 0.1%; PLAYBOOK_10/RAWAK_PADAN_10 = peraturan pra-daftar kos 0.25%.',
+             penuh={k: MJ['penuh'][v] for k, v in peta.items() if v in MJ['penuh']},
+             buang40={k: MJ['buang 40'][v] for k, v in peta.items() if v in MJ['buang 40']})
+    with open(os.path.join(out, 'mdd_jangka.json'), 'w', encoding='utf-8') as f:
+        json.dump(J, f, ensure_ascii=False, indent=1)
+    print(json.dumps(J, ensure_ascii=False, indent=1))
+
+
 # ---------------------------------------------------------------- 3. ringkasan
 def cmd_ringkas(a):
     D = pd.read_pickle(f'{OUT}/portfolio.pkl'); kurva = pickle.load(open(f'{OUT}/kurva.pkl', 'rb'))
@@ -287,4 +506,6 @@ if __name__ == '__main__':
     x = s.add_parser('semak'); x.add_argument('--kaedah', nargs='+', default=['M03', 'M27', 'M119']); x.set_defaults(f=cmd_semak)
     s.add_parser('sim').set_defaults(f=cmd_sim); s.add_parser('ringkas').set_defaults(f=cmd_ringkas)
     s.add_parser('tahan').set_defaults(f=cmd_tahan)
+    x = s.add_parser('playbook'); x.add_argument('--benih', type=int, default=20); x.add_argument('--proses', type=int, default=4)
+    x.set_defaults(f=cmd_playbook)
     a = ap.parse_args(); a.f(a)

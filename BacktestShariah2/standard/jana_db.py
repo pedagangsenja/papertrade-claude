@@ -656,41 +656,90 @@ def pengawas(st, masa):
     return out
 
 
-def portfolio_slot(dibina, folder=os.path.join(BS2, 'portfolio_slot')):
-    """prestasi/portfolio_slot: portfolio maya 10 slot (standard/portfolio_slot.py, daripada Lejar Penuh) untuk kad Eksperimen
-    dalam tab Ringkasan dan panel Skor kaedah swing (gabungan beku). Portfolio tanpa fail dilangkau; None jika RS_10 belum dijana.
-    Setiap portfolio: mula, sesi dan spy_pct tempoh sama (portfolio beku bermula pada mula_jejak)."""
+def portfolio_slot(dibina, folder=os.path.join(BS2, 'portfolio_slot'), ew_path=os.path.join(BS2, 'data', 'analisis', 'ew_harian.csv'),
+                   kajian=os.path.join(BS2, 'kajian', 'portfolio', 'mdd_jangka.json'), had=200_000, simpan=50):
+    """prestasi/portfolio_slot: portfolio maya (standard/portfolio_slot.py, daripada Lejar Penuh) untuk kad Eksperimen dalam tab
+    Ringkasan, panel Skor kaedah swing (gabungan beku) dan risiko portfolio. Portfolio tanpa fail dilangkau; None jika RS_10
+    belum dijana. Setiap portfolio: mula, sesi dan spy_pct tempoh sama (portfolio beku bermula pada mula_jejak).
+    Sejak 25 Okt 2026 (audit risiko): tunai_pct, heat_pct (Σ nilai × jarak ke paras keluar ÷ ekuiti), sektor {sektor_us: bil
+    dipegang}, bawah_puncak_sesi, mdd_jangka [p5, p50] daripada kajian (None jika tiada), ekuiti [[tarikh, ekuiti, spy, ew]]
+    (ew = EW alam Shariah data/analisis/ew_harian.csv, beli pada buka hari mula seperti penanda_ew.tempoh); setiap posisi:
+    paras_keluar, jarak_atr, risiko_pct, sektor_us, industri_us, hari (CSV, portfolio_slot.perinci) dan earn_kini / earn_kini_h
+    bagi posisi dipegang. Dokumen >= `had` bait -> posisi Keluar setiap portfolio diringkaskan kepada `simpan` terakhir
+    (medan posisi_keluar_dipotong = bilangan dibuang)."""
     import portfolio_slot as PS
-    out = {}
+    import kalendar_earnings as KE
+
+    def baca(path):
+        try:
+            with open(path, encoding='utf-8') as f:
+                return json.load(f)
+        except (OSError, ValueError):
+            return None
+
+    try:
+        EW = pd.read_csv(ew_path, index_col='tarikh')
+    except (OSError, ValueError):
+        EW = None
+
+    def siri_ew(mula, tarikh):
+        if EW is None or mula not in EW.index:
+            return {}
+        s = EW.loc[mula:]; v = np.cumprod(np.r_[1 + s.ew_oc.iloc[0], 1 + s.ew_cc.iloc[1:].to_numpy()])
+        return {t: float(x) for t, x in zip(s.index, v) if t in tarikh}
+
+    J = baca(kajian) or {}; MJ = J.get('penuh', {})
+    out, K, cache = {}, None, {}
     for k, nama in PS.PORTFOLIO.items():
         pe, pp = os.path.join(folder, f'{k}_ekuiti.csv'), os.path.join(folder, f'{k}_posisi.csv')
         if not (os.path.exists(pe) and os.path.exists(pp)):
             continue
-        E, R = pd.read_csv(pe), pd.read_csv(pp)
+        E, R = pd.read_csv(pe), pd.read_csv(pp, dtype={'id_kaedah': str})
         if E.empty and k not in PS.BEKU_JENIS:
             continue
         kel = R[R.status == 'Keluar']
+        ew = siri_ew(E.tarikh.iloc[0], set(E.tarikh)) if len(E) else {}
+        x = PS.ringkas_risiko(R, E) if {'risiko_pct', 'sektor_us'} <= set(R) else \
+            dict(tunai_pct=None, heat_pct=None, sektor={}, bawah_puncak_sesi=None)
+        posisi = json.loads(R.round(4).to_json(orient='records'))
+        S = E.tarikh.iloc[-1] if len(E) else ''
+        for r in posisi:
+            if r.get('status') == 'Pegang' and S:
+                K = KE.muat() if K is None else K
+                earn_kini(r, r.get('saham'), S, K, cache); r.pop('earn_lalu', None)
+        mj = MJ.get(k)
         out[k] = dict(nama=f'{k}: {nama}', pulangan_pct=round(100 * (E.ekuiti.iloc[-1] - 1), 2) if len(E) else None,
                       mdd_pct=round(100 * PS.mdd(E.ekuiti), 2) if len(E) else None,
                       dipegang=int((R.status == 'Pegang').sum()), keluar=int(len(kel)),
                       menang_pct=round(100 * float((kel.untung_pct > 0).mean()), 1) if len(kel) else None,
                       mula=E.tarikh.iloc[0] if len(E) else None, sesi=int(len(E)),
                       spy_pct=round(100 * (float(E.spy.iloc[-1]) - 1), 2) if len(E) and pd.notna(E.spy.iloc[-1]) else None,
-                      ekuiti=[[t, round(float(e), 5)] for t, e in zip(E.tarikh, E.ekuiti)],
-                      posisi=json.loads(R.round(4).to_json(orient='records')))
+                      tunai_pct=x['tunai_pct'], heat_pct=x['heat_pct'], sektor=x['sektor'], bawah_puncak_sesi=x['bawah_puncak_sesi'],
+                      mdd_jangka=list(mj) if mj else None,
+                      ekuiti=[[t, round(float(e), 5), round(float(sp), 5) if pd.notna(sp) else None,
+                               round(ew[t], 5) if t in ew else None] for t, e, sp in zip(E.tarikh, E.ekuiti, E.spy)],
+                      posisi=posisi)
     rs = out.get('RS_10')
     if not rs or not rs['sesi']:
         return None
-    beku = None
-    try:
-        beku = json.load(open(os.path.join(BS2, 'data', 'analisis', 'gabungan_beku.json'), encoding='utf-8'))
-    except (OSError, ValueError):
-        pass
-    return dict(dibina=dibina, mula=rs['mula'], sesi_terakhir=rs['ekuiti'][-1][0], sesi=rs['sesi'], spy_pct=rs['spy_pct'], portfolio=out,
-                beku=beku,
-                nota='Rekod sahaja (kajian/KAJIAN_PORTFOLIO.md). 10 slot x 10% ekuiti, satu posisi setiap saham. RS_10 = RS pasaran '
-                     'tertinggi, RAWAK_10 = kawalan rawak (lorong 2). GABUNGAN_10 / TOP1_10 / RAWAK_KAEDAH_10 = gabungan kaedah beku '
-                     '(data/analisis/gabungan_beku.json) lawan #1 sahaja lawan kaedah rawak, sejak mula_jejak. Dibina semula setiap malam oleh lejar.yml.')
+    doc = dict(dibina=dibina, mula=rs['mula'], sesi_terakhir=rs['ekuiti'][-1][0], sesi=rs['sesi'], spy_pct=rs['spy_pct'], portfolio=out,
+               beku=baca(os.path.join(BS2, 'data', 'analisis', 'gabungan_beku.json')),
+               mdd_jangka_nota=f"{J['takrif']} Sumber: {J.get('sumber')}." if J.get('takrif') else None,
+               nota='Rekod sahaja (kajian/KAJIAN_PORTFOLIO.md). RS_10 / RAWAK_10 / GABUNGAN_10 / TOP1_10 / RAWAK_KAEDAH_10: 10 slot x 10% '
+                    'ekuiti, satu posisi setiap saham; RS_10 = RS pasaran tertinggi (seri dipecah ikut abjad), RAWAK_10 = kawalan rawak '
+                    '(lorong 2); gabungan beku (data/analisis/gabungan_beku.json) lawan #1 sahaja lawan kaedah rawak, sejak mula_jejak. '
+                    'PLAYBOOK_10 / RAWAK_PADAN_10 (pra-daftar 25 Okt 2026, kajian/portfolio/PRA_DAFTAR_PLAYBOOK.md): penapis P1–P11, '
+                    'saiz risiko 1% ekuiti (had 15%), heat <= 10%, <= 20 posisi, had sektor/industri, Chandelier + henti masa, brek '
+                    '15%/25%; RS 80–94 lawan susunan rawak. heat_pct = Σ nilai × jarak ke paras keluar ÷ ekuiti (tiada paras = nilai '
+                    'penuh). Dibina semula setiap malam oleh lejar.yml.')
+    if bait(doc) >= had:
+        for v in out.values():
+            kx = [i for i, r in enumerate(v['posisi']) if r.get('status') == 'Keluar']
+            if len(kx) > simpan:
+                buang = set(sorted(kx, key=lambda i: (v['posisi'][i].get('tarikh_keluar') or '', i))[:-simpan])
+                v['posisi'] = [r for i, r in enumerate(v['posisi']) if i not in buang]
+                v['posisi_keluar_dipotong'] = len(buang)
+    return doc
 
 
 def sesi_stor(path=STATUS_HARGA):
