@@ -1,11 +1,11 @@
-saham,id_kaedah,tarikh_isyarat,rs,tarikh_beli,harga_beli,saiz_pct,status,tarikh_keluar,harga_keluar,untung_pct,harga_terkini,untung_semasa_pct,lorong
-AGL,M125,2026-10-15,98.0000,2026-10-16,88.9000,10.0000,Pegang,,,,89.7100,0.9111,henti
-ANL,M73,2026-10-15,99.0000,2026-10-16,11.8900,10.0000,Pegang,,,,10.5800,-11.0177,henti
-AUGO,M14,2026-10-15,98.0000,2026-10-16,85.1700,10.0000,Pegang,,,,78.0700,-8.3363,henti
-AXTI,M81,2026-10-15,99.0000,2026-10-16,56.2300,10.0000,Pegang,,,,52.0800,-7.3804,henti
-BAND,M81,2026-10-15,98.0000,2026-10-16,49.0400,10.0000,Pegang,,,,44.1800,-9.9103,henti
-BUUU,M151,2026-10-15,98.0000,2026-10-16,43.3700,10.0000,Pegang,,,,53.9000,24.2795,henti
-GRAL,M14,2026-10-15,98.0000,2026-10-16,134.0200,10.0000,Pegang,,,,132.5500,-1.0969,henti
-IOVA,M102,2026-10-15,99.0000,2026-10-16,14.6500,10.0000,Pegang,,,,14.0900,-3.8225,henti
-SNDK,M81,2026-10-15,99.0000,2026-10-16,1348.8200,10.0000,Pegang,,,,1238.0300,-8.2138,henti
-SVRN,M08,2026-10-15,99.0000,2026-10-16,41.0100,10.0000,Pegang,,,,35.3200,-13.8747,henti
+saham,id_kaedah,tarikh_isyarat,rs,tarikh_beli,harga_beli,saiz_pct,status,tarikh_keluar,harga_keluar,untung_pct,harga_terkini,untung_semasa_pct,lorong,amaun,henti,nilai_semasa,paras_keluar,jarak_pct,jarak_atr,risiko_pct,sektor_us,industri_us,hari
+AGL,M125,2026-10-15,98.0000,2026-10-16,88.9000,10.0000,Pegang,,,,89.7100,0.9111,henti,0.1000,77.9414,0.1009,74.0577,17.4476,3.3988,1.8311,Healthcare,Medical Care Facilities,6.0000
+ANL,M73,2026-10-15,99.0000,2026-10-16,11.8900,10.0000,Pegang,,,,10.5800,-11.0177,henti,0.1000,,0.0890,5.5937,47.1294,3.5200,4.3614,Healthcare,Biotechnology,6.0000
+AUGO,M14,2026-10-15,98.0000,2026-10-16,85.1700,10.0000,Pegang,,,,78.0700,-8.3363,henti,0.1000,80.78,0.0917,68.7220,11.9739,1.8629,1.1415,Basic Materials,Gold,6.0000
+AXTI,M81,2026-10-15,99.0000,2026-10-16,56.2300,10.0000,Pegang,,,,52.0800,-7.3804,henti,0.1000,36.9148,0.0926,34.1371,34.4525,2.8349,3.3186,Technology,Semiconductor Equipment & Materials,6.0000
+BAND,M81,2026-10-15,98.0000,2026-10-16,49.0400,10.0000,Pegang,,,,44.1800,-9.9103,henti,0.1000,36.5155,0.0901,30.2809,31.4603,3.0940,2.9476,Technology,Software - Infrastructure,6.0000
+BUUU,M151,2026-10-15,98.0000,2026-10-16,43.3700,10.0000,Pegang,,,,53.9000,24.2795,henti,0.1000,36.9665,0.1243,29.5791,45.1222,4.0000,5.8321,Industrials,Specialty Business Services,6.0000
+GRAL,M14,2026-10-15,98.0000,2026-10-16,134.0200,10.0000,Pegang,,,,132.5500,-1.0969,henti,0.1000,132.09,0.0989,88.8514,32.9676,3.9954,3.3910,Healthcare,Diagnostics & Research,6.0000
+IOVA,M102,2026-10-15,99.0000,2026-10-16,14.6500,10.0000,Pegang,,,,14.0900,-3.8225,henti,0.1000,13.8,0.0962,11.1943,20.5516,3.0829,2.0557,Healthcare,Biotechnology,6.0000
+SNDK,M81,2026-10-15,99.0000,2026-10-16,1348.8200,10.0000,Pegang,,,,1238.0300,-8.2138,henti,0.1000,1083.8687,0.0918,1017.9771,17.7744,2.3151,1.6967,Technology,Computer Hardware,6.0000
+SVRN,M08,2026-10-15,99.0000,2026-10-16,41.0100,10.0000,Pegang,,,,35.3200,-13.8747,henti,0.1000,31.779,0.0861,5.0900,85.5889,3.8181,7.6662,Financial Services,Asset Management,6.0000

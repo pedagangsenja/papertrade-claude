@@ -1,0 +1,11 @@
+saham,id_kaedah,tarikh_isyarat,rs,tarikh_beli,harga_beli,saiz_pct,status,tarikh_keluar,harga_keluar,untung_pct,harga_terkini,untung_semasa_pct,lorong,amaun,r_awal,sebab_keluar,r_multiple,keluar_esok,paras_keluar,sektor_us,industri_us,nilai_semasa,jarak_pct,jarak_atr,risiko_pct,hari
+BIIB,"M116,M159,M31,M81,M82",2026-10-15,85,2026-10-16,235.7500,8.8890,Pegang,,,,250.6900,6.3372,playbook,0.0889,0.1125,,,,223.6200,Healthcare,Drug Manufacturers - General,0.0945,10.7982,3.5146,0.9831,6.0000
+CNQ,"M125,M132,M137,M14,M159,M27,M80,M81,M82",2026-10-15,87,2026-10-16,52.5400,9.8666,Pegang,,,,55.0600,4.7963,playbook,0.0987,0.1014,,,,49.4571,Energy,Oil & Gas E&P,0.1034,10.1759,4.0000,1.0134,6.0000
+SHEL,"M153,M158,M159,M81,M82",2026-10-15,82,2026-10-16,105.2400,12.2514,Pegang,,,,108.1800,2.7936,playbook,0.1225,0.0816,,,,100.1257,Energy,Oil & Gas Integrated,0.1259,7.4453,4.0000,0.9031,6.0000
+TTE,"M06,M10,M111,M116,M125,M13,M148,M159,M50,M80,M93",2026-10-16,84,2026-10-19,90.3800,12.6630,Pegang,,,,92.7800,2.6555,playbook,0.1270,0.0790,,,,84.7857,Energy,Oil & Gas Integrated,0.1304,8.6164,4.0000,1.0819,5.0000
+TX,M14,2026-10-16,88,2026-10-19,57.5800,7.7574,Pegang,,,,55.9600,-2.8135,playbook,0.0778,0.1289,,,,52.5414,Basic Materials,Steel,0.0756,6.1090,1.8623,0.4449,5.0000
+ZETA,"M12,M57",2026-10-16,94,2026-10-19,31.9000,4.3397,Pegang,,,,33.9800,6.5204,playbook,0.0435,0.2304,,,,27.3543,Technology,Software - Infrastructure,0.0464,19.4989,3.9230,0.8706,5.0000
+IFF,"M155,M70,M80",2026-10-19,83,2026-10-20,91.1800,12.1504,Pegang,,,,94.1500,3.2573,playbook,0.1218,0.0823,,,,86.7871,Basic Materials,Specialty Chemicals,0.1258,7.8203,4.0000,0.9475,4.0000
+PAYC,"M133,M145,M70",2026-10-19,94,2026-10-20,254.5000,8.6947,Pegang,,,,274.5900,7.8939,playbook,0.0872,0.1150,,,,245.4751,Technology,Software - Application,0.0941,10.6030,4.0000,0.9605,4.0000
+RBRK,M125,2026-10-19,92,2026-10-20,111.8000,5.1070,Pegang,,,,128.7400,15.1521,playbook,0.0512,0.1958,,,,101.6326,Technology,Software - Infrastructure,0.0590,21.0559,4.0000,1.1958,4.0000
+RVTY,"M13,M152,M20",2026-10-20,92,2026-10-21,154.4400,6.4454,Pegang,,,,158.7700,2.8037,playbook,0.0654,0.1552,,,,133.0100,Healthcare,Diagnostics & Research,0.0672,16.2247,4.0000,1.0509,3.0000

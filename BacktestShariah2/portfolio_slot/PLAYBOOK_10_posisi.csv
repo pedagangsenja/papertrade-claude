@@ -1,0 +1,12 @@
+saham,id_kaedah,tarikh_isyarat,rs,tarikh_beli,harga_beli,saiz_pct,status,tarikh_keluar,harga_keluar,untung_pct,harga_terkini,untung_semasa_pct,lorong,amaun,r_awal,sebab_keluar,r_multiple,keluar_esok,paras_keluar,sektor_us,industri_us,nilai_semasa,jarak_pct,jarak_atr,risiko_pct,hari
+LFST,"M81,M82",2026-10-15,94,2026-10-16,12.4500,8.1985,Pegang,,,,12.9300,3.8554,playbook,0.0820,0.1220,,,,11.3129,Healthcare,Medical Care Facilities,0.0851,12.5069,4.0000,1.0426,6.0000
+PSX,"M14,M81,M82",2026-10-15,94,2026-10-16,291.9400,7.6844,Pegang,,,,283.1800,-3.0006,playbook,0.0768,0.1301,,,,258.0114,Energy,Oil & Gas Refining & Marketing,0.0745,8.8878,2.8402,0.6486,6.0000
+TRMD,"M156,M81,M82",2026-10-15,93,2026-10-16,39.3400,5.4382,Pegang,,,,39.8900,1.3981,playbook,0.0544,0.1839,,,,33.7523,Energy,Oil & Gas Midstream,0.0551,15.3866,4.0000,0.8306,6.0000
+DHT,M14,2026-10-16,94,2026-10-19,23.6900,4.8788,Pegang,,,,24.6000,3.8413,playbook,0.0485,0.2050,,,,19.7971,Energy,Oil & Gas Midstream,0.0504,19.5238,4.0000,0.9626,5.0000
+PAYC,"M158,M78",2026-10-16,94,2026-10-19,249.7500,9.5719,Pegang,,,,274.5900,9.9459,playbook,0.0952,0.1045,,,,245.4751,Technology,Software - Application,0.1046,10.6030,4.0000,1.0860,5.0000
+ZETA,"M12,M57",2026-10-16,94,2026-10-19,31.9000,4.3397,Pegang,,,,33.9800,6.5204,playbook,0.0431,0.2304,,,,27.3543,Technology,Software - Infrastructure,0.0460,19.4989,3.9230,0.8772,5.0000
+NSIT,"M08,M117,M161,M20,M55,M66",2026-10-19,92,2026-10-20,162.8900,7.1767,Pegang,,,,176.7700,8.5211,playbook,0.0713,0.1393,,,,151.4414,Technology,Electronics & Computer Distribution,0.0774,14.3285,4.0000,1.0854,4.0000
+NUE,M158,2026-10-19,90,2026-10-20,256.0100,10.9540,Pegang,,,,258.1100,0.8203,playbook,0.1088,0.0913,,,,235.7486,Basic Materials,Steel,0.1097,8.6635,3.1067,0.9306,4.0000
+TX,"M155,M161,M20,M57",2026-10-19,89,2026-10-20,58.0000,8.4340,Pegang,,,,55.9600,-3.5172,playbook,0.0838,0.1186,,,,52.5414,Basic Materials,Steel,0.0808,6.1090,1.8623,0.4835,4.0000
+SN,"M158,M73",2026-10-21,94,2026-10-22,194.9400,8.9358,Pegang,,,,196.3800,0.7387,playbook,0.0907,0.1119,,,,174.3071,Consumer Cyclical,"Furnishings, Fixtures & Appliances",0.0914,11.2399,3.5526,1.0060,2.0000
+RVTY,"M159,M25",2026-10-22,92,2026-10-23,156.3500,6.2637,Pegang,,,,158.7700,1.5478,playbook,0.0634,0.1597,,,,133.0100,Healthcare,Diagnostics & Research,0.0644,16.2247,4.0000,1.0226,1.0000

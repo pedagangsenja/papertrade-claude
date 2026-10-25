@@ -1,0 +1,41 @@
+{
+ "dijana": "2026-10-25 13:26 MYT",
+ "sumber": "kajian/portfolio/kaji_portfolio.py playbook (dalam sampel, set 431 tolak 8, masuk Nov 2020 – Okt 2026; alam penyintas)",
+ "takrif": "MDD % keseluruhan tempoh Nov 2020 – Okt 2026 merentas 20 benih (RAWAK: susunan; RS_10/PLAYBOOK: pecah seri): [p5, p50]. RS_10/RAWAK_10 = 10 x 10% lorong 2 kos 0.1%; PLAYBOOK_10/RAWAK_PADAN_10 = peraturan pra-daftar kos 0.25%.",
+ "penuh": {
+  "PLAYBOOK_10": [
+   -19.1,
+   -17.4
+  ],
+  "RAWAK_PADAN_10": [
+   -18.6,
+   -16.6
+  ],
+  "RS_10": [
+   -50.5,
+   -48.0
+  ],
+  "RAWAK_10": [
+   -39.7,
+   -31.5
+  ]
+ },
+ "buang40": {
+  "PLAYBOOK_10": [
+   -18.5,
+   -17.1
+  ],
+  "RAWAK_PADAN_10": [
+   -18.3,
+   -16.6
+  ],
+  "RS_10": [
+   -36.1,
+   -33.5
+  ],
+  "RAWAK_10": [
+   -38.3,
+   -30.6
+  ]
+ }
+}
