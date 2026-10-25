@@ -1630,8 +1630,10 @@ def main(argv=None):
     # 25 Okt 2026 (Penganalisis v4: pintu, SPRT, lebihan, bendera): dokumen > HAD_BAHAGI dibahagi seperti watchlist
     # (bahagi_db.bahagi: asas analisis/papan {bahagian:{id,n}} + analisis/papan_2… {induk,bahagian,rows}; halaman: subBhg)
     pa = os.path.join(BS2, 'data', 'analisis', 'papan.json')
+    papan_penuh = None   # semua baris (sebelum dibahagi) untuk harian/hari_ini (umur matang setiap kaedah)
     if os.path.exists(pa):
         papan = json.load(open(pa, encoding='utf-8'))
+        papan_penuh = papan
         if bait(papan) > HAD_BAHAGI:
             bhg = bahagi(papan, 'papan', HAD_BAHAGI)
             docs['analisis/papan'] = bhg[0][1]
@@ -1646,7 +1648,7 @@ def main(argv=None):
     # harian/hari_ini (v105): pra-kira tab Hari Ini (Buku hari ini, Esok tiga tahap, Berubah, EW); jurnal/minggu (jurnal.py)
     try:
         docs['harian/hari_ini'] = hari_ini(RC, docs.get('harian/trend'), docs['papertrade/watchlist'], docs['prestasi/harian_kaedah'],
-                                           docs.get('analisis/papan'), docs['papertrade/langkau'], S, sb, siri_ew(), dibina)
+                                           papan_penuh, docs['papertrade/langkau'], S, sb, siri_ew(), dibina)
     except Exception as e:  # noqa: BLE001
         print(f'amaran: harian/hari_ini gagal: {e!r}', file=sys.stderr)
         ralat.append(f'harian/hari_ini tidak dijana (halaman mengira sendiri): {e!r}'[:300])
