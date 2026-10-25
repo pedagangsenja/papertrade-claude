@@ -1,0 +1,222 @@
+id,bendera,sebab,sumber,tarikh
+M01,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M01,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M02,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M02,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M03,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M03,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M04,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M05,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M06,HAMPIR_PENDUA:M159,95% daripada 38 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M06,CIRI:PENUNJUK,"regex kasar kod entry: tinggi52, rs, volum; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M07,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M07,CIRI:PENUNJUK,"regex kasar kod entry: rejim, adr; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M08,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M09,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M10,HAMPIR_PENDUA:M159,82% daripada 50 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M10,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M11,CIRI:PENUNJUK,"regex kasar kod entry: volum, ketat; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M12,HAMPIR_PENDUA:M159,83% daripada 78 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M12,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M13,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M14,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M15,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M18,HAMPIR_PENDUA:M14,89% daripada 127 isyarat malam terkandung dalam M14,data/isyarat/*.csv.gz,2026-10-23
+M18,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M19,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M20,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M21,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M21,CIRI:PENUNJUK,"regex kasar kod entry: rejim, volum, adr; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M22,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M22,CIRI:PENUNJUK,"regex kasar kod entry: rejim, volum, adr; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M23,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M23,HAMPIR_PENDUA:M159,97% daripada 34 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M23,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M24,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M24,CIRI:PENUNJUK,regex kasar kod entry: rs; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M25,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M25,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M26,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M27,CIRI:PENUNJUK,regex kasar kod entry: rejim; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M28,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M28,CIRI:PANTULAN,regex kasar kod entry: volum; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M29,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M30,HAMPIR_PENDUA:M159,93% daripada 116 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M30,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M31,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M31,HAMPIR_PENDUA:M159,84% daripada 282 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M31,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M32,HAMPIR_PENDUA:M102,95% daripada 22 isyarat malam terkandung dalam M102,data/isyarat/*.csv.gz,2026-10-23
+M32,CIRI:PENUNJUK,"regex kasar kod entry: volum, adr, ketat; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M33,HAMPIR_PENDUA:M105,100% daripada 90 isyarat malam terkandung dalam M105,data/isyarat/*.csv.gz,2026-10-23
+M33,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M34,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M34,HAMPIR_PENDUA:M159,84% daripada 55 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M34,CIRI:PENUNJUK,regex kasar kod entry: ketat; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M35,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M35,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M36,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M36,HAMPIR_PENDUA:M116,90% daripada 188 isyarat malam terkandung dalam M116,data/isyarat/*.csv.gz,2026-10-23
+M36,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M37,CIRI:PENUNJUK,"regex kasar kod entry: rejim, volum; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M38,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M38,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M39,HAMPIR_PENDUA:M159,88% daripada 107 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M39,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M40,CIRI:PENUNJUK,regex kasar kod entry: rs; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M41,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M44,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M44,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M45,CIRI:PENUNJUK,"regex kasar kod entry: tinggi52, rs; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M46,CIRI:PENUNJUK,"regex kasar kod entry: volum, ketat; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M47,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M47,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M48,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M49,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M49,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M50,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M50,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M51,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M51,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M52,CIRI:PENUNJUK,regex kasar kod entry: rejim; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M54,HAMPIR_PENDUA:M116,93% daripada 161 isyarat malam terkandung dalam M116,data/isyarat/*.csv.gz,2026-10-23
+M54,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M55,HAMPIR_PENDUA:M20,89% daripada 95 isyarat malam terkandung dalam M20,data/isyarat/*.csv.gz,2026-10-23
+M55,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M56,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M56,CIRI:PENUNJUK,regex kasar kod entry: rs; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M57,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M59,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M59,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M64,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M64,CIRI:PENUNJUK,regex kasar kod entry: ketat; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M66,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M67,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M68,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M68,CIRI:PENUNJUK,regex kasar kod entry: ketat; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M70,HAMPIR_PENDUA:M82,83% daripada 162 isyarat malam terkandung dalam M82,data/isyarat/*.csv.gz,2026-10-23
+M70,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M73,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M73,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M74,HAMPIR_PENDUA:M82,82% daripada 34 isyarat malam terkandung dalam M82,data/isyarat/*.csv.gz,2026-10-23
+M74,CIRI:PENUNJUK,regex kasar kod entry: tinggi52; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M76,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M76,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M77,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M78,CIRI:PENUNJUK,"regex kasar kod entry: rejim, volum; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M79,HAMPIR_PENDUA:M159,83% daripada 65 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M79,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M80,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M81,ARTIFAK,pandang hadapan: _exit_ekor menanda exitc[j-1] daripada rendah hari j (AUTOTUNE/hasil/AUDIT_M81.md); sedang dibaiki dalam BacktestShariah2/kod,AUTOTUNE/hasil/AUDIT_M81.md,2026-10-23
+M81,CIRI:PENUNJUK,"regex kasar kod entry: rejim, volum; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M82,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M82,CIRI:PENUNJUK,"regex kasar kod entry: rejim, volum; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M84,CIRI:PENUNJUK,regex kasar kod entry: rs; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M87,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M87,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M88,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M89,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M90,CIRI:PENUNJUK,"regex kasar kod entry: volum, ketat; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M91,CIRI:PENUNJUK,"regex kasar kod entry: volum, ketat; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M92,CIRI:PENUNJUK,"regex kasar kod entry: volum, ketat; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M93,HAMPIR_PENDUA:M159,84% daripada 142 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M93,CIRI:PENUNJUK,"regex kasar kod entry: volum, ketat; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M94,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M94,CIRI:PENUNJUK,regex kasar kod entry: rs; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M95,HAMPIR_PENDUA:M116,94% daripada 99 isyarat malam terkandung dalam M116,data/isyarat/*.csv.gz,2026-10-23
+M95,CIRI:MOMENTUM_PRO,"regex kasar kod entry: tinggi52, volum, ketat; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M96,CIRI:PENUNJUK,regex kasar kod entry: rs; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M99,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M100,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M100,HAMPIR_PENDUA:M159,85% daripada 33 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M100,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M101,HAMPIR_PENDUA:M36,100% daripada 35 isyarat malam terkandung dalam M36,data/isyarat/*.csv.gz,2026-10-23
+M101,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M102,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M104,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M104,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M105,HAMPIR_PENDUA:M159,84% daripada 158 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M105,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M106,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M107,CIRI:PENUNJUK,regex kasar kod entry: rejim; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M111,HAMPIR_PENDUA:M159,87% daripada 106 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M111,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M115,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M115,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M116,HAMPIR_PENDUA:M159,88% daripada 522 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M116,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M117,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M117,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M118,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M119,HAMPIR_PENDUA:M159,88% daripada 60 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M119,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M120,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M120,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M121,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M121,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M122,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M123,CIRI:PANTULAN,regex kasar kod entry: volum; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M124,HAMPIR_PENDUA:M159,83% daripada 132 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M124,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M125,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M125,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M126,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M126,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M127,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M127,HAMPIR_PENDUA:M159,91% daripada 44 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M127,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M128,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M129,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M130,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M131,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M131,HAMPIR_PENDUA:M159,84% daripada 114 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M131,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M132,HAMPIR_PENDUA:M36,90% daripada 51 isyarat malam terkandung dalam M36,data/isyarat/*.csv.gz,2026-10-23
+M132,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M133,HAMPIR_PENDUA:M125,95% daripada 22 isyarat malam terkandung dalam M125,data/isyarat/*.csv.gz,2026-10-23
+M133,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M134,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M135,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M136,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M136,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M137,HAMPIR_PENDUA:M159,89% daripada 75 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M137,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M138,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M138,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M139,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M140,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M140,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M141,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M141,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M142,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M143,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M143,CIRI:PENUNJUK,regex kasar kod entry: volum; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M144,CIRI:PENUNJUK,regex kasar kod entry: adr; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M145,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M145,HAMPIR_PENDUA:M159,91% daripada 168 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M145,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M146,HAMPIR_PENDUA:M159,100% daripada 31 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M146,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M147,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M147,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M148,HAMPIR_PENDUA:M159,89% daripada 64 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M148,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M149,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M150,HAMPIR_PENDUA:M159,82% daripada 50 isyarat malam terkandung dalam M159,data/isyarat/*.csv.gz,2026-10-23
+M150,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M151,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M152,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M153,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M154,CIRI:PANTULAN,regex kasar kod entry: tiada ciri; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M155,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M155,CIRI:PANTULAN,regex kasar kod entry: volum; jenis pantulan,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M156,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M156,HAMPIR_PENDUA:M82,81% daripada 81 isyarat malam terkandung dalam M82,data/isyarat/*.csv.gz,2026-10-23
+M156,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M157,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M157,CIRI:PENUNJUK,"regex kasar kod entry: volum, adr; jenis momentum","kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M158,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M159,DITOLAK,keputusan registry set 431 = DITOLAK,data/registry_M_gabung.csv,2026-10-23
+M159,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M160,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
+M161,CIRI:PENUNJUK,regex kasar kod entry: tiada ciri; jenis momentum,"kod/kaedah/*.py, kod/jenis_kaedah.csv",2026-10-23
