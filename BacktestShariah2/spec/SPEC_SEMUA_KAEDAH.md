@@ -14373,3 +14373,97 @@ Dalam luar sampel, bagi ≥ 4 daripada 6 kaedah: kadar Hit10 isyarat lulus − k
 
 ## Penutup
 Untuk ujian: buka chat baharu dan taip `/step2 L02` selepas M162, M165 dan L01 siap.
+
+---
+
+<!-- FAIL ASAL: spec/M168.md -->
+# M168 — Pulih MACD + Silang SMA10/20 (teknik manual pengguna)
+
+**Sumber:** Amalan pengguna sendiri, bukan buku atau video. `00_NOTA_SERAHAN.md` §6 item 5: "selepas saham jatuh beberapa minggu, pengguna memasang alert MACD, kemudian membeli apabila MA10 melintas di atas MA20". Jawapan pengguna 25 Okt 2026: (1) "jatuh beberapa minggu" tiada takrif tetap, jadi beberapa takrif diuji dan semuanya dilaporkan; (2) alert = histogram MACD(12,26,9) harian bertukar daripada negatif kepada positif; (3) beli apabila SMA10 tutup melintas atas SMA20 selepas alert, pada BUKA hari dagangan berikutnya; (4) keluar apabila SMA10 melintas bawah SMA20, jual pada BUKA esok; tiada henti dan tiada sasaran disebut. Dagangan sebenar: DCI dan MGA (akaun Moomoo lama, kaedah MANUAL, dibeli 6 Okt 2026; `papertrade/moomoo.csv`).
+**Jenis:** Pantulan selepas fasa jatuh (pemulihan aliran jangka pendek). Long sahaja. Median pulangan 20 hari sebelum isyarat V1 = −1.7% (takrif `kod/jenis_kaedah.csv`: pantulan).
+**Status:** Moratorium kaedah baharu (25 Okt 2026): modul `WFO/kaedah_baru/M168.py` (antara muka `kod/ANTARAMUKA.md`) sengaja di luar `kod/kaedah/`, jadi tiada isyarat dalam imbasan harian / Lejar Penuh sehingga pengguna memutuskan (langkah: `laporan/M168.md` bahagian 10).
+
+## 1. Ringkasan satu pandangan
+| Perkara | Isi |
+|---|---|
+| Idea teras | Saham yang sudah jatuh beberapa minggu mula kehilangan momentum turun (histogram MACD positif); beli apabila SMA10 kembali melintas atas SMA20 |
+| Indikator | SMA10 dan SMA20 harga tutup; histogram MACD(12,26,9); tinggi 60 hari |
+| Persediaan | Fasa jatuh (SMA10 < SMA20 sekurang-kurangnya J hari dalam W hari) dan tutup ≥ D di bawah tinggi 60 hari, kedua-duanya pada hari alert |
+| Pencetus | Alert MACD, kemudian SMA10 silang atas SMA20 dalam 0..K hari dagangan |
+| Arah | Long sahaja |
+| Keluar | SMA10 silang bawah SMA20 → jual buka esok |
+| Sasaran | Tiada |
+| Henti rugi | Tiada (pengguna tidak menyatakan). Henti kecemasan diuji sebagai kepekaan sahaja |
+| Rangka masa | Harian |
+
+## 2. Tetapan indikator
+| Indikator | Tetapan | S/C |
+|---|---|---|
+| SMA10, SMA20 | Purata mudah 10 dan 20 harga tutup | S |
+| MACD | EMA12 − EMA26 harga tutup (EMA rekursif, adjust=False, sama seperti M02); isyarat = EMA9 MACD; histogram = MACD − isyarat | S (12,26,9) |
+| Tinggi 60 hari H60_i | maks(high_{i−59..i}) | C |
+| Tetingkap fasa jatuh W | ⌈1.5 × J⌉ hari dagangan berakhir pada hari alert: J = 15/20/30 → W = 23/30/45 | C |
+
+## 3. Persediaan dan pencetus (pada tutup hari i)
+| Langkah | Syarat | S/C |
+|---|---|---|
+| 1 | Alert pada hari a: histogram_a > 0 dan histogram_{a−1} ≤ 0 | S |
+| 2 | Fasa jatuh: bilangan hari SMA10 < SMA20 dalam W hari (a−W+1..a) ≥ J (3/4/6 minggu = 15/20/30 hari) | C (grid; tiada takrif pengguna) |
+| 3 | Kedalaman: C_a ≤ (1 − D) × H60_a, D = 10/15/20% | C (grid) |
+| 4 | Pencetus hari b: SMA10_b > SMA20_b dan SMA10_{b−1} ≤ SMA20_{b−1}, dengan a ≤ b ≤ a + K bagi sekurang-kurangnya satu alert layak (K = 10/20) | S (silang), C (K) |
+| 5 | Masuk pada buka b+1 | S |
+| 6 | Keluar: hari j > b dengan SMA10_j < SMA20_j dan SMA10_{j−1} ≥ SMA20_{j−1} → jual buka j+1 | S |
+
+**Andaian saya:** silang pada hari alert sendiri (b = a) dikira; mana-mana silang atas dalam K hari selepas alert layak (termasuk silang kedua selepas keluar); rank slot = ROC63 (konvensyen projek, pengguna tidak menyatakan); tiada penapis pasaran (SPY) dan tiada penapis cair selain alam 431.
+
+## 4. Penapis "jangan dagang"
+| Tanda amaran | Maksud | Tindakan |
+|---|---|---|
+| Tiada daripada pengguna | — | Tiada penapis tambahan dalam V utama |
+| Buka esok ≤ henti (varian H sahaja) | Jurang turun melepasi henti kecemasan | Langkau (konvensyen projek) |
+
+## 5. Jurang dan kekaburan
+| # | Perkara | Status | Masalah |
+|---|---|---|---|
+| 1 | "Jatuh beberapa minggu" | ⚠️ Tiada takrif | Grid J × D (9 gabungan) |
+| 2 | Tempoh alert → silang | ⚠️ Tiada takrif | K = 10 dan 20 hari dagangan |
+| 3 | Henti rugi | ❌ Tiada dalam sumber | V utama tanpa henti gagal G1 secara automatik (G1 mensyaratkan henti); varian H = henti kecemasan 0.99 × rendah terendah dari awal tetingkap fasa jatuh (a−W+1) hingga hari isyarat (C) |
+| 4 | Masa belian sebenar | ⚠️ | Pengguna membeli DCI dan MGA pada 6 Okt 2026 semasa sesi (DCI: hari silang; MGA: sehari sebelum silang 7 Okt). Kad mesin = buka esok selepas silang tutup (jawapan pengguna) |
+| 5 | Kalibrasi V utama | ✅ | Kedua-dua dagangan sebenar memenuhi J20 D10 K10: DCI alert 28 Sep 2026 (SMA10 < SMA20 26/30 hari, −11.8% bawah H60), silang 6 Okt (6 hari selepas alert); MGA alert 28 Sep (21/30 hari, −11.7%), silang 7 Okt (7 hari). Kedua-duanya TIDAK memenuhi D15, D20 atau J30 |
+| 6 | Data | ✅ | OHLC harian sahaja. Stor repo = kline Moomoo terlaras hadapan bagi DCI/MGA (disemak 25 Okt 2026) |
+| 7 | Syariah | ✅ | Long sahaja |
+
+## 6. Kad Spesifikasi Mesin
+| Medan enjin | Takrif tepat (formula) | S/C |
+|---|---|---|
+| `sig` | Langkah 1–4 (V1: J20, W30, D10, K10) | S/C |
+| `stop` | V utama: tiada (NaN). Varian VnH: 0.99 × min(low_{a−W+1..b}), a = alert layak terkini; langkau jika buka_{b+1} ≤ henti | C |
+| `tgt` | Tiada | S |
+| `exitc` | SMA10_j < SMA20_j dan SMA10_{j−1} ≥ SMA20_{j−1} (jual buka j+1) | S |
+| `rank` | ROC63 = C_i ÷ C_{i−63} − 1 | C |
+| `tmax` | Tiada | S |
+| Penapis pasaran | Tiada | S |
+| Varian V0a | Kawalan: silang SMA10/20 sahaja (tiada alert, tiada fasa jatuh) | C |
+| Varian V0b | Kawalan: alert MACD + silang ≤ 10 hari, tanpa syarat jatuh | C |
+| Varian V1 (utama) | J20 D10 K10, tiada henti (paling hampir dengan amalan pengguna; dikalibrasi pada DCI/MGA) | S/C |
+| Varian V2–V18 | Gabungan lain J ∈ {15, 20, 30} × D ∈ {10, 15, 20%} × K ∈ {10, 20}, tiada henti | C |
+| Varian V1H–V18H | Sama seperti Vn + henti kecemasan (kepekaan sahaja) | C |
+
+## 7. Verdict awal
+**Layak diuji dengan STEP-2 sebagai kod amalan pengguna. V utama tanpa henti akan DITOLAK oleh G1 secara automatik; nilai sebenar diukur dengan CAGR lawan sama rata 431, SPY dan belian rawak tempoh sama.**
+
+## 8. Keputusan STEP-2 (25 Okt 2026, enjin v1.2, set 431)
+| Perkara | Keputusan |
+|---|---|
+| V1 utama (J20 D10 K10, tiada henti) | DITOLAK (G1 sahaja: tiada henti). CAGR 26.6%, MDD −30.0%, 4980 dagangan, menang 42.8%, purata +2.97%, pegang purata 21.5 hari. Jika G1 diabaikan: UJI KERTAS 60.6 |
+| Penanda aras | Sama rata 431 21.9%, SPY 15.9%. Hingga Dis 2025 V1 18.5% (SPY 15.6%, sama rata 18.3%) |
+| S1–S4 (V1) | 14.3 / 16.0 / 19.7 / 24.9%; mengatasi sama rata set hanya 1/4 |
+| Tanpa 10 terbaik (V1) | 3.9% (< SPY); semua 36 varian grid < SPY tanpa 10 terbaik (maks 15.6%) |
+| Belian rawak tempoh sama (V1, 20 benih) | Saham rawak, tarikh sama: CAGR median 21.4% (lebihan +5.2 mata; 3/20 benih ≥ V1). Purata dagangan: +0.39 mata atas saham rawak, +0.83 mata atas tarikh rawak saham sama |
+| Grid 36 varian | CAGR 3.6–38.1% (median 23.0%); 20/36 > sama rata, 29/36 > SPY; hanya 1/36 mengatasi sama rata dalam ≥ 3/4 subset. Varian bersebelahan berbeza sangat besar (V2 16.1%, V1 26.6%, V3 3.6%, V8 32.2%) |
+| Kawalan | V0a silang sahaja 15.1%, V0b alert tanpa jatuh 14.9% (kedua-duanya < SPY). Syarat fasa jatuh menaikkan purata dagangan (D10 ≈ 2.9%, D15 ≈ 3.6%, D20 ≈ 4.3%, kawalan 1.9%) |
+| Varian skor tertinggi bukan DITOLAK (peraturan tugasan_v3 §3) | V5H J15 D15 K20 + henti kecemasan: UJI KERTAS 69.2, CAGR 33.1%, MDD −32.5% (dipilih dalam sampel daripada 38 varian) |
+| Verdict | Kelebihan dalam sampel ada tetapi rapuh: bergantung pada segelintir dagangan besar, tidak konsisten merentas subset dan sangat peka pada takrif "jatuh". Set 431 berbias penyintas (penting bagi kaedah pantulan). Tunggu ujian point-in-time (`kajian/pit`) sebelum diaktifkan |
+
+## Penutup
+Skrip: `python3 WFO/kaedah_baru/step2_M168.py <folder> --proses 4 --benih 20`. Laporan penuh: `laporan/M168.md`. Registry: `kod/registry/M168.csv`.
