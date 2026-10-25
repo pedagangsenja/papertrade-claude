@@ -293,7 +293,8 @@ def laporan(D, hasil, keluar):
          '(`standard/banding_bayang.py`). Beza dijangka: teks paparan, harga sementara 9:35 NY, gred P (masa data '
          'pemangkin), sumber tarikh earnings (SST Claude lawan Nasdaq/fail mingguan).', '']
     for h in hasil:
-        L.append(f"## {h['peringkat']} ({h.get('commit')}, sesi {h.get('sesi') or h.get('tarikh')})")
+        L.append(f"## {h['peringkat']} ({h.get('commit')}, sesi {h.get('sesi') or h.get('tarikh')})" if h.get('commit') else
+                 f"## {h['peringkat']}")
         if h.get('ralat'):
             L += ['', f"RALAT: {h['ralat']}", '']; continue
         if h.get('nota'):

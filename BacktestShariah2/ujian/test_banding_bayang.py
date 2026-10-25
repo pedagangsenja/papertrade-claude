@@ -30,6 +30,15 @@ class TestBandingBelum(unittest.TestCase):
         self.assertEqual(BB.dijadual('2026-11-26'), {'kemas': True, 'imbas': False, 'beli': False})
         self.assertFalse(BB.dijadual('2026-11-27')['kemas'])
 
+    def test_laporan_nota(self):
+        d = tempfile.mkdtemp()
+        p = BB.laporan('2026-10-24', [dict(peringkat='kemas', commit='3fc565e', sesi='2026-10-23', stat={'baris': 1}, beza={}),
+                                       dict(peringkat='imbas', nota='tiada rutin dijadualkan')], d)
+        teks = open(p, encoding='utf-8').read()
+        self.assertIn('## kemas (3fc565e, sesi 2026-10-23)', teks)
+        self.assertIn('## imbas\n\nNota: tiada rutin dijadualkan', teks)
+        self.assertNotIn('RALAT', teks)
+
     def test_ada_rutin(self):
         self.assertFalse(BB.ada_rutin({'imbas': []}))
         self.assertTrue(BB.ada_rutin({'imbas': [], 'kemas': 'abc'}))
