@@ -1,0 +1,236 @@
+{
+"aktiviti": {
+"beli": {
+"n": 1,
+"saham": 1,
+"tarikh": "2026-10-23"
+},
+"keluar": {
+"n": 1,
+"tarikh": "2026-10-23"
+},
+"langkau": {
+"n": 1,
+"tarikh": "2026-10-23"
+}
+},
+"berubah": {
+"beli": {
+"n": 1,
+"saham": 1,
+"tarikh": "2026-10-23"
+},
+"bendera": {
+"jenis": {},
+"n": 0,
+"tarikh": "2026-10-23"
+},
+"keluar": {
+"n": 1,
+"sebab": {
+"masa": 1
+},
+"tarikh": "2026-10-23",
+"tidak_sah": {}
+},
+"keluar_l2": {
+"n": 1,
+"tarikh": "2026-10-22"
+},
+"langkau": {
+"n": 1,
+"sebab": {
+"buka > buka_maks": 1
+},
+"tarikh": "2026-10-23"
+},
+"tidak_sah_baru": {
+"jenis": {
+"tidak_cair": 1
+},
+"n": 1
+},
+"watchlist": {
+"imbasan": null,
+"n": null,
+"tarikh_data": "2026-10-23"
+}
+},
+"buka_seterusnya": "2026-10-26",
+"buku": {
+"bendera": {
+"jenis": {},
+"n": 0
+},
+"breadth": {
+"N": 0,
+"n": 0,
+"pct": null,
+"tarikh": ""
+},
+"liputan": null,
+"lorong2_sahaja": 1,
+"lorong_kaedah": 6,
+"pnl": {
+"c": -0.2,
+"ew": null,
+"n": 8,
+"spy": -0.1,
+"tarikh": "2026-10-23"
+},
+"posisi": 7,
+"rejim": null,
+"risiko": {
+"median": 10.45,
+"n": 6,
+"purata": 10.26
+},
+"saham": 6,
+"tanpa_henti": {
+"kaedah": 0,
+"n": 0
+},
+"tarikh": "2026-10-23"
+},
+"dibina": "2026-10-24 06:30 MYT",
+"esok": {
+"buka": "2026-10-26",
+"maklumat": {
+"amaran": {
+"cip": [],
+"lagi": 0,
+"n": 0,
+"saham": 0
+},
+"calon": {
+"cip": [
+{
+"g": null,
+"k": "M03",
+"s": "JJJ"
+}
+],
+"kaedah_watchlist": 3,
+"n": 1,
+"saham": 1
+},
+"earn": {
+"cip": [
+{
+"eh": 3,
+"et": "2026-10-28",
+"k": [
+"M03",
+"M07"
+],
+"l": "",
+"n": 2,
+"s": "AAA",
+"u": 7.88
+}
+],
+"lagi": 0,
+"n": 2,
+"saham": 1
+}
+},
+"sebelum": "2026-10-22",
+"semak": {
+"calon_earn": {
+"cip": [],
+"n": 0,
+"saham": 0
+},
+"earn_buka": {
+"cip": [],
+"lagi": 0,
+"n": 0,
+"saham": 0
+},
+"jurang": 0,
+"kritikal": {
+"cip": [],
+"lagi": 0,
+"n": 0,
+"saham": 0
+},
+"tidak_sah_baru": {
+"cip": [
+{
+"jenis": "tidak_cair",
+"k": "M12",
+"s": "GGG",
+"sebab": "isyarat palsu: saham tidak cair (3 bar tanpa julat) pada 2026-10-22",
+"tb": "2026-10-23"
+}
+],
+"n": 1,
+"saham": 1
+}
+},
+"tanpa_earnings": 4,
+"wajib": {
+"data": [],
+"jual": {
+"cip": [
+{
+"k": [
+"M03"
+],
+"l": "K",
+"n": 1,
+"s": "BBB",
+"sb": [
+"isyarat kaedah (tutup)"
+],
+"u": -10.0
+},
+{
+"eh": 20,
+"et": "2026-11-20",
+"k": [
+"M12"
+],
+"l": "2",
+"n": 1,
+"s": "CCC",
+"sb": [
+"lorong 2: tutup 21 < paras 21.5"
+],
+"u": 5.0
+}
+],
+"lagi": 0,
+"n": 2,
+"saham": 2
+}
+}
+},
+"ew": null,
+"matang": {
+"G": 0,
+"belum": 8,
+"buka_pct": null,
+"g_min": 10,
+"hi": null,
+"kaedah": 0,
+"lo": null,
+"m": null,
+"menang": null,
+"menang_hi": null,
+"menang_lo": null,
+"n": 0
+},
+"nota": "Pra-kira jana_db.py untuk tab Hari Ini (takrif sama dengan halaman). Cip = satu setiap saham: s saham, n posisi, k kaedah, u untung semasa purata %, j jarak minimum ke paras keluar (ATR14), l lorong (K kaedah, 2 Chandelier), sb sebab jual, eh/et earnings (hari dagangan/tarikh), q bendera data. Tiada order · tiada wang sebenar.",
+"senarai_beli": null,
+"sesi": "2026-10-23",
+"sesi_sebelum": "2026-10-22",
+"takrif": {
+"earn_calon": 5,
+"earn_maklumat": 10,
+"had_cip": 60,
+"hampir_atr": 1.0,
+"kritikal_atr": 0.5
+},
+"versi": 1
+}

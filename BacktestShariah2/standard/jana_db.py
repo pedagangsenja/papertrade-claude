@@ -16,7 +16,10 @@
 # harian/status.semakan (24 Okt 2026): ringkasan data/semakan/kira_semula.json, sahkan.json, sampel.json + baris "semakan: …"
 # dalam ralat. Susunan: jana_db --keluar <db> -> kira_semula.py --db <db> -> jana_db --keluar <db> --semakan-sahaja
 # (tulis semula harian/status.json sahaja) -> tolak batch (standard/dashboard.md "Pengiraan semula bebas").
-import argparse, csv, glob, hashlib, json, os, re, statistics as stt, sys
+# v105 (25 Okt 2026, cawangan pt/dashboard): harian/hari_ini (pra-kira tab Hari Ini: Buku hari ini, Esok tiga tahap Wajib/Semak/
+# Maklumat, Berubah, matang, siri EW penanda_ew.py), jurnal/minggu (standard/jurnal.py), papertrade/watchlist.tarikh_imbasan,
+# harian/status.amaran_data, prestasi/ringkasan label §7 dibersarakan (Combine = C sahaja), --lama (tolak dokumen berubah sahaja).
+import argparse, csv, glob, hashlib, json, math, os, re, statistics as stt, sys
 
 import numpy as np
 import pandas as pd
@@ -236,7 +239,25 @@ def sah(r):
 
 
 # ---------------------------------------------------------------- prestasi (peraturan sama dengan halaman; tugasan_v3 §7)
-def prestasi(M, C, mae):
+# 25 Okt 2026 (selaras harian_prestasi.py cawangan pt/ops): label §7 TERUSKAN/PERHATI/HENTIKAN DIBERSARAKAN — medan lama kekal untuk
+# keserasian (`keputusan` = 'dibersarakan', `teruskan`/`hentikan`/`bil` = None) dan medan baharu `pantau_penganalisis` /
+# `status_penganalisis` daripada Papan Penganalisis; Combine = Papertrade C SAHAJA, M = sejarah Moomoo lama.
+DIBERSARAKAN = 'dibersarakan'
+NOTA_COMBINE = 'Combine = Papertrade C sahaja (posisi Moomoo lama dikecualikan sejak 25 Okt 2026); M = sejarah Moomoo lama.'
+
+
+def baca_pantau(papan=None):
+    """{id kaedah: (pantau, status)} daripada data/analisis/papan.json (penganalisis.py); {} jika tiada."""
+    try:
+        with open(papan or os.path.join(BS2, 'data', 'analisis', 'papan.json'), encoding='utf-8') as f:
+            P = json.load(f)
+    except (OSError, ValueError):
+        return {}
+    return {r['id']: (r.get('pantau'), r.get('status')) for r in P.get('rows') or [] if r.get('id')}
+
+
+def prestasi(M, C, mae, pantau=None):
+    pantau = pantau or {}
     cl = lambda x: max(0, min(1, x))
 
     def rows(ak, R):
@@ -272,24 +293,24 @@ def prestasi(M, C, mae):
             U = 0.6 * cl((avg + 5) / 15) + 0.4 * win; S_ = 0.6 * cl(1 + dd / 10) + 0.4 * cl(1 + worst / 20)
             sk = 100 * U * S_ * min(1, n / 5); gagal = 1 - win
             ntutup = sum(1 for t in a if t['keluar'])
-            kep = ('BELUM CUKUP DATA' if ntutup < MIN_TUTUP else
-                   'HENTIKAN' if (avg <= -3 or gagal >= .75 or round(sk) < 25) else
-                   'TERUSKAN' if round(sk) >= 55 and avg > 0 else 'PERHATI')
+            pn = pantau.get(k) or (None, None)
             out.append(dict(kaedah=k, n=n, menang=round(100 * win, 1), purata=round(avg, 2), median=round(stt.median(us), 2),
                             terburuk=round(worst, 2), dd=round(dd, 2), gagal=round(100 * gagal, 1),
-                            keluar_rugi=sum(1 for t in a if t['keluar'] and t['u'] < 0), tutup=ntutup, skor=round(sk, 1), keputusan=kep))
+                            keluar_rugi=sum(1 for t in a if t['keluar'] and t['u'] < 0), tutup=ntutup, skor=round(sk, 1), keputusan=DIBERSARAKAN,
+                            pantau_penganalisis=pn[0], status_penganalisis=pn[1]))
         return sorted(out, key=lambda x: -x['skor'])
 
     res = {}
-    for nm, T in [('M', rows('M', M)), ('C', rows('C', C)), ('Combine', rows('M', M) + rows('C', C))]:
+    # Papertrade M (Moomoo lama) = sejarah, tidak digabung (audit 25 Okt 2026): 'Combine' kekal sebagai kunci (keserasian) = C sahaja
+    for nm, T in [('M', rows('M', M)), ('C', rows('C', C)), ('Combine', rows('C', C))]:
         K = kaedah(T)
-        res[nm] = dict(kpi=kpi(T), kaedah=K, teruskan=[x['kaedah'] for x in K if x['keputusan'] == 'TERUSKAN'],
-                       hentikan=[x['kaedah'] for x in K if x['keputusan'] == 'HENTIKAN'],
-                       bil={k: sum(x['keputusan'] == k for x in K) for k in ['TERUSKAN', 'PERHATI', 'HENTIKAN', 'BELUM CUKUP DATA']},
+        res[nm] = dict(kpi=kpi(T), kaedah=K, teruskan=None, hentikan=None, bil=None, label_s7=DIBERSARAKAN,
                        teruk_gagal=[(x['kaedah'], x['gagal'], x['n']) for x in sorted([x for x in K if x['n'] >= 3], key=lambda x: -x['gagal'])[:5]],
                        teruk_rugi=[(x['kaedah'], x['terburuk']) for x in sorted(K, key=lambda x: x['terburuk'])[:5]],
                        teruk_keluar_rugi=[(x['kaedah'], x['keluar_rugi']) for x in sorted(K, key=lambda x: -x['keluar_rugi'])[:5]],
                        top=[(x['kaedah'], x['skor'], x['purata'], x['menang'], x['n']) for x in K[:5]])
+    res['M']['nota'] = 'Papertrade M: posisi Moomoo lama (sejarah; tiada belian baharu sejak 13 Okt 2026).'
+    res['Combine']['nota'] = NOTA_COMBINE
     return res
 
 
@@ -636,6 +657,475 @@ def harian_kaedah(M, C, stor, terkini=None):
     return dict(tarikh=hari, spy=spy, rows=rows)
 
 
+# ---------------------------------------------------------------- harian/hari_ini (dashboard v105; audit 25 Okt 2026)
+# Dokumen pra-kira kecil (<= ~300 KB) supaya tab Hari Ini tidak memuat ~6 MB dokumen posisi/trend/lorong 2 setiap kali papan
+# dibuka. Takrif SAMA dengan halaman (statusPos, jarakAtr, hariKeEarn, wBeli; dashboard_v2.html hariIniKlien): halaman
+# mengira bentuk yang sama sendiri jika dokumen ini tiada (db lama), dan ujian halaman membanding kedua-duanya.
+HAMPIR_ATR = 1.0          # <= 1 ATR = hampir paras keluar (Maklumat jika > KRITIKAL_ATR)
+KRITIKAL_ATR = 0.5        # <= 0.5 ATR = kritikal (Semak); kalibrasi audit: 19% tutup / 39% rendah melepasi paras esok
+EARN_CALON = 5            # calon beli yang masuk ke earnings dalam <= 5 hari dagangan (Semak)
+EARN_MAKLUMAT = 10        # earnings 2–10 hari dagangan (Maklumat)
+HAD_CIP = 60              # cip setiap blok dalam dokumen; halaman memapar 24 (desktop) / 12 (telefon), selebihnya "+N lagi"
+EW = os.path.join(BS2, 'data', 'analisis', 'ew_harian.csv')
+EW_MULA = '2025-10-01'
+_R_PARAS = re.compile(r'paras keluar ([\d.]+)')     # sama dengan halaman l2Info (tanpa tanda negatif)
+_R_PUNCAK = re.compile(r'puncak ([\d.]+)')
+_R_TARIKH = re.compile(r'\d{4}-\d\d-\d\d')
+
+
+def hari_dag_berikut(t):
+    """Hari dagangan NYSE selepas tarikh t (YYYY-MM-DD); cuti XNYS (hari_dag)."""
+    from datetime import date, timedelta
+    d = date.fromisoformat(str(t)[:10])
+    for _ in range(10):
+        d += timedelta(days=1)
+        if hari_dag(d, d + timedelta(days=1)) == 1:
+            return d.isoformat()
+    return ''
+
+
+def siri_ew(path=EW, mula=EW_MULA):
+    """Siri penanda EW (standard/penanda_ew.py) sejak `mula`: {lajur, rows} (pecahan, bukan %); None jika fail tiada."""
+    if not path or not os.path.exists(path):
+        return None
+    lajur = ['tarikh', 'n', 'ew_cc', 'ew_oc', 'ew_indeks', 'spy_cc', 'spy_oc', 'spy_indeks']
+    rows = []
+    with open(path, newline='', encoding='utf-8') as f:
+        for r in csv.DictReader(f):
+            if (r.get('tarikh') or '') < mula:
+                continue
+            x = [r['tarikh']]
+            for k in lajur[1:]:
+                v = SH.nombor(r.get(k))
+                x.append(None if v is None else (int(v) if k == 'n' else round(v, 6)))
+            rows.append(x)
+    return dict(lajur=lajur, rows=rows, sumber='data/analisis/ew_harian.csv (standard/penanda_ew.py)',
+                nota='EW = purata sama berat saham Shariah univ.txt (harga >= USD10) dalam stor; cc = tutup semalam -> tutup, '
+                     'oc = buka -> tutup (pecahan). Sejarah sebelum Okt 2026 berbias penyintas (senarai Shariah semasa).')
+
+
+def norm_pt(r):
+    """Baris db posisi -> bentuk halaman normPT (keluar, harga_terkini dibekukan, tutup_semua, keluar_henti boolean)."""
+    b = SH.benar
+    kel = bool(b(r.get('keluar')) or r.get('tarikh_keluar'))
+    x = dict(r)
+    x['keluar'] = kel
+    x['isyarat_keluar'] = r.get('isyarat_keluar') or ('Keluar' if kel else 'Pegang')
+    x['harga_terkini'] = r.get('harga_keluar') if kel and r.get('harga_keluar') not in (None, '') else r.get('harga_terkini')
+    x['untung_akhir_pct'] = (r.get('untung_akhir_pct') if r.get('untung_akhir_pct') not in (None, '') else r.get('untung_pct')) if kel else None
+    x['tidak_sah'] = b(r.get('tidak_sah'))
+    x['tidak_dibeli'] = b(r.get('tidak_dibeli'))
+    x['keluar_henti'] = b(r.get('keluar_henti'))
+    ts = r.get('tutup_semua')
+    if ts not in (None, ''):
+        x['tutup_semua'] = b(ts)
+    elif r.get('status_henti') or r.get('keluar_henti') not in (None, ''):
+        x['tutup_semua'] = kel and b(r.get('keluar_henti'))
+    else:
+        x['tutup_semua'] = kel
+    return x
+
+
+def peta_trend(doc):
+    """harian/trend -> {saham: {lajur: nilai}}."""
+    if not doc:
+        return {}
+    L = doc.get('lajur') or []
+    return {x[0]: dict(zip(L, x)) for x in doc.get('rows') or []}
+
+
+def l2_info(x, t):
+    """Lorong 2 masih Pegang: {paras, puncak, h} (halaman l2Info); h = tutup terakhir jika lorong kaedah sudah keluar."""
+    if x['tidak_dibeli'] or x['keluar_henti']:
+        return None
+    s = str(x.get('status_henti') or '')
+    if not s or 'menunggu' in s:
+        return None
+    p, k = _R_PARAS.search(s), _R_PUNCAK.search(s)
+    if not p or not k:
+        return None
+    paras, puncak = float(p.group(1)), float(k.group(1))
+    h = (t or {}).get('c') if x['keluar'] else SH.nombor(x.get('harga_terkini'))
+    if not h or not puncak > paras:
+        return None
+    return dict(paras=paras, puncak=puncak, h=float(h))
+
+
+def jarak_lorong(x, t):
+    """Jarak harga ke paras keluar setiap lorong yang masih Pegang dalam unit ATR14 semasa (halaman jarakAtrL):
+    {kaedah, henti, paras_k, paras_2}; None jika tiada ATR."""
+    if x['tidak_dibeli'] or x['tutup_semua'] or not t:
+        return None
+    atr, c = t.get('atr_pct'), t.get('c')
+    if atr is None or not c:
+        return None
+    A = atr / 100 * c
+    if not A > 0:
+        return None
+    o, h = {}, SH.nombor(x.get('harga_terkini'))
+    if not x['keluar'] and 'menunggu' not in str(x['isyarat_keluar']):
+        p = SH.nombor(x.get('henti'))
+        if p is not None and h:
+            o.update(kaedah=(h - p) / A, paras_k=p)
+    a = l2_info(x, t)
+    if a:
+        o.update(henti=(a['h'] - a['paras']) / A, paras_2=a['paras'])
+    return o
+
+
+def status_pos(x, o):
+    """Halaman statusPos: None (tidak dibeli), 'k' (tutup kedua-dua), ('m', lorong kaedah, lorong 2) jual pada buka,
+    'h' (<= 1 ATR) atau 'j'."""
+    if x['tidak_dibeli']:
+        return None
+    if x['tutup_semua']:
+        return 'k'
+    tk = not x['keluar'] and 'menunggu' in str(x.get('isyarat_keluar') or '')
+    t2 = not x['keluar_henti'] and 'menunggu' in str(x.get('status_henti') or '')
+    if tk or t2:
+        return ('m', tk, t2)
+    j = min([v for k, v in (o or {}).items() if k in ('kaedah', 'henti')], default=None)
+    return 'h' if j is not None and j <= HAMPIR_ATR else 'j'
+
+
+def hari_earn(x, D, ada_kini):
+    """Hari dagangan dari sesi data D ke earnings seterusnya (halaman hariKeEarn): (h, tarikh); h 0 = pada D, None = tiada/lalu."""
+    from datetime import date, timedelta
+    te = str((x.get('earn_kini') if ada_kini else x.get('tarikh_earnings')) or '')[:10]
+    if not re.fullmatch(r'\d{4}-\d\d-\d\d', te) or not D or te < D:
+        return None, te
+    if te == D:
+        return 0, te
+    if ada_kini and x.get('earn_kini_h') is not None:
+        return int(x['earn_kini_h']), te
+    return hari_dag(date.fromisoformat(D) + timedelta(days=1), date.fromisoformat(te) + timedelta(days=1)), te
+
+
+def jenis_keluar(s):
+    """Teks isyarat_keluar lorong kaedah -> kategori Berubah/jurnal: henti, buka_bawah_henti, sasaran, isyarat, masa, ambil_alih,
+    tidak_cair, delist, lain."""
+    s = re.sub(r'^Keluar:? ?', '', str(s or '')).lower()
+    if 'buka bawah henti' in s:
+        return 'buka_bawah_henti'
+    if s.startswith('kena henti') or s.startswith('henti'):
+        return 'henti'
+    if 'diambil alih' in s or 'ambil alih' in s:
+        return 'ambil_alih'
+    if 'tidak cair' in s:
+        return 'tidak_cair'
+    if 'delist' in s or 'tanpa bar' in s:
+        return 'delist'
+    if s.startswith('capai sasaran') or 'sasaran' in s[:20]:
+        return 'sasaran'
+    if s.startswith('isyarat'):
+        return 'isyarat'
+    if 'had masa' in s or 'maks' in s[:30] or 'masa' in s[:15]:
+        return 'masa'
+    return 'lain'
+
+
+def _purata(a):
+    a = [v for v in a if v is not None]
+    return sum(a) / len(a) if a else None
+
+
+def _bulat(v, d=2):
+    return None if v is None else round(float(v), d)
+
+
+_T975 = [12.706, 4.303, 3.182, 2.776, 2.571, 2.447, 2.365, 2.306, 2.262, 2.228, 2.201, 2.179, 2.160, 2.145, 2.131, 2.120, 2.110,
+         2.101, 2.093, 2.086, 2.080, 2.074, 2.069, 2.064, 2.060, 2.056, 2.052, 2.048, 2.045, 2.042]
+
+
+def selang_k(p):
+    """[(nilai, hari beli)] -> purata + selang 95% berkelompok hari beli (halaman selangK: CR1, t(G - 1))."""
+    p = [(v, h) for v, h in p if v is not None]
+    n = len(p)
+    if not n:
+        return None
+    m = sum(v for v, _ in p) / n
+    g = {}
+    for v, h in p:
+        g[h] = g.get(h, 0.0) + (v - m)
+    G = len(g)
+    if G < 2:
+        return dict(m=m, n=n, G=G, lo=None, hi=None)
+    se = (G / (G - 1) * sum(s * s for s in g.values())) ** 0.5 / n
+    t = _T975[G - 2] if G - 1 <= 30 else 1.96 + 2.4 / (G - 1)
+    return dict(m=m, n=n, G=G, lo=m - t * se, hi=m + t * se)
+
+
+def _cip(L, D, ada_kini, lebih=None):
+    """[(x, {j, l1, l2, sb})] -> cip satu setiap saham (halaman cipSaham): s, n, k, u, j, l ('K'|'2'|'K2'), sb, eh, et, q."""
+    m = {}
+    for x, e in L:
+        g = m.get(x['saham'])
+        if g is None:
+            eh, et = hari_earn(x, D, ada_kini)
+            g = m[x['saham']] = dict(s=x['saham'], n=0, k=[], u=[], j=None, l1=False, l2=False, sb=[], eh=eh, et=et or None, q=False)
+        g['n'] += 1
+        if x.get('kaedah') not in g['k']:
+            g['k'].append(x.get('kaedah'))
+        g['u'].append(e.get('u'))
+        if e.get('j') is not None and (g['j'] is None or e['j'] < g['j']):
+            g['j'] = e['j']
+        g['l1'] |= bool(e.get('l1')); g['l2'] |= bool(e.get('l2'))
+        if e.get('sb') and e['sb'] not in g['sb']:
+            g['sb'].append(e['sb'])
+        g['q'] |= bool(x.get('kualiti'))
+    out = []
+    for g in m.values():
+        c = dict(s=g['s'], n=g['n'], k=g['k'][:8], u=_bulat(_purata(g['u'])), l=('K' if g['l1'] else '') + ('2' if g['l2'] else ''))
+        if g['j'] is not None:
+            c['j'] = round(g['j'], 2)
+        if g['sb']:
+            c['sb'] = g['sb'][:3]
+        if g['eh'] is not None:
+            c.update(eh=g['eh'], et=g['et'])
+        if g['q']:
+            c['q'] = 1
+        out.append(c)
+    return out
+
+
+def _blok(L, D, ada_kini, susun):
+    """Blok Esok: {n (posisi), saham, cip ≤ HAD_CIP (disusun), lagi (cip tidak dimuatkan)}."""
+    C = sorted(_cip(L, D, ada_kini), key=susun)
+    return dict(n=len(L), saham=len(C), cip=C[:HAD_CIP], lagi=max(0, len(C) - HAD_CIP))
+
+
+def hari_ini(R, trend, wl_doc, hk, papan, lk, S, senarai_beli=None, ew=None, dibina=''):
+    """harian/hari_ini: Buku hari ini, Esok tiga tahap (Wajib / Semak / Maklumat), Berubah, Aktiviti, Posisi C matang, siri EW.
+    R = baris db papertrade/ringkas_c (sebelum padat); trend = harian/trend; wl_doc = papertrade/watchlist; hk =
+    prestasi/harian_kaedah; papan = analisis/papan; lk = papertrade/langkau; S = sesi data. Medan yang tidak boleh dikira = None (halaman memapar "tiada data", bukan 0)."""
+    from datetime import date
+    D = str(S or '')[:10]
+    nx = hari_dag_berikut(D) if D else ''
+    T = peta_trend(trend)
+    TD = (trend or {}).get('tarikh')
+    TDi = f'{str(TD)[:4]}-{str(TD)[4:6]}-{str(TD)[6:8]}' if TD else ''
+    X = [norm_pt(r) for r in R]
+    pos = [x for x in X if not x['tidak_dibeli']]
+    sahp = [x for x in pos if not x['tidak_sah']]
+    ada_kini = any(x.get('earn_kini') for x in X)
+    aktif = [x for x in sahp if not x['tutup_semua']]
+    hasil = lambda x: x['untung_akhir_pct'] if x['keluar'] else x.get('untung_pct')
+
+    def semasa(x):
+        """Untung semasa lorong yang masih terbuka: lorong kaedah = untung_pct; lorong 2 sahaja = tutup terakhir ÷ harga beli."""
+        if not x['keluar']:
+            return SH.nombor(x.get('untung_pct'))
+        c, hb = (T.get(x['saham']) or {}).get('c'), SH.nombor(x.get('harga_beli'))
+        return (c / hb - 1) * 100 if c and hb else SH.nombor(x.get('untung_pct'))
+
+    # ---- Esok
+    jual, krit, amar, earn_b, earn_m = [], [], [], [], []
+    n_jurang = set()
+    for x in aktif:
+        t = T.get(x['saham'])
+        o = jarak_lorong(x, t) or {}
+        st = status_pos(x, o)
+        eh, _ = hari_earn(x, D, ada_kini)
+        u = semasa(x)
+        if isinstance(st, tuple):
+            tk, t2 = st[1], st[2]
+            sb = 'isyarat kaedah (tutup)' if tk else ''
+            if t2:
+                m2 = re.match(r'Tutup ([\d.]+) bawah paras keluar ([\d.]+)', str(x.get('status_henti') or ''))
+                sb2 = f'lorong 2: tutup {m2.group(1)} < paras {m2.group(2)}' if m2 else 'lorong 2 (Chandelier)'
+                sb = f'{sb} + {sb2}' if sb else sb2
+            jual.append((x, dict(u=u, l1=tk, l2=t2, sb=sb)))
+            continue
+        jk, j2 = o.get('kaedah'), o.get('henti')
+        j = min([v for v in (jk, j2) if v is not None], default=None)
+        if j is not None and j <= HAMPIR_ATR:
+            e = dict(u=u, j=j, l1=jk is not None and jk <= HAMPIR_ATR, l2=j2 is not None and j2 <= HAMPIR_ATR)
+            (krit if j <= KRITIKAL_ATR else amar).append((x, e))
+            if eh is not None and eh <= EARN_CALON:
+                n_jurang.add(x['saham'])
+        if eh is not None and eh <= 1:
+            earn_b.append((x, dict(u=u, j=j)))
+        elif eh is not None and eh <= EARN_MAKLUMAT:
+            earn_m.append((x, dict(u=u, j=j)))
+    # posisi tidak sah baharu: tarikh beli, tarikh keluar atau tarikh terakhir dalam sebab >= sesi sebelum
+    P = ''
+    if D:
+        from datetime import timedelta
+        d0 = date.fromisoformat(D)
+        for i in range(1, 10):
+            dd = d0 - timedelta(days=i)
+            if hari_dag(dd, dd + timedelta(days=1)) == 1:
+                P = dd.isoformat(); break
+    ts_baru = []
+    for x in pos:
+        if not x['tidak_sah']:
+            continue
+        tt = [x.get('tarikh_beli') or '', x.get('tarikh_keluar') or ''] + _R_TARIKH.findall(str(x.get('sebab_tidak_sah') or ''))
+        if P and max(tt) >= P:
+            ts_baru.append(dict(s=x['saham'], k=x.get('kaedah'), tb=x.get('tarikh_beli'),
+                                jenis=x.get('jenis_tidak_sah') or jenis_tidak_sah(x.get('sebab_tidak_sah')),
+                                sebab=str(x.get('sebab_tidak_sah') or '')[:140]))
+    # calon beli (isyarat lengkap dalam watchlist, menunggu belian) yang masuk ke earnings <= EARN_CALON hari
+    W = (wl_doc or {}).get('rows') or []
+    t0 = str((wl_doc or {}).get('tarikh_data') or '')[:10]
+    tb = hari_dag_berikut(t0) if t0 else ''
+    idx = {}
+    for x in sahp:
+        idx.setdefault((x['saham'], x.get('kaedah')), []).append(x)
+    beli_akhir = max((x.get('tarikh_beli') or '' for x in sahp), default='')
+    calon = []
+    for w in W:
+        p = w.get('pct_dipenuhi')
+        if p is None or not 90 <= p <= 100 or not re.match(r'(?i)^tiada \(isyarat sah\)', str(w.get('syarat_belum') or '')):
+            continue
+        sama = idx.get((w.get('saham'), w.get('kaedah')), [])
+        if any((x.get('tarikh_beli') or '') > t0 for x in sama):
+            k = 'beli'
+        elif any(not x['keluar'] and (x.get('tarikh_beli') or '') <= t0 for x in sama):
+            k = 'pegang'
+        elif tb and beli_akhir >= tb:
+            k = 'tiada'
+        else:
+            k = 'tunggu'
+        if k != 'tunggu':
+            continue
+        c = dict(s=w.get('saham'), k=w.get('kaedah'), g=w.get('gred_keseluruhan'))
+        if w.get('earn_kini_h') is not None:
+            c.update(eh=w['earn_kini_h'], et=w.get('earn_kini'))
+        calon.append(c)
+    calon.sort(key=lambda c: (c.get('eh') if c.get('eh') is not None else 99, c['s']))
+    calon_e = [c for c in calon if c.get('eh') is not None and c['eh'] <= EARN_CALON]
+    kw = len({w.get('kaedah') for w in W})
+    tanpa_e = len({x['saham'] for x in aktif if not x.get('earn_kini')}) if ada_kini else None
+    sj = lambda c: (c['u'] if c.get('u') is not None else 0)
+    sa = lambda c: (c.get('j', 99), c['s'])
+    se = lambda c: (c.get('eh', 99), c['s'])
+    esok = dict(
+        buka=nx,
+        wajib=dict(jual=_blok(jual, D, ada_kini, sj)),
+        semak=dict(kritikal=_blok(krit, D, ada_kini, sa), earn_buka=_blok(earn_b, D, ada_kini, se),
+                   calon_earn=dict(n=len(calon_e), saham=len({c['s'] for c in calon_e}), cip=calon_e[:HAD_CIP]),
+                   tidak_sah_baru=dict(n=len(ts_baru), saham=len({c['s'] for c in ts_baru}), cip=ts_baru[:HAD_CIP]),
+                   jurang=len(n_jurang)),
+        maklumat=dict(amaran=_blok(amar, D, ada_kini, sa), earn=_blok(earn_m, D, ada_kini, se),
+                      calon=dict(n=len(calon), saham=len({c['s'] for c in calon}), cip=calon[:HAD_CIP], kaedah_watchlist=kw)),
+        tanpa_earnings=tanpa_e, sebelum=P)
+    # ---- Buku hari ini
+    hkC = next((r for r in (hk or {}).get('rows') or [] if r.get('a') == 'C' and r.get('k') == 'Semua'), None)
+    hkT = (hk or {}).get('tarikh') or []
+    ewR = {r[0]: dict(zip(ew['lajur'], r)) for r in ew['rows']} if ew else {}
+    eD = ewR.get(D) or {}
+    pnl = dict(tarikh=D, c=None, n=None, spy=None, ew=None)
+    if hkC and hkT and str(hkT[-1]) == D.replace('-', ''):
+        pnl.update(c=hkC['d'][-1], n=hkC['n'][-1])
+        sp = (hk or {}).get('spy') or []
+        pnl['spy'] = sp[-1] if sp else None
+    if eD:
+        pnl['ew'] = _bulat(100 * eD['ew_cc'], 2) if eD.get('ew_cc') is not None else None
+        if eD.get('spy_cc') is not None:
+            pnl['spy'] = _bulat(100 * eD['spy_cc'], 2)
+    risk, tanpa, tanpa_k, bendera = [], 0, set(), {}
+    for x in aktif:
+        t = T.get(x['saham'])
+        paras = []
+        h = SH.nombor(x.get('harga_terkini')) if not x['keluar'] else (t or {}).get('c')
+        if not x['keluar']:
+            p = SH.nombor(x.get('henti'))
+            if p is None:
+                tanpa += 1; tanpa_k.add(x.get('kaedah'))
+            elif 'menunggu' not in str(x['isyarat_keluar']):
+                paras.append(p)
+        a = l2_info(x, t)
+        if a:
+            paras.append(a['paras'])
+        if paras and h:
+            risk.append(max(0.0, (h - max(paras)) / h * 100))
+        for q in x.get('kualiti') or []:
+            bendera[q] = bendera.get(q, 0) + 1
+    br = [t for t in T.values() if t.get('c') and t.get('sma50') and t.get('tarikh_data') == TD]
+    pegang_s = {x['saham'] for x in aktif}
+    lip = [T[s] for s in pegang_s if s in T]
+    buku = dict(
+        tarikh=D, pnl=pnl, posisi=len(aktif), saham=len(pegang_s), lorong_kaedah=sum(not x['keluar'] for x in aktif),
+        lorong2_sahaja=sum(bool(x['keluar']) for x in aktif),
+        risiko=dict(purata=_bulat(_purata(risk)), median=_bulat(stt.median(risk)) if risk else None, n=len(risk)),
+        tanpa_henti=dict(n=tanpa, kaedah=len(tanpa_k)),
+        bendera=dict(n=sum(1 for x in aktif if x.get('kualiti')), jenis=bendera),
+        rejim=(trend or {}).get('rejim'),
+        breadth=dict(pct=_bulat(100 * sum(t['c'] > t['sma50'] for t in br) / len(br), 1) if br else None, n=sum(t['c'] > t['sma50'] for t in br),
+                     N=len(br), tarikh=TDi),
+        liputan=dict(n=sum(1 for t in lip if t.get('tarikh_data') == TD), N=len(lip), tarikh=TDi) if lip and TD else None)
+    # ---- Berubah sejak sesi lalu + Aktiviti
+    dB = max((x.get('tarikh_beli') or '' for x in sahp), default='')
+    dK = max((x.get('tarikh_keluar') or '' for x in sahp if x['keluar']), default='')
+    d2 = max((x.get('tarikh_keluar_henti') or '' for x in sahp if x['keluar_henti']), default='')
+    kel = [x for x in sahp if x['keluar'] and x.get('tarikh_keluar') == dK]
+    sebab = {}
+    for x in kel:
+        j = jenis_keluar(x.get('isyarat_keluar'))
+        sebab[j] = sebab.get(j, 0) + 1
+    ts_kel = {}
+    for x in pos:
+        if x['tidak_sah'] and x['keluar'] and x.get('tarikh_keluar') == dK:
+            j = x.get('jenis_tidak_sah') or jenis_tidak_sah(x.get('sebab_tidak_sah'))
+            ts_kel[j] = ts_kel.get(j, 0) + 1
+    tj = {}
+    for c in ts_baru:
+        tj[c['jenis']] = tj.get(c['jenis'], 0) + 1
+    LK = (lk or {}).get('rows') or []
+    dL = max((r.get('tarikh') or '' for r in LK), default='')
+    sbL = {}
+    for r in LK:
+        if r.get('tarikh') == dL:
+            s = re.sub(r'[\d.]+', 'N', str(r.get('sebab') or ''))[:40]
+            sbL[s] = sbL.get(s, 0) + 1
+    imb = str((wl_doc or {}).get('tarikh_imbasan') or '')[:10]
+    wbaru = sum(1 for w in W if imb and str(w.get('ditambah') or '')[:10] == imb) if imb else None
+    berubah = dict(
+        beli=dict(tarikh=dB, n=sum(1 for x in sahp if x.get('tarikh_beli') == dB), saham=len({x['saham'] for x in sahp if x.get('tarikh_beli') == dB})),
+        keluar=dict(tarikh=dK, n=len(kel), sebab=sebab, tidak_sah=ts_kel),
+        keluar_l2=dict(tarikh=d2, n=sum(1 for x in sahp if x['keluar_henti'] and x.get('tarikh_keluar_henti') == d2)),
+        langkau=dict(tarikh=dL, n=sum(1 for r in LK if r.get('tarikh') == dL), sebab=sbL),
+        tidak_sah_baru=dict(n=len(ts_baru), jenis=tj),
+        bendera=dict(n=buku['bendera']['n'], jenis=bendera, tarikh=D),
+        watchlist=dict(n=wbaru, imbasan=imb or None, tarikh_data=t0 or None))
+    # ---- Posisi C matang (KPI dalam banner fasa): umur >= h_umur kaedah Papan Penganalisis
+    pr = {r['id']: r for r in (papan or {}).get('rows') or []}
+
+    def umur(k):
+        a = pr.get(k) or {}
+        if a.get('h_umur') is not None:
+            return a['h_umur']
+        return max(14, math.ceil(1.5 * (a.get('hari') if a.get('hari') is not None else 10) * 7 / 5))
+    M_ = []
+    if D:
+        Dm = date.fromisoformat(D)
+        for x in sahp:
+            if x.get('tarikh_beli') and hasil(x) is not None and (Dm - date.fromisoformat(x['tarikh_beli'])).days >= umur(x.get('kaedah')):
+                M_.append(x)
+    c = selang_k([(SH.nombor(hasil(x)), x['tarikh_beli']) for x in M_])
+    w = selang_k([(100.0 if (SH.nombor(hasil(x)) or 0) > 0 else 0.0, x['tarikh_beli']) for x in M_])
+    matang = dict(n=len(M_), G=c['G'] if c else 0, m=_bulat(c['m']) if c else None, lo=_bulat(c and c['lo']), hi=_bulat(c and c['hi']),
+                  menang=_bulat(w['m'], 1) if w else None, menang_lo=_bulat(w and w['lo'], 1), menang_hi=_bulat(w and w['hi'], 1),
+                  buka_pct=_bulat(100 * sum(not x['keluar'] for x in M_) / len(M_), 1) if M_ else None,
+                  kaedah=len({x.get('kaedah') for x in M_}), belum=len(sahp) - len(M_), g_min=10)
+    # data tidak dipercayai yang hanya diketahui di sini (ralat/lampu sistem dibaca halaman terus daripada harian/status)
+    data = []
+    if buku['liputan'] and buku['liputan']['n'] < buku['liputan']['N']:
+        L_ = buku['liputan']
+        data.append(f"{L_['N'] - L_['n']} daripada {L_['N']} saham dipegang tiada bar {TDi}: harga, ATR dan jarak keluar memakai sesi lebih awal")
+    esok['wajib']['data'] = data
+    return dict(versi=1, dibina=dibina, sesi=D, sesi_sebelum=P, buka_seterusnya=nx, buku=buku, esok=esok, berubah=berubah,
+                aktiviti=dict(beli=berubah['beli'], keluar=dict(tarikh=dK, n=len(kel)), langkau=dict(tarikh=dL, n=berubah['langkau']['n'])),
+                matang=matang, ew=ew,
+                senarai_beli=dict(n=len(senarai_beli), tarikh_isyarat=max((r.get('tarikh_isyarat') or '' for r in senarai_beli), default='') or None)
+                if senarai_beli is not None else None,
+                takrif=dict(hampir_atr=HAMPIR_ATR, kritikal_atr=KRITIKAL_ATR, earn_calon=EARN_CALON, earn_maklumat=EARN_MAKLUMAT, had_cip=HAD_CIP),
+                nota='Pra-kira jana_db.py untuk tab Hari Ini (takrif sama dengan halaman). Cip = satu setiap saham: s saham, n posisi, '
+                     'k kaedah, u untung semasa purata %, j jarak minimum ke paras keluar (ATR14), l lorong (K kaedah, 2 Chandelier), '
+                     'sb sebab jual, eh/et earnings (hari dagangan/tarikh), q bendera data. Tiada order · tiada wang sebenar.')
+
+
 def pengawas(st, masa):
     """Larian Actions yang sepatutnya sudah siap tetapi belum (untuk sesi tolak db: tembak workflow sekali).
     harian.yml: sesi NYSE terakhir yang tutup >= 9 jam lalu (data Yahoo muktamad); beli.yml: hari ini NY selepas 9:45."""
@@ -760,6 +1250,20 @@ def sesi_lejar(path=LEJAR_STATUS):
         return json.load(open(path, encoding='utf-8')).get('sesi_terakhir', '')
     except (OSError, ValueError, AttributeError):
         return ''
+
+
+def amaran_luar(masa, S):
+    """Amaran data luar basi (SST, EDGAR, kalendar earnings) sama dengan `notifikasi.py --amaran` (fungsi notifikasi.amaran_data,
+    jika ada) untuk lampu Sistem dashboard -> senarai teks pendek, [] jika semua segar, None jika fungsi tiada."""
+    try:
+        import notifikasi as NT
+        f = getattr(NT, 'amaran_data', None)
+        if f is None:
+            return None
+        return list(f(BS2, masa, S or None))
+    except Exception as e:  # noqa: BLE001
+        print(f'amaran: amaran_data gagal: {e!r}', file=sys.stderr)
+        return None
 
 
 def saring_saiz(semua, ralat, had=None):
@@ -910,6 +1414,51 @@ def semakan_sahaja(keluar, folder):
     return out
 
 
+# ---------------------------------------------------------------- tolakan dokumen berubah sahaja (--lama; v105)
+_R_BHG = re.compile(r'^(.*?)(?:_kamus)?_\d+$')
+
+
+def normal_banding(d):
+    """Dokumen tanpa medan yang berubah setiap larian walaupun data sama (dibina; id bahagian / induk) untuk perbandingan."""
+    if not isinstance(d, dict):
+        return d
+    x = {k: v for k, v in d.items() if k != 'dibina'}
+    if isinstance(x.get('bahagian'), dict):
+        x['bahagian'] = {k: v for k, v in x['bahagian'].items() if k != 'id'}
+    if 'induk' in x:
+        x['induk'] = '*'
+    return x
+
+
+def baca_lama(folder, kol, doc_id):
+    p = os.path.join(folder, kol, doc_id + '.json')
+    try:
+        with open(p, encoding='utf-8') as f:
+            x = json.load(f)
+    except (OSError, ValueError):
+        return None
+    if isinstance(x, dict) and isinstance(x.get('data'), dict) and set(x) <= {'data', 'version', 'id', 'doc_id', 'collection', 'updated_at', 'created_at'}:
+        x = x['data']
+    return x
+
+
+def tidak_berubah(sedia, folder):
+    """--lama <folder> (salinan dokumen db semasa, <koleksi>/<doc>.json): kumpulan dokumen (asas + bahagian/kamus) yang SEMUA sama
+    dengan versi lama selepas normal_banding -> set 'koleksi/doc' yang tidak perlu ditolak. harian/status sentiasa ditolak.
+    Kumpulan dilangkau bersama supaya bahagian lama kekal sepadan dengan asasnya (induk = id bahagian lama)."""
+    kump = {}
+    for kol, doc_id, dd, _ in sedia:
+        m = _R_BHG.match(doc_id)
+        kump.setdefault((kol, m.group(1) if m else doc_id), []).append((kol, doc_id, dd))
+    out = set()
+    for (kol, asas), L in kump.items():
+        if kol == 'harian' and asas == 'status':
+            continue
+        if all(normal_banding(json.loads(padat(dd))) == normal_banding(baca_lama(folder, k, d)) for k, d, dd in L):   # tuple -> senarai
+            out |= {f'{k}/{d}' for k, d, _ in L}
+    return out
+
+
 # ---------------------------------------------------------------- utama
 BAHAGI = ('senarai_beli', 'watchlist', 'garis', 'mfe', 'mae', 'mae_atr', 'maefe_l2', 'harian_kaedah', 'trend', 'lorong2', 'langkau')
 
@@ -921,6 +1470,8 @@ def main(argv=None):
     ap.add_argument('--sumber', help='sumber harga sebenar larian ini (label jujur harga_pada / harian/status.sumber_harga), '
                                      'cth. "rutin Claude 6:02: yfinance 22:04 UTC + skrin Moomoo 31 saham"')
     ap.add_argument('--semakan-dir', default=SEMAKAN, help='folder kira_semula.json / sahkan.json / sampel.json (harian/status.semakan)')
+    ap.add_argument('--lama', help='folder dokumen db semasa (<koleksi>/<doc>.json): dokumen yang kandungannya sama (abaikan dibina dan id '
+                                   'bahagian) ditulis ke folder tetapi TIDAK dimasukkan ke batch (pilihan; tanpanya semua dokumen ditolak)')
     ap.add_argument('--semakan-sahaja', action='store_true',
                     help='tulis semula <keluar>/harian/status.json sahaja (semakan + ralat), selepas kira_semula.py --db <keluar>')
     a = ap.parse_args(argv)
@@ -1006,7 +1557,11 @@ def main(argv=None):
                  'belum lengkap). Maks 5 setiap kaedah. Terkeluar signal dibuang serta-merta (tugasan_v3 §3). tarikh_data setiap '
                  'baris = sesi data harga baris itu; gred_pada baris = tarikh data gred (snapshot kumpulan/RS).',
         dibina=malam.get('masa', dibina), gred_pada=st.get('gred', {}).get('tarikh', ''), pemangkin_pada=st.get('gred', {}).get('tarikh', ''),
-        tarikh_data=wl[0]['tarikh_data'] if wl else S, rows=wl_db)
+        tarikh_data=wl[0]['tarikh_data'] if wl else S,
+        # sesi data imbasan terakhir (senarai_beli.csv tarikh_isyarat; ditulis imbasan yang sama dengan watchlist): "Masuk Watchlist"
+        # = baris yang ditambah pada sesi ini (audit 25 Okt 2026 N7; tarikh_data dikemas kini semula oleh rutin pagi)
+        tarikh_imbasan=max((r.get('tarikh_isyarat') or '' for r in sb), default='') or None,
+        imbasan_pada=max((r.get('tarikh_imbasan') or '' for r in sb), default='') or None, rows=wl_db)
     # prestasi
     mae = penurunan_maks(M, C, a.stor, tk)
     docs['prestasi/mae'] = dict(rows=[[k, v] for k, v in sorted(mae.items())], dibina=dibina, harga_hingga=hingga_teks,
@@ -1020,8 +1575,10 @@ def main(argv=None):
                                               'beli hingga sehari sebelum keluar lorong 2 dan harga keluar lorong 2 (atau hingga bar terakhir jika '
                                               'masih dipegang) ÷ harga beli − 1; MAE maks 0, MFE min 0. rows: [[akaun|saham|kaedah|tarikh_beli, '
                                               'mae, mfe]]. prestasi/mae dan prestasi/mfe berhenti pada keluar lorong 1.')
-    docs['prestasi/ringkasan'] = dict(prestasi(M, C, mae), dibina=dibina, harga_pada=f'{S} tutup',
-                                      nota='Dikira oleh standard/jana_db.py (GitHub Actions + sesi tolak db) dengan peraturan skor & keputusan P4 (sama seperti halaman).')
+    docs['prestasi/ringkasan'] = dict(prestasi(M, C, mae, baca_pantau()), dibina=dibina, harga_pada=f'{S} tutup',
+                                      label_s7='Label §7 TERUSKAN/PERHATI/HENTIKAN dibersarakan (25 Okt 2026): keputusan kaedah ikut pintu '
+                                               'Papan Penganalisis (analisis/papan).',
+                                      nota='Dikira oleh standard/jana_db.py (GitHub Actions + sesi tolak db) dengan skor U×S (paparan). ' + NOTA_COMBINE)
     # papertrade/langkau: langkauan belian 9:35 NY (tidak pernah direkod sebagai baris CSV)
     lk = langkau_beli(a.folder, st)
     docs['papertrade/langkau'] = dict(lk, dibina=dibina,
@@ -1036,7 +1593,8 @@ def main(argv=None):
     kual = kualiti(M, C, S, a.stor, tk)
     pra = {}
     dc = docs.get('papertrade/claude', {})
-    for kod, R, meta in (('c', [baris_posisi(r, 'C', KAL, S, kual, cache_e) for r in C], {k: dc[k] for k in ('dibina', 'harga_pada', 'nota', 'slot', 'batal') if k in dc}),
+    RC = [baris_posisi(r, 'C', KAL, S, kual, cache_e) for r in C]
+    for kod, R, meta in (('c', RC, {k: dc[k] for k in ('dibina', 'harga_pada', 'nota', 'slot', 'batal') if k in dc}),
                          ('m', [baris_posisi(r, 'M', KAL, S, kual, cache_e) for r in M], {k: v for k, v in docs['papertrade/moomoo'].items() if k not in ('rows', 'medan_digugurkan')})):
         for doc_id, d in ringkas_pt(R, f'ringkas_{kod}', meta):
             pra[f'papertrade/{doc_id}'] = d
@@ -1076,6 +1634,19 @@ def main(argv=None):
     snap = os.path.join(BS2, 'data', 'db', 'sektor_snapshot.json')
     if os.path.exists(snap):
         docs['sektor/snapshot'] = json.load(open(snap, encoding='utf-8'))
+    # harian/hari_ini (v105): pra-kira tab Hari Ini (Buku hari ini, Esok tiga tahap, Berubah, EW); jurnal/minggu (jurnal.py)
+    try:
+        docs['harian/hari_ini'] = hari_ini(RC, docs.get('harian/trend'), docs['papertrade/watchlist'], docs['prestasi/harian_kaedah'],
+                                           docs.get('analisis/papan'), docs['papertrade/langkau'], S, sb, siri_ew(), dibina)
+    except Exception as e:  # noqa: BLE001
+        print(f'amaran: harian/hari_ini gagal: {e!r}', file=sys.stderr)
+        ralat.append(f'harian/hari_ini tidak dijana (halaman mengira sendiri): {e!r}'[:300])
+    try:
+        import jurnal as JR
+        docs['jurnal/minggu'] = JR.jurnal(C, lk['rows'], a.stor, tk, S, KAL=KAL, dibina=dibina)
+    except Exception as e:  # noqa: BLE001
+        print(f'amaran: jurnal/minggu gagal: {e!r}', file=sys.stderr)
+        ralat.append(f'jurnal/minggu tidak dijana: {e!r}'[:300])
     # saiz: dokumen >= had db dilangkau dan dicatat (24 Okt 2026; dahulu SystemExit menghentikan SEMUA tolakan); >= 80% = amaran
     os.makedirs(a.keluar, exist_ok=True)
     versi = json.load(open(a.versi)) if a.versi else {}
@@ -1116,7 +1687,8 @@ def main(argv=None):
                                     tidak_dibeli_baru=len(rk.get('tidak_dibeli') or []), watchlist_dibuang=rk.get('watchlist_dibuang', 0)),
         senarai_beli=dict(claude=len(sb), jumlah=len(sb), moomoo=0, saham_unik=len(lihat), watchlist=len(wl)),
         beli_dirancang=len(sb), beli_pada=beli.get('masa', ''), beli_ringkas=dict(direkod=beli.get('direkod', 0), dilangkau=beli.get('dilangkau', 0)),
-        gred_pada=st.get('gred', {}).get('masa', ''), ralat=ralat, mod=mod, sumber_harga=sumber, saluran=saluran, beli_langkau=beli_langkau)
+        gred_pada=st.get('gred', {}).get('masa', ''), ralat=ralat, mod=mod, sumber_harga=sumber, saluran=saluran, beli_langkau=beli_langkau,
+        amaran_data=amaran_luar(masa, S))
     # semakan bebas (24 Okt 2026): kira_semula.json (lapuk jika cap jari db berbeza), sahkan.json, sampel.json -> status.semakan +
     # baris 'semakan: …' dalam ralat. Susunan: jana_db -> kira_semula --db <keluar> -> jana_db --semakan-sahaja (dashboard.md)
     ditulis = {f'{kol}/{doc_id}': dd for kol, doc_id, dd, _ in sedia}
@@ -1126,7 +1698,8 @@ def main(argv=None):
     ralat.extend(ral_sem)
     docs['harian/status'] = status
     sedia.append(('harian', 'status', status, bait(status)))
-    # tulis + batch
+    # tulis + batch (--lama: kumpulan dokumen yang tidak berubah tidak ditolak; fail tetap ditulis untuk kira_semula)
+    sama = tidak_berubah(sedia, a.lama) if a.lama else set()
     tulis = []
     for kol, doc_id, dd, sz in sedia:
         p = os.path.join(a.keluar, kol, doc_id + '.json'); os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -1135,7 +1708,8 @@ def main(argv=None):
         v = versi.get(f'{kol}/{doc_id}')
         if v:
             w['if_version'] = int(v)
-        tulis.append((w, sz))
+        if f'{kol}/{doc_id}' not in sama:
+            tulis.append((w, sz))
     batches, cur, size = [], [], 0
     for w, sz in tulis:
         if cur and (size + sz > HAD_BATCH or len(cur) >= 50):
@@ -1146,7 +1720,7 @@ def main(argv=None):
     fail = []
     for i, bt in enumerate(batches):
         p = os.path.join(a.keluar, f'batch_{i}.json'); json.dump(bt, open(p, 'w'), indent=1); fail.append(p)
-    ring = dict(dibina=dibina, sesi=S, dokumen=len(tulis), batch=fail, tanpa_versi=[f"{w['collection']}/{w['doc_id']}" for w, _ in tulis if 'if_version' not in w],
+    ring = dict(dibina=dibina, sesi=S, dokumen=len(tulis), batch=fail, tidak_berubah=sorted(sama), tanpa_versi=[f"{w['collection']}/{w['doc_id']}" for w, _ in tulis if 'if_version' not in w],
                 pengawas=pengawas(st, masa), ralat=ralat)
     json.dump(ring, open(os.path.join(a.keluar, 'ringkas.json'), 'w'), ensure_ascii=False, indent=1)
     print(json.dumps(ring, ensure_ascii=False, indent=1))
