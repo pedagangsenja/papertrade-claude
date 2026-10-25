@@ -221,6 +221,24 @@ def dokumen(had_ringkas=1500, had_bahagi=1200):
     return D
 
 
+def hari_ini_doc(D=None):
+    """harian/hari_ini (jana_db.hari_ini) daripada dokumen fikstur yang sama: ujian halaman memapar Hari Ini dua kali (dokumen
+    ini ada / tiada) dan menjangka angka yang sama (takrif Python = takrif halaman)."""
+    import jana_db as J
+    D = D or dokumen(had_ringkas=10 ** 9, had_bahagi=10 ** 9)
+    R = []
+    for r in POSISI:
+        d = J.baris_db({k: v for k, v in r.items()})
+        e = EARN_KINI.get(r['saham'])
+        if e:
+            d.update(earn_kini=e[0], earn_kini_h=e[1])
+        if r.get('tidak_sah') == 'True':
+            d['jenis_tidak_sah'] = J.jenis_tidak_sah(r.get('sebab_tidak_sah'))
+        R.append(d)
+    return J.hari_ini(R, None, D['papertrade/watchlist'], D['prestasi/harian_kaedah'], D['analisis/papan'], D['papertrade/langkau'], S,
+                      senarai_beli=None, ew=None, dibina=DIBINA)
+
+
 def tulis_sumber(folder):
     """CSV papertrade (claude.csv, watchlist.csv) bagi kira_semula.py."""
     os.makedirs(folder, exist_ok=True)
@@ -240,5 +258,10 @@ if __name__ == '__main__':
     out = os.path.join(HERE, 'fikstur_db.json')
     with open(out, 'w', encoding='utf-8') as f:
         json.dump(dokumen(), f, ensure_ascii=False, indent=0, sort_keys=True)
+        f.write('\n')
+    print(out)
+    out = os.path.join(HERE, 'fikstur_hari_ini.json')
+    with open(out, 'w', encoding='utf-8') as f:
+        json.dump(hari_ini_doc(), f, ensure_ascii=False, indent=0, sort_keys=True)
         f.write('\n')
     print(out)

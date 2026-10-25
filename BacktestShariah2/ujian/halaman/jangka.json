@@ -1,15 +1,17 @@
 {
- "nota": "Angka dijangka bagi fikstur_db.json, dikira dengan tangan (fikstur.py). Dipakai oleh uji_halaman.js (teks yang dipapar halaman) dan test_kira_semula.py (nilai kira_semula.py). Posisi C bukan tidak_dibeli = 9 (HHH tidak dibeli); tidak sah = GGG; dipegang lorong kaedah = AAA x2, BBB, CCC, FFF, III; lorong 2 sahaja = DDD; tutup kedua-dua = EEE. Belum direalisasi = (10 + 5.77 - 10 + 5 + 5 + 1.67) / 6 = 2.9067; sedang untung 5/6 = 83%; ikut saham = (7.885 - 10 + 5 + 5 + 1.67) / 5 = 1.911. Direalisasi = (10 - 5) / 2 = 2.50, menang 1/2. Dibeli pada 23 Okt = FFF sahaja (GGG tidak sah, HHH tidak dibeli dan tidak sah); keluar lorong kaedah 23 Okt = EEE. Esok: dijual pada buka = BBB (lorong kaedah menunggu) + CCC (lorong 2 menunggu); isyarat lengkap menunggu belian = JJJ (AAA M03 masih dipegang -> dilangkau); earnings <= 10 hari dagangan = AAA 28 Okt (3 hari: 26, 27, 28), 2 posisi; tanpa tarikh earnings = BBB, DDD, FFF, III. Pintu: 5 aktif -> 4 swing (M99 bukan) -> 3 berkedudukan (M20 tiada) -> 2 tidak DITOLAK (M12) -> 2 AUTOTUNE SEDERHANA/TINGGI -> 1 bersih 0.15 > SPY 0.1204 (M07 0.10) -> 1 KUAT (M03).",
+ "nota": "Angka dijangka bagi fikstur_db.json, dikira dengan tangan (fikstur.py). Dipakai oleh uji_halaman.js (teks yang dipapar halaman) dan test_kira_semula.py (nilai kira_semula.py). Posisi C bukan tidak_dibeli = 9 (HHH tidak dibeli); tidak sah = GGG; dipegang lorong kaedah = AAA x2, BBB, CCC, FFF, III; lorong 2 sahaja = DDD; tutup kedua-dua = EEE. Belum direalisasi = (10 + 5.77 - 10 + 5 + 5 + 1.67) / 6 = 2.9067; sedang untung 5/6 = 83%; ikut saham = (7.885 - 10 + 5 + 5 + 1.67) / 5 = 1.911. Direalisasi = (10 - 5) / 2 = 2.50, menang 1/2. Dibeli pada 23 Okt = FFF sahaja (GGG tidak sah, HHH tidak dibeli dan tidak sah); keluar lorong kaedah 23 Okt = EEE. Esok: dijual pada buka = BBB (lorong kaedah menunggu) + CCC (lorong 2 menunggu); isyarat lengkap menunggu belian = JJJ (AAA M03 masih dipegang -> dilangkau); earnings <= 10 hari dagangan = AAA 28 Okt (3 hari: 26, 27, 28), 2 posisi; tanpa tarikh earnings = BBB, DDD, FFF, III. Pintu: 5 aktif -> 4 swing (M99 bukan) -> 3 berkedudukan (M20 tiada) -> 2 tidak DITOLAK (M12) -> 2 AUTOTUNE SEDERHANA/TINGGI -> 1 bersih 0.15 > SPY 0.1204 (M07 0.10) -> 1 KUAT (M03). v105 Hari Ini (sama dengan dan tanpa harian/hari_ini): Buku hari ini P&L C -0.20% (harian_kaedah C/Semua hari terakhir), 7 posisi aktif dalam 6 saham (AAA x2, BBB, CCC, DDD, FFF, III); tahap Esok Wajib 6 (jual BBB, CCC + 4 saluran yang tiada dalam harian/status fikstur: Belian 9:35 NY, Trend, Lorong 2, Harga tinggi/rendah), Semak 1 (GGG tidak sah baharu, dibeli 23 Okt), Maklumat 2 (AAA earnings 3 hari dagangan + calon JJJ).",
  "halaman": {
   "hari": {
-   "aktiviti": "1 dibeli · 1 keluar · 1 dilangkau",
    "bukti_hadapan": "6 / 12",
-   "berubah": {"Dibeli": "1 pada 23 Okt", "Keluar lorong kaedah": "1 pada 23 Okt"},
+   "buku": {"P&L sejak tutup semalam": "-0.20%", "Posisi aktif": "7 · 6 saham", "Tanpa henti kaedah": "0", "Breadth": "tiada data"},
+   "tahap": ["Wajib 6", "Semak 1", "Maklumat 2"],
+   "berubah": {"Dibeli": "1 pada 23 Okt", "Keluar lorong kaedah": "1 pada 23 Okt", "Dilangkau 9:35 NY": "1 pada 23 Okt"},
    "esok": {
     "Dijual pada buka": "2 posisi · 2 saham",
     "Isyarat lengkap dalam watchlist": "1 calon · 1 saham · watchlist meliputi 3 kaedah",
-    "Hampir henti kaedah": "0 posisi · 0 saham",
-    "Earnings ≤ 10 hari dagangan": "1 saham · 2 posisi · 4 saham tanpa tarikh earnings"
+    "Kritikal": "0 posisi · 0 saham",
+    "Earnings 2–10 hari dagangan": "2 posisi · 1 saham · 4 saham tanpa tarikh earnings",
+    "Posisi baharu tidak sah": "1 posisi · 1 saham"
    }
   },
   "pilih": {

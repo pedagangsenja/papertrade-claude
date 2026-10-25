@@ -1,5 +1,8 @@
 # Kemas kini 6:02 pagi MYT (Selasa–Sabtu)
 
+> Prosedur rutin Claude: aktif hanya selagi `BacktestShariah2/MOD_ACTIONS` = `bayang`. Pada peralihan (`PERALIHAN.md`) tugasan
+> ini dimatikan dan kerjanya dibuat GitHub Actions (`harian_c.py`); jangan jalankan dalam mod `rasmi`.
+
 Automatik; jangan tanya soalan. Peraturan: `standard/tugasan_v3.md` (baca dahulu), skema: `papertrade/SKEMA.md`.
 
 Alat (ToolSearch, satu panggilan setiap kumpulan):

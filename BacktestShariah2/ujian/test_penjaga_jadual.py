@@ -50,6 +50,23 @@ class TestPenjagaJadual(unittest.TestCase):
         self.assertEqual(pj.sasaran(h, 'buka', utc(2026, 10, 20, 2, 0)), utc(2026, 10, 20, 0, 23))
         self.assertIsNone(pj.sasaran(h, 'buka', utc(2026, 10, 20, 13, 5)))
 
+    def test_beli_lewat_khas_slot_950_ny(self):
+        # slot penjaga 9:50 NY (cadangan 25 Okt 2026): beli didispatch ~10 minit selepas cron 9:40 NY, sebelum dan selepas DST
+        crons = pj.baca_cron(os.path.join(AKAR, '.github', 'workflows', 'beli.yml'))
+        self.assertEqual(pj.lewat_min('beli.yml'), 8)
+        self.assertEqual(pj.lewat_min('harian.yml'), pj.LEWAT_MIN)
+        jenis = pj.JAGA['beli.yml']
+        # Isnin 26 Okt 2026 (EDT): 9:50 NY = 13:50 UTC -> cetusan 13:40 UTC (9:40 NY)
+        self.assertEqual(pj.sasaran(crons, jenis, utc(2026, 10, 26, 13, 50), pj.lewat_min('beli.yml')), utc(2026, 10, 26, 13, 40))
+        # tanpa LEWAT_KHAS (30 minit) slot 9:50 NY tidak bertindak
+        self.assertIsNone(pj.sasaran(crons, jenis, utc(2026, 10, 26, 13, 50)))
+        # Isnin 2 Nov 2026 (EST): 9:50 NY = 14:50 UTC -> cetusan 14:40 UTC (9:40 NY); larian 13:48 (8:48 NY, kosong) tidak dikira
+        kini = utc(2026, 11, 2, 14, 50)
+        t, perlu = pj.keputusan(crons, jenis, [utc(2026, 11, 2, 13, 48)], kini, pj.lewat_min('beli.yml'))
+        self.assertEqual(t, utc(2026, 11, 2, 14, 40))
+        self.assertTrue(perlu)
+        self.assertFalse(pj.keputusan(crons, jenis, [utc(2026, 11, 2, 14, 41)], kini, 8)[1])
+
     def test_hujung_minggu_tiada(self):
         self.assertIsNone(pj.sasaran(['40 13 * * 1-5'], ('ny', 16, 45), utc(2026, 10, 18, 15, 0)))
 

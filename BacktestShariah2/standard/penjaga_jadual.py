@@ -1,8 +1,14 @@
 # Penjaga jadual GitHub Actions (`.github/workflows/penjaga_jadual.yml`): jadual cron GitHub boleh lewat 2–4 jam atau
-# digugurkan (17–19 Okt 2026: beli.yml dan petang.yml tidak pernah dicetus). Bagi setiap workflow berjadual di JAGA,
-# cetusan cron terkini yang sudah lewat LEWAT_MIN minit dan masih dalam had masa dicari; jika tiada larian (apa-apa
-# event/status) dicipta sejak cetusan itu, workflow_dispatch dicetus. Semua workflow dijaga idempoten dan ada
-# concurrency, jadi larian berganda (jadual lewat tiba selepas dispatch) selamat. Tanpa LLM; tiada fail repo ditulis.
+# digugurkan (17–19 Okt 2026: beli.yml dan petang.yml tidak pernah dicetus; audit 25 Okt 2026: lewat median 100–297 minit).
+# Bagi setiap workflow berjadual di JAGA, cetusan cron terkini yang sudah lewat LEWAT_MIN minit (LEWAT_KHAS bagi workflow
+# tertentu) dan masih dalam had masa dicari; jika tiada larian (apa-apa event/status) dicipta sejak cetusan itu,
+# workflow_dispatch dicetus. Semua workflow dijaga idempoten dan ada concurrency, jadi larian berganda (jadual lewat tiba
+# selepas dispatch) selamat. Tanpa LLM; tiada fail repo ditulis.
+#
+# beli.yml: LEWAT_KHAS 8 minit (cadangan 25 Okt 2026, `jadual/CADANGAN_JADUAL.md`) supaya slot penjaga 9:50 NY
+# (CRON_TZ=America/New_York; tidak terkesan DST) mendispatch belian ~10 minit selepas cron 9:40 NY, bukan selepas 10:10 NY.
+# Cron beli.yml kekal UTC: 13:40 UTC = 9:40 EDT (8:40 EST selepas 1 Nov 2026: gerbang 9:31 menjadikannya larian kosong)
+# dan 14:40 UTC = 9:40 EST (10:40 EDT).
 #
 # Had masa (elak data salah):
 #   buka  = sebelum 13:00 UTC seterusnya (sebelum buka AS; harga/RS/gred kumpulan/skrin tanpa bar separa)
@@ -16,6 +22,7 @@ from zoneinfo import ZoneInfo
 
 NY = ZoneInfo('America/New_York')
 LEWAT_MIN = 30           # minit selepas cetusan sebelum penjaga bertindak (beri peluang jadual GitHub yang lewat)
+LEWAT_KHAS = {'beli.yml': 8}   # belian maya dekat buka: tunggu sekejap sahaja (gerbang beli.yml 9:31 NY menolak larian awal)
 TINJAU_JAM = 16          # cetusan lebih lama daripada ini diabaikan
 AWAL_MIN = 2             # larian dicipta sedikit sebelum cetusan masih dikira
 JAGA = {
@@ -77,16 +84,21 @@ def baca_cron(laluan):
     return re.findall(r"""^\s*-\s*cron:\s*['"]([^'"]+)['"]""", open(laluan).read(), re.M)
 
 
-def sasaran(crons, jenis, kini):
-    """Cetusan terkini yang perlu dipastikan berlaku (sudah lewat LEWAT_MIN, masih dalam had), atau None."""
-    calon = [t for c in crons for t in cetusan(c, kini - timedelta(hours=TINJAU_JAM), kini - timedelta(minutes=LEWAT_MIN))
+def lewat_min(fail):
+    """Minit tunggu selepas cetusan cron sebelum dispatch bagi workflow `fail`."""
+    return LEWAT_KHAS.get(fail, LEWAT_MIN)
+
+
+def sasaran(crons, jenis, kini, lewat=LEWAT_MIN):
+    """Cetusan terkini yang perlu dipastikan berlaku (sudah lewat `lewat` minit, masih dalam had), atau None."""
+    calon = [t for c in crons for t in cetusan(c, kini - timedelta(hours=TINJAU_JAM), kini - timedelta(minutes=lewat))
              if kini < had_masa(jenis, t)]
     return max(calon) if calon else None
 
 
-def keputusan(crons, jenis, dicipta, kini):
+def keputusan(crons, jenis, dicipta, kini, lewat=LEWAT_MIN):
     """dicipta: masa cipta larian workflow itu (UTC). Pulang (cetusan, perlu_dispatch)."""
-    t = sasaran(crons, jenis, kini)
+    t = sasaran(crons, jenis, kini, lewat)
     if t is None:
         return None, False
     return t, not any(d >= t - timedelta(minutes=AWAL_MIN) for d in dicipta)
@@ -117,14 +129,15 @@ def main():
     ralat = 0
     for fail, jenis in JAGA.items():
         crons = baca_cron(os.path.join(a.folder, fail))
-        t = sasaran(crons, jenis, kini)
+        lw = lewat_min(fail)
+        t = sasaran(crons, jenis, kini, lw)
         if t is None:
             print(json.dumps(dict(workflow=fail, status='tiada cetusan perlu disemak')))
             continue
         try:
             dari = (t - timedelta(minutes=AWAL_MIN)).strftime('%Y-%m-%dT%H:%M:%SZ')
             runs = api('GET', f'{asas}/{fail}/runs?per_page=30&created=%3E%3D{dari}', token)['workflow_runs']
-            _, perlu = keputusan(crons, jenis, [masa(r['created_at']) for r in runs], kini)
+            _, perlu = keputusan(crons, jenis, [masa(r['created_at']) for r in runs], kini, lw)
             rekod = dict(workflow=fail, cetusan=t.strftime('%Y-%m-%d %H:%M UTC'), larian_sejak=len(runs))
             if perlu and not a.cuba:
                 api('POST', f'{asas}/{fail}/dispatches', token, {'ref': a.ref})

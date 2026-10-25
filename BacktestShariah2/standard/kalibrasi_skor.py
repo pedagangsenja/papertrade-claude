@@ -25,6 +25,15 @@
 # dagangan; tiada jika jumlah <= 0); (5) kelompok korelasi: purata pulangan bersih dagangan ikut bulan masuk, korelasi
 # Pearson atas bulan bertindih (>= KORELASI_BULAN_MIN), pautan LENGKAP dengan ambang rho >= KORELASI_AMBANG (setiap pasangan
 # dalam kelompok berkorelasi >= ambang). Label kelompok = id pertama kelompok (susunan katalog).
+# Lebihan (25 Okt 2026, Penganalisis v4; audit: skor mengukur hanyutan pasaran, bukan edge): setiap dagangan backtest dinilai
+# lawan BELIAN RAWAK TEMPOH SAMA = purata sama berat 431 saham dari BUKA hari masuk hingga harga keluar (BUKA hari keluar jika
+# enjin keluar pada buka: isyarat keluar atau jurang henti/sasaran; selainnya TUTUP hari keluar), pulangan harian dihad +-50%
+# (sama dengan standard/penanda_ew.py). lebihan = pulangan bersih dagangan (kos 0.1% setiap belah = 0.2% pusingan, sudah dalam
+# ret enjin) - pulangan kasar belian rawak. Ditulis sebagai lebihan_rawak (purata %), lebihan_sd, lebihan_pangkas, ew_tempoh,
+# lebihan_t_hari (t berkelompok ikut hari masuk, dalam sampel), mu/sd kohort lebihan (purata harian ikut hari masuk; SPRT
+# penganalisis.py) dan lebihan_kohort_n; parameter SPRT teguh (sprt_winsor: kohort diwinsor p5–p95, purata winsor di bawah H0
+# lebihan 0 dan H1 lebihan = kekal x purata, model anjakan). u3 (lebihan atas purata semua dagangan semua kaedah hari sama) kekal.
+#   python3 BacktestShariah2/standard/kalibrasi_skor.py --lebihan [--hanya M03,M70]   (tambah medan lebihan sahaja ke fail sedia ada)
 import argparse, importlib, json, math, os, sys, time
 
 import numpy as np
@@ -50,6 +59,9 @@ EKOR = 0.01              # pecahan dagangan terbaik bagi pct_top1
 KORELASI_AMBANG, KORELASI_BULAN_MIN, KORELASI_PAUTAN = 0.7, 24, 'lengkap'
 N_BERGULIR = 20          # kohort (hari beli) dalam purata bergulir peraturan GANTUNG hadapan
 SWING = (3, 30)          # purata hari pegang backtest (enjin: bar isyarat hingga keluar), sama dengan registry 'days'
+VERSI_LEBIHAN = 'lebihan-v1-2026-10-25'
+HAD_PULANGAN = 0.5       # had pulangan harian satu saham dalam purata sama berat (sama dengan penanda_ew.py)
+KOS_PUSINGAN = 2 * COST * 100   # % kos pusingan (0.2%), sudah ditolak dalam ret enjin
 
 
 def muat():
@@ -180,6 +192,65 @@ def kalibrasi_h(c, arl, k=CUSUM_K, x=BOOT_X, biji=BIJI, blok=None):
     return round(hi, 2), round(len(zb) / n, 1) if n else None
 
 
+def ew_harian(fr, had=HAD_PULANGAN):
+    """Purata sama berat harian alam fr: cc (tutup semalam -> tutup), oc (buka -> tutup), co (tutup semalam -> buka); setiap
+    saham dihad +-had; saham tanpa bar pada hari itu tidak dikira."""
+    cl = pd.DataFrame({t: g.close for t, g in fr.items()}).sort_index()
+    op = pd.DataFrame({t: g.open for t, g in fr.items()}).reindex(cl.index)
+    sem = cl.shift(1)
+    cc = (cl / sem - 1).clip(-had, had); oc = (cl / op - 1).where(op > 0).clip(-had, had); co = (op / sem - 1).where(op > 0).clip(-had, had)
+    return pd.DataFrame({'cc': cc.mean(axis=1), 'oc': oc.mean(axis=1), 'co': co.mean(axis=1)}).fillna(0.0)
+
+
+def ew_tempoh_dagangan(T, fr, ew):
+    """Pulangan kasar (pecahan) belian rawak sama berat bagi tempoh setiap dagangan: BUKA hari masuk -> BUKA hari keluar jika
+    enjin keluar pada buka (harga keluar = buka bar keluar), selainnya -> TUTUP hari keluar. Indeks T dikekalkan."""
+    ix = ew.index; L = np.log1p(ew.cc.values).cumsum(); oc = ew.oc.values; co = ew.co.values
+    out = pd.Series(np.nan, index=T.index)
+    for t, d in T.groupby('ticker'):
+        g = fr[t]; o = g.open.reindex(d.ent).values; ox = g.open.reindex(d.ex).values
+        x = o * (1 + d.ret.values) * (1 + COST) / (1 - COST)
+        buka = np.isclose(x, ox, rtol=1e-7, atol=0) & (d.ex.values > d.ent.values)
+        ie = ix.get_indexer(d.ent); ik = ix.get_indexer(d.ex)
+        ok = (ie >= 0) & (ik >= 0)
+        r = np.full(len(d), np.nan)
+        a = (1 + oc[ie]) * np.exp(L[ik] - L[ie])                                    # buka masuk -> tutup keluar
+        b = (1 + oc[ie]) * np.exp(L[np.maximum(ik - 1, 0)] - L[ie]) * (1 + co[ik])   # buka masuk -> buka keluar
+        r[ok] = np.where(buka, b, a)[ok] - 1
+        out.loc[d.index] = r
+    return out
+
+
+def lebihan(T, fr, ew):
+    """Statistik lebihan setiap dagangan (%) atas belian rawak tempoh sama (lihat kepala fail)."""
+    R = ew_tempoh_dagangan(T, fr, ew)
+    x = (T.ret.values - R.values) * 100; ok = ~np.isnan(x); x = x[ok]; ent = T.ent.values[ok]
+    if not len(x):
+        return {}
+    c = pd.Series(x).groupby(ent).mean()
+    e = x - x.mean(); g = pd.Series(e).groupby(ent).sum(); G = len(g)
+    se = math.sqrt(G / (G - 1) * float((g ** 2).sum())) / len(x) if G > 1 else None
+    out = dict(lebihan_rawak=float(x.mean()), lebihan_sd=float(x.std(ddof=1)) if len(x) > 1 else None,
+               lebihan_pangkas=pangkas(x), ew_tempoh=float(np.nanmean(R.values) * 100), lebihan_n=int(len(x)),
+               lebihan_t_hari=float(x.mean() / se) if se else None, lebihan_kohort_n=int(len(c)),
+               lebihan_mu_kohort=float(c.mean()), lebihan_sd_kohort=float(c.std(ddof=1)) if len(c) > 1 else None)
+    out.update(sprt_winsor(c.values))
+    return out
+
+
+def sprt_winsor(c, kekal=(0.25, 0.5)):
+    """Parameter SPRT teguh (penganalisis.py sprt): kohort lebihan backtest c diwinsor pada p5–p95 (ekor squeeze tidak menguasai
+    llr). Model anjakan: di bawah hipotesis purata mu, kohort = c - purata(c) + mu. H0 mu = 0 -> purata winsor h0; H1 mu = kekal x
+    purata(c) (jangkaan dipotong, skala kohort) -> h1[kekal]; sd = sd kohort winsor. Kosong jika < 30 kohort."""
+    c = np.asarray(c, float)
+    if len(c) < 30:
+        return {}
+    lo, hi = (float(v) for v in np.percentile(c, [5, 95])); m = float(c.mean())
+    w = lambda mu: float(np.clip(c - m + mu, lo, hi).mean())
+    return dict(lebihan_winsor=[round(lo, 4), round(hi, 4)], lebihan_sd_winsor=round(float(np.clip(c, lo, hi).std(ddof=1)), 4),
+                lebihan_h0_winsor=round(w(0.0), 4), lebihan_h1_winsor={str(k): round(w(k * m), 4) for k in kekal})
+
+
 def pantau(T):
     """Kohort harian backtest: bilangan, kohort setahun, purata, sd, dd_maks, dd_tempoh (hari dagangan), h CUSUM, ARL0,
     persentil ke-5 purata bergulir N_BERGULIR kohort."""
@@ -204,11 +275,44 @@ def pantau(T):
                 p5_bergulir_winsor=round(float(np.percentile(pd.Series(cw).rolling(N_BERGULIR).mean().dropna(), 5)), 4))
 
 
+def meta_lebihan():
+    return dict(versi=VERSI_LEBIHAN, dibina=time.strftime('%Y-%m-%d %H:%M UTC', time.gmtime()), kos_pusingan=KOS_PUSINGAN,
+                had_pulangan=HAD_PULANGAN, penanda='belian rawak sama berat 431 saham tempoh sama (buka masuk -> buka/tutup keluar)')
+
+
+def main_lebihan(ids, keluar):
+    """--lebihan: tambah medan lebihan (fungsi lebihan) setiap kaedah ke fail kalibrasi sedia ada; medan lain tidak disentuh."""
+    lama = json.load(open(keluar, encoding='utf-8'))
+    fr0, idx = muat(); ew = ew_harian(fr0); gagal = {}
+    for mid in ids:
+        t0 = time.time()
+        try:
+            f = {t: g[['open', 'high', 'low', 'close', 'volume', 'turnover']].copy() for t, g in fr0.items()}
+            m = importlib.import_module(f'kaedah.{mid}'); m.sedia(f, idx)
+            T = trades(f, tmax=m.TMAX, warm=m.WARM); T = T[T.ent >= pd.Timestamp(START)]
+        except Exception as e:  # noqa: BLE001 — kaedah yang gagal dilangkau dan dilapor
+            gagal[mid] = f'{type(e).__name__}: {e}'[:200]; continue
+        if mid not in lama['kaedah'] or not len(T):
+            continue
+        lb = lebihan(T.reset_index(drop=True), fr0, ew)
+        lama['kaedah'][mid].update({k: (round(v, 4) if isinstance(v, float) else v) for k, v in lb.items()})
+        print(f"{mid} n={len(T)} lebihan={lb.get('lebihan_rawak', float('nan')):+.2f} ew={lb.get('ew_tempoh', float('nan')):+.2f} "
+              f"({time.time() - t0:.1f}s)", flush=True)
+    lama['lebihan'] = dict(meta_lebihan(), gagal=gagal)
+    json.dump(lama, open(keluar, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print(json.dumps(dict(kaedah=len(ids), gagal=len(gagal)), ensure_ascii=False))
+
+
 def main(argv=None):
-    ap = argparse.ArgumentParser(); ap.add_argument('--hanya'); ap.add_argument('--keluar', default=OUT); a = ap.parse_args(argv)
+    ap = argparse.ArgumentParser(); ap.add_argument('--hanya'); ap.add_argument('--keluar', default=OUT)
+    ap.add_argument('--lebihan', action='store_true', help='tambah medan lebihan sahaja ke fail --keluar sedia ada')
+    a = ap.parse_args(argv)
     kat = json.load(open(KATALOG, encoding='utf-8')); kat = kat['rows'] if isinstance(kat, dict) else kat
     ids = [r['id'] for r in kat if not a.hanya or r['id'] in a.hanya.split(',')]
+    if a.lebihan:
+        return main_lebihan(ids, a.keluar)
     fr0, idx = muat(); M, semua, gagal, BL = {}, [], {}, {}
+    ew = ew_harian(fr0)
     for mid in ids:
         t0 = time.time()
         try:
@@ -219,7 +323,8 @@ def main(argv=None):
             gagal[mid] = f'{type(e).__name__}: {e}'[:200]; continue
         if len(T) < N_MIN:
             gagal[mid] = f'{len(T)} dagangan < {N_MIN}'; continue
-        r = metrik(T); r['r2'] = mae_atr(T, fr0); r['varian'] = getattr(m, 'VARIAN', ''); r['pantau'] = pantau(T); M[mid] = r
+        r = metrik(T); r['r2'] = mae_atr(T, fr0); r['varian'] = getattr(m, 'VARIAN', ''); r['pantau'] = pantau(T)
+        r.update(lebihan(T.reset_index(drop=True), fr0, ew)); M[mid] = r
         BL[mid] = bulanan(T)
         semua.append(T.assign(kaedah=mid, x=T.ret * 100)[['kaedah', 'ent', 'x']])
         print(f'{mid} n={r["n"]} u1={r["u1"]:.2f} hari={r["hari"]:.1f} r2={r["r2"]} ({time.time() - t0:.1f}s)', flush=True)
@@ -239,14 +344,14 @@ def main(argv=None):
                ekor=dict(pct_top1=EKOR),
                kelompok=dict(ambang=KORELASI_AMBANG, bulan_min=KORELASI_BULAN_MIN, pautan=KORELASI_PAUTAN,
                              siri='purata pulangan bersih dagangan ikut bulan masuk'),
-               n_kaedah=len(sw), n_semua=len(M), tiang=tiang, gagal=gagal,
+               lebihan=meta_lebihan(), n_kaedah=len(sw), n_semua=len(M), tiang=tiang, gagal=gagal,
                kaedah={m: {k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items()} for m, r in sorted(M.items())})
     if a.hanya and os.path.exists(a.keluar):   # larian separa: kekalkan kaedah lain, julat dan kelompok sedia ada
         lama = json.load(open(a.keluar, encoding='utf-8'))
         for m, r in out['kaedah'].items():
             if 'kelompok' in lama['kaedah'].get(m, {}):
                 r['kelompok'] = lama['kaedah'][m]['kelompok']
-        lama['kaedah'].update(out['kaedah']); lama['pantau'] = out['pantau']; out = lama
+        lama['kaedah'].update(out['kaedah']); lama['pantau'] = out['pantau']; lama['lebihan'] = out['lebihan']; out = lama
     os.makedirs(os.path.dirname(a.keluar), exist_ok=True)
     json.dump(out, open(a.keluar, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(json.dumps(dict(n_kaedah=len(sw), n_semua=len(M), gagal=len(gagal), tiang=tiang), ensure_ascii=False))
