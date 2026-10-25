@@ -519,8 +519,9 @@ def log_pb(C, sesi, folder=None, dinilai=None, prm=PB):
     selagi < tangguh_sesi sesi berlalu (kemudian calon itu gagal 'data tiada'). Pulang (calon lulus beku, tapis, ditangguh)."""
     folder = folder or KELUAR
     pc, pt = os.path.join(folder, 'PLAYBOOK_calon.csv'), os.path.join(folder, 'PLAYBOOK_tapis.csv')
-    L = pd.read_csv(pc, dtype={'tarikh_beli': str, 'saham': str, 'tarikh_isyarat': str, 'id_kaedah': str}, keep_default_na=False) \
-        if os.path.exists(pc) else pd.DataFrame(columns=L_CALON_PB)
+    baca = lambda: pd.read_csv(pc, dtype={'tarikh_beli': str, 'saham': str, 'tarikh_isyarat': str, 'id_kaedah': str},
+                               keep_default_na=False)
+    L = baca() if os.path.exists(pc) else pd.DataFrame(columns=L_CALON_PB)
     T = pd.read_csv(pt, dtype={'tarikh_beli': str}) if os.path.exists(pt) else pd.DataFrame(columns=['tarikh_beli'])
     sudah = set(T.tarikh_beli)
     dinilai = dinilai or pd.Timestamp.now(tz='Asia/Kuala_Lumpur').strftime('%Y-%m-%d %H:%M MYT')
@@ -540,6 +541,7 @@ def log_pb(C, sesi, folder=None, dinilai=None, prm=PB):
         os.makedirs(folder, exist_ok=True)
         L.sort_values(['tarikh_beli', 'saham']).to_csv(pc, index=False, float_format='%.6g')
         T.sort_values('tarikh_beli').to_csv(pt, index=False)
+        L = baca()                     # larian pertama = larian seterusnya (nilai seperti dalam rekod beku)
     return L, T, tangguh
 
 
@@ -676,7 +678,7 @@ def ringkasan(hasil, spy_mula, spy_akhir, hari, CFG=None, pb=None):
             R, E = hasil[k]; e0 = E.ekuiti[E.tarikh <= PB_PRA_DAFTAR]
             sp = 100 * (E.ekuiti.iloc[-1] / e0.iloc[-1] - 1) if len(e0) and len(E) else None
             L.append(f"| {k} | {len(E)} | {_f(100 * (E.ekuiti.iloc[-1] - 1) if len(E) else None)} | {_f(sp)} | "
-                     f"{_f(100 * E.heat.iloc[-1] if len(E) else None, '{:.1f}')} | {'ya' if len(E) and E.brek.iloc[-1] else 'tidak'} | "
+                     f"{ringkas_risiko(R, E)['heat_pct']:.1f} | {'ya' if len(E) and E.brek.iloc[-1] else 'tidak'} | "
                      f"{pb['bunuh'].get(k) or 'tidak'} |")
         T = pb['tapis']
         if len(T):

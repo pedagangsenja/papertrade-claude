@@ -3,30 +3,69 @@
   "sesi_terakhir": "2026-10-23",
   "ekuiti": 0.961538,
   "dipegang": 10,
-  "keluar": 0
+  "keluar": 0,
+  "tunai_pct": 0.0,
+  "heat_pct": 34.24,
+  "bawah_puncak_sesi": 6
  },
  "RAWAK_10": {
   "sesi_terakhir": "2026-10-23",
   "ekuiti": 1.027246,
   "dipegang": 10,
-  "keluar": 0
+  "keluar": 0,
+  "tunai_pct": 0.0,
+  "heat_pct": 10.68,
+  "bawah_puncak_sesi": 0
  },
  "GABUNGAN_10": {
   "sesi_terakhir": "2026-10-23",
   "ekuiti": 0.991559,
   "dipegang": 9,
-  "keluar": 5
+  "keluar": 5,
+  "tunai_pct": 9.39,
+  "heat_pct": 7.6,
+  "bawah_puncak_sesi": 2
  },
  "TOP1_10": {
   "sesi_terakhir": "2026-10-23",
   "ekuiti": 0.997687,
   "dipegang": 7,
-  "keluar": 8
+  "keluar": 8,
+  "tunai_pct": 29.79,
+  "heat_pct": 2.62,
+  "bawah_puncak_sesi": 2
  },
  "RAWAK_KAEDAH_10": {
   "sesi_terakhir": "2026-10-23",
   "ekuiti": 0.994999,
   "dipegang": 10,
-  "keluar": 0
+  "keluar": 0,
+  "tunai_pct": 0.0,
+  "heat_pct": 13.48,
+  "bawah_puncak_sesi": 1
+ },
+ "PLAYBOOK_10": {
+  "sesi_terakhir": "2026-10-23",
+  "ekuiti": 1.021428,
+  "dipegang": 11,
+  "keluar": 0,
+  "tunai_pct": 17.81,
+  "heat_pct": 9.98,
+  "bawah_puncak_sesi": 0,
+  "brek": false,
+  "kill_switch": null,
+  "tangguh": []
+ },
+ "RAWAK_PADAN_10": {
+  "sesi_terakhir": "2026-10-23",
+  "ekuiti": 1.038251,
+  "dipegang": 10,
+  "keluar": 0,
+  "tunai_pct": 11.17,
+  "heat_pct": 9.45,
+  "bawah_puncak_sesi": 0,
+  "brek": false,
+  "kill_switch": null,
+  "tangguh": []
  }
 }
