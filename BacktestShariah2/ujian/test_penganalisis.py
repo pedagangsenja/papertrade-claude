@@ -3,6 +3,7 @@
 # 24 Okt 2026 (audit dashboard tab demi tab item 6/16/17/18): ranking tunggal (susun tanpa bundar, peluang pangkat Monte Carlo,
 # meter bukti, tarikh status sebenar, kelompok, fasa, nota gabungan beku) dan pantau v3 (sasaran winsor, pengawal bukti,
 # ujian sintetik M32/M84 dengan parameter kalibrasi sebenar), serta kalibrasi_skor.py v3 (bootstrap blok, ekor, kelompok).
+# 25 Okt 2026 (v4): lebihan EW, n berkesan dua hala, Holm, SPRT, pintu A–F, corong, bendera, isi semula, umur tetap, ramalan.
 import json, math, os, sys, tempfile, unittest
 from fractions import Fraction
 import numpy as np
@@ -122,7 +123,7 @@ class TestPenganalisis(unittest.TestCase):
         self.assertEqual(x['pantau'], 'BERSARA'); self.assertGreaterEqual(x['p_amaran'], 2); self.assertGreater(x['p_rugi'], 0.9)
         self.assertAlmostEqual(x['p_dd'], 150.0)
         baik = pd.DataFrame(dict(tarikh_beli=hari, hasil1=np.random.default_rng(1).normal(1.0, 3, 60)))
-        self.assertEqual(pg.pantau_kaedah(baik, 14, '2026-12-31', kal, 0.25, 1.0, 0.2, 1.8, 60, k=0.5)['pantau'], 'OK')
+        self.assertEqual(pg.pantau_kaedah(baik, 14, '2026-12-31', kal, 0.25, 1.0, 0.2, 1.8, 60, k=0.5)['pantau'], pg.PANTAU_OK)
         jatuh = pd.DataFrame(dict(tarikh_beli=hari, hasil1=[3.0] * 20 + [-4.0] * 40))      # kejatuhan 160 > 1.5 x 100
         y = pg.pantau_kaedah(jatuh, 14, '2026-12-31', dict(kal, h=1e9), 0.25, 0.5, -1.0, 2.0, 60)
         self.assertEqual(y['pantau'], 'GANTUNG'); self.assertIn('kejatuhan', y['p_sebab'])
@@ -133,7 +134,7 @@ class TestPenganalisis(unittest.TestCase):
         z = pg.pantau_kaedah(lemah, 14, '2026-12-31', kb, 0.25, 0.5, -1.0, 2.0, 60)
         self.assertEqual(z['pantau'], 'GANTUNG'); self.assertAlmostEqual(z['p_bergulir_had'], -2.1); self.assertIn('purata 20 hari beli', z['p_sebab'])
         sedang = pd.DataFrame(dict(tarikh_beli=hari, hasil1=[1.0] * 40 + [-1.9] * 20))
-        self.assertEqual(pg.pantau_kaedah(sedang, 14, '2026-12-31', kb, 0.25, 0.5, -1.0, 2.0, 60)['pantau'], 'OK')
+        self.assertEqual(pg.pantau_kaedah(sedang, 14, '2026-12-31', kb, 0.25, 0.5, -1.0, 2.0, 60)['pantau'], pg.PANTAU_OK)
         self.assertIsNone(pg.pantau_kaedah(lemah.iloc[-19:], 14, '2026-12-31', kb, 0.25, 0.5, -1.0, 2.0, 19)['p_bergulir'])   # < 20 hari beli
         muda = pd.DataFrame(dict(tarikh_beli=['2026-12-30'], hasil1=[-9.0]))                # belum matang
         self.assertEqual(pg.pantau_kaedah(muda, 14, '2026-12-31', kal, 0.25, 0.5, -1.0, 2.0, 1)['pantau'], 'BELUM CUKUP')
@@ -180,7 +181,11 @@ class TestPenganalisis(unittest.TestCase):
             doc = json.load(open(js, encoding='utf-8'))
             kat = json.load(open(pg.KATALOG, encoding='utf-8'))['rows']
             self.assertEqual(len(doc['rows']), len(kat))
-            self.assertLess(os.path.getsize(js), 250_000)                  # had dokumen db dashboard
+            # v4: papan.json boleh melebihi had satu dokumen db; jana_db membahagi (bahagi_db) setiap bahagian < had
+            from bahagi_db import bahagi, bait, HAD_DB
+            self.assertTrue(all(bait(x) < HAD_DB for _, x in bahagi(doc, 'papan', 200000)))
+            self.assertTrue(os.path.exists(os.path.join(d, 'sejarah_skor.csv')))   # sebelah --json, bukan fail repo
+            self.assertTrue(os.path.exists(os.path.join(d, 'bendera_kaedah.csv')))
             self.assertEqual(len(doc['penemuan']), 3)
             self.assertTrue(set(r['status'] for r in doc['rows']) <= set(pg.STATUS))
             k = [r['kedudukan'] for r in doc['rows'] if r['kedudukan']]
@@ -204,7 +209,9 @@ class TestPenganalisis(unittest.TestCase):
             self.assertTrue(all(a['skor_bulan'] >= b['skor_bulan'] for a, b in zip(ked, ked[1:])))
             self.assertTrue(all(r['p_top1'] is None for r in doc['rows'] if not r['kedudukan']))
             f = doc['fasa']
-            self.assertEqual(set(f), {'matang_hadapan', 'jumlah_hadapan', 'kaedah_bukti', 'tarikh_sebenar_pertama', 'tarikh_top5', 'teks'})
+            self.assertEqual(set(f), {'matang_hadapan', 'jumlah_hadapan', 'kaedah_bukti', 'tarikh_sebenar_pertama', 'tarikh_top5', 'teks',
+                                      'swing', 'bukan_swing'})
+            self.assertEqual(f['swing']['matang'] + f['bukan_swing']['matang'], f['matang_hadapan'])
             self.assertEqual(f['matang_hadapan'], sum(r['h_matang'] for r in doc['rows']))
             self.assertEqual(f['kaedah_bukti'], sum(r['status'] != 'BELUM CUKUP' for r in doc['rows']))
             self.assertEqual(len(f['tarikh_top5']), 2)
@@ -247,10 +254,12 @@ class TestRankingTunggal(unittest.TestCase):
         self.assertTrue(all(1 <= x <= y <= 3 for x, y in zip(a[2], a[3])))
 
     def test_nb_perlu(self):
-        self.assertEqual(pg.nb_perlu(2.0, 10.0, 30.0), math.ceil((1.96 * 10 / 2) ** 2 - 30))    # 96.04 - 30 -> 67
-        self.assertEqual(pg.nb_perlu(-2.0, 10.0, 30.0), 67)                                       # simetri (bukti LEMAH)
-        self.assertEqual(pg.nb_perlu(10.0, 5.0, 30.0), pg.NB_MIN)                                # lantai pengawal bukti
-        self.assertEqual(pg.nb_perlu(2.0, 1.0, 0.0), math.ceil((1.96 * pg.SD_MIN / 2) ** 2))       # SD minimum SD_MIN -> 25
+        # v4: z 3.0 (sama dengan KUAT); dahulu 1.96
+        self.assertEqual(pg.nb_perlu(2.0, 10.0, 30.0), math.ceil((3.0 * 10 / 2) ** 2 - 30))     # 225 - 30 -> 195
+        self.assertEqual(pg.nb_perlu(-2.0, 10.0, 30.0), 195)                                      # simetri (bukti LEMAH)
+        self.assertEqual(pg.nb_perlu(2.0, 10.0, 30.0, z=1.96), 67)                                # z 1.96 lama
+        self.assertEqual(pg.nb_perlu(20.0, 5.0, 30.0), pg.NB_MIN)                                # lantai pengawal bukti
+        self.assertEqual(pg.nb_perlu(2.0, 1.0, 0.0), math.ceil((3.0 * pg.SD_MIN / 2) ** 2))        # SD minimum SD_MIN -> 57
         self.assertIsNone(pg.nb_perlu(0.0, 10.0, 30.0))
 
     def test_sesi_nyse(self):
@@ -339,7 +348,7 @@ class TestPantauV3(unittest.TestCase):
         y = pg.pantau_kaedah(self.kohort(25, -5.0), 14, '2026-12-31', m32, 0.5, 1.0, -2.0, 4.0, 25, 0.25)
         self.assertIn(y['pantau'], ('AMARAN', 'GANTUNG'), y)
         z = pg.pantau_kaedah(self.kohort(25, -5.0), 14, '2026-12-31', dict(m32, h=1.19), 0.5, 1.0, -2.0, 4.0, 25, 0.5)
-        self.assertEqual(z['pantau'], 'OK')     # kalibrasi v2 (k 0.5): buta terhadap rugi berterusan -5% (dapatan audit)
+        self.assertEqual(z['pantau'], pg.PANTAU_OK)     # kalibrasi v2 (k 0.5): buta terhadap rugi berterusan -5% (dapatan audit)
 
     def test_4_kohort_tidak_bersara(self):
         for m in ('M84', 'M22', 'M24'):
@@ -410,6 +419,290 @@ class TestKedudukanSebelum(unittest.TestCase):
         rows3 = [dict(id='M01', kedudukan=1)]
         pg.kedudukan_sebelum(rows3, '2026-10-20', None)         # tiada fail lama
         self.assertNotIn('kedudukan_sebelum', rows3[0])
+
+
+class TestPenganalisisV4(unittest.TestCase):
+    """25 Okt 2026 (Penganalisis v4, audit pratonton): lebihan EW, n berkesan dua hala, Holm, SPRT, pintu A–F, corong, bendera,
+    kohort isi semula, umur tetap, sejarah skor + ramalan, kredit AUTOTUNE sahaja."""
+
+    def ew(self, n=8):
+        t = list(pd.bdate_range('2026-10-12', periods=n).strftime('%Y-%m-%d'))
+        cc = [0.01, -0.02, 0.005, 0.0, 0.03, -0.01, 0.002, 0.004][:n]
+        oc = [0.004, -0.01, 0.001, 0.002, 0.01, -0.004, 0.0, 0.001][:n]
+        e = pd.DataFrame(dict(n=100, ew_cc=cc, ew_oc=oc), index=pd.Index(t, name='tarikh'))
+        e['ew_indeks'] = (1 + e.ew_cc).cumprod(); e['ew_co'] = (1 + e.ew_cc) / (1 + e.ew_oc) - 1
+        return e
+
+    def test_ew_tempoh_sama_penanda(self):
+        import penanda_ew
+        e = self.ew()
+        t = list(e.index)
+        r = pg.ew_tempoh(e, [t[0], t[2], t[1], '2026-10-11'], [t[4], t[2], '2026-10-24', t[3]])
+        self.assertAlmostEqual(r[0], penanda_ew.tempoh(e, t[0], t[4]))                     # buka t0 -> tutup t4
+        self.assertAlmostEqual(r[1], e.ew_oc.iloc[2])                                        # beli dan nilai hari sama
+        self.assertAlmostEqual(r[2], penanda_ew.tempoh(e, t[1], t[-1]))                     # akhir di luar siri -> sesi terakhir
+        self.assertTrue(np.isnan(r[3]))                                                      # mula bukan sesi
+        b = pg.ew_tempoh(e, [t[0]], [t[3]], [True])[0]                                       # keluar pada BUKA t3
+        self.assertAlmostEqual(b, (1 + penanda_ew.tempoh(e, t[0], t[2])) * (1 + e.ew_co.iloc[3]) - 1)
+
+    def test_tambah_lebihan(self):
+        e = self.ew(); t = list(e.index)
+        P = pd.DataFrame([dict(id='M01', saham='A', tarikh_isyarat=t[0], tarikh_beli=t[1], tarikh_keluar=t[3], tutup1=True, hasil1=5.0,
+                               hasil2=5.0, sumber='lejar', buka_keluar=True, hb=10.0, kohort='lejar'),
+                          dict(id='M01', saham='B', tarikh_isyarat=t[0], tarikh_beli=t[1], tarikh_keluar='', tutup1=False, hasil1=-1.0,
+                               hasil2=-1.0, sumber='lejar', buka_keluar=False, hb=10.0, kohort='lejar')])
+        X = pg.tambah_lebihan(P, e, t[5])
+        self.assertAlmostEqual(X.ew.iloc[0], 100 * pg.ew_tempoh(e, [t[1]], [t[3]], [True])[0])
+        self.assertAlmostEqual(X.ew.iloc[1], 100 * pg.ew_tempoh(e, [t[1]], [t[5]])[0])      # terbuka: hingga kini
+        self.assertAlmostEqual(X.lebihan.iloc[0], 5.0 - X.ew.iloc[0])
+        self.assertTrue(pg.tambah_lebihan(P, None, t[5]).lebihan.isna().all())
+
+    def test_buka_keluar(self):
+        self.assertTrue(pg.buka_keluar_lejar('isyarat keluar', '10', '', ''))
+        self.assertTrue(pg.buka_keluar_lejar('henti', '9.5', '10', ''))                     # jurang bawah henti
+        self.assertFalse(pg.buka_keluar_lejar('henti', '10', '10', ''))                     # tepat pada henti: dalam hari
+        self.assertTrue(pg.buka_keluar_lejar('sasaran', '12', '', '11'))
+        self.assertFalse(pg.buka_keluar_lejar('masa', '12', '', ''))
+        self.assertTrue(pg.buka_keluar_c('Keluar: isyarat keluar (jual pada buka 12 Okt)'))
+        self.assertTrue(pg.buka_keluar_c('Keluar: kena henti (buka bawah henti) (22 Okt @ 73.11)'))
+        self.assertFalse(pg.buka_keluar_c('Keluar: kena henti'))
+
+    def test_se_dua_hala(self):
+        r = np.random.default_rng(7)
+        hari = np.repeat([f'd{i}' for i in range(20)], 10); saham = np.tile([f's{i}' for i in range(10)], 20)
+        x = r.normal(0, 1, 200)
+        self.assertGreater(pg.se_dua_hala(x, hari, saham)['nb'], 100)                     # tiada kesan kelompok: hampir n
+        y = r.normal(0, 3, 10)[np.tile(np.arange(10), 20)] + r.normal(0, 1, 200)          # kesan saham kuat merentas hari
+        d2 = pg.se_dua_hala(y, hari, saham)
+        self.assertLess(d2['nb'], 40)
+        self.assertLess(d2['nb'], pg.n_berkesan(y, hari))                                   # sehala ikut hari terlepas kesan saham
+        self.assertEqual((d2['g_hari'], d2['g_saham']), (20, 10))
+        k = pg.se_dua_hala(np.arange(12.0), ['a'] * 6 + ['b'] * 6, [f's{i}' for i in range(12)])
+        self.assertEqual(k['nb'], 2.0)                                                       # < 5 hari beli: nb = bilangan hari
+        self.assertAlmostEqual(k['se'], float(np.std(np.arange(12.0), ddof=1)) / math.sqrt(2))
+        self.assertIsNone(pg.se_dua_hala([1.0], ['a'], ['s'])['se'])
+
+    def test_holm_dan_z(self):
+        self.assertEqual(pg.holm([0.01, 0.04, 0.03, None]), [0.03, 0.06, 0.06, None])
+        self.assertEqual(pg.holm([0.5, 0.9]), [1.0, 1.0])
+        self.assertAlmostEqual(pg.z_daripada_p(0.00135), 3.0, places=2)
+        self.assertIsNone(pg.z_daripada_p(None))
+        self.assertGreater(pg.z_daripada_p(0.0), 7.9); self.assertLess(pg.z_daripada_p(1.0), -7.9)
+
+    def test_sprt(self):
+        t = [f'2026-11-{i:02d}' for i in range(1, 31)]
+        x = pg.sprt(np.full(9, 5.0), 1.0, 2.0, t[:9])
+        self.assertEqual(x['status'], 'TERUSKAN'); self.assertIn('belum diputuskan', x['nota'])   # < 10 kohort walau llr besar
+        self.assertAlmostEqual(x['llr'], 9 * (1.0 * 5.0 - 0.5) / 4.0)
+        y = pg.sprt(np.full(30, 5.0), 1.0, 2.0, t)
+        self.assertEqual((y['status'], y['pada']), ('H1', t[9]))                          # lintasan pertama selepas pengawal
+        z = pg.sprt(np.full(30, -1.0), 1.0, 2.0, t)
+        self.assertEqual(z['status'], 'H0')
+        self.assertEqual(z['had'], [round(math.log(0.1 / (1 - pg.SPRT_ALFA)), 2), round(math.log(0.9 / pg.SPRT_ALFA), 2)])
+        w = pg.sprt(np.full(12, 0.5), 0.5, 20.0)                                            # hingar besar: belum cukup
+        self.assertEqual(w['status'], 'TERUSKAN')
+        v = pg.sprt(np.full(12, 3.0), -0.2, 2.0)
+        self.assertEqual((v['status'], v['llr']), ('H0', None)); self.assertIn('tiada H1', v['nota'])
+        self.assertEqual(pg.sprt([], None, None)['status'], 'H0')
+        # teguh (winsor): squeeze +100% dihad pada hi, jadi satu kohort tidak memutuskan H1
+        wz = dict(lo=-5.0, hi=5.0, h0=-0.3, h1=0.2, sd=2.0)
+        u = pg.sprt([100.0, 0.0], 0.4, 30.0, None, wz)
+        self.assertEqual(u['skala'], 'winsor')
+        self.assertAlmostEqual(u['llr'], (0.5 * (5.0 + 0.05) + 0.5 * (0.0 + 0.05)) / 4.0, places=3)
+        self.assertEqual(pg.sprt([1.0], 0.4, 3.0, None, dict(wz, h1=-0.4))['skala'], 'mentah')   # h1 <= h0: sandaran mentah
+
+    def test_kredit_autotune_sahaja(self):
+        self.assertEqual(pg.kekal(True), 0.5); self.assertEqual(pg.kekal(False), 0.25); self.assertEqual(pg.kekal(None), 0.25)
+        self.assertTrue(pg.kredit_at(dict(label='SEDERHANA'))); self.assertTrue(pg.kredit_at(dict(label='TINGGI')))
+        self.assertFalse(pg.kredit_at(dict(label='RENDAH', cagr_a=0.3, spy_a=0.1, cagr_b=0.3, spy_b=0.1)))   # MDD gagal: label RENDAH
+        self.assertFalse(pg.kredit_at(None))
+        reg, wfo = dict(subset_menang=4, subset_n=4), dict(cagr=0.9, ew=0.3)
+        s = pg.semakan(reg, wfo, dict(label='GAGAL'))
+        self.assertEqual(s[:2], (True, True))
+        self.assertEqual(pg.kekal(pg.kredit_at(dict(label='GAGAL'))), 0.25)                 # S1–S4 + WFO lulus: tiada kredit
+
+    def test_pisah_backfill(self):
+        C = pos([['M01', 'A', '2026-10-07', '2026-10-08', '', False, 1.0, 1.0, 'C'],
+                 ['M01', 'B', '2026-10-12', '2026-10-13', '', False, 1.0, 1.0, 'C'],
+                 ['M01', 'C', '2026-10-13', '2026-10-14', '', False, 1.0, 1.0, 'C'],
+                 ['M01', 'D', '2026-10-14', '2026-10-15', '', False, 1.0, 1.0, 'C']])
+        b, f = pg.pisah_backfill(C)
+        self.assertEqual((list(b.saham), list(f.saham)), (['C', 'D'], ['A', 'B']))
+        C['kohort'] = ['', '', 'backfill', 'hadapan']
+        b, f = pg.pisah_backfill(C)
+        self.assertEqual(list(b.saham), ['D'])                                               # label kohort juga dihormati
+
+    def test_umur_tetap(self):
+        e = self.ew(); t = list(e.index)
+        P = pd.DataFrame([dict(id='M01', saham='A', tarikh_isyarat=t[0], tarikh_beli=t[1], tarikh_keluar='', tutup1=False, hasil1=0.0,
+                               hasil2=0.0, sumber='lejar', buka_keluar=False, hb=10.0, kohort='lejar'),
+                          dict(id='M01', saham='B', tarikh_isyarat=t[0], tarikh_beli=t[1], tarikh_keluar=t[2], tutup1=True, hasil1=-3.0,
+                               hasil2=-3.0, sumber='lejar', buka_keluar=False, hb=10.0, kohort='lejar'),
+                          dict(id='M01', saham='A', tarikh_isyarat=t[3], tarikh_beli=t[4], tarikh_keluar='', tutup1=False, hasil1=0.0,
+                               hasil2=0.0, sumber='lejar', buka_keluar=False, hb=10.0, kohort='lejar')])
+        tutup = {('A', t[6]): 11.0}
+        X = pg.tambah_umur_tetap(P, e, tutup, t, t[7], ks=(5,))
+        self.assertAlmostEqual(X.x5.iloc[0], pg.bersih(10.0) - 100 * pg.ew_tempoh(e, [t[1]], [t[6]])[0])   # tutup sesi beli + 5
+        self.assertAlmostEqual(X.x5.iloc[1], -3.0 - 100 * pg.ew_tempoh(e, [t[1]], [t[2]])[0])              # keluar lebih awal
+        self.assertTrue(np.isnan(X.x5.iloc[2]))                                              # umur belum cukup (t9 > kini)
+
+    def test_pintu_dan_corong(self):
+        r = dict(id='M05', at_label='SEDERHANA', h_hari_beli=45, h_z_terlaras=3.4, h_lebihan=0.8)
+        p, n, k = pg.pintu_kaedah(r, [], {'M05': {}}, None, (130, 0.12), None)
+        self.assertEqual(p, dict(A=True, B=True, C=True, D=True, E=None, F=False))
+        self.assertEqual(n, 4)                                                               # E tiada: berhenti pada E
+        self.assertTrue(any(x.startswith('E: tiada portfolio') for x in k)); self.assertTrue(any(x.startswith('F:') for x in k))
+        p, n, k = pg.pintu_kaedah(r, ['HAMPIR_PENDUA:M03'], None, None, (130, 0.05), None)
+        self.assertEqual((p['A'], p['B'], p['D'], n), (False, False, False, 0))              # pendua tidak boleh lulus B
+        self.assertTrue(any('HAMPIR_PENDUA:M03 tidak boleh lulus' in x for x in k))
+        self.assertTrue(any('tiada pra_daftar.json' in x for x in k))
+        p, _, _ = pg.pintu_kaedah(dict(r, at_label='RENDAH'), [], None, {'M05': {'lulus_B': True}}, (0, None), None)
+        self.assertTrue(p['B'])                                                              # ujian PIT lulus_B
+        p, _, _ = pg.pintu_kaedah(dict(r, h_z_terlaras=2.9), [], None, None, (0, None), None)
+        self.assertFalse(p['C'])
+        sl = dict(portfolio='TOP1_10', sesi=130, pulangan=9.0, kawalan_pulangan=5.0, spy=6.0, ew=8.0)
+        self.assertTrue(pg.pintu_kaedah(r, [], None, None, (0, None), sl)[0]['E'])
+        self.assertFalse(pg.pintu_kaedah(r, [], None, None, (0, None), dict(sl, sesi=2))[0]['E'])
+        self.assertFalse(pg.pintu_kaedah(r, [], None, None, (0, None), dict(sl, ew=10.0))[0]['E'])
+        rows = [dict(swing=True, bendera=[], pintu=dict(A=False, B=True, C=False, D=False, E=None, F=False)),
+                dict(swing=True, bendera=['DITOLAK'], pintu=dict(A=False, B=True, C=True, D=False, E=None, F=False)),
+                dict(swing=False, bendera=[], pintu=dict(A=True, B=True, C=True, D=True, E=True, F=False)),
+                dict(swing=True, bendera=['CIRI:PANTULAN'], pintu=dict(A=False, B=False, C=False, D=False, E=None, F=False))]
+        self.assertEqual([x['n'] for x in pg.corong(rows)], [4, 3, 2, 1, 0, 0, 0])
+        self.assertEqual([x['peringkat'] for x in pg.corong(rows)], pg.CORONG)
+
+    def test_pendua_dan_ciri(self):
+        with tempfile.TemporaryDirectory() as d:
+            A = [(f'S{i}', '2026-10-20') for i in range(30)]
+            rows = [dict(tarikh_data=t, kaedah='M02', saham=s) for s, t in A[:25] + [('X1', '2026-10-21')] * 1]   # 25/26 dalam M01
+            rows += [dict(tarikh_data=t, kaedah='M01', saham=s) for s, t in A]
+            rows += [dict(tarikh_data=t, kaedah='M03', saham=s) for s, t in A]                                 # sama dengan M01
+            rows += [dict(tarikh_data='2026-10-20', kaedah='M04', saham=s) for s in ('S1', 'S2')]              # < 20 isyarat
+            pd.DataFrame(rows).to_csv(os.path.join(d, '2026-10-20_malam.csv.gz'), index=False)
+            x = pg.pendua_isyarat(d, ['M01', 'M02', 'M03', 'M04'])
+            self.assertEqual(set(x), {'M02', 'M03'})
+            self.assertEqual(x['M03'][0], 'M01')                                                # sama besar: lebih awal = induk
+            self.assertEqual(x['M02'][0], 'M01'); self.assertAlmostEqual(x['M02'][1], 25 / 26)
+        self.assertEqual(pg.kelas_ciri(dict(jenis='pantulan', tinggi52=True, rs=True, volum=True, ketat=True, adr=False, rejim=False)), 'PANTULAN')
+        self.assertEqual(pg.kelas_ciri(dict(jenis='momentum', tinggi52=True, rs=False, volum=True, ketat=True, adr=False, rejim=False)), 'MOMENTUM_PRO')
+        self.assertEqual(pg.kelas_ciri(dict(jenis='momentum', tinggi52=False, rs=False, volum=True, ketat=True, adr=False, rejim=True)), 'PENUNJUK')
+        self.assertIsNone(pg.kelas_ciri(None))
+        c = pg.ciri_kaedah()
+        self.assertGreater(len(c), 100); self.assertIn(c['M01']['jenis'], ('momentum', 'pantulan'))
+
+    def test_bendera_tarikh_dikekal(self):
+        with tempfile.TemporaryDirectory() as d:
+            f = os.path.join(d, 'b.csv')
+            b = [dict(id='M81', bendera='ARTIFAK', sebab='x', sumber='y'), dict(id='M02', bendera='DITOLAK', sebab='x', sumber='y')]
+            pg.tulis_bendera(b, '2026-10-23', f)
+            x = pg.tulis_bendera(b + [dict(id='M09', bendera='HAMPIR_PENDUA:M01', sebab='x', sumber='y')], '2026-10-30', f)
+            self.assertEqual(dict(zip(x.id, x.tarikh)), {'M81': '2026-10-23', 'M02': '2026-10-23', 'M09': '2026-10-30'})
+            self.assertEqual(list(x.columns), ['id', 'bendera', 'sebab', 'sumber', 'tarikh'])
+
+    def test_sejarah_dan_ramalan(self):
+        with tempfile.TemporaryDirectory() as d:
+            f = os.path.join(d, 's.csv')
+            ids = [f'M{i:02d}' for i in range(1, 7)]
+            pg.tulis_sejarah([dict(id=i, skor=0.0) for i in ids], '2026-10-23', f)
+            s = pg.tulis_sejarah([dict(id=i, skor=float(k)) for k, i in enumerate(ids)], '2026-10-23', f)   # larian semula: ganti
+            self.assertEqual(len(s), 6); self.assertEqual(list(s.skor), [0.0, 1.0, 2.0, 3.0, 4.0, 5.0])
+            H = pd.DataFrame(dict(id=ids, tarikh_beli='2026-10-27', x5=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6]))
+            self.assertIsNone(pg.ramalan(s, H, ids))                                          # < 2 minggu sejarah
+            s = pg.tulis_sejarah([dict(id=i, skor=float(k)) for k, i in enumerate(ids)], '2026-10-30', f)
+            r = pg.ramalan(s, H, ids)
+            self.assertEqual((r['spearman'], r['n_minggu']), (1.0, 1))                       # skor 23 Okt lawan belian minggu 27 Okt
+            self.assertEqual(r['pasangan'][0]['minggu_hadapan'], '2026-W44')
+            self.assertEqual(pg.ramalan(s, H.assign(x5=np.nan), ids)['n_minggu'], 0)
+
+    def test_ringkas_hadapan_lebihan(self):
+        hari = list(pd.bdate_range('2026-10-01', periods=12).strftime('%Y-%m-%d'))
+        P = pd.DataFrame([dict(id='M01', saham=f'S{i % 4}', tarikh_isyarat=h, tarikh_beli=h, tarikh_keluar='', tutup1=False,
+                               hasil1=2.0 + i % 3, hasil2=2.0, sumber='lejar', lebihan=0.5 + (i % 3), x5=0.25)
+                          for i, h in enumerate(hari * 2)])
+        h = pg.ringkas_hadapan(P, 5, '2026-12-31')
+        self.assertEqual(h['matang'], 24); self.assertAlmostEqual(h['lebihan'], float(P.lebihan.mean()))
+        self.assertEqual(h['g_saham'], 4); self.assertAlmostEqual(h['r5'], 0.25); self.assertEqual(h['n_r5'], 24)
+        self.assertAlmostEqual(h['lebihan_saham'], float(P.groupby('saham').lebihan.mean().mean()))
+        self.assertEqual(len(h['kohort_lebihan']), 12)
+        self.assertGreater(h['z'], 0); self.assertLess(h['p'], 0.5)
+
+
+class TestKalibrasiLebihan(unittest.TestCase):
+    def test_ew_tempoh_dagangan(self):
+        import kalibrasi_skor as K
+        ix = pd.bdate_range('2020-01-06', periods=6)
+        fr = {'A': pd.DataFrame(dict(open=[10, 11, 12, 13, 14, 15.0], close=[10.5, 11.5, 12.5, 13.5, 14.5, 15.5]), index=ix),
+              'B': pd.DataFrame(dict(open=[20, 20, 20, 20, 20, 20.0], close=[20, 20, 20, 20, 20, 20.0]), index=ix)}
+        ew = K.ew_harian(fr)
+        self.assertAlmostEqual(ew.oc.iloc[0], (0.05 + 0.0) / 2)
+        x_buka = 13 / 11 * (1 - K.COST) / (1 + K.COST) - 1          # keluar pada buka hari ke-3
+        x_tutup = 13.5 / 11 * (1 - K.COST) / (1 + K.COST) - 1       # keluar pada tutup hari ke-3
+        T = pd.DataFrame(dict(ticker=['A', 'A'], ent=[ix[1], ix[1]], ex=[ix[3], ix[3]], ret=[x_buka, x_tutup]))
+        R = K.ew_tempoh_dagangan(T, fr, ew)
+        a = 0.5 * (13 / 12.5 - 1)                                      # buka t3 / tutup t2, B rata
+        oc1, cc2 = 0.5 * (11.5 / 11 - 1), 0.5 * (12.5 / 11.5 - 1)
+        self.assertAlmostEqual(R.iloc[0], (1 + oc1) * (1 + cc2) * (1 + a) - 1)
+        self.assertAlmostEqual(R.iloc[1], (1 + oc1) * (1 + cc2) * (1 + 0.5 * (13.5 / 12.5 - 1)) - 1)
+        lb = K.lebihan(T, fr, ew)
+        self.assertAlmostEqual(lb['lebihan_rawak'], float(np.mean((T.ret.values - R.values) * 100)))
+        self.assertEqual(lb['lebihan_n'], 2); self.assertEqual(lb['lebihan_kohort_n'], 1)
+
+    def test_sprt_winsor(self):
+        import kalibrasi_skor as K
+        c = np.random.default_rng(5).normal(0.4, 3.0, 300); c[:5] = 80.0                  # ekor squeeze
+        w = K.sprt_winsor(c)
+        self.assertEqual(set(w), {'lebihan_winsor', 'lebihan_sd_winsor', 'lebihan_h0_winsor', 'lebihan_h1_winsor'})
+        self.assertGreater(w['lebihan_h1_winsor']['0.5'], w['lebihan_h1_winsor']['0.25'])
+        self.assertGreater(w['lebihan_h1_winsor']['0.25'], w['lebihan_h0_winsor'])
+        self.assertLess(w['lebihan_sd_winsor'], float(np.std(c)))
+        self.assertEqual(K.sprt_winsor(c[:10]), {})
+
+    def test_fail_kalibrasi_lebihan(self):
+        d = json.load(open(pg.KALIBRASI, encoding='utf-8'))
+        self.assertEqual(d['lebihan']['kos_pusingan'], 0.2)
+        ada = [m for m, r in d['kaedah'].items() if 'lebihan_rawak' in r]
+        self.assertGreaterEqual(len(ada), len(d['kaedah']) - len(d['lebihan'].get('gagal') or {}))
+
+
+class TestJanaDbPapanDibahagi(unittest.TestCase):
+    """jana_db.py (bahagian analisis/papan sahaja, 25 Okt 2026): papan.json > HAD_BAHAGI dibahagi seperti watchlist; setiap
+    bahagian < had db dan gabungan baris = papan penuh (halaman: subBhg)."""
+
+    def test_papan_dibahagi(self):
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import io
+        from contextlib import redirect_stdout
+        import jana_db as jd
+        from bahagi_db import bait, HAD_DB
+        from test_audit_24okt import tulis_stor
+        from test_sahkan import ASAS, tulis
+        papan = json.load(open(os.path.join(pg.BS2, 'data', 'analisis', 'papan.json'), encoding='utf-8'))
+        with tempfile.TemporaryDirectory() as d:
+            pt, stor, kel = (os.path.join(d, x) for x in ('pt', 'stor', 'db'))
+            os.makedirs(pt); os.makedirs(stor)
+            tulis_stor(stor, [('AAA', 20261013, 100, 106, 99, 105, 1000), ('AAA', 20261014, 105, 107, 104, 106, 1000)])
+            tulis_stor(stor, [('SPY', 20261013, 600, 601, 599, 600, 1), ('SPY', 20261014, 600, 601, 599, 600, 1)], 'harga_idx.csv')
+            tulis(pt, 'moomoo.csv', [dict(ASAS, saham='MMM')])
+            tulis(pt, 'claude.csv', [dict(ASAS, kaedah='M03', id_kaedah='M03', harga_terkini='106', untung_pct='6.0', hari='1')])
+            tulis(pt, 'watchlist.csv', [{'Saham': 'BBB', 'Kaedah': 'M02', 'Sektor': 'Energy', 'Industri': 'Oil', '% hampir': '100.0',
+                                         'Jarak %': '0.0', 'Syarat belum cukup': 'Tutup esok > 20', 'tarikh_data': '2026-10-14'}])
+            with redirect_stdout(io.StringIO()):
+                jd.main(['--keluar', kel, '--folder', pt, '--stor', stor, '--masa', '2026-10-15 06:30', '--sumber', 'ujian'])
+            asas = json.load(open(os.path.join(kel, 'analisis', 'papan.json'), encoding='utf-8'))
+            st = json.load(open(os.path.join(kel, 'harian', 'status.json'), encoding='utf-8'))
+            if bait(papan) <= jd.HAD_BAHAGI:
+                self.assertNotIn('bahagian', asas); return
+            b = asas['bahagian']; rows = list(asas['rows'])
+            self.assertGreaterEqual(b['n'], 2)
+            for k in range(2, b['n'] + 1):
+                x = json.load(open(os.path.join(kel, 'analisis', f'papan_{k}.json'), encoding='utf-8'))
+                self.assertEqual((x['induk'], x['bahagian']), (b['id'], k)); self.assertLess(bait(x), HAD_DB)
+                rows += x['rows']
+            self.assertLess(bait(asas), HAD_DB)
+            self.assertEqual([r['id'] for r in rows], [r['id'] for r in papan['rows']])
+            self.assertEqual(asas['corong'], papan['corong'])                     # meta penuh dalam dokumen asas
+            self.assertEqual(st['saluran']['analisis'], papan['harga_pada'])
+            self.assertFalse([x for x in st['ralat'] if 'analisis/papan' in x])
 
 
 if __name__ == '__main__':

@@ -1627,9 +1627,18 @@ def main(argv=None):
     if ps:
         docs['prestasi/portfolio_slot'] = ps
     # analisis/papan: Papan Penganalisis (standard/penganalisis.py, Actions analisis.yml selepas Lejar Penuh) untuk tab Analisis
+    # 25 Okt 2026 (Penganalisis v4: pintu, SPRT, lebihan, bendera): dokumen > HAD_BAHAGI dibahagi seperti watchlist
+    # (bahagi_db.bahagi: asas analisis/papan {bahagian:{id,n}} + analisis/papan_2… {induk,bahagian,rows}; halaman: subBhg)
     pa = os.path.join(BS2, 'data', 'analisis', 'papan.json')
     if os.path.exists(pa):
-        docs['analisis/papan'] = json.load(open(pa, encoding='utf-8'))
+        papan = json.load(open(pa, encoding='utf-8'))
+        if bait(papan) > HAD_BAHAGI:
+            bhg = bahagi(papan, 'papan', HAD_BAHAGI)
+            docs['analisis/papan'] = bhg[0][1]
+            for doc_id, d in bhg[1:]:
+                pra[f'analisis/{doc_id}'] = d
+        else:
+            docs['analisis/papan'] = papan
     # sektor/snapshot (dijana mingguan; medan posisi dikemas kini jika fail ada)
     snap = os.path.join(BS2, 'data', 'db', 'sektor_snapshot.json')
     if os.path.exists(snap):
