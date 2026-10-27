@@ -1,6 +1,6 @@
 # FASA 2 — pulangan boleh didagangkan, penilaian bergabung, ablasi 2×2
 
-Dijana `REVERSE/fasa2_laporan.py` (2026-10-27 14:32 UTC). Reka bentuk dikunci dalam `SPEC.md` §13.12 B **sebelum** sebarang angka FASA 2 dilihat. FASA 1 (`LAPORAN_<TAHUN>.md`, `BANDING_TAHUN.md`) kekal sebagai rekod.
+Dijana `REVERSE/fasa2_laporan.py` (2026-10-27 15:30 UTC). Reka bentuk dikunci dalam `SPEC.md` §13.12 B **sebelum** sebarang angka FASA 2 dilihat. FASA 1 (`LAPORAN_<TAHUN>.md`, `BANDING_TAHUN.md`) kekal sebagai rekod.
 
 ## 0. Apa yang berubah berbanding FASA 1
 
@@ -231,3 +231,31 @@ Posisi entry-agnostik (arm X+R: 8 saham RS 6 bulan tertinggi dalam universe seti
 - Bukan bukti bahawa tiada kelebihan boleh didapati dalam data ini; ia bukti bahawa **46 signal yang FASA 1 hasilkan tidak membawa kelebihan boleh dagang**, dan bahawa cara FASA 1 mengukur (puncak dalam tetingkap) memilih kemeruapan.
 - Tiada saham delist: angka rawak X+X juga dipandang tinggi oleh survivorship, mungkin lebih daripada arm signal (saham yang mati lebih berkemungkinan muncul dalam pilihan rawak daripada dalam pilihan signal momentum). Perbandingan arm tetap sah kerana kesemuanya memakai data yang sama, tetapi aras mutlak bukan jangkaan.
 - Satu signal contrarian (`q1:cerun_ema21`, kuintil terendah cerun EMA21) ialah satu-satunya yang lulus, dan hanya pada satu polisi. Arahnya bertentangan dengan keluarga momentum/kemeruapan yang FASA 1 tumpukan. Itu petunjuk untuk fasa seterusnya, bukan keputusan.
+
+## 6. Apa yang pembetulan FASA 1 ubah (SPEC §13.12 A)
+
+**A4 — kelas pullback satu peraturan.** % pullback yang bersambung ke puncak baharu, sebelum (commit `5197ba4`) lawan selepas:
+
+| tahun | sihat_lama | sihat_baru | amaran_lama | amaran_baru | jurang_lama | jurang_baru | beza_jurang |
+|---|---|---|---|---|---|---|---|
+| 2020.0 | 89.1 | 90.2 | 70.5 | 70.1 | 18.6 | 20.1 | 1.5 |
+| 2021.0 | 89.0 | 90.6 | 43.9 | 43.7 | 45.1 | 46.9 | 1.8 |
+| 2022.0 | 65.0 | 67.1 | 54.0 | 53.9 | 11.0 | 13.2 | 2.2 |
+| 2023.0 | 91.5 | 92.0 | 46.2 | 46.1 | 45.3 | 45.9 | 0.6 |
+| 2024.0 | 88.4 | 89.4 | 47.2 | 47.0 | 41.2 | 42.4 | 1.2 |
+| 2025.0 | 88.9 | 90.1 | 50.8 | 50.6 | 38.1 | 39.5 | 1.4 |
+
+Jurang SIHAT−AMARAN berubah +0.6 hingga +2.2 mata; melebar pada 6 daripada 6 tahun — arah yang dinyatakan dalam pindaan sebelum larian.
+
+**A1 — asas entry Step 9 termasuk DITERIMA.**
+
+| tahun | asas_baru | angka_sama | chandelier_lama | chandelier_baru |
+|---|---|---|---|---|
+| 2020 | CALON atau DITERIMA selepas Step 8 | TIDAK | 82.15 | -9.01 |
+| 2021 | lulus Step 7 sahaja (TIADA signal CALON tahun ini) | ya | -2.15 | -2.15 |
+| 2022 | lulus Step 7 sahaja (TIADA signal CALON tahun ini) | ya | -5.26 | -5.26 |
+| 2023 | CALON atau DITERIMA selepas Step 8 | ya | 56.37 | 56.37 |
+| 2024 | lulus Step 7 sahaja (TIADA signal CALON tahun ini) | ya | -46.69 | -46.69 |
+| 2025 | CALON atau DITERIMA selepas Step 8 | ya | 14.93 | 14.93 |
+
+Angka berubah pada 1 tahun (2020) — tahun yang mempunyai signal DITERIMA **dan** CALON serentak, jadi penapis lama membuang signal terbaik daripada portfolio. Tahun lain hanya label `asas_entry` yang bertukar.

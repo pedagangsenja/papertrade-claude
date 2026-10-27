@@ -14,9 +14,9 @@ Dijana skrip `REVERSE/jana_laporan.py` pada 27 Okt 2026. Spec dikunci: `REVERSE/
 
 4. **Rujukan "pegang tanpa jual hingga hari ke-252" MENANG.** Tiada satu pun daripada 234 sistem HOLD×EXIT mengalahkan ketiga-tiga rujukan. Jangkaan: +60.66% (pegang tanpa jual hingga hari ke-252), +19.61% (Chandelier 4×ATR14), +15.00% (jual hari ke-63). Mengikut arahan Step 7b.4, jawapan kajian tahun ini ialah **"jangan jual"**.
 
-5. **Kapasiti slot, bukan kadar menang, yang mengikat.** Dalam Step 9 rujukan pegang-252 hanya membuka **16 posisi sepanjang tahun** (8 slot terisi awal dan tidak pernah kosong), berbanding ~130 calon/tahun yang diperlukan. Pulangannya 57.40% ialah hasil **16 saham**, bukan sistem.
+5. **Kapasiti slot, bukan kadar menang, yang mengikat.** Dalam Step 9 rujukan pegang-252 hanya membuka **16 posisi sepanjang tahun** (8 slot terisi awal dan tidak pernah kosong), berbanding ~130 calon/tahun yang diperlukan. Pulangannya 4.86% ialah hasil **16 saham**, bukan sistem.
 
-6. **Sasaran +10% sebulan (median): TIDAK TERCAPAI oleh mana-mana sistem.** Yang terbaik ialah 3.26% sebulan (median) dengan MDD -54.28%.
+6. **Sasaran +10% sebulan (median): TIDAK TERCAPAI oleh mana-mana sistem.** Yang terbaik ialah -0.43% sebulan (median) dengan MDD -49.28%.
 
 7. **Keluarga EXIT dan SISTEM pada FDR:** 0/68 signal EXIT dan 0/234 sistem lulus q ≤ 0.01.
 
@@ -28,7 +28,7 @@ Dijana skrip `REVERSE/jana_laporan.py` pada 27 Okt 2026. Spec dikunci: `REVERSE/
 | b. SPY dan QQQ dalam `idx.parquet` | **LULUS** |
 | c. Sumber sektor/industri setiap ticker | **LULUS** — 2115/2131 = 99.2% (2 kelas saham diisi daripada ticker asas; 103 ticker = `Lain-lain`) |
 | d. 11 ETF sektor SPDR ditarik dan dicache | **GAGAL** → pindaan SPEC §13.1 (indeks sektor A02; diluluskan pengguna) |
-| e. Step 1–3 satu bulan, anggaran × 12 | **LULUS** — 0.147 s/ticker; larian penuh 2131 ticker = 313 s |
+| e. Step 1–3 satu bulan, anggaran × 12 | **LULUS** — 0.331 s/ticker; larian penuh 2131 ticker = 706 s |
 | f. `semak_hadapan` atas modul indikator | **LULUS** — 14 tarikh potong (≥ 12), 26,950 perbandingan, **0 kegagalan** (`REVERSE/PANDANG_HADAPAN_2020.md`) |
 
 ## 2. Step 1–2 — run
@@ -595,12 +595,12 @@ Keenam pemicu diuji sebagai signal tunggal. Dilaporkan walaupun ditolak, seperti
 
 | nama | n | pct_sambung_puncak_baru | purata_kedalaman | purata_hari_pulih |
 |---|---|---|---|---|
-| AMARAN | 5673 | 70.5 | -14.28 | 9.7 |
-| PULLBACK PASARAN | 708 | 87.9 | -8.79 | 6.3 |
-| PULLBACK SIHAT | 2065 | 89.1 | -8.56 | 7.5 |
+| AMARAN | 5705 | 70.1 | -14.31 | 9.7 |
+| PULLBACK PASARAN | 703 | 88.5 | -8.73 | 6.3 |
+| PULLBACK SIHAT | 2038 | 90.2 | -8.41 | 7.5 |
 
 
-Pullback yang trend sahamnya utuh (SIHAT 89.1%, PASARAN 87.9%) menyambung ke puncak baru jauh lebih kerap daripada pullback AMARAN (70.5%). Ini sokongan paling jelas bagi falsafah "pegang selagi naik".
+Pullback yang trend sahamnya utuh (SIHAT 90.2%, PASARAN 88.5%) menyambung ke puncak baru jauh lebih kerap daripada pullback AMARAN (70.1%). Ini sokongan paling jelas bagi falsafah "pegang selagi naik".
 
 
 ### Grid 18 peraturan HOLD (deskriptif)
@@ -676,7 +676,7 @@ Pullback yang trend sahamnya utuh (SIHAT 89.1%, PASARAN 87.9%) menyambung ke pun
 | hist_neg3 | 2608 | 99.6 | -21.0 | -0.06 | 0.3 | 76.9 |
 | jauh_ma50_2x | 1438 | 54.9 | -18.0 | 14.44 | 57.5 | 72.8 |
 | macd_bawah | 2597 | 99.2 | -19.0 | 1.04 | 6.1 | 76.2 |
-| pullback_amaran | 2572 | 98.2 | -17.5 | -5.49 | -21.9 | 87.3 |
+| pullback_amaran | 2576 | 98.4 | -17.0 | -5.49 | -21.8 | 87.2 |
 | rsi_70_60 | 1969 | 75.2 | -5.0 | 10.49 | 43.8 | 71.8 |
 | trail_10pct | 2362 | 90.2 | 2.0 | -2.95 | -11.1 | 74.1 |
 | trail_15pct | 1678 | 64.1 | 8.0 | -6.75 | -27.1 | 69.5 |
@@ -723,7 +723,7 @@ Taburan berat di hujung kanan: perhatikan jurang antara `mfe63_p50` dan `mfe63_p
 
 
 ### Penapis Step 7.4
-128 kombinasi signal × penapis diuji (0 lulus kriteria "buang ≥ 30% palsu dan ≤ 10% benar").
+128 kombinasi signal × penapis diuji (54 lulus kriteria "buang ≥ 30% palsu dan ≤ 10% benar").
 
 
 **Tiada penapis lulus.** Termasuk pengesahan 1–2 tutup, SPY/sektor atas MA50, volum relatif, lapis MA. Kemunculan BENAR dan PALSU tidak dibezakan oleh mana-mana penapis dipradaftar. Ini keputusan negatif yang bersih.
@@ -871,37 +871,37 @@ Penapis Step 7.4 kekal CALON tanpa kecuali — arahan 8.5 memerlukan keberkesana
 
 ## 11. Step 9 — PRESTASI PORTFOLIO (kriteria akhir)
 
-Portfolio 8 slot × 12.5%, kos penuh, tiada leverage, satu posisi satu saham. Asas signal ENTRY: **CALON selepas Step 8**. Peraturan pemilihan dibekukan (SPEC §12): lift_presisi → RS 6 bulan → ticker.
+Portfolio 8 slot × 12.5%, kos penuh, tiada leverage, satu posisi satu saham. Asas signal ENTRY: **CALON atau DITERIMA selepas Step 8**. Peraturan pemilihan dibekukan (SPEC §12): lift_presisi → RS 6 bulan → ticker.
 
 
 | sistem | n_posisi_dibuka | n_dagangan_ditutup | n_posisi_terbuka_hujung_tahun | purata_slot_terisi | pulangan_tahun | median_bulanan | purata_bulanan | pct_bulan_ge10 | pct_bulan_positif | bulan_terbaik | bulan_terburuk | mdd | purata_hari_pegang | pusing_ganti_bulanan | spy_pulangan_tahun | spy_mdd |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| REF_pegang_252 | 16 | 8 | 8 | 7.91 | 57.4 | 3.26 | 5.19 | 33.3 | 75.0 | 32.54 | -31.61 | -54.28 | 252.0 | 1.3 | 17.24 | -33.72 |
-| REF_chandelier_4atr | 44 | 36 | 8 | 7.79 | 82.15 | 2.38 | 5.95 | 25.0 | 66.7 | 44.88 | -10.89 | -29.37 | 45.7 | 3.7 | 17.24 | -33.72 |
-| REF_jual_hari63 | 40 | 32 | 8 | 7.81 | 77.59 | 5.42 | 6.41 | 41.7 | 66.7 | 41.9 | -31.61 | -54.28 | 63.0 | 3.3 | 17.24 | -33.72 |
-| hari_agihan|X=20%,Y=ma50 | 43 | 35 | 8 | 7.8 | 38.52 | 1.88 | 3.47 | 25.0 | 58.3 | 31.79 | -19.23 | -40.63 | 51.3 | 3.6 | 17.24 | -33.72 |
-| hari_agihan|X=15%,Y=ma50 | 45 | 37 | 8 | 7.79 | 93.71 | 6.73 | 6.28 | 33.3 | 75.0 | 22.45 | -19.23 | -40.63 | 45.9 | 3.8 | 17.24 | -33.72 |
-| rsi_70_60|X=20%,Y=ma50 | 27 | 19 | 8 | 7.86 | 30.77 | 2.49 | 2.6 | 25.0 | 58.3 | 15.31 | -12.8 | -33.99 | 55.2 | 2.2 | 17.24 | -33.72 |
+| REF_pegang_252 | 16 | 8 | 8 | 7.91 | 4.86 | -0.43 | 1.47 | 16.7 | 33.3 | 37.29 | -24.35 | -49.28 | 252.0 | 1.3 | 17.24 | -33.72 |
+| REF_chandelier_4atr | 46 | 38 | 8 | 7.78 | -9.01 | -3.03 | 0.33 | 25.0 | 33.3 | 35.45 | -21.43 | -48.64 | 47.5 | 3.8 | 17.24 | -33.72 |
+| REF_jual_hari63 | 40 | 32 | 8 | 7.81 | 85.32 | 4.44 | 7.2 | 41.7 | 50.0 | 41.54 | -24.35 | -49.28 | 63.0 | 3.3 | 17.24 | -33.72 |
+| hari_agihan|X=20%,Y=ma50 | 41 | 33 | 8 | 7.81 | 39.28 | 0.57 | 4.32 | 33.3 | 58.3 | 43.15 | -26.47 | -50.2 | 46.5 | 3.4 | 17.24 | -33.72 |
+| hari_agihan|X=15%,Y=ma50 | 42 | 34 | 8 | 7.8 | 35.81 | 0.57 | 4.22 | 33.3 | 58.3 | 48.41 | -26.47 | -50.2 | 44.6 | 3.5 | 17.24 | -33.72 |
+| rsi_70_60|X=20%,Y=ma50 | 112 | 104 | 8 | 7.53 | 13.2 | 2.52 | 2.5 | 25.0 | 58.3 | 28.06 | -29.74 | -55.92 | 13.9 | 9.3 | 17.24 | -33.72 |
 | KAWALAN_RAWAK|pegang_252 | 15 | 7 | 8 | 7.91 | 102.84 | 7.01 | 6.42 | 41.7 | 83.3 | 15.11 | -13.89 | -28.89 | 252.0 | 1.2 | 17.24 | -33.72 |
-| KAWALAN_RAWAK|chandelier | 42 | 34 | 8 | 7.8 | 42.17 | 2.67 | 3.32 | 16.7 | 75.0 | 17.67 | -16.2 | -27.59 | 45.9 | 3.5 | 17.24 | -33.72 |
+| KAWALAN_RAWAK|chandelier | 41 | 33 | 8 | 7.81 | 39.21 | 1.59 | 3.17 | 25.0 | 75.0 | 17.67 | -16.2 | -27.59 | 44.1 | 3.4 | 17.24 | -33.72 |
 
 
 ### Pulangan bulanan penuh (%)
 
 | tarikh | REF_pegang_252 | REF_chandelier_4atr | REF_jual_hari63 | hari_agihan|X=20%,Y=ma50 | hari_agihan|X=15%,Y=ma50 | rsi_70_60|X=20%,Y=ma50 | KAWALAN_RAWAK|pegang_252 | KAWALAN_RAWAK|chandelier |
 |---|---|---|---|---|---|---|---|---|
-| 2020-01-31 | 13.94 | 13.94 | 13.94 | 10.68 | 10.68 | 13.94 | 3.25 | 3.02 |
-| 2020-02-29 | -6.13 | -0.79 | -6.13 | 3.28 | 3.28 | -4.97 | 4.47 | 0.7 |
-| 2020-03-31 | -31.61 | -10.89 | -31.61 | -19.23 | -19.23 | -12.8 | -13.89 | -16.2 |
-| 2020-04-30 | 29.62 | 14.83 | 4.71 | 8.44 | 8.44 | 15.31 | 12.69 | 17.67 |
-| 2020-05-31 | 12.84 | -1.76 | 6.13 | -3.4 | -3.4 | -4.98 | 15.11 | 2.32 |
-| 2020-06-30 | 8.72 | 0.42 | 15.51 | 5.79 | 5.79 | 1.87 | 12.78 | 8.45 |
-| 2020-07-31 | 2.25 | 2.39 | 15.84 | 0.49 | 7.67 | 6.66 | 14.44 | 13.37 |
-| 2020-08-31 | 4.28 | 2.37 | -1.41 | -0.2 | -3.22 | -2.1 | 5.33 | -0.4 |
-| 2020-09-30 | 1.55 | 5.98 | 4.64 | -1.69 | 3.68 | 3.1 | 3.1 | 0.41 |
-| 2020-10-31 | -6.16 | -9.29 | -8.45 | -9.63 | 19.27 | -3.68 | -3.89 | -2.48 |
-| 2020-11-30 | 32.54 | 44.88 | 41.9 | 31.79 | 22.45 | 11.37 | 15.01 | 3.59 |
-| 2020-12-31 | 0.47 | 9.35 | 21.84 | 15.29 | 19.98 | 7.43 | 8.68 | 9.34 |
+| 2020-01-31 | -0.46 | -0.46 | -0.46 | 0.09 | 0.09 | 0.09 | 3.25 | 3.02 |
+| 2020-02-29 | -4.86 | -10.67 | -4.86 | -4.92 | -4.92 | -15.7 | 4.47 | 0.7 |
+| 2020-03-31 | -24.35 | -21.43 | -24.35 | -26.47 | -26.47 | -29.74 | -13.89 | -16.2 |
+| 2020-04-30 | 37.29 | 21.18 | 11.26 | 30.71 | 30.71 | 26.2 | 12.69 | 17.67 |
+| 2020-05-31 | 0.88 | -2.24 | 22.0 | 1.05 | 1.05 | 7.21 | 15.11 | 1.68 |
+| 2020-06-30 | -0.4 | 8.18 | 27.4 | 14.83 | 14.83 | 25.46 | 12.78 | 7.93 |
+| 2020-07-31 | -12.75 | 10.61 | 35.52 | 5.37 | 1.05 | 6.22 | 14.44 | 15.12 |
+| 2020-08-31 | 8.92 | -3.81 | -11.58 | -6.88 | -9.45 | 4.96 | 5.33 | 1.5 |
+| 2020-09-30 | -0.31 | -11.94 | -0.26 | -8.37 | -6.38 | -10.21 | 3.1 | 0.3 |
+| 2020-10-31 | -1.17 | -8.23 | -18.96 | -10.1 | -9.68 | -2.39 | -3.89 | -3.72 |
+| 2020-11-30 | 21.64 | 35.45 | 41.54 | 43.15 | 48.41 | 28.06 | 15.01 | 11.24 |
+| 2020-12-31 | -6.82 | -12.73 | 9.13 | 13.41 | 11.43 | -10.09 | 8.68 | -1.21 |
 
 
 ### Jawapan terus kepada sasaran +10% sebulan
@@ -909,37 +909,37 @@ Portfolio 8 slot × 12.5%, kos penuh, tiada leverage, satu posisi satu saham. As
 **TIDAK TERCAPAI — oleh mana-mana sistem.** Angka sebenar:
 
 
-- `REF_pegang_252`: median bulanan **3.26%**, 33.3% bulan ≥ +10%, bulan terburuk -31.61%, MDD -54.28%, pulangan tahun 57.40% (SPY 17.24%, MDD SPY -33.72%)
+- `REF_pegang_252`: median bulanan **-0.43%**, 16.7% bulan ≥ +10%, bulan terburuk -24.35%, MDD -49.28%, pulangan tahun 4.86% (SPY 17.24%, MDD SPY -33.72%)
 
-- `REF_chandelier_4atr`: median bulanan **2.38%**, 25.0% bulan ≥ +10%, bulan terburuk -10.89%, MDD -29.37%, pulangan tahun 82.15% (SPY 17.24%, MDD SPY -33.72%)
+- `REF_chandelier_4atr`: median bulanan **-3.03%**, 25.0% bulan ≥ +10%, bulan terburuk -21.43%, MDD -48.64%, pulangan tahun -9.01% (SPY 17.24%, MDD SPY -33.72%)
 
-- `REF_jual_hari63`: median bulanan **5.42%**, 41.7% bulan ≥ +10%, bulan terburuk -31.61%, MDD -54.28%, pulangan tahun 77.59% (SPY 17.24%, MDD SPY -33.72%)
+- `REF_jual_hari63`: median bulanan **4.44%**, 41.7% bulan ≥ +10%, bulan terburuk -24.35%, MDD -49.28%, pulangan tahun 85.32% (SPY 17.24%, MDD SPY -33.72%)
 
-- `hari_agihan|X=20%,Y=ma50`: median bulanan **1.88%**, 25.0% bulan ≥ +10%, bulan terburuk -19.23%, MDD -40.63%, pulangan tahun 38.52% (SPY 17.24%, MDD SPY -33.72%)
+- `hari_agihan|X=20%,Y=ma50`: median bulanan **0.57%**, 33.3% bulan ≥ +10%, bulan terburuk -26.47%, MDD -50.20%, pulangan tahun 39.28% (SPY 17.24%, MDD SPY -33.72%)
 
-- `hari_agihan|X=15%,Y=ma50`: median bulanan **6.73%**, 33.3% bulan ≥ +10%, bulan terburuk -19.23%, MDD -40.63%, pulangan tahun 93.71% (SPY 17.24%, MDD SPY -33.72%)
+- `hari_agihan|X=15%,Y=ma50`: median bulanan **0.57%**, 33.3% bulan ≥ +10%, bulan terburuk -26.47%, MDD -50.20%, pulangan tahun 35.81% (SPY 17.24%, MDD SPY -33.72%)
 
-- `rsi_70_60|X=20%,Y=ma50`: median bulanan **2.49%**, 25.0% bulan ≥ +10%, bulan terburuk -12.80%, MDD -33.99%, pulangan tahun 30.77% (SPY 17.24%, MDD SPY -33.72%)
+- `rsi_70_60|X=20%,Y=ma50`: median bulanan **2.52%**, 25.0% bulan ≥ +10%, bulan terburuk -29.74%, MDD -55.92%, pulangan tahun 13.20% (SPY 17.24%, MDD SPY -33.72%)
 
 - `KAWALAN_RAWAK|pegang_252`: median bulanan **7.01%**, 41.7% bulan ≥ +10%, bulan terburuk -13.89%, MDD -28.89%, pulangan tahun 102.84% (SPY 17.24%, MDD SPY -33.72%)
 
-- `KAWALAN_RAWAK|chandelier`: median bulanan **2.67%**, 16.7% bulan ≥ +10%, bulan terburuk -16.20%, MDD -27.59%, pulangan tahun 42.17% (SPY 17.24%, MDD SPY -33.72%)
+- `KAWALAN_RAWAK|chandelier`: median bulanan **1.59%**, 25.0% bulan ≥ +10%, bulan terburuk -16.20%, MDD -27.59%, pulangan tahun 39.21% (SPY 17.24%, MDD SPY -33.72%)
 
 
 **Apa yang menghalang — kapasiti, bukan kadar menang.**
 
 - Sistem terbaik (`REF_pegang_252`) hanya membuka **16 posisi sepanjang tahun**. Portfolio memerlukan ~11 kemasukan sebulan (~130 setahun). Dengan purata pegangan 246 hari, 8 slot terisi pada Januari dan tidak pernah kosong: pulangan tahun ialah hasil **8 saham**, bukan sistem. Variansnya sangat tinggi dan tidak boleh dijadikan asas keputusan.
 
-- Sistem yang pusing ganti mencukupi (Chandelier: 44 posisi, 3.7/bulan) memberi median bulanan hanya 2.38% dengan MDD -29.37% — lebih buruk daripada MDD SPY.
+- Sistem yang pusing ganti mencukupi (Chandelier: 46 posisi, 3.8/bulan) memberi median bulanan hanya -3.03% dengan MDD -48.64% — lebih buruk daripada MDD SPY.
 
 - Pusing ganti juga masih jauh di bawah ~11/bulan kerana kekangan 8 slot: calon jauh melebihi slot (178,843 kemunculan entri) tetapi slot sentiasa penuh. Dengan pegangan panjang, **kapasiti slot, bukan kapasiti signal, yang mengikat**.
 
-- KAWALAN RAWAK pegang-252 memberi 102.84% dan Chandelier rawak 42.17% — dengan n = 8 dan n = 40 posisi, perbezaan antara signal dan rawak di sini **tidak bermakna secara statistik**. Jangan tafsir jurang itu sebagai bukti.
+- KAWALAN RAWAK pegang-252 memberi 102.84% dan Chandelier rawak 39.21% — dengan n = 8 dan n = 40 posisi, perbezaan antara signal dan rawak di sini **tidak bermakna secara statistik**. Jangan tafsir jurang itu sebagai bukti.
 
 
 ### Banding wajib: SPY dan KAWALAN RAWAK
 
-- SPY tempoh sama: **17.24%** (MDD -33.72%). **0/6** sistem kalah kepada SPY.
+- SPY tempoh sama: **17.24%** (MDD -33.72%). **3/6** sistem kalah kepada SPY.
 
 - KAWALAN RAWAK terbaik: **102.84%** (`KAWALAN_RAWAK|pegang_252`). **6/6** sistem kalah kepada entri rawak.
 
@@ -953,7 +953,7 @@ Portfolio 8 slot × 12.5%, kos penuh, tiada leverage, satu posisi satu saham. As
 
 1. **ENTRY** — 3 signal CALON: `rsi_lintas50&q5:atr_pct`, `macd_cross&q1:sektor_1b`, `q1:cerun_ma50`. Tiada pemicu klasik tunggal lulus. Hipotesis "magnitud ada pada konteks, bukan pemicu" disokong oleh data 2020.
 
-2. **HOLD** — 9/18 signal lulus FDR; kelas pullback ialah hasil paling kukuh (SIHAT 89.1% / PASARAN 87.9% menyambung ke puncak baru lawan AMARAN 70.5%).
+2. **HOLD** — 9/18 signal lulus FDR; kelas pullback ialah hasil paling kukuh (SIHAT 90.2% / PASARAN 88.5% menyambung ke puncak baru lawan AMARAN 70.1%).
 
 3. **EXIT** — 0/68 signal lulus FDR; 0/234 sistem mengalahkan ketiga-tiga rujukan dan 0/234 lulus FDR keluarga SISTEM. **Jawapan kajian tahun ini: jangan jual.**
 

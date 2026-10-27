@@ -76,9 +76,10 @@ python3 REVERSE/fasa2_laporan.py             # jana FASA2.md
 ## Pembetulan pelaksanaan (SPEC §13.12 A)
 
 1. `step9_portfolio.py` memilih `keputusan == 'CALON'` sahaja, jadi signal yang dinaik taraf ke
-   DITERIMA terkeluar daripada asas entry. **Kecacatan terpendam:** tiada angka yang sudah dicommit
-   berubah (disahkan: 2023 dan 2025 sama tepat, hanya label `asas_entry` bertukar), tetapi larian
-   semula akan menukar asas entry secara senyap.
+   DITERIMA terkeluar daripada asas entry. **2020 terjejas:** tahun itu mempunyai 3 DITERIMA dan
+   3 CALON, jadi portfolio lama dibina atas 3 signal sahaja — `REF_chandelier_4atr` +82.15%
+   sebenarnya **−9.01%** atas asas 6 signal yang betul (kawalan rawak kekal +102.84%). Lima tahun
+   lain hanya label `asas_entry` yang bertukar. Butiran: `FASA2.md` §6.
 2. `jangkaan_bulanan_anggaran` melaporkan jangkaan setiap dagangan (ufuk ≤ 63 hari) sebagai
    jangkaan sebulan — kira-kira 3× terlebih nyata. Diganti `jangkaan_per_21_hari`.
 3. Penapis Step 7.4 tidak pernah dinilai atas pulangan; kini melaporkan `jangkaan_dengan_penapis`

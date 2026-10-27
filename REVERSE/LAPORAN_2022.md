@@ -28,7 +28,7 @@ Dijana skrip `REVERSE/jana_laporan.py` pada 27 Okt 2026. Spec dikunci: `REVERSE/
 | b. SPY dan QQQ dalam `idx.parquet` | **LULUS** |
 | c. Sumber sektor/industri setiap ticker | **LULUS** — 2320/2330 = 99.6% (2 kelas saham diisi daripada ticker asas; 103 ticker = `Lain-lain`) |
 | d. 11 ETF sektor SPDR ditarik dan dicache | **GAGAL** → pindaan SPEC §13.1 (indeks sektor A02; diluluskan pengguna) |
-| e. Step 1–3 satu bulan, anggaran × 12 | **LULUS** — 0.125 s/ticker; larian penuh 2330 ticker = 292 s |
+| e. Step 1–3 satu bulan, anggaran × 12 | **LULUS** — 0.302 s/ticker; larian penuh 2330 ticker = 705 s |
 | f. `semak_hadapan` atas modul indikator | **LULUS** — 14 tarikh potong (≥ 12), 26,950 perbandingan, **0 kegagalan** (`REVERSE/PANDANG_HADAPAN_2022.md`) |
 
 ## 2. Step 1–2 — run
@@ -576,12 +576,12 @@ Keenam pemicu diuji sebagai signal tunggal. Dilaporkan walaupun ditolak, seperti
 
 | nama | n | pct_sambung_puncak_baru | purata_kedalaman | purata_hari_pulih |
 |---|---|---|---|---|
-| AMARAN | 6502 | 54.0 | -16.43 | 9.6 |
-| PULLBACK PASARAN | 417 | 88.7 | -8.01 | 7.4 |
-| PULLBACK SIHAT | 223 | 65.0 | -7.96 | 5.6 |
+| AMARAN | 6514 | 53.9 | -16.42 | 9.6 |
+| PULLBACK PASARAN | 412 | 89.8 | -8.01 | 7.4 |
+| PULLBACK SIHAT | 216 | 67.1 | -7.83 | 5.6 |
 
 
-Pullback yang trend sahamnya utuh (SIHAT 65.0%, PASARAN 88.7%) menyambung ke puncak baru jauh lebih kerap daripada pullback AMARAN (54.0%). Ini sokongan paling jelas bagi falsafah "pegang selagi naik".
+Pullback yang trend sahamnya utuh (SIHAT 67.1%, PASARAN 89.8%) menyambung ke puncak baru jauh lebih kerap daripada pullback AMARAN (53.9%). Ini sokongan paling jelas bagi falsafah "pegang selagi naik".
 
 
 ### Grid 18 peraturan HOLD (deskriptif)
@@ -657,7 +657,7 @@ Pullback yang trend sahamnya utuh (SIHAT 65.0%, PASARAN 88.7%) menyambung ke pun
 | hist_neg3 | 3449 | 98.9 | 4.0 | -0.28 | 0.4 | 49.6 |
 | jauh_ma50_2x | 1545 | 44.3 | -10.0 | 8.79 | 61.0 | 41.2 |
 | macd_bawah | 3480 | 99.8 | 2.0 | -0.39 | 2.2 | 48.9 |
-| pullback_amaran | 3484 | 99.9 | -1.0 | -7.6 | -51.2 | 74.3 |
+| pullback_amaran | 3485 | 99.9 | -1.0 | -7.59 | -51.2 | 74.3 |
 | rsi_70_60 | 1819 | 52.2 | 2.0 | 10.55 | 58.5 | 41.3 |
 | trail_10pct | 3359 | 96.3 | 7.0 | -3.76 | -23.4 | 49.3 |
 | trail_15pct | 2882 | 82.6 | 15.0 | -8.36 | -58.9 | 51.1 |
@@ -709,7 +709,7 @@ Taburan berat di hujung kanan: perhatikan jurang antara `mfe63_p50` dan `mfe63_p
 
 
 ### Penapis Step 7.4
-168 kombinasi signal × penapis diuji (0 lulus kriteria "buang ≥ 30% palsu dan ≤ 10% benar").
+168 kombinasi signal × penapis diuji (80 lulus kriteria "buang ≥ 30% palsu dan ≤ 10% benar").
 
 
 **Tiada penapis lulus.** Termasuk pengesahan 1–2 tutup, SPY/sektor atas MA50, volum relatif, lapis MA. Kemunculan BENAR dan PALSU tidak dibezakan oleh mana-mana penapis dipradaftar. Ini keputusan negatif yang bersih.
@@ -942,7 +942,7 @@ Portfolio 8 slot × 12.5%, kos penuh, tiada leverage, satu posisi satu saham. As
 
 1. **ENTRY** — TIADA signal CALON pada 2022. Semua gagal G4 (bootstrap) dan/atau G5 (outlier). Pemicu klasik tunggal juga tidak lulus.
 
-2. **HOLD** — 13/18 signal lulus FDR; kelas pullback ialah hasil paling kukuh (SIHAT 65.0% / PASARAN 88.7% menyambung ke puncak baru lawan AMARAN 54.0%).
+2. **HOLD** — 13/18 signal lulus FDR; kelas pullback ialah hasil paling kukuh (SIHAT 67.1% / PASARAN 89.8% menyambung ke puncak baru lawan AMARAN 53.9%).
 
 3. **EXIT** — 0/66 signal lulus FDR; 14/234 sistem mengalahkan ketiga-tiga rujukan dan 0/234 lulus FDR keluarga SISTEM. **Tahun ini exit aktif berbaloi** kerana memegang tanpa jual hampir tidak menguntungkan.
 

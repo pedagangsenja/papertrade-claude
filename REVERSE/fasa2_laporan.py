@@ -55,6 +55,48 @@ def verdik(j, pol):
     return out, asas
 
 
+RUJ_PRA = '5197ba4'   # commit FASA 1 terakhir SEBELUM pembetulan SPEC 13.12 A
+
+
+def _pra(f):
+    """Fail REVERSE sebelum pembetulan, daripada commit RUJ_PRA (rujukan tetap)."""
+    import io
+    import subprocess
+    r = subprocess.run(['git', 'show', f'{RUJ_PRA}:REVERSE/{f}'], capture_output=True, text=True,
+                       cwd=AKAR)
+    return pd.read_csv(io.StringIO(r.stdout)) if r.returncode == 0 and r.stdout else None
+
+
+def kesan_pembetulan():
+    """Jadual: apa yang pembetulan SPEC 13.12 A1 dan A4 ubah dalam FASA 1, setiap tahun."""
+    tahun = sorted(int(f.stem.split('_')[-1]) for f in R.glob('keputusan_*.csv'))
+    pb, pf9 = [], []
+    for y in tahun:
+        a0, a1 = _pra(f'hold_exit_{y}.csv'), pd.read_csv(R / f'hold_exit_{y}.csv')
+        if a0 is not None:
+            def g(d):
+                x = d[d.jenis == 'kelas_pullback'].set_index('nama').pct_sambung_puncak_baru
+                s = x.get('PULLBACK SIHAT', np.nan)
+                am = x.get('AMARAN', np.nan)
+                return s, am, s - am
+            s0, m0, j0 = g(a0)
+            s1, m1, j1 = g(a1)
+            pb.append(dict(tahun=y, sihat_lama=s0, sihat_baru=s1, amaran_lama=m0,
+                           amaran_baru=m1, jurang_lama=round(j0, 1), jurang_baru=round(j1, 1),
+                           beza_jurang=round(j1 - j0, 1)))
+        b0, b1 = _pra(f'portfolio_{y}.csv'), pd.read_csv(R / f'portfolio_{y}.csv')
+        if b0 is not None:
+            kol = [c for c in b1.columns if c != 'asas_entry']
+            sama = list(b0.columns) == list(b1.columns) and b0[kol].equals(b1[kol])
+            r0 = b0[b0.sistem == 'REF_chandelier_4atr'].pulangan_tahun
+            r1 = b1[b1.sistem == 'REF_chandelier_4atr'].pulangan_tahun
+            pf9.append(dict(tahun=y, asas_baru=b1.asas_entry.iloc[0],
+                            angka_sama='ya' if sama else 'TIDAK',
+                            chandelier_lama=float(r0.iloc[0]) if len(r0) else np.nan,
+                            chandelier_baru=float(r1.iloc[0]) if len(r1) else np.nan))
+    return pd.DataFrame(pb), pd.DataFrame(pf9)
+
+
 def main():
     j = pd.read_csv(R / 'fasa2_jangkaan.csv')
     pf = pd.read_csv(R / 'fasa2_portfolio.csv')
@@ -216,6 +258,27 @@ def main():
       'satunya yang lulus, dan hanya pada satu polisi. Arahnya bertentangan dengan keluarga '
       'momentum/kemeruapan yang FASA 1 tumpukan. Itu petunjuk untuk fasa seterusnya, bukan '
       'keputusan.\n')
+    w('## 6. Apa yang pembetulan FASA 1 ubah (SPEC §13.12 A)\n')
+    pb, pf9 = kesan_pembetulan()
+    if len(pb):
+        w('**A4 — kelas pullback satu peraturan.** % pullback yang bersambung ke puncak baharu, '
+          f'sebelum (commit `{RUJ_PRA}`) lawan selepas:\n')
+        w(md(pb))
+        w(f'Jurang SIHAT−AMARAN berubah {pb.beza_jurang.min():+.1f} hingga '
+          f'{pb.beza_jurang.max():+.1f} mata; melebar pada '
+          f'{int((pb.beza_jurang > 0).sum())} daripada {len(pb)} tahun — arah yang dinyatakan '
+          'dalam pindaan sebelum larian.\n')
+    if len(pf9):
+        w('**A1 — asas entry Step 9 termasuk DITERIMA.**\n')
+        w(md(pf9))
+        ub = pf9[pf9.angka_sama == 'TIDAK']
+        if len(ub):
+            w(f'Angka berubah pada {len(ub)} tahun ({", ".join(str(int(y)) for y in ub.tahun)}) '
+              '— tahun yang mempunyai signal DITERIMA **dan** CALON serentak, jadi penapis lama '
+              'membuang signal terbaik daripada portfolio. Tahun lain hanya label `asas_entry` '
+              'yang bertukar.\n')
+        else:
+            w('Tiada angka berubah; hanya label `asas_entry`.\n')
     (R / 'FASA2.md').write_text('\n'.join(A))
     print(f'FASA2.md ditulis ({len("".join(A))} aksara)')
 

@@ -97,12 +97,12 @@ Lulus BH-FDR q ≤ 0.01. **Keluarga EXIT dan SISTEM kosong pada setiap tahun.**
 
 | tahun | PULLBACK SIHAT | n_PULLBACK SIHAT | PULLBACK PASARAN | n_PULLBACK PASARAN | AMARAN | n_AMARAN |
 |---|---|---|---|---|---|---|
-| 2020.0 | 89.1 | 2065.0 | 87.9 | 708.0 | 70.5 | 5673.0 |
-| 2021.0 | 89.0 | 798.0 | 85.3 | 394.0 | 43.9 | 4778.0 |
-| 2022.0 | 65.0 | 223.0 | 88.7 | 417.0 | 54.0 | 6502.0 |
-| 2023.0 | 91.5 | 1322.0 | 80.0 | 115.0 | 46.2 | 4568.0 |
-| 2024.0 | 88.4 | 1034.0 | 82.6 | 408.0 | 47.2 | 4489.0 |
-| 2025.0 | 88.9 | 1394.0 | 92.0 | 311.0 | 50.8 | 4790.0 |
+| 2020.0 | 90.2 | 2038.0 | 88.5 | 703.0 | 70.1 | 5705.0 |
+| 2021.0 | 90.6 | 784.0 | 86.6 | 388.0 | 43.7 | 4798.0 |
+| 2022.0 | 67.1 | 216.0 | 89.8 | 412.0 | 53.9 | 6514.0 |
+| 2023.0 | 92.0 | 1315.0 | 81.4 | 113.0 | 46.1 | 4577.0 |
+| 2024.0 | 89.4 | 1022.0 | 83.6 | 403.0 | 47.0 | 4506.0 |
+| 2025.0 | 90.1 | 1375.0 | 92.9 | 308.0 | 50.6 | 4812.0 |
 
 
 Perbezaan SIHAT/PASARAN lawan AMARAN kekal besar pada kedua-dua tahun. Ini hasil HOLD yang paling boleh dipercayai dalam kajian ini.
@@ -132,14 +132,14 @@ Perbezaan SIHAT/PASARAN lawan AMARAN kekal besar pada kedua-dua tahun. Ini hasil
 
 | tahun | sistem | n_posisi_dibuka | n_dagangan_ditutup | purata_slot_terisi | pulangan_tahun | median_bulanan | pct_bulan_ge10 | pct_bulan_positif | bulan_terburuk | mdd | pusing_ganti_bulanan | spy_pulangan_tahun | spy_mdd |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2020 | REF_pegang_252 | 16 | 8 | 7.91 | 57.4 | 3.26 | 33.3 | 75.0 | -31.61 | -54.28 | 1.3 | 17.24 | -33.72 |
-| 2020 | REF_chandelier_4atr | 44 | 36 | 7.79 | 82.15 | 2.38 | 25.0 | 66.7 | -10.89 | -29.37 | 3.7 | 17.24 | -33.72 |
-| 2020 | REF_jual_hari63 | 40 | 32 | 7.81 | 77.59 | 5.42 | 41.7 | 66.7 | -31.61 | -54.28 | 3.3 | 17.24 | -33.72 |
-| 2020 | hari_agihan|X=20%,Y=ma50 | 43 | 35 | 7.8 | 38.52 | 1.88 | 25.0 | 58.3 | -19.23 | -40.63 | 3.6 | 17.24 | -33.72 |
-| 2020 | hari_agihan|X=15%,Y=ma50 | 45 | 37 | 7.79 | 93.71 | 6.73 | 33.3 | 75.0 | -19.23 | -40.63 | 3.8 | 17.24 | -33.72 |
-| 2020 | rsi_70_60|X=20%,Y=ma50 | 27 | 19 | 7.86 | 30.77 | 2.49 | 25.0 | 58.3 | -12.8 | -33.99 | 2.2 | 17.24 | -33.72 |
+| 2020 | REF_pegang_252 | 16 | 8 | 7.91 | 4.86 | -0.43 | 16.7 | 33.3 | -24.35 | -49.28 | 1.3 | 17.24 | -33.72 |
+| 2020 | REF_chandelier_4atr | 46 | 38 | 7.78 | -9.01 | -3.03 | 25.0 | 33.3 | -21.43 | -48.64 | 3.8 | 17.24 | -33.72 |
+| 2020 | REF_jual_hari63 | 40 | 32 | 7.81 | 85.32 | 4.44 | 41.7 | 50.0 | -24.35 | -49.28 | 3.3 | 17.24 | -33.72 |
+| 2020 | hari_agihan|X=20%,Y=ma50 | 41 | 33 | 7.81 | 39.28 | 0.57 | 33.3 | 58.3 | -26.47 | -50.2 | 3.4 | 17.24 | -33.72 |
+| 2020 | hari_agihan|X=15%,Y=ma50 | 42 | 34 | 7.8 | 35.81 | 0.57 | 33.3 | 58.3 | -26.47 | -50.2 | 3.5 | 17.24 | -33.72 |
+| 2020 | rsi_70_60|X=20%,Y=ma50 | 112 | 104 | 7.53 | 13.2 | 2.52 | 25.0 | 58.3 | -29.74 | -55.92 | 9.3 | 17.24 | -33.72 |
 | 2020 | KAWALAN_RAWAK|pegang_252 | 15 | 7 | 7.91 | 102.84 | 7.01 | 41.7 | 83.3 | -13.89 | -28.89 | 1.2 | 17.24 | -33.72 |
-| 2020 | KAWALAN_RAWAK|chandelier | 42 | 34 | 7.8 | 42.17 | 2.67 | 16.7 | 75.0 | -16.2 | -27.59 | 3.5 | 17.24 | -33.72 |
+| 2020 | KAWALAN_RAWAK|chandelier | 41 | 33 | 7.81 | 39.21 | 1.59 | 25.0 | 75.0 | -16.2 | -27.59 | 3.4 | 17.24 | -33.72 |
 | 2021 | REF_pegang_252 | 8 | 0 | 7.94 | 12.28 | 1.02 | 8.3 | 58.3 | -5.16 | -22.16 | 0.7 | 30.51 | -5.11 |
 | 2021 | REF_chandelier_4atr | 46 | 38 | 7.79 | -2.15 | -0.25 | 25.0 | 50.0 | -13.16 | -33.56 | 3.8 | 30.51 | -5.11 |
 | 2021 | REF_jual_hari63 | 40 | 32 | 7.81 | 5.24 | 1.71 | 16.7 | 66.7 | -17.18 | -39.51 | 3.3 | 30.51 | -5.11 |
@@ -223,13 +223,13 @@ Perbezaan SIHAT/PASARAN lawan AMARAN kekal besar pada kedua-dua tahun. Ini hasil
 
    Lajur terakhir itu yang penting. Pada tahun yang rujukannya sendiri merugikan, ramai sistem "mengalahkan rujukan" dan lulus FDR sambil masih kehilangan wang: pada 2021, 196/234 mengalahkan rujukan dan 173 lulus FDR, tetapi **0/234 berjangkaan positif**. Kedudukan berbanding rujukan bukan ukuran keuntungan.
 
-4. **Konsisten:** kelas pullback membezakan sambungan ke puncak baru setiap tahun — 2020: SIHAT 89.1% / PASARAN 87.9% lawan AMARAN 70.5%; 2021: SIHAT 89.0% / PASARAN 85.3% lawan AMARAN 43.9%; 2022: SIHAT 65.0% / PASARAN 88.7% lawan AMARAN 54.0%; 2023: SIHAT 91.5% / PASARAN 80.0% lawan AMARAN 46.2%; 2024: SIHAT 88.4% / PASARAN 82.6% lawan AMARAN 47.2%; 2025: SIHAT 88.9% / PASARAN 92.0% lawan AMARAN 50.8%.
+4. **Konsisten:** kelas pullback membezakan sambungan ke puncak baru setiap tahun — 2020: SIHAT 90.2% / PASARAN 88.5% lawan AMARAN 70.1%; 2021: SIHAT 90.6% / PASARAN 86.6% lawan AMARAN 43.7%; 2022: SIHAT 67.1% / PASARAN 89.8% lawan AMARAN 53.9%; 2023: SIHAT 92.0% / PASARAN 81.4% lawan AMARAN 46.1%; 2024: SIHAT 89.4% / PASARAN 83.6% lawan AMARAN 47.0%; 2025: SIHAT 90.1% / PASARAN 92.9% lawan AMARAN 50.6%.
 
 5. **Tidak konsisten:** magnitud mutlak. Median pulangan rujukan pegang-252 +45.5% (2020), -22.4% (2021), -3.6% (2022), +9.8% (2023), -2.0% (2024), +10.1% (2025); kohort masih_naik yang melebihi +100%: 54.6% (2020), 15.6% (2021), 18.2% (2022), 31.4% (2023), 22.7% (2024), 39.8% (2025). Tahun berbeza = rejim berbeza; angka tahun terbaik bukan jangkaan.
 
 6. **Paling penting untuk keputusan dagangan: arah bertukar dari tahun ke tahun.** Portfolio berasaskan signal kalah kepada entri rawak pada 4 daripada 6 tahun.
 
-   - 2020: SPY +17.24%, rawak terbaik +102.84%; **0/6** sistem kalah kepada SPY dan **6/6** kalah kepada entri rawak.
+   - 2020: SPY +17.24%, rawak terbaik +102.84%; **3/6** sistem kalah kepada SPY dan **6/6** kalah kepada entri rawak.
 
    - 2021: SPY +30.51%, rawak terbaik +2.39%; **6/6** sistem kalah kepada SPY dan **4/6** kalah kepada entri rawak. Terbaik yang mengalahkan rawak: `REF_pegang_252` (+12.28%) dengan 8 posisi dibuka.
 

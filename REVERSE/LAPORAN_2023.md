@@ -28,7 +28,7 @@ Dijana skrip `REVERSE/jana_laporan.py` pada 27 Okt 2026. Spec dikunci: `REVERSE/
 | b. SPY dan QQQ dalam `idx.parquet` | **LULUS** |
 | c. Sumber sektor/industri setiap ticker | **LULUS** — 2259/2268 = 99.6% (3 kelas saham diisi daripada ticker asas; 99 ticker = `Lain-lain`) |
 | d. 11 ETF sektor SPDR ditarik dan dicache | **GAGAL** → pindaan SPEC §13.1 (indeks sektor A02; diluluskan pengguna) |
-| e. Step 1–3 satu bulan, anggaran × 12 | **LULUS** — 0.121 s/ticker; larian penuh 2268 ticker = 274 s |
+| e. Step 1–3 satu bulan, anggaran × 12 | **LULUS** — 0.304 s/ticker; larian penuh 2268 ticker = 689 s |
 | f. `semak_hadapan` atas modul indikator | **LULUS** — 14 tarikh potong (≥ 12), 26,950 perbandingan, **0 kegagalan** (`REVERSE/PANDANG_HADAPAN_2023.md`) |
 
 ## 2. Step 1–2 — run
@@ -561,12 +561,12 @@ Keenam pemicu diuji sebagai signal tunggal. Dilaporkan walaupun ditolak, seperti
 
 | nama | n | pct_sambung_puncak_baru | purata_kedalaman | purata_hari_pulih |
 |---|---|---|---|---|
-| AMARAN | 4568 | 46.2 | -15.23 | 10.4 |
-| PULLBACK PASARAN | 115 | 80.0 | -7.82 | 8.4 |
-| PULLBACK SIHAT | 1322 | 91.5 | -7.6 | 8.1 |
+| AMARAN | 4577 | 46.1 | -15.23 | 10.4 |
+| PULLBACK PASARAN | 113 | 81.4 | -7.74 | 8.4 |
+| PULLBACK SIHAT | 1315 | 92.0 | -7.55 | 8.1 |
 
 
-Pullback yang trend sahamnya utuh (SIHAT 91.5%, PASARAN 80.0%) menyambung ke puncak baru jauh lebih kerap daripada pullback AMARAN (46.2%). Ini sokongan paling jelas bagi falsafah "pegang selagi naik".
+Pullback yang trend sahamnya utuh (SIHAT 92.0%, PASARAN 81.4%) menyambung ke puncak baru jauh lebih kerap daripada pullback AMARAN (46.1%). Ini sokongan paling jelas bagi falsafah "pegang selagi naik".
 
 
 ### Grid 18 peraturan HOLD (deskriptif)
@@ -642,7 +642,7 @@ Pullback yang trend sahamnya utuh (SIHAT 91.5%, PASARAN 80.0%) menyambung ke pun
 | hist_neg3 | 3005 | 99.6 | -6.0 | 1.81 | 14.9 | 52.0 |
 | jauh_ma50_2x | 1477 | 49.0 | -10.0 | 11.28 | 63.4 | 47.5 |
 | macd_bawah | 3010 | 99.8 | -8.0 | 2.24 | 18.4 | 53.8 |
-| pullback_amaran | 2944 | 97.6 | 24.0 | -5.34 | -29.1 | 62.1 |
+| pullback_amaran | 2946 | 97.6 | 24.0 | -5.34 | -29.1 | 62.1 |
 | rsi_70_60 | 2113 | 70.0 | 2.0 | 11.32 | 59.4 | 46.8 |
 | trail_10pct | 2626 | 87.0 | 13.0 | -1.01 | -3.8 | 39.9 |
 | trail_15pct | 1886 | 62.5 | 23.0 | -5.78 | -32.1 | 36.2 |
@@ -693,7 +693,7 @@ Taburan berat di hujung kanan: perhatikan jurang antara `mfe63_p50` dan `mfe63_p
 
 
 ### Penapis Step 7.4
-160 kombinasi signal × penapis diuji (0 lulus kriteria "buang ≥ 30% palsu dan ≤ 10% benar").
+160 kombinasi signal × penapis diuji (72 lulus kriteria "buang ≥ 30% palsu dan ≤ 10% benar").
 
 
 **Tiada penapis lulus.** Termasuk pengesahan 1–2 tutup, SPY/sektor atas MA50, volum relatif, lapis MA. Kemunculan BENAR dan PALSU tidak dibezakan oleh mana-mana penapis dipradaftar. Ini keputusan negatif yang bersih.
@@ -848,7 +848,7 @@ Penapis Step 7.4 kekal CALON tanpa kecuali — arahan 8.5 memerlukan keberkesana
 
 ## 11. Step 9 — PRESTASI PORTFOLIO (kriteria akhir)
 
-Portfolio 8 slot × 12.5%, kos penuh, tiada leverage, satu posisi satu saham. Asas signal ENTRY: **CALON selepas Step 8**. Peraturan pemilihan dibekukan (SPEC §12): lift_presisi → RS 6 bulan → ticker.
+Portfolio 8 slot × 12.5%, kos penuh, tiada leverage, satu posisi satu saham. Asas signal ENTRY: **CALON atau DITERIMA selepas Step 8**. Peraturan pemilihan dibekukan (SPEC §12): lift_presisi → RS 6 bulan → ticker.
 
 
 | sistem | n_posisi_dibuka | n_dagangan_ditutup | n_posisi_terbuka_hujung_tahun | purata_slot_terisi | pulangan_tahun | median_bulanan | purata_bulanan | pct_bulan_ge10 | pct_bulan_positif | bulan_terbaik | bulan_terburuk | mdd | purata_hari_pegang | pusing_ganti_bulanan | spy_pulangan_tahun | spy_mdd |
@@ -928,7 +928,7 @@ Portfolio 8 slot × 12.5%, kos penuh, tiada leverage, satu posisi satu saham. As
 
 1. **ENTRY** — TIADA signal CALON pada 2023. Semua gagal G4 (bootstrap) dan/atau G5 (outlier). Pemicu klasik tunggal juga tidak lulus.
 
-2. **HOLD** — 0/18 signal lulus FDR; kelas pullback ialah hasil paling kukuh (SIHAT 91.5% / PASARAN 80.0% menyambung ke puncak baru lawan AMARAN 46.2%).
+2. **HOLD** — 0/18 signal lulus FDR; kelas pullback ialah hasil paling kukuh (SIHAT 92.0% / PASARAN 81.4% menyambung ke puncak baru lawan AMARAN 46.1%).
 
 3. **EXIT** — 0/64 signal lulus FDR; 0/234 sistem mengalahkan ketiga-tiga rujukan dan 0/234 lulus FDR keluarga SISTEM. **Jawapan kajian tahun ini: jangan jual.**
 
