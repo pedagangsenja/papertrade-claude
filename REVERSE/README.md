@@ -49,6 +49,44 @@ guna Release `autotune-data` (A01 membuang saham meruap). Cache tempatan `REVERS
 | `teras/stat.py` | lift/presisi, kelas, BH-FDR, permutasi label, bootstrap blok |
 | `teras/kos.py` | komisen 0.1% + slippage ikut median nilai dagangan 20 hari |
 
+## FASA 2 (27 Okt 2026) — pulangan boleh didagangkan dan ablasi 2×2
+
+FASA 1 memberi lift 10–20× tetapi portfolio yang kalah kepada entri rawak. Puncanya ialah sasaran
+kajian: `tarikh_puncak` (§4.3) dan `mfe63 ≥ 30%` (Step 7) ialah **maksimum pandang-belakang** dalam
+tetingkap, jadi carian menumpu pada kemeruapan, bukan kelebihan boleh dagang. FASA 2 menukar sasaran
+dan unit penilaian; data, universe, kos dan definisi indikator tidak berubah. Reka bentuk dikunci
+dalam `SPEC.md` §13.12 B sebelum sebarang angka dilihat.
+
+- **Laporan: [`FASA2.md`](FASA2.md)**; data `fasa2_jangkaan.csv`, `fasa2_portfolio.csv`,
+  `fasa2_hold.csv`.
+- Keputusan ringkas: 1 daripada 138 ujian lulus syarat ablasi (jangkaan nasib ≈ 7); pemilihan
+  **rawak** daripada universe mengalahkan kesemua 46 signal pada median, kadar menang dan purata
+  dipangkas; 0 daripada 282 kombinasi mencapai median +10% sebulan; kelas pullback sebagai
+  peraturan jual merugikan.
+- Data 2000–2010: [`DATA_2000.md`](DATA_2000.md) — tidak boleh dengan Release A02 (mula
+  2009-01-02); pilihan vendor dan cadangan ada di sana.
+
+```
+python3 REVERSE/fasa2_kuintil.py <TAHUN>     # pilihan: bina semula cache laju (disahkan setara)
+python3 REVERSE/fasa2_ablasi.py              # ablasi 2x2 + portfolio bergabung 2020-2025
+python3 REVERSE/fasa2_hold.py                # kelas pullback sebagai peraturan jual
+python3 REVERSE/fasa2_laporan.py             # jana FASA2.md
+```
+
+## Pembetulan pelaksanaan (SPEC §13.12 A)
+
+1. `step9_portfolio.py` memilih `keputusan == 'CALON'` sahaja, jadi signal yang dinaik taraf ke
+   DITERIMA terkeluar daripada asas entry. **Kecacatan terpendam:** tiada angka yang sudah dicommit
+   berubah (disahkan: 2023 dan 2025 sama tepat, hanya label `asas_entry` bertukar), tetapi larian
+   semula akan menukar asas entry secara senyap.
+2. `jangkaan_bulanan_anggaran` melaporkan jangkaan setiap dagangan (ufuk ≤ 63 hari) sebagai
+   jangkaan sebulan — kira-kira 3× terlebih nyata. Diganti `jangkaan_per_21_hari`.
+3. Penapis Step 7.4 tidak pernah dinilai atas pulangan; kini melaporkan `jangkaan_dengan_penapis`
+   dan `delta_jangkaan`.
+4. Kelas pullback dikira dengan dua peraturan berbeza bergantung pada hasil (pulih lawan tidak
+   pulih). Satu peraturan sekarang; jurang SIHAT−AMARAN melebar, seperti dinyatakan lebih awal
+   dalam pindaan.
+
 ## Had fasa
 
 Gate 8.1 memerlukan kelas yang sama dalam **≥ 2 tahun LAIN**, dan (pindaan §13.11) kelas tahun itu

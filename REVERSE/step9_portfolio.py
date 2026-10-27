@@ -176,7 +176,9 @@ def main():
     th = a_.tahun
     t0 = time.time()
     kp = pd.read_csv(KELUAR / f'keputusan_{th}.csv')
-    calon = kp[kp.keputusan == 'CALON'].signal.tolist()
+    # SPEC 13.12 A1: DITERIMA ialah naik taraf CALON oleh gate 8.1 — ia tidak boleh
+    # terkeluar daripada asas entry.
+    calon = kp[kp.keputusan.isin(['CALON', 'DITERIMA'])].signal.tolist()
     fs = pd.read_csv(KELUAR / f'false_signal_{th}.csv')
     cu = pd.read_csv(KELUAR / f'common_unique_{th}.csv')
     lp = cu[(cu.subset == 'S2') & (cu.populasi == 'a') & (cu.kumpulan_data == 'A')
@@ -186,7 +188,7 @@ def main():
     kuin = json.loads((CACHE / f'kuintil_{th}.json').read_text())['sempadan']
     sig = pd.read_parquet(CACHE / f'signals_{th}.parquet')
     sig = sig[sig.dalam_univ == 1].reset_index(drop=True)
-    asas = 'CALON selepas Step 8'
+    asas = 'CALON atau DITERIMA selepas Step 8'
     if not calon:
         # SPEC pindaan §13.10: jika TIADA signal CALON, Step 9 tetap dijalankan atas signal yang
         # lulus Step 7 supaya kriteria akhir ada angka — dilabel jelas, BUKAN sistem yang lulus.

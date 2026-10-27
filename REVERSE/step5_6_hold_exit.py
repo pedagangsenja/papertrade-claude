@@ -168,7 +168,12 @@ def main():
                 if x > puncak_sem:
                     puncak_sem, i_puncak_sem = x, d
             if dalam and i_palung > 0:
-                trend_shm = (np.isfinite(ma50[i_palung]) and c[i_palung] > ma50[i_palung])
+                # SPEC 13.12 A4: peraturan sama seperti pullback yang pulih — label tidak boleh
+                # bergantung pada hasil yang sedang diukur.
+                trend_shm = (np.isfinite(ma50[i_palung]) and c[i_palung] > ma50[i_palung]
+                             and np.isfinite(ind['cerun_ma50'].to_numpy()[i_palung])
+                             and ind['cerun_ma50'].to_numpy()[i_palung] > 0
+                             and palung > palung_lepas)
                 kls = ('PULLBACK SIHAT' if (trend_shm and pas_a[i_palung])
                        else ('PULLBACK PASARAN' if (trend_shm and jat_a[i_palung]) else 'AMARAN'))
                 kelas_pb[i_palung] = kls

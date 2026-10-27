@@ -623,3 +623,114 @@ Pembetulan ini **mengetatkan** gate, bukan melonggarkannya, jadi ia tidak memiha
 hasil. Ia juga tidak menjawab soalan berasingan yang masih terbuka kepada pengguna: sama ada gate
 8.1 patut menuntut **keputusan** CALON dalam ≥ 2 tahun lain, bukan sekadar kelas yang sama. Soalan
 itu kekal keputusan pengguna.
+
+### 13.12 — 27 Okt 2026: empat pembetulan pelaksanaan dan reka bentuk FASA 2
+
+Ditulis **sebelum** sebarang larian FASA 2 dan sebelum melihat sebarang angka baharu. Hasil FASA 1
+(`LAPORAN_<TAHUN>.md`, `BANDING_TAHUN.md`, `keputusan_*.csv`) dikekalkan sebagaimana adanya sebagai
+rekod; output FASA 2 ialah fail berasingan (`FASA2*`).
+
+#### A. Pembetulan pelaksanaan (kecacatan, bukan perubahan reka bentuk)
+
+1. **Asas entry Step 9 tersilap tapis.** `step9_portfolio.py` memilih `keputusan == 'CALON'`, jadi
+   signal yang dinaik taraf ke **DITERIMA** oleh gate 8.1 terkeluar daripada portfolio. Akibatnya
+   `portfolio_2025.csv` (dijana ketika 4 signal masih CALON) tidak lagi boleh dihasilkan semula
+   daripada `keputusan_2025.csv` semasa, dan larian semula 2023 akan jatuh ke laluan sandaran
+   §13.10 walaupun ada satu signal DITERIMA. Dikunci: asas entry = `CALON` **atau** `DITERIMA`.
+   Semua tahun dijana semula selepas pembetulan.
+
+2. **`jangkaan_bulanan_anggaran` tersalah skala.** Formula `jangkaan × min((n/12)/11, 1)` memberi
+   faktor 1 bagi setiap signal (kerana n besar), jadi jangkaan **setiap dagangan** (ufuk sehingga 63
+   hari, henti −2×ATR) dilaporkan sebagai jangkaan **sebulan** — lebih kurang 3× terlebih nyata.
+   Dikunci: lajur itu digugurkan dan diganti `jangkaan_per_21_hari = jangkaan × 21 ÷ median hari
+   pegang` (hari pegang sebenar simulasi henti −2×ATR, lajur `hari_pegang` yang sudah ada dalam
+   `.cache/hadapan_<TAHUN>.parquet`). Label kapasiti §11.7 tidak berubah.
+
+3. **Penapis Step 7.4 tidak pernah dinilai atas pulangan.** Penapis hanya dilaporkan sebagai
+   `buang_palsu_pct` / `buang_benar_pct` atas kelas MFE, dan syaratnya (buang_palsu ≥ 30% DAN
+   buang_benar ≤ 10%) hampir mustahil kerana penapis rejim membuang kedua-dua kelas pada kadar yang
+   serupa. Dikunci: setiap penapis juga melaporkan `n_dengan_penapis`, `jangkaan_dengan_penapis`
+   dan `delta_jangkaan`; tanda `PENAPIS LULUS` kini diberi jika `delta_jangkaan > 0` **dan**
+   `n_dengan_penapis ≥ 130`. Kriteria MFE lama dikekalkan sebagai lajur rujukan.
+
+4. **Kelas pullback dikira dengan dua peraturan berbeza.** Dalam `step5_6_hold_exit.py`, pullback
+   yang **pulih** diuji dengan `tutup > MA50` DAN `cerun MA50 > 0` DAN `palung > palung sebelumnya`,
+   sedangkan pullback terakhir yang **tidak pulih** diuji dengan `tutup > MA50` sahaja. Kedua-dua
+   peraturan kausal, tetapi label diberi mengikut peraturan yang berbeza bergantung pada hasil yang
+   sedang diukur, jadi jurang SIHAT lawan AMARAN tercemar. Dikunci: satu peraturan untuk kedua-dua
+   kes (peraturan pullback pulih).
+
+   **Arah dinyatakan lebih awal:** peraturan lama lebih longgar bagi pullback yang tidak pulih, jadi
+   ia meletakkan lebih banyak kegagalan ke dalam SIHAT/PASARAN. Pembetulan ini dijangka
+   **melebarkan** jurang SIHAT−AMARAN, bukan mengecilkannya. Jika jurang itu sebaliknya mengecil
+   atau hilang, itu dilaporkan sebagai penemuan menentang penemuan FASA 1.
+
+#### B. FASA 2 — reka bentuk (dikunci; tiada carian signal baharu, tiada penalaan)
+
+Punca hasil FASA 1 yang bercanggah (lift 10–20× tetapi portfolio kalah kepada entri rawak) ialah
+sasaran kajian: `tarikh_puncak` (§4.3) dan `mfe63 ≥ 30%` (Step 7) ialah **maksimum pandang-belakang**
+dalam tetingkap, jadi carian menumpu pada kemeruapan, bukan kelebihan boleh dagang. FASA 2 menukar
+sasaran dan unit penilaian; ia tidak menukar data, universe, kos atau definisi indikator.
+
+1. **Sasaran = pulangan boleh didagangkan.** Masuk pada **buka d+1**, keluar mengikut polisi tetap
+   yang diisytiharkan: `chandelier_4atr`, `jual_hari63`, `pegang_252`. Had 252 hari, censoring §3.4,
+   kos penuh dua sisi (§3.1). Tiada metrik MFE dalam keputusan FASA 2.
+
+2. **Unit penilaian = tempoh BERGABUNG 2020-01-01 – 2026-10-16**, bukan silo setahun. Sempadan
+   kuintil kekal sempadan tahun berkenaan (titik masa, §7.2); statistik dikumpul merentas tahun.
+
+3. **Had calon 8 setiap hari** (sama dengan bilangan slot), diisih ikut skor yang diisytiharkan.
+   Dengan ini set yang diuji ialah set yang portfolio benar-benar boleh ambil; signal yang menyala
+   100,000+ kali setahun tidak lagi dinilai atas kemunculan yang tidak boleh didagangkan.
+
+4. **ABLASI 2×2 (wajib).** FASA 1 tidak dapat membezakan sumbangan signal daripada sumbangan
+   pemutus seri (`lift_presisi`, kemudian `rs_spy_6b`), kerana calon setiap hari jauh melebihi 8
+   slot. Empat arm, kos dan polisi exit yang sama:
+
+   | Arm | Pemilihan saham | Susunan |
+   |---|---|---|
+   | S+R | signal | `rs_spy_6b` menurun |
+   | S+X | signal | rawak (benih 42) |
+   | X+R | ticker rawak daripada universe hari itu | `rs_spy_6b` menurun |
+   | X+X | ticker rawak | rawak (benih 42) |
+
+   **Signal dianggap menyumbang hanya jika S+R mengalahkan X+R DAN S+X mengalahkan X+X**, pada
+   jangkaan dan pada portfolio bergabung, dengan selang 95% yang tidak merangkumi sifar.
+
+5. **Metrik setiap arm:** n dagangan, median, purata, purata dipangkas (5% teratas dibuang), kadar
+   menang, jangkaan, **lebihan atas SPY bagi tempoh pegang yang sama setiap dagangan**, dan
+   bootstrap blok **ticker** dan blok **minggu kalendar** (1,000 ulangan, benih 42) → selang 95%.
+   Median dan purata dipangkas dilaporkan bersebelahan purata, kerana FASA 1 menunjukkan jangkaan
+   positif boleh datang sepenuhnya daripada 5% ekor kanan.
+
+6. **Portfolio bergabung:** 8 slot × 12.5%, berterusan 2020-01-01 – 2026-10-16 **tanpa set semula
+   setiap tahun**. Dilaporkan: CAGR, MDD, taburan bulanan penuh, median bulanan, % bulan ≥ +10%,
+   bulan terburuk, banding SPY tempoh sama dan banding arm X+R / X+X.
+
+7. **Fasa HOLD berasingan.** Satu-satunya penemuan FASA 1 yang replikasi pada 6/6 tahun ialah kelas
+   pullback (selepas pembetulan A4). Ia diuji sebagai **peraturan jual** atas posisi yang
+   entry-agnostik (arm X+R), bukan sebagai signal entry: jual apabila kelas pullback = AMARAN,
+   dibanding dengan `chandelier_4atr` dan `pegang_252` atas set posisi yang sama.
+
+   **Definisi kausal (dikunci).** Kelas pullback FASA 1 dikira pada palung yang hanya diketahui
+   selepas pullback tamat. Sebagai peraturan jual ia mesti boleh dinilai pada hari semasa, jadi:
+   puncak = tutup tertinggi sejak hari masuk; pullback bermula apabila tutup ≤ puncak × 0.95;
+   palung = tutup terendah **setakat hari ini** dalam pullback itu; pada setiap hari dalam pullback,
+   kelas dinilai pada palung setakat ini dengan data hingga tutup hari ini:
+
+   - `trend_sihat` = tutup(palung) > MA50(palung) DAN cerun MA50(palung) > 0 DAN palung > palung
+     pullback sebelumnya (palung pertama dibanding rendah hari masuk);
+   - PULLBACK SIHAT jika `trend_sihat` dan pasaran naik; PULLBACK PASARAN jika `trend_sihat` dan
+     SPY jatuh > 2% dalam 5 hari; selain itu **AMARAN**.
+   - Pasaran naik = SPY dan QQQ > MA50 dan > MA200, dan SMA50 SPY menaik 10 hari (sama seperti
+     `step5_6_hold_exit.py`).
+
+   Jual pada **buka hari berikut** selepas hari AMARAN pertama, kos sisi jual dikenakan. Pullback
+   yang pulih (tutup melepasi puncak lama) menetapkan palung itu sebagai `palung sebelumnya`.
+
+8. **Senarai signal ditetapkan sebelum larian** = union semua signal yang pernah masuk corong
+   2020–2025 (dibaca daripada `keputusan_*.csv`). Tiada signal baharu dibina, tiada parameter
+   ditala, tiada kuintil dikira semula.
+
+9. **Kaveat kekal:** tiada saham delist (survivorship) — semua angka FASA 2 ialah had atas; peta
+   sektor bukan titik masa; universe 2020 lebih kecil (1638/1832/1940) daripada 2021–2025.

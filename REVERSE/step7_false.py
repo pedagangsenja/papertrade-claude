@@ -167,7 +167,10 @@ def main():
         jk, kmn, pmn, pkl = __import__('REVERSE.teras.stat', fromlist=['x']).jangkaan(
             d.pul_henti2atr.to_numpy())
         kapasiti = 'TULANG BELAKANG' if (n >= 130 and np.isfinite(jk) and jk > 0) else 'PELENGKAP'
-        pusing = n / 12.0
+        # SPEC 13.12 A2: jangkaan ialah jangkaan SETIAP DAGANGAN (ufuk <= 63 hari, henti -2xATR).
+        # Skala lama (n/12/11) memberi faktor 1 bagi setiap signal, jadi ia melaporkan jangkaan
+        # setiap dagangan sebagai jangkaan sebulan. Guna hari pegang sebenar.
+        med_hari = float(d.hari_pegang.median()) if len(d) else np.nan
         baris = dict(
             signal=nm, n_kemunculan=n, kekerapan_setahun=n,
             kadar_tepat_mfe30=round(tepat, 2), kadar_asas_rawak=round(asas_tepat, 2),
@@ -192,8 +195,9 @@ def main():
             kadar_menang=round(kmn * 100, 2) if np.isfinite(kmn) else '',
             purata_menang=round(pmn * 100, 2) if np.isfinite(pmn) else '',
             purata_kalah=round(pkl * 100, 2) if np.isfinite(pkl) else '',
-            jangkaan_bulanan_anggaran=round(jk * 100 * min(pusing / 11.0, 1.0), 3)
-            if np.isfinite(jk) else '',
+            median_hari_pegang=round(med_hari, 1) if np.isfinite(med_hari) else '',
+            jangkaan_per_21_hari=round(jk * 100 * 21.0 / med_hari, 3)
+            if (np.isfinite(jk) and np.isfinite(med_hari) and med_hari > 0) else '',
             pct_terpotong=round(float(d.terpotong.mean() * 100), 1),
             kapasiti=kapasiti, tanda='BUNYI LATAR' if bunyi else '')
         rows.append(baris)
@@ -204,18 +208,29 @@ def main():
         palsu = d[d.mfe63 < 0.10]
         for pn, fn in PENAPIS.items():
             try:
-                mb, mp = fn(benar), fn(palsu)
+                mb, mp, mk = fn(benar), fn(palsu), fn(d)
             except Exception:
                 continue
             if len(benar) == 0 or len(palsu) == 0:
                 continue
             buang_palsu = float((~mp).mean() * 100)
             buang_benar = float((~mb).mean() * 100)
+            # SPEC 13.12 A3: penapis dinilai atas PULANGAN, bukan hanya atas kelas MFE.
+            nk = int(mk.sum())
+            jkf = __import__('REVERSE.teras.stat', fromlist=['x']).jangkaan(
+                d.pul_henti2atr.to_numpy()[mk])[0] if nk else np.nan
+            delta = (jkf - jk) * 100 if (np.isfinite(jkf) and np.isfinite(jk)) else np.nan
             rows.append(dict(signal=f'{nm} | penapis:{pn}', n_kemunculan=int(mb.sum() + mp.sum()),
                              kadar_tepat_mfe30='', buang_palsu_pct=round(buang_palsu, 1),
                              buang_benar_pct=round(buang_benar, 1),
-                             tanda='PENAPIS LULUS' if (buang_palsu >= 30 and buang_benar <= 10)
-                             else ''))
+                             n_dengan_penapis=nk,
+                             jangkaan_dengan_penapis=round(jkf * 100, 3)
+                             if np.isfinite(jkf) else '',
+                             delta_jangkaan=round(delta, 3) if np.isfinite(delta) else '',
+                             mfe_lama='PENAPIS LULUS (kriteria MFE lama)'
+                             if (buang_palsu >= 30 and buang_benar <= 10) else '',
+                             tanda='PENAPIS LULUS' if (np.isfinite(delta) and delta > 0
+                                                       and nk >= 130) else ''))
     out = pd.DataFrame(rows)
     out.to_csv(KELUAR / f'false_signal_{th}.csv', index=False)
     (CACHE / f'lulus7_{th}.json').write_text(json.dumps({'signal': lulus}, indent=1))
