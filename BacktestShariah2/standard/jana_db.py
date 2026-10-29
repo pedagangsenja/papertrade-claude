@@ -392,6 +392,37 @@ def pengawas(st, masa):
     return out
 
 
+def kumpulan_siri(folder=os.path.join(BS2, 'data', 'kumpulan'), sesi=60):
+    """kumpulan/siri (29 Okt 2026): trend skor gred kumpulan setiap sektor/industri bagi carta kecil kad tab Sektor.
+    Sumber data/kumpulan/gred_kumpulan_sejarah.csv (ditulis Actions gred_kumpulan.yml setiap hari; satu baris setiap
+    kumpulan setiap sesi). rows: {j: 'S'|'I', n: nama, k: sektor induk (industri sahaja), s: [skor sejajar tarikh]}.
+    Skor hilang pada satu sesi = null (kumpulan tidak wujud pada sesi itu, cth. industri < 3 saham)."""
+    f = os.path.join(folder, 'gred_kumpulan_sejarah.csv')
+    if not os.path.exists(f):
+        return None
+    with open(f, newline='', encoding='utf-8') as fh:
+        R = list(csv.DictReader(fh))
+    if not R:
+        return None
+    hari = sorted({r['tarikh'] for r in R if r.get('tarikh')})[-sesi:]
+    ix = {d: i for i, d in enumerate(hari)}
+    by = {}
+    for r in R:
+        i = ix.get(r.get('tarikh'))
+        if i is None:
+            continue
+        j = 'S' if r.get('jenis') == 'Sektor' else 'I'
+        k = (j, r.get('nama') or '')
+        x = by.get(k)
+        if x is None:
+            x = by[k] = dict(j=j, n=k[1], k=r.get('sektor') or '', s=[None] * len(hari))
+        v = SH.nombor(r.get('skor'))
+        x['s'][i] = None if v is None else round(float(v), 1)
+    rows = [x for x in by.values() if any(v is not None for v in x['s'])]
+    rows.sort(key=lambda x: (x['j'], x['n']))
+    return dict(tarikh=hari, rows=rows)
+
+
 def portfolio_slot(dibina, folder=os.path.join(BS2, 'portfolio_slot')):
     """prestasi/portfolio_slot: portfolio maya 10 slot (standard/portfolio_slot.py, daripada Lejar Penuh) untuk kad Eksperimen
     dalam tab Ringkasan dan panel Skor kaedah swing (gabungan beku). Portfolio tanpa fail dilangkau; None jika RS_10 belum dijana.
@@ -526,6 +557,12 @@ def main(argv=None):
                          ('m', [earn_sebenar(baris_db(r), r, KAL) for r in M], {k: v for k, v in docs['papertrade/moomoo'].items() if k not in ('rows', 'medan_digugurkan')})):
         for doc_id, d in ringkas_pt(R, f'ringkas_{kod}', meta):
             pra[f'papertrade/{doc_id}'] = d
+    ks = kumpulan_siri()
+    if ks:
+        docs['kumpulan/siri'] = dict(ks, dibina=dibina,
+                                     definisi='Trend skor gred kumpulan (standard/gred_kumpulan.py) setiap sektor/industri, '
+                                              'maksimum 60 sesi terakhir. rows: {j: S|I, n: nama, k: sektor induk, s: [skor]}. '
+                                              'Carta kecil kad tab Sektor (dashboard v133).')
     garis, mfe = garis_harga(M, C, a.stor, tambah={r['saham'] for r in wl if r.get('saham')} | lihat)
     docs['prestasi/garis'] = dict(garis, dibina=dibina, harga_hingga=f'{S} tutup',
                                   definisi='rows: {s: saham, c: tutup sejajar dengan tarikh (null = tiada bar)} bagi saham yang masih ada '
@@ -578,7 +615,7 @@ def main(argv=None):
     os.makedirs(a.keluar, exist_ok=True)
     versi = json.load(open(a.versi)) if a.versi else {}
     tulis = []
-    semua = [(nama.split('/')[0], bahagi(d, nama.split('/')[1], 200000) if nama.split('/')[1] in ('senarai_beli', 'watchlist', 'garis', 'mfe', 'mae_atr', 'harian_kaedah', 'trend', 'stage', 'lorong2')
+    semua = [(nama.split('/')[0], bahagi(d, nama.split('/')[1], 200000) if nama.split('/')[1] in ('senarai_beli', 'watchlist', 'garis', 'mfe', 'mae_atr', 'harian_kaedah', 'trend', 'stage', 'lorong2', 'siri')
               else [(nama.split('/')[1], d)]) for nama, d in docs.items()]
     semua += [(nama.split('/')[0], [(nama.split('/')[1], d)]) for nama, d in pra.items()]   # sudah dibahagi (ringkas_pt)
     for kol, bahagian in semua:
