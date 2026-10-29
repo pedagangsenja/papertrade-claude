@@ -249,10 +249,11 @@ def ringkas_pt(R, nama, meta, had=HAD_RINGKAS):
 SESI_GARIS = 60
 
 
-def garis_harga(M, C, stor):
+def garis_harga(M, C, stor, tambah=()):
     """prestasi/garis + prestasi/mfe (pratonton dashboard v3).
     garis: tarikh (<= 60 sesi terakhir stor), tutup setiap saham yang masih ada posisi terbuka atau keluar dalam sesi
-    terakhir (carta kecil, harga sesi sebelum)
+    terakhir (carta kecil, harga sesi sebelum), ditambah saham `tambah` (watchlist + senarai beli: carta kecil kad
+    "Calon paling hampir" dashboard v132, 29 Okt 2026)
     dan spy [[tarikh, buka, tutup]] sejak belian terawal (banding pasaran). mfe: [[kunci, kenaikan maks %], …] =
     (tinggi tertinggi sejak hari beli hingga kini, atau hingga sehari sebelum keluar lorong kaedah + harga keluar) ÷ harga beli − 1, minimum 0."""
     fr = pd.concat([pd.read_csv(os.path.join(stor, f), usecols=['ticker', 'date', 'high', 'close']) for f in ('harga_A.csv', 'harga_B.csv')
@@ -284,6 +285,7 @@ def garis_harga(M, C, stor):
                 k = f"{ak}|{r['saham']}|{r['kaedah']}|{r['tarikh_beli']}"
                 mfe[k] = max(round(max(0.0, (max(w) / hbv - 1) * 100), 2), mfe.get(k, 0.0))
     hari = [d for d in hari if mula_t is None or d >= mula_t] or hari[-1:]
+    terbuka |= {t for t in tambah if t}
     rows = []
     for t in sorted(terbuka):
         g = G.get(t)
@@ -524,10 +526,10 @@ def main(argv=None):
                          ('m', [earn_sebenar(baris_db(r), r, KAL) for r in M], {k: v for k, v in docs['papertrade/moomoo'].items() if k not in ('rows', 'medan_digugurkan')})):
         for doc_id, d in ringkas_pt(R, f'ringkas_{kod}', meta):
             pra[f'papertrade/{doc_id}'] = d
-    garis, mfe = garis_harga(M, C, a.stor)
+    garis, mfe = garis_harga(M, C, a.stor, tambah={r['saham'] for r in wl if r.get('saham')} | lihat)
     docs['prestasi/garis'] = dict(garis, dibina=dibina, harga_hingga=f'{S} tutup',
                                   definisi='rows: {s: saham, c: tutup sejajar dengan tarikh (null = tiada bar)} bagi saham yang masih ada '
-                                           'posisi terbuka; spy: [tarikh, buka, tutup] sejak belian terawal.')
+                                           'posisi terbuka, dalam watchlist atau dalam senarai beli; spy: [tarikh, buka, tutup] sejak belian terawal.')
     docs['prestasi/mfe'] = dict(rows=mfe, dibina=dibina, harga_hingga=f'{S} tutup',
                                 definisi='Kenaikan maksimum % (MFE) = (harga tinggi tertinggi sejak hari beli hingga hari ini, atau sehingga '
                                          'sehari sebelum keluar lorong kaedah, dan harga keluar) ÷ harga beli − 1, minimum 0. '
