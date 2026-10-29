@@ -436,9 +436,38 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 
 **Dashboard v126 (artifact versi 135).** Lajur Untung % (dibuang daripada pandangan Penuh dalam v109 kerana peratus yang sama ada dalam lajur lorong) dikembalikan atas permintaan pengguna, dengan gaya cip hijau/merah yang sama seperti pandangan lain, diletak antara Stage dan R. Susunan lalai jadual kembali kepada `untung_pct`. Semakan selepas: 16 lajur, tiada lajur disembunyi, jadual tidak terkeluar bekas pada 1900px, tinggi baris 46px, huruf dan nombor gred kekal sebaris.
 
-**Dashboard v127 (artifact versi 136).** Pengguna: "Tab analisis dan prestasi tu macam benda yang sama je". Audit menunjukkan tindihan yang nyata: tab Prestasi mengandungi DUA panel pemilihan kaedah ("Skor kaedah swing" dan jadual "Kedudukan kaedah · Skor Untung×Selamat") yang menjawab soalan sama dengan jadual kedudukan tab Analisis, tetapi atas sampel jauh lebih kecil (dagangan akaun C sahaja, bukan Lejar Penuh), jadi boleh bercanggah. Keputusan pengguna: kedua-dua panel itu dipindah ke tab Analisis (`prPilih()` / `prPilihBind()`, akaun Papertrade C sahaja). Prestasi menjadi rekod akaun; kumpulan rel "Setiap kaedah" bermula pada "Untung lawan risiko"; Analisis dapat dua kumpulan rel ("Lejar Penuh (semua isyarat)", "Akaun Papertrade C"); pautan kad Ringkasan "Terbaik ikut papertrade" dan langkah 3 Panduan dikemas kini.
+## 2026-10-28 13:59 MYT — GitHub Actions: kemas kini + imbas (sesi AS 2026-10-27)
+- Keluar baharu 250 (C {'isyarat': 64, 'henti': 169, 'sasaran': 17}, M {}); menunggu buka sesi seterusnya: 71.
+- Harga beli sementara dibetulkan kepada buka rasmi bar harian: 94 (beza > 0.5%: 11). Tidak dibeli baharu: tiada.
+- Senarai beli 613 baris (283 saham, 98 kaedah; 86 daripada watchlist; belian semula 53). Ditolak: {'dipegang': 383, 'tidak_cair': 74, 'had': 1609, 'ambil_alih': 38, 'kelas_berganda': 11, 'mingguan': 59}.
+- Watchlist 282 (baharu 206, dibuang 107, ke senarai beli 86). Isyarat direkod: 2787 (data/isyarat/2026-10-27_malam.csv.gz).
+- Ralat kaedah: tiada. Nota: C WLYB M30: tiada bar 2026-10-27 (harga terkini 2026-10-26); C WLYB M74: tiada bar 2026-10-27 (harga terkini 2026-10-26); C ACA M95: tiada bar 2026-10-27 (harga terkini 2026-10-22); C ACA M54: tiada bar 2026-10-27 (harga terkini 2026-10-22); C ACA M06: tiada bar 2026-10-27 (harga terkini 2026-10-22); C ACA M23: tiada bar 2026-10-27 (harga terkini 2026-10-22); C ACA M46: tiada bar 2026-10-27 (harga terkini 2026-10-22); C ACA M100: tiada bar 2026-10-27 (harga terkini 2026-10-22).
+- Tiada order. Tiada wang sebenar.
 
-**Dashboard v128 (artifact versi 137).** Pengguna: "ada benda yang tak perlu ke? … kadang kadang nampak macam terlalu banyak. Pening nak baca, dan tak faham." Audit: 26 panel (Analisis 6, Prestasi 20) dan — punca sebenar "tak faham" — TIGA perbendaharaan label yang menjawab soalan sama, dengan "PERHATI" bermakna dua perkara berbeza, jadi satu kaedah boleh KUAT + HENTIKAN + Calon serentak.
+## 2026-10-28 22:31 MYT — GitHub Actions: beli maya 2026-10-28 (isyarat 2026-10-27)
+- Direkod 600 (277 saham; belian semula 51; fail claude_87.csv); dilangkau 13. Harga: buka sementara yfinance 10:31 NY.
+- Dilangkau: NVDA M13: buka 219.88 <= henti 256.05; BTU M13: buka 23.33 <= henti 25.25; OLLI M14: buka 83.51 <= henti 83.64; ABT M18: buka 101.82 <= henti 101.91; CHD M18: buka 103.98 <= henti 104.19; PFE M18: buka 29.49 <= henti 29.51; GEF M49: buka 82.13 <= henti 82.89; ULTA M70: buka 620.43 <= henti 620.68; NRP M128: isyarat batal pada buka (peraturan kaedah); NRP M129: isyarat batal pada buka (peraturan kaedah); RXO M136: isyarat batal pada buka (peraturan kaedah); NEOG M153: isyarat batal pada buka (peraturan kaedah); CSGP M156: isyarat batal pada buka (peraturan kaedah).
+- Tiada order. Tiada wang sebenar.
+
+## 2026-10-29 — Dashboard v130: hari dipegang dipecah ikut lorong keluar
+- Permintaan pengguna: "hari pegang tu, patut ada hari pegang utk keluar kaedah, dah hari pegang, pegang selagi naik, susun kejap, Hari Pegang(KK), Keluar Kaedah, Hari Pegang(PSN), Pegang selagi naik."
+- Posisi (pandangan Penuh) kini: Hari pegang (KK) · Keluar kaedah · Hari pegang (PSN) · Pegang selagi naik.
+- `hariSel` dikira dengan `hariL(r,'kaedah')` (dahulu `r.hari` = hingga keluar mana-mana lorong), `hariSel2` baharu dengan `hariL(r,'henti')`; pembantu sama dengan yang digunakan lajur lorong, jadi nombor dan status sepadan.
+- Lajur PSN tiada bar had masa kerana lorong 2 tiada had masa; keutamaan sembunyi `kp-hi` (hilang paling akhir).
+- Tooltip `hari_psn` baharu; `hari_pt` dinamakan "Hari pegang (KK)" dan menerangkan bar had masa.
+- Digabung di atas v127–v129 sesi lain (kad hover Stage/Trend, `tipPotong`, panel pemilihan kaedah dipindah ke tab Analisis) supaya halaman terbit tidak berundur.
+- Tiada data baharu; tiada order; tiada wang sebenar.
+
+## 2026-10-29 — Dashboard v131: label "bt 62" diganti teks penuh
+- Soalan pengguna: "bt 62 tu apa benda ya? boleh bagi description yang mudah difahami? ada had apa semua".
+- Label di bawah Hari pegang (KK): `bt 62` → `purata backtest 62 hari`; `had 20` → `had 20 hari`.
+- Tooltip bar membezakan dua kes dengan jelas: had masa (kaedah menjual pada hari ke-N walaupun sasaran belum dicapai; bar kuning ≥ 80%) lawan purata backtest (rujukan sahaja, bukan had).
+- Tooltip tajuk lajur `hari_pt` menyenaraikan had sebenar: 33 daripada 134 kaedah ada had masa — 10 hari (5 kaedah), 20 (4), 21 (5), 42 (9), 63 (8), 126 (2); 101 kaedah tiada had masa.
+- Tiada perubahan susun atur: label itu disembunyi dalam sel jadual bergred (`tr:not(.buka) td.m0 .vv`) dan hanya dipapar dalam pop timbul hover mod Padat.
+
+**Dashboard v127-A (artifact versi 136; dinomborkan semula kepada sejarah v132).** Pengguna: "Tab analisis dan prestasi tu macam benda yang sama je". Audit menunjukkan tindihan yang nyata: tab Prestasi mengandungi DUA panel pemilihan kaedah ("Skor kaedah swing" dan jadual "Kedudukan kaedah · Skor Untung×Selamat") yang menjawab soalan sama dengan jadual kedudukan tab Analisis, tetapi atas sampel jauh lebih kecil (dagangan akaun C sahaja, bukan Lejar Penuh), jadi boleh bercanggah. Keputusan pengguna: kedua-dua panel itu dipindah ke tab Analisis (`prPilih()` / `prPilihBind()`, akaun Papertrade C sahaja). Prestasi menjadi rekod akaun; kumpulan rel "Setiap kaedah" bermula pada "Untung lawan risiko"; Analisis dapat dua kumpulan rel ("Lejar Penuh (semua isyarat)", "Akaun Papertrade C"); pautan kad Ringkasan "Terbaik ikut papertrade" dan langkah 3 Panduan dikemas kini.
+
+**Dashboard v132 (artifact versi 142).** Pengguna: "ada benda yang tak perlu ke? … kadang kadang nampak macam terlalu banyak. Pening nak baca, dan tak faham." Audit: 26 panel (Analisis 6, Prestasi 20) dan — punca sebenar "tak faham" — TIGA perbendaharaan label yang menjawab soalan sama, dengan "PERHATI" bermakna dua perkara berbeza, jadi satu kaedah boleh KUAT + HENTIKAN + Calon serentak.
 
 Keputusan pengguna (dua soalan): buang panel duplikat + susun semula dua tab, dan buang label TERUSKAN/PERHATI/HENTIKAN terus.
 
