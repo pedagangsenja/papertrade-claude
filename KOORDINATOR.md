@@ -1,6 +1,6 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-10-30 07:41 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-10-30 09:45 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
@@ -59,12 +59,12 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 
 | Lorong | Ekuiti | Dipegang | Keluar | Sesi terakhir |
 |---|---|---|---|---|
-| RS_10 | 1.003605 | 10 | 0 | 2026-10-28 |
-| RAWAK_10 | 0.998871 | 10 | 1 | 2026-10-28 |
-| GABUNGAN_10 | 1.000688 | 8 | 13 | 2026-10-28 |
-| TOP1_10 | 0.993348 | 6 | 15 | 2026-10-28 |
-| RAWAK_KAEDAH_10 | 1.01581 | 10 | 1 | 2026-10-28 |
-| RISIKO_10 | 1.004692 | 10 | 0 | 2026-10-28 |
+| RS_10 | 0.953163 | 10 | 0 | 2026-10-29 |
+| RAWAK_10 | 1.00006 | 10 | 1 | 2026-10-29 |
+| GABUNGAN_10 | 1.013214 | 9 | 14 | 2026-10-29 |
+| TOP1_10 | 1.012105 | 9 | 16 | 2026-10-29 |
+| RAWAK_KAEDAH_10 | 1.009998 | 10 | 1 | 2026-10-29 |
+| RISIKO_10 | 0.98375 | 10 | 0 | 2026-10-29 |
 
 
 `RISIKO_10` (sejak 28 Okt 2026) dipasangkan dengan `RS_10`: susunan calon sama, hanya saiz berbeza. **MDD-nya mesti dibaca bersama lajur `tunai`** — pendedahannya lebih rendah, jadi sebahagian kelebihan MDD datang daripada pendedahan, bukan saiz. Ia menguji saiz atas **isyarat Mxx** dan bukan ujian ke hadapan dapatan REVERSE fasa 1b (`REVERSE/SPEC_FASA2.md` §9.2).
@@ -74,8 +74,8 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 
 | Status pantau | Bilangan |
 |---|---|
-| BELUM CUKUP | 132 |
-| OK | 2 |
+| BELUM CUKUP | 131 |
+| OK | 3 |
 
 
 ## 4. Kesegaran data
@@ -84,8 +84,8 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 |---|---|---|---|
 | Stor harga | 20261029 | 1 | OK |
 | Trend D10H2-r2 | 20261029 | 1 | OK |
-| Lejar Penuh | 2026-10-28 | 2 | OK |
-| portfolio_slot | 2026-10-28 | 2 | OK |
+| Lejar Penuh | 2026-10-29 | 1 | OK |
+| portfolio_slot | 2026-10-29 | 1 | OK |
 | Papan Penganalisis | 2026-10-30 | 0 | OK |
 | RS pasaran | 2026-10-29 | 1 | OK |
 | Gred kumpulan | 2026-10-29 | 1 | OK |
