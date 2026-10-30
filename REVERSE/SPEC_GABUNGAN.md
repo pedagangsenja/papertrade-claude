@@ -93,3 +93,25 @@ membuang bar sama sekali, jadi ia satu-satunya yang boleh mengekalkan ekor sambi
 - Semua pada satu keluar (`X3`) sahaja, ufuk 63 bar.
 - Kolam 12 signal dipilih daripada data yang sama, jadi keputusan bersyarat padanya.
 - Alam A02 tiada saham delist.
+
+---
+
+## 7. Pindaan kebolehlaksanaan `GB08` (00:35 MY, sebelum larian)
+
+§2 menetapkan `GB08` menggunakan 25 kaedah Mxx yang `KAEDAH_TERBAIK.md` buktikan negatif.
+**Itu tidak boleh dilaksanakan malam ini:** kaedah Mxx dikodkan dalam
+`BacktestShariah2/kod/kaedah/` dan berjalan atas enjin repo, bukan atas panel `step18`.
+Melaksanakan 25 peraturan masuk Mxx pada panel ini ialah kerja berasingan.
+
+**Diganti dengan ujian prinsip yang sama, tanpa kecirularan:**
+
+`GB08` = alam TOLAK kesatuan **12 MASUK dengan lift LATIH paling negatif**, di mana 12 itu
+dipilih **pada tingkap LATIH 2012-2019 sahaja** dan penyingkiran diuji **pada TAHAN
+2020-2025**.
+
+Itu bukan pemilihan pada data ujian: pemilih (LATIH) dan penilai (TAHAN) berasingan. Ia
+menguji perkara yang sama — "adakah membuang yang terbukti rugi menambah nilai" — tanpa
+melihat TAHAN untuk memilih apa yang dibuang.
+
+Bilangan ujian kekal **14**. Saya nyatakan dengan jelas bahawa ini pindaan **kebolehlaksanaan**
+yang dibuat sebelum larian, bukan pindaan yang didorong oleh keputusan.
