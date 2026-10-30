@@ -17,16 +17,16 @@ class TestStruktur(unittest.TestCase):
 
     def test_bilangan(self):
         # jumlah dipradaftar; menambah baris mesti kemas kini ujian ini dengan sengaja
-        self.assertEqual(len(R.MASUK), 100)
-        self.assertEqual(len(R.KELUAR), 32)
-        self.assertEqual(len(R.CARA), 8)
-        self.assertEqual(len(R.URUTAN), 8)
+        self.assertEqual(len(R.MASUK), 130)
+        self.assertEqual(len(R.KELUAR), 41)
+        self.assertEqual(len(R.CARA), 10)
+        self.assertEqual(len(R.URUTAN), 11)
 
     def test_id_berturutan(self):
-        self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 101)])
-        self.assertEqual([b[0] for b in R.KELUAR], [f'X{i:02d}' for i in range(1, 33)])
-        self.assertEqual([b[0] for b in R.CARA], [f'C{i:02d}' for i in range(1, 9)])
-        self.assertEqual([b[0] for b in R.URUTAN], [f'U{i:02d}' for i in range(1, 9)])
+        self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 131)])
+        self.assertEqual([b[0] for b in R.KELUAR], [f'X{i:02d}' for i in range(1, 42)])
+        self.assertEqual([b[0] for b in R.CARA], [f'C{i:02d}' for i in range(1, 11)])
+        self.assertEqual([b[0] for b in R.URUTAN], [f'U{i:02d}' for i in range(1, 12)])
 
     def test_medan_penuh(self):
         for b in R.MASUK:
@@ -111,6 +111,23 @@ class TestStatus(unittest.TestCase):
         self.assertNotIn('pandas-ta==', teks)
         self.assertNotIn('pandas_ta==', teks)
 
+    def test_rejim_kalendar_ada_amaran_pendedahan(self):
+        # N101-N110 memilih MASA bukan saham = peruntukan tunai; spec mesti menyatakannya
+        kel = {b[1] for b in R.MASUK if b[0] in
+               ('N101', 'N105', 'N107', 'N108', 'N110')}
+        self.assertEqual(kel, {'KALENDAR', 'REJIM'})
+
+    def test_n122_pembetulan_ambang_direkod(self):
+        # saya tersilap ingat $20 juta; sumber beri $10 juta. Pembetulan mesti kekal direkod.
+        n122 = [b for b in R.MASUK if b[0] == 'N122'][0]
+        self.assertIn('10 juta', n122[3])
+        self.assertIn('PEMBETULAN', n122[7])
+
+    def test_n130_orb_amaran_kos(self):
+        n130 = [b for b in R.MASUK if b[0] == 'N130'][0]
+        self.assertEqual(n130[6], 'PERLU:intraday')
+        self.assertIn('SIFAR', n130[7])
+
     def test_kira(self):
         km = R._kira(R.MASUK, 6)
         self.assertEqual(sum(km.values()), len(R.MASUK))
@@ -175,10 +192,11 @@ class TestKeluaran(unittest.TestCase):
                 self.assertEqual(baris[-1]['keluarga'], 'URUTAN')
                 teks = open(R.SPEC, encoding='utf-8').read()
                 self.assertIn('SPEC SEMUA N', teks)
-                self.assertIn('N100', teks)
-                self.assertIn('X32', teks)
-                self.assertIn('C08', teks)
-                self.assertIn('U08', teks)
+                self.assertIn('N130', teks)
+                self.assertIn('X41', teks)
+                self.assertIn('C10', teks)
+                self.assertIn('U11', teks)
+                self.assertIn('peruntukan tunai yang disamarkan', teks)
                 self.assertIn('Sempadan K / M / N', teks)
                 self.assertIn('Saluran rangkaian', teks)
                 self.assertIn('Jangan sunting fail ini secara manual', teks)

@@ -263,6 +263,120 @@ MASUK = [
   'serupa lorong 2 Chandelier repo tetapi pengangkaan berbeza'),
  ('N100', 'OSILATOR', 'True Momentum Oscillator silang naik garis isyarat',
   'tmo silang naik tmo_sig', 'pandas_ta (tmo)', 'pandas_ta', 'PERLU:tmo', ''),
+ ('N101', 'KALENDAR', 'Turn of the month (versi 5 hari)',
+  'beli pada tutup 5 hari dagangan sebelum akhir bulan', 'Quantified Strategies',
+  'YouTube/Substack', 'PERLU:kalendar_dagangan',
+  'keluar asal: tutup hari dagangan ke-3 bulan berikut (pegang ~7 hari)'),
+ ('N102', 'KALENDAR', 'Turn of the month (versi 2 hari)',
+  'beli pada tutup 2 hari dagangan sebelum akhir bulan', 'Honestcowboy', 'TradingView',
+  'PERLU:kalendar_dagangan',
+  'penulis lapor dalam pasaran ~25% masa sahaja; bandingkan pulangan/unit pendedahan'),
+ ('N103', 'KALENDAR', 'Pra-cuti bursa', 'beli pada tutup sesi sebelum cuti bursa',
+  'kesan pra-cuti klasik', 'umum', 'PERLU:kalendar_cuti', ''),
+ ('N104', 'KALENDAR', 'Kesan hari minggu', 'beli pada tutup hari minggu tertentu',
+  'kesan hari minggu', 'akademik/umum', 'SEDIA',
+  'JUJUR: 5 hari = 5 ujian; mesti dikira dalam FDR'),
+ ('N105', 'KALENDAR', 'Santa Claus rally', 'beli pada tutup 5 sesi terakhir Disember',
+  'klasik seasonality', 'umum', 'PERLU:kalendar_dagangan', ''),
+ ('N106', 'KALENDAR', 'Sell in May songsang (pegang Nov-Apr)',
+  'dalam pasaran hanya November hingga April', 'klasik seasonality', 'umum', 'SEDIA', ''),
+ ('N107', 'REJIM', 'Follow-through day (O’Neil)',
+  'indeks naik >= 1.25% pada volum lebih tinggi daripada sesi sebelum, pada hari ke-4 atau '
+  'lebih percubaan rali', 'O’Neil / IBD', 'buku/IBD', 'PERLU:ftd',
+  'ambang berubah ikut era: asal 1%, IBD 1.7% pertengahan 2000-an, kini ~1.25%. Ia BUKAN '
+  'isyarat beli indeks - ia MEMBENARKAN beli peneraju yang pecah asas. Banyak gagal.'),
+ ('N108', 'REJIM', 'Zweig Breadth Thrust',
+  'EMA10 bagi naik/(naik+turun) bangkit daripada < 0.400 ke > 0.615 dalam 10 sesi',
+  'Martin Zweig', 'buku', 'PERLU:data_keluasan',
+  'jarang: satu sumber lapor 6 kali sejak 2010 pada alamnya'),
+ ('N109', 'REJIM', 'Peratus saham atas MA200 > 50%', 'keluasan_atas_ma200 > 0.50',
+  'konsensus keluasan', 'umum', 'PERLU:data_keluasan', ''),
+ ('N110', 'REJIM', 'SPY atas MA50 dan MA200', 'spy > spy_ma50 DAN spy > spy_ma200',
+  'pakej Sistem A', 'buku', 'DIUJI',
+  'sebagai pintu TUNGGAL belum diuji; sebagai bahagian Sistem A: CAGR -1.03% (SISTEM.md)'),
+ ('N111', 'POLA', 'Turtle Soup',
+  'rendah 20 hari baharu yang ekstrem 20 hari sebelumnya berlaku >= 4 sesi lalu',
+  'Connors & Raschke, Street Smarts (1995)', 'buku', 'PERLU:turtle_soup',
+  'sumber sekunder TIDAK SEPAKAT: umur ekstrem 3 atau 4 bar; ofset masuk 5-10 tik atau 1/8 '
+  'mata. Teks buku belum dibaca.'),
+ ('N112', 'POLA', 'Turtle Soup Plus One', 'syarat Turtle Soup tetapi masuk satu sesi kemudian',
+  'Connors & Raschke, Street Smarts (1995)', 'buku', 'PERLU:turtle_soup', ''),
+ ('N113', 'POLA', '80-20 bar (sisi beli)',
+  'buka dalam 20% BAWAH julat hari DAN tutup dalam 20% ATAS julat hari',
+  'Connors & Raschke, Street Smarts (1995)', 'buku', 'SEDIA',
+  'sumber BERCANGGAH pada rangka: satu kata fade, satu lagi kata ikut; ini bacaan sisi beli'),
+ ('N114', 'OSILATOR', 'Momentum Pinball (LBR/RSI3)',
+  'RSI(3) bagi ROC 1 hari < 30; beli-stop atas tinggi hari ini',
+  'Connors & Raschke, Street Smarts (1995)', 'buku', 'PERLU:momentum_pinball', ''),
+ ('N115', 'ADX', 'Holy Grail (Raschke)',
+  'adx14 > 30 DAN undur menyentuh ema20 DAN tutup > tinggi bar sebelum', 'Linda Raschke',
+  'buku/blog', 'SEDIA', 'repo ada adx14 dan ema21; ema20 tepat perlu dikira'),
+ ('N116', 'KETAT', 'ID/NR4',
+  'inside_day DAN julat hari ini terkecil dalam 4 hari; beli-stop atas tinggi',
+  'Connors & Raschke, Street Smarts (1995)', 'buku', 'SEDIA', ''),
+ ('N117', 'RSI', '3 hari turun + atas MA200 + bawah SMA5',
+  'tutup > ma200 DAN tutup < SMA5 DAN rendah < rendah[-1] DAN tinggi < tinggi[-1] bagi 3 sesi '
+  'berturut', 'Connors & Alvarez, High Probability ETF Trading', 'buku', 'PERLU:ma5',
+  'sumber sendiri kata ia direka untuk ETF kerana ETF tidak mungkin ke sifar; saham tunggal '
+  'lebih lemah'),
+ ('N118', 'RSI', '4 daripada 5 sesi terakhir turun',
+  'tutup > ma200 DAN 4 daripada 5 sesi terakhir tutup lebih rendah', 'Connors & Alvarez',
+  'buku', 'SEDIA', 'bab berasingan dalam sumber; juga direka untuk ETF'),
+ ('N119', 'RSI', '3 tutup turun berturut', 'tutup[-2] > tutup[-1] DAN tutup[-1] > tutup',
+  'Connors & Alvarez, Short-Term Trading Strategies That Work (2009)', 'buku', 'SEDIA',
+  'sumber lapor pasaran naik > 4x purata mingguan dalam 5 sesi berikut; tidak disahkan'),
+ ('N120', 'KEKUATAN', 'Trend Template Minervini (8 syarat)',
+  'tutup > ma150 DAN tutup > ma200 DAN ma150 > ma200 DAN ma200 menaik >= 1 bulan DAN '
+  'ma50 > ma150 DAN ma50 > ma200 DAN tutup > ma50 DAN tutup >= 1.30 x rendah_52w DAN '
+  'tutup >= 0.75 x tinggi_52w DAN RS >= 70', 'Minervini, Trade Like a Stock Market Wizard',
+  'buku', 'SEDIA',
+  'sumber sekunder TIDAK SEPAKAT pada ambang rendah 52w: 25% lawan 30%; saya guna 30% kerana '
+  'skrip ProRealCode mengiranya Close/Lowest[252] > 1.3. Teks buku belum dibaca.'),
+ ('N121', 'KEKUATAN', 'Weinstein Stage 2', 'stage dalam (2A, 2) daripada data/stage/status.json',
+  'Weinstein, Secrets for Profiting in Bull and Bear Markets', 'buku', 'SEDIA',
+  'repo SUDAH mengira stage setiap hari tetapi ia "paparan sahaja" (keputusan 27 Okt 2026); '
+  'ini mendaftarkannya sebagai calon yang boleh diuji'),
+ ('N122', 'KEKUATAN', 'Kriteria imbasan Qullamaggie',
+  'pulangan 1 atau 3 atau 6 bulan >= 30% DAN adr_pct > 5 DAN nilai dolar harian > USD10 juta',
+  'Qullamaggie (sumber sekunder)', 'blog/screener', 'PERLU:adr_pct',
+  'adr_pct (julat purata) BUKAN atr_pct repo. PEMBETULAN: saya sangka ambang $20 juta; ia '
+  'TIDAK muncul dalam mana-mana sumber - angka paling konsisten ialah $10 juta. Satu sumber '
+  'juga sebut "50x saiz akaun" yang peraturan berbeza sama sekali.'),
+ ('N123', 'POLA', 'Power Earnings Gap',
+  'gap earnings DAN vol_n50 >= 3.0 DAN tutup dalam 25% atas julat hari', 'therighttrader',
+  'blog', 'SEDIA', 'keluar asal: henti bawah rendah hari gap; gagal jika tutup < buka hari gap'),
+ ('N124', 'POLA', 'Episodic pivot gap 8-10%', 'gap >= 8% DAN vol_n50 >= 2.0',
+  'Qullamaggie/Bonde melalui Tradingsim', 'blog', 'SEDIA',
+  'lebih tegas daripada N64 yang hanya guna gap_and_go'),
+ ('N125', 'POLA', 'Undur Fibonacci 38.2-61.8 + bar penolakan',
+  'undur ke zon 38.2%-61.8% ayunan terakhir DAN bar penolakan DAN tutup > tinggi bar penolakan',
+  'konsensus blog (LuxAlgo, therighttrader, kotakneo)', 'blog', 'PERLU:fib_ayunan',
+  'henti asal di 78.6%. Sumber mengakui 50% BUKAN nisbah Fibonacci, hanya titik tengah '
+  'psikologi.'),
+ ('N126', 'POLA', 'Floor trader pivot: tutup silang naik P',
+  'P = (tinggi[-1] + rendah[-1] + tutup[-1])/3; tutup silang naik P', 'pivot pedagang lantai',
+  'TradingView/QuantShare', 'PERLU:pivot_lantai',
+  'sumber syorkan versi MINGGUAN untuk ufuk swing, dan beramaran JANGAN masuk pada sentuhan'),
+ ('N127', 'POLA', 'Wyckoff spring',
+  'rendah < rendah julat 20 hari kemudian tutup kembali DALAM julat', 'Wyckoff', 'buku/blog',
+  'PERLU:wyckoff_spring',
+  'sumber BERCANGGAH pada volum: satu kata volum RENDAH pada spring, satu lagi guna spring '
+  'bervolum TINGGI yang gagal pulih sebagai isyarat BEARISH. Satu sumber mengaku tiada kadar '
+  'menang terbitan bagi membeli setiap spring.'),
+ ('N128', 'KEKUATAN', 'Short float tinggi + hari untuk tutup',
+  'short_float > 0.20 DAN hari_untuk_tutup > 5', 'konsensus screener', 'blog/screener',
+  'PERLU:data_short',
+  'AMARAN: satu kajian vendor (2,269 saham) dapati short interest > 30% BUKAN isyarat boleh '
+  'dipercayai - hanya 35% mengatasi pasaran. FINRA terbit dua kali sebulan jadi perlu '
+  'pengendalian titik-masa.'),
+ ('N129', 'KEKUATAN', 'Belian dalaman berkelompok',
+  'pembelian pasaran terbuka oleh >= 2 orang dalaman dalam 30 hari', 'konsensus', 'blog',
+  'PERLU:data_form4', 'perlu data Form 4; tiada sumber memberi backtest gabungan ini'),
+ ('N130', 'PECAH', 'Opening Range Breakout 5 minit',
+  'arah lilin 5 minit pertama menentukan sisi; masuk pada pecah julatnya dari buka lilin kedua',
+  'Zarattini, Barbon & Aziz', 'SSRN/akademik', 'PERLU:intraday',
+  'repo TIADA bar intrahari. Replikasi bebas pada 5 indeks lapor kelebihan KASAR berulang '
+  'tetapi pulangan BERSIH hampir SIFAR selepas kos. Saiz asal: syer = risiko$/(masuk - rendah).'),
 ]
 
 # (id, peraturan keluar, sumber, platform, status, nota)
@@ -315,6 +429,22 @@ KELUAR = [
   'QuantJourney W15', 'quantjourney-bt', 'SEDIA', ''),
  ('X32', 'imbang semula berkala sahaja, tiada syarat keluar lain', 'QuantJourney W04',
   'quantjourney-bt', 'SEDIA', 'keluar hanya berlaku apabila pangkat berubah pada tarikh imbang'),
+ ('X33', 'keluar pada tutup sesi masuk', 'Connors & Raschke (80-20)', 'buku', 'SEDIA',
+  'pegang satu sesi sahaja'),
+ ('X34', 'keluar bila tutup silang naik SMA5', 'Connors & Alvarez', 'buku', 'PERLU:ma5', ''),
+ ('X35', 'keluar pada tutup hari dagangan ke-3 bulan berikut', 'Quantified Strategies',
+  'YouTube/Substack', 'PERLU:kalendar_dagangan', 'pasangan keluar bagi N101'),
+ ('X36', 'keluar selepas DUA tutup di bawah MA rujukan', 'Deepvue', 'blog', 'SEDIA',
+  'sumber TEGAS: jangan bertindak atas satu hari merah sahaja'),
+ ('X37', 'henti bawah rendah hari gap; gagal jika tutup < buka hari gap', 'therighttrader (PEG)',
+  'blog', 'SEDIA', ''),
+ ('X38', 'biar henti sampai +2R, kemudian ekori bawah rendah ayunan harian terakhir',
+  'therighttrader (PEG)', 'blog', 'PERLU:tinggi_swing', ''),
+ ('X39', 'henti pada paras undur Fibonacci 78.6%', 'konsensus blog', 'blog',
+  'PERLU:fib_ayunan', ''),
+ ('X40', 'henti bawah rendah shakeout', 'Wyckoff', 'buku/blog', 'PERLU:wyckoff_spring', ''),
+ ('X41', 'henti pada rendah hari masuk', 'Zarattini, Barbon & Aziz (ORB)', 'SSRN/akademik',
+  'SEDIA', 'saiz asal: syer = risiko$ / (harga masuk - rendah hari)'),
 ]
 
 # (id, cara masuk diisi, sumber, platform, status, nota)
@@ -342,6 +472,11 @@ CARA = [
  ('C08', 'beli pada tutup hari isyarat', 'umum', 'umum', 'PERLU:isi_tutup',
   'TIDAK boleh dilaksanakan dalam papertrade repo kerana isyarat dikira SELEPAS tutup; '
   'didaftar hanya sebagai siling teori'),
+ ('C09', 'buy-stop sedikit atas rendah 20 hari (5-10 tik atau 1/8 mata)',
+  'Connors & Raschke (Turtle Soup)', 'buku', 'SEDIA',
+  'sumber sekunder beri dua ofset berbeza'),
+ ('C10', 'masuk pada buka lilin kedua selepas lilin 5 minit pertama',
+  'Zarattini, Barbon & Aziz', 'SSRN/akademik', 'PERLU:intraday', ''),
 ]
 
 # (id, cara alam disusun, sumber, platform, status, nota)
@@ -380,6 +515,12 @@ URUTAN = [
  ('U08', 'ATR% songsang sebagai URUTAN (bukan sebagai saiz)', 'belum diuji', 'repo', 'SEDIA',
   'RISIKO_10 guna ATR untuk SAIZ atas susunan RS_10; ini akan guna ATR untuk URUTAN. '
   'Belum pernah diuji dan boleh dijalankan dengan lajur yang sudah ada.'),
+ ('U09', 'ADR% tertinggi (julat purata, bukan ATR)', 'Qullamaggie', 'blog/screener',
+  'PERLU:adr_pct', 'ADR% ialah julat purata; atr_pct repo ialah julat BENAR - bukan sama'),
+ ('U10', 'nilai dolar harian tertinggi', 'Qullamaggie', 'blog/screener', 'SEDIA',
+  'lajur nilai20 sudah ada; sumber beri ambang $10 juta, bukan urutan - ini versi urutan'),
+ ('U11', 'pulangan gabungan 1 + 3 + 6 bulan tertinggi', 'Qullamaggie', 'blog/screener',
+  'SEDIA', 'sumber guna sebagai penapis 30%; ini versi urutan'),
 ]
 
 
@@ -535,6 +676,25 @@ def tulis_spec():
         _id, cara, sumber, plat, status, nota = b
         A(f'**{_id}** — `{cara}` · {sumber} ({plat}) · {status}' + (f' · {nota}' if nota else ''))
         A('')
+    A('## AMARAN: pintu KALENDAR dan REJIM ialah peruntukan tunai yang disamarkan')
+    A('')
+    A('`N101`-`N110` (kalendar dan rejim) berbeza daripada setiap baris lain dalam fail ini: '
+      'ia tidak memilih SAHAM, ia memilih MASA. Ia menutup kedudukan pada tempoh tertentu dan '
+      'membukanya pada tempoh lain.')
+    A('')
+    A('Secara matematik itu ialah **peruntukan tunai**. Dan peruntukan tunai sudah diukur: '
+      '`SISTEM.md` bahagian "Ujian penguasaan" mendapati campuran SPUS + tunai 0% diimbang '
+      'bulanan memberi nisbah `CAGR / abs(MDD)` yang hampir **pemalar 0.642-0.669 merentas '
+      'setiap berat** (100%, 60%, 40%, 35.4%, 30%). Pada pendedahan yang **sama**, SPUS '
+      'mengalahkan sistem momentum Clenow pada **kedua-dua** paksi.')
+    A('')
+    A('Maka pintu rejim dijangka **mengurangkan pulangan dan MDD bersama-sama** mengikut '
+      'nisbah yang sama, bukan menambah alfa. Supaya ia bermakna, pintu rejim mesti '
+      'menunjukkan nisbah `CAGR / abs(MDD)` yang **lebih tinggi daripada 0.669** - bukan '
+      'sekadar MDD lebih cetek. Itu syarat lulusnya, dan ia mesti ditulis dalam pradaftar '
+      'sebelum ujian dijalankan. Sistem B Clenow gagal tepat di sini: MDD-nya lulus dengan '
+      'lega tetapi hanya kerana pendedahannya 35.4%.')
+    A('')
     A('## Saluran rangkaian: apa yang boleh dicapai dalam sesi awan')
     A('')
     A('Diuji 30 Okt 2026. Ini menentukan sumber mana yang boleh digunakan sekarang dan mana '
@@ -583,6 +743,27 @@ def tulis_spec():
       'gagal dengan cara yang sama. Ia didaftar supaya ia tidak dicari lagi, bukan kerana '
       'saya menjangka ia lulus. **Yang berbeza secara jenis ialah `U06`-`U08` (urutan) dan '
       '`C02`-`C06` (cara) — bukan indikator lagi.**')
+    A('')
+    A('**Buku dengan peraturan harian yang tepat** (sapuan 30 Okt 2026) — `Street Smarts` '
+      '(Connors & Raschke 1995) memberi `N111`-`N116` dan `X33`: Turtle Soup, Turtle Soup Plus '
+      'One, 80-20, Momentum Pinball, Holy Grail, ID/NR4. `Short-Term Trading Strategies That '
+      'Work` dan `High Probability ETF Trading` (Connors & Alvarez) memberi `N117`-`N119` dan '
+      '`X34`. `Trade Like a Stock Market Wizard` (Minervini) memberi `N120` (Trend Template, '
+      '8 syarat). Weinstein memberi `N121`. **Teks buku belum dibaca dalam sesi ini** - '
+      'semuanya daripada ringkasan dan skrip pihak ketiga, dan sumber sekunder bercanggah pada '
+      'beberapa ambang (umur ekstrem Turtle Soup 3 atau 4 bar; rendah 52w Minervini 25% atau '
+      '30%). Setiap percanggahan direkod dalam nota barisnya.')
+    A('')
+    A('**Qullamaggie** — `N122`, `N124`, `U09`-`U11`. **Pembetulan:** saya menyangka ambang '
+      'nilai dolar $20 juta; angka itu TIDAK muncul dalam mana-mana sumber. Yang paling '
+      'konsisten ialah **$10 juta**, dan satu sumber memberi peraturan berbeza sama sekali '
+      '("50x saiz akaun"). ADR% yang ia guna ialah **julat purata**, bukan `atr_pct` repo yang '
+      'julat BENAR - dua perkara berbeza.')
+    A('')
+    A('**Zarattini, Barbon & Aziz (ORB)** — `N130`, `C10`, `X41`. Repo **tiada bar '
+      'intrahari**, jadi ia tidak boleh diuji di sini. Lebih penting: replikasi bebas pada '
+      'lima indeks melaporkan kelebihan **kasar** berulang tetapi pulangan **bersih hampir '
+      'SIFAR** selepas kos dagangan. Didaftar dengan amaran itu.')
     A('')
     A('**Quantpedia** — sudah menjadi sumber dalam repo ini sejak Okt 2026: '
       '`spec/KATALOG_K145.md` memetiknya bagi K195, K241, K242 dan K270. Populasinya ialah '
@@ -654,5 +835,6 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+
 
 
