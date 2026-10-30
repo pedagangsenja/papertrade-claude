@@ -17,19 +17,21 @@ class TestStruktur(unittest.TestCase):
 
     def test_bilangan(self):
         # jumlah dipradaftar; menambah baris mesti kemas kini ujian ini dengan sengaja
-        self.assertEqual(len(R.MASUK), 72)
-        self.assertEqual(R.KELUAR and len(R.KELUAR), 25)
+        self.assertEqual(len(R.MASUK), 80)
+        self.assertEqual(len(R.KELUAR), 32)
+        self.assertEqual(len(R.CARA), 8)
 
     def test_id_berturutan(self):
-        self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 73)])
-        self.assertEqual([b[0] for b in R.KELUAR], [f'X{i:02d}' for i in range(1, 26)])
+        self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 81)])
+        self.assertEqual([b[0] for b in R.KELUAR], [f'X{i:02d}' for i in range(1, 33)])
+        self.assertEqual([b[0] for b in R.CARA], [f'C{i:02d}' for i in range(1, 9)])
 
     def test_medan_penuh(self):
         for b in R.MASUK:
             self.assertEqual(len(b), 8, b[0])
             for medan in b[:7]:        # nota dibenarkan kosong
                 self.assertTrue(str(medan).strip(), b[0])
-        for b in R.KELUAR:
+        for b in list(R.KELUAR) + list(R.CARA):
             self.assertEqual(len(b), 6, b[0])
             for medan in b[:5]:
                 self.assertTrue(str(medan).strip(), b[0])
@@ -52,7 +54,8 @@ class TestStruktur(unittest.TestCase):
 
 class TestStatus(unittest.TestCase):
     def test_status_sah(self):
-        for st in [b[6] for b in R.MASUK] + [b[4] for b in R.KELUAR]:
+        for st in ([b[6] for b in R.MASUK] + [b[4] for b in R.KELUAR] +
+                   [b[4] for b in R.CARA]):
             self.assertTrue(st in ('DIUJI', 'SEDIA') or st.startswith('PERLU:'), st)
 
     def test_diuji_ada_nota(self):
@@ -60,7 +63,7 @@ class TestStatus(unittest.TestCase):
         for b in R.MASUK:
             if b[6] == 'DIUJI':
                 self.assertTrue(b[7].strip(), b[0])
-        for b in R.KELUAR:
+        for b in list(R.KELUAR) + list(R.CARA):
             if b[4] == 'DIUJI':
                 self.assertTrue(b[5].strip(), b[0])
 
@@ -76,6 +79,17 @@ class TestStatus(unittest.TestCase):
         self.assertIn('ma20', n01[3])
         self.assertIn('vol_n50', n01[3])
         self.assertEqual(n01[6], 'DIUJI')
+
+    def test_c01_adalah_asas_repo(self):
+        c01 = R.CARA[0]
+        self.assertEqual(c01[0], 'C01')
+        self.assertEqual(c01[4], 'DIUJI')
+        self.assertIn('buka', c01[1])
+        self.assertIn('KOLAM_EKOR', c01[5])
+
+    def test_cara_lain_belum_diuji(self):
+        # hanya C01 pernah diuji; jika ini gagal, seseorang menanda DIUJI tanpa hasil
+        self.assertEqual([b[0] for b in R.CARA if b[4] == 'DIUJI'], ['C01'])
 
     def test_kira(self):
         km = R._kira(R.MASUK, 6)
@@ -101,6 +115,14 @@ class TestSemakTangkapRalat(unittest.TestCase):
         m = [('N01', 'MA', 'a', 'x', 's', 'p', 'MUNGKIN', '')]
         self.assertTrue(any('tidak dikenali' in x for x in self._dengan(m)))
 
+    def test_tangkap_cara_tidak_berturutan(self):
+        asal = R.CARA
+        try:
+            R.CARA = [('C02', 'a', 's', 'p', 'SEDIA', '')]
+            self.assertTrue(any('tidak berturutan' in x for x in R.semak()))
+        finally:
+            R.CARA = asal
+
     def test_tangkap_medan_kurang(self):
         m = [('N01', 'MA', 'a', 'x', 's', 'p', 'SEDIA')]
         self.assertTrue(any('medan' in x for x in self._dengan(m)))
@@ -115,16 +137,19 @@ class TestKeluaran(unittest.TestCase):
                 R.SPEC = os.path.join(d, 'SPEC_SEMUA_N.md')
                 n = R.tulis_csv()
                 R.tulis_spec()
-                self.assertEqual(n, len(R.MASUK) + len(R.KELUAR))
+                self.assertEqual(n, len(R.MASUK) + len(R.KELUAR) + len(R.CARA))
                 with open(R.CSV, encoding='utf-8') as f:
                     baris = list(csv.DictReader(f))
                 self.assertEqual(len(baris), n)
                 self.assertEqual(baris[0]['id'], 'N01')
-                self.assertEqual(baris[-1]['keluarga'], 'KELUAR')
+                self.assertEqual(baris[len(R.MASUK)]['keluarga'], 'KELUAR')
+                self.assertEqual(baris[-1]['keluarga'], 'CARA')
                 teks = open(R.SPEC, encoding='utf-8').read()
                 self.assertIn('SPEC SEMUA N', teks)
-                self.assertIn('N72', teks)
-                self.assertIn('X25', teks)
+                self.assertIn('N80', teks)
+                self.assertIn('X32', teks)
+                self.assertIn('C08', teks)
+                self.assertIn('Sempadan K / M / N', teks)
                 self.assertIn('Jangan sunting fail ini secara manual', teks)
             finally:
                 R.CSV, R.SPEC = asal_csv, asal_spec
@@ -133,7 +158,7 @@ class TestKeluaran(unittest.TestCase):
         """Fail yang dikomit mesti sepadan dengan senarai dalam skrip."""
         with open(R.CSV, encoding='utf-8') as f:
             baris = list(csv.DictReader(f))
-        self.assertEqual(len(baris), len(R.MASUK) + len(R.KELUAR))
+        self.assertEqual(len(baris), len(R.MASUK) + len(R.KELUAR) + len(R.CARA))
         self.assertEqual([b['id'] for b in baris[:len(R.MASUK)]], [b[0] for b in R.MASUK])
 
     def test_main_pulang_sifar(self):

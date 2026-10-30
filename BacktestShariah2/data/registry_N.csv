@@ -71,6 +71,14 @@ N69,KEKUATAN,RS kuintil 5 + sektor atas MA50,rs_spy_6b dalam kuintil teratas DAN
 N70,KEKUATAN,Garis RS tinggi baharu,garis_rs_tinggi,Minervini,buku,SEDIA,
 N71,KEKUATAN,RS + pecah + rejim SPY,rs_spy_6b kuintil teratas DAN sektor_atas_ma50 DAN donchian20 DAN spy > ma50 DAN spy > ma200,pakej Sistem A,buku,DIUJI,"Sistem A penuh: CAGR -1.03%, MDD -40.65%, sebaran benih 4.01 (SISTEM.md)"
 N72,KEKUATAN,Momentum Clenow 90 hari,"skor = (exp(cerun regresi log 90 hari x 252) - 1) x R^2; ambil 20 teratas, imbang bulanan",Clenow,buku,DIUJI,"Sistem B: CAGR +6.38%, MDD -11.59%, sebaran benih 0.00; pendedahan hanya 35.4%"
+N73,BB,"Tutup bawah jalur bawah BB(20,2)",tutup < SMA20 - 2 x SD20,QuantJourney W21,quantjourney-bt,SEDIA,keluar asal: tutup > jalur tengah SMA20
+N74,TREND,"MACD atas garis isyarat (keadaan, bukan silang)",macd > macd_sig,QuantJourney W22,quantjourney-bt,SEDIA,"BERBEZA daripada macd_cross: keadaan berterusan, bukan peristiwa silang"
+N75,RSI,RSI14 < 40 tanpa penapis,rsi14 < 40,QuantJourney O03,quantjourney-bt,SEDIA,sumber pasangkan dengan buy-limit 1.5% bawah tutup (C03)
+N76,MA,Tutup > MA50 (penapis trend tunggal),tutup > ma50,QuantJourney O04,quantjourney-bt,SEDIA,berguna sebagai ASAS penapis tunggal untuk mengira lift
+N77,KEKUATAN,Pulangan 252 hari dalam 3 teratas alam,"pangkat keratan rentas pulangan 252 hari, ambil 3 teratas, imbang bulanan",QuantJourney W15 / Jegadeesh-Titman,quantjourney-bt,SEDIA,momentum keratan rentas klasik; BERBEZA daripada N72 (Clenow guna regresi 90 hari x R^2)
+N78,KEKUATAN,Pulangan 21 hari dalam 3 terbawah alam (pembalikan),"pangkat keratan rentas pulangan 21 hari, ambil 3 TERBAWAH, imbang mingguan",QuantJourney W16,quantjourney-bt,SEDIA,"PEMBALIKAN - bertentangan momentum; didaftar untuk kelengkapan, bukan kerana dijangka lulus"
+N79,KEKUATAN,Momentum ganda (relatif + mutlak),pulangan 252 hari dalam 2 teratas alam DAN pulangan 252 hari > 0,QuantJourney W04 / Antonacci,quantjourney-bt,SEDIA,syarat mutlak ialah penapis rejim terbina dalam
+N80,PECAH,Tinggi sepanjang masa,tutup >= tutup tertinggi sepanjang masa,"Wilcox & Crittenden (2005); Zarattini, Pagani & Wilcox (2025)",Quantpedia,SEDIA,"SAMA dengan K195 dalam katalog K; henti ekor asal 10 x ATR, pegangan purata ~305 hari (kedudukan, bukan swing)"
 X01,KELUAR,"henti 1.5 x ATR14, sasaran 1 x ATR14",,pedagang forum,babypips,DIUJI,asas tahan -0.281% — MENUKAR ASAS JADI NEGATIF; kadar menang 61.1%
 X02,KELUAR,"henti 2 x ATR14, sasaran 4 x ATR14",,pelbagai,umum,DIUJI,asas tahan +0.953%
 X03,KELUAR,"henti 2 x ATR14, pegang 63 sesi",,asas kajian,repo,DIUJI,asas tahan +2.595% — TERBAIK; kadar menang 30.2%
@@ -96,3 +104,18 @@ X22,KELUAR,henti keras -8% daripada harga masuk,,O’Neil,buku,DIUJI,komponen Si
 X23,KELUAR,keluar bila jatuh keluar 20 teratas pangkat momentum; imbang bulanan,,Clenow,buku,DIUJI,komponen Sistem B; sebaran benih 0.00
 X24,KELUAR,keluar pada tinggi swing terdahulu,,umum,blog,PERLU:tinggi_swing,
 X25,KELUAR,"henti 1% bawah EMA21 atau bawah rendah undur, mana lebih ketat",,panduan 8/21 EMA,blog,SEDIA,
+X26,KELUAR,"ekori 4% (peratus tetap, bukan ATR)",,QuantJourney O09,quantjourney-bt,SEDIA,"ekor diurus enjin isi, bukan dikemas kini strategi"
+X27,KELUAR,sasaran limit +3% atas harga masuk purata,,QuantJourney O03,quantjourney-bt,SEDIA,bandingkan dengan dapatan KOMBINASI.md: sasaran kecil merugikan
+X28,KELUAR,sasaran limit +4%; keluar pasaran jika tutup < MA50,,QuantJourney O04,quantjourney-bt,SEDIA,sasaran DAN kegagalan trend sebagai dua keluar berasingan
+X29,KELUAR,pegang tetap 10 bar kemudian keluar pasaran,,QuantJourney O05/O14,quantjourney-bt,SEDIA,
+X30,KELUAR,keluar bila macd < macd_sig,,QuantJourney W22,quantjourney-bt,SEDIA,
+X31,KELUAR,keluar bila jatuh keluar 3 teratas pangkat 252 hari; imbang bulanan,,QuantJourney W15,quantjourney-bt,SEDIA,
+X32,KELUAR,"imbang semula berkala sahaja, tiada syarat keluar lain",,QuantJourney W04,quantjourney-bt,SEDIA,keluar hanya berlaku apabila pangkat berubah pada tarikh imbang
+C01,CARA,beli pada buka sesi berikutnya,,asas repo,repo,DIUJI,"asas SEMUA keputusan kajian setakat ini; juga PUNCA kecacatan henti hari-0 (KOLAM_EKOR.md §4a: 421/1,770 posisi C dibeli dan dihentikan pada hari masuk, menang 0.00%)"
+C02,CARA,buy-stop pada tinggi 20 hari x 1.002; luput selepas 5 bar,,QuantJourney O05,quantjourney-bt,SEDIA,"pengesahan harga: tiada isi bermakna tiada dagangan, jadi ia MENAPIS pecah palsu pada peringkat pelaksanaan, bukan peringkat isyarat"
+C03,CARA,buy-limit 1.5% bawah tutup isyarat; luput selepas 3 bar,,QuantJourney O03,quantjourney-bt,SEDIA,isi pasif; sumber pasangkan dengan rsi14 < 40 (N75)
+C04,CARA,buy-limit 1% bawah tutup isyarat,,QuantJourney O04,quantjourney-bt,SEDIA,sumber syaratkan tutup > ma50 (N76) sebelum meletakkan limit
+C05,CARA,OCO: buy-limit -2% lawan buy-stop +2%; yang isi dahulu batalkan yang lain,,QuantJourney O14,quantjourney-bt,SEDIA,menguji undur lawan pecah pada saham yang SAMA tanpa memilih dahulu
+C06,CARA,bracket: masuk pasaran + sasaran +6% + henti -3% sebagai pasangan OCO,,QuantJourney O12,quantjourney-bt,SEDIA,henti dan sasaran aktif serentak sejak bar masuk
+C07,CARA,buy-stop 1% atas tinggi semalam,,panduan pecah,blog,SEDIA,
+C08,CARA,beli pada tutup hari isyarat,,umum,umum,PERLU:isi_tutup,TIDAK boleh dilaksanakan dalam papertrade repo kerana isyarat dikira SELEPAS tutup; didaftar hanya sebagai siling teori

@@ -189,6 +189,31 @@ MASUK = [
   'skor = (exp(cerun regresi log 90 hari x 252) - 1) x R^2; ambil 20 teratas, imbang bulanan',
   'Clenow', 'buku', 'DIUJI',
   'Sistem B: CAGR +6.38%, MDD -11.59%, sebaran benih 0.00; pendedahan hanya 35.4%'),
+ ('N73', 'BB', 'Tutup bawah jalur bawah BB(20,2)', 'tutup < SMA20 - 2 x SD20',
+  'QuantJourney W21', 'quantjourney-bt', 'SEDIA', 'keluar asal: tutup > jalur tengah SMA20'),
+ ('N74', 'TREND', 'MACD atas garis isyarat (keadaan, bukan silang)', 'macd > macd_sig',
+  'QuantJourney W22', 'quantjourney-bt', 'SEDIA',
+  'BERBEZA daripada macd_cross: keadaan berterusan, bukan peristiwa silang'),
+ ('N75', 'RSI', 'RSI14 < 40 tanpa penapis', 'rsi14 < 40', 'QuantJourney O03',
+  'quantjourney-bt', 'SEDIA', 'sumber pasangkan dengan buy-limit 1.5% bawah tutup (C03)'),
+ ('N76', 'MA', 'Tutup > MA50 (penapis trend tunggal)', 'tutup > ma50', 'QuantJourney O04',
+  'quantjourney-bt', 'SEDIA', 'berguna sebagai ASAS penapis tunggal untuk mengira lift'),
+ ('N77', 'KEKUATAN', 'Pulangan 252 hari dalam 3 teratas alam',
+  'pangkat keratan rentas pulangan 252 hari, ambil 3 teratas, imbang bulanan',
+  'QuantJourney W15 / Jegadeesh-Titman', 'quantjourney-bt', 'SEDIA',
+  'momentum keratan rentas klasik; BERBEZA daripada N72 (Clenow guna regresi 90 hari x R^2)'),
+ ('N78', 'KEKUATAN', 'Pulangan 21 hari dalam 3 terbawah alam (pembalikan)',
+  'pangkat keratan rentas pulangan 21 hari, ambil 3 TERBAWAH, imbang mingguan',
+  'QuantJourney W16', 'quantjourney-bt', 'SEDIA',
+  'PEMBALIKAN - bertentangan momentum; didaftar untuk kelengkapan, bukan kerana dijangka lulus'),
+ ('N79', 'KEKUATAN', 'Momentum ganda (relatif + mutlak)',
+  'pulangan 252 hari dalam 2 teratas alam DAN pulangan 252 hari > 0',
+  'QuantJourney W04 / Antonacci', 'quantjourney-bt', 'SEDIA',
+  'syarat mutlak ialah penapis rejim terbina dalam'),
+ ('N80', 'PECAH', 'Tinggi sepanjang masa', 'tutup >= tutup tertinggi sepanjang masa',
+  'Wilcox & Crittenden (2005); Zarattini, Pagani & Wilcox (2025)', 'Quantpedia', 'SEDIA',
+  'SAMA dengan K195 dalam katalog K; henti ekor asal 10 x ATR, pegangan purata ~305 hari '
+  '(kedudukan, bukan swing)'),
 ]
 
 # (id, peraturan keluar, sumber, platform, status, nota)
@@ -228,13 +253,55 @@ KELUAR = [
  ('X24', 'keluar pada tinggi swing terdahulu', 'umum', 'blog', 'PERLU:tinggi_swing', ''),
  ('X25', 'henti 1% bawah EMA21 atau bawah rendah undur, mana lebih ketat',
   'panduan 8/21 EMA', 'blog', 'SEDIA', ''),
+ ('X26', 'ekori 4% (peratus tetap, bukan ATR)', 'QuantJourney O09', 'quantjourney-bt', 'SEDIA',
+  'ekor diurus enjin isi, bukan dikemas kini strategi'),
+ ('X27', 'sasaran limit +3% atas harga masuk purata', 'QuantJourney O03', 'quantjourney-bt',
+  'SEDIA', 'bandingkan dengan dapatan KOMBINASI.md: sasaran kecil merugikan'),
+ ('X28', 'sasaran limit +4%; keluar pasaran jika tutup < MA50', 'QuantJourney O04',
+  'quantjourney-bt', 'SEDIA', 'sasaran DAN kegagalan trend sebagai dua keluar berasingan'),
+ ('X29', 'pegang tetap 10 bar kemudian keluar pasaran', 'QuantJourney O05/O14',
+  'quantjourney-bt', 'SEDIA', ''),
+ ('X30', 'keluar bila macd < macd_sig', 'QuantJourney W22', 'quantjourney-bt', 'SEDIA', ''),
+ ('X31', 'keluar bila jatuh keluar 3 teratas pangkat 252 hari; imbang bulanan',
+  'QuantJourney W15', 'quantjourney-bt', 'SEDIA', ''),
+ ('X32', 'imbang semula berkala sahaja, tiada syarat keluar lain', 'QuantJourney W04',
+  'quantjourney-bt', 'SEDIA', 'keluar hanya berlaku apabila pangkat berubah pada tarikh imbang'),
+]
+
+# (id, cara masuk diisi, sumber, platform, status, nota)
+# PAKSI KETIGA (30 Okt 2026): masuk = BILA, cara = BAGAIMANA pesanan diisi, keluar = BILA KELUAR.
+# Repo hanya pernah menguji C01. QuantJourney Backtester memodelkan jenis pesanan yang lain.
+CARA = [
+ ('C01', 'beli pada buka sesi berikutnya', 'asas repo', 'repo', 'DIUJI',
+  'asas SEMUA keputusan kajian setakat ini; juga PUNCA kecacatan henti hari-0 '
+  '(KOLAM_EKOR.md §4a: 421/1,770 posisi C dibeli dan dihentikan pada hari masuk, menang 0.00%)'),
+ ('C02', 'buy-stop pada tinggi 20 hari x 1.002; luput selepas 5 bar', 'QuantJourney O05',
+  'quantjourney-bt', 'SEDIA',
+  'pengesahan harga: tiada isi bermakna tiada dagangan, jadi ia MENAPIS pecah palsu pada '
+  'peringkat pelaksanaan, bukan peringkat isyarat'),
+ ('C03', 'buy-limit 1.5% bawah tutup isyarat; luput selepas 3 bar', 'QuantJourney O03',
+  'quantjourney-bt', 'SEDIA', 'isi pasif; sumber pasangkan dengan rsi14 < 40 (N75)'),
+ ('C04', 'buy-limit 1% bawah tutup isyarat', 'QuantJourney O04', 'quantjourney-bt', 'SEDIA',
+  'sumber syaratkan tutup > ma50 (N76) sebelum meletakkan limit'),
+ ('C05', 'OCO: buy-limit -2% lawan buy-stop +2%; yang isi dahulu batalkan yang lain',
+  'QuantJourney O14', 'quantjourney-bt', 'SEDIA',
+  'menguji undur lawan pecah pada saham yang SAMA tanpa memilih dahulu'),
+ ('C06', 'bracket: masuk pasaran + sasaran +6% + henti -3% sebagai pasangan OCO',
+  'QuantJourney O12', 'quantjourney-bt', 'SEDIA',
+  'henti dan sasaran aktif serentak sejak bar masuk'),
+ ('C07', 'buy-stop 1% atas tinggi semalam', 'panduan pecah', 'blog', 'SEDIA', ''),
+ ('C08', 'beli pada tutup hari isyarat', 'umum', 'umum', 'PERLU:isi_tutup',
+  'TIDAK boleh dilaksanakan dalam papertrade repo kerana isyarat dikira SELEPAS tutup; '
+  'didaftar hanya sebagai siling teori'),
 ]
 
 
 def semak():
     """Pulangkan senarai masalah; kosong bermakna registry konsisten."""
     masalah = []
-    for nama, baris, awalan, n_medan in (('MASUK', MASUK, 'N', 8), ('KELUAR', KELUAR, 'X', 6)):
+    for nama, baris, awalan, n_medan in (('MASUK', MASUK, 'N', 8),
+                                        ('KELUAR', KELUAR, 'X', 6),
+                                        ('CARA', CARA, 'C', 6)):
         ids = [b[0] for b in baris]
         if len(set(ids)) != len(ids):
             masalah.append(f'{nama}: id berulang')
@@ -260,7 +327,9 @@ def tulis_csv():
         for b in KELUAR:
             # keluar: id, keluarga KELUAR, nama = peraturan, masuk kosong
             w.writerow([b[0], 'KELUAR', b[1], '', b[2], b[3], b[4], b[5]])
-    return len(MASUK) + len(KELUAR)
+        for b in CARA:
+            w.writerow([b[0], 'CARA', b[1], '', b[2], b[3], b[4], b[5]])
+    return len(MASUK) + len(KELUAR) + len(CARA)
 
 
 def _kira(baris, idx_status):
@@ -274,8 +343,10 @@ def _kira(baris, idx_status):
 def tulis_spec():
     km = _kira(MASUK, 6)
     kk = _kira(KELUAR, 4)
+    kc = _kira(CARA, 4)
     perlu = sorted({b[6].split(':', 1)[1] for b in MASUK if b[6].startswith('PERLU:')} |
-                   {b[4].split(':', 1)[1] for b in KELUAR if b[4].startswith('PERLU:')})
+                   {b[4].split(':', 1)[1] for b in KELUAR if b[4].startswith('PERLU:')} |
+                   {b[4].split(':', 1)[1] for b in CARA if b[4].startswith('PERLU:')})
     L = []
     A = L.append
     A('# SPEC SEMUA N — kombinasi daripada pakar, forum dan platform sosial')
@@ -310,7 +381,8 @@ def tulis_spec():
     A('- `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.')
     A('')
     A(f'Masuk: {len(MASUK)} ({km["DIUJI"]} DIUJI, {km["SEDIA"]} SEDIA, {km["PERLU"]} PERLU). '
-      f'Keluar: {len(KELUAR)} ({kk["DIUJI"]} DIUJI, {kk["SEDIA"]} SEDIA, {kk["PERLU"]} PERLU).')
+      f'Keluar: {len(KELUAR)} ({kk["DIUJI"]} DIUJI, {kk["SEDIA"]} SEDIA, {kk["PERLU"]} PERLU). '
+      f'Cara: {len(CARA)} ({kc["DIUJI"]} DIUJI, {kc["SEDIA"]} SEDIA, {kc["PERLU"]} PERLU).')
     A('')
     A('Indikator baharu yang diperlukan: ' + (', '.join(f'`{p}`' for p in perlu) or 'tiada') +
       '.')
@@ -338,6 +410,61 @@ def tulis_spec():
         A(f'**{_id}** — `{peraturan}` · {sumber} ({plat}) · {status}' +
           (f' · {nota}' if nota else ''))
         A('')
+    A('## Cara masuk diisi (paksi ketiga)')
+    A('')
+    A('**Repo hanya pernah menguji `C01`.** Setiap keputusan dalam REVERSE, setiap kedudukan '
+      'dalam Papan Penganalisis dan setiap baris Lejar Penuh menganggap belian berlaku pada '
+      '**buka sesi berikutnya**, tanpa syarat. Itu bukan satu-satunya pilihan, dan ia PUNCA '
+      'kecacatan yang sudah diukur: `KOLAM_EKOR.md` §4a mendapati 421 daripada 1,770 posisi C '
+      'ditutup dibeli DAN dihentikan pada hari masuk dengan kadar menang **0.00%**. Pesanan '
+      'buy-stop atau buy-limit mengubah tepat perkara itu, kerana harga isi tidak lagi '
+      'ditetapkan oleh buka tanpa mengira apa yang bar itu buat.')
+    A('')
+    for b in CARA:
+        _id, cara, sumber, plat, status, nota = b
+        A(f'**{_id}** — `{cara}` · {sumber} ({plat}) · {status}' + (f' · {nota}' if nota else ''))
+        A('')
+    A('## Sumber: apa yang setiap satu sebenarnya beri')
+    A('')
+    A('**QuantJourney Backtester** (`quantjourney-bt` 0.12.5, Apache 2.0, PyPI) — ia sebuah '
+      '**rangka kerja**, bukan katalog kelebihan. 50 contoh strateginya berjalan pada 3 ETF '
+      '(SPY/QQQ/IWM) atau 9 ETF sektor, dan logik isyaratnya mudah (silang SMA, pembalikan '
+      'RSI, Donchian, MACD, Bollinger). Nilai sebenarnya kepada repo ini ialah **mekanik '
+      'pelaksanaan**: ia memodelkan MARKET, LIMIT, STOP, STOP_TRAIL, STOP_LIMIT, BRACKET dan '
+      'OCO dengan luput-selepas-N-bar — kesemuanya `C02`-`C06` dan `X26`-`X29` di atas. '
+      'Ia juga ada walk-forward dengan **purge + embargo** (`example_wf_03`), yang WFO repo '
+      'tiada. **`example_wf_05` guna Optuna: JANGAN guna** — arahan kajian melarang Optuna dan '
+      'apa-apa pengoptimum. Ia TIDAK ditambah sebagai kebergantungan repo: repo sudah ada '
+      'enjinnya sendiri, dan dua enjin bermakna dua sumber kebenaran.')
+    A('')
+    A('**Quantpedia** — sudah menjadi sumber dalam repo ini sejak Okt 2026: '
+      '`spec/KATALOG_K145.md` memetiknya bagi K195, K241, K242 dan K270. Populasinya ialah '
+      '**strategi faktor/portfolio akademik**, kebanyakannya pangkat keratan rentas yang '
+      'diimbang bulanan atau suku tahunan. Itu paksi **pembinaan**, yang `REVERSE/PEMBINAAN.md` '
+      'sudah ukur dan tolak lawan SPUS. Jadi Quantpedia akan menambah banyak strategi, tetapi '
+      'kebanyakannya dalam paksi yang sudah ditutup. Yang berasaskan bar OHLCV harian masuk '
+      'ke sini (contoh `N80`); yang berasaskan faktor bulanan kekal dalam katalog K.')
+    A('')
+    A('**Quantified Strategies** — `www.quantifiedstrategies.com` dan '
+      '`quantifiedstrategies.substack.com` KEDUA-DUANYA tidak dapat diselesaikan (DNS) dalam '
+      'sesi awan ini. `N16`, `N18` dan `X07` didaftar daripada ringkasan carian web, BUKAN '
+      'daripada teks penuh sumber. Untuk peraturan penuh, domain itu perlu dibenarkan dalam '
+      'tetapan rangkaian sesi.')
+    A('')
+    A('**quants.md** — tidak dapat diselesaikan (DNS) dalam sesi ini; belum dinilai. Perlu '
+      'dibenarkan dalam tetapan rangkaian sesi sebelum apa-apa daripadanya boleh didaftar.')
+    A('')
+    A('## Sempadan K / M / N')
+    A('')
+    A('Tiga katalog, tiga populasi berbeza. Jangan campur.')
+    A('')
+    A('- **K1-K397** (`spec/KATALOG_K145.md`) — calon kaedah daripada kajian dalam talian dan '
+      'akademik, termasuk Quantpedia. 47 daripadanya menjadi M115-M161.')
+    A('- **Mxx** (`spec/SPEC_SEMUA_KAEDAH.md`, `kod/kaedah/`) — kaedah lengkap yang sudah '
+      'dikodkan dan dijalankan setiap malam dalam Lejar Penuh.')
+    A('- **Nxx** (fail ini) — kombinasi indikator gaya pedagang pada bar harian, didaftar '
+      'dahulu dan diuji kemudian, dengan paksi `CARA` yang K dan M tiada.')
+    A('')
     A('## Cara menguji')
     A('')
     A('1. Pradaftar: tulis `REVERSE/SPEC_<nama>.md` dengan senarai id yang akan diuji, '
@@ -365,9 +492,12 @@ def main():
     tulis_spec()
     km = _kira(MASUK, 6)
     kk = _kira(KELUAR, 4)
-    print(f'registry N: {len(MASUK)} masuk + {len(KELUAR)} keluar = {n} baris')
+    kc = _kira(CARA, 4)
+    print(f'registry N: {len(MASUK)} masuk + {len(KELUAR)} keluar + {len(CARA)} cara '
+          f'= {n} baris')
     print(f'  masuk  : {km["DIUJI"]} DIUJI, {km["SEDIA"]} SEDIA, {km["PERLU"]} PERLU')
     print(f'  keluar : {kk["DIUJI"]} DIUJI, {kk["SEDIA"]} SEDIA, {kk["PERLU"]} PERLU')
+    print(f'  cara   : {kc["DIUJI"]} DIUJI, {kc["SEDIA"]} SEDIA, {kc["PERLU"]} PERLU')
     print(f'  -> {os.path.relpath(CSV, AKAR)}')
     print(f'  -> {os.path.relpath(SPEC, AKAR)}')
     return 0
@@ -375,3 +505,4 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+
