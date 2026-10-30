@@ -10,6 +10,22 @@
 
 **Dapatan carian web yang penting:** peraturan pedagang **TIDAK diseragamkan**. Setiap sumber memberi versi berbeza bagi setup yang sama (ambang gap 3%-5%, pengganda volum 1.5x-2x, ADX 20-25, henti bawah rendah undur lawan bawah EMA). Jadi setiap baris di bawah ialah **satu versi tertentu daripada satu sumber tertentu**, bukan "peraturan rasmi" setup itu.
 
+## Kesilapan struktur dalam registry ini, dan pembetulannya
+
+**Kesemua 147 baris MASUK ialah syarat `DAN`.** Setiap satu ialah penapis. Dan `SETUP.md` sudah mengukur apa yang berlaku kepada penapis: **0 daripada 598 mempunyai lift positif**, dan sebabnya **struktur, bukan pemilihan** — setiap penapis membuang bar, dan kerana taburan saham tunggal terpencong kanan (dagangan median −5.19% tetapi min +3.03%), menapis terutamanya membuang peluang pada **ekor kanan**, satu-satunya bahagian yang membayar.
+
+Maka menambah baris MASUK ke-148 ialah variasi ke-148 bagi sesuatu yang **sudah diukur gagal**. Enam sapuan sumber menambah baris pada paksi yang salah.
+
+Pembetulannya bukan signal lain. Ia **operasi lain**:
+
+- `GB02` **ATAU (kesatuan)** — menambah bar, bukan membuang. Jika masalahnya "menapis membuang ekor", maka operasi yang betul ialah kesatuan. **Belum pernah diuji.**
+- `GB04` **agregat pangkat** — menukar n penapis menjadi satu skor berterusan, dan `SISTEM.md` mengukur urutan skor berterusan mempunyai sebaran benih **0.00** lawan 17.3 mata/tahun.
+- `GB08` **penapis terbalik** — buang yang terbukti rugi. Pada taburan terpencong kanan, membuang ekor KIRI tidak menyentuh ekor KANAN. `KAEDAH_TERBAIK.md` sudah mengenal pasti **25 kaedah Mxx terbukti NEGATIF** pada BH-FDR q ≤ 0.05 — senarai buang itu sudah ada dan belum pernah diguna.
+- `SZ10` **berat sama rata atas kolam PENUH** — `KOLAM_EKOR.md` sudah mengukur kolam penuh +1.64%/bulan lawan saham median +0.82%. Memegang **semua** mengalahkan memilih 10 dengan 0.82 mata sebulan, **tanpa apa-apa signal**.
+- `IS02` **putaran ETF sektor** — `SETUP.md` mendapati SPY +3.356% dan QQQ +4.419% melepasi syarat ekor dengan mudah kerana **indeks itulah kepelbagaian merentas ekor**. ETF sektor ialah titik tengah antara saham tunggal dan SPUS, dan belum diuji.
+
+Kelima-lima ini mengikut terus daripada ukuran yang repo **sudah** ada. Tiada satu pun memerlukan sumber baharu, data baharu, atau domain yang disekat.
+
 ## Status
 
 - `DIUJI` — sudah ada hasil terukur; nota memberi angkanya dan fail laporan.
@@ -18,7 +34,9 @@
 
 Masuk: 147 (12 DIUJI, 71 SEDIA, 64 PERLU). Keluar: 45 (7 DIUJI, 26 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
 
-Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`, `atrts`, `bar_mingguan`, `chop`, `coppock`, `crsi`, `darvas`, `data_13f`, `data_buyback`, `data_eps_suku`, `data_form4`, `data_keluasan`, `data_putcall`, `data_semakan`, `data_sentimen`, `data_short`, `donchian10`, `donchian50`, `efi`, `eri`, `fib_ayunan`, `fisher`, `ftd`, `gmma`, `gtja191`, `harmonik`, `htf`, `huggingface`, `intraday`, `isi_tutup`, `kalendar_cuti`, `kalendar_dagangan`, `kst`, `kvo`, `ma5`, `momentum_pinball`, `pgo`, `pivot_lantai`, `qqe`, `rwi`, `squeeze_ttm`, `stc`, `strat_bar`, `supertrend3`, `talib_cdl`, `td_seq`, `tinggi_swing`, `tmo`, `tsv`, `turtle_soup`, `vhf`, `vortex`, `vwap20`, `vwap_ankor`, `wyckoff_spring`.
+Tujuh paksi baharu (30 Okt 2026): GABUNGAN 8 · SAIZ 10 · ALAM 8 · PEGANG 6 · IMBANG 5 · KORELASI 4 · INSTRUMEN 4. Jumlah semua paksi: 262 baris.
+
+Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`, `atrts`, `bar_mingguan`, `chop`, `coppock`, `crsi`, `darvas`, `data_13f`, `data_buyback`, `data_eps_suku`, `data_form4`, `data_keluasan`, `data_putcall`, `data_semakan`, `data_sentimen`, `data_short`, `donchian10`, `donchian50`, `efi`, `eri`, `fib_ayunan`, `fisher`, `ftd`, `gmma`, `gtja191`, `harmonik`, `htf`, `huggingface`, `intraday`, `isi_tutup`, `kalendar_cuti`, `kalendar_dagangan`, `kapitalisasi`, `keanggotaan`, `kelly`, `korelasi_signal`, `kst`, `kvo`, `ma5`, `matriks_kovarians`, `momentum_pinball`, `optimal_f`, `pgo`, `pivot_lantai`, `qqe`, `rwi`, `squeeze_ttm`, `stc`, `strat_bar`, `supertrend3`, `talib_cdl`, `tarikh_ipo`, `td_seq`, `tinggi_swing`, `tmo`, `tsv`, `turtle_soup`, `vhf`, `vol_portfolio`, `vortex`, `vwap20`, `vwap_ankor`, `wyckoff_spring`.
 
 ## Peraturan masuk
 
@@ -520,6 +538,116 @@ Maknanya **kekangan sudah berpindah**. Dahulu ia "cari peraturan"; sekarang ia "
 Secara matematik itu ialah **peruntukan tunai**. Dan peruntukan tunai sudah diukur: `SISTEM.md` bahagian "Ujian penguasaan" mendapati campuran SPUS + tunai 0% diimbang bulanan memberi nisbah `CAGR / abs(MDD)` yang hampir **pemalar 0.642-0.669 merentas setiap berat** (100%, 60%, 40%, 35.4%, 30%). Pada pendedahan yang **sama**, SPUS mengalahkan sistem momentum Clenow pada **kedua-dua** paksi.
 
 Maka pintu rejim dijangka **mengurangkan pulangan dan MDD bersama-sama** mengikut nisbah yang sama, bukan menambah alfa. Supaya ia bermakna, pintu rejim mesti menunjukkan nisbah `CAGR / abs(MDD)` yang **lebih tinggi daripada 0.669** - bukan sekadar MDD lebih cetek. Itu syarat lulusnya, dan ia mesti ditulis dalam pradaftar sebelum ujian dijalankan. Sistem B Clenow gagal tepat di sini: MDD-nya lulus dengan lega tetapi hanya kerana pendedahannya 35.4%.
+
+## Tujuh paksi yang tidak pernah dienumerasi
+
+MASUK, CARA, KELUAR dan URUTAN semuanya menjawab soalan **"saham mana dan bila"**. Tujuh paksi di bawah menjawab soalan yang berbeza, dan sebelum 30 Okt 2026 tiada satu pun pernah disenaraikan sebagai pilihan yang boleh diuji — walaupun beberapa daripadanya sudah **diukur secara kebetulan** dalam kajian lain.
+
+Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A dan W yang sudah bermakna dalam repo ini.
+
+### Gabungan signal (paksi KELIMA) — paksi yang paling penting
+
+**GB01** — `DAN (persilangan): semua syarat mesti benar` · asas semua 147 MASUK (repo) · DIUJI · INI yang SETUP.md ukur: 0 daripada 598 lift positif, sebab STRUKTUR bukan pemilihan. Setiap syarat tambahan membuang lebih banyak bar, dan bar yang dibuang termasuk ekor kanan.
+
+**GB02** — `ATAU (kesatuan): mana-mana satu syarat benar` · akibat logik SETUP.md (repo) · SEDIA · BELUM PERNAH DIUJI, dan ia secara struktur BERTENTANGAN dengan kegagalan yang diukur: kesatuan MENAMBAH bar, bukan membuang. Jika masalahnya "menapis membuang ekor", maka operasi yang betul ialah kesatuan, bukan persilangan. Ini teknik yang saya tertinggal.
+
+**GB03** — `Undi k-daripada-n syarat benar` · ensemble klasik (umum) · SEDIA · k=1 ialah GB02, k=n ialah GB01; k di antaranya belum pernah diuji
+
+**GB04** — `Agregat pangkat: purata pangkat merentas n signal -> satu skor` · ensemble klasik (umum) · SEDIA · menukar penapis menjadi URUTAN. SISTEM.md ukur urutan skor BERTERUSAN mempunyai sebaran benih 0.00 lawan 17.3 mata/tahun bagi susunan sewenang-wenang - jadi ini juga membaiki kebolehpercayaan keputusan, bukan hanya pulangan.
+
+**GB05** — `Jumlah berpemberat sama bagi skor ternormal` · ensemble klasik (umum) · SEDIA
+
+**GB06** — `Berat songsang-korelasi antara signal` · ensemble klasik (umum) · PERLU:korelasi_signal
+
+**GB07** — `Hierarki: signal A tentukan ALAM, signal B tentukan URUTAN` · struktur (repo) · SEDIA · bukan penapis bertindan - setiap signal buat kerja BERBEZA, jadi ia tidak menambah pembuangan bar
+
+**GB08** — `Penapis TERBALIK: buang yang terbukti rugi, bukan pilih yang terbukti untung` · akibat logik KOLAM_EKOR.md (repo) · SEDIA · pada taburan terpencong kanan, membuang ekor KIRI tidak menyentuh ekor KANAN. Itu operasi BERBEZA daripada memilih. KAEDAH_TERBAIK.md sudah kenal pasti 25 kaedah Mxx terbukti NEGATIF pada BH-FDR q <= 0.05 - senarai buang itu SUDAH ADA dan belum pernah diguna.
+
+### Saiz posisi (paksi KEENAM)
+
+**SZ01** — `berat sama rata merentas slot` · asas repo (repo) · DIUJI · asas setiap lorong portfolio_slot kecuali RISIKO_10
+
+**SZ02** — `pariti risiko Clenow: nilai = 0.001 x ekuiti / ATR%` · Clenow (buku) · DIUJI · Sistem B; memberi pendedahan 35.4% sahaja kerana ATR peneraju 5-6% (SISTEM.md)
+
+**SZ03** — `risiko 1% / (4 x ATR14%), had 2-25%` · repo fasa 1b (repo) · DIUJI · RISIKO_10; DITOLAK untuk pulangan tetapi memperbaiki MDD 6/6 tahun (KEPUTUSAN_1B.md)
+
+**SZ04** — `pecahan tetap f% ekuiti setiap posisi` · klasik (umum) · SEDIA
+
+**SZ05** — `Kelly pecahan (f* x 0.25)` · Kelly / Thorp (buku) · PERLU:kelly · Kelly perlu anggaran kebarangkalian DAN nisbah untung/rugi. KOMBINASI.md ukur nisbah itu bergantung pada KELUAR (untung purata +4.06% dengan sasaran lawan +31.03% tanpa), jadi f* Kelly berubah dengan keluar BUKAN dengan masuk.
+
+**SZ06** — `sasaran volatiliti portfolio (skala pendedahan ke vol sasaran)` · konsensus institusi (umum) · PERLU:vol_portfolio · AMARAN: ini mengubah PENDEDAHAN, jadi ia tertakluk kepada ujian penguasaan SISTEM.md - nisbah CAGR/abs(MDD) mesti melepasi 0.669
+
+**SZ07** — `sumbangan risiko sama (ERC)` · Maillard, Roncalli & Teiletche (akademik) · PERLU:matriks_kovarians
+
+**SZ08** — `Optimal f (Vince)` · Ralph Vince (buku) · PERLU:optimal_f · Vince sendiri beramaran ia memaksimumkan pertumbuhan geometri tetapi dengan drawdown melampau; pada sasaran MDD repo ia hampir pasti gagal
+
+**SZ09** — `saiz berkadar dengan skor urutan` · struktur (repo) · SEDIA · menyambung paksi URUTAN kepada paksi SAIZ: skor tinggi dapat berat lebih besar
+
+**SZ10** — `berat sama rata atas KOLAM PENUH, bukan 8-10 slot` · akibat logik KOLAM_EKOR.md (repo) · SEDIA · KOLAM_EKOR.md SUDAH ukur: kolam berat sama rata SELURUH memberi +1.64%/bulan manakala saham MEDIAN kolam memberi +0.82% dan SPY +1.82%. Jadi memegang SEMUA mengalahkan memilih 10 dengan 0.82 mata sebulan, tanpa apa-apa signal. Ini BELUM pernah diuji sebagai lorong ke hadapan, dan ia satu-satunya pembinaan yang menangkap ekor secara struktur.
+
+### Definisi alam (paksi KETUJUH)
+
+**AL01** — `Release autotune-data-a02` · repo (repo) · DIUJI · SATU-SATUNYA alam yang pernah diguna dalam seluruh kajian. TIADA saham delist = bias survivorship (SPEC.md). Larangan A01 kekal: ia membuang saham meruap.
+
+**AL02** — `konstituen skrin Syariah SPUS sahaja` · repo data/skrin/etf_shariah.csv (repo) · SEDIA · JURANG YANG PENTING: repo menapis belian melalui SPUS tetapi seluruh kajian REVERSE guna A02 penuh. Alam kajian dan alam dagangan BUKAN sama.
+
+**AL03** — `had harga minimum USD3` · konsensus screener (umum) · SEDIA
+
+**AL04** — `N teratas ikut nilai dolar harian` · Qullamaggie / konsensus (blog) · SEDIA · lajur nilai20 sudah ada
+
+**AL05** — `jalur permodalan pasaran (kecil / sederhana / besar)` · akademik faktor saiz (akademik) · PERLU:kapitalisasi · KOLAM_EKOR.md menunjukkan kadar asas kolam ialah pengikat; jalur saiz ialah cara paling terus mengubahnya
+
+**AL06** — `keanggotaan indeks titik-masa (S&P 500 / Russell 1000 / 2000)` · konsensus (umum) · PERLU:keanggotaan
+
+**AL07** — `umur IPO > 1 tahun (atau < 5 tahun untuk peneraju baharu)` · O’Neil / Minervini (buku) · PERLU:tarikh_ipo · sumber BERCANGGAH arah: beberapa pakar ELAK IPO baharu, yang lain MENCARI mereka
+
+**AL08** — `had pendedahan sektor maksimum` · konsensus pengurusan risiko (umum) · SEDIA
+
+### Tempoh pegang (paksi KELAPAN)
+
+**PG01** — `5 sesi` · swing pendek (umum) · SEDIA
+
+**PG02** — `10 sesi` · swing (umum) · DIUJI · KAEDAH_TERBAIK.md: hanya kumpulan <= 10 hari hampir matang (53% terbuka)
+
+**PG03** — `21 sesi (~1 bulan)` · swing panjang (umum) · SEDIA
+
+**PG04** — `63 sesi (~3 bulan)` · asas kajian (repo) · DIUJI · asas SETUP.md dan KOMBINASI.md; keluar X03
+
+**PG05** — `126 sesi (~6 bulan)` · momentum akademik (akademik) · SEDIA
+
+**PG06** — `252 sesi (~1 tahun)` · kedudukan (umum) · SEDIA · K195 lapor pegangan purata ~305 hari = kedudukan, bukan swing
+
+### Kekerapan imbang (paksi KESEMBILAN)
+
+**IB01** — `pada isyarat sahaja (tiada imbang berkala)` · asas repo (repo) · DIUJI · asas Lejar Penuh dan setiap lorong portfolio_slot: posisi dibuka pada isyarat dan ditutup pada keluar, tanpa imbang berat di antaranya
+
+**IB02** — `harian` · konsensus (umum) · SEDIA · kos dagangan paling tinggi
+
+**IB03** — `mingguan` · konsensus (umum) · SEDIA
+
+**IB04** — `bulanan` · Clenow / konsensus (buku) · DIUJI · Sistem B dan ujian penguasaan SPUS+tunai kedua-duanya bulanan
+
+**IB05** — `jalur hanyut (imbang hanya bila berat tersasar > X%)` · QuantJourney W02/W12 (quantjourney-bt) · SEDIA · mengurangkan kos berbanding imbang berkala tetap
+
+### Had kepekatan dan korelasi (paksi KESEPULUH)
+
+**KR01** — `tiada had korelasi` · asas repo (repo) · DIUJI · 8-10 slot yang semuanya dalam satu industri = secara berkesan 2-3 slot. Belum pernah diukur dalam repo ini.
+
+**KR02** — `had korelasi berpasangan maksimum antara pegangan` · konsensus pengurusan risiko (umum) · PERLU:matriks_kovarians
+
+**KR03** — `had bilangan maksimum setiap industri` · konsensus (umum) · SEDIA · lajur industri sudah ada
+
+**KR04** — `kluster korelasi: satu pegangan setiap kluster` · konsensus (akademik) · PERLU:matriks_kovarians
+
+### Instrumen (paksi KESEBELAS)
+
+**IS01** — `saham tunggal` · asas repo (repo) · DIUJI · SETUP.md: dagangan median -5.19% tetapi min +3.03% = terpencong kanan teruk
+
+**IS02** — `putaran ETF sektor` · konsensus (umum) · SEDIA · TITIK TENGAH yang belum diuji: SETUP.md mendapati SPY +3.356% dan QQQ +4.419% melepasi syarat ekor dengan mudah (menang ~77% lawan ~31%) kerana INDEKS ITULAH kepelbagaian merentas ekor. ETF sektor terletak antara saham tunggal (ekor teruk) dan SPUS (ekor baik).
+
+**IS03** — `SPUS + tunai diimbang bulanan` · ujian penguasaan SISTEM.md (repo) · DIUJI · INI YANG MENANG setakat ini: pada pendedahan sama ia mengalahkan Clenow pada KEDUA-DUA paksi. Nisbah CAGR/abs(MDD) hampir pemalar 0.642-0.669 merentas berat.
+
+**IS04** — `campuran saham + ETF teras` · konsensus (umum) · SEDIA · teras ETF menangkap ekor, satelit saham menguji signal - belum pernah diuji
 
 ## Saluran rangkaian: apa yang boleh dicapai dalam sesi awan
 

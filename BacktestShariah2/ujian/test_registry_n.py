@@ -21,22 +21,34 @@ class TestStruktur(unittest.TestCase):
         self.assertEqual(len(R.KELUAR), 45)
         self.assertEqual(len(R.CARA), 12)
         self.assertEqual(len(R.URUTAN), 13)
+        self.assertEqual(len(R.GABUNGAN), 8)
+        self.assertEqual(len(R.SAIZ), 10)
+        self.assertEqual(len(R.ALAM), 8)
+        self.assertEqual(len(R.PEGANG), 6)
+        self.assertEqual(len(R.IMBANG), 5)
+        self.assertEqual(len(R.KORELASI), 4)
+        self.assertEqual(len(R.INSTRUMEN), 4)
+        self.assertEqual(len(R.PAKSI_LAIN), 10)
 
     def test_id_berturutan(self):
         self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 148)])
         self.assertEqual([b[0] for b in R.KELUAR], [f'X{i:02d}' for i in range(1, 46)])
         self.assertEqual([b[0] for b in R.CARA], [f'C{i:02d}' for i in range(1, 13)])
         self.assertEqual([b[0] for b in R.URUTAN], [f'U{i:02d}' for i in range(1, 14)])
+        for nama, baris, awalan in R.paksi():
+            self.assertEqual([b[0] for b in baris],
+                             [f'{awalan}{i:02d}' for i in range(1, len(baris) + 1)], nama)
 
     def test_medan_penuh(self):
         for b in R.MASUK:
             self.assertEqual(len(b), 8, b[0])
             for medan in b[:7]:        # nota dibenarkan kosong
                 self.assertTrue(str(medan).strip(), b[0])
-        for b in list(R.KELUAR) + list(R.CARA) + list(R.URUTAN):
-            self.assertEqual(len(b), 6, b[0])
-            for medan in b[:5]:
-                self.assertTrue(str(medan).strip(), b[0])
+        for _n, baris, _a in R.paksi():
+            for b in baris:
+                self.assertEqual(len(b), 6, b[0])
+                for medan in b[:5]:
+                    self.assertTrue(str(medan).strip(), b[0])
 
     def test_lajur_sepadan(self):
         self.assertEqual(len(R.LAJUR), 8)
@@ -56,8 +68,10 @@ class TestStruktur(unittest.TestCase):
 
 class TestStatus(unittest.TestCase):
     def test_status_sah(self):
-        for st in ([b[6] for b in R.MASUK] + [b[4] for b in R.KELUAR] +
-                   [b[4] for b in R.CARA] + [b[4] for b in R.URUTAN]):
+        semua = [b[6] for b in R.MASUK]
+        for _n, baris, _a in R.paksi():
+            semua += [b[4] for b in baris]
+        for st in semua:
             self.assertTrue(st in ('DIUJI', 'SEDIA') or st.startswith('PERLU:'), st)
 
     def test_diuji_ada_nota(self):
@@ -65,9 +79,10 @@ class TestStatus(unittest.TestCase):
         for b in R.MASUK:
             if b[6] == 'DIUJI':
                 self.assertTrue(b[7].strip(), b[0])
-        for b in list(R.KELUAR) + list(R.CARA) + list(R.URUTAN):
-            if b[4] == 'DIUJI':
-                self.assertTrue(b[5].strip(), b[0])
+        for _n, baris, _a in R.paksi():
+            for b in baris:
+                if b[4] == 'DIUJI':
+                    self.assertTrue(b[5].strip(), b[0])
 
     def test_perlu_ada_nama_indikator(self):
         for b in R.MASUK:
@@ -145,6 +160,29 @@ class TestStatus(unittest.TestCase):
         self.assertIn('17 daripada 191', u12[5])
         self.assertIn('BELUM dibaca', u12[5])
 
+    def test_gb01_semua_masuk_adalah_dan(self):
+        # kesilapan struktur: 147 MASUK semuanya penapis DAN, yang SETUP.md ukur gagal
+        gb01 = [b for b in R.GABUNGAN if b[0] == 'GB01'][0]
+        self.assertEqual(gb01[4], 'DIUJI')
+        self.assertIn('0 daripada 598', gb01[5])
+
+    def test_gb02_belum_diuji(self):
+        gb02 = [b for b in R.GABUNGAN if b[0] == 'GB02'][0]
+        self.assertEqual(gb02[4], 'SEDIA')
+        self.assertIn('BELUM PERNAH DIUJI', gb02[5])
+
+    def test_lima_calon_tanpa_sumber_baharu(self):
+        # GB02, GB04, GB08, SZ10, IS02 mesti SEDIA: tiada data/domain baharu diperlukan
+        cari = {'GB02': R.GABUNGAN, 'GB04': R.GABUNGAN, 'GB08': R.GABUNGAN,
+                'SZ10': R.SAIZ, 'IS02': R.INSTRUMEN}
+        for _id, senarai in cari.items():
+            b = [x for x in senarai if x[0] == _id][0]
+            self.assertEqual(b[4], 'SEDIA', _id)
+
+    def test_tajuk_paksi_lengkap(self):
+        for nama, _b, _a in R.paksi()[3:]:
+            self.assertIn(nama, R.TAJUK_PAKSI)
+
     def test_kira(self):
         km = R._kira(R.MASUK, 6)
         self.assertEqual(sum(km.values()), len(R.MASUK))
@@ -199,20 +237,23 @@ class TestKeluaran(unittest.TestCase):
                 R.SPEC = os.path.join(d, 'SPEC_SEMUA_N.md')
                 n = R.tulis_csv()
                 R.tulis_spec()
-                self.assertEqual(n, len(R.MASUK) + len(R.KELUAR) + len(R.CARA) +
-                                 len(R.URUTAN))
+                self.assertEqual(
+                    n, len(R.MASUK) + sum(len(b) for _n, b, _a in R.paksi()))
                 with open(R.CSV, encoding='utf-8') as f:
                     baris = list(csv.DictReader(f))
                 self.assertEqual(len(baris), n)
                 self.assertEqual(baris[0]['id'], 'N01')
                 self.assertEqual(baris[len(R.MASUK)]['keluarga'], 'KELUAR')
-                self.assertEqual(baris[-1]['keluarga'], 'URUTAN')
+                self.assertEqual(baris[-1]['keluarga'], 'INSTRUMEN')
                 teks = open(R.SPEC, encoding='utf-8').read()
                 self.assertIn('SPEC SEMUA N', teks)
                 self.assertIn('N147', teks)
                 self.assertIn('X45', teks)
                 self.assertIn('C12', teks)
                 self.assertIn('U13', teks)
+                for tanda in ('GB02', 'SZ10', 'AL02', 'PG06', 'IB05', 'KR04', 'IS02'):
+                    self.assertIn(tanda, teks)
+                self.assertIn('Kesilapan struktur dalam registry ini', teks)
                 self.assertIn('kadar pulangan sudah boleh diukur', teks)
                 self.assertIn('peruntukan tunai yang disamarkan', teks)
                 self.assertIn('Sempadan K / M / N', teks)
@@ -226,7 +267,7 @@ class TestKeluaran(unittest.TestCase):
         with open(R.CSV, encoding='utf-8') as f:
             baris = list(csv.DictReader(f))
         self.assertEqual(len(baris),
-                         len(R.MASUK) + len(R.KELUAR) + len(R.CARA) + len(R.URUTAN))
+                         len(R.MASUK) + sum(len(b) for _n, b, _a in R.paksi()))
         self.assertEqual([b['id'] for b in baris[:len(R.MASUK)]], [b[0] for b in R.MASUK])
 
     def test_main_pulang_sifar(self):

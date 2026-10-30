@@ -632,14 +632,187 @@ URUTAN = [
   'PERLU:data_semakan', 'versi urutan bagi N145'),
 ]
 
+# ===== TUJUH PAKSI BAHARU (30 Okt 2026) =====
+# Empat paksi pertama (MASUK/CARA/KELUAR/URUTAN) semuanya menjawab "saham mana dan bila".
+# Tujuh di bawah menjawab soalan yang BERBEZA, dan tiada satu pun pernah dienumerasi.
+# Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A, W repo.
+
+# (id, logik gabungan, sumber, platform, status, nota)
+# PAKSI INI YANG PALING PENTING. Kesemua 147 MASUK ialah syarat DAN = penapis, dan
+# SETUP.md sudah ukur 0/598 lift positif dengan sebab STRUKTUR: menapis membuang bar, dan
+# pada taburan terpencong kanan ia terutamanya membuang peluang pada EKOR.
+GABUNGAN = [
+ ('GB01', 'DAN (persilangan): semua syarat mesti benar', 'asas semua 147 MASUK', 'repo',
+  'DIUJI',
+  'INI yang SETUP.md ukur: 0 daripada 598 lift positif, sebab STRUKTUR bukan pemilihan. '
+  'Setiap syarat tambahan membuang lebih banyak bar, dan bar yang dibuang termasuk ekor kanan.'),
+ ('GB02', 'ATAU (kesatuan): mana-mana satu syarat benar', 'akibat logik SETUP.md', 'repo',
+  'SEDIA',
+  'BELUM PERNAH DIUJI, dan ia secara struktur BERTENTANGAN dengan kegagalan yang diukur: '
+  'kesatuan MENAMBAH bar, bukan membuang. Jika masalahnya "menapis membuang ekor", maka '
+  'operasi yang betul ialah kesatuan, bukan persilangan. Ini teknik yang saya tertinggal.'),
+ ('GB03', 'Undi k-daripada-n syarat benar', 'ensemble klasik', 'umum', 'SEDIA',
+  'k=1 ialah GB02, k=n ialah GB01; k di antaranya belum pernah diuji'),
+ ('GB04', 'Agregat pangkat: purata pangkat merentas n signal -> satu skor', 'ensemble klasik',
+  'umum', 'SEDIA',
+  'menukar penapis menjadi URUTAN. SISTEM.md ukur urutan skor BERTERUSAN mempunyai sebaran '
+  'benih 0.00 lawan 17.3 mata/tahun bagi susunan sewenang-wenang - jadi ini juga membaiki '
+  'kebolehpercayaan keputusan, bukan hanya pulangan.'),
+ ('GB05', 'Jumlah berpemberat sama bagi skor ternormal', 'ensemble klasik', 'umum', 'SEDIA',
+  ''),
+ ('GB06', 'Berat songsang-korelasi antara signal', 'ensemble klasik', 'umum',
+  'PERLU:korelasi_signal', ''),
+ ('GB07', 'Hierarki: signal A tentukan ALAM, signal B tentukan URUTAN', 'struktur', 'repo',
+  'SEDIA',
+  'bukan penapis bertindan - setiap signal buat kerja BERBEZA, jadi ia tidak menambah '
+  'pembuangan bar'),
+ ('GB08', 'Penapis TERBALIK: buang yang terbukti rugi, bukan pilih yang terbukti untung',
+  'akibat logik KOLAM_EKOR.md', 'repo', 'SEDIA',
+  'pada taburan terpencong kanan, membuang ekor KIRI tidak menyentuh ekor KANAN. Itu operasi '
+  'BERBEZA daripada memilih. KAEDAH_TERBAIK.md sudah kenal pasti 25 kaedah Mxx terbukti '
+  'NEGATIF pada BH-FDR q <= 0.05 - senarai buang itu SUDAH ADA dan belum pernah diguna.'),
+]
+
+# (id, peraturan saiz, sumber, platform, status, nota)
+SAIZ = [
+ ('SZ01', 'berat sama rata merentas slot', 'asas repo', 'repo', 'DIUJI',
+  'asas setiap lorong portfolio_slot kecuali RISIKO_10'),
+ ('SZ02', 'pariti risiko Clenow: nilai = 0.001 x ekuiti / ATR%', 'Clenow', 'buku', 'DIUJI',
+  'Sistem B; memberi pendedahan 35.4% sahaja kerana ATR peneraju 5-6% (SISTEM.md)'),
+ ('SZ03', 'risiko 1% / (4 x ATR14%), had 2-25%', 'repo fasa 1b', 'repo', 'DIUJI',
+  'RISIKO_10; DITOLAK untuk pulangan tetapi memperbaiki MDD 6/6 tahun (KEPUTUSAN_1B.md)'),
+ ('SZ04', 'pecahan tetap f% ekuiti setiap posisi', 'klasik', 'umum', 'SEDIA', ''),
+ ('SZ05', 'Kelly pecahan (f* x 0.25)', 'Kelly / Thorp', 'buku', 'PERLU:kelly',
+  'Kelly perlu anggaran kebarangkalian DAN nisbah untung/rugi. KOMBINASI.md ukur nisbah itu '
+  'bergantung pada KELUAR (untung purata +4.06% dengan sasaran lawan +31.03% tanpa), jadi '
+  'f* Kelly berubah dengan keluar BUKAN dengan masuk.'),
+ ('SZ06', 'sasaran volatiliti portfolio (skala pendedahan ke vol sasaran)', 'konsensus institusi',
+  'umum', 'PERLU:vol_portfolio',
+  'AMARAN: ini mengubah PENDEDAHAN, jadi ia tertakluk kepada ujian penguasaan SISTEM.md - '
+  'nisbah CAGR/abs(MDD) mesti melepasi 0.669'),
+ ('SZ07', 'sumbangan risiko sama (ERC)', 'Maillard, Roncalli & Teiletche', 'akademik',
+  'PERLU:matriks_kovarians', ''),
+ ('SZ08', 'Optimal f (Vince)', 'Ralph Vince', 'buku', 'PERLU:optimal_f',
+  'Vince sendiri beramaran ia memaksimumkan pertumbuhan geometri tetapi dengan drawdown '
+  'melampau; pada sasaran MDD repo ia hampir pasti gagal'),
+ ('SZ09', 'saiz berkadar dengan skor urutan', 'struktur', 'repo', 'SEDIA',
+  'menyambung paksi URUTAN kepada paksi SAIZ: skor tinggi dapat berat lebih besar'),
+ ('SZ10', 'berat sama rata atas KOLAM PENUH, bukan 8-10 slot', 'akibat logik KOLAM_EKOR.md',
+  'repo', 'SEDIA',
+  'KOLAM_EKOR.md SUDAH ukur: kolam berat sama rata SELURUH memberi +1.64%/bulan manakala '
+  'saham MEDIAN kolam memberi +0.82% dan SPY +1.82%. Jadi memegang SEMUA mengalahkan memilih '
+  '10 dengan 0.82 mata sebulan, tanpa apa-apa signal. Ini BELUM pernah diuji sebagai lorong '
+  'ke hadapan, dan ia satu-satunya pembinaan yang menangkap ekor secara struktur.'),
+]
+
+# (id, definisi alam, sumber, platform, status, nota)
+ALAM = [
+ ('AL01', 'Release autotune-data-a02', 'repo', 'repo', 'DIUJI',
+  'SATU-SATUNYA alam yang pernah diguna dalam seluruh kajian. TIADA saham delist = bias '
+  'survivorship (SPEC.md). Larangan A01 kekal: ia membuang saham meruap.'),
+ ('AL02', 'konstituen skrin Syariah SPUS sahaja', 'repo data/skrin/etf_shariah.csv', 'repo',
+  'SEDIA',
+  'JURANG YANG PENTING: repo menapis belian melalui SPUS tetapi seluruh kajian REVERSE guna '
+  'A02 penuh. Alam kajian dan alam dagangan BUKAN sama.'),
+ ('AL03', 'had harga minimum USD3', 'konsensus screener', 'umum', 'SEDIA', ''),
+ ('AL04', 'N teratas ikut nilai dolar harian', 'Qullamaggie / konsensus', 'blog', 'SEDIA',
+  'lajur nilai20 sudah ada'),
+ ('AL05', 'jalur permodalan pasaran (kecil / sederhana / besar)', 'akademik faktor saiz',
+  'akademik', 'PERLU:kapitalisasi',
+  'KOLAM_EKOR.md menunjukkan kadar asas kolam ialah pengikat; jalur saiz ialah cara paling '
+  'terus mengubahnya'),
+ ('AL06', 'keanggotaan indeks titik-masa (S&P 500 / Russell 1000 / 2000)', 'konsensus',
+  'umum', 'PERLU:keanggotaan', ''),
+ ('AL07', 'umur IPO > 1 tahun (atau < 5 tahun untuk peneraju baharu)', 'O’Neil / Minervini',
+  'buku', 'PERLU:tarikh_ipo',
+  'sumber BERCANGGAH arah: beberapa pakar ELAK IPO baharu, yang lain MENCARI mereka'),
+ ('AL08', 'had pendedahan sektor maksimum', 'konsensus pengurusan risiko', 'umum', 'SEDIA',
+  ''),
+]
+
+# (id, tempoh pegang, sumber, platform, status, nota)
+PEGANG = [
+ ('PG01', '5 sesi', 'swing pendek', 'umum', 'SEDIA', ''),
+ ('PG02', '10 sesi', 'swing', 'umum', 'DIUJI',
+  'KAEDAH_TERBAIK.md: hanya kumpulan <= 10 hari hampir matang (53% terbuka)'),
+ ('PG03', '21 sesi (~1 bulan)', 'swing panjang', 'umum', 'SEDIA', ''),
+ ('PG04', '63 sesi (~3 bulan)', 'asas kajian', 'repo', 'DIUJI',
+  'asas SETUP.md dan KOMBINASI.md; keluar X03'),
+ ('PG05', '126 sesi (~6 bulan)', 'momentum akademik', 'akademik', 'SEDIA', ''),
+ ('PG06', '252 sesi (~1 tahun)', 'kedudukan', 'umum', 'SEDIA',
+  'K195 lapor pegangan purata ~305 hari = kedudukan, bukan swing'),
+]
+
+# (id, kekerapan imbang, sumber, platform, status, nota)
+IMBANG = [
+ ('IB01', 'pada isyarat sahaja (tiada imbang berkala)', 'asas repo', 'repo', 'DIUJI',
+  'asas Lejar Penuh dan setiap lorong portfolio_slot: posisi dibuka pada isyarat dan ditutup '
+  'pada keluar, tanpa imbang berat di antaranya'),
+ ('IB02', 'harian', 'konsensus', 'umum', 'SEDIA', 'kos dagangan paling tinggi'),
+ ('IB03', 'mingguan', 'konsensus', 'umum', 'SEDIA', ''),
+ ('IB04', 'bulanan', 'Clenow / konsensus', 'buku', 'DIUJI',
+  'Sistem B dan ujian penguasaan SPUS+tunai kedua-duanya bulanan'),
+ ('IB05', 'jalur hanyut (imbang hanya bila berat tersasar > X%)', 'QuantJourney W02/W12',
+  'quantjourney-bt', 'SEDIA', 'mengurangkan kos berbanding imbang berkala tetap'),
+]
+
+# (id, had kepekatan, sumber, platform, status, nota)
+KORELASI = [
+ ('KR01', 'tiada had korelasi', 'asas repo', 'repo', 'DIUJI',
+  '8-10 slot yang semuanya dalam satu industri = secara berkesan 2-3 slot. Belum pernah '
+  'diukur dalam repo ini.'),
+ ('KR02', 'had korelasi berpasangan maksimum antara pegangan', 'konsensus pengurusan risiko',
+  'umum', 'PERLU:matriks_kovarians', ''),
+ ('KR03', 'had bilangan maksimum setiap industri', 'konsensus', 'umum', 'SEDIA',
+  'lajur industri sudah ada'),
+ ('KR04', 'kluster korelasi: satu pegangan setiap kluster', 'konsensus', 'akademik',
+  'PERLU:matriks_kovarians', ''),
+]
+
+# (id, instrumen, sumber, platform, status, nota)
+INSTRUMEN = [
+ ('IS01', 'saham tunggal', 'asas repo', 'repo', 'DIUJI',
+  'SETUP.md: dagangan median -5.19% tetapi min +3.03% = terpencong kanan teruk'),
+ ('IS02', 'putaran ETF sektor', 'konsensus', 'umum', 'SEDIA',
+  'TITIK TENGAH yang belum diuji: SETUP.md mendapati SPY +3.356% dan QQQ +4.419% melepasi '
+  'syarat ekor dengan mudah (menang ~77% lawan ~31%) kerana INDEKS ITULAH kepelbagaian '
+  'merentas ekor. ETF sektor terletak antara saham tunggal (ekor teruk) dan SPUS (ekor baik).'),
+ ('IS03', 'SPUS + tunai diimbang bulanan', 'ujian penguasaan SISTEM.md', 'repo', 'DIUJI',
+  'INI YANG MENANG setakat ini: pada pendedahan sama ia mengalahkan Clenow pada KEDUA-DUA '
+  'paksi. Nisbah CAGR/abs(MDD) hampir pemalar 0.642-0.669 merentas berat.'),
+ ('IS04', 'campuran saham + ETF teras', 'konsensus', 'umum', 'SEDIA',
+  'teras ETF menangkap ekor, satelit saham menguji signal - belum pernah diuji'),
+]
+
+# (nama paksi, nama pemboleh ubah, awalan id). Diselesaikan melalui paksi() supaya ujian
+# boleh menggantikan senarai individu tanpa senarai ini memegang rujukan lama.
+PAKSI_LAIN = [('KELUAR', 'KELUAR', 'X'), ('CARA', 'CARA', 'C'), ('URUTAN', 'URUTAN', 'U'),
+              ('GABUNGAN', 'GABUNGAN', 'GB'), ('SAIZ', 'SAIZ', 'SZ'), ('ALAM', 'ALAM', 'AL'),
+              ('PEGANG', 'PEGANG', 'PG'), ('IMBANG', 'IMBANG', 'IB'),
+              ('KORELASI', 'KORELASI', 'KR'), ('INSTRUMEN', 'INSTRUMEN', 'IS')]
+
+
+def paksi():
+    """Pulangkan [(nama, baris, awalan)] dengan senarai diselesaikan pada masa panggil."""
+    g = globals()
+    return [(nama, g[pemboleh], awalan) for nama, pemboleh, awalan in PAKSI_LAIN]
+
+TAJUK_PAKSI = {
+ 'GABUNGAN': 'Gabungan signal (paksi KELIMA) — paksi yang paling penting',
+ 'SAIZ': 'Saiz posisi (paksi KEENAM)',
+ 'ALAM': 'Definisi alam (paksi KETUJUH)',
+ 'PEGANG': 'Tempoh pegang (paksi KELAPAN)',
+ 'IMBANG': 'Kekerapan imbang (paksi KESEMBILAN)',
+ 'KORELASI': 'Had kepekatan dan korelasi (paksi KESEPULUH)',
+ 'INSTRUMEN': 'Instrumen (paksi KESEBELAS)',
+}
+
 
 def semak():
     """Pulangkan senarai masalah; kosong bermakna registry konsisten."""
     masalah = []
-    for nama, baris, awalan, n_medan in (('MASUK', MASUK, 'N', 8),
-                                        ('KELUAR', KELUAR, 'X', 6),
-                                        ('CARA', CARA, 'C', 6),
-                                        ('URUTAN', URUTAN, 'U', 6)):
+    semua = [('MASUK', MASUK, 'N', 8)] + [(n, b, a, 6) for n, b, a in paksi()]
+    for nama, baris, awalan, n_medan in semua:
         ids = [b[0] for b in baris]
         if len(set(ids)) != len(ids):
             masalah.append(f'{nama}: id berulang')
@@ -662,14 +835,11 @@ def tulis_csv():
         w.writerow(LAJUR)
         for b in MASUK:
             w.writerow(list(b))
-        for b in KELUAR:
-            # keluar: id, keluarga KELUAR, nama = peraturan, masuk kosong
-            w.writerow([b[0], 'KELUAR', b[1], '', b[2], b[3], b[4], b[5]])
-        for b in CARA:
-            w.writerow([b[0], 'CARA', b[1], '', b[2], b[3], b[4], b[5]])
-        for b in URUTAN:
-            w.writerow([b[0], 'URUTAN', b[1], '', b[2], b[3], b[4], b[5]])
-    return len(MASUK) + len(KELUAR) + len(CARA) + len(URUTAN)
+        for nama, baris, _ in paksi():
+            # paksi lain: id, keluarga, nama = peraturan, lajur masuk kosong
+            for b in baris:
+                w.writerow([b[0], nama, b[1], '', b[2], b[3], b[4], b[5]])
+    return len(MASUK) + sum(len(b) for _, b, _ in paksi())
 
 
 def _kira(baris, idx_status):
@@ -685,10 +855,10 @@ def tulis_spec():
     kk = _kira(KELUAR, 4)
     kc = _kira(CARA, 4)
     ku = _kira(URUTAN, 4)
-    perlu = sorted({b[6].split(':', 1)[1] for b in MASUK if b[6].startswith('PERLU:')} |
-                   {b[4].split(':', 1)[1] for b in KELUAR if b[4].startswith('PERLU:')} |
-                   {b[4].split(':', 1)[1] for b in CARA if b[4].startswith('PERLU:')} |
-                   {b[4].split(':', 1)[1] for b in URUTAN if b[4].startswith('PERLU:')})
+    perlu = {b[6].split(':', 1)[1] for b in MASUK if b[6].startswith('PERLU:')}
+    for _, baris, _a in paksi():
+        perlu |= {b[4].split(':', 1)[1] for b in baris if b[4].startswith('PERLU:')}
+    perlu = sorted(perlu)
     L = []
     A = L.append
     A('# SPEC SEMUA N — kombinasi daripada pakar, forum dan platform sosial')
@@ -714,6 +884,40 @@ def tulis_spec():
       'Jadi setiap baris di bawah ialah **satu versi tertentu daripada satu sumber '
       'tertentu**, bukan "peraturan rasmi" setup itu.')
     A('')
+    A('## Kesilapan struktur dalam registry ini, dan pembetulannya')
+    A('')
+    A('**Kesemua 147 baris MASUK ialah syarat `DAN`.** Setiap satu ialah penapis. Dan '
+      '`SETUP.md` sudah mengukur apa yang berlaku kepada penapis: **0 daripada 598 mempunyai '
+      'lift positif**, dan sebabnya **struktur, bukan pemilihan** — setiap penapis membuang '
+      'bar, dan kerana taburan saham tunggal terpencong kanan (dagangan median −5.19% tetapi '
+      'min +3.03%), menapis terutamanya membuang peluang pada **ekor kanan**, satu-satunya '
+      'bahagian yang membayar.')
+    A('')
+    A('Maka menambah baris MASUK ke-148 ialah variasi ke-148 bagi sesuatu yang **sudah '
+      'diukur gagal**. Enam sapuan sumber menambah baris pada paksi yang salah.')
+    A('')
+    A('Pembetulannya bukan signal lain. Ia **operasi lain**:')
+    A('')
+    A('- `GB02` **ATAU (kesatuan)** — menambah bar, bukan membuang. Jika masalahnya '
+      '"menapis membuang ekor", maka operasi yang betul ialah kesatuan. **Belum pernah '
+      'diuji.**')
+    A('- `GB04` **agregat pangkat** — menukar n penapis menjadi satu skor berterusan, '
+      'dan `SISTEM.md` mengukur urutan skor berterusan mempunyai sebaran benih **0.00** '
+      'lawan 17.3 mata/tahun.')
+    A('- `GB08` **penapis terbalik** — buang yang terbukti rugi. Pada taburan terpencong '
+      'kanan, membuang ekor KIRI tidak menyentuh ekor KANAN. `KAEDAH_TERBAIK.md` sudah '
+      'mengenal pasti **25 kaedah Mxx terbukti NEGATIF** pada BH-FDR q ≤ 0.05 — senarai '
+      'buang itu sudah ada dan belum pernah diguna.')
+    A('- `SZ10` **berat sama rata atas kolam PENUH** — `KOLAM_EKOR.md` sudah mengukur '
+      'kolam penuh +1.64%/bulan lawan saham median +0.82%. Memegang **semua** mengalahkan '
+      'memilih 10 dengan 0.82 mata sebulan, **tanpa apa-apa signal**.')
+    A('- `IS02` **putaran ETF sektor** — `SETUP.md` mendapati SPY +3.356% dan QQQ +4.419% '
+      'melepasi syarat ekor dengan mudah kerana **indeks itulah kepelbagaian merentas ekor**. '
+      'ETF sektor ialah titik tengah antara saham tunggal dan SPUS, dan belum diuji.')
+    A('')
+    A('Kelima-lima ini mengikut terus daripada ukuran yang repo **sudah** ada. Tiada satu '
+      'pun memerlukan sumber baharu, data baharu, atau domain yang disekat.')
+    A('')
     A('## Status')
     A('')
     A('- `DIUJI` — sudah ada hasil terukur; nota memberi angkanya dan fail laporan.')
@@ -726,6 +930,10 @@ def tulis_spec():
       f'Keluar: {len(KELUAR)} ({kk["DIUJI"]} DIUJI, {kk["SEDIA"]} SEDIA, {kk["PERLU"]} PERLU). '
       f'Cara: {len(CARA)} ({kc["DIUJI"]} DIUJI, {kc["SEDIA"]} SEDIA, {kc["PERLU"]} PERLU). '
       f'Urutan: {len(URUTAN)} ({ku["DIUJI"]} DIUJI, {ku["SEDIA"]} SEDIA, {ku["PERLU"]} PERLU).')
+    A('')
+    A('Tujuh paksi baharu (30 Okt 2026): ' + ' · '.join(
+        f'{nama} {len(baris)}' for nama, baris, _a in paksi()[3:]) +
+      f'. Jumlah semua paksi: {len(MASUK) + sum(len(b) for _n, b, _a in paksi())} baris.')
     A('')
     A('Indikator baharu yang diperlukan: ' + (', '.join(f'`{p}`' for p in perlu) or 'tiada') +
       '.')
@@ -823,6 +1031,24 @@ def tulis_spec():
       'sebelum ujian dijalankan. Sistem B Clenow gagal tepat di sini: MDD-nya lulus dengan '
       'lega tetapi hanya kerana pendedahannya 35.4%.')
     A('')
+    A('## Tujuh paksi yang tidak pernah dienumerasi')
+    A('')
+    A('MASUK, CARA, KELUAR dan URUTAN semuanya menjawab soalan **"saham mana dan bila"**. '
+      'Tujuh paksi di bawah menjawab soalan yang berbeza, dan sebelum 30 Okt 2026 tiada satu '
+      'pun pernah disenaraikan sebagai pilihan yang boleh diuji — walaupun beberapa '
+      'daripadanya sudah **diukur secara kebetulan** dalam kajian lain.')
+    A('')
+    A('Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A dan W '
+      'yang sudah bermakna dalam repo ini.')
+    A('')
+    for nama, baris, _a in paksi()[3:]:
+        A(f'### {TAJUK_PAKSI[nama]}')
+        A('')
+        for b in baris:
+            _id, aturan, sumber, plat, status, nota = b
+            A(f'**{_id}** — `{aturan}` · {sumber} ({plat}) · {status}' +
+              (f' · {nota}' if nota else ''))
+            A('')
     A('## Saluran rangkaian: apa yang boleh dicapai dalam sesi awan')
     A('')
     A('Diuji 30 Okt 2026. Ini menentukan sumber mana yang boleh digunakan sekarang dan mana '
@@ -970,12 +1196,15 @@ def main():
     kk = _kira(KELUAR, 4)
     kc = _kira(CARA, 4)
     ku = _kira(URUTAN, 4)
-    print(f'registry N: {len(MASUK)} masuk + {len(KELUAR)} keluar + {len(CARA)} cara '
-          f'+ {len(URUTAN)} urutan = {n} baris')
+    print(f'registry N: {n} baris merentas {1 + len(PAKSI_LAIN)} paksi')
     print(f'  masuk  : {km["DIUJI"]} DIUJI, {km["SEDIA"]} SEDIA, {km["PERLU"]} PERLU')
     print(f'  keluar : {kk["DIUJI"]} DIUJI, {kk["SEDIA"]} SEDIA, {kk["PERLU"]} PERLU')
     print(f'  cara   : {kc["DIUJI"]} DIUJI, {kc["SEDIA"]} SEDIA, {kc["PERLU"]} PERLU')
     print(f'  urutan : {ku["DIUJI"]} DIUJI, {ku["SEDIA"]} SEDIA, {ku["PERLU"]} PERLU')
+    for nama, baris, _a in paksi()[3:]:
+        k = _kira(baris, 4)
+        print(f'  {nama.lower():<10}: {len(baris):>3} baris — {k["DIUJI"]} DIUJI, '
+              f'{k["SEDIA"]} SEDIA, {k["PERLU"]} PERLU')
     print(f'  -> {os.path.relpath(CSV, AKAR)}')
     print(f'  -> {os.path.relpath(SPEC, AKAR)}')
     return 0
@@ -983,6 +1212,7 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+
 
 
 
