@@ -377,6 +377,92 @@ MASUK = [
   'Zarattini, Barbon & Aziz', 'SSRN/akademik', 'PERLU:intraday',
   'repo TIADA bar intrahari. Replikasi bebas pada 5 indeks lapor kelebihan KASAR berulang '
   'tetapi pulangan BERSIH hampir SIFAR selepas kos. Saiz asal: syer = risiko$/(masuk - rendah).'),
+ ('N131', 'LILIN', 'Keluarga penuh pola lilin TA-Lib (62 pola)',
+  'mana-mana daripada 62 pola lilin TA-Lib (senarai penuh dalam nota)',
+  'TA-Lib / Nison / Morris', 'pandas_ta cdl_pattern', 'PERLU:talib_cdl',
+  'AMARAN FDR: ini 62 UJIAN BERASINGAN, bukan satu - FDR mesti mengira 62. Repo kini ada DUA '
+  'sahaja (hammer, bullish_engulfing). Senarai: 2crows 3blackcrows 3inside 3linestrike '
+  '3outside 3starsinsouth 3whitesoldiers abandonedbaby advanceblock belthold breakaway '
+  'closingmarubozu concealbabyswall counterattack darkcloudcover doji dojistar dragonflydoji '
+  'engulfing eveningdojistar eveningstar gapsidesidewhite gravestonedoji hammer hangingman '
+  'harami haramicross highwave hikkake hikkakemod homingpigeon identical3crows inneck inside '
+  'invertedhammer kicking kickingbylength ladderbottom longleggeddoji longline marubozu '
+  'matchinglow mathold morningdojistar morningstar onneck piercing rickshawman risefall3methods '
+  'separatinglines shootingstar shortline spinningtop stalledpattern sticksandwich takuri '
+  'tasukigap thrusting tristar unique3river upsidegap2crows xsidegap3methods'),
+ ('N132', 'POLA', 'The Strat 2-1-2',
+  'bar arah (2), kemudian inside bar (1), kemudian pecah tinggi inside bar', 'Rob Smith',
+  'TradingView/X', 'PERLU:strat_bar',
+  'sumber TIDAK SEPAKAT sama ada ia pembalikan atau penerusan; bahan Rob Smith sendiri tidak '
+  'ditemui'),
+ ('N133', 'POLA', 'The Strat 3-1-2',
+  'outside bar (3), kemudian inside bar (1), kemudian pecah tinggi inside bar', 'Rob Smith',
+  'TradingView/X', 'PERLU:strat_bar', 'sumber umumnya anggap ini pembalikan'),
+ ('N134', 'OSILATOR', 'TD Sequential buy setup 9',
+  '9 bar berturut dengan tutup < tutup 4 bar lalu', 'DeMark', 'buku/pustaka',
+  'PERLU:td_seq', 'parameter kanonik: setup_lookback 4, setup_target 9'),
+ ('N135', 'OSILATOR', 'TD Sequential buy countdown 13',
+  'selepas setup 9 selesai, kira hingga 13 bar dengan tutup <= rendah 2 bar lalu (tidak perlu '
+  'berturut)', 'DeMark', 'buku/pustaka', 'PERLU:td_seq',
+  'satu pustaka menambah syarat bar 13 mesti melalui tutup bar countdown 8; itu pilihan '
+  'pengekodan, BUKAN peraturan asal DeMark'),
+ ('N136', 'POLA', 'Harmonik Gartley',
+  'XA->AB 0.618, AB->BC 0.382-0.886, BC->CD 1.27-1.618, XA->AD 0.786', 'Gartley / Carney',
+  'blog/capital.com', 'PERLU:harmonik', 'corak PENGUNDURAN: D kekal antara X dan A'),
+ ('N137', 'POLA', 'Harmonik Bat',
+  'XA->AB 0.382-0.50, AB->BC 0.382-0.886, BC->CD 1.618-2.618, XA->AD 0.886', 'Scott Carney',
+  'blog/capital.com', 'PERLU:harmonik',
+  'satu sumber kata titik B biasanya 0.382 tepat, jadual lain benarkan 0.382-0.50'),
+ ('N138', 'POLA', 'Harmonik Butterfly',
+  'XA->AB 0.786, AB->BC 0.382-0.886, BC->CD 1.618-2.618, XA->AD 1.27-1.618',
+  'Gilmore / Carney', 'blog/capital.com', 'PERLU:harmonik',
+  'corak PELANJUTAN: D melepasi X. Sumber BERCANGGAH siapa menciptanya (Bryce Gilmore lawan '
+  'Carney)'),
+ ('N139', 'POLA', 'Harmonik Crab',
+  'XA->AB 0.382-0.618, AB->BC 0.382-0.886, BC->CD 2.618-3.618, XA->AD 1.618', 'Scott Carney',
+  'blog/capital.com', 'PERLU:harmonik', 'Carney sendiri kata ini paling tepat antara harmonik'),
+ ('N140', 'MA', 'Guppy GMMA: kumpulan pendek atas kumpulan panjang',
+  'EMA(3,5,8,10,12,15) kesemuanya atas EMA(30,35,40,45,50,60)', 'Daryl Guppy',
+  'buku/TTR/StockSharp', 'PERLU:gmma',
+  'tiada set peraturan berangka formal dalam mana-mana sumber - hanya tafsiran persilangan '
+  'kumpulan'),
+ ('N141', 'TREND', 'Elder Triple Screen',
+  'histogram MACD mingguan menaik DAN osilator harian terlebih jual DAN beli-stop 1 mata atas '
+  'tinggi bar isyarat', 'Elder, Trading for a Living', 'buku', 'PERLU:bar_mingguan',
+  'satu pengkritik lapor histogram MACD tradisional memberi hanya ~5 dagangan setahun. MACD '
+  'sendiri karya Gerald Appel, bukan Elder.'),
+ ('N142', 'KEKUATAN', 'CANSLIM (7 syarat O’Neil)',
+  'EPS suku semasa >= 25% DAN EPS tahunan >= 25% selama 3 tahun DAN produk/pengurusan baharu '
+  'DAN volum menyokong DAN RS >= 80 DAN sokongan institusi DAN arah pasaran menaik',
+  'O’Neil, How to Make Money in Stocks', 'buku/IBD', 'PERLU:data_eps_suku',
+  'sumber TIDAK SEPAKAT: EPS suku 18%, 20% atau 25%; dalam 15% atau 5% daripada tinggi 52w; '
+  'RS >= 70 atau >= 80. Composite Rating IBD tidak dapat disahkan dalam carian.'),
+ ('N143', 'REJIM', 'Nisbah put/call purata 10 hari > 0.85',
+  'purata 10 hari nisbah put/call ekuiti > 0.85', 'konsensus sentimen', 'StockCharts/blog',
+  'PERLU:data_putcall',
+  'repo ADA akses melalui Alpha Vantage HISTORICAL_PUT_CALL_RATIO. Ambang TIDAK diseragamkan: '
+  '> 1.0, > 0.85, atau < 0.60 bergantung sumber; dan sumber berbeza pada total lawan '
+  'ekuiti-sahaja. Satu sumber beramaran nisbah tinggi boleh KEKAL tinggi sepanjang penurunan.'),
+ ('N144', 'REJIM', 'AAII bearish > 45% + put/call > 1.0',
+  'AAII bearish > 0.45 DAN purata 10 hari put/call > 1.0', 'konsensus sentimen', 'blog',
+  'PERLU:data_sentimen', 'sumber kata isyarat lebih kuat bila beberapa bacaan takut sejajar'),
+ ('N145', 'KEKUATAN', 'Keluasan semakan analis > +0.5',
+  'nisbah (analis semak naik - semak turun) / jumlah > +0.5', 'konsensus praktisi',
+  'blog/FMP', 'PERLU:data_semakan',
+  'satu sumber anggar sebaran panjang-pendek 4-6% atas 3-6 bulan; itu anggaran blog, BUKAN '
+  'hasil disahkan. Sumber lain kata momentum semakan ialah KADAR PERUBAHAN semakan, bukan '
+  'jumlah perubahan.'),
+ ('N146', 'KEKUATAN', 'Pemfailan 13F: belian pertama >= 3 dana besar suku sama',
+  'pembelian pertama kali oleh >= 3 dana besar dalam suku yang sama', 'konsensus',
+  'blog', 'PERLU:data_13f',
+  '13F ada LAG 45 HARI - pada masa data dilihat, posisi mungkin sudah berubah. Satu sumber '
+  'petik alfa 1.3-2.4%/tahun bagi strategi copycat.'),
+ ('N147', 'KEKUATAN', 'Pengumuman belian balik saham + atas MA50',
+  'pengumuman buyback dalam 5 sesi DAN tutup > ma50', 'umum', 'blog',
+  'PERLU:data_buyback',
+  'carian TIDAK menemui bukti kajian peristiwa pulangan luar biasa - satu-satunya sumber '
+  'mengakui data reaksi harga tidak tersedia. Repo ADA alat Moomoo '
+  'quote_corporate_actions_buybacks.'),
 ]
 
 # (id, peraturan keluar, sumber, platform, status, nota)
@@ -445,6 +531,15 @@ KELUAR = [
  ('X40', 'henti bawah rendah shakeout', 'Wyckoff', 'buku/blog', 'PERLU:wyckoff_spring', ''),
  ('X41', 'henti pada rendah hari masuk', 'Zarattini, Barbon & Aziz (ORB)', 'SSRN/akademik',
   'SEDIA', 'saiz asal: syer = risiko$ / (harga masuk - rendah hari)'),
+ ('X42', 'keluar bila histogram MACD mingguan tutup bawah garis isyarat',
+  'Elder, Trading for a Living', 'buku', 'PERLU:bar_mingguan',
+  'sumber lain kata ekori henti ke rendah semalam dan keluar bila stokastik terlebih beli'),
+ ('X43', 'keluar pada TD Sequential sell countdown 13', 'DeMark', 'buku/pustaka',
+  'PERLU:td_seq', ''),
+ ('X44', 'keluar pada zon D harmonik (sasaran 0.382 kemudian 0.618 CD)', 'Scott Carney',
+  'blog', 'PERLU:harmonik', ''),
+ ('X45', 'keluar bila kumpulan pendek GMMA silang turun kumpulan panjang', 'Daryl Guppy',
+  'buku/TTR', 'PERLU:gmma', ''),
 ]
 
 # (id, cara masuk diisi, sumber, platform, status, nota)
@@ -477,6 +572,11 @@ CARA = [
   'sumber sekunder beri dua ofset berbeza'),
  ('C10', 'masuk pada buka lilin kedua selepas lilin 5 minit pertama',
   'Zarattini, Barbon & Aziz', 'SSRN/akademik', 'PERLU:intraday', ''),
+ ('C11', 'beli-stop 1 mata atas tinggi bar isyarat, dipindah naik setiap bar',
+  'Elder (trailing buy stop)', 'buku', 'SEDIA',
+  'jika tidak tercetus dalam bar semasa, pindahkan ke tinggi berikut'),
+ ('C12', 'beli-stop atas tinggi inside bar', 'Rob Smith (The Strat)', 'TradingView/X',
+  'PERLU:strat_bar', 'henti di sisi bertentangan inside bar; sasaran pertama ekstrem bar sebelum'),
 ]
 
 # (id, cara alam disusun, sumber, platform, status, nota)
@@ -521,6 +621,15 @@ URUTAN = [
   'lajur nilai20 sudah ada; sumber beri ambang $10 juta, bukan urutan - ini versi urutan'),
  ('U11', 'pulangan gabungan 1 + 3 + 6 bulan tertinggi', 'Qullamaggie', 'blog/screener',
   'SEDIA', 'sumber guna sebagai penapis 30%; ini versi urutan'),
+ ('U12', '191 alfa formula GTJA (harga, volum, volatiliti, VWAP)',
+  'Guotai Junan Securities (2017)', 'laporan/arXiv', 'PERLU:gtja191',
+  'DAPATAN TERKUAT SAPUAN KEENAM: satu kertas 2026 melapor 17 daripada 191 MASIH menambah '
+  'kuasa penerangan bagi pulangan saham AS selepas mengawal 151 faktor fundamental lain. Itu '
+  'bukti kuantitatif LUARAN pertama bagi kemandirian mana-mana katalog dalam registry ini. '
+  'Direka untuk A-share China; keluarga sama seperti U06 (skor peringkat, bukan penapis). '
+  'Formula BELUM dibaca - laporan asal 2017 tidak ditemui dalam carian.'),
+ ('U13', 'skor keluasan semakan analis', 'konsensus praktisi', 'blog/FMP',
+  'PERLU:data_semakan', 'versi urutan bagi N145'),
 ]
 
 
@@ -676,6 +785,25 @@ def tulis_spec():
         _id, cara, sumber, plat, status, nota = b
         A(f'**{_id}** — `{cara}` · {sumber} ({plat}) · {status}' + (f' · {nota}' if nota else ''))
         A('')
+    A('## Sapuan sumber: kadar pulangan sudah boleh diukur, dan ia berkurangan')
+    A('')
+    A('Enam sapuan dijalankan 30 Okt 2026. Pertambahan masuk setiap kali: **42 → +30 → +8 → '
+      '+20 → +30 → +17**.')
+    A('')
+    A('Tetapi bilangan bukan ukuran yang betul. Yang betul ialah **berapa banyak boleh diuji '
+      'dengan apa yang repo ada**:')
+    A('')
+    A('- Sapuan 1-5 menghasilkan 71 baris berstatus `SEDIA` (boleh diuji serta-merta).')
+    A('- **Sapuan 6 menghasilkan 17 baris dan SIFAR berstatus `SEDIA`.** Kesemua 17 '
+      'memerlukan indikator atau data yang repo tidak ada: `talib_cdl`, `strat_bar`, '
+      '`td_seq`, `harmonik`, `gmma`, `bar_mingguan`, `data_eps_suku`, `data_putcall`, '
+      '`data_sentimen`, `data_semakan`, `data_13f`, `data_buyback`.')
+    A('')
+    A('Maknanya **kekangan sudah berpindah**. Dahulu ia "cari peraturan"; sekarang ia "ada '
+      'data". Mencari lebih banyak peraturan gaya pedagang pada bar harian tidak lagi '
+      'menghasilkan apa-apa yang boleh diuji tanpa kerja data dahulu. Itu bukti berangka '
+      'bahawa ruang peraturan hampir habis, bukan pendapat.')
+    A('')
     A('## AMARAN: pintu KALENDAR dan REJIM ialah peruntukan tunai yang disamarkan')
     A('')
     A('`N101`-`N110` (kalendar dan rejim) berbeza daripada setiap baris lain dalam fail ini: '
@@ -743,6 +871,26 @@ def tulis_spec():
       'gagal dengan cara yang sama. Ia didaftar supaya ia tidak dicari lagi, bukan kerana '
       'saya menjangka ia lulus. **Yang berbeza secara jenis ialah `U06`-`U08` (urutan) dan '
       '`C02`-`C06` (cara) — bukan indikator lagi.**')
+    A('')
+    A('**GTJA 191 Alphas** (Guotai Junan Securities, 2017) — `U12`, dan **dapatan terkuat '
+      'sapuan keenam**. 191 formula eksplisit daripada harga, volum, volatiliti dan VWAP, '
+      'keluarga yang sama seperti `U06` (skor peringkat, bukan penapis boolean). Sebabnya ia '
+      'terkuat: satu kertas 2026 melaporkan **17 daripada 191 masih menambah kuasa penerangan '
+      'bagi pulangan saham AS selepas mengawal 151 faktor fundamental lain**. Itu bukti '
+      'kuantitatif **luaran** pertama bagi kemandirian mana-mana katalog dalam fail ini — '
+      'setiap sumber lain hanya mendakwa. Ia direka untuk A-share China, dan laporan asal 2017 '
+      'tidak ditemui dalam carian, jadi formula **belum dibaca**.')
+    A('')
+    A('**TA-Lib / pandas_ta candlestick** — `N131`. 62 pola lilin bernama dan terkod; repo '
+      'kini ada **dua** (`hammer`, `bullish_engulfing`). Didaftar sebagai SATU baris kerana '
+      'metadatanya sama, tetapi **ia 62 ujian berasingan dan FDR mesti mengira 62** — nota '
+      'barisnya menyenaraikan kesemuanya.')
+    A('')
+    A('**Data yang repo SUDAH ada aksesnya tetapi belum guna** — `N143` nisbah put/call '
+      '(Alpha Vantage `HISTORICAL_PUT_CALL_RATIO`), `N147` belian balik (Moomoo '
+      '`quote_corporate_actions_buybacks`), `N146` 13F (alat pemegang institusi Moomoo), '
+      '`N145` semakan analis (FMP `analyst`). Ini bukan masalah akses, ia masalah belum '
+      'dikumpul sebagai siri titik-masa.')
     A('')
     A('**Buku dengan peraturan harian yang tepat** (sapuan 30 Okt 2026) — `Street Smarts` '
       '(Connors & Raschke 1995) memberi `N111`-`N116` dan `X33`: Turtle Soup, Turtle Soup Plus '
@@ -835,6 +983,7 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+
 
 
 

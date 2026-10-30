@@ -16,9 +16,9 @@
 - `SEDIA` — semua indikator yang diperlukan sudah dikira oleh kod repo (`REVERSE/teras/ind.py` atau `REVERSE/step15_setup.py` / `step17_kombinasi.py`); boleh diuji tanpa kod indikator baharu.
 - `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.
 
-Masuk: 130 (12 DIUJI, 71 SEDIA, 47 PERLU). Keluar: 41 (7 DIUJI, 26 SEDIA, 8 PERLU). Cara: 10 (1 DIUJI, 7 SEDIA, 2 PERLU). Urutan: 11 (5 DIUJI, 3 SEDIA, 3 PERLU).
+Masuk: 147 (12 DIUJI, 71 SEDIA, 64 PERLU). Keluar: 45 (7 DIUJI, 26 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
 
-Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`, `atrts`, `chop`, `coppock`, `crsi`, `darvas`, `data_form4`, `data_keluasan`, `data_short`, `donchian10`, `donchian50`, `efi`, `eri`, `fib_ayunan`, `fisher`, `ftd`, `htf`, `huggingface`, `intraday`, `isi_tutup`, `kalendar_cuti`, `kalendar_dagangan`, `kst`, `kvo`, `ma5`, `momentum_pinball`, `pgo`, `pivot_lantai`, `qqe`, `rwi`, `squeeze_ttm`, `stc`, `supertrend3`, `tinggi_swing`, `tmo`, `tsv`, `turtle_soup`, `vhf`, `vortex`, `vwap20`, `vwap_ankor`, `wyckoff_spring`.
+Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`, `atrts`, `bar_mingguan`, `chop`, `coppock`, `crsi`, `darvas`, `data_13f`, `data_buyback`, `data_eps_suku`, `data_form4`, `data_keluasan`, `data_putcall`, `data_semakan`, `data_sentimen`, `data_short`, `donchian10`, `donchian50`, `efi`, `eri`, `fib_ayunan`, `fisher`, `ftd`, `gmma`, `gtja191`, `harmonik`, `htf`, `huggingface`, `intraday`, `isi_tutup`, `kalendar_cuti`, `kalendar_dagangan`, `kst`, `kvo`, `ma5`, `momentum_pinball`, `pgo`, `pivot_lantai`, `qqe`, `rwi`, `squeeze_ttm`, `stc`, `strat_bar`, `supertrend3`, `talib_cdl`, `td_seq`, `tinggi_swing`, `tmo`, `tsv`, `turtle_soup`, `vhf`, `vortex`, `vwap20`, `vwap_ankor`, `wyckoff_spring`.
 
 ## Peraturan masuk
 
@@ -43,6 +43,8 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 **N09 Undur EMA10 + penapis EMA50** — `tutup > ema10 DAN tutup[-1] < ema10[-1] DAN tutup > ema50` · skrip 10ema (TradingView) · SEDIA
 
 **N76 Tutup > MA50 (penapis trend tunggal)** — `tutup > ma50` · QuantJourney O04 (quantjourney-bt) · SEDIA · berguna sebagai ASAS penapis tunggal untuk mengira lift
+
+**N140 Guppy GMMA: kumpulan pendek atas kumpulan panjang** — `EMA(3,5,8,10,12,15) kesemuanya atas EMA(30,35,40,45,50,60)` · Daryl Guppy (buku/TTR/StockSharp) · PERLU:gmma · tiada set peraturan berangka formal dalam mana-mana sumber - hanya tafsiran persilangan kumpulan
 
 ### RSI
 
@@ -117,6 +119,8 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 **N96 Random Walk Index tinggi > 1** — `rwi_tinggi > 1 DAN rwi_tinggi > rwi_rendah` · Michael Poulos (pandas_ta) · PERLU:rwi · > 1 bermakna gerakan melebihi apa yang jalan rawak boleh terangkan
 
 **N99 ATR Trailing Stop naik dan tutup di atasnya** — `atrts > atrts[-1] DAN tutup > atrts` · pandas_ta (atrts) (pandas_ta) · PERLU:atrts · serupa lorong 2 Chandelier repo tetapi pengangkaan berbeza
+
+**N141 Elder Triple Screen** — `histogram MACD mingguan menaik DAN osilator harian terlebih jual DAN beli-stop 1 mata atas tinggi bar isyarat` · Elder, Trading for a Living (buku) · PERLU:bar_mingguan · satu pengkritik lapor histogram MACD tradisional memberi hanya ~5 dagangan setahun. MACD sendiri karya Gerald Appel, bukan Elder.
 
 ### PECAH
 
@@ -244,6 +248,18 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N127 Wyckoff spring** — `rendah < rendah julat 20 hari kemudian tutup kembali DALAM julat` · Wyckoff (buku/blog) · PERLU:wyckoff_spring · sumber BERCANGGAH pada volum: satu kata volum RENDAH pada spring, satu lagi guna spring bervolum TINGGI yang gagal pulih sebagai isyarat BEARISH. Satu sumber mengaku tiada kadar menang terbitan bagi membeli setiap spring.
 
+**N132 The Strat 2-1-2** — `bar arah (2), kemudian inside bar (1), kemudian pecah tinggi inside bar` · Rob Smith (TradingView/X) · PERLU:strat_bar · sumber TIDAK SEPAKAT sama ada ia pembalikan atau penerusan; bahan Rob Smith sendiri tidak ditemui
+
+**N133 The Strat 3-1-2** — `outside bar (3), kemudian inside bar (1), kemudian pecah tinggi inside bar` · Rob Smith (TradingView/X) · PERLU:strat_bar · sumber umumnya anggap ini pembalikan
+
+**N136 Harmonik Gartley** — `XA->AB 0.618, AB->BC 0.382-0.886, BC->CD 1.27-1.618, XA->AD 0.786` · Gartley / Carney (blog/capital.com) · PERLU:harmonik · corak PENGUNDURAN: D kekal antara X dan A
+
+**N137 Harmonik Bat** — `XA->AB 0.382-0.50, AB->BC 0.382-0.886, BC->CD 1.618-2.618, XA->AD 0.886` · Scott Carney (blog/capital.com) · PERLU:harmonik · satu sumber kata titik B biasanya 0.382 tepat, jadual lain benarkan 0.382-0.50
+
+**N138 Harmonik Butterfly** — `XA->AB 0.786, AB->BC 0.382-0.886, BC->CD 1.618-2.618, XA->AD 1.27-1.618` · Gilmore / Carney (blog/capital.com) · PERLU:harmonik · corak PELANJUTAN: D melepasi X. Sumber BERCANGGAH siapa menciptanya (Bryce Gilmore lawan Carney)
+
+**N139 Harmonik Crab** — `XA->AB 0.382-0.618, AB->BC 0.382-0.886, BC->CD 2.618-3.618, XA->AD 1.618` · Scott Carney (blog/capital.com) · PERLU:harmonik · Carney sendiri kata ini paling tepat antara harmonik
+
 ### KEKUATAN
 
 **N69 RS kuintil 5 + sektor atas MA50** — `rs_spy_6b dalam kuintil teratas DAN sektor_atas_ma50` · O’Neil/Minervini (buku) · SEDIA · dua daripada tiga tiang yang DITINGGALKAN daripada grid 672 setup
@@ -270,6 +286,14 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N129 Belian dalaman berkelompok** — `pembelian pasaran terbuka oleh >= 2 orang dalaman dalam 30 hari` · konsensus (blog) · PERLU:data_form4 · perlu data Form 4; tiada sumber memberi backtest gabungan ini
 
+**N142 CANSLIM (7 syarat O’Neil)** — `EPS suku semasa >= 25% DAN EPS tahunan >= 25% selama 3 tahun DAN produk/pengurusan baharu DAN volum menyokong DAN RS >= 80 DAN sokongan institusi DAN arah pasaran menaik` · O’Neil, How to Make Money in Stocks (buku/IBD) · PERLU:data_eps_suku · sumber TIDAK SEPAKAT: EPS suku 18%, 20% atau 25%; dalam 15% atau 5% daripada tinggi 52w; RS >= 70 atau >= 80. Composite Rating IBD tidak dapat disahkan dalam carian.
+
+**N145 Keluasan semakan analis > +0.5** — `nisbah (analis semak naik - semak turun) / jumlah > +0.5` · konsensus praktisi (blog/FMP) · PERLU:data_semakan · satu sumber anggar sebaran panjang-pendek 4-6% atas 3-6 bulan; itu anggaran blog, BUKAN hasil disahkan. Sumber lain kata momentum semakan ialah KADAR PERUBAHAN semakan, bukan jumlah perubahan.
+
+**N146 Pemfailan 13F: belian pertama >= 3 dana besar suku sama** — `pembelian pertama kali oleh >= 3 dana besar dalam suku yang sama` · konsensus (blog) · PERLU:data_13f · 13F ada LAG 45 HARI - pada masa data dilihat, posisi mungkin sudah berubah. Satu sumber petik alfa 1.3-2.4%/tahun bagi strategi copycat.
+
+**N147 Pengumuman belian balik saham + atas MA50** — `pengumuman buyback dalam 5 sesi DAN tutup > ma50` · umum (blog) · PERLU:data_buyback · carian TIDAK menemui bukti kajian peristiwa pulangan luar biasa - satu-satunya sumber mengakui data reaksi harga tidak tersedia. Repo ADA alat Moomoo quote_corporate_actions_buybacks.
+
 ### OSILATOR
 
 **N84 Schaff Trend Cycle silang naik 25** — `stc silang naik 25` · Doug Schaff (pandas_ta) · PERLU:stc · MACD melalui dua lapisan stokastik
@@ -287,6 +311,10 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 **N100 True Momentum Oscillator silang naik garis isyarat** — `tmo silang naik tmo_sig` · pandas_ta (tmo) (pandas_ta) · PERLU:tmo
 
 **N114 Momentum Pinball (LBR/RSI3)** — `RSI(3) bagi ROC 1 hari < 30; beli-stop atas tinggi hari ini` · Connors & Raschke, Street Smarts (1995) (buku) · PERLU:momentum_pinball
+
+**N134 TD Sequential buy setup 9** — `9 bar berturut dengan tutup < tutup 4 bar lalu` · DeMark (buku/pustaka) · PERLU:td_seq · parameter kanonik: setup_lookback 4, setup_target 9
+
+**N135 TD Sequential buy countdown 13** — `selepas setup 9 selesai, kira hingga 13 bar dengan tutup <= rendah 2 bar lalu (tidak perlu berturut)` · DeMark (buku/pustaka) · PERLU:td_seq · satu pustaka menambah syarat bar 13 mesti melalui tutup bar countdown 8; itu pilihan pengekodan, BUKAN peraturan asal DeMark
 
 ### KALENDAR
 
@@ -311,6 +339,14 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 **N109 Peratus saham atas MA200 > 50%** — `keluasan_atas_ma200 > 0.50` · konsensus keluasan (umum) · PERLU:data_keluasan
 
 **N110 SPY atas MA50 dan MA200** — `spy > spy_ma50 DAN spy > spy_ma200` · pakej Sistem A (buku) · DIUJI · sebagai pintu TUNGGAL belum diuji; sebagai bahagian Sistem A: CAGR -1.03% (SISTEM.md)
+
+**N143 Nisbah put/call purata 10 hari > 0.85** — `purata 10 hari nisbah put/call ekuiti > 0.85` · konsensus sentimen (StockCharts/blog) · PERLU:data_putcall · repo ADA akses melalui Alpha Vantage HISTORICAL_PUT_CALL_RATIO. Ambang TIDAK diseragamkan: > 1.0, > 0.85, atau < 0.60 bergantung sumber; dan sumber berbeza pada total lawan ekuiti-sahaja. Satu sumber beramaran nisbah tinggi boleh KEKAL tinggi sepanjang penurunan.
+
+**N144 AAII bearish > 45% + put/call > 1.0** — `AAII bearish > 0.45 DAN purata 10 hari put/call > 1.0` · konsensus sentimen (blog) · PERLU:data_sentimen · sumber kata isyarat lebih kuat bila beberapa bacaan takut sejajar
+
+### LILIN
+
+**N131 Keluarga penuh pola lilin TA-Lib (62 pola)** — `mana-mana daripada 62 pola lilin TA-Lib (senarai penuh dalam nota)` · TA-Lib / Nison / Morris (pandas_ta cdl_pattern) · PERLU:talib_cdl · AMARAN FDR: ini 62 UJIAN BERASINGAN, bukan satu - FDR mesti mengira 62. Repo kini ada DUA sahaja (hammer, bullish_engulfing). Senarai: 2crows 3blackcrows 3inside 3linestrike 3outside 3starsinsouth 3whitesoldiers abandonedbaby advanceblock belthold breakaway closingmarubozu concealbabyswall counterattack darkcloudcover doji dojistar dragonflydoji engulfing eveningdojistar eveningstar gapsidesidewhite gravestonedoji hammer hangingman harami haramicross highwave hikkake hikkakemod homingpigeon identical3crows inneck inside invertedhammer kicking kickingbylength ladderbottom longleggeddoji longline marubozu matchinglow mathold morningdojistar morningstar onneck piercing rickshawman risefall3methods separatinglines shootingstar shortline spinningtop stalledpattern sticksandwich takuri tasukigap thrusting tristar unique3river upsidegap2crows xsidegap3methods
 
 ## Peraturan keluar
 
@@ -398,6 +434,14 @@ Keluar diuji **bersilang** dengan masuk, kerana `KOMBINASI.md` menunjukkan kelua
 
 **X41** — `henti pada rendah hari masuk` · Zarattini, Barbon & Aziz (ORB) (SSRN/akademik) · SEDIA · saiz asal: syer = risiko$ / (harga masuk - rendah hari)
 
+**X42** — `keluar bila histogram MACD mingguan tutup bawah garis isyarat` · Elder, Trading for a Living (buku) · PERLU:bar_mingguan · sumber lain kata ekori henti ke rendah semalam dan keluar bila stokastik terlebih beli
+
+**X43** — `keluar pada TD Sequential sell countdown 13` · DeMark (buku/pustaka) · PERLU:td_seq
+
+**X44** — `keluar pada zon D harmonik (sasaran 0.382 kemudian 0.618 CD)` · Scott Carney (blog) · PERLU:harmonik
+
+**X45** — `keluar bila kumpulan pendek GMMA silang turun kumpulan panjang` · Daryl Guppy (buku/TTR) · PERLU:gmma
+
 ## Cara masuk diisi (paksi ketiga)
 
 **Repo hanya pernah menguji `C01`.** Setiap keputusan dalam REVERSE, setiap kedudukan dalam Papan Penganalisis dan setiap baris Lejar Penuh menganggap belian berlaku pada **buka sesi berikutnya**, tanpa syarat. Itu bukan satu-satunya pilihan, dan ia PUNCA kecacatan yang sudah diukur: `KOLAM_EKOR.md` §4a mendapati 421 daripada 1,770 posisi C ditutup dibeli DAN dihentikan pada hari masuk dengan kadar menang **0.00%**. Pesanan buy-stop atau buy-limit mengubah tepat perkara itu, kerana harga isi tidak lagi ditetapkan oleh buka tanpa mengira apa yang bar itu buat.
@@ -421,6 +465,10 @@ Keluar diuji **bersilang** dengan masuk, kerana `KOMBINASI.md` menunjukkan kelua
 **C09** — `buy-stop sedikit atas rendah 20 hari (5-10 tik atau 1/8 mata)` · Connors & Raschke (Turtle Soup) (buku) · SEDIA · sumber sekunder beri dua ofset berbeza
 
 **C10** — `masuk pada buka lilin kedua selepas lilin 5 minit pertama` · Zarattini, Barbon & Aziz (SSRN/akademik) · PERLU:intraday
+
+**C11** — `beli-stop 1 mata atas tinggi bar isyarat, dipindah naik setiap bar` · Elder (trailing buy stop) (buku) · SEDIA · jika tidak tercetus dalam bar semasa, pindahkan ke tinggi berikut
+
+**C12** — `beli-stop atas tinggi inside bar` · Rob Smith (The Strat) (TradingView/X) · PERLU:strat_bar · henti di sisi bertentangan inside bar; sasaran pertama ekstrem bar sebelum
 
 ## Urutan alam (paksi keempat)
 
@@ -450,6 +498,21 @@ Dan `SISTEM.md` mengukur sesuatu yang lebih kuat: urutan ikut **skor berterusan*
 
 **U11** — `pulangan gabungan 1 + 3 + 6 bulan tertinggi` · Qullamaggie (blog/screener) · SEDIA · sumber guna sebagai penapis 30%; ini versi urutan
 
+**U12** — `191 alfa formula GTJA (harga, volum, volatiliti, VWAP)` · Guotai Junan Securities (2017) (laporan/arXiv) · PERLU:gtja191 · DAPATAN TERKUAT SAPUAN KEENAM: satu kertas 2026 melapor 17 daripada 191 MASIH menambah kuasa penerangan bagi pulangan saham AS selepas mengawal 151 faktor fundamental lain. Itu bukti kuantitatif LUARAN pertama bagi kemandirian mana-mana katalog dalam registry ini. Direka untuk A-share China; keluarga sama seperti U06 (skor peringkat, bukan penapis). Formula BELUM dibaca - laporan asal 2017 tidak ditemui dalam carian.
+
+**U13** — `skor keluasan semakan analis` · konsensus praktisi (blog/FMP) · PERLU:data_semakan · versi urutan bagi N145
+
+## Sapuan sumber: kadar pulangan sudah boleh diukur, dan ia berkurangan
+
+Enam sapuan dijalankan 30 Okt 2026. Pertambahan masuk setiap kali: **42 → +30 → +8 → +20 → +30 → +17**.
+
+Tetapi bilangan bukan ukuran yang betul. Yang betul ialah **berapa banyak boleh diuji dengan apa yang repo ada**:
+
+- Sapuan 1-5 menghasilkan 71 baris berstatus `SEDIA` (boleh diuji serta-merta).
+- **Sapuan 6 menghasilkan 17 baris dan SIFAR berstatus `SEDIA`.** Kesemua 17 memerlukan indikator atau data yang repo tidak ada: `talib_cdl`, `strat_bar`, `td_seq`, `harmonik`, `gmma`, `bar_mingguan`, `data_eps_suku`, `data_putcall`, `data_sentimen`, `data_semakan`, `data_13f`, `data_buyback`.
+
+Maknanya **kekangan sudah berpindah**. Dahulu ia "cari peraturan"; sekarang ia "ada data". Mencari lebih banyak peraturan gaya pedagang pada bar harian tidak lagi menghasilkan apa-apa yang boleh diuji tanpa kerja data dahulu. Itu bukti berangka bahawa ruang peraturan hampir habis, bukan pendapat.
+
 ## AMARAN: pintu KALENDAR dan REJIM ialah peruntukan tunai yang disamarkan
 
 `N101`-`N110` (kalendar dan rejim) berbeza daripada setiap baris lain dalam fail ini: ia tidak memilih SAHAM, ia memilih MASA. Ia menutup kedudukan pada tempoh tertentu dan membukanya pada tempoh lain.
@@ -475,6 +538,12 @@ Akibatnya **PyPI ialah saluran sumber yang paling boleh dipercayai**: pakej yang
 **pandas_ta** (`pandas-ta` 0.4.71b0, MIT, Kevin Johnson) — ~150 indikator terkod dalam 8 kategori (candle · momentum · trend · volatility · volume · overlap · cycle · statistics). Ia memberi `N81`-`N100`: TTM Squeeze Carter yang betul (BB dalam KC, bukan lebar BB), Connors RSI **tiga komponen** (repo hanya ada `rsi2`), AlphaTrend, Schaff Trend Cycle, QQE, Vortex, VHF, Elder Force Index, Elder Ray, Klinger, Time Segmented Volume, Alligator, Fisher Transform, Pretty Good Oscillator, Choppiness, Random Walk Index, Coppock, KST, ATR Trailing Stop, TMO. **JANGAN pasang sebagai kebergantungan:** ia memerlukan `numba==0.61.2` yang memaksa `numpy<2.3`, sedangkan persekitaran repo ialah numpy 2.5.3 + pandas 3.0.5 — pemasangan akan MENURUNKAN taraf numpy dan berisiko merosakkan workflow malam. Guna ia sebagai **rujukan spesifikasi** (lesen MIT membenarkan, dengan atribusi) dan laksanakan indikator yang diperlukan terus dalam `REVERSE/teras/ind.py`, sama seperti 71 lajur yang lain.
 
 **AMARAN STRUKTUR tentang N81-N100.** Kedua puluh ini ialah **penapis**, dan ruang penapis sudah diukur: `SETUP.md` mendapati **0 daripada 598** setup mempunyai lift positif, dengan sebab **struktur** bukan pemilihan. Menambah 20 penapis lagi dijangka gagal dengan cara yang sama. Ia didaftar supaya ia tidak dicari lagi, bukan kerana saya menjangka ia lulus. **Yang berbeza secara jenis ialah `U06`-`U08` (urutan) dan `C02`-`C06` (cara) — bukan indikator lagi.**
+
+**GTJA 191 Alphas** (Guotai Junan Securities, 2017) — `U12`, dan **dapatan terkuat sapuan keenam**. 191 formula eksplisit daripada harga, volum, volatiliti dan VWAP, keluarga yang sama seperti `U06` (skor peringkat, bukan penapis boolean). Sebabnya ia terkuat: satu kertas 2026 melaporkan **17 daripada 191 masih menambah kuasa penerangan bagi pulangan saham AS selepas mengawal 151 faktor fundamental lain**. Itu bukti kuantitatif **luaran** pertama bagi kemandirian mana-mana katalog dalam fail ini — setiap sumber lain hanya mendakwa. Ia direka untuk A-share China, dan laporan asal 2017 tidak ditemui dalam carian, jadi formula **belum dibaca**.
+
+**TA-Lib / pandas_ta candlestick** — `N131`. 62 pola lilin bernama dan terkod; repo kini ada **dua** (`hammer`, `bullish_engulfing`). Didaftar sebagai SATU baris kerana metadatanya sama, tetapi **ia 62 ujian berasingan dan FDR mesti mengira 62** — nota barisnya menyenaraikan kesemuanya.
+
+**Data yang repo SUDAH ada aksesnya tetapi belum guna** — `N143` nisbah put/call (Alpha Vantage `HISTORICAL_PUT_CALL_RATIO`), `N147` belian balik (Moomoo `quote_corporate_actions_buybacks`), `N146` 13F (alat pemegang institusi Moomoo), `N145` semakan analis (FMP `analyst`). Ini bukan masalah akses, ia masalah belum dikumpul sebagai siri titik-masa.
 
 **Buku dengan peraturan harian yang tepat** (sapuan 30 Okt 2026) — `Street Smarts` (Connors & Raschke 1995) memberi `N111`-`N116` dan `X33`: Turtle Soup, Turtle Soup Plus One, 80-20, Momentum Pinball, Holy Grail, ID/NR4. `Short-Term Trading Strategies That Work` dan `High Probability ETF Trading` (Connors & Alvarez) memberi `N117`-`N119` dan `X34`. `Trade Like a Stock Market Wizard` (Minervini) memberi `N120` (Trend Template, 8 syarat). Weinstein memberi `N121`. **Teks buku belum dibaca dalam sesi ini** - semuanya daripada ringkasan dan skrip pihak ketiga, dan sumber sekunder bercanggah pada beberapa ambang (umur ekstrem Turtle Soup 3 atau 4 bar; rendah 52w Minervini 25% atau 30%). Setiap percanggahan direkod dalam nota barisnya.
 

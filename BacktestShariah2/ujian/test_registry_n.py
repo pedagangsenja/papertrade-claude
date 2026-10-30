@@ -17,16 +17,16 @@ class TestStruktur(unittest.TestCase):
 
     def test_bilangan(self):
         # jumlah dipradaftar; menambah baris mesti kemas kini ujian ini dengan sengaja
-        self.assertEqual(len(R.MASUK), 130)
-        self.assertEqual(len(R.KELUAR), 41)
-        self.assertEqual(len(R.CARA), 10)
-        self.assertEqual(len(R.URUTAN), 11)
+        self.assertEqual(len(R.MASUK), 147)
+        self.assertEqual(len(R.KELUAR), 45)
+        self.assertEqual(len(R.CARA), 12)
+        self.assertEqual(len(R.URUTAN), 13)
 
     def test_id_berturutan(self):
-        self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 131)])
-        self.assertEqual([b[0] for b in R.KELUAR], [f'X{i:02d}' for i in range(1, 42)])
-        self.assertEqual([b[0] for b in R.CARA], [f'C{i:02d}' for i in range(1, 11)])
-        self.assertEqual([b[0] for b in R.URUTAN], [f'U{i:02d}' for i in range(1, 12)])
+        self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 148)])
+        self.assertEqual([b[0] for b in R.KELUAR], [f'X{i:02d}' for i in range(1, 46)])
+        self.assertEqual([b[0] for b in R.CARA], [f'C{i:02d}' for i in range(1, 13)])
+        self.assertEqual([b[0] for b in R.URUTAN], [f'U{i:02d}' for i in range(1, 14)])
 
     def test_medan_penuh(self):
         for b in R.MASUK:
@@ -128,6 +128,23 @@ class TestStatus(unittest.TestCase):
         self.assertEqual(n130[6], 'PERLU:intraday')
         self.assertIn('SIFAR', n130[7])
 
+    def test_n131_amaran_fdr_62(self):
+        # satu baris tetapi 62 ujian; tanpa amaran ini FDR akan salah 62 kali
+        n131 = [b for b in R.MASUK if b[0] == 'N131'][0]
+        self.assertIn('62 UJIAN BERASINGAN', n131[7])
+        self.assertIn('morningstar', n131[7])
+
+    def test_sapuan6_semua_perlu_data(self):
+        # dapatan: N131-N147 tiada satu pun boleh diuji dengan apa yang repo ada
+        baru = [b for b in R.MASUK if int(b[0][1:]) >= 131]
+        self.assertEqual(len(baru), 17)
+        self.assertEqual([b for b in baru if b[6] == 'SEDIA'], [])
+
+    def test_u12_gtja_bukti_luaran(self):
+        u12 = [b for b in R.URUTAN if b[0] == 'U12'][0]
+        self.assertIn('17 daripada 191', u12[5])
+        self.assertIn('BELUM dibaca', u12[5])
+
     def test_kira(self):
         km = R._kira(R.MASUK, 6)
         self.assertEqual(sum(km.values()), len(R.MASUK))
@@ -192,10 +209,11 @@ class TestKeluaran(unittest.TestCase):
                 self.assertEqual(baris[-1]['keluarga'], 'URUTAN')
                 teks = open(R.SPEC, encoding='utf-8').read()
                 self.assertIn('SPEC SEMUA N', teks)
-                self.assertIn('N130', teks)
-                self.assertIn('X41', teks)
-                self.assertIn('C10', teks)
-                self.assertIn('U11', teks)
+                self.assertIn('N147', teks)
+                self.assertIn('X45', teks)
+                self.assertIn('C12', teks)
+                self.assertIn('U13', teks)
+                self.assertIn('kadar pulangan sudah boleh diukur', teks)
                 self.assertIn('peruntukan tunai yang disamarkan', teks)
                 self.assertIn('Sempadan K / M / N', teks)
                 self.assertIn('Saluran rangkaian', teks)
