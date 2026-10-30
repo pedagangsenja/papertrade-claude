@@ -32,7 +32,7 @@ Kelima-lima ini mengikut terus daripada ukuran yang repo **sudah** ada. Tiada sa
 - `SEDIA` — semua indikator yang diperlukan sudah dikira oleh kod repo (`REVERSE/teras/ind.py` atau `REVERSE/step15_setup.py` / `step17_kombinasi.py`); boleh diuji tanpa kod indikator baharu.
 - `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.
 
-Masuk: 147 (12 DIUJI, 66 SEDIA, 69 PERLU). Keluar: 45 (7 DIUJI, 26 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
+Masuk: 147 (78 DIUJI, 0 SEDIA, 69 PERLU). Keluar: 45 (7 DIUJI, 26 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
 
 Tujuh paksi baharu (30 Okt 2026): GABUNGAN 8 · SAIZ 10 · ALAM 8 · PEGANG 6 · IMBANG 5 · KORELASI 4 · INSTRUMEN 4. Jumlah semua paksi: 262 baris.
 
@@ -52,15 +52,15 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N05 tutup>EMA20>SMA100 + volum** — `tutup > ema20 DAN ema20 > sma100 DAN vol_n50 >= 1.2` · pedagang forum (babypips) · DIUJI · lift negatif
 
-**N06 Golden cross MA50/MA200** — `ma50 silang naik ma200` · klasik (umum) · SEDIA · hari_gc sudah ada
+**N06 Golden cross MA50/MA200** — `ma50 silang naik ma200` · klasik (umum) · DIUJI · hari_gc sudah ada | DIUJI (NXX.md): lift terbaik X3 -0.552 latih / +0.142 tahan, n 13,422, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N07 Tiga MA tersusun** — `hari pertama ma10 > ma20 > ma50` · triple-MA klasik (umum) · SEDIA
+**N07 Tiga MA tersusun** — `hari pertama ma10 > ma20 > ma50` · triple-MA klasik (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.043 latih / -0.113 tahan, n 85,712, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N08 tutup>EMA20 tidak terlalu jauh** — `tutup > ema20 DAN (tutup - ema20) <= 1.5 x atr14` · pedagang forum (babypips) · SEDIA · sumber menegaskan LANGKAU jika terlalu jauh dari EMA20
+**N08 tutup>EMA20 tidak terlalu jauh** — `tutup > ema20 DAN (tutup - ema20) <= 1.5 x atr14` · pedagang forum (babypips) · DIUJI · sumber menegaskan LANGKAU jika terlalu jauh dari EMA20 | DIUJI (NXX.md): lift terbaik X1 -0.066 latih / -0.074 tahan, n 1,596,759, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N09 Undur EMA10 + penapis EMA50** — `tutup > ema10 DAN tutup[-1] < ema10[-1] DAN tutup > ema50` · skrip 10ema (TradingView) · SEDIA
+**N09 Undur EMA10 + penapis EMA50** — `tutup > ema10 DAN tutup[-1] < ema10[-1] DAN tutup > ema50` · skrip 10ema (TradingView) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.100 latih / -0.093 tahan, n 229,340, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N76 Tutup > MA50 (penapis trend tunggal)** — `tutup > ma50` · QuantJourney O04 (quantjourney-bt) · SEDIA · berguna sebagai ASAS penapis tunggal untuk mengira lift
+**N76 Tutup > MA50 (penapis trend tunggal)** — `tutup > ma50` · QuantJourney O04 (quantjourney-bt) · DIUJI · berguna sebagai ASAS penapis tunggal untuk mengira lift | DIUJI (NXX.md): lift terbaik X1 -0.085 latih / -0.118 tahan, n 2,296,233, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N140 Guppy GMMA: kumpulan pendek atas kumpulan panjang** — `EMA(3,5,8,10,12,15) kesemuanya atas EMA(30,35,40,45,50,60)` · Daryl Guppy (buku/TTR/StockSharp) · PERLU:gmma · tiada set peraturan berangka formal dalam mana-mana sumber - hanya tafsiran persilangan kumpulan
 
@@ -76,53 +76,53 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N14 Connors RSI2<5 + SMA200** — `rsi2 < 5 DAN tutup > ma200` · Connors (varian 200-hari) (buku/blog) · PERLU:ma5 · keluar asal: tutup > SMA5 ATAU tutup < SMA200
 
-**N15 Connors RSI2<10 + SMA200** — `rsi2 < 10 DAN tutup > ma200` · EA MQL5 (MQL5) · SEDIA · keluar asal rsi2 > 65
+**N15 Connors RSI2<10 + SMA200** — `rsi2 < 10 DAN tutup > ma200` · EA MQL5 (MQL5) · DIUJI · keluar asal rsi2 > 65 | DIUJI (NXX.md): lift terbaik X1 +0.072 latih / +0.101 tahan, n 211,655, gate1 LULUS, gate2 gagal, gate3 gagal
 
-**N16 RSI2<10 tanpa penapis** — `rsi2 < 10` · Quantified Strategies (YouTube/Substack) · SEDIA · keluar asal rsi2 > 60; pegang 1-10 hari
+**N16 RSI2<10 tanpa penapis** — `rsi2 < 10` · Quantified Strategies (YouTube/Substack) · DIUJI · keluar asal rsi2 > 60; pegang 1-10 hari | DIUJI (NXX.md): lift terbaik X4 +0.284 latih / +0.518 tahan, n 567,422, gate1 LULUS, gate2 LULUS, gate3 gagal
 
-**N17 RSI14 silang naik 30** — `rsi14 silang naik 30` · klasik terlebih jual (umum) · SEDIA
+**N17 RSI14 silang naik 30** — `rsi14 silang naik 30` · klasik terlebih jual (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X3 +0.886 latih / +1.544 tahan, n 54,073, gate1 LULUS, gate2 LULUS, gate3 gagal
 
-**N18 RSI 30-50 pullback** — `30 <= rsi14 <= 50 DAN tutup > ma200` · Quantified Strategies (YouTube/Substack) · SEDIA · sumber lapor CAGR 5.3%, 196 dagangan, menang 81% pada S&P 500
+**N18 RSI 30-50 pullback** — `30 <= rsi14 <= 50 DAN tutup > ma200` · Quantified Strategies (YouTube/Substack) · DIUJI · sumber lapor CAGR 5.3%, 196 dagangan, menang 81% pada S&P 500 | DIUJI (NXX.md): lift terbaik X1 +0.062 latih / -0.062 tahan, n 665,910, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N75 RSI14 < 40 tanpa penapis** — `rsi14 < 40` · QuantJourney O03 (quantjourney-bt) · SEDIA · sumber pasangkan dengan buy-limit 1.5% bawah tutup (C03)
+**N75 RSI14 < 40 tanpa penapis** — `rsi14 < 40` · QuantJourney O03 (quantjourney-bt) · DIUJI · sumber pasangkan dengan buy-limit 1.5% bawah tutup (C03) | DIUJI (NXX.md): lift terbaik X3 +0.647 latih / +1.587 tahan, n 861,071, gate1 LULUS, gate2 LULUS, gate3 gagal
 
 **N82 Connors RSI penuh < 10** — `crsi = purata(RSI(3), RSI(2) atas panjang streak, pangkat peratus ROC(1) 100 hari) < 10` · Larry Connors (pandas_ta) · PERLU:crsi · TIGA komponen; N14-N16 hanya guna rsi2 = versi ringkas sahaja
 
 **N117 3 hari turun + atas MA200 + bawah SMA5** — `tutup > ma200 DAN tutup < SMA5 DAN rendah < rendah[-1] DAN tinggi < tinggi[-1] bagi 3 sesi berturut` · Connors & Alvarez, High Probability ETF Trading (buku) · PERLU:ma5 · sumber sendiri kata ia direka untuk ETF kerana ETF tidak mungkin ke sifar; saham tunggal lebih lemah
 
-**N118 4 daripada 5 sesi terakhir turun** — `tutup > ma200 DAN 4 daripada 5 sesi terakhir tutup lebih rendah` · Connors & Alvarez (buku) · SEDIA · bab berasingan dalam sumber; juga direka untuk ETF
+**N118 4 daripada 5 sesi terakhir turun** — `tutup > ma200 DAN 4 daripada 5 sesi terakhir tutup lebih rendah` · Connors & Alvarez (buku) · DIUJI · bab berasingan dalam sumber; juga direka untuk ETF | DIUJI (NXX.md): lift terbaik X1 +0.045 latih / +0.072 tahan, n 300,593, gate1 LULUS, gate2 gagal, gate3 gagal
 
-**N119 3 tutup turun berturut** — `tutup[-2] > tutup[-1] DAN tutup[-1] > tutup` · Connors & Alvarez, Short-Term Trading Strategies That Work (2009) (buku) · SEDIA · sumber lapor pasaran naik > 4x purata mingguan dalam 5 sesi berikut; tidak disahkan
+**N119 3 tutup turun berturut** — `tutup[-2] > tutup[-1] DAN tutup[-1] > tutup` · Connors & Alvarez, Short-Term Trading Strategies That Work (2009) (buku) · DIUJI · sumber lapor pasaran naik > 4x purata mingguan dalam 5 sesi berikut; tidak disahkan | DIUJI (NXX.md): lift terbaik X2 +0.092 latih / +0.237 tahan, n 1,051,604, gate1 LULUS, gate2 gagal, gate3 gagal
 
 ### BB
 
-**N19 Bawah jalur BB + RSI<30** — `bb_pctb < 0 DAN rsi14 < 30` · LuxAlgo (LuxAlgo) · SEDIA · keluar asal rsi14 > 70
+**N19 Bawah jalur BB + RSI<30** — `bb_pctb < 0 DAN rsi14 < 30` · LuxAlgo (LuxAlgo) · DIUJI · keluar asal rsi14 > 70 | DIUJI (NXX.md): lift terbaik X3 +0.873 latih / +3.618 tahan, n 73,769, gate1 LULUS, gate2 gagal, gate3 gagal
 
-**N20 Kembali masuk jalur + RSI silang 30** — `bb_pctb[-1] < 0 DAN bb_pctb > 0 DAN rsi14 silang naik 30` · therighttrader (blog) · SEDIA · henti pada ekstrem luar; keluar jalur tengah
+**N20 Kembali masuk jalur + RSI silang 30** — `bb_pctb[-1] < 0 DAN bb_pctb > 0 DAN rsi14 silang naik 30` · therighttrader (blog) · DIUJI · henti pada ekstrem luar; keluar jalur tengah | DIUJI (NXX.md): lift terbaik X3 +0.936 latih / +1.614 tahan, n 19,208, gate1 LULUS, gate2 gagal, gate3 gagal
 
-**N21 BB + RSI 40/60** — `bb_pctb < 20 DAN rsi14 > 40` · Fmz (Fmz) · SEDIA · sasaran untung 2% tetap
+**N21 BB + RSI 40/60** — `bb_pctb < 20 DAN rsi14 > 40` · Fmz (Fmz) · DIUJI · sasaran untung 2% tetap | DIUJI (NXX.md): lift terbaik X1 +0.040 latih / -0.053 tahan, n 266,924, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N22 BB pecah atas + RSI** — `bb_pctb > 100 DAN rsi14 > 50` · StockSharp (StockSharp) · SEDIA · keluar jalur tengah
+**N22 BB pecah atas + RSI** — `bb_pctb > 100 DAN rsi14 > 50` · StockSharp (StockSharp) · DIUJI · keluar jalur tengah | DIUJI (NXX.md): lift terbaik X1 -0.145 latih / -0.268 tahan, n 288,864, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N23 BB squeeze kemudian pecah** — `bb_squeeze[-1] DAN tutup > ema20` · klasik (umum) · SEDIA
+**N23 BB squeeze kemudian pecah** — `bb_squeeze[-1] DAN tutup > ema20` · klasik (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.061 latih / -0.199 tahan, n 56,608, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N73 Tutup bawah jalur bawah BB(20,2)** — `tutup < SMA20 - 2 x SD20` · QuantJourney W21 (quantjourney-bt) · SEDIA · keluar asal: tutup > jalur tengah SMA20
+**N73 Tutup bawah jalur bawah BB(20,2)** — `tutup < SMA20 - 2 x SD20` · QuantJourney W21 (quantjourney-bt) · DIUJI · keluar asal: tutup > jalur tengah SMA20 | DIUJI (NXX.md): lift terbaik X3 +0.425 latih / +0.889 tahan, n 240,838, gate1 LULUS, gate2 gagal, gate3 gagal
 
 ### TREND
 
-**N24 Supertrend(10,3) + ADX>20** — `supertrend > 0 DAN adx14 > 20` · therighttrader (blog) · SEDIA · sumber: ATR 10, pengganda 3, ADX Wilder 14, ambang 20
+**N24 Supertrend(10,3) + ADX>20** — `supertrend > 0 DAN adx14 > 20` · therighttrader (blog) · DIUJI · sumber: ATR 10, pengganda 3, ADX Wilder 14, ambang 20 | DIUJI (NXX.md): lift terbaik X1 -0.091 latih / -0.081 tahan, n 1,359,653, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N25 Supertrend + EMA + ADX>23** — `supertrend > 0 DAN tutup > ema20 DAN adx14 > 23` · skrip awam (TradingView) · SEDIA
+**N25 Supertrend + EMA + ADX>23** — `supertrend > 0 DAN tutup > ema20 DAN adx14 > 23` · skrip awam (TradingView) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.118 latih / -0.132 tahan, n 948,243, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N26 Tiga Supertrend + EMA + ADX** — `ketiga supertrend > 0 DAN tutup > ema20 DAN adx14 > ambang` · LuxAlgo (LuxAlgo) · PERLU:supertrend3 · tiga pengganda ATR berbeza
 
-**N27 Ichimoku atas awan** — `atas_awan DAN tenkan_atas` · klasik (umum) · SEDIA
+**N27 Ichimoku atas awan** — `atas_awan DAN tenkan_atas` · klasik (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.090 latih / -0.126 tahan, n 1,562,663, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N28 ADX>25 + DI+ > DI-** — `adx14 > 25 DAN mdi < adx14` · Wilder (buku) · SEDIA · proksi DI daripada lajur sedia ada
+**N28 ADX>25 + DI+ > DI-** — `adx14 > 25 DAN mdi < adx14` · Wilder (buku) · DIUJI · proksi DI daripada lajur sedia ada | DIUJI (NXX.md): lift terbaik X3 -0.094 latih / +0.914 tahan, n 1,404,045, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N29 PSAR naik + tutup>MA50** — `psar_arah > 0 DAN tutup > ma50` · klasik (umum) · SEDIA
+**N29 PSAR naik + tutup>MA50** — `psar_arah > 0 DAN tutup > ma50` · klasik (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.093 latih / -0.138 tahan, n 1,557,048, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N74 MACD atas garis isyarat (keadaan, bukan silang)** — `macd > macd_sig` · QuantJourney W22 (quantjourney-bt) · SEDIA · BERBEZA daripada macd_cross: keadaan berterusan, bukan peristiwa silang
+**N74 MACD atas garis isyarat (keadaan, bukan silang)** — `macd > macd_sig` · QuantJourney W22 (quantjourney-bt) · DIUJI · BERBEZA daripada macd_cross: keadaan berterusan, bukan peristiwa silang | DIUJI (NXX.md): lift terbaik X3 -0.096 latih / +0.133 tahan, n 2,255,263, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N83 AlphaTrend menaik** — `alphatrend > alphatrend[-2]` · KivancOzbilgic (TradingView / pandas_ta) · PERLU:alphatrend · ATR + MFI (atau RSI) memilih jalur
 
@@ -144,35 +144,35 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N30 Turtle sistem 1** — `donchian20 pecah` · Dennis/Eckhardt (buku) · PERLU:donchian10 · henti 2xATR20; keluar Donchian10 bertentangan
 
-**N31 Turtle sistem 2** — `donchian55 pecah` · Dennis/Eckhardt (buku) · SEDIA
+**N31 Turtle sistem 2** — `donchian55 pecah` · Dennis/Eckhardt (buku) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.153 latih / -0.287 tahan, n 176,582, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N32 Donchian50 (Darvas ringkas)** — `donchian50 pecah` · EA Darvas (MQL5) · PERLU:donchian50
 
-**N33 Donchian20 + penapis MA200** — `donchian20 pecah DAN j_ma200 > 0` · skrip awam (TradingView) · SEDIA · henti pada jalur bertentangan
+**N33 Donchian20 + penapis MA200** — `donchian20 pecah DAN j_ma200 > 0` · skrip awam (TradingView) · DIUJI · henti pada jalur bertentangan | DIUJI (NXX.md): lift terbaik X1 -0.128 latih / -0.219 tahan, n 223,348, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N34 Darvas Box** — `pecah atas kotak Darvas` · Darvas (buku) · PERLU:darvas · tiada peraturan berangka standard; henti bawah kotak
 
-**N35 Pecah 52 minggu tinggi** — `breakout_52w` · klasik (umum) · SEDIA
+**N35 Pecah 52 minggu tinggi** — `breakout_52w` · klasik (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.097 latih / -0.223 tahan, n 182,300, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N36 Pocket pivot** — `pocket_pivot` · Morales/Kacher (buku) · SEDIA · juga M35 dalam keluarga Mxx
+**N36 Pocket pivot** — `pocket_pivot` · Morales/Kacher (buku) · DIUJI · juga M35 dalam keluarga Mxx | DIUJI (NXX.md): lift terbaik X1 -0.143 latih / -0.228 tahan, n 386,797, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N37 Gap and go** — `gap_and_go` · klasik intraday (umum) · SEDIA
+**N37 Gap and go** — `gap_and_go` · klasik intraday (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X3 +0.323 latih / +2.099 tahan, n 19,652, gate1 LULUS, gate2 gagal, gate3 gagal
 
-**N38 VCP pecah** — `vcp` · Minervini (buku) · SEDIA · juga M06
+**N38 VCP pecah** — `vcp` · Minervini (buku) · DIUJI · juga M06 | DIUJI (NXX.md): lift terbaik X3 -0.289 latih / +0.234 tahan, n 452,952, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N39 NR7 kemudian pecah** — `nr7[-1] DAN donchian20` · Crabel (buku) · SEDIA
+**N39 NR7 kemudian pecah** — `nr7[-1] DAN donchian20` · Crabel (buku) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.088 latih / -0.221 tahan, n 36,881, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N80 Tinggi sepanjang masa** — `tutup >= tutup tertinggi sepanjang masa` · Wilcox & Crittenden (2005); Zarattini, Pagani & Wilcox (2025) (Quantpedia) · SEDIA · SAMA dengan K195 dalam katalog K; henti ekor asal 10 x ATR, pegangan purata ~305 hari (kedudukan, bukan swing)
+**N80 Tinggi sepanjang masa** — `tutup >= tutup tertinggi sepanjang masa` · Wilcox & Crittenden (2005); Zarattini, Pagani & Wilcox (2025) (Quantpedia) · DIUJI · SAMA dengan K195 dalam katalog K; henti ekor asal 10 x ATR, pegangan purata ~305 hari (kedudukan, bukan swing) | DIUJI (NXX.md): lift terbaik X1 -0.055 latih / -0.099 tahan, n 110,082, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N130 Opening Range Breakout 5 minit** — `arah lilin 5 minit pertama menentukan sisi; masuk pada pecah julatnya dari buka lilin kedua` · Zarattini, Barbon & Aziz (SSRN/akademik) · PERLU:intraday · repo TIADA bar intrahari. Replikasi bebas pada 5 indeks lapor kelebihan KASAR berulang tetapi pulangan BERSIH hampir SIFAR selepas kos. Saiz asal: syer = risiko$/(masuk - rendah).
 
 ### VOLUM
 
-**N40 OBV tinggi baharu + MA50** — `obv_tinggi_baru DAN tutup > ma50` · klasik (umum) · SEDIA
+**N40 OBV tinggi baharu + MA50** — `obv_tinggi_baru DAN tutup > ma50` · klasik (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.065 latih / -0.181 tahan, n 132,453, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N41 CMF20>0 + tutup>EMA20** — `cmf20 > 0 DAN tutup > ema20` · Chaikin (buku) · SEDIA
+**N41 CMF20>0 + tutup>EMA20** — `cmf20 > 0 DAN tutup > ema20` · Chaikin (buku) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.096 latih / -0.110 tahan, n 1,536,991, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N42 Lonjakan volum 2x** — `vol_n50 >= 2.0 DAN tutup > tutup[-1]` · umum (umum) · SEDIA
+**N42 Lonjakan volum 2x** — `vol_n50 >= 2.0 DAN tutup > tutup[-1]` · umum (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X3 +0.270 latih / +1.093 tahan, n 130,675, gate1 LULUS, gate2 gagal, gate3 gagal
 
 **N88 Elder Force Index > 0 + tutup > EMA21** — `efi(13) > 0 DAN tutup > ema21` · Alexander Elder (pandas_ta) · PERLU:efi
 
@@ -184,47 +184,47 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 ### UNDUR
 
-**N43 Undur EMA8 + penapis MA50** — `tutup[-1] < ema9[-1] DAN tutup > ema9 DAN tutup > ma50` · Morpheus Trading (Deel) (blog) · SEDIA · sumber guna EMA8; repo ada ema9 — proksi terdekat
+**N43 Undur EMA8 + penapis MA50** — `tutup[-1] < ema9[-1] DAN tutup > ema9 DAN tutup > ma50` · Morpheus Trading (Deel) (blog) · DIUJI · sumber guna EMA8; repo ada ema9 — proksi terdekat | DIUJI (NXX.md): lift terbaik X1 -0.096 latih / -0.074 tahan, n 233,028, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N44 Undur EMA21 + EMA21>MA50** — `tutup > ema21 DAN tutup[-1] < ema21[-1] DAN ema21 > ma50` · panduan 8/21 EMA (blog) · SEDIA · sumber: 21 EMA atas 50 EMA dan harga atas kedua-duanya
+**N44 Undur EMA21 + EMA21>MA50** — `tutup > ema21 DAN tutup[-1] < ema21[-1] DAN ema21 > ma50` · panduan 8/21 EMA (blog) · DIUJI · sumber: 21 EMA atas 50 EMA dan harga atas kedua-duanya | DIUJI (NXX.md): lift terbaik X1 -0.069 latih / -0.067 tahan, n 128,080, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N45 Undur EMA21 cerun positif** — `tutup > ema21 DAN cerun_ema21 > 0 DAN julat10 < julat20` · panduan 8/21 EMA (blog) · SEDIA · sumber syarat "EMA 45 darjah" — proksi cerun; elak EMA rata
+**N45 Undur EMA21 cerun positif** — `tutup > ema21 DAN cerun_ema21 > 0 DAN julat10 < julat20` · panduan 8/21 EMA (blog) · DIUJI · sumber syarat "EMA 45 darjah" — proksi cerun; elak EMA rata | DIUJI (NXX.md): lift terbaik X1 -0.094 latih / -0.125 tahan, n 1,649,671, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N46 Pecah tinggi bar penolakan** — `rendah[-1] <= ema21[-1] DAN tutup > tinggi[-1]` · journalplus/kotakneo (blog) · SEDIA · sumber TEGAS: masuk pada pecah tinggi lilin penolakan, BUKAN pada undur itu sendiri
+**N46 Pecah tinggi bar penolakan** — `rendah[-1] <= ema21[-1] DAN tutup > tinggi[-1]` · journalplus/kotakneo (blog) · DIUJI · sumber TEGAS: masuk pada pecah tinggi lilin penolakan, BUKAN pada undur itu sendiri | DIUJI (NXX.md): lift terbaik X2 +0.138 latih / +0.011 tahan, n 665,113, gate1 LULUS, gate2 gagal, gate3 gagal
 
 ### KETAT
 
-**N47 NR7 + EMA9>EMA21** — `nr7 DAN ema9 > ema21 DAN tutup > ema21` · Stockezee (screener) · SEDIA · sumber asal 10EMA>20EMA pasaran India; ema9/ema21 proksi
+**N47 NR7 + EMA9>EMA21** — `nr7 DAN ema9 > ema21 DAN tutup > ema21` · Stockezee (screener) · DIUJI · sumber asal 10EMA>20EMA pasaran India; ema9/ema21 proksi | DIUJI (NXX.md): lift terbaik X1 -0.083 latih / -0.123 tahan, n 303,256, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N48 Inside day pecah** — `inside_day[-1] DAN tutup > tinggi[-1]` · Crabel (buku) · SEDIA · order henti atas tinggi inside day — tidak meramal arah
+**N48 Inside day pecah** — `inside_day[-1] DAN tutup > tinggi[-1]` · Crabel (buku) · DIUJI · order henti atas tinggi inside day — tidak meramal arah | DIUJI (NXX.md): lift terbaik X1 -0.021 latih / -0.080 tahan, n 158,573, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N49 NR7 + inside day serentak** — `nr7 DAN inside_day` · Crabel (buku) · SEDIA · Crabel: gabungan dua ini paling mampat
+**N49 NR7 + inside day serentak** — `nr7 DAN inside_day` · Crabel (buku) · DIUJI · Crabel: gabungan dua ini paling mampat | DIUJI (NXX.md): lift terbaik X3 +0.015 latih / +0.712 tahan, n 209,101, gate1 LULUS, gate2 gagal, gate3 gagal
 
-**N50 Mampat + pecah volum 1.5x** — `julat10 < 0.5 x julat20 DAN vol_n50 >= 1.5 DAN tutup > tinggi[-1]` · Stockezee (screener) · SEDIA · sumber tolak pecah bervolum lemah (< 1.5x) dan langkau 5 hari sebelum earnings
+**N50 Mampat + pecah volum 1.5x** — `julat10 < 0.5 x julat20 DAN vol_n50 >= 1.5 DAN tutup > tinggi[-1]` · Stockezee (screener) · DIUJI · sumber tolak pecah bervolum lemah (< 1.5x) dan langkau 5 hari sebelum earnings | DIUJI (NXX.md): lift terbaik X3 -0.273 latih / +1.875 tahan, n 14,857, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N51 BB squeeze + Supertrend** — `bb_squeeze DAN supertrend > 0` · Squeeze Momentum (LazyBear) (YouTube) · SEDIA
+**N51 BB squeeze + Supertrend** — `bb_squeeze DAN supertrend > 0` · Squeeze Momentum (LazyBear) (YouTube) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.082 latih / -0.178 tahan, n 59,912, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N52 Squeeze lepas + atas MA200** — `bb_squeeze[-1] DAN bb_lebar > bb_lebar[-1] DAN j_ma200 > 0` · Squeeze + EMA200 (YouTube) · SEDIA · video guna EMA200 sebagai penapis trend
+**N52 Squeeze lepas + atas MA200** — `bb_squeeze[-1] DAN bb_lebar > bb_lebar[-1] DAN j_ma200 > 0` · Squeeze + EMA200 (YouTube) · DIUJI · video guna EMA200 sebagai penapis trend | DIUJI (NXX.md): lift terbaik X1 -0.068 latih / -0.200 tahan, n 27,526, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N81 TTM Squeeze lepas + momentum naik** — `squeeze OFF pada bar ini DAN ON pada bar sebelum DAN momentum squeeze > 0` · John Carter (pandas_ta / Simpler Trading) · PERLU:squeeze_ttm · BERBEZA daripada bb_squeeze repo (lebar BB): TTM = BB(20,2) berada DALAM KC(20,1.5,ATR)
 
-**N116 ID/NR4** — `inside_day DAN julat hari ini terkecil dalam 4 hari; beli-stop atas tinggi` · Connors & Raschke, Street Smarts (1995) (buku) · SEDIA
+**N116 ID/NR4** — `inside_day DAN julat hari ini terkecil dalam 4 hari; beli-stop atas tinggi` · Connors & Raschke, Street Smarts (1995) (buku) · DIUJI · DIUJI (NXX.md): lift terbaik X3 +0.026 latih / +0.532 tahan, n 323,670, gate1 LULUS, gate2 gagal, gate3 gagal
 
 ### ADX
 
-**N53 Supertrend + ADX>25** — `supertrend > 0 DAN adx14 > 25` · StockSharp (StockSharp) · SEDIA · keluar asal: supertrend berbalik (dipakai sebagai henti ekor)
+**N53 Supertrend + ADX>25** — `supertrend > 0 DAN adx14 > 25` · StockSharp (StockSharp) · DIUJI · keluar asal: supertrend berbalik (dipakai sebagai henti ekor) | DIUJI (NXX.md): lift terbaik X3 -0.386 latih / +0.062 tahan, n 913,085, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N54 Supertrend + RSI>50** — `supertrend > 0 DAN rsi14 > 50` · skrip posisional (TradingView) · SEDIA · ADX pilihan dalam sumber
+**N54 Supertrend + RSI>50** — `supertrend > 0 DAN rsi14 > 50` · skrip posisional (TradingView) · DIUJI · ADX pilihan dalam sumber | DIUJI (NXX.md): lift terbaik X1 -0.090 latih / -0.106 tahan, n 1,820,574, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N55 BB + RSI + ADX>20** — `bb_pctb < 20 DAN rsi14 > 40 DAN adx14 > 20` · "Super Swing Strategy" (TradingView) · SEDIA
+**N55 BB + RSI + ADX>20** — `bb_pctb < 20 DAN rsi14 > 40 DAN adx14 > 20` · "Super Swing Strategy" (TradingView) · DIUJI · DIUJI (NXX.md): lift terbaik X1 +0.077 latih / -0.073 tahan, n 113,407, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N56 RSI>50 + ADX>20** — `rsi14 > 50 DAN adx14 > 20` · MTF RSI-ADX-ATR (TradingView) · SEDIA · henti ATR dalam sumber
+**N56 RSI>50 + ADX>20** — `rsi14 > 50 DAN adx14 > 20` · MTF RSI-ADX-ATR (TradingView) · DIUJI · henti ATR dalam sumber | DIUJI (NXX.md): lift terbaik X1 -0.103 latih / -0.140 tahan, n 1,384,407, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N57 ADX bangkit daripada <20** — `adx14 > 20 DAN adx14[-1] <= 20 DAN tutup > ma50` · Wilder (buku) · SEDIA
+**N57 ADX bangkit daripada <20** — `adx14 > 20 DAN adx14[-1] <= 20 DAN tutup > ma50` · Wilder (buku) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.111 latih / -0.223 tahan, n 45,009, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N58 DI+ silang DI- + ADX>20** — `pdi silang naik mdi DAN adx14 > 20` · Wilder (buku) · SEDIA
+**N58 DI+ silang DI- + ADX>20** — `pdi silang naik mdi DAN adx14 > 20` · Wilder (buku) · DIUJI · DIUJI (NXX.md): lift terbaik X2 -0.053 latih / +0.190 tahan, n 62,725, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N115 Holy Grail (Raschke)** — `adx14 > 30 DAN undur menyentuh ema20 DAN tutup > tinggi bar sebelum` · Linda Raschke (buku/blog) · SEDIA · repo ada adx14 dan ema21; ema20 tepat perlu dikira
+**N115 Holy Grail (Raschke)** — `adx14 > 30 DAN undur menyentuh ema20 DAN tutup > tinggi bar sebelum` · Linda Raschke (buku/blog) · DIUJI · repo ada adx14 dan ema21; ema20 tepat perlu dikira | DIUJI (NXX.md): lift terbaik X3 +0.452 latih / +1.750 tahan, n 104,014, gate1 LULUS, gate2 LULUS, gate3 gagal
 
 ### VWAP
 
@@ -236,29 +236,29 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 ### POLA
 
-**N62 Flat base pecah** — `julat20 <= 0.08 x tutup DAN tutup > tinggi20[-1]` · Tradezella/O’Neil (blog) · SEDIA · sumber: MA mengetat dan julat harian mengecil
+**N62 Flat base pecah** — `julat20 <= 0.08 x tutup DAN tutup > tinggi20[-1]` · Tradezella/O’Neil (blog) · DIUJI · sumber: MA mengetat dan julat harian mengecil | DIUJI (NXX.md): lift terbaik X1 -0.030 latih / -0.030 tahan, n 35,685, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N63 High tight flag** — `gap >= 3% DAN vol_n50 >= 2.0 pada hari gap DAN sisi 3-8 hari DAN tutup > tinggi bendera` · skrip gaya Minervini (TradingView) · PERLU:htf
 
-**N64 Episodic pivot** — `gap_and_go DAN vol_n50 >= 2.0` · Qullamaggie/Tradezella (blog/YouTube) · SEDIA · sumber tawar "high-volume close" sebagai masuk kedua
+**N64 Episodic pivot** — `gap_and_go DAN vol_n50 >= 2.0` · Qullamaggie/Tradezella (blog/YouTube) · DIUJI · sumber tawar "high-volume close" sebagai masuk kedua | DIUJI (NXX.md): lift terbaik X3 +0.290 latih / +1.572 tahan, n 13,667, gate1 LULUS, gate2 gagal, gate3 gagal
 
-**N65 Gap 4% + volum + hampir 52w** — `gap_and_go DAN vol_n50 >= 1.5 DAN j_52w_tinggi >= -0.05` · pemeriksa pramasa (blog) · SEDIA · sumber: gap 4%, volum pramasa > 100k, pemangkin dalam 24 jam
+**N65 Gap 4% + volum + hampir 52w** — `gap_and_go DAN vol_n50 >= 1.5 DAN j_52w_tinggi >= -0.05` · pemeriksa pramasa (blog) · DIUJI · sumber: gap 4%, volum pramasa > 100k, pemangkin dalam 24 jam | DIUJI (NXX.md): lift terbaik X1 -0.008 latih / -0.110 tahan, n 6,537, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N66 52w tinggi + pengesahan 1%** — `tutup > 1.01 x tinggi_52w[-1]` · panduan amaran pecah (blog) · SEDIA · sumber: cetus 1-2% ATAS paras untuk tapis pecah palsu; elak saham tipis
+**N66 52w tinggi + pengesahan 1%** — `tutup > 1.01 x tinggi_52w[-1]` · panduan amaran pecah (blog) · DIUJI · sumber: cetus 1-2% ATAS paras untuk tapis pecah palsu; elak saham tipis | DIUJI (NXX.md): lift terbaik X1 -0.184 latih / -0.308 tahan, n 43,179, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N67 Hammer di MA50** — `hammer DAN rendah <= ma50 DAN tutup > ma50` · klasik lilin (umum) · SEDIA
+**N67 Hammer di MA50** — `hammer DAN rendah <= ma50 DAN tutup > ma50` · klasik lilin (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.153 latih / -0.119 tahan, n 20,900, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N68 Bullish engulfing + EMA21** — `bullish_engulfing DAN tutup > ema21` · klasik lilin (umum) · SEDIA
+**N68 Bullish engulfing + EMA21** — `bullish_engulfing DAN tutup > ema21` · klasik lilin (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.090 latih / -0.108 tahan, n 106,476, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N111 Turtle Soup** — `rendah 20 hari baharu yang ekstrem 20 hari sebelumnya berlaku >= 4 sesi lalu` · Connors & Raschke, Street Smarts (1995) (buku) · PERLU:turtle_soup · sumber sekunder TIDAK SEPAKAT: umur ekstrem 3 atau 4 bar; ofset masuk 5-10 tik atau 1/8 mata. Teks buku belum dibaca.
 
 **N112 Turtle Soup Plus One** — `syarat Turtle Soup tetapi masuk satu sesi kemudian` · Connors & Raschke, Street Smarts (1995) (buku) · PERLU:turtle_soup
 
-**N113 80-20 bar (sisi beli)** — `buka dalam 20% BAWAH julat hari DAN tutup dalam 20% ATAS julat hari` · Connors & Raschke, Street Smarts (1995) (buku) · SEDIA · sumber BERCANGGAH pada rangka: satu kata fade, satu lagi kata ikut; ini bacaan sisi beli
+**N113 80-20 bar (sisi beli)** — `buka dalam 20% BAWAH julat hari DAN tutup dalam 20% ATAS julat hari` · Connors & Raschke, Street Smarts (1995) (buku) · DIUJI · sumber BERCANGGAH pada rangka: satu kata fade, satu lagi kata ikut; ini bacaan sisi beli | DIUJI (NXX.md): lift terbaik X1 -0.014 latih / -0.061 tahan, n 389,109, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N123 Power Earnings Gap** — `gap earnings DAN vol_n50 >= 3.0 DAN tutup dalam 25% atas julat hari` · therighttrader (blog) · PERLU:tarikh_earnings · keluar asal: henti bawah rendah hari gap; gagal jika tutup < buka hari gap. DIBETULKAN 30 Okt 2026 (SPEC_NXX §10): perlu tarikh earnings titik-masa; data/sec/ ada tetapi penyertaannya tugas data berasingan.
 
-**N124 Episodic pivot gap 8-10%** — `gap >= 8% DAN vol_n50 >= 2.0` · Qullamaggie/Bonde melalui Tradingsim (blog) · SEDIA · lebih tegas daripada N64 yang hanya guna gap_and_go
+**N124 Episodic pivot gap 8-10%** — `gap >= 8% DAN vol_n50 >= 2.0` · Qullamaggie/Bonde melalui Tradingsim (blog) · DIUJI · lebih tegas daripada N64 yang hanya guna gap_and_go | DIUJI (NXX.md): lift terbaik X3 -0.132 latih / +7.066 tahan, n 12,728, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N125 Undur Fibonacci 38.2-61.8 + bar penolakan** — `undur ke zon 38.2%-61.8% ayunan terakhir DAN bar penolakan DAN tutup > tinggi bar penolakan` · konsensus blog (LuxAlgo, therighttrader, kotakneo) (blog) · PERLU:fib_ayunan · henti asal di 78.6%. Sumber mengakui 50% BUKAN nisbah Fibonacci, hanya titik tengah psikologi.
 
@@ -280,9 +280,9 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 ### KEKUATAN
 
-**N69 RS kuintil 5 + sektor atas MA50** — `rs_spy_6b dalam kuintil teratas DAN sektor_atas_ma50` · O’Neil/Minervini (buku) · SEDIA · dua daripada tiga tiang yang DITINGGALKAN daripada grid 672 setup
+**N69 RS kuintil 5 + sektor atas MA50** — `rs_spy_6b dalam kuintil teratas DAN sektor_atas_ma50` · O’Neil/Minervini (buku) · DIUJI · dua daripada tiga tiang yang DITINGGALKAN daripada grid 672 setup | DIUJI (NXX.md): lift terbaik X3 -0.075 latih / +0.392 tahan, n 582,620, gate1 gagal, gate2 gagal, gate3 gagal
 
-**N70 Garis RS tinggi baharu** — `garis_rs_tinggi` · Minervini (buku) · SEDIA
+**N70 Garis RS tinggi baharu** — `garis_rs_tinggi` · Minervini (buku) · DIUJI · DIUJI (NXX.md): lift terbaik X1 -0.065 latih / -0.175 tahan, n 98,946, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N71 RS + pecah + rejim SPY** — `rs_spy_6b kuintil teratas DAN sektor_atas_ma50 DAN donchian20 DAN spy > ma50 DAN spy > ma200` · pakej Sistem A (buku) · DIUJI · Sistem A penuh: CAGR -1.03%, MDD -40.65%, sebaran benih 4.01 (SISTEM.md)
 
@@ -294,7 +294,7 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N79 Momentum ganda (relatif + mutlak)** — `pulangan 252 hari dalam 2 teratas alam DAN pulangan 252 hari > 0` · QuantJourney W04 / Antonacci (quantjourney-bt) · PERLU:paksi_urutan · syarat mutlak ialah penapis rejim terbina dalam. DIBETULKAN 30 Okt 2026 (SPEC_NXX §10): bahagian "2 teratas alam" ialah URUTAN; alam sumber 9 ETF lawan 2,800 saham repo.
 
-**N120 Trend Template Minervini (8 syarat)** — `tutup > ma150 DAN tutup > ma200 DAN ma150 > ma200 DAN ma200 menaik >= 1 bulan DAN ma50 > ma150 DAN ma50 > ma200 DAN tutup > ma50 DAN tutup >= 1.30 x rendah_52w DAN tutup >= 0.75 x tinggi_52w DAN RS >= 70` · Minervini, Trade Like a Stock Market Wizard (buku) · SEDIA · sumber sekunder TIDAK SEPAKAT pada ambang rendah 52w: 25% lawan 30%; saya guna 30% kerana skrip ProRealCode mengiranya Close/Lowest[252] > 1.3. Teks buku belum dibaca.
+**N120 Trend Template Minervini (8 syarat)** — `tutup > ma150 DAN tutup > ma200 DAN ma150 > ma200 DAN ma200 menaik >= 1 bulan DAN ma50 > ma150 DAN ma50 > ma200 DAN tutup > ma50 DAN tutup >= 1.30 x rendah_52w DAN tutup >= 0.75 x tinggi_52w DAN RS >= 70` · Minervini, Trade Like a Stock Market Wizard (buku) · DIUJI · sumber sekunder TIDAK SEPAKAT pada ambang rendah 52w: 25% lawan 30%; saya guna 30% kerana skrip ProRealCode mengiranya Close/Lowest[252] > 1.3. Teks buku belum dibaca. | DIUJI (NXX.md): lift terbaik X1 -0.087 latih / -0.097 tahan, n 627,861, gate1 gagal, gate2 gagal, gate3 gagal
 
 **N121 Weinstein Stage 2** — `stage dalam (2A, 2) daripada data/stage/status.json` · Weinstein, Secrets for Profiting in Bull and Bear Markets (buku) · PERLU:sejarah_stage · DIBETULKAN 30 Okt 2026 selepas audit: data/stage/status.json ialah PETIKAN harian (7 commit sahaja), tiada sejarah titik-masa, jadi ia tidak boleh diuji pada 2012-2025. Ia BOLEH dikira semula daripada stor harga oleh standard/stage.py (bar mingguan + MA 30 minggu), tetapi itu larian berasingan. Dikeluarkan daripada pradaftar SPEC_NXX.md §3.
 
@@ -342,11 +342,11 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N103 Pra-cuti bursa** — `beli pada tutup sesi sebelum cuti bursa` · kesan pra-cuti klasik (umum) · PERLU:kalendar_cuti
 
-**N104 Kesan hari minggu** — `beli pada tutup hari minggu tertentu` · kesan hari minggu (akademik/umum) · SEDIA · JUJUR: 5 hari = 5 ujian; mesti dikira dalam FDR
+**N104 Kesan hari minggu** — `beli pada tutup hari minggu tertentu` · kesan hari minggu (akademik/umum) · DIUJI · JUJUR: 5 hari = 5 ujian; mesti dikira dalam FDR | DIUJI (NXX.md): lift terbaik X3 -0.052 latih / +0.144 tahan, n 824,568, gate1 LULUS, gate2 gagal, gate3 gagal
 
 **N105 Santa Claus rally** — `beli pada tutup 5 sesi terakhir Disember` · klasik seasonality (umum) · PERLU:kalendar_dagangan
 
-**N106 Sell in May songsang (pegang Nov-Apr)** — `dalam pasaran hanya November hingga April` · klasik seasonality (umum) · SEDIA
+**N106 Sell in May songsang (pegang Nov-Apr)** — `dalam pasaran hanya November hingga April` · klasik seasonality (umum) · DIUJI · DIUJI (NXX.md): lift terbaik X1 +0.066 latih / -0.073 tahan, n 2,170,276, gate1 gagal, gate2 gagal, gate3 gagal
 
 ### REJIM
 

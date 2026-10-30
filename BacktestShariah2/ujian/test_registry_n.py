@@ -179,6 +179,21 @@ class TestStatus(unittest.TestCase):
             b = [x for x in senarai if x[0] == _id][0]
             self.assertEqual(b[4], 'SEDIA', _id)
 
+    def test_hasil_nxx_sepadan_registry(self):
+        # setiap id dalam HASIL_NXX mesti wujud dan menjadi DIUJI dalam keluaran
+        ids = {b[0] for b in R.MASUK}
+        self.assertTrue(set(R.HASIL_NXX) <= ids)
+        self.assertEqual(len(R.HASIL_NXX), 66)
+        for b in R.MASUK:
+            if b[0] in R.HASIL_NXX:
+                self.assertEqual(R.kemas_masuk(b)[6], 'DIUJI', b[0])
+                self.assertIn('NXX.md', R.kemas_masuk(b)[7])
+
+    def test_nxx_tiada_gate3_lulus(self):
+        # 0 daripada 280 lulus ketiga-tiga gate; jika ada yang lulus, nota mesti berubah
+        for v in R.HASIL_NXX.values():
+            self.assertIn('gate3 gagal', v)
+
     def test_tajuk_paksi_lengkap(self):
         for nama, _b, _a in R.paksi()[3:]:
             self.assertIn(nama, R.TAJUK_PAKSI)

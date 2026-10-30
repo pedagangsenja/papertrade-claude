@@ -817,6 +817,78 @@ TAJUK_PAKSI = {
 }
 
 
+# Keputusan bahagian A pradaftar SPEC_NXX.md (larian 30 Okt 2026, REVERSE/NXX.md).
+# Status DIUJI diterbitkan daripada kekunci dict ini; tuple MASUK tidak disentuh
+# supaya provenans sumber kekal. 0 daripada 280 lulus ketiga-tiga gate.
+HASIL_NXX = {
+ 'N06': 'lift terbaik X3 -0.552 latih / +0.142 tahan, n 13,422, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N07': 'lift terbaik X1 -0.043 latih / -0.113 tahan, n 85,712, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N08': 'lift terbaik X1 -0.066 latih / -0.074 tahan, n 1,596,759, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N09': 'lift terbaik X1 -0.100 latih / -0.093 tahan, n 229,340, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N104': 'lift terbaik X3 -0.052 latih / +0.144 tahan, n 824,568, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N106': 'lift terbaik X1 +0.066 latih / -0.073 tahan, n 2,170,276, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N113': 'lift terbaik X1 -0.014 latih / -0.061 tahan, n 389,109, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N115': 'lift terbaik X3 +0.452 latih / +1.750 tahan, n 104,014, gate1 LULUS, gate2 LULUS, gate3 gagal',
+ 'N116': 'lift terbaik X3 +0.026 latih / +0.532 tahan, n 323,670, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N118': 'lift terbaik X1 +0.045 latih / +0.072 tahan, n 300,593, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N119': 'lift terbaik X2 +0.092 latih / +0.237 tahan, n 1,051,604, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N120': 'lift terbaik X1 -0.087 latih / -0.097 tahan, n 627,861, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N124': 'lift terbaik X3 -0.132 latih / +7.066 tahan, n 12,728, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N15': 'lift terbaik X1 +0.072 latih / +0.101 tahan, n 211,655, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N16': 'lift terbaik X4 +0.284 latih / +0.518 tahan, n 567,422, gate1 LULUS, gate2 LULUS, gate3 gagal',
+ 'N17': 'lift terbaik X3 +0.886 latih / +1.544 tahan, n 54,073, gate1 LULUS, gate2 LULUS, gate3 gagal',
+ 'N18': 'lift terbaik X1 +0.062 latih / -0.062 tahan, n 665,910, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N19': 'lift terbaik X3 +0.873 latih / +3.618 tahan, n 73,769, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N20': 'lift terbaik X3 +0.936 latih / +1.614 tahan, n 19,208, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N21': 'lift terbaik X1 +0.040 latih / -0.053 tahan, n 266,924, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N22': 'lift terbaik X1 -0.145 latih / -0.268 tahan, n 288,864, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N23': 'lift terbaik X1 -0.061 latih / -0.199 tahan, n 56,608, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N24': 'lift terbaik X1 -0.091 latih / -0.081 tahan, n 1,359,653, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N25': 'lift terbaik X1 -0.118 latih / -0.132 tahan, n 948,243, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N27': 'lift terbaik X1 -0.090 latih / -0.126 tahan, n 1,562,663, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N28': 'lift terbaik X3 -0.094 latih / +0.914 tahan, n 1,404,045, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N29': 'lift terbaik X1 -0.093 latih / -0.138 tahan, n 1,557,048, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N31': 'lift terbaik X1 -0.153 latih / -0.287 tahan, n 176,582, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N33': 'lift terbaik X1 -0.128 latih / -0.219 tahan, n 223,348, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N35': 'lift terbaik X1 -0.097 latih / -0.223 tahan, n 182,300, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N36': 'lift terbaik X1 -0.143 latih / -0.228 tahan, n 386,797, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N37': 'lift terbaik X3 +0.323 latih / +2.099 tahan, n 19,652, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N38': 'lift terbaik X3 -0.289 latih / +0.234 tahan, n 452,952, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N39': 'lift terbaik X1 -0.088 latih / -0.221 tahan, n 36,881, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N40': 'lift terbaik X1 -0.065 latih / -0.181 tahan, n 132,453, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N41': 'lift terbaik X1 -0.096 latih / -0.110 tahan, n 1,536,991, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N42': 'lift terbaik X3 +0.270 latih / +1.093 tahan, n 130,675, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N43': 'lift terbaik X1 -0.096 latih / -0.074 tahan, n 233,028, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N44': 'lift terbaik X1 -0.069 latih / -0.067 tahan, n 128,080, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N45': 'lift terbaik X1 -0.094 latih / -0.125 tahan, n 1,649,671, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N46': 'lift terbaik X2 +0.138 latih / +0.011 tahan, n 665,113, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N47': 'lift terbaik X1 -0.083 latih / -0.123 tahan, n 303,256, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N48': 'lift terbaik X1 -0.021 latih / -0.080 tahan, n 158,573, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N49': 'lift terbaik X3 +0.015 latih / +0.712 tahan, n 209,101, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N50': 'lift terbaik X3 -0.273 latih / +1.875 tahan, n 14,857, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N51': 'lift terbaik X1 -0.082 latih / -0.178 tahan, n 59,912, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N52': 'lift terbaik X1 -0.068 latih / -0.200 tahan, n 27,526, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N53': 'lift terbaik X3 -0.386 latih / +0.062 tahan, n 913,085, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N54': 'lift terbaik X1 -0.090 latih / -0.106 tahan, n 1,820,574, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N55': 'lift terbaik X1 +0.077 latih / -0.073 tahan, n 113,407, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N56': 'lift terbaik X1 -0.103 latih / -0.140 tahan, n 1,384,407, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N57': 'lift terbaik X1 -0.111 latih / -0.223 tahan, n 45,009, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N58': 'lift terbaik X2 -0.053 latih / +0.190 tahan, n 62,725, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N62': 'lift terbaik X1 -0.030 latih / -0.030 tahan, n 35,685, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N64': 'lift terbaik X3 +0.290 latih / +1.572 tahan, n 13,667, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N65': 'lift terbaik X1 -0.008 latih / -0.110 tahan, n 6,537, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N66': 'lift terbaik X1 -0.184 latih / -0.308 tahan, n 43,179, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N67': 'lift terbaik X1 -0.153 latih / -0.119 tahan, n 20,900, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N68': 'lift terbaik X1 -0.090 latih / -0.108 tahan, n 106,476, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N69': 'lift terbaik X3 -0.075 latih / +0.392 tahan, n 582,620, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N70': 'lift terbaik X1 -0.065 latih / -0.175 tahan, n 98,946, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N73': 'lift terbaik X3 +0.425 latih / +0.889 tahan, n 240,838, gate1 LULUS, gate2 gagal, gate3 gagal',
+ 'N74': 'lift terbaik X3 -0.096 latih / +0.133 tahan, n 2,255,263, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N75': 'lift terbaik X3 +0.647 latih / +1.587 tahan, n 861,071, gate1 LULUS, gate2 LULUS, gate3 gagal',
+ 'N76': 'lift terbaik X1 -0.085 latih / -0.118 tahan, n 2,296,233, gate1 gagal, gate2 gagal, gate3 gagal',
+ 'N80': 'lift terbaik X1 -0.055 latih / -0.099 tahan, n 110,082, gate1 gagal, gate2 gagal, gate3 gagal',
+}
+
 def semak():
     """Pulangkan senarai masalah; kosong bermakna registry konsisten."""
     masalah = []
@@ -837,13 +909,21 @@ def semak():
     return masalah
 
 
+def kemas_masuk(b):
+    """Terbitkan status DIUJI + nota keputusan bagi baris yang HASIL_NXX ada."""
+    if b[0] not in HASIL_NXX:
+        return b
+    nota = (b[7] + ' | ' if b[7] else '') + 'DIUJI (NXX.md): ' + HASIL_NXX[b[0]]
+    return b[:6] + ('DIUJI', nota)
+
+
 def tulis_csv():
     os.makedirs(os.path.dirname(CSV), exist_ok=True)
     with open(CSV, 'w', newline='', encoding='utf-8') as f:
         w = csv.writer(f)
         w.writerow(LAJUR)
         for b in MASUK:
-            w.writerow(list(b))
+            w.writerow(list(kemas_masuk(b)))
         for nama, baris, _ in paksi():
             # paksi lain: id, keluarga, nama = peraturan, lajur masuk kosong
             for b in baris:
@@ -860,7 +940,7 @@ def _kira(baris, idx_status):
 
 
 def tulis_spec():
-    km = _kira(MASUK, 6)
+    km = _kira([kemas_masuk(b) for b in MASUK], 6)
     kk = _kira(KELUAR, 4)
     kc = _kira(CARA, 4)
     ku = _kira(URUTAN, 4)
@@ -955,7 +1035,7 @@ def tulis_spec():
         for b in MASUK:
             if b[1] != kel:
                 continue
-            _id, _, nama, masuk, sumber, plat, status, nota = b
+            _id, _, nama, masuk, sumber, plat, status, nota = kemas_masuk(b)
             A(f'**{_id} {nama}** — `{masuk}` · {sumber} ({plat}) · {status}' +
               (f' · {nota}' if nota else ''))
             A('')
@@ -1201,7 +1281,7 @@ def main():
         return 1
     n = tulis_csv()
     tulis_spec()
-    km = _kira(MASUK, 6)
+    km = _kira([kemas_masuk(b) for b in MASUK], 6)
     kk = _kira(KELUAR, 4)
     kc = _kira(CARA, 4)
     ku = _kira(URUTAN, 4)
