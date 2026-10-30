@@ -214,6 +214,55 @@ MASUK = [
   'Wilcox & Crittenden (2005); Zarattini, Pagani & Wilcox (2025)', 'Quantpedia', 'SEDIA',
   'SAMA dengan K195 dalam katalog K; henti ekor asal 10 x ATR, pegangan purata ~305 hari '
   '(kedudukan, bukan swing)'),
+ ('N81', 'KETAT', 'TTM Squeeze lepas + momentum naik',
+  'squeeze OFF pada bar ini DAN ON pada bar sebelum DAN momentum squeeze > 0', 'John Carter',
+  'pandas_ta / Simpler Trading', 'PERLU:squeeze_ttm',
+  'BERBEZA daripada bb_squeeze repo (lebar BB): TTM = BB(20,2) berada DALAM KC(20,1.5,ATR)'),
+ ('N82', 'RSI', 'Connors RSI penuh < 10',
+  'crsi = purata(RSI(3), RSI(2) atas panjang streak, pangkat peratus ROC(1) 100 hari) < 10',
+  'Larry Connors', 'pandas_ta', 'PERLU:crsi',
+  'TIGA komponen; N14-N16 hanya guna rsi2 = versi ringkas sahaja'),
+ ('N83', 'TREND', 'AlphaTrend menaik', 'alphatrend > alphatrend[-2]', 'KivancOzbilgic',
+  'TradingView / pandas_ta', 'PERLU:alphatrend', 'ATR + MFI (atau RSI) memilih jalur'),
+ ('N84', 'OSILATOR', 'Schaff Trend Cycle silang naik 25', 'stc silang naik 25', 'Doug Schaff',
+  'pandas_ta', 'PERLU:stc', 'MACD melalui dua lapisan stokastik'),
+ ('N85', 'OSILATOR', 'QQE silang naik', 'qqe garis cepat silang naik garis perlahan',
+  'QQE (Quantitative Qualitative Estimation)', 'pandas_ta', 'PERLU:qqe', ''),
+ ('N86', 'TREND', 'Vortex VI+ silang naik VI-', 'vtxp silang naik vtxm',
+  'Botes & Siepman (TASC Jan 2010)', 'pandas_ta', 'PERLU:vortex', ''),
+ ('N87', 'TREND', 'VHF > 0.35 + tutup > MA50', 'vhf(28) > 0.35 DAN tutup > ma50', 'Adam White',
+  'pandas_ta', 'PERLU:vhf', 'Vertical Horizontal Filter: tinggi = trend, rendah = sisi'),
+ ('N88', 'VOLUM', 'Elder Force Index > 0 + tutup > EMA21', 'efi(13) > 0 DAN tutup > ema21',
+  'Alexander Elder', 'pandas_ta', 'PERLU:efi', ''),
+ ('N89', 'VOLUM', 'Elder Ray: bull power > 0 dan bear power menaik',
+  'eri_bull > 0 DAN eri_bear > eri_bear[-1]', 'Alexander Elder', 'pandas_ta', 'PERLU:eri', ''),
+ ('N90', 'VOLUM', 'Klinger Volume Oscillator silang naik 0', 'kvo silang naik 0',
+  'Stephen Klinger', 'pandas_ta', 'PERLU:kvo', ''),
+ ('N91', 'VOLUM', 'Time Segmented Volume > 0 + tutup > MA50', 'tsv(18) > 0 DAN tutup > ma50',
+  'Worden Brothers', 'pandas_ta', 'PERLU:tsv', ''),
+ ('N92', 'TREND', 'Alligator mulut terbuka menaik',
+  'jaw(13) < teeth(8) DAN teeth(8) < lips(5) DAN tutup > lips', 'Bill Williams', 'pandas_ta',
+  'PERLU:alligator', ''),
+ ('N93', 'OSILATOR', 'Fisher Transform silang naik 0', 'fisher silang naik 0', 'John Ehlers',
+  'pandas_ta', 'PERLU:fisher', ''),
+ ('N94', 'OSILATOR', 'Pretty Good Oscillator > 3', 'pgo(14) > 3', 'Mark Johnson', 'pandas_ta',
+  'PERLU:pgo', 'sumber: > 3 bermakna pecah kuat, < -3 jual kuat'),
+ ('N95', 'TREND', 'Choppiness Index < 38.2 + tutup > MA50', 'chop(14) < 38.2 DAN tutup > ma50',
+  'E.W. Dreiss', 'pandas_ta', 'PERLU:chop',
+  'rendah = trend, tinggi = sisi; 38.2 ialah paras Fibonacci yang sumber guna'),
+ ('N96', 'TREND', 'Random Walk Index tinggi > 1', 'rwi_tinggi > 1 DAN rwi_tinggi > rwi_rendah',
+  'Michael Poulos', 'pandas_ta', 'PERLU:rwi',
+  '> 1 bermakna gerakan melebihi apa yang jalan rawak boleh terangkan'),
+ ('N97', 'OSILATOR', 'Coppock Curve silang naik 0', 'coppock silang naik 0',
+  'Edwin Coppock (Barron’s 1962)', 'pandas_ta', 'PERLU:coppock',
+  'JUJUR: direka untuk isyarat BULANAN pada indeks, bukan swing saham harian'),
+ ('N98', 'OSILATOR', 'KST silang naik garis isyarat', 'kst silang naik kst_sig', 'Martin Pring',
+  'pandas_ta', 'PERLU:kst', ''),
+ ('N99', 'TREND', 'ATR Trailing Stop naik dan tutup di atasnya',
+  'atrts > atrts[-1] DAN tutup > atrts', 'pandas_ta (atrts)', 'pandas_ta', 'PERLU:atrts',
+  'serupa lorong 2 Chandelier repo tetapi pengangkaan berbeza'),
+ ('N100', 'OSILATOR', 'True Momentum Oscillator silang naik garis isyarat',
+  'tmo silang naik tmo_sig', 'pandas_ta (tmo)', 'pandas_ta', 'PERLU:tmo', ''),
 ]
 
 # (id, peraturan keluar, sumber, platform, status, nota)
@@ -295,13 +344,52 @@ CARA = [
   'didaftar hanya sebagai siling teori'),
 ]
 
+# (id, cara alam disusun, sumber, platform, status, nota)
+# PAKSI KEEMPAT (30 Okt 2026): bila isyarat melebihi slot, APA yang menentukan siapa dibeli.
+# Ini BUKAN penapis. Penapis membuang bar; urutan menyusunnya. SISTEM.md mengukur bahawa
+# urutan skor BERTERUSAN tiada hingar pemilihan (sebaran benih 0.00) manakala susunan
+# sewenang-wenang ada 17.3 mata peratus setahun (KEPEKATAN_BENIH.md).
+URUTAN = [
+ ('U01', 'rawak berbenih', 'kawalan repo', 'repo', 'DIUJI',
+  'hingar pemilihan 17.3 mata peratus/tahun pada 8 slot (KEPEKATAN_BENIH.md); jalur 20 cabutan '
+  'dalam portfolio_slot/rawak_jalur_ekuiti.csv'),
+ ('U02', 'RS pasaran tertinggi', 'repo', 'repo', 'DIUJI',
+  'lorong RS_10; 29 Okt 2026 -2.15%, persentil 0 dalam jalur rawak (BANDING_SPUS.md)'),
+ ('U03', 'skor momentum Clenow: (exp(cerun regresi log 90 hari x 252) - 1) x R^2', 'Clenow',
+  'buku', 'DIUJI',
+  'Sistem B; sebaran 20 benih 0.00 = TIADA hingar pemilihan (SISTEM.md). Ini satu-satunya '
+  'struktur dalam seluruh kajian yang keputusannya boleh dipercayai pada sampel kecil.'),
+ ('U04', 'gabungan kaedah beku dengan kuota slot', 'repo', 'repo', 'DIUJI',
+  'lorong GABUNGAN_10 / TOP1_10 / RAWAK_KAEDAH_10'),
+ ('U05', 'skor gabungan Papan Penganalisis (backtest dipotong)', 'repo', 'repo', 'DIUJI',
+  'KAEDAH_TERBAIK.md: pangkat backtest TIADA kuasa ramalan yang boleh diukur - rho +0.16, '
+  'p = 0.105 selepas mengawal hari pegang. JANGAN guna sebagai urutan.'),
+ ('U06', '101 alfa formula harga-volum (rank, ts_rank, scale -> satu skor)',
+  'Kakushadze, Lauprete & Tulchinsky, arXiv:1601.00991 Appendix A', 'arXiv', 'PERLU:arxiv',
+  'arxiv.org DISEKAT DNS dalam sesi ini. Formula TIDAK boleh ditulis daripada ingatan - mesti '
+  'dibaca daripada Appendix A. Alfa proprietari WorldQuant LLC, diterbitkan dengan kebenaran: '
+  'daftar rujukan dan laksana sendiri, JANGAN salin pukal ke repo. Inputnya hampir semuanya '
+  'harga-volum harian (buka, tinggi, rendah, tutup, volum, vwap) = sepadan dengan alam repo.'),
+ ('U07', '212 peramal keratan rentas + SignalDoc (status replikasi setiap satu)',
+  'Chen & Zimmermann, Critical Finance Review 2022', 'openassetpricing.com / Hugging Face',
+  'PERLU:huggingface',
+  'Pakej PyPI openassetpricing 0.1.0 SUDAH dimuat turun dan dibaca, tetapi datanya di '
+  'huggingface.co yang DISEKAT proksi (403 CONNECT tunnel). Nilainya bukan peramal baharu: ia '
+  'memberitahu peramal mana yang SUDAH diukur dan mana yang bertahan, jadi ia menghentikan '
+  'repo mengukur semula ruang yang sudah diukur.'),
+ ('U08', 'ATR% songsang sebagai URUTAN (bukan sebagai saiz)', 'belum diuji', 'repo', 'SEDIA',
+  'RISIKO_10 guna ATR untuk SAIZ atas susunan RS_10; ini akan guna ATR untuk URUTAN. '
+  'Belum pernah diuji dan boleh dijalankan dengan lajur yang sudah ada.'),
+]
+
 
 def semak():
     """Pulangkan senarai masalah; kosong bermakna registry konsisten."""
     masalah = []
     for nama, baris, awalan, n_medan in (('MASUK', MASUK, 'N', 8),
                                         ('KELUAR', KELUAR, 'X', 6),
-                                        ('CARA', CARA, 'C', 6)):
+                                        ('CARA', CARA, 'C', 6),
+                                        ('URUTAN', URUTAN, 'U', 6)):
         ids = [b[0] for b in baris]
         if len(set(ids)) != len(ids):
             masalah.append(f'{nama}: id berulang')
@@ -329,7 +417,9 @@ def tulis_csv():
             w.writerow([b[0], 'KELUAR', b[1], '', b[2], b[3], b[4], b[5]])
         for b in CARA:
             w.writerow([b[0], 'CARA', b[1], '', b[2], b[3], b[4], b[5]])
-    return len(MASUK) + len(KELUAR) + len(CARA)
+        for b in URUTAN:
+            w.writerow([b[0], 'URUTAN', b[1], '', b[2], b[3], b[4], b[5]])
+    return len(MASUK) + len(KELUAR) + len(CARA) + len(URUTAN)
 
 
 def _kira(baris, idx_status):
@@ -344,9 +434,11 @@ def tulis_spec():
     km = _kira(MASUK, 6)
     kk = _kira(KELUAR, 4)
     kc = _kira(CARA, 4)
+    ku = _kira(URUTAN, 4)
     perlu = sorted({b[6].split(':', 1)[1] for b in MASUK if b[6].startswith('PERLU:')} |
                    {b[4].split(':', 1)[1] for b in KELUAR if b[4].startswith('PERLU:')} |
-                   {b[4].split(':', 1)[1] for b in CARA if b[4].startswith('PERLU:')})
+                   {b[4].split(':', 1)[1] for b in CARA if b[4].startswith('PERLU:')} |
+                   {b[4].split(':', 1)[1] for b in URUTAN if b[4].startswith('PERLU:')})
     L = []
     A = L.append
     A('# SPEC SEMUA N — kombinasi daripada pakar, forum dan platform sosial')
@@ -382,7 +474,8 @@ def tulis_spec():
     A('')
     A(f'Masuk: {len(MASUK)} ({km["DIUJI"]} DIUJI, {km["SEDIA"]} SEDIA, {km["PERLU"]} PERLU). '
       f'Keluar: {len(KELUAR)} ({kk["DIUJI"]} DIUJI, {kk["SEDIA"]} SEDIA, {kk["PERLU"]} PERLU). '
-      f'Cara: {len(CARA)} ({kc["DIUJI"]} DIUJI, {kc["SEDIA"]} SEDIA, {kc["PERLU"]} PERLU).')
+      f'Cara: {len(CARA)} ({kc["DIUJI"]} DIUJI, {kc["SEDIA"]} SEDIA, {kc["PERLU"]} PERLU). '
+      f'Urutan: {len(URUTAN)} ({ku["DIUJI"]} DIUJI, {ku["SEDIA"]} SEDIA, {ku["PERLU"]} PERLU).')
     A('')
     A('Indikator baharu yang diperlukan: ' + (', '.join(f'`{p}`' for p in perlu) or 'tiada') +
       '.')
@@ -424,6 +517,40 @@ def tulis_spec():
         _id, cara, sumber, plat, status, nota = b
         A(f'**{_id}** — `{cara}` · {sumber} ({plat}) · {status}' + (f' · {nota}' if nota else ''))
         A('')
+    A('## Urutan alam (paksi keempat)')
+    A('')
+    A('Bila isyarat melebihi slot, sesuatu mesti menentukan siapa dibeli. Itu **bukan** '
+      'penapis: penapis MEMBUANG bar, urutan MENYUSUN bar. Perbezaan itu penting kerana '
+      '`SETUP.md` mengukur bahawa setiap penapis merugikan (0 daripada 598 dengan lift '
+      'positif) **dan sebabnya struktur** — menapis membuang peluang pada ekor kanan, '
+      'satu-satunya bahagian yang membayar. Menyusun tidak membuang apa-apa.')
+    A('')
+    A('Dan `SISTEM.md` mengukur sesuatu yang lebih kuat: urutan ikut **skor berterusan** '
+      'mempunyai sebaran 20 benih **0.00 mata**, manakala susunan sewenang-wenang mempunyai '
+      'hingar pemilihan **17.3 mata peratus setahun** (`KEPEKATAN_BENIH.md`). Jadi keputusan '
+      'atas skor berterusan boleh dipercayai pada sampel jauh lebih kecil. Itu satu-satunya '
+      'struktur dalam seluruh kajian yang mempunyai sifat itu.')
+    A('')
+    for b in URUTAN:
+        _id, cara, sumber, plat, status, nota = b
+        A(f'**{_id}** — `{cara}` · {sumber} ({plat}) · {status}' + (f' · {nota}' if nota else ''))
+        A('')
+    A('## Saluran rangkaian: apa yang boleh dicapai dalam sesi awan')
+    A('')
+    A('Diuji 30 Okt 2026. Ini menentukan sumber mana yang boleh digunakan sekarang dan mana '
+      'yang perlu dibenarkan dahulu.')
+    A('')
+    A('**BERFUNGSI:** PyPI (`pip download` bagi mana-mana pakej), carian web.')
+    A('')
+    A('**DISEKAT:** `arxiv.org` (DNS), `huggingface.co` (proksi 403 CONNECT tunnel), '
+      '`quants.md` (DNS), `www.quantifiedstrategies.com` (DNS), '
+      '`quantifiedstrategies.substack.com` (DNS).')
+    A('')
+    A('Akibatnya **PyPI ialah saluran sumber yang paling boleh dipercayai**: pakej yang '
+      '**membenamkan** definisinya dalam kod boleh dibaca, pakej yang **mengambil** datanya '
+      'dari hos lain tidak. Itu sebab `openassetpricing` 0.1.0 dapat dimuat turun tetapi '
+      'datanya tidak (`U07`), manakala `pandas_ta` dapat dibaca sepenuhnya.')
+    A('')
     A('## Sumber: apa yang setiap satu sebenarnya beri')
     A('')
     A('**QuantJourney Backtester** (`quantjourney-bt` 0.12.5, Apache 2.0, PyPI) — ia sebuah '
@@ -436,6 +563,26 @@ def tulis_spec():
       'tiada. **`example_wf_05` guna Optuna: JANGAN guna** — arahan kajian melarang Optuna dan '
       'apa-apa pengoptimum. Ia TIDAK ditambah sebagai kebergantungan repo: repo sudah ada '
       'enjinnya sendiri, dan dua enjin bermakna dua sumber kebenaran.')
+    A('')
+    A('**pandas_ta** (`pandas-ta` 0.4.71b0, MIT, Kevin Johnson) — ~150 indikator terkod dalam '
+      '8 kategori (candle · momentum · trend · volatility · volume · overlap · cycle · '
+      'statistics). Ia memberi `N81`-`N100`: TTM Squeeze Carter yang betul (BB dalam KC, bukan '
+      'lebar BB), Connors RSI **tiga komponen** (repo hanya ada `rsi2`), AlphaTrend, Schaff '
+      'Trend Cycle, QQE, Vortex, VHF, Elder Force Index, Elder Ray, Klinger, Time Segmented '
+      'Volume, Alligator, Fisher Transform, Pretty Good Oscillator, Choppiness, Random Walk '
+      'Index, Coppock, KST, ATR Trailing Stop, TMO. **JANGAN pasang sebagai kebergantungan:** '
+      'ia memerlukan `numba==0.61.2` yang memaksa `numpy<2.3`, sedangkan persekitaran repo '
+      'ialah numpy 2.5.3 + pandas 3.0.5 — pemasangan akan MENURUNKAN taraf numpy dan berisiko '
+      'merosakkan workflow malam. Guna ia sebagai **rujukan spesifikasi** (lesen MIT '
+      'membenarkan, dengan atribusi) dan laksanakan indikator yang diperlukan terus dalam '
+      '`REVERSE/teras/ind.py`, sama seperti 71 lajur yang lain.')
+    A('')
+    A('**AMARAN STRUKTUR tentang N81-N100.** Kedua puluh ini ialah **penapis**, dan ruang '
+      'penapis sudah diukur: `SETUP.md` mendapati **0 daripada 598** setup mempunyai lift '
+      'positif, dengan sebab **struktur** bukan pemilihan. Menambah 20 penapis lagi dijangka '
+      'gagal dengan cara yang sama. Ia didaftar supaya ia tidak dicari lagi, bukan kerana '
+      'saya menjangka ia lulus. **Yang berbeza secara jenis ialah `U06`-`U08` (urutan) dan '
+      '`C02`-`C06` (cara) — bukan indikator lagi.**')
     A('')
     A('**Quantpedia** — sudah menjadi sumber dalam repo ini sejak Okt 2026: '
       '`spec/KATALOG_K145.md` memetiknya bagi K195, K241, K242 dan K270. Populasinya ialah '
@@ -493,11 +640,13 @@ def main():
     km = _kira(MASUK, 6)
     kk = _kira(KELUAR, 4)
     kc = _kira(CARA, 4)
+    ku = _kira(URUTAN, 4)
     print(f'registry N: {len(MASUK)} masuk + {len(KELUAR)} keluar + {len(CARA)} cara '
-          f'= {n} baris')
+          f'+ {len(URUTAN)} urutan = {n} baris')
     print(f'  masuk  : {km["DIUJI"]} DIUJI, {km["SEDIA"]} SEDIA, {km["PERLU"]} PERLU')
     print(f'  keluar : {kk["DIUJI"]} DIUJI, {kk["SEDIA"]} SEDIA, {kk["PERLU"]} PERLU')
     print(f'  cara   : {kc["DIUJI"]} DIUJI, {kc["SEDIA"]} SEDIA, {kc["PERLU"]} PERLU')
+    print(f'  urutan : {ku["DIUJI"]} DIUJI, {ku["SEDIA"]} SEDIA, {ku["PERLU"]} PERLU')
     print(f'  -> {os.path.relpath(CSV, AKAR)}')
     print(f'  -> {os.path.relpath(SPEC, AKAR)}')
     return 0
@@ -505,4 +654,5 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+
 

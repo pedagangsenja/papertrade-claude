@@ -16,9 +16,9 @@
 - `SEDIA` — semua indikator yang diperlukan sudah dikira oleh kod repo (`REVERSE/teras/ind.py` atau `REVERSE/step15_setup.py` / `step17_kombinasi.py`); boleh diuji tanpa kod indikator baharu.
 - `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.
 
-Masuk: 80 (11 DIUJI, 60 SEDIA, 9 PERLU). Keluar: 32 (7 DIUJI, 22 SEDIA, 3 PERLU). Cara: 8 (1 DIUJI, 6 SEDIA, 1 PERLU).
+Masuk: 100 (11 DIUJI, 60 SEDIA, 29 PERLU). Keluar: 32 (7 DIUJI, 22 SEDIA, 3 PERLU). Cara: 8 (1 DIUJI, 6 SEDIA, 1 PERLU). Urutan: 8 (5 DIUJI, 1 SEDIA, 2 PERLU).
 
-Indikator baharu yang diperlukan: `darvas`, `donchian10`, `donchian50`, `htf`, `isi_tutup`, `ma5`, `supertrend3`, `tinggi_swing`, `vwap20`, `vwap_ankor`.
+Indikator baharu yang diperlukan: `alligator`, `alphatrend`, `arxiv`, `atrts`, `chop`, `coppock`, `crsi`, `darvas`, `donchian10`, `donchian50`, `efi`, `eri`, `fisher`, `htf`, `huggingface`, `isi_tutup`, `kst`, `kvo`, `ma5`, `pgo`, `qqe`, `rwi`, `squeeze_ttm`, `stc`, `supertrend3`, `tinggi_swing`, `tmo`, `tsv`, `vhf`, `vortex`, `vwap20`, `vwap_ankor`.
 
 ## Peraturan masuk
 
@@ -66,6 +66,8 @@ Indikator baharu yang diperlukan: `darvas`, `donchian10`, `donchian50`, `htf`, `
 
 **N75 RSI14 < 40 tanpa penapis** — `rsi14 < 40` · QuantJourney O03 (quantjourney-bt) · SEDIA · sumber pasangkan dengan buy-limit 1.5% bawah tutup (C03)
 
+**N82 Connors RSI penuh < 10** — `crsi = purata(RSI(3), RSI(2) atas panjang streak, pangkat peratus ROC(1) 100 hari) < 10` · Larry Connors (pandas_ta) · PERLU:crsi · TIGA komponen; N14-N16 hanya guna rsi2 = versi ringkas sahaja
+
 ### BB
 
 **N19 Bawah jalur BB + RSI<30** — `bb_pctb < 0 DAN rsi14 < 30` · LuxAlgo (LuxAlgo) · SEDIA · keluar asal rsi14 > 70
@@ -95,6 +97,20 @@ Indikator baharu yang diperlukan: `darvas`, `donchian10`, `donchian50`, `htf`, `
 **N29 PSAR naik + tutup>MA50** — `psar_arah > 0 DAN tutup > ma50` · klasik (umum) · SEDIA
 
 **N74 MACD atas garis isyarat (keadaan, bukan silang)** — `macd > macd_sig` · QuantJourney W22 (quantjourney-bt) · SEDIA · BERBEZA daripada macd_cross: keadaan berterusan, bukan peristiwa silang
+
+**N83 AlphaTrend menaik** — `alphatrend > alphatrend[-2]` · KivancOzbilgic (TradingView / pandas_ta) · PERLU:alphatrend · ATR + MFI (atau RSI) memilih jalur
+
+**N86 Vortex VI+ silang naik VI-** — `vtxp silang naik vtxm` · Botes & Siepman (TASC Jan 2010) (pandas_ta) · PERLU:vortex
+
+**N87 VHF > 0.35 + tutup > MA50** — `vhf(28) > 0.35 DAN tutup > ma50` · Adam White (pandas_ta) · PERLU:vhf · Vertical Horizontal Filter: tinggi = trend, rendah = sisi
+
+**N92 Alligator mulut terbuka menaik** — `jaw(13) < teeth(8) DAN teeth(8) < lips(5) DAN tutup > lips` · Bill Williams (pandas_ta) · PERLU:alligator
+
+**N95 Choppiness Index < 38.2 + tutup > MA50** — `chop(14) < 38.2 DAN tutup > ma50` · E.W. Dreiss (pandas_ta) · PERLU:chop · rendah = trend, tinggi = sisi; 38.2 ialah paras Fibonacci yang sumber guna
+
+**N96 Random Walk Index tinggi > 1** — `rwi_tinggi > 1 DAN rwi_tinggi > rwi_rendah` · Michael Poulos (pandas_ta) · PERLU:rwi · > 1 bermakna gerakan melebihi apa yang jalan rawak boleh terangkan
+
+**N99 ATR Trailing Stop naik dan tutup di atasnya** — `atrts > atrts[-1] DAN tutup > atrts` · pandas_ta (atrts) (pandas_ta) · PERLU:atrts · serupa lorong 2 Chandelier repo tetapi pengangkaan berbeza
 
 ### PECAH
 
@@ -128,6 +144,14 @@ Indikator baharu yang diperlukan: `darvas`, `donchian10`, `donchian50`, `htf`, `
 
 **N42 Lonjakan volum 2x** — `vol_n50 >= 2.0 DAN tutup > tutup[-1]` · umum (umum) · SEDIA
 
+**N88 Elder Force Index > 0 + tutup > EMA21** — `efi(13) > 0 DAN tutup > ema21` · Alexander Elder (pandas_ta) · PERLU:efi
+
+**N89 Elder Ray: bull power > 0 dan bear power menaik** — `eri_bull > 0 DAN eri_bear > eri_bear[-1]` · Alexander Elder (pandas_ta) · PERLU:eri
+
+**N90 Klinger Volume Oscillator silang naik 0** — `kvo silang naik 0` · Stephen Klinger (pandas_ta) · PERLU:kvo
+
+**N91 Time Segmented Volume > 0 + tutup > MA50** — `tsv(18) > 0 DAN tutup > ma50` · Worden Brothers (pandas_ta) · PERLU:tsv
+
 ### UNDUR
 
 **N43 Undur EMA8 + penapis MA50** — `tutup[-1] < ema9[-1] DAN tutup > ema9 DAN tutup > ma50` · Morpheus Trading (Deel) (blog) · SEDIA · sumber guna EMA8; repo ada ema9 — proksi terdekat
@@ -151,6 +175,8 @@ Indikator baharu yang diperlukan: `darvas`, `donchian10`, `donchian50`, `htf`, `
 **N51 BB squeeze + Supertrend** — `bb_squeeze DAN supertrend > 0` · Squeeze Momentum (LazyBear) (YouTube) · SEDIA
 
 **N52 Squeeze lepas + atas MA200** — `bb_squeeze[-1] DAN bb_lebar > bb_lebar[-1] DAN j_ma200 > 0` · Squeeze + EMA200 (YouTube) · SEDIA · video guna EMA200 sebagai penapis trend
+
+**N81 TTM Squeeze lepas + momentum naik** — `squeeze OFF pada bar ini DAN ON pada bar sebelum DAN momentum squeeze > 0` · John Carter (pandas_ta / Simpler Trading) · PERLU:squeeze_ttm · BERBEZA daripada bb_squeeze repo (lebar BB): TTM = BB(20,2) berada DALAM KC(20,1.5,ATR)
 
 ### ADX
 
@@ -205,6 +231,22 @@ Indikator baharu yang diperlukan: `darvas`, `donchian10`, `donchian50`, `htf`, `
 **N78 Pulangan 21 hari dalam 3 terbawah alam (pembalikan)** — `pangkat keratan rentas pulangan 21 hari, ambil 3 TERBAWAH, imbang mingguan` · QuantJourney W16 (quantjourney-bt) · SEDIA · PEMBALIKAN - bertentangan momentum; didaftar untuk kelengkapan, bukan kerana dijangka lulus
 
 **N79 Momentum ganda (relatif + mutlak)** — `pulangan 252 hari dalam 2 teratas alam DAN pulangan 252 hari > 0` · QuantJourney W04 / Antonacci (quantjourney-bt) · SEDIA · syarat mutlak ialah penapis rejim terbina dalam
+
+### OSILATOR
+
+**N84 Schaff Trend Cycle silang naik 25** — `stc silang naik 25` · Doug Schaff (pandas_ta) · PERLU:stc · MACD melalui dua lapisan stokastik
+
+**N85 QQE silang naik** — `qqe garis cepat silang naik garis perlahan` · QQE (Quantitative Qualitative Estimation) (pandas_ta) · PERLU:qqe
+
+**N93 Fisher Transform silang naik 0** — `fisher silang naik 0` · John Ehlers (pandas_ta) · PERLU:fisher
+
+**N94 Pretty Good Oscillator > 3** — `pgo(14) > 3` · Mark Johnson (pandas_ta) · PERLU:pgo · sumber: > 3 bermakna pecah kuat, < -3 jual kuat
+
+**N97 Coppock Curve silang naik 0** — `coppock silang naik 0` · Edwin Coppock (Barron’s 1962) (pandas_ta) · PERLU:coppock · JUJUR: direka untuk isyarat BULANAN pada indeks, bukan swing saham harian
+
+**N98 KST silang naik garis isyarat** — `kst silang naik kst_sig` · Martin Pring (pandas_ta) · PERLU:kst
+
+**N100 True Momentum Oscillator silang naik garis isyarat** — `tmo silang naik tmo_sig` · pandas_ta (tmo) (pandas_ta) · PERLU:tmo
 
 ## Peraturan keluar
 
@@ -294,9 +336,45 @@ Keluar diuji **bersilang** dengan masuk, kerana `KOMBINASI.md` menunjukkan kelua
 
 **C08** — `beli pada tutup hari isyarat` · umum (umum) · PERLU:isi_tutup · TIDAK boleh dilaksanakan dalam papertrade repo kerana isyarat dikira SELEPAS tutup; didaftar hanya sebagai siling teori
 
+## Urutan alam (paksi keempat)
+
+Bila isyarat melebihi slot, sesuatu mesti menentukan siapa dibeli. Itu **bukan** penapis: penapis MEMBUANG bar, urutan MENYUSUN bar. Perbezaan itu penting kerana `SETUP.md` mengukur bahawa setiap penapis merugikan (0 daripada 598 dengan lift positif) **dan sebabnya struktur** — menapis membuang peluang pada ekor kanan, satu-satunya bahagian yang membayar. Menyusun tidak membuang apa-apa.
+
+Dan `SISTEM.md` mengukur sesuatu yang lebih kuat: urutan ikut **skor berterusan** mempunyai sebaran 20 benih **0.00 mata**, manakala susunan sewenang-wenang mempunyai hingar pemilihan **17.3 mata peratus setahun** (`KEPEKATAN_BENIH.md`). Jadi keputusan atas skor berterusan boleh dipercayai pada sampel jauh lebih kecil. Itu satu-satunya struktur dalam seluruh kajian yang mempunyai sifat itu.
+
+**U01** — `rawak berbenih` · kawalan repo (repo) · DIUJI · hingar pemilihan 17.3 mata peratus/tahun pada 8 slot (KEPEKATAN_BENIH.md); jalur 20 cabutan dalam portfolio_slot/rawak_jalur_ekuiti.csv
+
+**U02** — `RS pasaran tertinggi` · repo (repo) · DIUJI · lorong RS_10; 29 Okt 2026 -2.15%, persentil 0 dalam jalur rawak (BANDING_SPUS.md)
+
+**U03** — `skor momentum Clenow: (exp(cerun regresi log 90 hari x 252) - 1) x R^2` · Clenow (buku) · DIUJI · Sistem B; sebaran 20 benih 0.00 = TIADA hingar pemilihan (SISTEM.md). Ini satu-satunya struktur dalam seluruh kajian yang keputusannya boleh dipercayai pada sampel kecil.
+
+**U04** — `gabungan kaedah beku dengan kuota slot` · repo (repo) · DIUJI · lorong GABUNGAN_10 / TOP1_10 / RAWAK_KAEDAH_10
+
+**U05** — `skor gabungan Papan Penganalisis (backtest dipotong)` · repo (repo) · DIUJI · KAEDAH_TERBAIK.md: pangkat backtest TIADA kuasa ramalan yang boleh diukur - rho +0.16, p = 0.105 selepas mengawal hari pegang. JANGAN guna sebagai urutan.
+
+**U06** — `101 alfa formula harga-volum (rank, ts_rank, scale -> satu skor)` · Kakushadze, Lauprete & Tulchinsky, arXiv:1601.00991 Appendix A (arXiv) · PERLU:arxiv · arxiv.org DISEKAT DNS dalam sesi ini. Formula TIDAK boleh ditulis daripada ingatan - mesti dibaca daripada Appendix A. Alfa proprietari WorldQuant LLC, diterbitkan dengan kebenaran: daftar rujukan dan laksana sendiri, JANGAN salin pukal ke repo. Inputnya hampir semuanya harga-volum harian (buka, tinggi, rendah, tutup, volum, vwap) = sepadan dengan alam repo.
+
+**U07** — `212 peramal keratan rentas + SignalDoc (status replikasi setiap satu)` · Chen & Zimmermann, Critical Finance Review 2022 (openassetpricing.com / Hugging Face) · PERLU:huggingface · Pakej PyPI openassetpricing 0.1.0 SUDAH dimuat turun dan dibaca, tetapi datanya di huggingface.co yang DISEKAT proksi (403 CONNECT tunnel). Nilainya bukan peramal baharu: ia memberitahu peramal mana yang SUDAH diukur dan mana yang bertahan, jadi ia menghentikan repo mengukur semula ruang yang sudah diukur.
+
+**U08** — `ATR% songsang sebagai URUTAN (bukan sebagai saiz)` · belum diuji (repo) · SEDIA · RISIKO_10 guna ATR untuk SAIZ atas susunan RS_10; ini akan guna ATR untuk URUTAN. Belum pernah diuji dan boleh dijalankan dengan lajur yang sudah ada.
+
+## Saluran rangkaian: apa yang boleh dicapai dalam sesi awan
+
+Diuji 30 Okt 2026. Ini menentukan sumber mana yang boleh digunakan sekarang dan mana yang perlu dibenarkan dahulu.
+
+**BERFUNGSI:** PyPI (`pip download` bagi mana-mana pakej), carian web.
+
+**DISEKAT:** `arxiv.org` (DNS), `huggingface.co` (proksi 403 CONNECT tunnel), `quants.md` (DNS), `www.quantifiedstrategies.com` (DNS), `quantifiedstrategies.substack.com` (DNS).
+
+Akibatnya **PyPI ialah saluran sumber yang paling boleh dipercayai**: pakej yang **membenamkan** definisinya dalam kod boleh dibaca, pakej yang **mengambil** datanya dari hos lain tidak. Itu sebab `openassetpricing` 0.1.0 dapat dimuat turun tetapi datanya tidak (`U07`), manakala `pandas_ta` dapat dibaca sepenuhnya.
+
 ## Sumber: apa yang setiap satu sebenarnya beri
 
 **QuantJourney Backtester** (`quantjourney-bt` 0.12.5, Apache 2.0, PyPI) — ia sebuah **rangka kerja**, bukan katalog kelebihan. 50 contoh strateginya berjalan pada 3 ETF (SPY/QQQ/IWM) atau 9 ETF sektor, dan logik isyaratnya mudah (silang SMA, pembalikan RSI, Donchian, MACD, Bollinger). Nilai sebenarnya kepada repo ini ialah **mekanik pelaksanaan**: ia memodelkan MARKET, LIMIT, STOP, STOP_TRAIL, STOP_LIMIT, BRACKET dan OCO dengan luput-selepas-N-bar — kesemuanya `C02`-`C06` dan `X26`-`X29` di atas. Ia juga ada walk-forward dengan **purge + embargo** (`example_wf_03`), yang WFO repo tiada. **`example_wf_05` guna Optuna: JANGAN guna** — arahan kajian melarang Optuna dan apa-apa pengoptimum. Ia TIDAK ditambah sebagai kebergantungan repo: repo sudah ada enjinnya sendiri, dan dua enjin bermakna dua sumber kebenaran.
+
+**pandas_ta** (`pandas-ta` 0.4.71b0, MIT, Kevin Johnson) — ~150 indikator terkod dalam 8 kategori (candle · momentum · trend · volatility · volume · overlap · cycle · statistics). Ia memberi `N81`-`N100`: TTM Squeeze Carter yang betul (BB dalam KC, bukan lebar BB), Connors RSI **tiga komponen** (repo hanya ada `rsi2`), AlphaTrend, Schaff Trend Cycle, QQE, Vortex, VHF, Elder Force Index, Elder Ray, Klinger, Time Segmented Volume, Alligator, Fisher Transform, Pretty Good Oscillator, Choppiness, Random Walk Index, Coppock, KST, ATR Trailing Stop, TMO. **JANGAN pasang sebagai kebergantungan:** ia memerlukan `numba==0.61.2` yang memaksa `numpy<2.3`, sedangkan persekitaran repo ialah numpy 2.5.3 + pandas 3.0.5 — pemasangan akan MENURUNKAN taraf numpy dan berisiko merosakkan workflow malam. Guna ia sebagai **rujukan spesifikasi** (lesen MIT membenarkan, dengan atribusi) dan laksanakan indikator yang diperlukan terus dalam `REVERSE/teras/ind.py`, sama seperti 71 lajur yang lain.
+
+**AMARAN STRUKTUR tentang N81-N100.** Kedua puluh ini ialah **penapis**, dan ruang penapis sudah diukur: `SETUP.md` mendapati **0 daripada 598** setup mempunyai lift positif, dengan sebab **struktur** bukan pemilihan. Menambah 20 penapis lagi dijangka gagal dengan cara yang sama. Ia didaftar supaya ia tidak dicari lagi, bukan kerana saya menjangka ia lulus. **Yang berbeza secara jenis ialah `U06`-`U08` (urutan) dan `C02`-`C06` (cara) — bukan indikator lagi.**
 
 **Quantpedia** — sudah menjadi sumber dalam repo ini sejak Okt 2026: `spec/KATALOG_K145.md` memetiknya bagi K195, K241, K242 dan K270. Populasinya ialah **strategi faktor/portfolio akademik**, kebanyakannya pangkat keratan rentas yang diimbang bulanan atau suku tahunan. Itu paksi **pembinaan**, yang `REVERSE/PEMBINAAN.md` sudah ukur dan tolak lawan SPUS. Jadi Quantpedia akan menambah banyak strategi, tetapi kebanyakannya dalam paksi yang sudah ditutup. Yang berasaskan bar OHLCV harian masuk ke sini (contoh `N80`); yang berasaskan faktor bulanan kekal dalam katalog K.
 

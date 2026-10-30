@@ -79,6 +79,26 @@ N77,KEKUATAN,Pulangan 252 hari dalam 3 teratas alam,"pangkat keratan rentas pula
 N78,KEKUATAN,Pulangan 21 hari dalam 3 terbawah alam (pembalikan),"pangkat keratan rentas pulangan 21 hari, ambil 3 TERBAWAH, imbang mingguan",QuantJourney W16,quantjourney-bt,SEDIA,"PEMBALIKAN - bertentangan momentum; didaftar untuk kelengkapan, bukan kerana dijangka lulus"
 N79,KEKUATAN,Momentum ganda (relatif + mutlak),pulangan 252 hari dalam 2 teratas alam DAN pulangan 252 hari > 0,QuantJourney W04 / Antonacci,quantjourney-bt,SEDIA,syarat mutlak ialah penapis rejim terbina dalam
 N80,PECAH,Tinggi sepanjang masa,tutup >= tutup tertinggi sepanjang masa,"Wilcox & Crittenden (2005); Zarattini, Pagani & Wilcox (2025)",Quantpedia,SEDIA,"SAMA dengan K195 dalam katalog K; henti ekor asal 10 x ATR, pegangan purata ~305 hari (kedudukan, bukan swing)"
+N81,KETAT,TTM Squeeze lepas + momentum naik,squeeze OFF pada bar ini DAN ON pada bar sebelum DAN momentum squeeze > 0,John Carter,pandas_ta / Simpler Trading,PERLU:squeeze_ttm,"BERBEZA daripada bb_squeeze repo (lebar BB): TTM = BB(20,2) berada DALAM KC(20,1.5,ATR)"
+N82,RSI,Connors RSI penuh < 10,"crsi = purata(RSI(3), RSI(2) atas panjang streak, pangkat peratus ROC(1) 100 hari) < 10",Larry Connors,pandas_ta,PERLU:crsi,TIGA komponen; N14-N16 hanya guna rsi2 = versi ringkas sahaja
+N83,TREND,AlphaTrend menaik,alphatrend > alphatrend[-2],KivancOzbilgic,TradingView / pandas_ta,PERLU:alphatrend,ATR + MFI (atau RSI) memilih jalur
+N84,OSILATOR,Schaff Trend Cycle silang naik 25,stc silang naik 25,Doug Schaff,pandas_ta,PERLU:stc,MACD melalui dua lapisan stokastik
+N85,OSILATOR,QQE silang naik,qqe garis cepat silang naik garis perlahan,QQE (Quantitative Qualitative Estimation),pandas_ta,PERLU:qqe,
+N86,TREND,Vortex VI+ silang naik VI-,vtxp silang naik vtxm,Botes & Siepman (TASC Jan 2010),pandas_ta,PERLU:vortex,
+N87,TREND,VHF > 0.35 + tutup > MA50,vhf(28) > 0.35 DAN tutup > ma50,Adam White,pandas_ta,PERLU:vhf,"Vertical Horizontal Filter: tinggi = trend, rendah = sisi"
+N88,VOLUM,Elder Force Index > 0 + tutup > EMA21,efi(13) > 0 DAN tutup > ema21,Alexander Elder,pandas_ta,PERLU:efi,
+N89,VOLUM,Elder Ray: bull power > 0 dan bear power menaik,eri_bull > 0 DAN eri_bear > eri_bear[-1],Alexander Elder,pandas_ta,PERLU:eri,
+N90,VOLUM,Klinger Volume Oscillator silang naik 0,kvo silang naik 0,Stephen Klinger,pandas_ta,PERLU:kvo,
+N91,VOLUM,Time Segmented Volume > 0 + tutup > MA50,tsv(18) > 0 DAN tutup > ma50,Worden Brothers,pandas_ta,PERLU:tsv,
+N92,TREND,Alligator mulut terbuka menaik,jaw(13) < teeth(8) DAN teeth(8) < lips(5) DAN tutup > lips,Bill Williams,pandas_ta,PERLU:alligator,
+N93,OSILATOR,Fisher Transform silang naik 0,fisher silang naik 0,John Ehlers,pandas_ta,PERLU:fisher,
+N94,OSILATOR,Pretty Good Oscillator > 3,pgo(14) > 3,Mark Johnson,pandas_ta,PERLU:pgo,"sumber: > 3 bermakna pecah kuat, < -3 jual kuat"
+N95,TREND,Choppiness Index < 38.2 + tutup > MA50,chop(14) < 38.2 DAN tutup > ma50,E.W. Dreiss,pandas_ta,PERLU:chop,"rendah = trend, tinggi = sisi; 38.2 ialah paras Fibonacci yang sumber guna"
+N96,TREND,Random Walk Index tinggi > 1,rwi_tinggi > 1 DAN rwi_tinggi > rwi_rendah,Michael Poulos,pandas_ta,PERLU:rwi,> 1 bermakna gerakan melebihi apa yang jalan rawak boleh terangkan
+N97,OSILATOR,Coppock Curve silang naik 0,coppock silang naik 0,Edwin Coppock (Barron’s 1962),pandas_ta,PERLU:coppock,"JUJUR: direka untuk isyarat BULANAN pada indeks, bukan swing saham harian"
+N98,OSILATOR,KST silang naik garis isyarat,kst silang naik kst_sig,Martin Pring,pandas_ta,PERLU:kst,
+N99,TREND,ATR Trailing Stop naik dan tutup di atasnya,atrts > atrts[-1] DAN tutup > atrts,pandas_ta (atrts),pandas_ta,PERLU:atrts,serupa lorong 2 Chandelier repo tetapi pengangkaan berbeza
+N100,OSILATOR,True Momentum Oscillator silang naik garis isyarat,tmo silang naik tmo_sig,pandas_ta (tmo),pandas_ta,PERLU:tmo,
 X01,KELUAR,"henti 1.5 x ATR14, sasaran 1 x ATR14",,pedagang forum,babypips,DIUJI,asas tahan -0.281% — MENUKAR ASAS JADI NEGATIF; kadar menang 61.1%
 X02,KELUAR,"henti 2 x ATR14, sasaran 4 x ATR14",,pelbagai,umum,DIUJI,asas tahan +0.953%
 X03,KELUAR,"henti 2 x ATR14, pegang 63 sesi",,asas kajian,repo,DIUJI,asas tahan +2.595% — TERBAIK; kadar menang 30.2%
@@ -119,3 +139,11 @@ C05,CARA,OCO: buy-limit -2% lawan buy-stop +2%; yang isi dahulu batalkan yang la
 C06,CARA,bracket: masuk pasaran + sasaran +6% + henti -3% sebagai pasangan OCO,,QuantJourney O12,quantjourney-bt,SEDIA,henti dan sasaran aktif serentak sejak bar masuk
 C07,CARA,buy-stop 1% atas tinggi semalam,,panduan pecah,blog,SEDIA,
 C08,CARA,beli pada tutup hari isyarat,,umum,umum,PERLU:isi_tutup,TIDAK boleh dilaksanakan dalam papertrade repo kerana isyarat dikira SELEPAS tutup; didaftar hanya sebagai siling teori
+U01,URUTAN,rawak berbenih,,kawalan repo,repo,DIUJI,hingar pemilihan 17.3 mata peratus/tahun pada 8 slot (KEPEKATAN_BENIH.md); jalur 20 cabutan dalam portfolio_slot/rawak_jalur_ekuiti.csv
+U02,URUTAN,RS pasaran tertinggi,,repo,repo,DIUJI,"lorong RS_10; 29 Okt 2026 -2.15%, persentil 0 dalam jalur rawak (BANDING_SPUS.md)"
+U03,URUTAN,skor momentum Clenow: (exp(cerun regresi log 90 hari x 252) - 1) x R^2,,Clenow,buku,DIUJI,Sistem B; sebaran 20 benih 0.00 = TIADA hingar pemilihan (SISTEM.md). Ini satu-satunya struktur dalam seluruh kajian yang keputusannya boleh dipercayai pada sampel kecil.
+U04,URUTAN,gabungan kaedah beku dengan kuota slot,,repo,repo,DIUJI,lorong GABUNGAN_10 / TOP1_10 / RAWAK_KAEDAH_10
+U05,URUTAN,skor gabungan Papan Penganalisis (backtest dipotong),,repo,repo,DIUJI,"KAEDAH_TERBAIK.md: pangkat backtest TIADA kuasa ramalan yang boleh diukur - rho +0.16, p = 0.105 selepas mengawal hari pegang. JANGAN guna sebagai urutan."
+U06,URUTAN,"101 alfa formula harga-volum (rank, ts_rank, scale -> satu skor)",,"Kakushadze, Lauprete & Tulchinsky, arXiv:1601.00991 Appendix A",arXiv,PERLU:arxiv,"arxiv.org DISEKAT DNS dalam sesi ini. Formula TIDAK boleh ditulis daripada ingatan - mesti dibaca daripada Appendix A. Alfa proprietari WorldQuant LLC, diterbitkan dengan kebenaran: daftar rujukan dan laksana sendiri, JANGAN salin pukal ke repo. Inputnya hampir semuanya harga-volum harian (buka, tinggi, rendah, tutup, volum, vwap) = sepadan dengan alam repo."
+U07,URUTAN,212 peramal keratan rentas + SignalDoc (status replikasi setiap satu),,"Chen & Zimmermann, Critical Finance Review 2022",openassetpricing.com / Hugging Face,PERLU:huggingface,"Pakej PyPI openassetpricing 0.1.0 SUDAH dimuat turun dan dibaca, tetapi datanya di huggingface.co yang DISEKAT proksi (403 CONNECT tunnel). Nilainya bukan peramal baharu: ia memberitahu peramal mana yang SUDAH diukur dan mana yang bertahan, jadi ia menghentikan repo mengukur semula ruang yang sudah diukur."
+U08,URUTAN,ATR% songsang sebagai URUTAN (bukan sebagai saiz),,belum diuji,repo,SEDIA,RISIKO_10 guna ATR untuk SAIZ atas susunan RS_10; ini akan guna ATR untuk URUTAN. Belum pernah diuji dan boleh dijalankan dengan lajur yang sudah ada.

@@ -17,21 +17,23 @@ class TestStruktur(unittest.TestCase):
 
     def test_bilangan(self):
         # jumlah dipradaftar; menambah baris mesti kemas kini ujian ini dengan sengaja
-        self.assertEqual(len(R.MASUK), 80)
+        self.assertEqual(len(R.MASUK), 100)
         self.assertEqual(len(R.KELUAR), 32)
         self.assertEqual(len(R.CARA), 8)
+        self.assertEqual(len(R.URUTAN), 8)
 
     def test_id_berturutan(self):
-        self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 81)])
+        self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 101)])
         self.assertEqual([b[0] for b in R.KELUAR], [f'X{i:02d}' for i in range(1, 33)])
         self.assertEqual([b[0] for b in R.CARA], [f'C{i:02d}' for i in range(1, 9)])
+        self.assertEqual([b[0] for b in R.URUTAN], [f'U{i:02d}' for i in range(1, 9)])
 
     def test_medan_penuh(self):
         for b in R.MASUK:
             self.assertEqual(len(b), 8, b[0])
             for medan in b[:7]:        # nota dibenarkan kosong
                 self.assertTrue(str(medan).strip(), b[0])
-        for b in list(R.KELUAR) + list(R.CARA):
+        for b in list(R.KELUAR) + list(R.CARA) + list(R.URUTAN):
             self.assertEqual(len(b), 6, b[0])
             for medan in b[:5]:
                 self.assertTrue(str(medan).strip(), b[0])
@@ -55,7 +57,7 @@ class TestStruktur(unittest.TestCase):
 class TestStatus(unittest.TestCase):
     def test_status_sah(self):
         for st in ([b[6] for b in R.MASUK] + [b[4] for b in R.KELUAR] +
-                   [b[4] for b in R.CARA]):
+                   [b[4] for b in R.CARA] + [b[4] for b in R.URUTAN]):
             self.assertTrue(st in ('DIUJI', 'SEDIA') or st.startswith('PERLU:'), st)
 
     def test_diuji_ada_nota(self):
@@ -63,7 +65,7 @@ class TestStatus(unittest.TestCase):
         for b in R.MASUK:
             if b[6] == 'DIUJI':
                 self.assertTrue(b[7].strip(), b[0])
-        for b in list(R.KELUAR) + list(R.CARA):
+        for b in list(R.KELUAR) + list(R.CARA) + list(R.URUTAN):
             if b[4] == 'DIUJI':
                 self.assertTrue(b[5].strip(), b[0])
 
@@ -90,6 +92,24 @@ class TestStatus(unittest.TestCase):
     def test_cara_lain_belum_diuji(self):
         # hanya C01 pernah diuji; jika ini gagal, seseorang menanda DIUJI tanpa hasil
         self.assertEqual([b[0] for b in R.CARA if b[4] == 'DIUJI'], ['C01'])
+
+    def test_u05_papan_ditanda_jangan_guna(self):
+        # KAEDAH_TERBAIK.md: pangkat backtest tiada kuasa ramalan; nota mesti menyatakannya
+        u05 = [b for b in R.URUTAN if b[0] == 'U05'][0]
+        self.assertIn('JANGAN', u05[5])
+
+    def test_u03_clenow_sebaran_sifar(self):
+        u03 = [b for b in R.URUTAN if b[0] == 'U03'][0]
+        self.assertEqual(u03[4], 'DIUJI')
+        self.assertIn('0.00', u03[5])
+
+    def test_pandas_ta_bukan_kebergantungan(self):
+        # pandas_ta memaksa numpy<2.3; ia rujukan spesifikasi sahaja
+        import os
+        req = os.path.join(R.AKAR, 'requirements-kajian.txt')
+        teks = open(req, encoding='utf-8').read()
+        self.assertNotIn('pandas-ta==', teks)
+        self.assertNotIn('pandas_ta==', teks)
 
     def test_kira(self):
         km = R._kira(R.MASUK, 6)
@@ -123,6 +143,14 @@ class TestSemakTangkapRalat(unittest.TestCase):
         finally:
             R.CARA = asal
 
+    def test_tangkap_urutan_tidak_berturutan(self):
+        asal = R.URUTAN
+        try:
+            R.URUTAN = [('U02', 'a', 's', 'p', 'SEDIA', '')]
+            self.assertTrue(any('tidak berturutan' in x for x in R.semak()))
+        finally:
+            R.URUTAN = asal
+
     def test_tangkap_medan_kurang(self):
         m = [('N01', 'MA', 'a', 'x', 's', 'p', 'SEDIA')]
         self.assertTrue(any('medan' in x for x in self._dengan(m)))
@@ -137,19 +165,22 @@ class TestKeluaran(unittest.TestCase):
                 R.SPEC = os.path.join(d, 'SPEC_SEMUA_N.md')
                 n = R.tulis_csv()
                 R.tulis_spec()
-                self.assertEqual(n, len(R.MASUK) + len(R.KELUAR) + len(R.CARA))
+                self.assertEqual(n, len(R.MASUK) + len(R.KELUAR) + len(R.CARA) +
+                                 len(R.URUTAN))
                 with open(R.CSV, encoding='utf-8') as f:
                     baris = list(csv.DictReader(f))
                 self.assertEqual(len(baris), n)
                 self.assertEqual(baris[0]['id'], 'N01')
                 self.assertEqual(baris[len(R.MASUK)]['keluarga'], 'KELUAR')
-                self.assertEqual(baris[-1]['keluarga'], 'CARA')
+                self.assertEqual(baris[-1]['keluarga'], 'URUTAN')
                 teks = open(R.SPEC, encoding='utf-8').read()
                 self.assertIn('SPEC SEMUA N', teks)
-                self.assertIn('N80', teks)
+                self.assertIn('N100', teks)
                 self.assertIn('X32', teks)
                 self.assertIn('C08', teks)
+                self.assertIn('U08', teks)
                 self.assertIn('Sempadan K / M / N', teks)
+                self.assertIn('Saluran rangkaian', teks)
                 self.assertIn('Jangan sunting fail ini secara manual', teks)
             finally:
                 R.CSV, R.SPEC = asal_csv, asal_spec
@@ -158,7 +189,8 @@ class TestKeluaran(unittest.TestCase):
         """Fail yang dikomit mesti sepadan dengan senarai dalam skrip."""
         with open(R.CSV, encoding='utf-8') as f:
             baris = list(csv.DictReader(f))
-        self.assertEqual(len(baris), len(R.MASUK) + len(R.KELUAR) + len(R.CARA))
+        self.assertEqual(len(baris),
+                         len(R.MASUK) + len(R.KELUAR) + len(R.CARA) + len(R.URUTAN))
         self.assertEqual([b['id'] for b in baris[:len(R.MASUK)]], [b[0] for b in R.MASUK])
 
     def test_main_pulang_sifar(self):
