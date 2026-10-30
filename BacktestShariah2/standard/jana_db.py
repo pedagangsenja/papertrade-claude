@@ -437,6 +437,93 @@ def sesi_stor(path=STATUS_HARGA):
     return f'{s[:4]}-{s[4:6]}-{s[6:8]}' if len(s) == 8 and s.isdigit() else ''
 
 
+def kaedah_n(dibina):
+    """Dokumen kaedah_n/papan: registry Nxx (262 baris, 11 paksi) + hasil 371 ujian dipradaftar.
+
+    Sumber: data/registry_N.csv (satu sumber kebenaran = standard/registry_n.py) dan empat CSV
+    keputusan dalam REVERSE/ (nxx, nxx_keluar, gabungan, silang_akhir). Rekod kajian sahaja;
+    bukan isyarat beli. Tab "Kaedah N" dalam dashboard membacanya.
+    """
+    import csv as _csv
+    akar = os.path.dirname(BS2)
+
+    def rd(p_):
+        return list(_csv.DictReader(open(p_, encoding='utf-8'))) if os.path.exists(p_) else []
+
+    def ff(x, d=3):
+        try:
+            return round(float(x), d)
+        except (TypeError, ValueError):
+            return None
+
+    def ii(x):
+        try:
+            return int(float(x))
+        except (TypeError, ValueError):
+            return None
+
+    def bl(x):
+        return str(x) == 'True'
+
+    KEL = ['MA', 'RSI', 'BB', 'TREND', 'PECAH', 'VOLUM', 'UNDUR', 'KETAT', 'ADX', 'VWAP',
+           'POLA', 'KEKUATAN', 'OSILATOR', 'KALENDAR', 'REJIM', 'LILIN']
+    RV = os.path.join(akar, 'REVERSE')
+    reg = rd(os.path.join(BS2, 'data', 'registry_N.csv'))
+    if not reg:
+        return None
+    A, B = rd(os.path.join(RV, 'nxx.csv')), rd(os.path.join(RV, 'nxx_keluar.csv'))
+    G, X = rd(os.path.join(RV, 'gabungan.csv')), rd(os.path.join(RV, 'silang_akhir.csv'))
+    best = {}
+    for r in A:
+        nm = r.get('masuk', '')
+        if nm == 'N01_semak':
+            continue
+        key = nm[:4] if nm.startswith('N104') else nm
+        lt = ff(r.get('lift_tahan'))
+        if lt is None:
+            continue
+        cur = best.get(key)
+        if cur is None or lt > cur['lift_tahan']:
+            best[key] = dict(keluar=r.get('keluar'), lift_latih=ff(r.get('lift_latih')),
+                             lift_tahan=lt, jangkaan=ff(r.get('jangkaan_tahan')),
+                             n=ii(r.get('n_tahan')), menang=ff(r.get('menang'), 1),
+                             tanpa5=ff(r.get('tanpa5_tahan')), p=ff(r.get('p'), 6),
+                             g1=bl(r.get('gate1')), g2=bl(r.get('gate2')))
+    rows = []
+    for x in reg:
+        d = dict(id=x['id'], paksi='MASUK' if x['keluarga'] in KEL else x['keluarga'],
+                 kel=x['keluarga'], nama=x['nama'], aturan=x['masuk'] or x['nama'],
+                 sumber=x['sumber'], plat=x['platform'], status=x['status'])
+        if x['id'] in best:
+            d['hasil'] = best[x['id']]
+        rows.append(d)
+    return dict(
+        dibina=dibina,
+        nota='Registry Nxx: 262 baris merentas 11 paksi (MASUK, KELUAR, CARA, URUTAN, '
+             'GABUNGAN, SAIZ, ALAM, PEGANG, IMBANG, KORELASI, INSTRUMEN). Hasil daripada 371 '
+             'ujian dipradaftar: REVERSE/NXX.md (280), NXX_KELUAR.md (69), GABUNGAN.md (14), '
+             'SILANG_AKHIR.md (8). Setiap spec DAN kod dikomit sebelum keputusan dilihat. '
+             'Rekod kajian sahaja; bukan isyarat beli dan bukan prestasi portfolio.',
+        rows=rows,
+        gate=dict(A=dict(ujian=280, g1=52, g2=7, g3=0), B=dict(ujian=69, g1=24, g2=0, g3=0),
+                  GAB=dict(ujian=14, g1=13, g2=8, g3=2), SX=dict(ujian=8, g1=8, g2=8, g3=8)),
+        keluar=[dict(keluar=r['keluar'], peraturan=r.get('peraturan'),
+                     jangkaan=ff(r.get('jangkaan_tahan')), menang=ff(r.get('menang'), 1),
+                     n=ii(r.get('n_tahan'))) for r in B if r.get('masuk') == 'ASAS'],
+        gabungan=[dict(konfig=r['konfig'], lift_latih=ff(r.get('lift_latih')),
+                       lift_tahan=ff(r.get('lift_tahan')), jangkaan=ff(r.get('jangkaan_tahan')),
+                       menang=ff(r.get('menang'), 1), tanpa5=ff(r.get('tanpa5_tahan')),
+                       p=ff(r.get('p'), 6), n=ii(r.get('n_tahan')), g3=bl(r.get('gate3')))
+                  for r in G],
+        silang=[dict(masuk=r['masuk'], keluar=r['keluar'], lift_latih=ff(r.get('lift_latih')),
+                     lift_tahan=ff(r.get('lift_tahan')), jangkaan=ff(r.get('jangkaan_tahan')),
+                     menang=ff(r.get('menang'), 1), untung=ff(r.get('untung'), 2),
+                     rugi=ff(r.get('rugi'), 2), tanpa5=ff(r.get('tanpa5')),
+                     asas5=ff(r.get('asas5')), p=ff(r.get('p'), 6), n=ii(r.get('n_tahan')),
+                     g3=bl(r.get('gate3'))) for r in X],
+    )
+
+
 # ---------------------------------------------------------------- utama
 def main(argv=None):
     ap = argparse.ArgumentParser()
@@ -572,6 +659,9 @@ def main(argv=None):
         senarai_beli=dict(claude=len(sb), jumlah=len(sb), moomoo=0, saham_unik=len(lihat), watchlist=len(wl)),
         beli_dirancang=len(sb), beli_pada=beli.get('masa', ''), beli_ringkas=dict(direkod=beli.get('direkod', 0), dilangkau=beli.get('dilangkau', 0)),
         gred_pada=st.get('gred', {}).get('masa', ''), ralat=(rk.get('ralat_kaedah') or [])[:20])
+    kn = kaedah_n(dibina)
+    if kn:
+        docs['kaedah_n/papan'] = kn
     # tulis + bahagi + batch
     os.makedirs(a.keluar, exist_ok=True)
     versi = json.load(open(a.versi)) if a.versi else {}
