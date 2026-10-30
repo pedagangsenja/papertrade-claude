@@ -32,11 +32,11 @@ Kelima-lima ini mengikut terus daripada ukuran yang repo **sudah** ada. Tiada sa
 - `SEDIA` — semua indikator yang diperlukan sudah dikira oleh kod repo (`REVERSE/teras/ind.py` atau `REVERSE/step15_setup.py` / `step17_kombinasi.py`); boleh diuji tanpa kod indikator baharu.
 - `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.
 
-Masuk: 147 (12 DIUJI, 70 SEDIA, 65 PERLU). Keluar: 45 (7 DIUJI, 26 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
+Masuk: 147 (12 DIUJI, 66 SEDIA, 69 PERLU). Keluar: 45 (7 DIUJI, 26 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
 
 Tujuh paksi baharu (30 Okt 2026): GABUNGAN 8 · SAIZ 10 · ALAM 8 · PEGANG 6 · IMBANG 5 · KORELASI 4 · INSTRUMEN 4. Jumlah semua paksi: 262 baris.
 
-Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`, `atrts`, `bar_mingguan`, `chop`, `coppock`, `crsi`, `darvas`, `data_13f`, `data_buyback`, `data_eps_suku`, `data_form4`, `data_keluasan`, `data_putcall`, `data_semakan`, `data_sentimen`, `data_short`, `donchian10`, `donchian50`, `efi`, `eri`, `fib_ayunan`, `fisher`, `ftd`, `gmma`, `gtja191`, `harmonik`, `htf`, `huggingface`, `intraday`, `isi_tutup`, `kalendar_cuti`, `kalendar_dagangan`, `kapitalisasi`, `keanggotaan`, `kelly`, `korelasi_signal`, `kst`, `kvo`, `ma5`, `matriks_kovarians`, `momentum_pinball`, `optimal_f`, `pgo`, `pivot_lantai`, `qqe`, `rwi`, `sejarah_stage`, `squeeze_ttm`, `stc`, `strat_bar`, `supertrend3`, `talib_cdl`, `tarikh_ipo`, `td_seq`, `tinggi_swing`, `tmo`, `tsv`, `turtle_soup`, `vhf`, `vol_portfolio`, `vortex`, `vwap20`, `vwap_ankor`, `wyckoff_spring`.
+Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`, `atrts`, `bar_mingguan`, `chop`, `coppock`, `crsi`, `darvas`, `data_13f`, `data_buyback`, `data_eps_suku`, `data_form4`, `data_keluasan`, `data_putcall`, `data_semakan`, `data_sentimen`, `data_short`, `donchian10`, `donchian50`, `efi`, `eri`, `fib_ayunan`, `fisher`, `ftd`, `gmma`, `gtja191`, `harmonik`, `htf`, `huggingface`, `intraday`, `isi_tutup`, `kalendar_cuti`, `kalendar_dagangan`, `kapitalisasi`, `keanggotaan`, `kelly`, `korelasi_signal`, `kst`, `kvo`, `ma5`, `matriks_kovarians`, `momentum_pinball`, `optimal_f`, `paksi_urutan`, `pgo`, `pivot_lantai`, `qqe`, `rwi`, `sejarah_stage`, `squeeze_ttm`, `stc`, `strat_bar`, `supertrend3`, `talib_cdl`, `tarikh_earnings`, `tarikh_ipo`, `td_seq`, `tinggi_swing`, `tmo`, `tsv`, `turtle_soup`, `vhf`, `vol_portfolio`, `vortex`, `vwap20`, `vwap_ankor`, `wyckoff_spring`.
 
 ## Peraturan masuk
 
@@ -256,7 +256,7 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N113 80-20 bar (sisi beli)** — `buka dalam 20% BAWAH julat hari DAN tutup dalam 20% ATAS julat hari` · Connors & Raschke, Street Smarts (1995) (buku) · SEDIA · sumber BERCANGGAH pada rangka: satu kata fade, satu lagi kata ikut; ini bacaan sisi beli
 
-**N123 Power Earnings Gap** — `gap earnings DAN vol_n50 >= 3.0 DAN tutup dalam 25% atas julat hari` · therighttrader (blog) · SEDIA · keluar asal: henti bawah rendah hari gap; gagal jika tutup < buka hari gap
+**N123 Power Earnings Gap** — `gap earnings DAN vol_n50 >= 3.0 DAN tutup dalam 25% atas julat hari` · therighttrader (blog) · PERLU:tarikh_earnings · keluar asal: henti bawah rendah hari gap; gagal jika tutup < buka hari gap. DIBETULKAN 30 Okt 2026 (SPEC_NXX §10): perlu tarikh earnings titik-masa; data/sec/ ada tetapi penyertaannya tugas data berasingan.
 
 **N124 Episodic pivot gap 8-10%** — `gap >= 8% DAN vol_n50 >= 2.0` · Qullamaggie/Bonde melalui Tradingsim (blog) · SEDIA · lebih tegas daripada N64 yang hanya guna gap_and_go
 
@@ -288,11 +288,11 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N72 Momentum Clenow 90 hari** — `skor = (exp(cerun regresi log 90 hari x 252) - 1) x R^2; ambil 20 teratas, imbang bulanan` · Clenow (buku) · DIUJI · Sistem B: CAGR +6.38%, MDD -11.59%, sebaran benih 0.00; pendedahan hanya 35.4%
 
-**N77 Pulangan 252 hari dalam 3 teratas alam** — `pangkat keratan rentas pulangan 252 hari, ambil 3 teratas, imbang bulanan` · QuantJourney W15 / Jegadeesh-Titman (quantjourney-bt) · SEDIA · momentum keratan rentas klasik; BERBEZA daripada N72 (Clenow guna regresi 90 hari x R^2)
+**N77 Pulangan 252 hari dalam 3 teratas alam** — `pangkat keratan rentas pulangan 252 hari, ambil 3 teratas, imbang bulanan` · QuantJourney W15 / Jegadeesh-Titman (quantjourney-bt) · PERLU:paksi_urutan · DIBETULKAN 30 Okt 2026 (SPEC_NXX §10): ini peraturan URUTAN bukan penapis. Sumbernya guna alam 9 ETF sektor; alam repo 2,800 saham jadi "3 teratas" = 0.1%, bukan peraturan sama. Padanannya U11. Dikeluarkan daripada bahagian A.
 
-**N78 Pulangan 21 hari dalam 3 terbawah alam (pembalikan)** — `pangkat keratan rentas pulangan 21 hari, ambil 3 TERBAWAH, imbang mingguan` · QuantJourney W16 (quantjourney-bt) · SEDIA · PEMBALIKAN - bertentangan momentum; didaftar untuk kelengkapan, bukan kerana dijangka lulus
+**N78 Pulangan 21 hari dalam 3 terbawah alam (pembalikan)** — `pangkat keratan rentas pulangan 21 hari, ambil 3 TERBAWAH, imbang mingguan` · QuantJourney W16 (quantjourney-bt) · PERLU:paksi_urutan · PEMBALIKAN - bertentangan momentum. DIBETULKAN 30 Okt 2026 (SPEC_NXX §10): peraturan URUTAN, alam sumber 9 ETF lawan 2,800 saham repo. Dikeluarkan daripada bahagian A.
 
-**N79 Momentum ganda (relatif + mutlak)** — `pulangan 252 hari dalam 2 teratas alam DAN pulangan 252 hari > 0` · QuantJourney W04 / Antonacci (quantjourney-bt) · SEDIA · syarat mutlak ialah penapis rejim terbina dalam
+**N79 Momentum ganda (relatif + mutlak)** — `pulangan 252 hari dalam 2 teratas alam DAN pulangan 252 hari > 0` · QuantJourney W04 / Antonacci (quantjourney-bt) · PERLU:paksi_urutan · syarat mutlak ialah penapis rejim terbina dalam. DIBETULKAN 30 Okt 2026 (SPEC_NXX §10): bahagian "2 teratas alam" ialah URUTAN; alam sumber 9 ETF lawan 2,800 saham repo.
 
 **N120 Trend Template Minervini (8 syarat)** — `tutup > ma150 DAN tutup > ma200 DAN ma150 > ma200 DAN ma200 menaik >= 1 bulan DAN ma50 > ma150 DAN ma50 > ma200 DAN tutup > ma50 DAN tutup >= 1.30 x rendah_52w DAN tutup >= 0.75 x tinggi_52w DAN RS >= 70` · Minervini, Trade Like a Stock Market Wizard (buku) · SEDIA · sumber sekunder TIDAK SEPAKAT pada ambang rendah 52w: 25% lawan 30%; saya guna 30% kerana skrip ProRealCode mengiranya Close/Lowest[252] > 1.3. Teks buku belum dibaca.
 

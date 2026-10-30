@@ -200,16 +200,20 @@ MASUK = [
   'quantjourney-bt', 'SEDIA', 'berguna sebagai ASAS penapis tunggal untuk mengira lift'),
  ('N77', 'KEKUATAN', 'Pulangan 252 hari dalam 3 teratas alam',
   'pangkat keratan rentas pulangan 252 hari, ambil 3 teratas, imbang bulanan',
-  'QuantJourney W15 / Jegadeesh-Titman', 'quantjourney-bt', 'SEDIA',
-  'momentum keratan rentas klasik; BERBEZA daripada N72 (Clenow guna regresi 90 hari x R^2)'),
+  'QuantJourney W15 / Jegadeesh-Titman', 'quantjourney-bt', 'PERLU:paksi_urutan',
+  'DIBETULKAN 30 Okt 2026 (SPEC_NXX §10): ini peraturan URUTAN bukan penapis. Sumbernya guna '
+  'alam 9 ETF sektor; alam repo 2,800 saham jadi "3 teratas" = 0.1%, bukan peraturan sama. '
+  'Padanannya U11. Dikeluarkan daripada bahagian A.'),
  ('N78', 'KEKUATAN', 'Pulangan 21 hari dalam 3 terbawah alam (pembalikan)',
   'pangkat keratan rentas pulangan 21 hari, ambil 3 TERBAWAH, imbang mingguan',
-  'QuantJourney W16', 'quantjourney-bt', 'SEDIA',
-  'PEMBALIKAN - bertentangan momentum; didaftar untuk kelengkapan, bukan kerana dijangka lulus'),
+  'QuantJourney W16', 'quantjourney-bt', 'PERLU:paksi_urutan',
+  'PEMBALIKAN - bertentangan momentum. DIBETULKAN 30 Okt 2026 (SPEC_NXX §10): peraturan '
+  'URUTAN, alam sumber 9 ETF lawan 2,800 saham repo. Dikeluarkan daripada bahagian A.'),
  ('N79', 'KEKUATAN', 'Momentum ganda (relatif + mutlak)',
   'pulangan 252 hari dalam 2 teratas alam DAN pulangan 252 hari > 0',
-  'QuantJourney W04 / Antonacci', 'quantjourney-bt', 'SEDIA',
-  'syarat mutlak ialah penapis rejim terbina dalam'),
+  'QuantJourney W04 / Antonacci', 'quantjourney-bt', 'PERLU:paksi_urutan',
+  'syarat mutlak ialah penapis rejim terbina dalam. DIBETULKAN 30 Okt 2026 (SPEC_NXX §10): '
+  'bahagian "2 teratas alam" ialah URUTAN; alam sumber 9 ETF lawan 2,800 saham repo.'),
  ('N80', 'PECAH', 'Tinggi sepanjang masa', 'tutup >= tutup tertinggi sepanjang masa',
   'Wilcox & Crittenden (2005); Zarattini, Pagani & Wilcox (2025)', 'Quantpedia', 'SEDIA',
   'SAMA dengan K195 dalam katalog K; henti ekor asal 10 x ATR, pegangan purata ~305 hari '
@@ -346,7 +350,10 @@ MASUK = [
   'juga sebut "50x saiz akaun" yang peraturan berbeza sama sekali.'),
  ('N123', 'POLA', 'Power Earnings Gap',
   'gap earnings DAN vol_n50 >= 3.0 DAN tutup dalam 25% atas julat hari', 'therighttrader',
-  'blog', 'SEDIA', 'keluar asal: henti bawah rendah hari gap; gagal jika tutup < buka hari gap'),
+  'blog', 'PERLU:tarikh_earnings',
+  'keluar asal: henti bawah rendah hari gap; gagal jika tutup < buka hari gap. DIBETULKAN '
+  '30 Okt 2026 (SPEC_NXX §10): perlu tarikh earnings titik-masa; data/sec/ ada tetapi '
+  'penyertaannya tugas data berasingan.'),
  ('N124', 'POLA', 'Episodic pivot gap 8-10%', 'gap >= 8% DAN vol_n50 >= 2.0',
   'Qullamaggie/Bonde melalui Tradingsim', 'blog', 'SEDIA',
   'lebih tegas daripada N64 yang hanya guna gap_and_go'),

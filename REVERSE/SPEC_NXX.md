@@ -157,3 +157,39 @@ hidup dalam ekor kanan. Dalam kes itu kesimpulannya ialah **naikkan bilangan slo
 
 Jadi larian ini menjawab **satu kotak daripada sebelas**, dan saya menyatakannya di sini supaya
 keputusannya tidak dibaca lebih luas daripada yang sepatutnya.
+
+---
+
+## 10. Pembetulan pra-larian (30 Okt 2026, sebelum sebarang keputusan dilihat)
+
+Audit pemetaan peraturan → lajur menemui empat baris yang **tidak boleh** diuji sebagai
+penapis per-bar. Dibetulkan di sini, bukan selepas melihat keputusan.
+
+| ID | Masalah | Tindakan |
+|---|---|---|
+| `N77` | "pangkat keratan rentas pulangan 252 hari, **ambil 3 teratas**, imbang bulanan" | **Dikeluarkan.** Ia peraturan URUTAN, bukan penapis. Sumbernya guna alam 9 ETF sektor; alam repo 2,800 saham, jadi "3 teratas" bermakna 0.1% — bukan peraturan yang sama. Padanannya ialah `U11`. |
+| `N78` | sama, 3 TERBAWAH 21 hari | **Dikeluarkan.** Sebab sama. |
+| `N79` | "2 teratas alam" | **Dikeluarkan.** Sebab sama. |
+| `N123` | "gap **earnings**" | **Dikeluarkan.** Perlu tarikh earnings titik-masa; `data/sec/` ada tetapi penyertaannya tugas data berasingan. Status → `PERLU:tarikh_earnings`. |
+
+**Takrif yang ditetapkan di sini supaya tiada kelonggaran kemudian:**
+
+`RS` dalam `N69` dan `N120` = **persentil keratan rentas `rs_spy_6b` dalam tarikh yang sama**
+(0–100). `N69` kuintil teratas bermakna persentil >= 80. `N120` `RS >= 70` bermakna
+persentil >= 70. Ini satu-satunya tafsiran yang mungkin kerana `rs_spy_6b` ialah nisbah mentah,
+bukan rating.
+
+**Kiraan ujian dibetulkan.** Spec §3 dan §4 mengira 284 bagi bahagian A; aritmetik itu salah.
+Yang betul:
+
+| | |
+|---|---|
+| MASUK `SEDIA` | 70 |
+| tolak N77, N78, N79, N123 | 66 |
+| N104 dipecah 5 hari minggu (+4 topeng) | **70 topeng** |
+| × 4 keluar asas | **280 ujian (bahagian A)** |
+| Bahagian B: 26 keluar × 3 masuk | **78 ujian** |
+| **Jumlah dipradaftar, FDR mengira** | **358** |
+
+Saya menyatakan dengan jelas: 358 < 362, jadi pembetulan ini **melonggarkan** palang FDR
+sedikit. Ia dibuat sebelum melihat keputusan, dan sebabnya pemetaan peraturan, bukan hasil.
