@@ -242,3 +242,8 @@ tetap) dan `X27` (sasaran +3%), atas sebab yang sama tetapi bertentangan arah.
 
 **Saya jangka asas tanpa-penapis akan mengalahkan kedua-dua N115 dan N19 pada sekurang-kurangnya
 separuh keluar**, kerana itu yang berlaku pada 598 setup `SETUP.md`.
+
+**Nota pendedahan:** ufuk maksimum bahagian B ialah **126 bar** bagi setiap keluar (`IMBAS`
+dalam `step19_nxx_keluar.py`). Keluar tanpa penamat semula jadi (contoh `X13` rsi14 > 70)
+diputuskan di situ. Bahagian A guna 63 bar bagi `X3`, jadi nombor A dan B **tidak** boleh
+dibanding terus merentas ufuk.
