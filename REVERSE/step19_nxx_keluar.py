@@ -81,8 +81,22 @@ def pulangan_keluar(P):
     # PEPIJAT 2 (asap): rolling mesti per-ticker, bukan merentas frame bergabung
     rl20 = P.groupby('ticker', sort=False).rendah.rolling(20).min().to_numpy()
     kod = [k for k, _ in XSPEC]
+    # PEPIJAT 4 (ditangkap selepas larian B pertama): henti berasaskan PARAS boleh berada DI
+    # ATAS harga masuk apabila masuk berlaku jauh di bawah MA (contoh N19 terlebih jual:
+    # ema21*0.99 berada 14.3% DI ATAS masuk pada 99.8% dagangan). `rendah <= paras` jadi benar
+    # serta-merta dan kod "menjual" di atas masuk = keuntungan DIREKA, kadar menang 99.8%.
+    # Henti mesti di BAWAH masuk. Jika tidak, keluar itu TIDAK SAH untuk dagangan itu -> NaN,
+    # bukan kemenangan direka.
+    HENTI_PARAS = {'X12': lambda: ind_jb, 'X18': lambda: rl20, 'X25': lambda: ind['ema21'] * 0.99,
+                   'X37': lambda: lo_masuk, 'X41': lambda: lo_masuk}
     bar = {k: np.full(m, -1) for k in kod}
     px = {k: np.full(m, np.nan) for k in kod}
+    ind_jb = ind['ma20'] - 2.0 * ind['sd20']
+    lo_masuk = np.where(np.isfinite(masuk), lo[np.minimum(np.arange(m) + 1, m - 1)], np.nan)
+    sah_awal = {}
+    for k, fn in HENTI_PARAS.items():
+        pr = fn()
+        sah_awal[k] = np.isfinite(pr) & np.isfinite(masuk) & (pr < masuk)
     puncak = np.where(np.isfinite(masuk), masuk, -np.inf)
     bawah2 = np.zeros(m)                                     # kiraan tutup bawah ma50 (X36)
     # had: ticker berakhir -> hentikan
@@ -104,7 +118,7 @@ def pulangan_keluar(P):
         tetap('X09', ind['rsi2'][kk] > 65, bk)
         sas2 = masuk * 1.02
         tetap('X10', hk >= sas2, sas2)
-        jb = ind['ma20'][kk] - 2.0 * ind['sd20'][kk]
+        jb = ind_jb[kk]
         tetap('X12', lk <= jb, jb)
         tetap('X13', ind['rsi14'][kk] > 70, bk)
         tetap('X14', (ind['rsi14'][kk] > 50) & (ind['rsi14'][np.maximum(kk - 1, 0)] <= 50), bk)
@@ -129,7 +143,7 @@ def pulangan_keluar(P):
         tetap('X36', bawah2 >= 2, bk)
         # PEPIJAT 3 (asap): henti pada rendah HARI MASUK tercetus pada hari masuk itu
         # sendiri (lo <= lo selalu benar) -> kadar menang 0.0%. Disemak dari j>=2.
-        h37 = np.where(np.isfinite(masuk), lo[np.minimum(idx + 1, m - 1)], np.nan)
+        h37 = lo_masuk
         if j >= 2:
             tetap('X37', lk <= h37, h37)
             tetap('X41', lk <= h37, h37)
@@ -141,7 +155,10 @@ def pulangan_keluar(P):
         a[belum] = hidup_akhir[belum]
         p[belum] = buka_next[a[belum]]
         with np.errstate(invalid='ignore', divide='ignore'):
-            out[k] = (p * (1 - ks)) / (masuk * (1 + ks)) - 1.0
+            r = (p * (1 - ks)) / (masuk * (1 + ks)) - 1.0
+        if k in sah_awal:
+            r = np.where(sah_awal[k], r, np.nan)
+        out[k] = r
     return out
 
 
