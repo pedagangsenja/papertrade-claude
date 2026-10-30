@@ -1,6 +1,6 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-10-30 06:04 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-10-30 07:41 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
@@ -39,7 +39,7 @@ REVERSE menguji **signal dan indikator** untuk ENTRY/HOLD/EXIT. Ia **tidak** men
 | Sumber | Hari dagangan | Mula | Akhir | Suku (anggaran) | Baris | Cukup? |
 |---|---|---|---|---|---|---|
 | RS pasaran | 30 | 2026-09-18 | 2026-10-29 | 0.5 |  | tidak |
-| Gred kumpulan | 24 | 2026-09-25 | 2026-10-28 | 0.4 |  | tidak |
+| Gred kumpulan | 25 | 2026-09-25 | 2026-10-29 | 0.4 |  | tidak |
 | SEC EPS/hasil | 4095 | 2009-04-15 | 2026-10-29 | 65.0 | 268391 | ya |
 | SEC earnings 8-K | 5448 | 2004-08-23 | 2026-10-29 | 86.5 | 178675 | ya |
 
@@ -88,7 +88,7 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 | portfolio_slot | 2026-10-28 | 2 | OK |
 | Papan Penganalisis | 2026-10-30 | 0 | OK |
 | RS pasaran | 2026-10-29 | 1 | OK |
-| Gred kumpulan | 2026-10-28 | 2 | OK |
+| Gred kumpulan | 2026-10-29 | 1 | OK |
 | SEC fundamental | fail diubah | 0 | OK |
 | Senarai bursa | fail diubah | 0 | OK |
 
