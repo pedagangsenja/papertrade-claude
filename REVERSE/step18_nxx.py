@@ -320,6 +320,37 @@ def bh_m(p, m, q=0.05):
 
 
 M_PRADAFTAR = 358
+KELOMPOK = 400
+
+
+def rs_persentil():
+    """Persentil RS keratan rentas dalam tarikh (spec §10). Pas ringan, 3 lajur sahaja."""
+    pst = CACHE / 'rs_pst_nxx.parquet'
+    if pst.exists():
+        return pd.read_parquet(pst)
+    x = pd.read_parquet(PANEL, columns=['ticker', 'date', 'rs_spy_6b'])
+    x['rs_pst'] = x.groupby('date').rs_spy_6b.rank(pct=True).astype('float32') * 100.0
+    x = x.drop(columns='rs_spy_6b')
+    x.to_parquet(pst, index=False)
+    return x
+
+
+def kelompok_ticker():
+    t = pd.read_parquet(PANEL, columns=['ticker']).ticker.unique()
+    t = sorted(t)
+    return [t[i:i + KELOMPOK] for i in range(0, len(t), KELOMPOK)]
+
+
+def _sedia(bk, pulf, rsf):
+    """Panel + pulangan + rs_pst bagi satu kelompok ticker. Topeng dikira pada siri PENUH."""
+    import pyarrow.parquet as pq
+    flt = [('ticker', 'in', set(bk))]
+    P = pq.read_table(PANEL, filters=flt).to_pandas()
+    pul = pq.read_table(pulf, columns=['ticker', 'date'] + [f'pul_{k}' for k in XK],
+                        filters=flt).to_pandas()
+    P = P.merge(rsf, on=['ticker', 'date'], how='left')
+    P = P.merge(pul, on=['ticker', 'date'], how='left')
+    return P.sort_values(['ticker', 'date']).reset_index(drop=True)
 
 
 def main(argv=None):
@@ -332,61 +363,138 @@ def main(argv=None):
         H = pd.read_csv(csvp)
     else:
         print('1/4 panel indikator...', flush=True)
-        P = bina_panel()
-        print('2/4 gabung dengan cache keluar asas...', flush=True)
-        pul = pd.read_parquet(PUL, columns=['ticker', 'date'] + [f'pul_{k}' for k in XK])
-        P = P.merge(pul, on=['ticker', 'date'], how='inner')
-        P = P[P.nilai20 >= CAIR].copy()
-        P['tahun'] = P.date.dt.year
-        P = P[(P.tahun >= TH0) & (P.tahun <= TH1)].sort_values(['ticker', 'date'])
-        # persentil RS keratan rentas dalam tarikh (spec §10)
-        P['rs_pst'] = P.groupby('date').rs_spy_6b.rank(pct=True) * 100.0
-        print(f'  [{time.time()-t0:.0f}s] bar cair dengan pulangan: {len(P):,}', flush=True)
-        print('3/4 topeng x 4 keluar x 2 tingkap...', flush=True)
-        T = topeng(P)
-        hari = P.date.to_numpy().astype('datetime64[D]').astype('int64')
-        tahun = P.tahun.to_numpy()
-        win = {'latih': (tahun >= LATIH[0]) & (tahun <= LATIH[1]),
-               'tahan': (tahun >= TAHAN[0]) & (tahun <= TAHAN[1])}
-        PU = {k: P[f'pul_{k}'].to_numpy('float64') for k in XK}
-        asas = {(k, w): float(np.nanmean(PU[k][win[w]])) * 100 for k in XK for w in win}
+        bina_panel()
+        rsf = rs_persentil()
+        kel = kelompok_ticker()
+        print(f'  [{time.time()-t0:.0f}s] {len(kel)} kelompok x {KELOMPOK} ticker', flush=True)
+        print('2/4 pas statistik (bersiri, topeng atas siri PENUH)...', flush=True)
+        # akumulator: kunci (topeng, keluar, tingkap)
+        AK, PERHARI, ASAS = {}, {}, {}
+        nama_topeng = None
+        for i, bk in enumerate(kel):
+            P = _sedia(bk, PUL, rsf)
+            T = topeng(P)            # PENTING: atas siri penuh, sebelum penapis
+            if nama_topeng is None:
+                nama_topeng = list(T)
+            th = P.date.dt.year.to_numpy()
+            hari = P.date.to_numpy().astype('datetime64[D]').astype('int64')
+            cair = (P.nilai20.to_numpy() >= CAIR)
+            W = {'latih': (th >= LATIH[0]) & (th <= LATIH[1]) & cair,
+                 'tahan': (th >= TAHAN[0]) & (th <= TAHAN[1]) & cair}
+            for k in XK:
+                pu = P[f'pul_{k}'].to_numpy('float64')
+                ada = np.isfinite(pu)
+                for w, wm in W.items():
+                    bas = ASAS.setdefault((k, w), [0.0, 0])
+                    sel0 = wm & ada
+                    bas[0] += float(pu[sel0].sum()); bas[1] += int(sel0.sum())
+                    for nm in nama_topeng:
+                        sel = T[nm] & sel0
+                        if not sel.any():
+                            continue
+                        x = pu[sel]
+                        ak = AK.setdefault((nm, k, w), [0.0, 0, 0, 0.0, 0.0])
+                        ak[0] += float(x.sum()); ak[1] += int(x.size)
+                        pos = x > 0
+                        ak[2] += int(pos.sum()); ak[3] += float(x[pos].sum())
+                        ak[4] += float(x[~pos].sum())
+                        if w == 'tahan':
+                            ph = PERHARI.setdefault((nm, k), {})
+                            hh = hari[sel]
+                            idx = np.argsort(hh, kind='stable')
+                            hs, xs = hh[idx], x[idx]
+                            b = np.flatnonzero(np.concatenate(
+                                [[True], hs[1:] != hs[:-1], [True]]))
+                            sm = np.add.reduceat(xs, b[:-1])
+                            cn = np.diff(b)
+                            for d, sv, cv in zip(hs[b[:-1]], sm, cn):
+                                e = ph.get(d)
+                                if e is None:
+                                    ph[d] = [sv, int(cv)]
+                                else:
+                                    e[0] += sv; e[1] += int(cv)
+            del P, T
+            print(f'    [{time.time()-t0:.0f}s] kelompok {i+1}/{len(kel)}', flush=True)
+        asas = {kw: (v[0] / v[1] * 100 if v[1] else np.nan) for kw, v in ASAS.items()}
         baris = []
-        for nm, msk in T.items():
+        from scipy import stats as sps
+        for nm in nama_topeng:
             for k in XK:
                 r = {'masuk': nm, 'keluar': k}
-                for w in win:
-                    sel = msk & win[w]
-                    mt = metrik(PU[k][sel])
-                    r[f'n_{w}'] = mt['n']
-                    r[f'jangkaan_{w}'] = mt['jangkaan']
-                    r[f'tanpa5_{w}'] = mt['tanpa5']
-                    r[f'lift_{w}'] = mt['jangkaan'] - asas[(k, w)]
+                for w in ('latih', 'tahan'):
+                    ak = AK.get((nm, k, w))
+                    if ak is None or ak[1] == 0:
+                        r[f'n_{w}'] = 0; r[f'jangkaan_{w}'] = np.nan
+                        r[f'lift_{w}'] = np.nan
+                        continue
+                    jg = ak[0] / ak[1] * 100
+                    r[f'n_{w}'] = ak[1]; r[f'jangkaan_{w}'] = jg
+                    r[f'lift_{w}'] = jg - asas[(k, w)]
                     if w == 'tahan':
-                        r['menang'], r['untung'], r['rugi'] = (mt['menang'], mt['untung'],
-                                                               mt['rugi'])
-                        x = PU[k][sel] - asas[(k, w)] / 100.0
-                        t, p, kk = t_kelompok(x, hari[sel])
-                        r['t'], r['p'], r['n_hari'] = t, p, kk
+                        r['menang'] = ak[2] / ak[1] * 100
+                        r['untung'] = ak[3] / ak[2] * 100 if ak[2] else np.nan
+                        nneg = ak[1] - ak[2]
+                        r['rugi'] = ak[4] / nneg * 100 if nneg else np.nan
+                        ph = PERHARI.get((nm, k), {})
+                        if len(ph) >= 20:
+                            km = np.array([v[0] / v[1] for v in ph.values()])
+                            km = km - asas[(k, w)] / 100.0
+                            se = km.std(ddof=1) / np.sqrt(km.size)
+                            t = float(km.mean() / se) if se > 0 else np.nan
+                            r['t'] = t
+                            r['p'] = (float(sps.t.sf(t, df=km.size - 1))
+                                      if np.isfinite(t) else np.nan)
+                        else:
+                            r['t'] = r['p'] = np.nan
+                        r['n_hari'] = len(ph)
+                r['asas_latih'] = asas[(k, 'latih')]
+                r['asas_tahan'] = asas[(k, 'tahan')]
                 baris.append(r)
         H = pd.DataFrame(baris)
-        for k in XK:
-            for w in win:
-                H.loc[H.keluar == k, f'asas_{w}'] = asas[(k, w)]
+        H['gate1'] = ((H.lift_latih > 0) & (H.lift_tahan > 0) & (H.n_tahan >= MIN_N)
+                      & (H.masuk != 'N01_semak'))
+        # --- pas 3: tanpa5 bagi yang lulus gate1 sahaja ---
+        hidup = H[H.gate1][['masuk', 'keluar']].itertuples(index=False, name=None)
+        hidup = sorted(set(hidup))
+        print(f'3/4 pas ekor bagi {len(hidup)} yang lulus gate1...', flush=True)
+        kump = {kk: [] for kk in hidup}
+        if hidup:
+            for i, bk in enumerate(kel):
+                P = _sedia(bk, PUL, rsf)
+                T = topeng(P)
+                th = P.date.dt.year.to_numpy()
+                cair = (P.nilai20.to_numpy() >= CAIR)
+                wm = (th >= TAHAN[0]) & (th <= TAHAN[1]) & cair
+                for m, k in hidup:
+                    pu = P[f'pul_{k}'].to_numpy('float32')
+                    sel = T[m] & wm & np.isfinite(pu)
+                    if sel.any():
+                        kump[(m, k)].append(pu[sel])
+                del P, T
+                if (i + 1) % 2 == 0:
+                    print(f'    [{time.time()-t0:.0f}s] kelompok {i+1}/{len(kel)}', flush=True)
+        H['tanpa5_tahan'] = np.nan
+        for (m, k), lst in kump.items():
+            if not lst:
+                continue
+            x = np.concatenate(lst)
+            u = np.sort(x)[::-1]
+            v = float(u[int(np.ceil(0.05 * u.size)):].mean() * 100) if u.size > 20 else np.nan
+            H.loc[(H.masuk == m) & (H.keluar == k), 'tanpa5_tahan'] = v
         H.to_csv(csvp, index=False)
         print(f'  [{time.time()-t0:.0f}s] {len(H)} ujian -> {csvp.name}', flush=True)
-    # --- gate ---
     print('4/4 gate...', flush=True)
-    semak = H.masuk == 'N01_semak'
-    H['gate1'] = ((H.lift_latih > 0) & (H.lift_tahan > 0) & (H.n_tahan >= MIN_N)
-                  & ~semak)
+    if 'gate1' not in H.columns:
+        H['gate1'] = ((H.lift_latih > 0) & (H.lift_tahan > 0) & (H.n_tahan >= MIN_N)
+                      & (H.masuk != 'N01_semak'))
     lulus, amb = bh_m(H.p.where(H.gate1).to_numpy(), M_PRADAFTAR, 0.05)
     H['gate2'] = lulus
     H['gate3'] = H.gate2 & (H.tanpa5_tahan > 0)
     H = H.sort_values('lift_tahan', ascending=False)
-    print(f"  gate1 {int(H.gate1.sum())}/{len(H)} | gate2 {int(H.gate2.sum())} "
-          f"(ambang p {amb}) | gate3 {int(H.gate3.sum())}")
+    H.to_csv(csvp, index=False)
+    print(f"  gate1 {int(H.gate1.sum())}/{int((H.masuk != 'N01_semak').sum())} | "
+          f"gate2 {int(H.gate2.sum())} (ambang p {amb}) | gate3 {int(H.gate3.sum())}")
     print()
-    # SEMAKAN PEMALSUAN DILAPOR DAHULU (spec §6)
     n01 = H[(H.masuk == 'N01_semak') & (H.keluar == 'X3')]
     print('=== SEMAKAN PEMALSUAN N01 (X3) — dibaca SEBELUM keputusan lain ===')
     if n01.empty:
@@ -403,8 +511,8 @@ def main(argv=None):
     print()
     lajur = ['masuk', 'keluar', 'n_tahan', 'lift_latih', 'lift_tahan', 'jangkaan_tahan',
              'tanpa5_tahan', 'p']
-    print('=== 15 lift_tahan teratas yang lulus gate1 ===')
-    print(H[H.gate1].head(15)[lajur].to_string(index=False) if H.gate1.any() else '  (tiada)')
+    print('=== lift_tahan teratas yang lulus gate1 ===')
+    print(H[H.gate1].head(20)[lajur].to_string(index=False) if H.gate1.any() else '  (tiada)')
     print()
     print('=== asas setiap keluar (beli SETIAP bar) ===')
     for k in XK:
