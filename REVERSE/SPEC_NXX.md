@@ -193,3 +193,52 @@ Yang betul:
 
 Saya menyatakan dengan jelas: 358 < 362, jadi pembetulan ini **melonggarkan** palang FDR
 sedikit. Ia dibuat sebelum melihat keputusan, dan sebabnya pemetaan peraturan, bukan hasil.
+
+---
+
+## 11. Pembetulan pra-larian bahagian B (31 Okt 2026 00:10 MY, sebelum keputusan dilihat)
+
+26 keluar `SEDIA` diaudit. Tiga **bukan** keluar per-dagangan dan tidak boleh diuji dalam
+rangka ini:
+
+| ID | Masalah | Tindakan |
+|---|---|---|
+| `X20` | "separa 1/3 pada 2R, ekori baki" — keluar BERPERINGKAT, satu dagangan jadi dua | Dikeluarkan. Perlu rangka saiz, bukan rangka pulangan-setiap-bar. |
+| `X31` | "jatuh keluar 3 teratas pangkat 252 hari" — keratan rentas + imbang | Dikeluarkan. Ia paksi `URUTAN` + `IMBANG`, bukan keluar. |
+| `X32` | "imbang berkala sahaja" — peringkat portfolio | Dikeluarkan. Ia paksi `IMBANG`. |
+
+**Bahagian B dibetulkan: 23 keluar x 3 masuk tetap = 69 ujian** (bukan 78).
+
+Tiga masuk tetap, ditetapkan di sini: `N115` (Holy Grail — momentum-undur, lulus gate2
+bahagian A), `N19` (bawah jalur BB + rsi14 < 30 — lift terbesar bahagian A), dan **tiada
+penapis** (setiap bar) sebagai asas.
+
+**Jumlah dipradaftar dikemas: 280 (A, selesai) + 69 (B) = 349.** FDR bahagian B mengira 349.
+
+### Syarat tambahan yang bahagian A dedahkan (spec §5 dipinda untuk B sahaja)
+
+Bahagian A menunjukkan `N16` x `X1` lulus gate 1 dan 2 dengan lift +0.193 **tetapi jangkaan
+mutlak -0.088%** — merugikan, kerana asas `X1` sendiri negatif. Gate asal tidak menangkapnya.
+
+**Gate 0 ditambah untuk bahagian B: jangkaan mutlak tingkap TAHAN mesti > 0.** Ia dinyatakan
+di sini sebelum larian B, dan ia TIDAK digunakan ke belakang pada keputusan A yang sudah
+dilaporkan.
+
+### Jangkaan priori saya untuk bahagian B
+
+Jangkaan priori saya salah tiga kali berturut-turut, kedua-dua kali terakhir ke arah terlalu
+rendah. Jadi kali ini saya menyesuaikan ke ATAS dengan sengaja, dan merekodkannya:
+
+| | Jangkaan |
+|---|---|
+| Gate 0+1 (mutlak > 0 dan lift positif dua tingkap) | 15-35 daripada 69 |
+| Gate 2 (FDR m=349) | 3-10 |
+| Gate 3 (ekor mutlak > 0) | **0-2** |
+
+**Keluar mana saya jangka terbaik:** `X29` (pegang tetap 10 bar) dan `X33` (keluar pada tutup
+sesi masuk) — kerana `KOMBINASI.md` sudah ukur bahawa SETIAP sasaran untung merugikan, dan
+keluar terpantas mengelak paling banyak masa dalam pasaran. **Terburuk:** `X10` (sasaran 2%
+tetap) dan `X27` (sasaran +3%), atas sebab yang sama tetapi bertentangan arah.
+
+**Saya jangka asas tanpa-penapis akan mengalahkan kedua-dua N115 dan N19 pada sekurang-kurangnya
+separuh keluar**, kerana itu yang berlaku pada 598 setup `SETUP.md`.
