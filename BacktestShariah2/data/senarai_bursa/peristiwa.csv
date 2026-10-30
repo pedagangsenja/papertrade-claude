@@ -12915,3 +12915,7 @@ tarikh,simbol,peristiwa,nama,bursa,etf,biasa
 2026-10-29,JSM,tukar_nama,"Navient LLC - 6% Senior Notes due December 15, 2043",NASDAQ,0,0
 2026-10-29,NAVI,tukar_nama,"Navient Holdings, Inc. - Common Stock",NASDAQ,0,1
 2026-10-29,SLMT,tukar_nama,Solmate Infrastructure Public Limited Company - Class B Ordinary Shares,NASDAQ,0,1
+2026-10-30,BHAIU,tambah,BHAV Acquisition Corp II - Units,NASDAQ,0,0
+2026-10-30,FBEQ,tambah,Franklin US Equity Bitcoin Drip Index ETF,NASDAQ,1,0
+2026-10-30,FIBT,tambah,Franklin US Innovation Bitcoin DRIP Index ETF,NASDAQ,1,0
+2026-10-30,GBC,tambah,"Georgia Banking Company, Inc. - Common Stock",NASDAQ,0,1
