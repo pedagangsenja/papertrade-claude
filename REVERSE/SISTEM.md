@@ -1,6 +1,6 @@
 # Dua sistem lengkap lawan SPUS
 
-Dijana 2026-10-30 05:54 UTC oleh `REVERSE/step16_sistem.py`. Pradaftar `REVERSE/SPEC_SISTEM.md` (dikomit sebelum larian ini).
+Dijana 2026-10-30 06:30 UTC oleh `REVERSE/step16_sistem.py`. Pradaftar `REVERSE/SPEC_SISTEM.md` (dikomit sebelum larian ini).
 
 ## Keputusan: **DITOLAK**
 
@@ -50,6 +50,25 @@ Baris terakhir ialah dapatan sebenar: **18.0% lawan 17.9% setiap unit pendedahan
 **Amaran yang mesti disertakan:** jangan tafsir ini sebagai "naikkan pendedahan 3× dan dapat 18%". Menaikkan pendedahan menaikkan drawdown secara berkadar; itu bukan alfa, itu beta. Dan menaikkannya melebihi 100% memerlukan margin, iaitu riba.
 
 Pendedahan setiap tahun: `2012:47% 2013:41% 2014:39% 2015:38% 2016:35% 2017:42% 2018:34% 2019:37% 2020:27% 2021:30% 2022:14% 2023:39% 2024:38% 2025:35%`. Penapis rejim memang berfungsi — pendedahan paling rendah tepat pada tahun jatuh, dan itu sebab MDD-nya cetek.
+
+## Ujian penguasaan: campuran SPUS + tunai pada pendedahan SAMA
+
+Jika Sistem B memperoleh pulangan setiap unit pendedahan yang sama dengan SPUS, maka memegang SPUS pada **berat yang lebih rendah** sepatutnya memberi perkara yang sama tanpa mesin. Itu akibat logik yang mesti diuji, bukan diandaikan.
+
+| Berat SPUS (baki tunai 0%) | CAGR | MDD | CAGR ÷ abs(MDD) |
+|---|---|---|---|
+| 100% | +17.95% | -26.82% | 0.669 |
+| 60% | +10.87% | -16.62% | 0.654 |
+| 40% | +7.27% | -11.25% | 0.646 |
+| 35% ← pendedahan Sistem B | +6.44% | -10.00% | 0.644 |
+| 30% | +5.46% | -8.50% | 0.642 |
+| **Sistem B (Clenow)** | **+6.38%** | **-11.59%** | **0.551** |
+
+Pada pendedahan yang **sama** (35.4%): SPUS memberi **+6.44% / -10.00%** lawan Clenow **+6.38% / -11.59%**. Pulangan lebih baik: **SPUS**. MDD lebih cetek: **SPUS**.
+
+**Campuran SPUS + tunai MENGUASAI sistem Clenow pada kedua-dua paksi.** Itu kesimpulan terakhir seluruh kajian: selepas 134 kaedah, 672 setup, 20,640 ujian pemicu dan dua sistem pakar lengkap, tiada satu pun mengalahkan garis yang dilukis oleh satu ETF dan satu nisbah tunai.
+
+Nisbah `CAGR ÷ abs(MDD)` campuran itu hampir **pemalar** merentas berat (0.64–0.67), jadi tiada titik "optimum" untuk dicari. Pilihan berat bukan soalan data — ia soalan **berapa banyak drawdown anda boleh tahan**.
 
 ## Tafsiran
 

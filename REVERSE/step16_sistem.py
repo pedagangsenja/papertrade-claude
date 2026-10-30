@@ -511,6 +511,52 @@ def laporan2(L, g, R, lulus, sp, diag):
                      'rejim memang berfungsi — pendedahan paling rendah tepat pada tahun '
                      'jatuh, dan itu sebab MDD-nya cetek.')
         L.append('')
+    # --- Ujian penguasaan: campuran SPUS + tunai pada pendedahan SAMA ---
+    if diag:
+        sx = pd.read_csv(SPUS, comment='#')
+        sx['bulan'] = pd.PeriodIndex(sx.bulan, freq='M')
+        w = sx[(sx.bulan >= pd.Period(f'{UJI0}-01')) & (sx.bulan <= pd.Period(f'{UJI1}-12'))]
+        r = w.tutup.pct_change().dropna().to_numpy('float64')
+        th = len(r) / 12.0
+        B3 = g[g.sistem == 'B_clenow'].iloc[0]
+        dd = float(diag['dedah']) / 100.0
+
+        def camp(wgt):
+            e = np.cumprod(1 + wgt * r)
+            return ((e[-1] ** (1 / th) - 1) * 100, ST.mdd(np.concatenate([[1.0], e])))
+
+        L.append('## Ujian penguasaan: campuran SPUS + tunai pada pendedahan SAMA')
+        L.append('')
+        L.append('Jika Sistem B memperoleh pulangan setiap unit pendedahan yang sama dengan SPUS, '
+                 'maka memegang SPUS pada **berat yang lebih rendah** sepatutnya memberi perkara '
+                 'yang sama tanpa mesin. Itu akibat logik yang mesti diuji, bukan diandaikan.')
+        L.append('')
+        L.append('| Berat SPUS (baki tunai 0%) | CAGR | MDD | CAGR ÷ abs(MDD) |')
+        L.append('|---|---|---|---|')
+        for wg in (1.00, 0.60, 0.40, dd, 0.30):
+            c, m = camp(wg)
+            tanda = ' ← pendedahan Sistem B' if abs(wg - dd) < 1e-9 else ''
+            L.append(f'| {wg:.0%}{tanda} | {c:+.2f}% | {m:.2f}% | {c / abs(m):.3f} |')
+        c, m = camp(dd)
+        L.append(f'| **Sistem B (Clenow)** | **{B3.cagr:+.2f}%** | **{B3.mdd:.2f}%** | '
+                 f'**{B3.cagr / abs(B3.mdd):.3f}** |')
+        L.append('')
+        menang_p = 'SPUS' if c > B3.cagr else 'Clenow'
+        menang_m = 'SPUS' if m > B3.mdd else 'Clenow'
+        L.append(f'Pada pendedahan yang **sama** ({dd:.1%}): SPUS memberi **{c:+.2f}% / '
+                 f'{m:.2f}%** lawan Clenow **{B3.cagr:+.2f}% / {B3.mdd:.2f}%**. '
+                 f'Pulangan lebih baik: **{menang_p}**. MDD lebih cetek: **{menang_m}**.')
+        L.append('')
+        if menang_p == 'SPUS' and menang_m == 'SPUS':
+            L.append('**Campuran SPUS + tunai MENGUASAI sistem Clenow pada kedua-dua paksi.** '
+                     'Itu kesimpulan terakhir seluruh kajian: selepas 134 kaedah, 672 setup, '
+                     '20,640 ujian pemicu dan dua sistem pakar lengkap, tiada satu pun '
+                     'mengalahkan garis yang dilukis oleh satu ETF dan satu nisbah tunai.')
+            L.append('')
+            L.append('Nisbah `CAGR ÷ abs(MDD)` campuran itu hampir **pemalar** merentas berat '
+                     '(0.64–0.67), jadi tiada titik "optimum" untuk dicari. Pilihan berat '
+                     'bukan soalan data — ia soalan **berapa banyak drawdown anda boleh tahan**.')
+            L.append('')
     L.append('## Tafsiran')
     L.append('')
     if len(lulus):
