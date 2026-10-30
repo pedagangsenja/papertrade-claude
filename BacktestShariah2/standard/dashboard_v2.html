@@ -3308,6 +3308,19 @@ const tkRp=md=>{const B=['Jan','Feb','Mac','Apr','Mei','Jun','Jul','Ogo','Sep','
 const lilin=(b,xi,y,cw,op)=>{if(b[6]==null)return '';const up=b[1]>=b[6],c=up?'var(--pos)':'var(--neg)',y1=y(Math.max(b[6],b[1])),y2=y(Math.min(b[6],b[1]));
   return `<g${op<1?` opacity="${op}"`:''}><line x1="${xi.toFixed(1)}" x2="${xi.toFixed(1)}" y1="${y(b[7]).toFixed(1)}" y2="${y(b[8]).toFixed(1)}" stroke="${c}" stroke-width="1.2"/><rect x="${(xi-cw/2).toFixed(1)}" y="${y1.toFixed(1)}" width="${cw.toFixed(1)}" height="${Math.max(1,y2-y1).toFixed(1)}" fill="${c}"/></g>`;};
 const rpHad=A=>{const j=A.findIndex(b=>b[4]==='jual');return j<0?A.filter(b=>b[4]!=='lepas'):A.slice(0,j+1);};
+/* v135 (30 Okt 2026, permintaan pengguna): paksi carta harga dibaca dalam % SEJAK BELI, bukan USD.
+   (v/hb − 1) × 100 ialah penjelmaan affine harga, jadi bentuk lilin, paras lorong 2 dan garis putus TIDAK berubah
+   sedikit pun — hanya tanda paksi yang berpindah ke titik % bulat, dan garis beli jatuh tepat pada 0%.
+   tikPct: pilih langkah % bulat (1 … 100) supaya dapat ~n selang dalam julat, sentiasa termasuk 0. */
+function tikPct(loP,hiP,n){
+  const jul=hiP-loP;if(!(jul>0))return [0];
+  const kasar=jul/Math.max(1,n),L=[1,2,2.5,5,10,20,25,50,100,200];
+  const st=L.find(v=>v>=kasar)||Math.ceil(kasar/100)*100;
+  const out=[];for(let v=Math.ceil(loP/st)*st;v<=hiP+1e-9;v+=st)out.push(Math.abs(v)<1e-9?0:v);
+  if(!out.some(v=>Math.abs(v)<1e-9)&&loP<0&&hiP>0)out.push(0);
+  return out.sort((a,b)=>a-b);}
+const lblPct=v=>(v>0?'+':'')+(Math.abs(v)<10?v.toFixed(Math.abs(v)%1?1:0):v.toFixed(0))+'%';
+
 /* v133 (29 Okt 2026, permintaan pengguna): isian kecerunan lembut di bawah garis tutup, DI BELAKANG candlestick —
    arah keseluruhan dibaca sekali imbas tanpa membandingkan setiap lilin dengan garis putus harga beli.
    pt: [[x, tutup], …]; yB: garis dasar; hb: harga beli (warna); akhir: tutup terakhir yang dipapar. */
@@ -3319,7 +3332,10 @@ function isiTutup(pt,y,yB,hb,akhir){
 function rpSvg(Sr,u,hb){const n=Sr.length,ib=Sr.findIndex(b=>b[4]==='beli'),W=360,H=200,ml=42,mr=12,mt=10,mb=24,ada=Sr.some(b=>b[6]!=null);
   const vals=Sr.flatMap(b=>[b[1],b[2],b[3],b[5],b[7],b[8]]).concat(hb?[hb]:[]).filter(v=>v!=null);let lo=Math.min(...vals),hi=Math.max(...vals);const pad=(hi-lo)*0.06||1;lo-=pad;hi+=pad;
   const x=i=>ml+(W-ml-mr)*i/Math.max(1,n-1),y=v=>mt+(H-mt-mb)*(hi-v)/(hi-lo),dp=(hi-lo)<4?2:(hi-lo)<40?1:0,cw=Math.max(2,Math.min(9,(W-ml-mr)/Math.max(1,n-1)*0.62));let g='';
-  for(let k=0;k<=4;k++){const v=lo+pad+(hi-lo-2*pad)*k/4;g+=`<line x1="${ml}" x2="${W-mr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${ml-5}" y="${y(v)+4}" text-anchor="end" font-size="10" fill="var(--muted)">${v.toFixed(dp)}</text>`;}
+  /* v135: paksi dalam % sejak beli (sama seperti lilinPos) */
+  const tk2=hb?tikPct((lo/hb-1)*100,(hi/hb-1)*100,5).map(pc=>[hb*(1+pc/100),lblPct(pc)])
+              :[0,1,2,3,4].map(k=>{const v=lo+pad+(hi-lo-2*pad)*k/4;return [v,v.toFixed(dp)];});
+  g+=tk2.map(([v,t])=>`<line x1="${ml}" x2="${W-mr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${ml-5}" y="${y(v)+4}" text-anchor="end" font-size="10" fill="var(--muted)">${t}</text>`).join('');
   [[0,'start'],[ib,'middle'],[n-1,'end']].forEach(([i,a],j)=>{if(i>=0&&(j===0||i!==0)&&(j<2||i!==ib))g+=`<text x="${x(i)}" y="${H-7}" text-anchor="${a}" font-size="10" fill="var(--muted)">${tkRp(Sr[i][0])}</text>`;});
   g+=`<rect x="${x(u)-cw/2-4}" y="${mt}" width="${cw+8}" height="${H-mt-mb}" rx="4" fill="var(--accent-soft)"/>`;
   if(hb)g+=`<line x1="${ml}" x2="${W-mr}" y1="${y(hb).toFixed(1)}" y2="${y(hb).toFixed(1)}" stroke="var(--muted)" stroke-dasharray="2 3"/>`;
@@ -3341,7 +3357,10 @@ function lilinPos(bx,r,W){const m=l2Map(),A=m&&m.get(l2Key(r)),ib=A?A.findIndex(
   const Sr=A.slice(ib),n=Sr.length,hb=nomb(r.harga_beli),H=150,ml=40,mr=8,mt=8,mb=18;
   const vals=Sr.flatMap(b=>[b[7],b[8],b[2]]).concat(hb?[hb]:[]).filter(v=>v!=null);let lo=Math.min(...vals),hi=Math.max(...vals);const pad=(hi-lo)*0.06||1;lo-=pad;hi+=pad;
   const pw=W-ml-mr,x=i=>ml+(n<2?pw/2:pw*(i+0.5)/n),y=v=>mt+(H-mt-mb)*(hi-v)/(hi-lo),dp=(hi-lo)<4?2:(hi-lo)<40?1:0,cw=Math.max(2,Math.min(12,pw/n*0.62));let g='';
-  for(let k=0;k<=3;k++){const v=lo+pad+(hi-lo-2*pad)*k/3;g+=`<line x1="${ml}" x2="${W-mr}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="var(--line)"/><text x="${ml-5}" y="${(y(v)+4).toFixed(1)}" text-anchor="end" class="skt">${v.toFixed(dp)}</text>`;}
+  /* v135: paksi dalam % sejak beli apabila harga beli diketahui; USD sebagai sandaran */
+  const tik=hb?tikPct((lo/hb-1)*100,(hi/hb-1)*100,4).map(pc=>[hb*(1+pc/100),lblPct(pc)])
+              :[0,1,2,3].map(k=>{const v=lo+pad+(hi-lo-2*pad)*k/3;return [v,v.toFixed(dp)];});
+  g+=tik.map(([v,t])=>`<line x1="${ml}" x2="${W-mr}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="var(--line)"/><text x="${ml-5}" y="${(y(v)+4).toFixed(1)}" text-anchor="end" class="skt">${t}</text>`).join('');
   g+=isiTutup(Sr.map((b,i)=>[x(i),b[1]]),y,H-mb,hb,Sr[n-1][1]);
   if(hb)g+=`<line x1="${ml}" x2="${W-mr}" y1="${y(hb).toFixed(1)}" y2="${y(hb).toFixed(1)}" stroke="var(--muted)" stroke-dasharray="2 3"/>`;
   let pr='';Sr.forEach((b,i)=>{if(b[2]==null)return;pr+=`${pr?'L':'M'}${(x(i)-(i?0:cw/2)).toFixed(1)},${y(b[2]).toFixed(1)}`;const nx=Sr[i+1];pr+=`L${(nx&&nx[2]!=null?x(i+1):x(i)+cw/2).toFixed(1)},${y(b[2]).toFixed(1)}`;});
@@ -3349,8 +3368,9 @@ function lilinPos(bx,r,W){const m=l2Map(),A=m&&m.get(l2Key(r)),ib=A?A.findIndex(
   if(pr)g+=`<path d="${pr}" fill="none" stroke="var(--bg)" stroke-width="4.5" stroke-linejoin="round" opacity=".85"/><path d="${pr}" fill="none" stroke="#fb923c" stroke-width="2" stroke-linejoin="round"/>`;
   const ij=Sr.findIndex(b=>b[4]==='jual');if(ij>=0&&Sr[ij][5]!=null)g+=`<circle cx="${x(ij).toFixed(1)}" cy="${y(Sr[ij][5]).toFixed(1)}" r="4" fill="var(--neg-tx)" stroke="var(--surface)" stroke-width="2"/>`;
   const L=Sr[n-1],tb=String(r.tarikh_beli||''),tPen=md=>{const x=typeof md==='number'?md:+String(md).replace('-',''),y=+tb.slice(0,4)+(x<+tb.slice(5,7)*100+ +tb.slice(8,10)?1:0);return `${y}-${String(Math.floor(x/100)).padStart(2,'0')}-${String(x%100).padStart(2,'0')}`;};
-  g+=`<text x="${ml}" y="${H-4}" class="skt">${esc(tkO(tb))}${hb?` · beli ${fx(hb,2)}`:''}</text><text x="${W-mr}" y="${H-4}" text-anchor="end" class="skt">${tkRp(L[0])} · ${fx(L[1],2)}</text>`;
-  const lbl=`${r.saham}: candlestick harian sejak beli ${tkO(tb)} (${n} sesi); garis putus kelabu = harga beli ${fx(hb,2)}; oren = paras keluar lorong 2`;
+  const akhirPct=hb&&L[1]!=null?(L[1]/hb-1)*100:null;
+  g+=`<text x="${ml}" y="${H-4}" class="skt">${esc(tkO(tb))}${hb?` · beli ${fx(hb,2)}`:''} = 0%</text><text x="${W-mr}" y="${H-4}" text-anchor="end" class="skt">${tkRp(L[0])} · ${fx(L[1],2)}${akhirPct==null?'':` · ${sg2(akhirPct)}`}</text>`;
+  const lbl=`${r.saham}: candlestick harian sejak beli ${tkO(tb)} (${n} sesi); paksi menegak = % sejak beli, 0% = harga beli ${fx(hb,2)} (garis putus kelabu); oren = paras keluar lorong 2`;
   bx.innerHTML=`<svg class="spark lilin" viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="${esc(lbl)}"><title>${esc(lbl)}</title>${g}</svg><div class="lgl">${LGL}<span><i class="lg-hb"></i>Harga beli</span></div>`;
   silang(bx,W,Sr.map((_,i)=>x(i)),i=>{const b=Sr[i];return `<div class="mut">${esc(tkO(tPen(b[0])))}${b[4]==='jual'?' · jual lorong 2':b[4]==='lepas'?' · selepas jual lorong 2':''}</div>${slB('Buka',fx(b[6],2))}${slB('Tinggi',fx(b[7],2))}${slB('Rendah',fx(b[8],2))}${slB('Tutup',fx(b[1],2))}${hb?slB('Sejak beli',`<span class="${cls(b[1]/hb-1)}">${sg2((b[1]/hb-1)*100)}</span>`):''}${b[2]!=null?slB('Paras L2',fx(b[2],2)):''}`;});
   return true;}
