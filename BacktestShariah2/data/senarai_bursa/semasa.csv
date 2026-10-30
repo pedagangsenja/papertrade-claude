@@ -2349,7 +2349,7 @@ CMCO,Columbus McKinnon Corporation - Common Stock,NASDAQ,0,1,2026-10-27
 CMCSA,Comcast Corporation - Class A Common Stock,NASDAQ,0,1,2026-10-27
 CMCT,Creative Media  - Common Stock,NASDAQ,0,1,2026-10-27
 CMDB,Costamare Bulkers Holdings Limited Common Stock,NYSE,0,1,2026-10-27
-CMDT,PIMCO Commodity Strategy Active Exchange-Traded Fund,NYSE Arca,1,0,2026-10-27
+CMDT,PIMCO Commodity and Bond Strategy Active Exchange-Traded Fund,NYSE Arca,1,0,2026-10-27
 CMDY,iShares Bloomberg Roll Select Commodity Strategy ETF,NYSE Arca,1,0,2026-10-27
 CME,CME Group Inc. - Class A Common Stock,NASDAQ,0,1,2026-10-27
 CMF,iShares California Muni Bond ETF,NYSE Arca,1,0,2026-10-27
@@ -2474,7 +2474,7 @@ CORB,AB Core Bond ETF,NYSE Arca,1,0,2026-10-27
 CORD,T-REX 2X Inverse CRWV Daily Target ETF,Cboe BZX,1,0,2026-10-27
 CORN,Teucrium Corn Fund ETV,NYSE Arca,1,0,2026-10-27
 CORO,iShares International Country Rotation Active ETF,NASDAQ,1,0,2026-10-27
-CORP,PIMCO Investment Grade Corporate Bond Index Exchange-Traded Fund,NYSE Arca,1,0,2026-10-27
+CORP,PIMCO Investment Grade Corporate Bond Exchange-Traded Fund,NYSE Arca,1,0,2026-10-27
 CORT,Corcept Therapeutics Incorporated - Common Stock,NASDAQ,0,1,2026-10-27
 CORZ,"Core Scientific, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 CORZW,"Core Scientific, Inc. - Tranche 1 Warrants",NASDAQ,0,0,2026-10-27
@@ -3472,7 +3472,6 @@ EHLS,Even Herd Long Short ETF,NASDAQ,1,0,2026-10-27
 EHTH,"eHealth, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 EHY,Amplify Ethereum Max Income Covered Call ETF,Cboe BZX,1,0,2026-10-27
 EIC,Eagle Point Income Company Common Shares of Beneficial Interest,NYSE,0,0,2026-10-27
-EICA,Eagle Point Income Company 5.00% Series A Term Preferred Shares due 2026,NYSE,0,0,2026-10-27
 EIDO,iShares MSCI Indonesia ETF,NYSE Arca,1,0,2026-10-27
 EIG,Employers Holdings Inc Common Stock,NYSE,0,1,2026-10-27
 EIIA,Eagle Point Institutional Income Fund 8.125% Series A Term Preferred Shares Due 2029,NYSE,0,0,2026-10-27
@@ -3559,7 +3558,7 @@ EMM,Global X Emerging Markets ex-China ETF,NYSE Arca,1,0,2026-10-27
 EMMF,WisdomTree Emerging Markets Multifactor Fund,NYSE Arca,1,0,2026-10-27
 EMMY,Corgi Emerging Markets Equities 15% Structured Buffer ETF - May Series,Cboe BZX,1,0,2026-10-27
 EMN,Eastman Chemical Company Common Stock,NYSE,0,1,2026-10-27
-EMNT,PIMCO Enhanced Short Maturity Active ESG Exchange-Traded Fund,NYSE Arca,1,0,2026-10-27
+EMNT,PIMCO Enhanced Short Maturity Active ESG and Bond Exchange-Traded Fund,NYSE Arca,1,0,2026-10-27
 EMO,ClearBridge Energy Midstream Opportunity Fund Inc. Common Stock,NYSE,0,0,2026-10-27
 EMOP,AB Emerging Markets Opportunities ETF,NYSE Arca,1,0,2026-10-27
 EMOT,First Trust S&P 500 Economic Moat ETF,NYSE Arca,1,0,2026-10-27
@@ -4846,7 +4845,6 @@ GMAC,Simplify Brookwood Global Macro ETF,NYSE Arca,1,0,2026-10-27
 GMAR,FT Vest U.S. Equity Moderate Buffer ETF - March,Cboe BZX,1,0,2026-10-27
 GMAY,FT Vest U.S. Equity Moderate Buffer ETF - May,Cboe BZX,1,0,2026-10-27
 GME,GameStop Corporation Common Stock,NYSE,0,1,2026-10-27
-GME.W,GameStop Corporation Warrants to Purchase Common Stock,NYSE,0,0,2026-10-27
 GMEC,Corgi GME 2x Daily ETF,Cboe BZX,1,0,2026-10-27
 GMED,"Globus Medical, Inc. Class A Common Stock",NYSE,0,1,2026-10-27
 GMEU,T-REX 2X Long GME Daily Target ETF,Cboe BZX,1,0,2026-10-27
@@ -5490,7 +5488,7 @@ HYP,Golden Eagle Dynamic Hypergrowth ETF,NASDAQ,1,0,2026-10-27
 HYPD,"Hyperion DeFi, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 HYPG,Grayscale Hyperliquid Staking ETF,NASDAQ,1,0,2026-10-27
 HYPR,"Hyperfine, Inc.  - Class A Common Stock",NASDAQ,0,1,2026-10-27
-HYS,PIMCO 0-5 Year High Yield Corporat Bond Index Exchange-Traded Fund,NYSE Arca,1,0,2026-10-27
+HYS,PIMCO 0-5 Year High Yield Corporate Bond Exchange-Traded Fund,NYSE Arca,1,0,2026-10-27
 HYSA,BondBloxx High Yield Income ETF,NYSE Arca,1,0,2026-10-27
 HYSD,Columbia Short Duration High Yield ETF,NYSE Arca,1,0,2026-10-27
 HYT,"Blackrock Corporate High Yield Fund, Inc. Common Stock",NYSE,0,0,2026-10-27
@@ -6849,7 +6847,7 @@ LOGO,Alpha Brands Consumption Leaders ETF,NASDAQ,1,0,2026-10-27
 LOHA,Roundhill HALO ETF,Cboe BZX,1,0,2026-10-27
 LOMA,Loma Negra Compania Industrial Argentina Sociedad Anonima ADS,NYSE,0,1,2026-10-27
 LONA,"LeonaBio, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
-LONZ,PIMCO Senior Loan Active Exchange-Traded Fund,NYSE Arca,1,0,2026-10-27
+LONZ,PIMCO Senior Loan and Short-Term Active ETF,NYSE Arca,1,0,2026-10-27
 LOOP,"Loop Industries, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 LOPE,"Grand Canyon Education, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 LOPP,Gabelli Love Our Planet & People ETF Gabelli Love Our Planet & People ETF,NYSE Arca,1,0,2026-10-27

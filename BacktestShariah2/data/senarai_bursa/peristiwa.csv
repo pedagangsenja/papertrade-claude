@@ -12919,3 +12919,10 @@ tarikh,simbol,peristiwa,nama,bursa,etf,biasa
 2026-10-30,FBEQ,tambah,Franklin US Equity Bitcoin Drip Index ETF,NASDAQ,1,0
 2026-10-30,FIBT,tambah,Franklin US Innovation Bitcoin DRIP Index ETF,NASDAQ,1,0
 2026-10-30,GBC,tambah,"Georgia Banking Company, Inc. - Common Stock",NASDAQ,0,1
+2026-10-30,EICA,buang,Eagle Point Income Company 5.00% Series A Term Preferred Shares due 2026,NYSE,0,0
+2026-10-30,GME.W,buang,GameStop Corporation Warrants to Purchase Common Stock,NYSE,0,0
+2026-10-30,CMDT,tukar_nama,PIMCO Commodity and Bond Strategy Active Exchange-Traded Fund,NYSE Arca,1,0
+2026-10-30,CORP,tukar_nama,PIMCO Investment Grade Corporate Bond Exchange-Traded Fund,NYSE Arca,1,0
+2026-10-30,EMNT,tukar_nama,PIMCO Enhanced Short Maturity Active ESG and Bond Exchange-Traded Fund,NYSE Arca,1,0
+2026-10-30,HYS,tukar_nama,PIMCO 0-5 Year High Yield Corporate Bond Exchange-Traded Fund,NYSE Arca,1,0
+2026-10-30,LONZ,tukar_nama,PIMCO Senior Loan and Short-Term Active ETF,NYSE Arca,1,0
