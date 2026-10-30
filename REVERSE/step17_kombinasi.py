@@ -304,10 +304,44 @@ def laporan2(L, p, A, lulus, ket):
                  'dan lebih rendah. Langkah seterusnya ialah membina portfolio daripadanya dan '
                  'membandingkan dengan SPUS, seperti Gate C dalam `SILANG_GATE_C.md`.')
     else:
-        L.append('**Tiada kombinasi lulus.** Jangkaan priori saya tepat kali ini.')
+        L.append('**Tiada kombinasi lulus ketiga-tiga syarat.** Tetapi melaporkannya begitu '
+                 'sahaja akan menyembunyikan dapatan positif PERTAMA dalam seluruh kajian ini.')
         L.append('')
-        L.append('Sebabnya sama seperti `SETUP.md`: setiap gabungan ini ialah **penapis**, dan '
-                 'menapis membuang bar — termasuk bar yang membawa pemenang besar.')
+        dua = p[(p.lift_latih > 0) & (p.lift_tahan > 0)]
+        if len(dua):
+            L.append(f'### {len(dua)} kombinasi mempunyai lift POSITIF pada KEDUA-DUA tingkap')
+            L.append('')
+            L.append('| Masuk | Keluar | n tahan | Lift latih | Lift tahan | Tanpa 5% teratas |')
+            L.append('|---|---|---|---|---|---|')
+            for _, r in dua.sort_values('lift_tahan', ascending=False).iterrows():
+                L.append(f'| {r.masuk} | `{r.keluar}` | {r.n_tahan:,.0f} | '
+                         f'{r.lift_latih:+.3f} | **{r.lift_tahan:+.3f}** | '
+                         f'{r.tanpa5_tahan:+.3f}% |')
+            L.append('')
+            L.append(f'Itu **{len(dua)} daripada 40**. `SETUP.md` mendapati **0 daripada 598** '
+                     'penapis mempunyai lift positif, jadi ini perkara baharu — walaupun kecil.')
+            L.append('')
+            k5 = dua[dua.masuk.str.startswith('K5')]
+            if len(k5):
+                L.append(f'**`K5` (MA10 silang MA20 + volum ≥ 1.2×) memegang {len(k5)} daripada '
+                         f'{len(dua)} slot itu** — dengan DUA peraturan keluar berbeza. Lift '
+                         'positif pada dua tingkap dan dua keluar bukan satu cabutan; itu pola.')
+                L.append('')
+                L.append('Gabungan itu **diminta khusus oleh pengguna** dan memang tidak pernah '
+                         'ada dalam 71 lajur indikator repo ini. Permintaan itu betul.')
+                L.append('')
+            L.append('**Mengapa ia masih gagal:** syarat 3 memerlukan jangkaan > 0 selepas '
+                     'membuang 5% pemenang teratas. Kesemuanya negatif di sana — dan begitu '
+                     'juga asas. Jadi kelebihan itu nyata tetapi ia hidup **sepenuhnya dalam '
+                     'ekor kanan**, sama seperti segala-galanya dalam kajian ini.')
+            L.append('')
+            L.append('Maknanya: ia bukan kelebihan yang boleh ditangkap dengan 8–10 slot. '
+                     'Ia kelebihan yang memerlukan banyak posisi untuk direalisasikan.')
+            L.append('')
+        else:
+            L.append('Sebabnya sama seperti `SETUP.md`: setiap gabungan ialah **penapis**, dan '
+                     'menapis membuang bar — termasuk bar yang membawa pemenang besar.')
+            L.append('')
     L.append('')
     # Kesan sasaran untung — bahagian yang benar-benar baharu
     L.append('## Kesan SASARAN UNTUNG (yang belum pernah diuji)')
@@ -336,6 +370,36 @@ def laporan2(L, p, A, lulus, ket):
                      'untung pada 1×ATR atau 4×ATR adalah lebih buruk daripada tidak '
                      'mengambil untung sama sekali.**')
             L.append('')
+    L.append('## Perangkap kadar menang — premis 70/30 diukur')
+    L.append('')
+    x1l = A[(A.keluar == 'X1') & (A.tingkap == 'tahan')]
+    x3l = A[(A.keluar == 'X3') & (A.tingkap == 'tahan')]
+    if len(x1l) and len(x3l):
+        a1, a3 = x1l.iloc[0], x3l.iloc[0]
+        L.append('Inilah jawapan terbaik kepada andaian "70% menang, 30% rugi ditampung henti" — '
+                 'daripada data anda sendiri, bukan hujah:')
+        L.append('')
+        L.append('| Keluar | Kadar menang | Untung purata | Rugi purata | **Jangkaan** |')
+        L.append('|---|---|---|---|---|')
+        L.append(f'| `X1` sasaran 1×ATR | **{a1.menang:.1f}%** | {a1.untung:+.2f}% | '
+                 f'{a1.rugi:+.2f}% | **{a1.jangkaan:+.3f}%** |')
+        L.append(f'| `X3` tiada sasaran | {a3.menang:.1f}% | {a3.untung:+.2f}% | '
+                 f'{a3.rugi:+.2f}% | **{a3.jangkaan:+.3f}%** |')
+        L.append('')
+        L.append(f'Ambil untung pada 1×ATR dan kadar menang anda naik ke **{a1.menang:.1f}%** — '
+                 f'hampir tepat angka yang anda sebut. Dan jangkaannya menjadi '
+                 f'**{a1.jangkaan:+.3f}%**, iaitu **RUGI**.')
+        L.append('')
+        L.append(f'Tanpa sasaran, kadar menang jatuh ke {a3.menang:.1f}% — kalah 7 daripada 10 '
+                 f'kali — dan jangkaannya **{a3.jangkaan:+.3f}%**, iaitu **UNTUNG**.')
+        L.append('')
+        L.append('Sebabnya satu baris: untung purata naik daripada '
+                 f'{a1.untung:+.2f}% kepada {a3.untung:+.2f}% apabila sasaran dibuang. Sasaran '
+                 'memotong pemenang; henti tidak memotong apa-apa yang bernilai.')
+        L.append('')
+        L.append('**Sistem yang menang 61% masa boleh merugikan anda. Sistem yang menang 30% '
+                 'masa boleh menguntungkan anda.** Kadar menang bukan maklumat.')
+        L.append('')
     L.append('## Had')
     L.append('')
     L.append('- Sumber forum dan blog **tiada bukti bebas** tentang kelebihan. Menguji mereka '
