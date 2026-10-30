@@ -186,6 +186,9 @@ section.view.pnav .panel.pn-a>.panel-h{cursor:default}section.view.pnav .panel-h
 .fpw{margin:0 0 14px}
 .fpw .fph{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 8px}
 .fpw .fph .sub{margin:0}
+.fpw .fpseg{display:flex;gap:6px;flex-wrap:wrap}
+.fpw .fplg{margin-top:6px;gap:6px 14px;font-size:.76rem}
+.fpw .fplg i{border-radius:2px;width:10px;height:10px;opacity:.85}
 .fpw svg g.hit{cursor:pointer}
 .fpw svg g.hit:hover rect.fpbg{fill:color-mix(in srgb,var(--accent) 10%,transparent)}
 .kadr>button>span{min-width:0}
@@ -2577,43 +2580,74 @@ function panelAnlKad(rows,kat){
 const FP_MOD={bln:['skor_bulan','skor_bulan_bawah','skor_bulan_atas','% sebulan'],
               dag:['skor','skor_bawah','skor_atas','% setiap dagangan']};
 const FP_N=20;
-function fpData(rows,mod){const [k,lo,hi]=FP_MOD[mod]||FP_MOD.bln;
-  return rows.filter(r=>r.kedudukan&&nomb(r[k])!=null&&nomb(r[lo])!=null&&nomb(r[hi])!=null)
+/* P(skor > 0) daripada papan (p_rugi = Φ(−skor ÷ SE), standard/penganalisis.pantau_kaedah) */
+const fpP=r=>{const x=nomb(r.p_rugi);return x==null?null:1-x;};
+/* skala warna dipacu kebarangkalian, bukan "melintasi sifar" ya/tidak: lima aras supaya mata nampak susunan */
+const FP_SKALA=[[0.95,'--pos','sangat mungkin positif'],[0.80,'--accent','mungkin positif'],
+                [0.60,'--fg-2','condong positif'],[0.40,'--muted','tidak dapat dibezakan'],
+                [0.20,'--warn','condong negatif'],[0,'--neg-tx','mungkin negatif']];
+const fpCol=p=>{if(p==null)return ['--muted','tiada data'];const a=FP_SKALA.find(x=>p>=x[0]);return [a[1],a[2]];};
+/* tanda paksi pada nombor bulat, sentiasa termasuk 0 */
+function tikNice(lo,hi,n){const jul=hi-lo;if(!(jul>0))return [0];
+  const kasar=jul/Math.max(1,n),p=Math.pow(10,Math.floor(Math.log10(kasar)));
+  const st=[1,2,2.5,5,10].map(m=>m*p).find(v=>v>=kasar)||10*p;
+  const out=[];for(let v=Math.ceil(lo/st)*st;v<=hi+1e-9;v+=st)out.push(Math.abs(v)<1e-9?0:+v.toFixed(6));
+  if(lo<0&&hi>0&&!out.some(v=>Math.abs(v)<1e-9))out.push(0);
+  return out.sort((a,b)=>a-b);}
+function fpData(rows,mod,susun){const [k,lo,hi]=FP_MOD[mod]||FP_MOD.bln;
+  const D=rows.filter(r=>r.kedudukan&&nomb(r[k])!=null&&nomb(r[lo])!=null&&nomb(r[hi])!=null)
     .sort((a,b)=>a.kedudukan-b.kedudukan).slice(0,FP_N)
-    .map(r=>({r,v:+r[k],lo:+r[lo],hi:+r[hi]}));}
+    .map(r=>({r,v:+r[k],lo:+r[lo],hi:+r[hi],p:fpP(r),n:nomb(r.h_hari_beli)}));
+  if(susun==='p')D.sort((a,b)=>(b.p==null?-1:b.p)-(a.p==null?-1:a.p)||b.v-a.v);
+  else if(susun==='v')D.sort((a,b)=>b.v-a.v);
+  return D;}
 function drawForest(box,D,mod){
   if(!box)return;
   if(!D.length){box.innerHTML='<p class="empty">Tiada kaedah berkedudukan dalam tapisan ini.</p>';return;}
   const unit=(FP_MOD[mod]||FP_MOD.bln)[3];
-  /* lebar diukur daripada bekas (sama seperti lilinPos): viewBox tetap akan dipusatkan dalam panel lebar */
-  const W=Math.max(320,Math.min(1100,box.clientWidth||640)),ml=W<420?64:86,mr=W<420?48:58,mt=24,rh=W<420?22:19,mb=26,H=mt+D.length*rh+mb;
-  let lo=Math.min(0,...D.map(o=>o.lo)),hi=Math.max(0,...D.map(o=>o.hi));
-  const pad=(hi-lo)*0.04||1;lo-=pad;hi+=pad;
-  const X=v=>ml+(W-ml-mr)*(v-lo)/(hi-lo);
-  const tik=(()=>{const n=4,st=(hi-lo)/n,out=[];for(let i=0;i<=n;i++)out.push(lo+st*i);return out;})();
-  const dp=(hi-lo)<4?1:0;
-  let g=tik.map(v=>`<line x1="${X(v).toFixed(1)}" x2="${X(v).toFixed(1)}" y1="${mt-6}" y2="${H-mb+4}" stroke="var(--line)"/>`
-    +`<text x="${X(v).toFixed(1)}" y="${H-mb+18}" text-anchor="middle" style="font-size:10px">${v.toFixed(dp)}</text>`).join('');
-  g+=`<line x1="${X(0).toFixed(1)}" x2="${X(0).toFixed(1)}" y1="${mt-10}" y2="${H-mb+4}" stroke="var(--fg-2)" stroke-width="1.4"/>`
-    +`<text x="${X(0).toFixed(1)}" y="${mt-14}" text-anchor="middle" style="font-size:10px;fill:var(--fg-2)">tiada kelebihan</text>`;
-  g+=D.map((o,i)=>{const y=mt+i*rh+rh/2,col=o.lo>0?'--pos':o.hi<0?'--neg-tx':'--muted';
+  const W=Math.max(320,Math.min(1100,box.clientWidth||640)),kecil=W<520;
+  const ml=kecil?60:96,mr=kecil?98:124,mt=34,rh=kecil?23:21,mb=28,H=mt+D.length*rh+mb,xS=W-mr+(kecil?46:52);
+  /* paksi kukuh: potong pada persentil 10–90 sempadan supaya satu julat lebar tidak memicit 19 yang lain */
+  const sb=D.map(o=>o.lo).sort((a,b)=>a-b),sa=D.map(o=>o.hi).sort((a,b)=>a-b);
+  const q=(A,p)=>A[Math.min(A.length-1,Math.max(0,Math.round(p*(A.length-1))))];
+  let lo=Math.min(0,q(sb,0.10)),hi=Math.max(0,q(sa,0.90));
+  const m=(hi-lo)*0.08||1;lo-=m;hi+=m;
+  const X=v=>ml+(W-ml-mr)*(Math.min(hi,Math.max(lo,v))-lo)/(hi-lo);
+  const luar=v=>v<lo||v>hi;
+  let g=`<rect x="${ml}" y="${mt-8}" width="${(X(0)-ml).toFixed(1)}" height="${H-mb-mt+12}" fill="var(--neg)" opacity=".045"/>`;
+  g+=tikNice(lo,hi,kecil?4:5).map(v=>`<line x1="${X(v).toFixed(1)}" x2="${X(v).toFixed(1)}" y1="${mt-8}" y2="${H-mb+4}" stroke="var(--line)"/>`
+    +`<text x="${X(v).toFixed(1)}" y="${H-mb+18}" text-anchor="middle" style="font-size:10px">${v>0?'+':''}${v}</text>`).join('');
+  g+=`<line x1="${X(0).toFixed(1)}" x2="${X(0).toFixed(1)}" y1="${mt-14}" y2="${H-mb+4}" stroke="var(--fg-2)" stroke-width="1.4"/>`
+    +`<text x="${X(0).toFixed(1)}" y="${mt-18}" text-anchor="middle" style="font-size:10px;fill:var(--fg-2)">0 = tiada kelebihan</text>`;
+  if(!kecil)g+=`<text x="${xS.toFixed(1)}" y="${mt-18}" text-anchor="end" style="font-size:9px;letter-spacing:.06em">SKOR</text>`
+    +`<text x="${(W-4).toFixed(1)}" y="${mt-18}" text-anchor="end" style="font-size:9px;letter-spacing:.06em">PELUANG</text>`;
+  g+=D.map((o,i)=>{const y=mt+i*rh+rh/2,[col,maksud]=fpCol(o.p),bh=kecil?6:7;
+    const xl=X(o.lo),xh=X(o.hi),x0=X(0);
+    const seg=(a,b,c)=>b-a<0.4?'':`<rect x="${a.toFixed(1)}" y="${(y-bh/2).toFixed(1)}" width="${(b-a).toFixed(1)}" height="${bh}" rx="${(bh/2).toFixed(1)}" fill="var(${c})" opacity=".26"/>`;
+    const cap=(x,arah)=>`<path d="M${(x+arah*5).toFixed(1)},${y.toFixed(1)} L${x.toFixed(1)},${(y-4).toFixed(1)} L${x.toFixed(1)},${(y+4).toFixed(1)} Z" fill="var(${col})" opacity=".8"/>`;
     const nama=`${o.r.id}${o.r.varian?' '+o.r.varian:''}`;
-    const tip=`#${o.r.kedudukan} ${nama}: ${sg2(o.v)} ${unit}, selang p5–p95 ${sg2(o.lo)} hingga ${sg2(o.hi)}`
-      +` (${o.lo>0?'seluruhnya di atas sifar':o.hi<0?'seluruhnya di bawah sifar':'melintasi sifar — belum boleh dibezakan daripada tiada kelebihan'}).`;
+    const tip=`#${o.r.kedudukan} ${nama}: ${sg2(o.v)} ${unit}, julat 95% ${sg2(o.lo)} hingga ${sg2(o.hi)}`
+      +`${o.p==null?'':`; peluang skor sebenar positif ${fx(o.p*100,0)}% (${maksud})`}`
+      +`${o.n?`; ${fx(o.n,0)} hari beli berbeza — makin banyak, makin sempit julat`:''}.`;
     return `<g class="hit" data-anl="${esc(o.r.id)}"><title>${esc(tip)}</title>`
       +`<rect class="fpbg" x="0" y="${(y-rh/2).toFixed(1)}" width="${W}" height="${rh}" fill="transparent"/>`
       +`<text x="4" y="${(y+3.5).toFixed(1)}" style="font-size:11px;fill:var(--fg-2)">${esc(o.r.id)}</text>`
-      +`<text x="${ml-6}" y="${(y+3.5).toFixed(1)}" text-anchor="end" style="font-size:10px">#${o.r.kedudukan}</text>`
-      +`<line x1="${X(o.lo).toFixed(1)}" x2="${X(o.hi).toFixed(1)}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="var(${col})" stroke-width="2.2" stroke-linecap="round" opacity=".75"/>`
-      +`<circle cx="${X(o.v).toFixed(1)}" cy="${y.toFixed(1)}" r="3.2" fill="var(${col})"/>`
-      +`<text x="${W-4}" y="${(y+3.5).toFixed(1)}" text-anchor="end" style="font-size:11px;fill:var(${col})">${sg2(o.v)}</text></g>`;}).join('');
-  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="Plot selang: skor dan selang p5–p95 setiap kaedah, ${esc(unit)}">${g}</svg>`;}
-function blokForest(rows,mod){const D=fpData(rows,mod);
-  const atas=D.filter(o=>o.lo>0).length,bawah=D.filter(o=>o.hi<0).length,silang=D.length-atas-bawah;
-  return `<div class="fpw"><div class="fph"><p class="kbh" style="margin:0"><b data-tip="selang_p5">Selang keyakinan setiap kaedah</b> — titik = skor, garis = julat p5–p95</p>
-    ${segH('anlFp',mod,[['bln','Sebulan'],['dag','Setiap dagangan']],'Unit skor')}</div>
-    <div class="chartbox" id="anlForest"></div>
-    <p class="sub" style="margin-top:8px">${D.length?`<b>${silang}</b> daripada ${D.length} kaedah teratas mempunyai selang yang <b>melintasi sifar</b> — iaitu datanya setakat ini belum cukup untuk membezakan kaedah itu daripada tiada kelebihan langsung, walaupun kedudukannya tinggi. ${atas?`<b class="pos">${atas}</b> seluruhnya di atas sifar`:'Tiada kaedah dengan selang seluruhnya di atas sifar'}${bawah?` · <b class="neg">${bawah}</b> seluruhnya di bawah`:''}. Selang menyempit apabila bilangan posisi matang bertambah; ia bukan ramalan.`:''}</p></div>`;}
+      +`<text x="${kecil?ml-6:52}" y="${(y+3.5).toFixed(1)}" text-anchor="${kecil?'end':'start'}" style="font-size:10px">#${o.r.kedudukan}</text>`
+      +(kecil||!o.n?'':`<text x="${ml-6}" y="${(y+3.5).toFixed(1)}" text-anchor="end" style="font-size:10px">${fx(o.n,0)}h</text>`)
+      +seg(Math.max(xl,ml),Math.min(x0,xh),'--neg')+seg(Math.max(x0,xl),Math.min(xh,W-mr),'--pos')
+      +(luar(o.lo)?cap(ml,-1):'')+(luar(o.hi)?cap(W-mr,1):'')
+      +`<circle cx="${X(o.v).toFixed(1)}" cy="${y.toFixed(1)}" r="3.4" fill="var(${col})"/>`
+      +`<text x="${xS.toFixed(1)}" y="${(y+3.5).toFixed(1)}" text-anchor="end" style="font-size:11px;fill:var(${col})">${sg2(o.v)}</text>`
+      +`<text x="${(W-4).toFixed(1)}" y="${(y+3.5).toFixed(1)}" text-anchor="end" style="font-size:11px;fill:var(${col})">${o.p==null?'–':fx(o.p*100,0)+'%'}</text></g>`;}).join('');
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="Julat 95% skor setiap kaedah dengan peluang skor positif, ${esc(unit)}">${g}</svg>`;}
+const fpLegend=()=>`<div class="legend fplg">${FP_SKALA.map(([b,c,t],i)=>`<span><i style="background:var(${c})"></i>${i===0?'≥ 95%':i===FP_SKALA.length-1?'< 20%':'≥ '+Math.round(b*100)+'%'} — ${t}</span>`).join('')}</div>`;
+function blokForest(rows,mod,susun){const D=fpData(rows,mod,susun);
+  const kuat=D.filter(o=>o.p!=null&&o.p>=0.95).length,silang=D.filter(o=>o.lo<0&&o.hi>0).length;
+  const terbaik=D.reduce((a,o)=>o.p!=null&&(!a||o.p>a.p)?o:a,null);
+  return `<div class="fpw"><div class="fph"><p class="kbh" style="margin:0"><b data-tip="selang_p5">Seberapa pasti kaedah ini benar-benar untung?</b> — titik = skor, bar = julat 95%, hijau = bahagian julat di atas sifar</p>
+    <span class="fpseg">${segH('anlFp',mod,[['bln','Sebulan'],['dag','Setiap dagangan']],'Unit skor')}${segH('anlFpS',susun,[['k','Kedudukan'],['p','Peluang'],['v','Skor']],'Susun')}</span></div>
+    <div class="chartbox" id="anlForest"></div>${fpLegend()}
+    <p class="sub" style="margin-top:8px">${D.length?`Daripada ${D.length} kaedah teratas: <b${kuat?' class="pos"':''}>${kuat}</b> mempunyai peluang ≥ 95% bahawa skor sebenarnya positif${kuat?'':' — iaitu tiada satu pun yang sudah terbukti'}, dan <b>${silang}</b> julatnya masih merangkumi sifar.${terbaik?` Paling meyakinkan setakat ini: <b>${esc(terbaik.r.id)}</b> pada <b>${fx(terbaik.p*100,0)}%</b>.`:''} Julat menyempit apabila bilangan hari beli berbeza bertambah (angka "h" di sebelah kedudukan); ia bukan ramalan pulangan. Julat 95% = skor ± 1.96 × SE; peluang = 1 − P(purata ≤ 0) daripada Papan Penganalisis.`:''}</p></div>`;}
 
 /* ================= v133 (29 Okt 2026): kad sektor & industri =================
    Siri kumpulan/siri (jana_db.kumpulan_siri daripada data/kumpulan/gred_kumpulan_sejarah.csv) = trend skor gred
@@ -2937,6 +2971,8 @@ const atrOf=r=>{const A=atrPeta();if(!A)return null;const v=A[`${r.akaun}|${r.sa
 const skwLin=(v,a,b)=>v==null||isNaN(v)?null:clamp01((v-a)/(b-a))*100;
 const sdOf=a=>{if(a.length<2)return null;const m=avgOf(a);return Math.sqrt(a.reduce((t,x)=>t+(x-m)**2,0)/(a.length-1));};
 const SKW_KOS=0.001,SKW_N0=30,SKW_SDMIN=5,SKW_PANGKAS=0.05,SKW_G_TERAS=20,SKW_P_TERAS=0.9,SKW_MATANG_N=20,SKW_MATANG_G=10,SKW_UMUR_MIN=14;
+const katM=memo(k=>{const m={};((k&&k.rows)||[]).forEach(r=>{m[r.id]=r;});return m;});
+const katMx=()=>katM(S.kat);
 const skwTahap=x=>!x.layak?['Belum layak','p-mute']:x.pantau==='BERSARA'?['Bersara','p-exit']:x.pantau==='GANTUNG'?['Gantung','p-exit']:x.skor>=70&&x.matang&&x.G>=SKW_G_TERAS&&(x.pPos??0)>=SKW_P_TERAS&&x.mc&&x.mc.pTop>=SKW_PTOP?['Teras','p-buy']
   :x.skor>=55?[!x.matang||x.G<SKW_G_TERAS?'Calon (awal)':'Calon','p-near']:['Pantau','p-mute'];
 /* pulangan bersih kos enjin v1.2 (0.1% setiap belah), sama dengan penganalisis.bersih */
@@ -3163,12 +3199,36 @@ function prSkor(src,which){const D=skwOf(src,which),f=S.skw||(S.skw={lihat:'laya
     {k:'ptop',t:`P(${SKW_GAB} teratas)`,tip:'skor_swing',v:x=>x.mc?x.mc.pTop:-1,f:x=>x.mc?`<span class="${x.mc.pTop>=SKW_PTOP?'pos':''}">${fx(x.mc.pTop*100,0)}%</span><span class="vv nw">pangkat ${x.mc.p5}–${x.mc.p95}</span>`:'<span class="mut">–</span>'},skC];
   const ringkas=['rk','kaedah','lor','avg','pm','G','cvar10','k2','ptop','ovl','skor'],cols=lajurOf('skw')==='ringkas'?C.filter(c=>ringkas.includes(c.k)):C;
   return `<div class="panel"><div class="panel-h"><h2 data-tip="skor_swing">Skor kaedah swing</h2><span class="sub">${nf(D.L.length)} daripada ${nf(D.all.length)} kaedah layak · ≥ ${PR_MIN_TUTUP} selesai · pegang backtest ${SKW_SWING.join('–')} hari · untung pada lorong terbaik${D.P?` · ▲▼ sejak tutup ${esc(tkO(D.P))}`:''}</span></div>
+    ${skwKad(D,katMx())}
     <p class="kesimpulan">${ks}</p>${gbH}${bkH}
     <div class="filters" style="margin-bottom:8px">${segH('skwLihat'+which,f.lihat,[['layak',`Layak (${D.L.length})`],['semua',`Semua (${D.all.length})`]],'Tapis')}${lajurSeg('skw')}</div>
     ${sortTable({id:'skw-'+which,rows,cols,def:{k:'skor',dir:-1},limit:f.shown,lp:LP_SKW,attr:x=>`data-hk="${esc(x.kaedah)}" tabindex="0"`,
       rcls:x=>'click'+(x.layak&&x.rk<=nTop?' skw-top':'')+(x.layak?'':' skw-x'),foot:kakiLagi('skwMore'+which),empty:'Belum ada kaedah layak.'})}
     <p class="sub" style="margin-top:8px">Skor = gabungan <b>geometrik</b> empat tunjang (lantai 5): <b>Untung 40%</b> (untung dilaras 25, untung 21 hari 10, lebihan atas penanda aras dalaman 5) · <b>Konsisten 20%</b> (faktor untung had 3, hari beli positif Wilson) · <b>Risiko 25%</b> (CVaR 10% 15, penurunan maks ÷ ATR14 10) · <b>Bukti 15%</b> (bahagian bukti hadapan 10, semakan luar sampel 5). Setiap metrik dipeta 0–100 pada julat beku ${esc(TIANG_VERSI)} (persentil 5–95 merentas ${TIANG_N} kaedah backtest 431); metrik sekunder tanpa data dianggar pada persentil ke-25 (lihat liputan). Untung bersih kos 0.1% setiap belah, tidak dipangkas; asas posisi matang apabila ≥ ${SKW_MATANG_N} matang dan ≥ ${SKW_MATANG_G} hari beli, selainnya semua posisi (awal). <b>Pintu</b>: ≥ ${PR_MIN_TUTUP} selesai (atau matang), ≥ ${SKW_MATANG_G} hari beli, pegang backtest ${SKW_SWING.join('–')} hari, untung dilaras &gt; 0. <b>Teras</b> = skor ≥ 70%, asas matang, ≥ ${SKW_G_TERAS} hari beli, P(untung &gt; 0) ≥ ${SKW_P_TERAS*100}% dan stabil · <b>Calon</b> ≥ 55% (awal jika belum matang atau &lt; ${SKW_G_TERAS} hari beli) · Pantau &lt; 55%. <b>Pangkat MC</b>: ${nf(SKW_MC_B)} simulasi berbiji — untung dilaras diambil daripada taburan posterior, wajaran tunjang dan metrik × U(0.5, 1.5), gabungan geometrik atau aritmetik secara rawak; median dan julat p5–p95 pangkat dalam kaedah layak. <b>Stabil</b> = P(${SKW_GAB} teratas) ≥ ${SKW_PTOP*100}%. <b>Pantau</b> (Papan Penganalisis, Lejar Penuh lorong 1): AMARAN = 1 amaran CUSUM bawah atas kohort harian matang; GANTUNG = kejatuhan ekuiti kohort &gt; 1.5 × maks backtest, tempoh di bawah puncak &gt; maks backtest, atau purata 20 hari beli matang terakhir &lt; persentil ke-5 purata bergulir 20 hari beli backtest (dilaras ke jangkaan); BERSARA = P(purata ≤ 0) &gt; 90% dengan ≥ 20 hari beli, atau 2 amaran CUSUM; GANTUNG/BERSARA mengatasi tahap dan dikeluarkan daripada gabungan. Lajur lain (menang, median, rugi purata, terburuk dan lain-lain) maklumat sahaja. Hover Skor untuk pecahan; ketik baris untuk butiran kaedah.</p>
     ${rmH}${skwDiag(D.all.filter(x=>x.skor!=null))}</div>`;}
+/* v136 (30 Okt 2026, permintaan pengguna): jalur kad gaya SST di ATAS jadual Skor kaedah swing — ringkasan 5 kaedah
+   berskor tertinggi supaya panel itu boleh dibaca sekali imbas sebelum masuk ke jadual penuh. Cip bulat = skor 0–100,
+   carta = untung terkumpul Papertrade C kaedah itu (prestasi/harian_kaedah), baris bawah = 3 kaedah seterusnya. */
+function skwKad(D,kat){
+  /* 30 Okt 2026: pada data semasa 0 daripada 124 kaedah layak (perlu >= 20 dagangan selesai), jadi jatuh balik kepada
+     kaedah BELUM LAYAK supaya panel masih boleh dibaca — tetapi dilabel jelas, bukan dipersembahkan sebagai kedudukan sah. */
+  const Ly=(D.L||[]).filter(x=>x.skor!=null).slice().sort((a,b)=>b.skor-a.skor);
+  const awal=Ly.length<2,L=awal?(D.all||[]).filter(x=>x.skor!=null).slice().sort((a,b)=>b.skor-a.skor):Ly;
+  if(L.length<2)return '';
+  /* nama kaedah daripada analisis/papan (tab ini sudah melanggannya); kaedah/katalog hanya dilanggan tab Kaedah */
+  const nm=id=>{const a=anlRow(id);return (a&&a.nama)||(kat&&kat[id]&&kat[id].nama)||'';};
+  const lorL=x=>x.lor==='henti'?'pegang selagi naik':'ikut kaedah';
+  const kad=L.slice(0,5).map((x,i)=>{const v=hkSiri(S.hk,x.kaedah),[th,pc]=skwTahap(x),n=nm(x.kaedah);
+    return kadPel({saham:x.kaedah,attr:`data-kd="${esc(x.kaedah)}"`,
+      nama:`${n?n+' · ':''}lorong ${lorL(x)}`,
+      cip:cipN(x.skor,`Skor kaedah swing ${fx(x.skor,0)} daripada 100`),
+      spark:v?sparkG(v,{W:240,H:52,lbl:`${x.kaedah}: untung terkumpul Papertrade C (${v.length} sesi)`}):'',
+      harga:sg2(x.avg)+'<span class="mut" style="font-weight:400;font-size:.8rem"> purata</span>',
+      delta:`<span class="pill ${pc}">${esc(th)}</span>`,
+      kaki:`#${i+1} · ${x.ex} selesai${x.win==null?'':` · menang ${fx(x.win,0)}%`}`,aksi:'Lihat →'});}).join('');
+  return `<div class="kadblk"><p class="kbh"><b data-tip="skor_swing">5 kaedah berskor tertinggi</b> — cip = skor 0–100, carta = untung terkumpul Papertrade C; ketik untuk cara kaedah beli dan jual${awal?` · <span class="pill p-warn">belum layak</span> tiada kaedah mencapai ${PR_MIN_TUTUP} dagangan selesai, jadi ini susunan sementara antara yang belum layak`:''}</p>
+    <div class="kads">${kad}</div></div>`;}
+
 /* diagnostik (item 10): wajaran berkesan wᵢ·sdᵢ ÷ Σ w·sd, kadar tepu 0/100, pasangan sub-skor berkorelasi |ρ| > 0.8 (Spearman) */
 function skwDiag(A){if(A.length<5)return '';const WT={};SKW_M.forEach(([id,g,w])=>{WT[id]=SKW_W[g]*w/SKW_M.filter(m=>m[1]===g).reduce((t,m)=>t+m[2],0);});
   const rk=v=>{const r=[];v.map((x,i)=>[x,i]).sort((p,q)=>p[0]-q[0]).forEach(([,i],j)=>{r[i]=j+1;});return r;};
@@ -3706,7 +3766,7 @@ function renderAnalisis(){
   const el=$('#v-analisis'),d=S.anl;
   if(!d||!Array.isArray(d.rows)||!d.rows.length){el.innerHTML=`<div class="panel empty">${S.live?'Papan penganalisis belum ditolak ke pangkalan data (analisis/papan).':'Memuatkan papan penganalisis…'}</div>`;return;}
   const f=S.af2,all=d.rows,ruj=d.rujukan||{},sl=ruj.slot,pm=d.parameter||{};
-  if(!f.fp)f.fp='bln';
+  if(!f.fp)f.fp='bln';if(!f.fps)f.fps='k';
   const sw=all.filter(r=>r.kedudukan),mt=all.reduce((t,r)=>t+(r.h_matang||0),0),ps=all.reduce((t,r)=>t+(r.h_posisi||0),0);
   const m20=all.map(r=>r.matang_20).filter(Boolean).sort()[0],dua=all.filter(r=>r.lulus>=2).length,top=sw[0];
   let rows=f.lihat==='swing'?all.filter(r=>r.swing):f.lihat==='lain'?all.filter(r=>!r.swing):all;
@@ -3747,7 +3807,7 @@ function renderAnalisis(){
     <ol class="utama3">${(d.penemuan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>
   <div class="panel"><div class="panel-h"><h2>Kedudukan kaedah</h2><span class="sub">${rows.length} daripada ${all.length} · swing = pegang ${(pm.swing||[3,30]).join('–')} hari · ketik tajuk untuk susun</span></div>
     ${panelAnlKad(all,null)}
-    ${blokForest(rows,f.fp)}
+    ${blokForest(rows,f.fp,f.fps)}
     <div class="filters" style="margin-bottom:10px">${segH('anlLihat',f.lihat,[['swing','Swing'],['lain','Bukan swing'],['semua','Semua']],'Tapis')}${lajurSeg('anl')}<input type="search" id="anlQ" placeholder="Cari ID, nama atau status, cth. M96, AMARAN" value="${esc(f.q)}" aria-label="Cari kaedah"></div>
     ${sortTable({id:'analisis',rows,lp:LP_ANL,def:{k:'kedudukan',dir:1},limit:f.shown,attr:r=>`data-anl="${esc(r.id)}" tabindex="0"`,rcls:()=>'click',empty:'Tiada kaedah sepadan.',foot:kakiLagi('anlMore'),cols})}
   </div>
@@ -3763,8 +3823,8 @@ function renderAnalisis(){
     </ul></div>
   <div class="foot"><span>Sumber: standard/penganalisis.py · laporan/PENGANALISIS.md · Lejar sesi ${esc(tkP(d.lejar_sesi))} · harga ${esc(tkP(d.harga_pada))}</span><span>Dibina ${esc(d.dibina||'–')}</span></div>`;
   bindSegH('anlLihat',v=>{f.lihat=v;f.shown=AWAL;});
-  bindSegH('anlFp',v=>{f.fp=v;});
-  drawForest($('#anlForest'),fpData(rows,f.fp),f.fp);
+  bindSegH('anlFp',v=>{f.fp=v;});bindSegH('anlFpS',v=>{f.fps=v;});
+  drawForest($('#anlForest'),fpData(rows,f.fp,f.fps),f.fp);
   {const fb=$('#anlForest');if(fb)fb.onclick=e=>{const g=e.target.closest('[data-anl]');if(g)openAnl(g.dataset.anl);};}
   const q=$('#anlQ');let tm;q.oninput=()=>{clearTimeout(tm);tm=setTimeout(()=>{f.q=q.value.trim();f.shown=AWAL;renderAll();const n=$('#anlQ');n.focus();n.setSelectionRange(n.value.length,n.value.length);},220);};
   bindLagi('anlMore',f);prPilihBind('c');
@@ -3927,7 +3987,7 @@ const TIPS={
   pct_dipenuhi:{t:'% hampir',d:'Sejauh mana isyarat entry hampir lengkap: 100 − jarak pencetus (%). Hanya calon 90–100% dipapar. Dihadkan 99.9%. "Paras disentuh" = jarak 0: paras pencetus sudah disentuh tetapi syarat hari esok (contohnya lilin hijau atau volum) belum berlaku. Calon yang sudah menjadi isyarat lengkap dipapar berasingan. Corak lilin tanpa jarak = 90.',e:'99.2% = pencetus tinggal 0.8% lagi.'},
   harga_w:{t:'Harga',d:'Harga tutup terkini dalam data imbasan malam (sesi lengkap terakhir).',e:''},
   skor_panas:{t:'Skor panas (0–100)',d:'Gabungan pangkat persentil berbanding kumpulan lain: prestasi 1M 25%, 1W 15%, 3M 15%, breadth 15%, RS 15%, volum relatif 10%, aliran institusi bersih 5%. Tinggi = kuat DAN ramai fokus. Industri perlu ≥ 3 saham berharga.',e:'85 = lebih kuat daripada kira-kira 85% kumpulan lain.'},
-  selang_p5:{t:'Selang keyakinan (p5–p95)',d:'Titik = anggaran terbaik skor kaedah itu; garis = julat di mana nilai sebenar berkemungkinan 90% berada, daripada analisis/papan (skor_bawah hingga skor_atas). Garis menegak = sifar, iaitu tiada kelebihan langsung. Selang yang MELINTASI sifar bermakna data setakat ini belum cukup untuk membezakan kaedah itu daripada tiada kelebihan — kedudukan tinggi tidak mengubah hakikat itu. Selang menyempit apabila bilangan posisi matang bertambah.',e:'Dua kaedah yang selangnya bertindih banyak belum boleh dikatakan satu lebih baik daripada satu lagi.'},
+  selang_p5:{t:'Julat 95% dan peluang positif',d:'Titik = anggaran terbaik skor kaedah itu. Bar = julat 95% (skor ± 1.96 × ralat piawai, medan skor_bawah/skor_atas dalam analisis/papan): bahagian bar di KIRI sifar diwarnakan merah, di KANAN hijau. Lajur kanan = peluang skor sebenar lebih besar daripada sifar, iaitu 1 − P(purata ≤ 0) yang dikira standard/penganalisis.py daripada julat yang sama; warna titik dan nombor mengikut peluang itu. Bar yang masih merangkumi sifar bermakna data setakat ini belum cukup untuk membezakan kaedah itu daripada tiada kelebihan — kedudukan tinggi tidak mengubah hakikat itu. Angka "h" = bilangan hari beli berbeza; makin banyak, makin sempit julat. Paksi dipotong pada persentil 10–90 sempadan supaya satu julat yang sangat lebar tidak memicit yang lain; julat yang terkeluar ditanda dengan anak panah di tepi.',e:'Peluang 70% bermakna: jika kita boleh ulang tempoh ini berkali-kali, kira-kira 7 daripada 10 kali skor sebenar kaedah itu positif. Itu belum cukup untuk memanggilnya terbukti.'},
   g_kump:{t:'Skor gred kumpulan',d:'Skor 0–100 setiap sektor atau industri daripada standard/gred_kumpulan.py (GitHub Actions gred_kumpulan.yml, harian): berapa banyak saham dalam kumpulan itu mempunyai RS positif, RS yang sedang naik, dan berada dalam trend naik. Carta kecil = skor itu setiap sesi sejak 25 Sep 2026 (dokumen db kumpulan/siri). Ini BUKAN harga kumpulan dan BUKAN penapis beli — kajian 13 Okt 2026 mendapati kekuatan kumpulan tidak meramal pulangan 1–3 bulan seterusnya.',e:'Skor 90 dengan garis menaik = hampir semua saham dalam kumpulan itu kuat, dan makin ramai menyertainya.'},
   fasa:{t:'Fasa rotasi',d:'Kedudukan kumpulan lawan pasaran (median semua saham). Leading: 3M dan 1M atasi pasaran. Improving: 3M masih kalah tetapi 1M atasi (mula pulih). Weakening: 3M atasi tetapi 1M kalah (mula pudar). Lagging: kedua-duanya kalah. Maklumat sahaja: ujian 2019–2026 tidak menunjukkan kumpulan Leading mengatasi kumpulan lain selepas itu.',e:''},
   prestasi_1d:{t:'1H (hari ini)',d:'Purata perubahan harga hari ini bagi saham dalam kumpulan (SST Terminal, intraday jika pasaran dibuka).',e:''},
