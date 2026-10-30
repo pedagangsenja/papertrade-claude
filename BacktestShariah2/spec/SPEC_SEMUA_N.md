@@ -32,11 +32,11 @@ Kelima-lima ini mengikut terus daripada ukuran yang repo **sudah** ada. Tiada sa
 - `SEDIA` — semua indikator yang diperlukan sudah dikira oleh kod repo (`REVERSE/teras/ind.py` atau `REVERSE/step15_setup.py` / `step17_kombinasi.py`); boleh diuji tanpa kod indikator baharu.
 - `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.
 
-Masuk: 147 (12 DIUJI, 71 SEDIA, 64 PERLU). Keluar: 45 (7 DIUJI, 26 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
+Masuk: 147 (12 DIUJI, 70 SEDIA, 65 PERLU). Keluar: 45 (7 DIUJI, 26 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
 
 Tujuh paksi baharu (30 Okt 2026): GABUNGAN 8 · SAIZ 10 · ALAM 8 · PEGANG 6 · IMBANG 5 · KORELASI 4 · INSTRUMEN 4. Jumlah semua paksi: 262 baris.
 
-Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`, `atrts`, `bar_mingguan`, `chop`, `coppock`, `crsi`, `darvas`, `data_13f`, `data_buyback`, `data_eps_suku`, `data_form4`, `data_keluasan`, `data_putcall`, `data_semakan`, `data_sentimen`, `data_short`, `donchian10`, `donchian50`, `efi`, `eri`, `fib_ayunan`, `fisher`, `ftd`, `gmma`, `gtja191`, `harmonik`, `htf`, `huggingface`, `intraday`, `isi_tutup`, `kalendar_cuti`, `kalendar_dagangan`, `kapitalisasi`, `keanggotaan`, `kelly`, `korelasi_signal`, `kst`, `kvo`, `ma5`, `matriks_kovarians`, `momentum_pinball`, `optimal_f`, `pgo`, `pivot_lantai`, `qqe`, `rwi`, `squeeze_ttm`, `stc`, `strat_bar`, `supertrend3`, `talib_cdl`, `tarikh_ipo`, `td_seq`, `tinggi_swing`, `tmo`, `tsv`, `turtle_soup`, `vhf`, `vol_portfolio`, `vortex`, `vwap20`, `vwap_ankor`, `wyckoff_spring`.
+Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`, `atrts`, `bar_mingguan`, `chop`, `coppock`, `crsi`, `darvas`, `data_13f`, `data_buyback`, `data_eps_suku`, `data_form4`, `data_keluasan`, `data_putcall`, `data_semakan`, `data_sentimen`, `data_short`, `donchian10`, `donchian50`, `efi`, `eri`, `fib_ayunan`, `fisher`, `ftd`, `gmma`, `gtja191`, `harmonik`, `htf`, `huggingface`, `intraday`, `isi_tutup`, `kalendar_cuti`, `kalendar_dagangan`, `kapitalisasi`, `keanggotaan`, `kelly`, `korelasi_signal`, `kst`, `kvo`, `ma5`, `matriks_kovarians`, `momentum_pinball`, `optimal_f`, `pgo`, `pivot_lantai`, `qqe`, `rwi`, `sejarah_stage`, `squeeze_ttm`, `stc`, `strat_bar`, `supertrend3`, `talib_cdl`, `tarikh_ipo`, `td_seq`, `tinggi_swing`, `tmo`, `tsv`, `turtle_soup`, `vhf`, `vol_portfolio`, `vortex`, `vwap20`, `vwap_ankor`, `wyckoff_spring`.
 
 ## Peraturan masuk
 
@@ -296,7 +296,7 @@ Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`,
 
 **N120 Trend Template Minervini (8 syarat)** — `tutup > ma150 DAN tutup > ma200 DAN ma150 > ma200 DAN ma200 menaik >= 1 bulan DAN ma50 > ma150 DAN ma50 > ma200 DAN tutup > ma50 DAN tutup >= 1.30 x rendah_52w DAN tutup >= 0.75 x tinggi_52w DAN RS >= 70` · Minervini, Trade Like a Stock Market Wizard (buku) · SEDIA · sumber sekunder TIDAK SEPAKAT pada ambang rendah 52w: 25% lawan 30%; saya guna 30% kerana skrip ProRealCode mengiranya Close/Lowest[252] > 1.3. Teks buku belum dibaca.
 
-**N121 Weinstein Stage 2** — `stage dalam (2A, 2) daripada data/stage/status.json` · Weinstein, Secrets for Profiting in Bull and Bear Markets (buku) · SEDIA · repo SUDAH mengira stage setiap hari tetapi ia "paparan sahaja" (keputusan 27 Okt 2026); ini mendaftarkannya sebagai calon yang boleh diuji
+**N121 Weinstein Stage 2** — `stage dalam (2A, 2) daripada data/stage/status.json` · Weinstein, Secrets for Profiting in Bull and Bear Markets (buku) · PERLU:sejarah_stage · DIBETULKAN 30 Okt 2026 selepas audit: data/stage/status.json ialah PETIKAN harian (7 commit sahaja), tiada sejarah titik-masa, jadi ia tidak boleh diuji pada 2012-2025. Ia BOLEH dikira semula daripada stor harga oleh standard/stage.py (bar mingguan + MA 30 minggu), tetapi itu larian berasingan. Dikeluarkan daripada pradaftar SPEC_NXX.md §3.
 
 **N122 Kriteria imbasan Qullamaggie** — `pulangan 1 atau 3 atau 6 bulan >= 30% DAN adr_pct > 5 DAN nilai dolar harian > USD10 juta` · Qullamaggie (sumber sekunder) (blog/screener) · PERLU:adr_pct · adr_pct (julat purata) BUKAN atr_pct repo. PEMBETULAN: saya sangka ambang $20 juta; ia TIDAK muncul dalam mana-mana sumber - angka paling konsisten ialah $10 juta. Satu sumber juga sebut "50x saiz akaun" yang peraturan berbeza sama sekali.
 

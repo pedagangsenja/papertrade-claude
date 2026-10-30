@@ -333,9 +333,11 @@ MASUK = [
   'sumber sekunder TIDAK SEPAKAT pada ambang rendah 52w: 25% lawan 30%; saya guna 30% kerana '
   'skrip ProRealCode mengiranya Close/Lowest[252] > 1.3. Teks buku belum dibaca.'),
  ('N121', 'KEKUATAN', 'Weinstein Stage 2', 'stage dalam (2A, 2) daripada data/stage/status.json',
-  'Weinstein, Secrets for Profiting in Bull and Bear Markets', 'buku', 'SEDIA',
-  'repo SUDAH mengira stage setiap hari tetapi ia "paparan sahaja" (keputusan 27 Okt 2026); '
-  'ini mendaftarkannya sebagai calon yang boleh diuji'),
+  'Weinstein, Secrets for Profiting in Bull and Bear Markets', 'buku', 'PERLU:sejarah_stage',
+  'DIBETULKAN 30 Okt 2026 selepas audit: data/stage/status.json ialah PETIKAN harian (7 commit '
+  'sahaja), tiada sejarah titik-masa, jadi ia tidak boleh diuji pada 2012-2025. Ia BOLEH '
+  'dikira semula daripada stor harga oleh standard/stage.py (bar mingguan + MA 30 minggu), '
+  'tetapi itu larian berasingan. Dikeluarkan daripada pradaftar SPEC_NXX.md §3.'),
  ('N122', 'KEKUATAN', 'Kriteria imbasan Qullamaggie',
   'pulangan 1 atau 3 atau 6 bulan >= 30% DAN adr_pct > 5 DAN nilai dolar harian > USD10 juta',
   'Qullamaggie (sumber sekunder)', 'blog/screener', 'PERLU:adr_pct',
