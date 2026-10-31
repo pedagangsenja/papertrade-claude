@@ -221,6 +221,47 @@ svg.sparkg{display:block;width:100%;max-width:100%;height:auto;min-width:0}
 .kmp .kmb{display:flex;height:24px;border-radius:7px;overflow:hidden;gap:2px}
 .kmp .kmb i{display:block;min-width:2px}
 .kmp .kmb button{border:0;padding:0;cursor:pointer;min-width:2px;display:block}
+/* ================= v139 (31 Okt 2026): snowflake gred, meter bersegmen, grid gred, lencana kepekatan =================
+   Corak dipinjam: rajah ringkasan enam paksi (Simply Wall St), grid gred faktor (Seeking Alpha), lencana kepekatan
+   (aplikasi portfolio), meter bersegmen (blok kad agihan). Semua guna data gred yang sudah ada. */
+.snw{display:block;width:100%;max-width:190px;margin:0 auto;height:auto}
+.snwr{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.snwr .snwl{flex:1 1 180px;min-width:0;font-size:.84rem;color:var(--muted)}
+/* meter bersegmen lorong 2: 10 segmen lebih mudah dibaca "berapa banyak tinggal" daripada bar licin */
+.l2seg{display:flex;gap:2px;width:70px;margin-top:6px}
+.l2seg i{flex:1;height:9px;border-radius:2px;background:var(--sunk);box-shadow:inset 0 0 0 1px var(--line)}
+.l2seg i.on{background:var(--pos);box-shadow:none}
+.l2seg.hmp i.on{background:var(--neg)}
+.l2seg.hmp i{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--neg) 45%,transparent)}
+/* grid gred padat: satu huruf satu dimensi */
+.ggw{margin:0 0 12px}
+.ggw table{font-size:.84rem}.ggw td,.ggw th{text-align:center;padding:4px 6px}
+.ggw td.l,.ggw th.l{text-align:left}.ggw td.r{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.ggc{display:inline-flex;align-items:center;justify-content:center;width:1.85em;height:1.85em;border-radius:5px;font-weight:700;font-size:.8rem}
+/* lencana kepekatan */
+.kcn{display:grid;gap:2px}
+.kcnr{display:grid;grid-template-columns:62px minmax(70px,auto) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:.85rem;padding:5px 0;border-bottom:1px solid var(--line)}
+.kcnr:last-child{border-bottom:0}
+.kcnt{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kcnr b{color:var(--fg)}.kcns{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* explainer: dari mana angka itu datang */
+.xpl{margin:12px 0 0;display:grid;gap:3px}
+.xpr{display:grid;grid-template-columns:minmax(96px,140px) minmax(0,1fr) minmax(92px,auto);gap:10px;align-items:center;font-size:.85rem;padding:3px 0}
+.xpr .xpl2{color:var(--fg-2)}
+.xpr .xpt{display:block;height:14px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.xpr .xpt i{display:block;height:100%;border-radius:4px;opacity:.85}
+.xpr b{text-align:right;font-variant-numeric:tabular-nums}
+.xpr.tot{border-top:1px solid var(--line-2);margin-top:5px;padding-top:7px}.xpr.tot .xpl2{color:var(--fg);font-weight:700}
+/* perbandingan setara dalam helaian kaedah */
+.pcg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.pcd{background:var(--sunk);border:1px solid var(--line);border-radius:var(--r);padding:10px}
+.pcd.ini{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent-soft)}
+.pch{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:7px}
+.pch b{font-size:1.05rem}.pch span{font-weight:700;font-variant-numeric:tabular-nums;font-size:.85rem}
+.pbr{display:grid;grid-template-columns:minmax(0,1fr) 54px;gap:6px;align-items:center;font-size:.76rem;color:var(--muted);padding:2px 0}
+.pbr b{text-align:right;color:var(--fg);font-variant-numeric:tabular-nums}
+.pbb{grid-column:1/-1;display:block;height:6px;background:var(--card);border-radius:3px;overflow:hidden;margin-bottom:3px}
+.pbb i{display:block;height:100%;border-radius:3px}
 .kadblk{margin:0 0 14px}
 .kadblk>.kbh{font-size:.8rem;color:var(--muted);margin:0 0 8px}
 .kadblk>.kbh b{color:var(--fg-2)}
@@ -1526,6 +1567,7 @@ function renderWatch(){
   </div>
   <div class="panel"><div class="panel-h"><h2>Hampir Signal</h2><span class="sub">${rows.length} calon · ketik tajuk lajur untuk susun</span></div>${rejimHtml()}
     ${panelWatchKad(all)}
+    ${blokGredGrid(rows)}
     <div class="filters" style="margin-bottom:10px">${lajurSeg('watch')}<select id="wK" aria-label="Tapis kaedah"><option value="">Semua kaedah</option>${kdP.map(k=>`<option value="${esc(k)}" ${wf.k===k?'selected':''}>${esc(k)}</option>`).join('')}</select>
       ${selSI('w',all,wf)}
       <input type="search" id="wQ" placeholder="Cari saham, sektor, industri" value="${esc(wf.q)}" aria-label="Cari watchlist"></div>
@@ -1714,6 +1756,7 @@ function renderPos(){
   el.innerHTML=head+ptKpis(all,a==='m'?'Moomoo':a==='c'?'Claude dibeli':'gabungan')+panelPeta(sahSahaja(peg),fb.st)+`
   <div class="panel"><div class="panel-h"><h2>Posisi & keputusan</h2><span class="sub">${rows.length} posisi · ketik baris untuk butiran · ketik tajuk lajur untuk susun</span></div>${rejimHtml()}
     ${panelPerhatian(peg)}
+    ${blokGredGrid(rows)}
     <div class="filters" style="margin-bottom:8px">${segH('posSt',ps.st,[['semua',`Semua (${all.length})`],['pegang',`Dipegang (${peg.length})`],['keluar',`Sudah keluar (${kel.length})`]],'Status')}${skrinKecil()?lajurSeg('pos'):pandSeg()}</div>
     ${fb.html}${(cols=>sortTable({id:'pos'+a,rows,cols,def:{k:cols.some(c=>c.k==='untung_pct')?'untung_pct':'isyarat_keluar',dir:-1},rcls:r=>rclsPT(r)+' click'+bukaC('p'+r._p),limit:fb.st.shown,attr:r=>`data-pos="${esc(r._p)}" tabindex="0"`,foot:kakiLagi('posMore')}))(pd?posColsP(pd,a==='gab'):rk?posColsR(a==='gab'):ptCols(a==='gab'))}</div>
   ${tdb.length?`<div class="panel"><div class="panel-h"><h2>Isyarat tidak dibeli</h2><span class="sub">${tdb.length} isyarat · dilangkau ikut peraturan kaedah · tidak dikira dalam Prestasi</span></div>${sortTable({id:'ptctdb',rows:tdb,def:{k:'kaedah',dir:1},limit:TELEFON?tdbS.shown:0,foot:TELEFON?kakiLagi('tdbMore'):null,lp:{key:r=>r.saham+'|'+r.kaedah+'|'+(r.tarikh_beli_dirancang||r.tarikh_beli),line:r=>`<b>${esc(r.saham)}</b><span class="mut">${esc(r.kaedah)}</span><span class="mlx">${esc(r.sebab_tidak_sah||'')}</span><span class="mlr mut">${esc(tkO(r.tarikh_beli_dirancang||r.tarikh_beli))}</span>${mlC}`},cols:[
@@ -2344,6 +2387,84 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 /* satu lajur lencana gred: I Q P R S + keseluruhan; butiran penuh dalam helaian baris */
 /* lajur ringkas: gred keseluruhan sahaja; pecahan setiap gred dalam lajur penuh dan helaian baris */
 const grSatu=r=>GORD[r.gred_keseluruhan]!=null?grB(r.gred_keseluruhan,'','Gred keseluruhan'):'<span class="mut">–</span>';
+/* v139: grid gred padat (gaya grid faktor) — satu baris satu saham, satu lajur satu dimensi.
+   Menjawab "mana antara ini paling kukuh" tanpa membaca enam lajur gred yang bertaburan dalam jadual lebar. */
+function blokGredGrid(rows,had){
+  const L=(rows||[]).filter(r=>r.saham&&SNW.some(([k])=>snwNil(r[k])!=null)).slice(0,had||10);
+  if(L.length<3)return '';
+  const sel=g=>{const h=String(g||'').trim().charAt(0).toUpperCase(),ok=snwNil(g)!=null;
+    return `<span class="ggc g-${ok?h:'x'}">${ok?esc(h):'–'}</span>`;};
+  const u=r=>nomb(r.keluar?(r.untung_akhir_pct??r.untung_pct):r.untung_pct);
+  return `<div class="ggw"><p class="kbh"><b data-tip="gred">Gred sekali pandang</b> — ${L.length} baris teratas jadual di bawah, satu huruf satu dimensi</p>
+    <div class="tablewrap"><table><thead><tr><th class="l">Saham</th>${SNW.map(([,l])=>`<th>${esc(l)}</th>`).join('')}<th>Gred</th><th>Untung</th></tr></thead>
+    <tbody>${L.map(r=>`<tr>${''}<td class="l"><b>${esc(r.saham)}</b></td>${SNW.map(([k])=>`<td>${sel(r[k])}</td>`).join('')}<td>${sel(r.gred_keseluruhan)}</td><td class="r ${cls(u(r))}">${u(r)==null?'–':sg2(u(r))}</td></tr>`).join('')}</tbody></table></div></div>`;}
+
+/* v139: lencana kepekatan — aplikasi portfolio menanda kedudukan yang melepasi ambang, bukan hanya menyenaraikannya */
+const KEP_SEK=25,KEP_SAH=8,KEP_KAE=8;
+function blokKepekatan(peg){
+  if(!peg||peg.length<20)return '';
+  const by=(f)=>{const m={};peg.forEach(r=>{const k=f(r);if(k)m[k]=(m[k]||0)+1;});return Object.entries(m).sort((a,b)=>b[1]-a[1]);};
+  const tot=peg.length,sek=by(r=>r.sektor||'Tiada sektor'),sah=by(r=>r.saham),kae=by(r=>r.kaedah);
+  const L=[];
+  sek.slice(0,2).forEach(([k,n])=>L.push(['Sektor',k,`${nf(n)} posisi · ${fx(100*n/tot,0)}% portfolio`,100*n/tot>=KEP_SEK]));
+  sah.slice(0,2).forEach(([k,n])=>L.push(['Saham',k,`${nf(n)} kaedah membeli saham sama`,n>=KEP_SAH]));
+  kae.slice(0,1).forEach(([k,n])=>L.push(['Kaedah',k,`${nf(n)} posisi · ${fx(100*n/tot,0)}% portfolio`,100*n/tot>=KEP_KAE]));
+  const amb=L.filter(x=>x[3]).length;
+  return `<div class="kadblk"><p class="kbh"><b>Kepekatan</b> — ${amb?`<b class="neg">${amb}</b> melepasi ambang`:'tiada yang melepasi ambang'} · sektor ≥ ${KEP_SEK}% · saham dalam ≥ ${KEP_SAH} kaedah · kaedah ≥ ${KEP_KAE}% portfolio</p>
+    <div class="kcn">${L.map(([t,k,d,w])=>`<div class="kcnr"><span class="kcnt">${t}</span><b>${esc(k)}</b><span class="kcns">${esc(d)}</span><span class="pill ${w?'p-warn':'p-mute'}">${w?'perlu perhatian':'biasa'}</span></div>`).join('')}</div></div>`;}
+
+/* v139: explainer — dari mana angka hero itu datang (pecahan selesai lawan masih dipegang) */
+function blokExplainer(src){
+  const E=[['Selesai untung',0,'--pos'],['Selesai rugi',0,'--neg'],['Dipegang untung',0,'--accent'],['Dipegang rugi',0,'--warn']];
+  let n=0;
+  src.forEach(r=>{const kel=!!r.keluar,v=nomb(kel?r.untung_akhir_pct:r.untung_pct);if(v==null)return;n++;
+    E[(kel?0:2)+(v>=0?0:1)][1]+=v;});
+  if(!n)return '';
+  const jum=E.reduce((t,x)=>t+x[1],0),mx=Math.max(...E.map(x=>Math.abs(x[1])),Math.abs(jum))||1;
+  const baris=(l,v,c)=>`<div class="xpr"><span class="xpl2">${l}</span><span class="xpt"><i style="width:${(100*Math.abs(v)/mx).toFixed(1)}%;background:var(${c})"></i></span><b class="${cls(v)}">${v>0?'+':''}${nf(Math.round(v))} mata</b></div>`;
+  return `<div class="xpl"><p class="kbh" style="margin:0 0 6px"><b>Dari mana angka itu datang</b> — 1 mata = 1% pada satu posisi</p>
+    ${E.map(x=>baris(x[0],x[1],x[2])).join('')}
+    <div class="xpr tot"><span class="xpl2">Jumlah</span><span class="xpt"><i style="width:${(100*Math.abs(jum)/mx).toFixed(1)}%;background:var(${jum>0?'--pos':'--neg'})"></i></span><b class="${cls(jum)}">${jum>0?'+':''}${nf(Math.round(jum))} mata</b></div>
+    <p class="sub" style="margin-top:8px">Purata setiap belian = jumlah ÷ ${nf(n)} posisi. Bahagian <b>dipegang</b> belum pasti: ia berubah setiap sesi dan hanya menjadi muktamad apabila posisi keluar.</p></div>`;}
+
+/* v139: perbandingan setara — kaedah ini lawan dua jiran kedudukannya, metrik sama bersebelahan */
+function blokSetara(r,rows){
+  const sw=(rows||[]).filter(x=>x.kedudukan).sort((a,b)=>a.kedudukan-b.kedudukan);
+  const i=sw.findIndex(x=>x.id===r.id);if(i<0||sw.length<3)return '';
+  const pick=[sw[i-1],sw[i],sw[i+1]].filter(Boolean).slice(0,3);
+  const MET=[['Skor sebulan',x=>nomb(x.skor_bulan),v=>sg2(v),1],['Peluang positif',x=>x.p_rugi==null?null:(1-x.p_rugi)*100,v=>v==null?'–':fx(v,0)+'%',1],
+             ['Semakan lulus',x=>nomb(x.lulus),v=>fx(v,0)+'/3',1],['Posisi matang',x=>nomb(x.h_matang),v=>fx(v,0),1],
+             ['Hari beli',x=>nomb(x.h_hari_beli),v=>fx(v,0),1]];
+  const kad=pick.map(x=>{const baris=MET.map(([l,f,fm])=>{const vs=pick.map(f).filter(v=>v!=null),v=f(x);
+      const hi=vs.length?Math.max(...vs):null,lo=vs.length?Math.min(...vs):null;
+      const w=v==null||hi==null||hi===lo?0:100*(v-lo)/(hi-lo);
+      return `<div class="pbr"><span>${l}</span><b>${fm(v)}</b><span class="pbb"><i style="width:${Math.max(v==null?0:4,w).toFixed(0)}%;background:var(${v!=null&&hi!=null&&hi!==lo&&v===hi?'--pos':'--line-2'})"></i></span></div>`;}).join('');
+    return `<div class="pcd${x.id===r.id?' ini':''}"><div class="pch"><b>${esc(x.id)}</b><span class="${cls(nomb(x.skor_bulan))}">#${x.kedudukan}</span></div>${baris}</div>`;}).join('');
+  return `<div class="sec"><h4 data-tip="anl_skor">Perbandingan setara</h4><div class="pcg">${kad}</div>
+    <p class="sub" style="margin-top:6px">Kaedah ini (bergaris teal) lawan jiran kedudukannya pada metrik yang sama. Bar hijau = terbaik antara ketiga-tiga; bar itu hanya membandingkan tiga kaedah ini, bukan seluruh papan.</p></div>`;}
+
+/* v139: rajah ringkasan enam paksi (gaya Simply Wall St) — bentuk dan saiz dibaca sebelum huruf.
+   Paksi = enam dimensi gred yang sama dengan senarai di bawahnya; tiada data = jejari minimum. */
+const SNW=[['gred_sektor','Sektor'],['gred_industri','Industri'],['gred_rs','RS'],
+           ['gred_pemangkin','Pemangkin'],['gred_qr','QR'],['gred_kewangan','Kewangan']];
+const SNW_N={A:95,B:80,C:60,D:40,E:20};
+const snwNil=g=>SNW_N[String(g||'').trim().toUpperCase().charAt(0)]??null;
+function snowGred(r){
+  const V=SNW.map(([k,l])=>[l,r[k],snwNil(r[k])]),ada=V.filter(x=>x[2]!=null);
+  if(ada.length<3)return '';
+  const cx=84,cy=80,R=56,n=SNW.length,A=i=>-Math.PI/2+i*2*Math.PI/n;
+  const P=(f,i)=>[cx+R*f*Math.cos(A(i)),cy+R*f*Math.sin(A(i))];
+  const pg=f=>Array.from({length:n},(_,i)=>P(f,i).map(v=>v.toFixed(1)).join(',')).join(' ');
+  const purata=ada.reduce((t,x)=>t+x[2],0)/ada.length;
+  const col=purata>=75?'--pos':purata>=55?'--accent':purata>=40?'--warn':'--neg-tx';
+  const bentuk=V.map((x,i)=>P(0.18+0.82*((x[2]||0)/100),i).map(v=>v.toFixed(1)).join(',')).join(' ');
+  const lab=V.map((x,i)=>{const [lx,ly]=P(1.22,i);
+    return `<text x="${lx.toFixed(1)}" y="${(ly+3).toFixed(1)}" text-anchor="middle" style="font-size:7.5px">${esc(x[0])}</text>`;}).join('');
+  const tip=`Gred ${V.map(x=>`${x[0]} ${x[1]||'–'}`).join(' · ')}; purata ${fx(purata,0)} daripada 100 atas ${ada.length} daripada ${n} dimensi berdata.`;
+  return `<svg class="snw" viewBox="0 0 168 168" role="img" aria-label="${esc(tip)}"><title>${esc(tip)}</title>
+    ${[0.35,0.68,1].map(f=>`<polygon points="${pg(f)}" fill="none" stroke="var(--line)"/>`).join('')}
+    ${Array.from({length:n},(_,i)=>`<line x1="${cx}" y1="${cy}" x2="${P(1,i)[0].toFixed(1)}" y2="${P(1,i)[1].toFixed(1)}" stroke="var(--line)"/>`).join('')}
+    <polygon points="${bentuk}" fill="var(${col})" fill-opacity=".26" stroke="var(${col})" stroke-width="1.6" stroke-linejoin="round"/>${lab}</svg>`;}
 function gredList(r){const L=[['g_i','Industri',grKump(r,'Industri')],['g_q','Laporan suku (QR)',grQR(r)],['g_p','Pemangkin',grPem(r)],['g_r','RS',grRS(r)],['g_s','Sektor',grKump(r,'Sektor')],['g_k','Kewangan',grKew(r)],['gred','Gred keseluruhan',grSel1(r.gred_keseluruhan,'')]];
   return `<div class="gl">${L.map(([t,n,h])=>`<div class="glr"><span class="mut" data-tip="${t}">${n}</span><div>${h}</div></div>`).join('')}</div>`;}
 /* adakah gred A lebih untung? purata untung akhir dagangan tertutup, A lawan gred terendah yang cukup data (Sektor paparan sahaja, tidak dinilai) */
@@ -2406,7 +2527,7 @@ function openPos(id){const r=posRows('gab').find(x=>x._p===id);if(!r)return;cons
     ${trSec(r.saham)}
     ${stSec(r.saham)}
     ${rpPos(r)}
-    <div class="sec"><h4 data-tip="gred">Gred pada hari isyarat</h4>${gredList(r)}</div>
+    <div class="sec"><h4 data-tip="gred">Gred pada hari isyarat</h4>${(()=>{const sn=snowGred(r);return sn?`<div class="snwr">${sn}<div class="snwl">Rajah enam paksi: makin besar dan makin sekata bentuknya, makin kukuh gred saham itu merentas semua dimensi. Bentuk sengét bermakna kuat pada satu dimensi sahaja.</div></div>`:'';})()}${gredList(r)}</div>
     <div class="acts"><button type="button" class="btn" data-kd="${esc(r.kaedah)}">Lihat kaedah ${esc(r.kaedah)}</button><button type="button" class="btn ghost" data-tutup>Tutup</button></div>`);
   {const bx=$('#posSpark');if(bx){const W=Math.max(260,bx.clientWidth||340);if(!lilinPos(bx,r,W)){bx.innerHTML=sparkPos(r,W,120,1);silangSpark(bx,r,W);}}}
   {const rp=$('#rpPos'),m=l2Map();if(rp&&m&&m.get(rp.dataset.k))initRp(rp,m.get(rp.dataset.k));}}
@@ -2462,8 +2583,11 @@ const mfeOf=r=>{const v=mfeM(S.mfe)[`${r.akaun}|${r.saham}|${r.kaedah}|${r.tarik
 function l2Info(r){if(r.tidak_dibeli||r.keluar_henti)return null;const s=String(r.status_henti||'');if(!s||/menunggu/.test(s))return null;
   const p=/paras keluar ([\d.]+)/.exec(s),k=/puncak ([\d.]+)/.exec(s);if(!p||!k)return null;const paras=+p[1],puncak=+k[1];
   const h=r.keluar?tutupAkhir(r.saham):nomb(r.harga_terkini);if(!h||!(puncak>paras))return null;return {paras,puncak,h,x:(h-paras)/(puncak-paras)};}
-const barL2=r=>{const a=l2Info(r);if(!a)return '';const p=Math.max(0,Math.min(1,a.x));
-  return `<span class="l2bar${a.x<0.25?' hmp':''}" title="Harga ${fx(a.h,2)} berada ${fx(a.x*100,0)}% julat di atas paras keluar ${fx(a.paras,2)} (kiri) menuju puncak ${fx(a.puncak,2)} (kanan)"><i style="left:${(p*100).toFixed(1)}%"></i></span>${l2Cip(r)}`;};
+/* v139: meter 10 segmen menggantikan bar licin — "berapa banyak tinggal" lebih mudah dibaca daripada kedudukan penanda */
+const L2SEG=10;
+const barL2=r=>{const a=l2Info(r);if(!a)return '';const p=Math.max(0,Math.min(1,a.x)),n=Math.round(p*L2SEG),lo=a.x<0.25;
+  const t=`Harga ${fx(a.h,2)} berada ${fx(a.x*100,0)}% julat di atas paras keluar ${fx(a.paras,2)} menuju puncak ${fx(a.puncak,2)}: ${n} daripada ${L2SEG} segmen tinggal sebelum paras keluar`;
+  return `<span class="l2seg${lo?' hmp':''}" title="${esc(t)}" role="img" aria-label="${esc(t)}">${Array.from({length:L2SEG},(_,i)=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>${l2Cip(r)}`;};
 function statusPos(r){if(r.tidak_dibeli)return null;if(r.tutup_semua)return ['k'];
   const tk=!r.keluar&&/menunggu/.test(String(r.isyarat_keluar||'')),t2=!r.keluar_henti&&/menunggu/.test(String(r.status_henti||''));
   if(tk||t2)return ['m',`Jual pada buka sesi seterusnya: ${[tk?'lorong kaedah':'',t2?'lorong selagi naik':''].filter(Boolean).join(' dan ')}`,tk,t2];
@@ -3361,6 +3485,7 @@ function panelPeta(peg,st){if(!peg.length)return '';const sk=new Set(peg.map(r=>
   const D=petaData(peg).sort((a,b)=>b.v-a.v),top=D[0];
   return `<div class="panel"><div class="panel-h"><h2 data-tip="peta_portfolio">Peta portfolio</h2><span class="sub">${nf(peg.length)} posisi dipegang · ${sk} sektor · saiz = bilangan, warna = untung purata · ketik untuk tapis jadual</span></div>
     ${blokKomposisi(peg)}
+    ${blokKepekatan(peg)}
     <p class="kesimpulan">Tumpuan terbesar: <b>${esc(top.k)}</b> (${top.v} posisi, ${fx(top.v/peg.length*100,0)}%, purata <span class="${cls(top.u)}">${sg2(top.u)}</span>).${st&&(st.sk||st.ind)?` Jadual ditapis: <b>${esc(st.ind||st.sk)}</b> · <button type="button" class="lnk" data-pmk="" data-pmi="">Buang tapisan</button>`:''}</p>
     <div class="chartbox" id="posPeta"></div>
     <div class="legend"><span><i style="background:${heatCol(-10,10)}"></i>Rugi</span><span><i style="background:${heatCol(0.001,10)}"></i>Hampir rata</span><span><i style="background:${heatCol(10,10)}"></i>Untung (penuh pada ±10%)</span></div></div>`;}
@@ -3815,7 +3940,7 @@ function renderUtama(){
   ${salStrip()}
   ${panelPeluang(src)}
   <div class="panel"><div class="panel-h"><h2>3 perkara utama</h2><span class="sub">Ditulis automatik daripada data terkini</span></div>
-    <ol class="utama3">${p3.map(x=>`<li>${x}</li>`).join('')}</ol></div>
+    <ol class="utama3">${p3.map(x=>`<li>${x}</li>`).join('')}</ol>${blokExplainer(src)}</div>
   <div class="kpis">
     <div class="kpi"><div class="lbl" data-tip="selesai">Dagangan selesai</div><div class="v ${cls(A.avgEx)}">${sg2(A.avgEx)}</div>${As?delta(A.avgEx,As.avgEx):''}${kpiSpark('kum','--accent','Untung terkumpul Papertrade C')}<div class="s">menang ${A.winEx==null?'–':fx(A.winEx*100,0)+'%'} · ${nf(A.nEx)} dagangan</div></div>
     <div class="kpi"><div class="lbl" data-tip="dipegang">Masih dipegang</div><div class="v ${cls(A.avgOp)}">${sg2(A.avgOp)}</div>${As?delta(A.avgOp,As.avgOp):''}${kpiSpark('n','--violet','Bilangan posisi dipegang setiap sesi')}<div class="s">${A.upOp==null?'–':fx(A.upOp*100,0)+'%'} sedang untung · ${nf(A.nOp)} posisi</div></div>
@@ -3945,6 +4070,7 @@ function openAnl(id){const r=((S.anl||{}).rows||[]).find(x=>x.id===id);if(!r)ret
   sheet(`<div class="lbl">${esc(id)} · ${esc(r.varian||'')}</div><h3 id="shTitle">${esc(r.nama)}</h3>
     <div class="pills">${anlPill(r.status)}${r.kedudukan?`<span class="pill p-buy">#${r.kedudukan} swing</span>`:`<span class="pill p-mute">${r.swing?'sampel backtest kecil':'bukan swing'}</span>`}</div>
     <div class="sec"><h4 data-tip="anl_skor">Skor gabungan</h4><div class="mgrid">${mSel('Skor setiap dagangan',anlJul(r.skor,r.skor_bawah,r.skor_atas),'anl_skor')}${mSel('Skor sebulan',anlJul(r.skor_bulan,r.skor_bulan_bawah,r.skor_bulan_atas),'anl_bulan')}${mSel('Jangkaan backtest',`<b class="${cls(r.jangkaan)}">${sg2(r.jangkaan)}</b> <span class="mut">${Math.round((r.kekal||0)*100)}% daripada ${sg2(r.bt_purata)}</span>`,'anl_jangkaan')}${mSel('Berat backtest (n0)',fx(r.n0,1))}</div></div>
+    ${blokSetara(r,(S.anl||{}).rows)}
     <div class="sec"><h4 data-tip="anl_semakan">Semakan luar sampel · ${r.lulus}/3</h4><div class="mgrid">${mSel('S1–S4',`${anlTk(r.lulus_subset)} ${esc(r.subset||'–')} atasi EW`)}${mSel('WFO 2023–26',`${anlTk(r.lulus_wfo)} ${pct(r.wfo_cagr)} <span class="mut">lawan EW ${pct(r.wfo_ew)} · DSR ${fx(r.wfo_dsr,2)}</span>`)}${mSel('2000 saham AS',`${anlTk(r.lulus_at)} A ${pct(r.at_cagr_a)} · B ${pct(r.at_cagr_b)} <span class="mut">lawan SPY ${pct(r.at_spy)} · ${esc(r.at_label||'')}</span>`)}</div></div>
     <div class="sec"><h4>Backtest set 431 (dalam sampel)</h4><div class="mgrid">${mSel('CAGR',`<b class="${cls(r.bt_cagr)}">${pct(r.bt_cagr)}</b>`)}${mSel('MDD',pct(r.bt_mdd,0))}${mSel('Kadar menang',pct(r.bt_menang,0))}${mSel('Purata setiap dagangan',sg2(r.bt_purata))}${mSel('Hari pegang',fx(r.hari,1))}${mSel('Dagangan',`${r.bt_n} <span class="mut">(${fx(r.bt_setahun,0)} setahun)</span>`)}${mSel('Keputusan',esc(r.bt_keputusan||'–'))}</div></div>
     <div class="sec"><h4 data-tip="anl_hadapan">Data hadapan</h4><div class="mgrid">${mSel('Posisi',`${r.h_posisi} <span class="mut">(${r.h_tutup} tutup lorong kaedah)</span>`)}${mSel('Matang',`<b>${r.h_matang}</b> <span class="mut">≥ ${r.h_umur} hari</span>`)}${mSel('Purata matang',`<b class="${cls(r.h_purata)}">${sg2(r.h_purata)}</b> · menang ${pct(r.h_menang,0)}`)}${mSel('Lorong 2 matang',sg2(r.h_purata_l2),'anl_l2')}${mSel('Matang pertama',esc(tkP(r.matang_mula)))}${mSel('20 matang',esc(tkP(r.matang_20)))}${mSel('Papertrade C',`${r.c_posisi} · ${sg2(r.c_purata)}`,'anl_c')}</div></div>
