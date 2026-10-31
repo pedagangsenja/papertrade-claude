@@ -31,7 +31,7 @@ T3_CAGR, T3_MDD = 15.0, -15.0
 
 # Lajur yang BOLEH mengandungi id paksi. Medan nota sengaja dikecualikan: nota menyebut id
 # yang belum diuji secara sah, dan mengimbasnya akan memberi hanyutan palsu.
-LAJUR_ID = {'masuk', 'keluar', 'cara', 'urutan', 'konfig', 'pegang'}
+LAJUR_ID = {'masuk', 'keluar', 'cara', 'urutan', 'konfig', 'pegang', 'alam'}
 TOKEN = re.compile(r'\b(?:GB|SZ|AL|PG|IB|KR|IS)\d{2}|\b[NXCU]\d{1,3}\b')
 
 # Had pegangan (bar) -> baris registry PEGANG yang ia uji.
