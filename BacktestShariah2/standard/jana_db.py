@@ -501,12 +501,17 @@ def kaedah_n(dibina):
                   rd(os.path.join(RV, 'cara.csv')), ff, ii, bl)
     return dict(
         dibina=dibina,
-        nota='Registry Nxx: 262 baris merentas 11 paksi (MASUK, KELUAR, CARA, URUTAN, '
-             'GABUNGAN, SAIZ, ALAM, PEGANG, IMBANG, KORELASI, INSTRUMEN). Hasil daripada 413 '
-             'ujian dipradaftar: REVERSE/NXX.md (280), NXX_KELUAR.md (69), GABUNGAN.md (14), '
-             'SILANG_AKHIR.md (8), PORTFOLIO_N.md (36 konfigurasi / 264 larian), CARA.md (6). '
-             'Setiap spec DAN kod dikomit sebelum keputusan dilihat. Rekod kajian sahaja; '
-             'bukan isyarat beli.',
+        nota='Registry Nxx: 263 baris merentas 11 paksi (MASUK, KELUAR, CARA, URUTAN, '
+             'GABUNGAN, SAIZ, ALAM, PEGANG, IMBANG, KORELASI, INSTRUMEN). DUA populasi '
+             'ujian, unitnya BERBEZA dan ia tidak boleh dicampur: (1) 413 ujian '
+             'setiap-dagangan - NXX.md (280), NXX_KELUAR.md (69), GABUNGAN.md (14), '
+             'SILANG_AKHIR.md (8), PORTFOLIO_N.md (36), CARA.md (6), daripadanya 10 lulus '
+             'gate akhir; (2) 724 konfigurasi portfolio dalam baris gilir E1-E6 '
+             '(PEGANG_SLOT, ALAM, INSTRUMEN, KELUAR_PORTFOLIO, KORELASI, HIERARKI) atas '
+             '6,994 larian, daripadanya 161 lulus pulangan, 24 lulus risiko, dan SIFAR '
+             'lulus kedua-duanya. Baris gilir ditutup 31 Okt 2026: BERHENTI-TUTUP, lihat '
+             'REVERSE/KEPUTUSAN_AKHIR.md. Setiap spec DAN kod dikomit sebelum keputusan '
+             'dilihat. Rekod kajian sahaja; bukan isyarat beli.',
         rows=rows,
         gate=dict(A=dict(ujian=280, g1=52, g2=7, g3=0), B=dict(ujian=69, g1=24, g2=0, g3=0),
                   GAB=dict(ujian=14, g1=13, g2=8, g3=2), SX=dict(ujian=8, g1=8, g2=8, g3=8)),
@@ -558,8 +563,144 @@ def kaedah_n(dibina):
                      g3=bl(r.get('gate3'))) for r in X],
         ujian=UJ,
         skor=_skor_n(UJ),
+        giliran=_giliran(rd, ff, ii),
+        akhir=dict(
+            status='BERHENTI-TUTUP',
+            konfig=724, larian=6994, P1=161, P2=24, P3=215, P4=45, T1=0, T3=0,
+            spus_cagr=17.95, spus_mdd=-26.82,
+            ayat='Set konfigurasi yang RISIKONYA boleh diterima dan set yang PULANGANNYA '
+                 'mencukupi tidak pernah bertindih, dan jurangnya boleh diukur. 24 '
+                 'konfigurasi melepasi P2; CAGR tertinggi antara kesemuanya ialah 13.55% '
+                 'sedangkan SPUS memerlukan > 17.95% - jurang 4.40 mata. 161 melepasi P1; '
+                 'tiada satu pun melepasi P2. Dan 22 daripada 24 yang risikonya boleh '
+                 'diterima memakai masuk RAWAK, iaitu tiada isyarat langsung.',
+            sebab='Portfolio ekuiti panjang-sahaja yang 100% melabur tidak boleh mempunyai '
+                  'MDD lebih cetek daripada indeks ekuiti melainkan ia memegang tunai - '
+                  'dan memegang tunai ialah T4. Enam mekanik bebas mengesahkannya.',
+            dapatan=[
+                'Keluar jauh lebih penting daripada masuk (sebaran 4.997 mata lawan lift '
+                'masuk terbaik 0.392), dan keluar peringkat PORTFOLIO lebih penting lagi: '
+                '+47.44% lawan +21.01% pada alam sama, kekal +34.78% selepas pembetulan '
+                'titik-masa.',
+                'Jangan tapis sehingga kolam calon runtuh - tetapi saringan BERDIRI '
+                'membantu. Pintu harian (7.7-21.8 calon/sesi) memusnahkan pemeringkat '
+                '(jurang 37.6 mata); saringan berdiri (102-326) memperbaiki kedua-dua '
+                'paksi. Peraturan: kolam calon >= ~10x bilangan slot.',
+                'Had industri ialah kekangan yang MEMBAYAR: had 1 memperbaiki kedua-dua '
+                'paksi (+1.65 mata CAGR DAN +1.60 mata MDD). Tanpa had, 6 daripada 8 slot '
+                'boleh berada dalam satu industri.',
+                'Masalah ekor ialah sifat ALAM, bukan hukum pasaran: 5% teratas membawa '
+                '101.67% jumlah pulangan pada alam 3,260 nama, 47.92% pada 214 nama, dan '
+                'tanpa5 POSITIF pada 8/8 sel bakul sektor.',
+                'Volatiliti rendah ialah lever MDD terbesar (+22.09 mata) tetapi '
+                'pertukaran TULEN (-17.47 mata CAGR) - berbeza daripada had industri.'],
+            t4=[dict(berat=100, cagr=17.95, mdd=-26.82),
+                dict(berat=60, cagr=10.87, mdd=-16.62),
+                dict(berat=40, cagr=7.27, mdd=-11.25),
+                dict(berat=30, cagr=5.46, mdd=-8.50)],
+            t4_nota='SISTEM.md mengukur nisbah CAGR/|MDD| campuran SPUS+tunai hampir '
+                    'PEMALAR 0.642-0.669 merentas setiap berat, jadi tiada titik optimum '
+                    'untuk dicari. Pilihan berat bukan soalan data - ia soalan toleransi '
+                    'drawdown, dan itu keputusan pengguna. Diimbang bulanan; baki dalam '
+                    'TUNAI, bukan bon.',
+            priori=dict(betul=15, separa=3, salah=13)),
         metrik=METRIK_N,
     )
+
+
+# Baris gilir E1-E6 (REVERSE/STRATEGI.md §4). Medan naratif ditulis tangan kerana ia
+# DAPATAN, bukan agregat; kiraan gate dikira daripada CSV supaya ia tidak boleh hanyut.
+GILIRAN = [
+    dict(id='E1', nama='PEGANG x SLOT', alam='AL01', fail='pegang_slot_ringkas.csv',
+         konfig=320, larian=3360, spec='SPEC_PEGANG_SLOT.md', lap='PEGANG_SLOT.md',
+         khusus='Had pegangan 42 bar mengalahkan "tiada had" pada 72/128 sel; '
+                'puncak +39.24% lawan +12.09% = +27.15 mata.',
+         dapatan='SZ10 DITOLAK: lengkung slot memuncak pada 80-160 dan MEROSOT; kolam '
+                 'penuh memberi 9.19-16.71%. Hingar pemilihan pada sel terbaik 42.8 mata '
+                 'merentas 20 benih - jalur mengecil kepada 16.3 mata pada 160 slot, jadi '
+                 'menambah slot membeli KEBOLEHPERCAYAAN bukan pulangan.', cabang='E2'),
+    dict(id='E2', nama='ALAM AL02', alam='AL02', fail='alam_ringkas.csv', tapis='AL02',
+         konfig=160, larian=1680, spec='SPEC_ALAM.md', lap='ALAM.md',
+         khusus='Gate (a) isyarat > kawalan LULUS 46.2%; gate (b) had pegangan merentas '
+                'alam GAGAL 27.5% — gabungan yang spec TIDAK liputi, jadi cabang ke E3 '
+                'ialah keputusan pengguna, bukan keputusan yang pradaftar benarkan.',
+         dapatan='Masalah EKOR ialah sifat ALAM, bukan hukum pasaran: 5% teratas membawa '
+                 '101.67% jumlah pulangan pada alam a02 luas (95% lain NEGATIF bersih) '
+                 'lawan 47.92% pada SPUS, dan tanpa5 +2.682% - POSITIF buat kali pertama '
+                 'dalam kajian. HAD: keahlian SPUS semasa menghasilkan tepat kesan ini.',
+         cabang='E3'),
+    dict(id='E3', nama='INSTRUMEN IS02 bakul sektor', alam='AL02',
+         fail='instrumen_ringkas.csv', konfig=40, larian=230,
+         spec='SPEC_INSTRUMEN.md', lap='INSTRUMEN.md',
+         khusus='E3 mengesahkan hipotesis SETUP.md: tanpa5 bakul POSITIF pada 8/8 sel '
+                '(+0.55% hingga +4.77%, tertinggi dalam kajian) lawan 0/598 setup saham.',
+         dapatan='Kepelbagaian merentas ekor MEMANG membetulkan masalah ekor - tetapi '
+                 'masalah BERPINDAH kepada drawdown. Hanya U14 momentum 12-1 mengalahkan '
+                 'kawalan (5/8); U11 dan U03 Clenow 0/8. Memegang bakul Electronic '
+                 'Technology SAHAJA memberi +32.67%, mengalahkan setiap putaran.',
+         cabang='E4'),
+    dict(id='E4', nama='KELUAR portfolio X31/X32', alam='AL02',
+         fail='keluar_portfolio_ringkas.csv', konfig=48, larian=276,
+         spec='SPEC_KELUAR_PORTFOLIO.md', lap='KELUAR_PORTFOLIO.md',
+         khusus='E4a LULUS: keluar peringkat portfolio mengalahkan keluar setiap posisi '
+                'terbaik pada alam SAMA, +47.44% lawan +21.01%.',
+         dapatan='PEMALSUAN: konfigurasi sama memberi +9.65%/-91.50% pada alam penuh dan '
+                 '+34.78%/-68.80% pada 214 teratas TITIK-MASA. Pulangan separa bertahan; '
+                 'risiko TIDAK - 30.9 mata kelebihan MDD AL02 ialah survivorship. Isyarat '
+                 'masuk MEROSAKKAN putaran berpangkat: RAWAK +47.44% lulus P3, '
+                 'GB02_atau3 +24.04% GAGAL P3.', cabang='E5'),
+    dict(id='E5', nama='KORELASI KR03 had industri', alam='AL04 titik-masa',
+         fail='korelasi_ringkas.csv', konfig=96, larian=1008,
+         spec='SPEC_KORELASI.md', lap='KORELASI.md',
+         khusus='E5a LULUS kedua-dua bahagian: had mencetekkan MDD pada 56.9% sel DAN '
+                'menaikkan nisbah pada 52/72 sel.',
+         dapatan='Had industri BUKAN pertukaran. Had 1 memperbaiki KEDUA-DUA paksi: '
+                 '+1.65 mata CAGR DAN +1.60 mata MDD lebih cetek. Mekanisme: tanpa had, '
+                 '6 daripada 8 slot boleh berada dalam SATU industri, jadi "8 slot" '
+                 'sebenarnya ~3 taruhan. Dapatan E4 berulang lebih kuat: jurang RAWAK '
+                 'lawan GB02 ialah 37.6 mata.', cabang='E6'),
+    dict(id='E6', nama='GABUNGAN GB07 hierarki', alam='AL04 titik-masa',
+         fail='hierarki_ringkas.csv', konfig=60, larian=440,
+         spec='SPEC_HIERARKI.md', lap='HIERARKI.md',
+         khusus='E6a LULUS: 19/48 sel saringan BERDIRI mengalahkan asas pada KEDUA-DUA '
+                'paksi.',
+         dapatan='Menapis tidak buruk - menapis sehingga JARANG yang buruk. Pintu masuk '
+                 'HARIAN beri 7.7-21.8 calon/sesi (kolam lebih kecil daripada slot) dan '
+                 'memusnahkan pemeringkat; saringan BERDIRI beri 102-326 (kolam 13-41x '
+                 'slot) dan memperbaiki kedua-dua paksi. PERATURAN: kekalkan kolam calon '
+                 '>= ~10x bilangan slot. A4 separuh ATR% rendah beri lever MDD TERBESAR '
+                 'dalam kajian (+22.09 mata) tetapi -17.47 mata CAGR = pertukaran tulen.',
+         cabang='BERHENTI-TUTUP'),
+]
+
+
+def _giliran(rd, ff, ii):
+    """Satu baris setiap eksperimen baris gilir, kiraan gate dikira daripada CSV."""
+    akar = os.path.dirname(BS2)
+    out = []
+    for g in GILIRAN:
+        R = rd(os.path.join(akar, 'REVERSE', g['fail']))
+        if g.get('tapis'):
+            R = [r for r in R if str(r.get('alam')) == g['tapis']]
+        d = dict({k: v for k, v in g.items() if k not in ('fail', 'tapis')},
+                 sedia=bool(R))
+        if R:
+            def kira(k):
+                return sum(1 for r in R if str(r.get(k)) == 'True')
+            t1 = sum(1 for r in R
+                     if (ff(r.get('cagr')) or -9e9) > 17.95
+                     and (ff(r.get('mdd')) or -9e9) >= -26.82)
+            t3 = sum(1 for r in R
+                     if (ff(r.get('cagr')) or -9e9) >= 15.0
+                     and (ff(r.get('mdd')) or -9e9) >= -15.0)
+            cg = [ff(r.get('cagr')) for r in R if ff(r.get('cagr')) is not None]
+            md = [ff(r.get('mdd')) for r in R if ff(r.get('mdd')) is not None]
+            d.update(n=len(R), t1=t1, t3=t3, P1=kira('P1'), P2=kira('P2'),
+                     P3=kira('P3'), P4=kira('P4'),
+                     cagr_maks=max(cg) if cg else None,
+                     mdd_cetek=max(md) if md else None)
+        out.append(d)
+    return out
 
 
 # Nama tiga lajur metrik bagi setiap pradaftar. Diangkat ke sini, bukan diulang pada

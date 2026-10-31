@@ -187,6 +187,14 @@ sudah diuji**; empat gagal, satu (`GB02`) lulus gate setiap-dagangan tetapi gaga
 **Kos:** rendah.
 - **JIKA gagal** → **BERHENTI–TUTUP.**
 
+**SELESAI 31 Okt 2026 — laporan `HIERARKI.md`. BARIS GILIR DITUTUP: `KEPUTUSAN_AKHIR.md`.**
+T1 0, T3 0 → **BERHENTI–TUTUP**. `P2` gagal kali **keenam**. Tetapi **`E6a` LULUS 19/48**:
+saringan **berdiri** memperbaiki **kedua-dua** paksi, sedangkan pintu masuk **harian**
+memusnahkan pemeringkat. Bezanya **kekerapan**, bukan jenis — pintu harian beri 7.7–21.8
+calon/sesi (kolam lebih kecil daripada slot), saringan berdiri beri 102–326 (kolam 13–41×
+slot). **Peraturan: kekalkan kolam calon ≥ ~10× bilangan slot.** Itu merekonsiliasi
+`SETUP.md` (598/598 penapis merugikan — kesemuanya pencetus jarang) dengan dapatan ini.
+
 ## 5. Apa yang TIDAK akan diuji lagi, dan mengapa
 
 Ditulis supaya ia tidak boleh dicadangkan semula tanpa bukti baharu:
@@ -224,6 +232,8 @@ diambil, dan sebabnya. Ini rekod *mengapa* kita berada di langkah semasa.
 | E3 | INSTRUMEN `IS02` (40) | **T1 0 · T3 0**; P1 26/40 tetapi **P2 0/40**; P3 5 (`U14` sahaja); P4 1 | **E4** |
 | E4 | KELUAR portfolio `X31`/`X32` (48) | **T1 0 · T3 0**; P1 33, **P2 0**, P3 16, P4 17; **`E4a` LULUS** (47.44% lawan 21.01%) | **E5** |
 | E5 | KORELASI `KR03` (96, `AL04` titik-masa) | **T1 0 · T3 0**; P1 23, **P2 0**; **`E5a` LULUS dua-dua** — had 1 beri **+1.65 CAGR DAN +1.60 MDD** | **E6** |
+| E6 | GABUNGAN `GB07` (60, `AL04` titik-masa) | **T1 0 · T3 0**; P1 38, **P2 0**; **`E6a` LULUS 19/48** — saringan berdiri perbaiki dua-dua paksi | **BERHENTI–TUTUP** |
+| — | **JUMLAH baris gilir** | **724 konfigurasi · 6,994 larian · P1 161 · P2 24 · T1 0 · T3 0** | `KEPUTUSAN_AKHIR.md` |
 
 ## 7. Peraturan proses — supaya kesilapan yang sama tidak berulang
 

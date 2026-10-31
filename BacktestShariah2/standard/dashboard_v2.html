@@ -4133,6 +4133,7 @@ function renderKaedahN(){
     sx=(d.silang||[]).filter(r=>r.masuk!=='ASAS').slice().sort((a,b)=>b.jangkaan-a.jangkaan),
     top=sx[0],
     /* db lama tiada `skor`: jatuh balik kepada jadual gate A/B/GAB/SX supaya tab tetap muat */
+    AK=d.akhir||null, GI=d.giliran||[],
     SK=d.skor||{ujian,lulus:g3,peratus:ujian?100*g3/ujian:null,corong:[]},
     NP=Object.fromEntries((SK.corong||[]).map(c=>[c.pra,c.ujian])),
     PK=Object.fromEntries((SK.corong||[]).map(c=>[c.pra,c.metrik]));
@@ -4149,13 +4150,37 @@ function renderKaedahN(){
      f:r=>r.hasil&&r.hasil.tanpa5!=null?`<span class="${cls(r.hasil.tanpa5)}">${sg2(r.hasil.tanpa5)}</span>`:'<span class="mut">–</span>'}];
   const gateRow=(k,t)=>{const g=gt[k]||{};return `<tr><td class="l">${t}</td><td>${g.ujian||0}</td><td>${g.g1||0}</td><td>${g.g2||0}</td><td class="${g.g3?'pos':''}"><b>${g.g3||0}</b></td></tr>`;};
   el.innerHTML=`
-  <p class="headline">Keluarga <b>kedua</b> selain Mxx: <b>${nD}</b> peraturan masuk dan <b>${all.length}</b> baris keseluruhan merentas <b>11 paksi</b>. Hasil daripada <b>${SK.ujian}</b> ujian dipradaftar merentas <b>enam</b> pradaftar, <b>${SK.lulus}</b> lulus (${SK.peratus==null?'–':fx(SK.peratus,1)+'%'}) — setiap spec dan kod dikomit sebelum keputusan dilihat. <b>Rekod kajian sahaja; bukan isyarat beli.</b></p>
+  <p class="headline">Keluarga <b>kedua</b> selain Mxx: <b>${nD}</b> peraturan masuk dan <b>${all.length}</b> baris keseluruhan merentas <b>11 paksi</b>. Hasil daripada <b>${SK.ujian}</b> ujian setiap-dagangan (<b>${SK.lulus}</b> lulus, ${SK.peratus==null?'–':fx(SK.peratus,1)+'%'}) dan <b>${AK?nf(AK.konfig):'–'}</b> konfigurasi portfolio (<b class="neg">${AK?AK.T1+AK.T3:'–'}</b> mencapai sasaran) — setiap spec dan kod dikomit sebelum keputusan dilihat. <b>Rekod kajian sahaja; bukan isyarat beli.</b></p>
   <div class="kpis">
     <div class="kpi"><div class="lbl">Baris registry</div><div class="v">${all.length}</div><div class="s">${nD} masuk · 11 paksi</div></div>
     <div class="kpi"><div class="lbl">Status</div><div class="v">${diuji}</div><div class="s">DIUJI · ${sedia} sedia · ${perlu} perlu data baharu</div></div>
     <div class="kpi"><div class="lbl" data-tip="kn_gate">Lulus semua gate</div><div class="v ${SK.lulus?'pos':'neg'}">${SK.peratus==null?'–':fx(SK.peratus,1)+'%'}</div><div class="s">${SK.lulus} daripada ${SK.ujian} ujian dipradaftar</div></div>
     <div class="kpi"><div class="lbl" data-tip="kn_jangkaan">Terbaik diukur</div><div class="v">${top?sg2(top.jangkaan):'–'}</div><div class="s">${top?`${esc(top.masuk)} × ${esc(top.keluar)} · setiap dagangan`:''}</div></div>
   </div>
+  ${!AK?'':`<div class="panel"><div class="panel-h"><h2>Keputusan akhir: ${esc(AK.status)}</h2><span class="sub">baris gilir E1–E6 ditutup · ${nf(AK.konfig)} konfigurasi · ${nf(AK.larian)} larian · setiap satu dipradaftar</span></div>
+    <div class="kpis" style="margin-bottom:12px">
+      <div class="kpi"><div class="lbl">Konfigurasi portfolio</div><div class="v">${nf(AK.konfig)}</div><div class="s">${nf(AK.larian)} larian simulasi</div></div>
+      <div class="kpi"><div class="lbl">Pulangan lulus (P1)</div><div class="v pos">${AK.P1}</div><div class="s">CAGR &gt; ${sg2(AK.spus_cagr)} SPUS</div></div>
+      <div class="kpi"><div class="lbl">Risiko lulus (P2)</div><div class="v ${AK.P2?'':'neg'}">${AK.P2}</div><div class="s">MDD ≥ ${sg2(AK.spus_mdd)} SPUS</div></div>
+      <div class="kpi"><div class="lbl">Capai sasaran (T1 atau T3)</div><div class="v neg">${AK.T1 + AK.T3}</div><div class="s">kedua-dua paksi serentak</div></div>
+    </div>
+    <p class="kesimpulan">${esc(AK.ayat)}</p>
+    <p class="note"><b>Sebabnya struktur, bukan nasib.</b> ${esc(AK.sebab)}</p>
+    <div class="crg-h" style="margin-top:14px">Lima dapatan yang BERTAHAN — gate gagal, dapatan ini tidak</div>
+    <ol class="utama3" style="margin:6px 0 0">${(AK.dapatan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
+    <div class="crg-h" style="margin-top:14px">Apa yang perlu dibuat sekarang: T4 — SPUS + tunai</div>
+    <div class="tablewrap"><table data-st="kn-t4"><thead><tr><th class="l">Berat SPUS</th><th>CAGR/tahun</th><th>MDD</th><th>Nisbah</th></tr></thead><tbody>
+      ${(AK.t4||[]).map(r=>`<tr${r.berat===100?' class="skw-top"':''}><td class="l"><b>${r.berat}%</b><span class="vv">baki tunai</span></td><td><b class="pos">${sg2(r.cagr)}</b></td><td class="neg">${sg2(r.mdd)}</td><td>${fx(r.cagr/Math.abs(r.mdd),2)}</td></tr>`).join('')}
+    </tbody></table></div>
+    <p class="note">${esc(AK.t4_nota)}</p>
+    ${!AK.priori?'':`<p class="note"><b>Rekod jangkaan priori saya merentas enam pradaftar:</b> ${AK.priori.betul} betul · ${AK.priori.separa} separa · ${AK.priori.salah} salah. Satu-satunya pradaftar yang kebanyakannya betul ialah yang menguji mekanisme yang <b>sudah</b> diukur. Pada ruang belum diukur saya salah lebih kerap daripada betul — itu sebabnya setiap larian dipradaftar.</p>`}
+  </div>`}
+  ${!GI.length?'':`<div class="panel"><div class="panel-h"><h2>Baris gilir E1–E6</h2><span class="sub">setiap eksperimen: spec dan kod dikomit sebelum keputusan dilihat</span></div>
+    <div class="tablewrap"><table data-st="kn-giliran"><thead><tr><th class="l">#</th><th class="l">Eksperimen</th><th class="l">Alam</th><th>Konfig</th><th>P1</th><th>P2</th><th>P3</th><th>P4</th><th>T1</th><th>T3</th><th class="l">Cabang</th></tr></thead><tbody>
+    ${GI.map(r=>`<tr><td class="l"><b>${esc(r.id)}</b></td><td class="l wrap">${esc(r.nama)}<span class="vv">${esc(r.spec)} → ${esc(r.lap)}</span></td><td class="l"><span class="nw">${esc(r.alam)}</span></td><td>${r.konfig}</td><td class="${r.P1?'pos':'mut'}">${r.P1==null?'–':r.P1}</td><td class="${r.P2?'pos':'neg'}">${r.P2==null?'–':r.P2}</td><td class="mut">${r.P3==null?'–':r.P3}</td><td class="mut">${r.P4==null?'–':r.P4}</td><td class="${r.t1?'pos':'neg'}"><b>${r.t1==null?'–':r.t1}</b></td><td class="${r.t3?'pos':'neg'}"><b>${r.t3==null?'–':r.t3}</b></td><td class="l wrap"><span class="mut">${esc(r.cabang)}</span></td></tr>
+    <tr class="skw-x"><td></td><td class="l wrap" colspan="10"><b>${esc(r.khusus||'')}</b> ${esc(r.dapatan||'')}</td></tr>`).join('')}
+    </tbody></table></div>
+    <p class="note"><b>P1</b> = CAGR &gt; 17.95% SPUS · <b>P2</b> = MDD ≥ −26.82% SPUS · <b>P3</b> = atasi persentil-95 kawalan rawak · <b>P4</b> = nisbah &gt; 0.669 · <b>T1</b> = P1 dan P2 serentak · <b>T3</b> = CAGR ≥ 15% dengan MDD ≥ −15%. Jumlah: <b>161</b> lulus P1, <b>24</b> lulus P2, dan <b>sifar</b> lulus kedua-duanya.</p></div>`}
   ${!(SK.corong||[]).length?'':`<div class="panel"><div class="panel-h"><h2>Kad skor: ${SK.lulus} daripada ${SK.ujian}</h2><span class="sub">enam pradaftar · setiap spec dan kod dikomit sebelum keputusan dilihat</span></div>
     <p class="kesimpulan"><b>${fx(SK.peratus,2)}%</b> daripada <b>${SK.ujian}</b> ujian dipradaftar melepasi gate terakhirnya. Angka itu ialah kadar kelulusan <b>statistik setiap dagangan</b> — <b>bukan</b> kadar kejayaan sistem dagangan. Satu-satunya kumpulan yang pernah diukur sebagai <b>portfolio</b> gagal kesemua empat gate portfolio, <b>0 / 36</b>.</p>
     <div class="corong">${(SK.corong||[]).map(c=>{const GL=c.pra==='CARA'?KN_GLC:KN_GL;

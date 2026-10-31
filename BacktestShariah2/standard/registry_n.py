@@ -915,6 +915,19 @@ def semak():
 # Keputusan terukur bagi paksi SELAIN masuk. Tanpa ini lajur Status kekal 'SEDIA'
 # walaupun baris itu sudah ada angka, dan papan memberi gambaran liputan yang terkurang.
 HASIL_PAKSI = {
+    # GABUNGAN hierarki: pradaftar SPEC_HIERARKI.md, larian step29 (REVERSE/HIERARKI.md).
+    'GB07': 'hierarki signal A = ALAM, signal B = URUTAN (alam AL04 titik-masa 500): '
+            'T1 0, T3 0, P2 0/60 - tetapi E6a LULUS, 19/48 sel mengalahkan asas pada '
+            'KEDUA-DUA paksi. Saringan BERDIRI memperbaiki kedua-dua paksi (A1 tutup>ma200 '
+            '+1.67/+1.47; A2 rs>=50 +4.26/+0.94; A3 rs>=80 +6.29/+0.23) sedangkan pintu '
+            'masuk HARIAN memusnahkan pemeringkat (jurang 37.6 mata, E5). Bezanya '
+            'KEKERAPAN bukan jenis: pintu harian beri 7.7-21.8 calon/sesi (kolam < slot), '
+            'saringan berdiri beri 102-326 (kolam 13-41x slot). PERATURAN: kekalkan kolam '
+            'calon >= ~10x bilangan slot. A4 (separuh ATR% rendah) beri lever MDD TERBESAR '
+            'dalam kajian, +22.09 mata lebih cetek, tetapi -17.47 mata CAGR = pertukaran '
+            'tulen. Terbaik A2 x U14 x 8 slot x had 2: +53.15%/-57.56%, satu cabutan, '
+            'BUKAN boleh didagang',
+
     # KORELASI: pradaftar SPEC_KORELASI.md, larian step28 (REVERSE/KORELASI.md).
     'KR03': 'had bilangan pegangan setiap industri, alam AL04 TITIK-MASA: T1 0, T3 0, '
             'P2 0/96 - tetapi E5a LULUS kedua-dua bahagian. Had 1 memperbaiki KEDUA-DUA '
