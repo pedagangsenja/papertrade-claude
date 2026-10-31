@@ -62,8 +62,13 @@ def skor_pangkat(P, RSP, a, cara, rng=None):
     return np.nan_to_num(s, nan=-9e9, posinf=-9e9, neginf=-9e9)
 
 
-def simulasi(P, RSP, CAL, LAYAK, slot, imbang, cara, benih, m0):
-    """Ekuiti harian putaran berpangkat. Imbang setiap `imbang` sesi, dagang pada BUKA."""
+def simulasi(P, RSP, CAL, LAYAK, slot, imbang, cara, benih, m0, ind=None, had_ind=None):
+    """Ekuiti harian putaran berpangkat. Imbang setiap `imbang` sesi, dagang pada BUKA.
+
+    `ind` (array kumpulan industri setiap ticker) dan `had_ind` (bilangan maksimum pegangan
+    setiap industri) ialah paksi `KR03` E5. Lalai `None` memberi tingkah laku IDENTIK
+    dengan E4 — disahkan sebagai kawalan regresi dalam ujian asap E5.
+    """
     rng = np.random.default_rng(benih)
     m = len(P.tarikh)
     tunai = 1.0
@@ -88,7 +93,18 @@ def simulasi(P, RSP, CAL, LAYAK, slot, imbang, cara, benih, m0):
                     urut = sorted(kolam, key=lambda t: -sc[t])
                     sah = [t for t in urut
                            if np.isfinite(P.O[t, d]) and P.O[t, d] > 0]
-                    pilih = set(sah[:slot])
+                    if had_ind is None:
+                        pilih = set(sah[:slot])
+                    else:
+                        pilih, kira = set(), {}
+                        for t in sah:
+                            if len(pilih) >= slot:
+                                break
+                            g = ind[t]
+                            if kira.get(g, 0) >= had_ind:
+                                continue
+                            kira[g] = kira.get(g, 0) + 1
+                            pilih.add(t)
                 else:
                     pilih = set()
                 # jual yang keluar daripada k teratas
