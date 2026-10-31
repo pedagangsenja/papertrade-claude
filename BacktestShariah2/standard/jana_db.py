@@ -500,13 +500,46 @@ def kaedah_n(dibina):
     return dict(
         dibina=dibina,
         nota='Registry Nxx: 262 baris merentas 11 paksi (MASUK, KELUAR, CARA, URUTAN, '
-             'GABUNGAN, SAIZ, ALAM, PEGANG, IMBANG, KORELASI, INSTRUMEN). Hasil daripada 371 '
+             'GABUNGAN, SAIZ, ALAM, PEGANG, IMBANG, KORELASI, INSTRUMEN). Hasil daripada 413 '
              'ujian dipradaftar: REVERSE/NXX.md (280), NXX_KELUAR.md (69), GABUNGAN.md (14), '
-             'SILANG_AKHIR.md (8). Setiap spec DAN kod dikomit sebelum keputusan dilihat. '
-             'Rekod kajian sahaja; bukan isyarat beli dan bukan prestasi portfolio.',
+             'SILANG_AKHIR.md (8), PORTFOLIO_N.md (36 konfigurasi / 264 larian), CARA.md (6). '
+             'Setiap spec DAN kod dikomit sebelum keputusan dilihat. Rekod kajian sahaja; '
+             'bukan isyarat beli.',
         rows=rows,
         gate=dict(A=dict(ujian=280, g1=52, g2=7, g3=0), B=dict(ujian=69, g1=24, g2=0, g3=0),
                   GAB=dict(ujian=14, g1=13, g2=8, g3=2), SX=dict(ujian=8, g1=8, g2=8, g3=8)),
+        # Dua pradaftar 31 Okt 2026 dengan gate TERSENDIRI, jadi diasingkan daripada jadual
+        # gate1/2/3 di atas (REVERSE/PORTFOLIO_N.md, REVERSE/CARA.md).
+        port=dict(ujian=36, larian=264, P1=3, P2=6, P3=15, P4=1, lulus=0,
+                  spus_cagr=17.95, spus_mdd=-26.82, spus_nisbah=0.669,
+                  baris=[dict(k='GB02_atau4 · 40 slot · X15 · U02', cagr=29.28, mdd=-56.51,
+                              nisbah=0.52, dedah=94.4, nb=1, p5=None, p95=None),
+                         dict(k='GB02_atau3 · 40 slot · X13 · U01', cagr=13.92, mdd=-38.38,
+                              nisbah=0.36, dedah=81.6, nb=20, p5=7.21, p95=21.16),
+                         dict(k='GB02_atau3 · 8 slot · X13 · U01', cagr=9.40, mdd=-44.82,
+                              nisbah=0.21, dedah=82.8, nb=20, p5=1.14, p95=24.45),
+                         dict(k='RAWAK · 8 slot · X15 · U08 (tiada isyarat)', cagr=11.19,
+                              mdd=-12.14, nisbah=0.92, dedah=98.9, nb=1, p5=None, p95=None)],
+                  diambil=[dict(k='populasi penuh', n=195681, min=8.541, menang=64.2,
+                                pegang=None, tanpa5=2.858),
+                           dict(k='diambil, 8 slot', n=674, min=8.015, menang=67.1,
+                                pegang=84.9, tanpa5=1.558),
+                           dict(k='diambil, 40 slot', n=3495, min=7.483, menang=63.5,
+                                pegang=81.5, tanpa5=1.140)]),
+        cara=dict(ujian=6, C1=0, C2=0, C3=4, lulus=0,
+                  baris=[dict(k='C01', n='pasaran buka esok (asas repo)', isi=100.0,
+                              sig=8.540, isian=8.541, menang=64.2, tanpa5=2.858, h0=0),
+                         dict(k='C02', n='buy-stop tinggi20 x1.002, 5 bar', isi=13.3,
+                              sig=0.682, isian=5.119, menang=65.8, tanpa5=-0.180, h0=0),
+                         dict(k='C03', n='buy-limit -1.5%, 3 bar', isi=72.2,
+                              sig=7.227, isian=10.011, menang=64.6, tanpa5=3.945, h0=0),
+                         dict(k='C04', n='buy-limit -1.0%, 3 bar', isi=79.0,
+                              sig=7.429, isian=9.408, menang=64.5, tanpa5=3.577, h0=0),
+                         dict(k='C05', n='OCO -2% / +2%, 5 bar', isi=98.0,
+                              sig=8.044, isian=8.208, menang=63.7, tanpa5=2.563, h0=0),
+                         dict(k='C06', n='bracket +6% / -3%', isi=100.0,
+                              sig=-0.591, isian=-0.591, menang=32.9, tanpa5=-0.985,
+                              h0=65240)]),
         keluar=[dict(keluar=r['keluar'], peraturan=r.get('peraturan'),
                      jangkaan=ff(r.get('jangkaan_tahan')), menang=ff(r.get('menang'), 1),
                      n=ii(r.get('n_tahan'))) for r in B if r.get('masuk') == 'ASAS'],

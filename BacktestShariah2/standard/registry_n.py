@@ -937,6 +937,16 @@ HASIL_PAKSI = {
     'X36': 'jangkaan asas +0.892%, menang 35.7%, n 4,420,650',
     'X37': 'jangkaan asas +0.839%, menang 6.4%, n 4,138,081',
     'X41': 'jangkaan asas +0.839%, menang 6.4%, n 4,138,081',
+    # CARA: REVERSE/CARA.md (31 Okt 2026) — masuk GB02_atau3, keluar X13, tingkap tahan.
+    # Jangkaan SETIAP SIGNAL (isyarat tidak terisi dikira 0%), itu penyebut yang jujur.
+    'C01': 'jangkaan/signal +8.540%, kadar isi 100.0%, menang 64.2% — TERBAIK daripada 6',
+    'C02': 'jangkaan/signal +0.682%, kadar isi 13.3%, /isi +5.119% (lebih teruk juga)',
+    'C03': 'jangkaan/signal +7.227%, kadar isi 72.2%, /isi +10.011% (lebih baik setiap isian)',
+    'C04': 'jangkaan/signal +7.429%, kadar isi 79.0%, /isi +9.408%',
+    'C05': 'jangkaan/signal +8.044%, kadar isi 98.0%',
+    'C06': 'jangkaan/signal -0.591%, menang 32.9%, henti hari-0 33.3% — sasaran untung musnah',
+    # URUTAN: REVERSE/PORTFOLIO_N.md (31 Okt 2026) — 5 daripada 6 lulus gate MDD guna U08.
+    'U08': 'ATR% menaik: 5/6 konfigurasi lulus gate MDD; urutan mengawal MDD, bukan bilangan slot',
     # GABUNGAN: 14 konfigurasi (REVERSE/GABUNGAN.md); nilai = konfigurasi terbaik keluarga itu.
     'GB02': 'terbaik GB02_atau2: lift +0.793 latih / +3.299 tahan, jangkaan +5.893%, n 93,416; 2/6 lulus gate3',
     'GB03': 'terbaik GB03_undi4: lift +0.858 latih / +3.036 tahan, jangkaan +5.630%, n 85,575; 0/3 lulus gate3',

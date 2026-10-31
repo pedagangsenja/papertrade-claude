@@ -32,7 +32,7 @@ Kelima-lima ini mengikut terus daripada ukuran yang repo **sudah** ada. Tiada sa
 - `SEDIA` — semua indikator yang diperlukan sudah dikira oleh kod repo (`REVERSE/teras/ind.py` atau `REVERSE/step15_setup.py` / `step17_kombinasi.py`); boleh diuji tanpa kod indikator baharu.
 - `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.
 
-Masuk: 147 (78 DIUJI, 0 SEDIA, 69 PERLU). Keluar: 45 (30 DIUJI, 3 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
+Masuk: 147 (78 DIUJI, 0 SEDIA, 69 PERLU). Keluar: 45 (30 DIUJI, 3 SEDIA, 12 PERLU). Cara: 12 (6 DIUJI, 3 SEDIA, 3 PERLU). Urutan: 13 (6 DIUJI, 2 SEDIA, 5 PERLU).
 
 Tujuh paksi baharu (30 Okt 2026): GABUNGAN 8 · SAIZ 10 · ALAM 8 · PEGANG 6 · IMBANG 5 · KORELASI 4 · INSTRUMEN 4. Jumlah semua paksi: 262 baris.
 
