@@ -47,3 +47,9 @@ jobs:
         run: python3 BacktestShariah2/standard/pecah_claude.py
       - name: Integriti Lejar Penuh (lejar.py semak)
         run: python3 BacktestShariah2/standard/lejar.py semak
+      # Hanya arah "repo disunting tanpa diterbitkan". Arah bertentangan ("diterbitkan
+      # tanpa dikomit", yang berlaku DUA KALI pada 30-31 Okt 2026) TIDAK boleh disemak di
+      # sini: /api/artifacts/... dilindungi cabaran Cloudflare, jadi runner tidak dapat
+      # membaca artifact hidup. Arah itu disemak setiap hari oleh jadual/tolak_db.md §7.
+      - name: Dashboard selaras dengan terbitan terakhir (semak_terbit.py)
+        run: python3 BacktestShariah2/standard/semak_terbit.py

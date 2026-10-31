@@ -6,7 +6,7 @@ Semua pengiraan dibuat oleh GitHub Actions (`standard/harian_c.py`, `.github/wor
 Sesi ini hanya (1) memastikan Actions sudah berjalan dan (2) menolak fail yang sudah dijana ke db dashboard.
 Jangan baca fail CSV besar dan jangan bina JSON dengan tangan; guna skrip.
 
-Alat (satu panggilan ToolSearch): `select:ArtifactData,mcp__github__actions_list,mcp__github__actions_run_trigger`
+Alat (satu panggilan ToolSearch): `select:ArtifactData,Artifact,mcp__github__actions_list,mcp__github__actions_run_trigger`
 Notifikasi (keputusan pengguna 27 Okt 2026): ntfy SAHAJA (ringkasan belian dihantar oleh `beli.yml`); JANGAN guna PushNotification.
 Dashboard: https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e
 
@@ -26,4 +26,16 @@ Dashboard: https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e
 6. Amaran (hanya jika langkah 2–5 gagal atau db tidak ditolak): `mcp__github__actions_run_trigger` (method `run_workflow`,
    owner `pedagangsenja`, repo `papertrade-claude`, workflow_id `amaran_ntfy.yml`, ref `main`, inputs
    {"tajuk": "tolak db gagal", "mesej": "<tarikh>: <sebab ringkas, < 200 aksara>"}). Berjaya → tiada notifikasi.
+7. **Dashboard hidup lawan repo** (satu-satunya tempat semakan ini boleh dibuat: GitHub Actions
+   tidak dapat membaca artifact kerana `/api/artifacts/...` dilindungi cabaran Cloudflare).
+   `Artifact` `read`, `url` dashboard. Baris pertama hasilnya menyatakan version id, contohnya
+   `(version 1793412015-9909)` — ambil id itu. (`Artifact` `list` TIDAK memadai: ia hanya memberi
+   tajuk, pautan dan tarikh dikemas, tanpa version id.) Bacaan ini tidak perlu dibaca sepenuhnya
+   kerana sesi ini tidak menerbit apa-apa; hanya baris pertama diperlukan.
+   Banding dengan medan `versi_artifact` dalam `BacktestShariah2/data/dashboard_terbit.json`.
+   - Sama → tiada tindakan.
+   - BERBEZA → artifact diterbitkan tanpa dikomit (ini berlaku dua kali pada 30–31 Okt 2026:
+     v132–v138, kemudian v139). JANGAN terbit apa-apa dan JANGAN tulis ganti. Cetus amaran
+     `amaran_ntfy.yml` dengan mesej `dashboard hidup <versi> != repo <versi>; perlu gabung`,
+     dan catat dalam notifikasi. Penggabungan dibuat oleh sesi kerja bersama pengguna, bukan di sini.
 Tiada commit diperlukan (sesi ini tidak mengubah fail repo).
