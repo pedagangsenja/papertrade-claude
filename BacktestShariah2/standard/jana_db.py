@@ -497,6 +497,8 @@ def kaedah_n(dibina):
         if x['id'] in best:
             d['hasil'] = best[x['id']]
         rows.append(d)
+    UJ = _ujian_n(A, B, G, X, rd(os.path.join(RV, 'portfolio_n_ringkas.csv')),
+                  rd(os.path.join(RV, 'cara.csv')), ff, ii, bl)
     return dict(
         dibina=dibina,
         nota='Registry Nxx: 262 baris merentas 11 paksi (MASUK, KELUAR, CARA, URUTAN, '
@@ -554,8 +556,8 @@ def kaedah_n(dibina):
                      rugi=ff(r.get('rugi'), 2), tanpa5=ff(r.get('tanpa5')),
                      asas5=ff(r.get('asas5')), p=ff(r.get('p'), 6), n=ii(r.get('n_tahan')),
                      g3=bl(r.get('gate3'))) for r in X],
-        ujian=_ujian_n(A, B, G, X, rd(os.path.join(RV, 'portfolio_n_ringkas.csv')),
-                       rd(os.path.join(RV, 'cara.csv')), ff, ii, bl),
+        ujian=UJ,
+        skor=_skor_n(UJ),
         metrik=METRIK_N,
     )
 
@@ -594,7 +596,8 @@ def _ujian_n(A, B, G, X, PO, CA, ff, ii, bl):
                       p=ff(r.get('p'), 6),
                       gate=gt(('1', bl(r.get('gate1'))), ('2', bl(r.get('gate2'))),
                               ('3', bl(r.get('gate3')))),
-                      lulus=bl(r.get('gate3')), nota='semak pemalsuan' if 'semak' in m else ''))
+                      lulus=bl(r.get('gate3')), ref=1 if 'semak' in m else 0,
+                      nota='semak pemalsuan' if 'semak' in m else ''))
     for r in B:
         asas = r.get('masuk') == 'ASAS'
         U.append(dict(pra='B', masuk=r.get('masuk'), cara='C01', keluar=r.get('keluar'),
@@ -603,7 +606,7 @@ def _ujian_n(A, B, G, X, PO, CA, ff, ii, bl):
                       p=ff(r.get('p'), 6),
                       gate=gt(('0', bl(r.get('gate0'))), ('1', bl(r.get('gate1'))),
                               ('2', bl(r.get('gate2'))), ('3', bl(r.get('gate3')))),
-                      lulus=bl(r.get('gate3')),
+                      lulus=bl(r.get('gate3')), ref=0,
                       nota='asas tanpa penapis masuk' if asas else r.get('peraturan', '')))
     for r in G:
         asas = r.get('konfig') == 'ASAS'
@@ -613,7 +616,8 @@ def _ujian_n(A, B, G, X, PO, CA, ff, ii, bl):
                       p=ff(r.get('p'), 6),
                       gate=gt(('0', bl(r.get('gate0'))), ('1', bl(r.get('gate1'))),
                               ('2', bl(r.get('gate2'))), ('3', bl(r.get('gate3')))),
-                      lulus=bl(r.get('gate3')), nota='asas' if asas else ''))
+                      lulus=bl(r.get('gate3')), ref=1 if asas else 0,
+                      nota='asas' if asas else ''))
     for r in X:
         asas = r.get('masuk') == 'ASAS'
         U.append(dict(pra='SX', masuk=r.get('masuk'), cara='C01', keluar=r.get('keluar'),
@@ -622,7 +626,8 @@ def _ujian_n(A, B, G, X, PO, CA, ff, ii, bl):
                       p=ff(r.get('p'), 6),
                       gate=gt(('0', bl(r.get('gate0'))), ('1', bl(r.get('gate1'))),
                               ('2', bl(r.get('gate2'))), ('3', bl(r.get('gate3')))),
-                      lulus=bl(r.get('gate3')), nota='asas' if asas else ''))
+                      lulus=bl(r.get('gate3')), ref=1 if asas else 0,
+                      nota='asas' if asas else ''))
     for r in PO:
         kaw = r.get('masuk') == 'RAWAK'
         U.append(dict(pra='PORT',
@@ -654,7 +659,84 @@ def _ujian_n(A, B, G, X, PO, CA, ff, ii, bl):
                       lulus=bl(r.get('CARA1')) and bl(r.get('CARA2')) and bl(r.get('CARA3')),
                       nota=f'jangkaan/isi {ff(r.get("jangkaan_isi"))}%'
                            + (f' · henti hari-0 {h0:,}' if h0 else '')))
+    for r in U:
+        if not r.get('ref'):
+            r.pop('ref', None)   # baris ujian = kebanyakan; jangan bayar bait untuk ref=0
+    _pangkat_n(U)
     return U
+
+
+# Metrik yang menentukan pangkat dalam setiap pradaftar, sebagai indeks ke dalam METRIK_N:
+# "jangkaan tahan" bagi pradaftar setiap-dagangan, "CAGR tahan" bagi portfolio. Pangkat
+# dikira DALAM kumpulan sendiri sahaja — 2 mata lift dan 9% CAGR bukan unit yang sama.
+PANGKAT_N = {'A': 2, 'B': 2, 'GAB': 2, 'SX': 2, 'PORT': 1, 'CARA': 1}
+
+
+def _pangkat_n(U):
+    """Tulis `pangkat` (1 = terbaik) dalam setiap kumpulan pradaftar.
+
+    Baris rujukan (`ref`: asas tanpa penapis, semakan pemalsuan) tidak diberi pangkat —
+    ia bukan ujian dipradaftar, jadi memangkatkannya akan mengubah penyebut "3 / 280".
+    """
+    for pra, i in PANGKAT_N.items():
+        g = [r for r in U if r['pra'] == pra and not r.get('ref')]
+        kk = ('m1', 'm2', 'm3')[i]
+        g.sort(key=lambda r: (r[kk] is None, -(r[kk] or 0.0)))
+        for n_, r in enumerate(g, 1):
+            r['pangkat'] = n_
+
+
+def _skor_n(U):
+    """Kad skor: kadar lulus setiap pradaftar, dikira daripada senarai ujian YANG SAMA.
+
+    Sengaja diterbitkan daripada `U` dan bukan ditulis tangan: peratus pada kad tidak boleh
+    menyimpang daripada baris yang jadual tunjukkan. Baris rujukan dibuang daripada penyebut.
+    """
+    NAMA = {'A': 'A · ruang MASUK', 'B': 'B · ruang KELUAR', 'GAB': 'Paksi GABUNGAN',
+            'SX': 'Silang akhir', 'PORT': 'Portfolio lawan SPUS', 'CARA': 'Paksi CARA'}
+    corong, n_uji, n_lulus = [], 0, 0
+    for pra in ('A', 'B', 'GAB', 'SX', 'PORT', 'CARA'):
+        g = [r for r in U if r['pra'] == pra and not r.get('ref')]
+        if not g:
+            continue
+        tok = []
+        for r in g:
+            for t in (r.get('gate') or '').split():
+                if t[:-1] not in tok:
+                    tok.append(t[:-1])
+        lulus = sum(1 for r in g if r['lulus'])
+        n_uji += len(g); n_lulus += lulus
+        corong.append(dict(pra=pra, nama=NAMA[pra], ujian=len(g), lulus=lulus,
+                           tahap=[dict(g=k, n=sum(1 for r in g
+                                                  if f'{k}Y' in (r.get('gate') or '').split()))
+                                  for k in tok],
+                           metrik=METRIK_N[pra][PANGKAT_N[pra]]))
+    return dict(
+        ujian=n_uji, lulus=n_lulus,
+        peratus=round(100.0 * n_lulus / n_uji, 2) if n_uji else None,
+        corong=corong,
+        # "Terbaik" bermaksud terbaik SETIAP DAGANGAN. Nombor portfolio diletak bersebelahan
+        # dengan sengaja: ia pradaftar yang sama, dan tanpa lajur itu kad ini akan menipu.
+        terbaik=dict(
+            k='GB02_atau3 × X13',
+            aturan='Masuk: N19 ∪ N37 ∪ N115 (kesatuan ATAU, bukan penapis DAN). '
+                   'Keluar: rsi14 > 70 → jual buka esok. Cara: C01 beli pada buka esok.',
+            dagangan=8.541, menang=64.2, n=195681, tanpa5=2.858,
+            slot=8, cagr=9.40, mdd=-44.82, nisbah=0.21,
+            slot2=40, cagr2=13.92, mdd2=-38.38, nisbah2=0.36,
+            spus_cagr=17.95, spus_mdd=-26.82, spus_nisbah=0.669,
+            verdikt='Lulus KESEMUA gate setiap-dagangan (gate0–gate3) — satu daripada dua '
+                    'sahaja dalam 413 ujian yang pernah melepasi gate3 pada paksi GABUNGAN. '
+                    'GAGAL sebagai portfolio: 0 daripada 36 konfigurasi melepasi keempat-empat '
+                    'gate portfolio, dan CAGR 9.40% berada 8.6 mata di bawah SPUS dengan MDD '
+                    '18 mata lebih dalam.',
+            sebab='Jurangnya diukur, bukan ditafsir: tempoh pegang 84.9 bar (≈3 pusingan slot '
+                  'setahun) dan kelebihan yang hidup dalam ekor — selepas membuang 5% dagangan '
+                  'terbaik yang DIAMBIL, purata jatuh kepada +1.558% setiap 4 bulan. Tiada bias '
+                  'pemilihan: dagangan yang diambil memberi +8.015% lawan populasi +8.541%.',
+            syarat='BERSYARAT: kolam 12 signal GB02 dan keluar X13/X15 dipilih daripada data '
+                   'yang SAMA, jadi tiada tingkap bebas tinggal. Alam A02 tiada saham delist '
+                   '(setiap CAGR condong ke atas).'))
 
 
 # ---------------------------------------------------------------- utama
