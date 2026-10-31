@@ -32,6 +32,10 @@ memakai konvensyen pertama.
 | **T1** | CAGR > 17.95% **DAN** MDD ≥ −26.82% | belum dicapai oleh apa-apa (0 / 413 + 36) |
 | **T2** | nisbah `CAGR ÷ \|MDD\|` > 0.669 **DAN** CAGR > 17.95% | belum dicapai |
 | **T3** | CAGR ≈ SPUS (≥ 15%) dengan MDD **jauh lebih cetek** (≥ −15%) | belum diuji sebagai sasaran |
+
+**KEPUTUSAN PENGGUNA 31 Okt 2026: sasaran = T1 ATAU T3 (mana-mana satu).** T3 dipilih sebagai
+syarat menang penuh, bukan separa, kerana bagi pedagang swing MDD −15% berbanding −27% ialah
+kemenangan sebenar walaupun pulangan sama. `strategi.py` menguatkuasakan takrif ini.
 | **T4** | Terima SPUS + tunai pada berat pilihan pengguna | **tersedia sekarang, tiada kajian diperlukan** |
 
 T4 bukan kekalahan: `SISTEM.md` mengukur nisbah campuran SPUS+tunai hampir **pemalar
@@ -40,18 +44,20 @@ soalan data. 100% → +17.95%/−26.82%; 60% → +10.87%/−16.62%; 40% → +7.2
 
 ## 3. Syarat berhenti — dipra-komit, tidak boleh dilonggarkan selepas melihat keputusan
 
-**BERHENTI–MENANG:** mana-mana eksperimen dalam baris gilir §4 melepasi **T1 atau T2**
+**BERHENTI–MENANG:** mana-mana eksperimen dalam baris gilir §4 melepasi **T1 atau T3**
 dengan kawalan rawak dan jalur benih, pada tingkap tahan. Tindakan: bekukan konfigurasi,
 tulis spec hadapan, jalankan sebagai lorong `portfolio_slot/` selama ≥ 126 sesi sebelum
 sebarang dakwaan.
 
-**BERHENTI–TUTUP:** jika **E1 hingga E6 selesai dan tiada satu pun melepasi T1 atau T2**,
+**BERHENTI–TUTUP** (diterima pengguna 31 Okt 2026)**:** jika **E1 hingga E6 selesai dan
+tiada satu pun melepasi T1 atau T3**,
 kajian signal/pembinaan **ditutup**. Tindakan: terima **T4**, pengguna pilih berat, dan
 sumber dialih sepenuhnya kepada pelaksanaan (kecacatan henti hari-0, kualiti data, jejak
 hadapan). **Tiada eksperimen ke-7 ditambah selepas melihat keputusan E1–E6.**
 
-**BERHENTI–SEPARA:** jika sesuatu melepasi **T3** sahaja, ia dilaporkan sebagai lorong
-risiko-rendah dan diuji ke hadapan, tetapi **tidak** didakwa mengalahkan SPUS.
+**BERHENTI–SEPARA:** jika sesuatu melepasi **T2** sahaja (nisbah `CAGR ÷ |MDD|` > 0.669
+tetapi CAGR di bawah 15%), ia dilaporkan sebagai lorong risiko-rendah dan diuji ke hadapan,
+tetapi **tidak** didakwa mengalahkan SPUS dan ia **tidak** menghentikan baris gilir.
 
 Syarat tambahan yang mengikat semua: apa-apa dapatan pada alam `AL01` kekal **bersyarat**
 sehingga `E2` menjalankannya pada alam dagangan sebenar.
@@ -66,7 +72,7 @@ Pradaftar `SPEC_PEGANG_SLOT.md`, skrip `step24_pegang_slot.py` (komit `3370a4f`)
 **Bukti:** jangkaan/dagangan dan pusingan/tahun bergerak bertentangan dan hanya dua hujung
 pernah diukur (`X29` 10 bar +0.294%; `X13` ~85 bar +4.350%); lengkung slot menaik monoton
 pada kedua-dua paksi dalam DUA kajian bebas dan tidak pernah dijalankan ke hadnya.
-- **JIKA T1/T2 lulus** → BERHENTI–MENANG.
+- **JIKA T1/T3 lulus** → BERHENTI–MENANG.
 - **JIKA had pegangan menang tetapi masih bawah T1** → bawa had terbaik ke E2–E4 sebagai
   tetapan tetap; jangan ulang paksi ini.
 - **JIKA slot tinggi menang hanya kerana isyarat tidak lagi menyumbang** (gate `P3` gagal di
@@ -92,8 +98,8 @@ gagal, kerana indeks **itulah** kepelbagaian merentas ekor. ETF sektor ialah tit
 antara satu saham dan satu indeks, dan ia tidak pernah diuji.
 **Kos:** sederhana — repo **tiada** data ETF sektor (A02 = 3,260 saham; `idx.parquet` hanya
 SPY + QQQ). Perlu muat turun ~11 ticker SPDR, 2009–2026, ke dalam stor yang sama.
-- **JIKA T1/T2 lulus** → BERHENTI–MENANG.
-- **JIKA hanya T3** → BERHENTI–SEPARA, dan E4–E6 dijalankan hanya jika pengguna mahu.
+- **JIKA T1/T3 lulus** → BERHENTI–MENANG.
+- **JIKA hanya T2** → BERHENTI–SEPARA; baris gilir **diteruskan** ke E4.
 - **JIKA gagal** → E4.
 
 ### E4 · KELUAR `X31`/`X32` — keluar peringkat PORTFOLIO

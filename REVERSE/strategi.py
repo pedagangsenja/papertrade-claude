@@ -26,6 +26,8 @@ REG = AKAR / 'BacktestShariah2' / 'data' / 'registry_N.csv'
 # konvensyen median-setiap-tahun 26.09% / -10.14%).
 SPUS_CAGR, SPUS_MDD, SPUS_NISBAH = 17.95, -26.82, 0.669
 T3_CAGR, T3_MDD = 15.0, -15.0
+# Keputusan pengguna 31 Okt 2026: MENANG = T1 ATAU T3. T2 dilapor sebagai diagnostik sahaja
+# (BERHENTI-SEPARA) dan tidak menghentikan baris gilir.
 
 # Lajur yang BOLEH mengandungi id paksi. Medan nota sengaja dikecualikan: nota menyebut id
 # yang belum diuji secara sah, dan mengimbasnya akan memberi hanyutan palsu.
@@ -164,20 +166,26 @@ def main(argv=None):
              for e, st, _ in K if e.get('pf') and st == 'SELESAI')
     t2 = sum(nilai_tingkat(baca(RV / e['fail']))[1]
              for e, st, _ in K if e.get('pf') and st == 'SELESAI')
+    t3 = sum(nilai_tingkat(baca(RV / e['fail']))[2]
+             for e, st, _ in K if e.get('pf') and st == 'SELESAI')
 
     if not a.semak:
-        if t1 or t2:
-            print(f'BERHENTI–MENANG: {t1} konfigurasi melepasi T1, {t2} melepasi T2. '
+        if t1 or t3:
+            print(f'BERHENTI–MENANG: {t1} konfigurasi melepasi T1, {t3} melepasi T3 '
+                  f'(T2 diagnostik: {t2}). '
                   'Bekukan konfigurasi dan jalankan ujian hadapan >= 126 sesi.')
         elif not belum:
-            print('BERHENTI–TUTUP: baris gilir E1–E6 selesai dan tiada melepasi T1/T2. '
+            print('BERHENTI–TUTUP: baris gilir E1–E6 selesai dan tiada melepasi T1/T3. '
                   'Kajian signal/pembinaan ditutup; terima T4 (SPUS + tunai pada berat '
                   'pilihan pengguna) dan alih sumber kepada pelaksanaan.')
         else:
             print(f'LANGKAH SETERUSNYA: {belum[0]["id"]} — {belum[0]["nama"]}')
             print(f'  tinggal dalam baris gilir: '
                   f'{", ".join(e["id"] for e in belum)}  '
-                  f'(selepas E6 tanpa T1/T2 -> BERHENTI–TUTUP)')
+                  f'(selepas E6 tanpa T1/T3 -> BERHENTI–TUTUP)')
+            if t2:
+                print(f'  BERHENTI–SEPARA: {t2} konfigurasi melepasi T2 (nisbah) sahaja — '
+                      'dilapor sebagai lorong risiko-rendah, baris gilir diteruskan.')
         print()
 
     if bad:
