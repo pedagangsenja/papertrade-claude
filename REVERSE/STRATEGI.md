@@ -146,6 +146,22 @@ diagnosis: pusing ganti ~3 kali/slot/tahun.
 **Kos:** sederhana — perlu gelung pangkat + imbang dalam enjin `step22`.
 - Cabang sama seperti E3.
 
+**SELESAI 31 Okt 2026 — laporan `KELUAR_PORTFOLIO.md`.** T1 0, T3 0 → **E5**. `P2` gagal
+pada setiap sel untuk kali **keempat berturut-turut**. **`E4a` LULUS**: keluar peringkat
+portfolio mengalahkan keluar setiap posisi terbaik pada alam yang sama (47.44% lawan
+21.01%), jadi jangkaan priori saya salah — pada 214 saham kolam pemeringkat cukup besar
+untuk pemeringkatan menambah nilai, tidak seperti 11 bakul E3.
+
+**DUA DAPATAN YANG MENGUBAH BACAAN LAPORAN TERDAHULU:**
+1. **Isyarat masuk MEROSAKKAN putaran berpangkat.** `RAWAK` (tiada isyarat) +47.44% dan
+   lulus `P3`; `GB02_atau3` +24.04% dan **gagal** `P3`. Menapis membuang calon, dan
+   pemeringkat memerlukan calon — `SETUP.md` pada paksi baharu.
+2. **Pandang ke hadapan keahlian `AL02` menyanjung MDD sebanyak 30.9 mata.** Diagnostik
+   pemalsuan `AL04` (N teratas nilai20, **titik-masa kausal**): konfigurasi yang sama
+   memberi −37.94% pada `AL02` tetapi **−68.80%** pada 214 teratas titik-masa. Pulangan
+   separa bertahan (+34.78%); risiko **tidak**. **Laporan E2 dan E3 mesti dibaca dengan
+   pembetulan ini.**
+
 ### E5 · KORELASI `KR03` — had bilangan setiap industri
 **Bukti:** tidak pernah diukur. 8–10 slot yang semuanya satu industri = berkesan 2–3 slot.
 `PORTFOLIO_N.md` mendapati MDD dikawal oleh **urutan**, bukan bilangan slot — had industri
@@ -196,6 +212,7 @@ diambil, dan sebabnya. Ini rekod *mengapa* kita berada di langkah semasa.
 | E1 | PEGANG × SLOT (320) | **T1 0 · T3 0 · lulus 0/320** (P1 29, P2 24, P3 101, P4 9) | **E2** |
 | E2 | ALAM `AL02` (160) | **T1 0 · T3 0**; gate (a) **lulus 46.2%**, gate (b) **gagal 27.5%** | **spec tidak meliputi kes ini — keputusan pengguna: E3 pada `AL02`** |
 | E3 | INSTRUMEN `IS02` (40) | **T1 0 · T3 0**; P1 26/40 tetapi **P2 0/40**; P3 5 (`U14` sahaja); P4 1 | **E4** |
+| E4 | KELUAR portfolio `X31`/`X32` (48) | **T1 0 · T3 0**; P1 33, **P2 0**, P3 16, P4 17; **`E4a` LULUS** (47.44% lawan 21.01%) | **E5** |
 
 ## 7. Peraturan proses — supaya kesilapan yang sama tidak berulang
 

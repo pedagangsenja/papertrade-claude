@@ -915,6 +915,26 @@ def semak():
 # Keputusan terukur bagi paksi SELAIN masuk. Tanpa ini lajur Status kekal 'SEDIA'
 # walaupun baris itu sudah ada angka, dan papan memberi gambaran liputan yang terkurang.
 HASIL_PAKSI = {
+    # KELUAR peringkat portfolio + ALAM titik-masa: pradaftar SPEC_KELUAR_PORTFOLIO.md,
+    # larian step27 (REVERSE/KELUAR_PORTFOLIO.md).
+    'X31': 'putaran berpangkat, metrik dikunci pulangan 252 hari (alam AL02): T1 0, T3 0, '
+           'P2 0/48. Terbaik +46.22%/-43.24% dengan masuk RAWAK. Beza median 1.59 mata '
+           'CAGR daripada X32+U14 pada sel sepadan - dibaca sebagaimana sumber tulis, X31 '
+           'memang kes khas X32',
+    'X32': 'putaran berpangkat, imbang berkala sahaja (alam AL02): T1 0, T3 0, P1 33/48 '
+           'tetapi P2 0/48. E4a LULUS - keluar peringkat portfolio mengalahkan keluar '
+           'setiap posisi terbaik pada alam SAMA, +47.44% lawan +21.01%. DAPATAN YANG '
+           'BERTAHAN: masuk bersignal MEROSAKKAN putaran - GB02_atau3 terbaik +24.04% dan '
+           'GAGAL P3, lawan RAWAK (tiada isyarat) +47.44% yang LULUS P3; menapis membuang '
+           'calon dan pemeringkat memerlukan calon. AMARAN: +47.44% sebahagian besarnya '
+           'artifak keahlian SPUS hari ini - lihat AL04',
+    'AL04': 'N teratas ikut nilai dagangan 20 hari, TITIK-MASA (diagnostik pemalsuan E4, '
+            'bukan sel grid dipradaftar): konfigurasi sama yang memberi +47.44%/-37.94% '
+            'pada AL02 memberi +34.78%/-68.80% pada 214 teratas titik-masa dan '
+            '+9.65%/-91.50% pada alam penuh. PULANGAN separa bertahan (kesan kausal nyata) '
+            'tetapi RISIKO tidak: 30.9 mata kelebihan MDD AL02 hilang apabila keahlian '
+            'dijadikan kausal. Setiap nombor AL02 dalam kajian ini menyanjung paksi risiko',
+
     # INSTRUMEN + URUTAN: pradaftar SPEC_INSTRUMEN.md, larian step26 (REVERSE/INSTRUMEN.md).
     'IS02': 'putaran 11 bakul sektor sintetik berat sama rata (alam AL02): T1 0, T3 0. '
             'P1 26/40 tetapi P2 0/40 - MDD gagal pada SETIAP sel, paling cetek -31.61% '

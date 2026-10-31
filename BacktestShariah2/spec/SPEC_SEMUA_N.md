@@ -32,7 +32,7 @@ Kelima-lima ini mengikut terus daripada ukuran yang repo **sudah** ada. Tiada sa
 - `SEDIA` — semua indikator yang diperlukan sudah dikira oleh kod repo (`REVERSE/teras/ind.py` atau `REVERSE/step15_setup.py` / `step17_kombinasi.py`); boleh diuji tanpa kod indikator baharu.
 - `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.
 
-Masuk: 147 (78 DIUJI, 0 SEDIA, 69 PERLU). Keluar: 45 (30 DIUJI, 3 SEDIA, 12 PERLU). Cara: 12 (6 DIUJI, 3 SEDIA, 3 PERLU). Urutan: 14 (8 DIUJI, 1 SEDIA, 5 PERLU).
+Masuk: 147 (78 DIUJI, 0 SEDIA, 69 PERLU). Keluar: 45 (32 DIUJI, 1 SEDIA, 12 PERLU). Cara: 12 (6 DIUJI, 3 SEDIA, 3 PERLU). Urutan: 14 (8 DIUJI, 1 SEDIA, 5 PERLU).
 
 Tujuh paksi baharu (30 Okt 2026): GABUNGAN 8 · SAIZ 10 · ALAM 8 · PEGANG 6 · IMBANG 5 · KORELASI 4 · INSTRUMEN 4. Jumlah semua paksi: 263 baris.
 
@@ -595,7 +595,7 @@ Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A dan
 
 **AL03** — `had harga minimum USD3` · konsensus screener (umum) · SEDIA
 
-**AL04** — `N teratas ikut nilai dolar harian` · Qullamaggie / konsensus (blog) · SEDIA · lajur nilai20 sudah ada
+**AL04** — `N teratas ikut nilai dolar harian` · Qullamaggie / konsensus (blog) · DIUJI · lajur nilai20 sudah ada | DIUJI: N teratas ikut nilai dagangan 20 hari, TITIK-MASA (diagnostik pemalsuan E4, bukan sel grid dipradaftar): konfigurasi sama yang memberi +47.44%/-37.94% pada AL02 memberi +34.78%/-68.80% pada 214 teratas titik-masa dan +9.65%/-91.50% pada alam penuh. PULANGAN separa bertahan (kesan kausal nyata) tetapi RISIKO tidak: 30.9 mata kelebihan MDD AL02 hilang apabila keahlian dijadikan kausal. Setiap nombor AL02 dalam kajian ini menyanjung paksi risiko
 
 **AL05** — `jalur permodalan pasaran (kecil / sederhana / besar)` · akademik faktor saiz (akademik) · PERLU:kapitalisasi · KOLAM_EKOR.md menunjukkan kadar asas kolam ialah pengikat; jalur saiz ialah cara paling terus mengubahnya
 
