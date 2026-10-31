@@ -937,7 +937,7 @@ const TELEFON=(()=>{try{return matchMedia('(max-width:760px)').matches;}catch(e)
 const S={set:'431',tab:'utama',akaun:'c',sub:{backtest:'keputusan'},docs:{},meta:null,live:false,
   f:{jenis:'semua',kep:new Set(),q:'',best:true,gaya:false,shown:TELEFON?10:40},cmp:[],cmpTouched:false,
   ptm:null,ptmPeta:null,ptc:null,ptcN:{},mae:null,prf:null,watch:null,sektor:null,hst:null,sf:null,wf:{k:'',sk:'',ind:'',q:'',shown:TELEFON?10:25},kat:null,kf:{q:'',shown:TELEFON?10:25},at:{},af:{lbl:'',q:'',eq:'oos',v:'sar',lane:''},kp:{lihat:'pingat',gaya:false,q:'',langkah:null,shown:TELEFON?10:1e9},b4:'papan',
-  pos:{st:'semua'},lajur:{},anl:null,af2:{lihat:'swing',q:'',shown:TELEFON?10:25},kn:null,knf:{paksi:'semua',q:'',shown:TELEFON?10:25}};
+  pos:{st:'semua'},lajur:{},anl:null,af2:{lihat:'swing',q:'',shown:TELEFON?10:25},kn:null,knf:{paksi:'semua',q:'',shown:TELEFON?10:25},knu:{pra:'semua',q:'',shown:TELEFON?10:25}};
 try{const t=localStorage.getItem('pbs3_tab');if(MAIN.includes(t))S.tab=t;const a=localStorage.getItem('pbs3_akaun');if(AKAUN.some(x=>x[0]===a))S.akaun=a;
   const s=localStorage.getItem('pbs_set');if(SETSEG.includes(s))S.set=s;const b4=localStorage.getItem('pbs2_b4');if(['papan','ringkasan','banding'].includes(b4))S.b4=b4;
   const sb=JSON.parse(localStorage.getItem('pbs2_sub')||'null');if(sb&&SUBS.backtest.some(x=>x[0]===sb.backtest))S.sub.backtest=sb.backtest;
@@ -3959,6 +3959,8 @@ document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.tar
    NXX_KELUAR.md, GABUNGAN.md, SILANG_AKHIR.md). Rekod kajian sahaja; bukan isyarat beli. */
 const KN_ST={'DIUJI':'k-GUNA','SEDIA':'k-UJI'};
 const knPill=s=>`<span class="pill ${String(s||'').startsWith('PERLU')?'p-mute':(KN_ST[s]||'p-mute')}">${esc(s||'–')}</span>`;
+const KN_PRA=[['semua','Semua'],['A','A masuk'],['B','B keluar'],['GAB','Gabungan'],['SX','Silang akhir'],['PORT','Portfolio'],['CARA','Cara']];
+const knGate=g=>String(g||'').split(' ').filter(Boolean).map(t=>{const y=t.slice(-1)==='Y';return `<span class="gate ${y?'ok':'no'}" style="padding:1px 5px;font-size:.7rem;margin-right:3px">${esc(t.slice(0,-1))}${y?'\u2713':'\u2717'}</span>`;}).join('')||'<span class="mut">\u2013</span>';
 const KN_PAKSI=[['MASUK','Masuk'],['KELUAR','Keluar'],['CARA','Cara'],['URUTAN','Urutan'],
   ['GABUNGAN','Gabungan'],['SAIZ','Saiz'],['ALAM','Alam'],['PEGANG','Pegang'],
   ['IMBANG','Imbang'],['KORELASI','Korelasi'],['INSTRUMEN','Instrumen']];
@@ -4030,8 +4032,33 @@ function renderKaedahN(){
     <div class="filters" style="margin-bottom:10px">${segH('knPaksi',f.paksi,[['semua','Semua']].concat(KN_PAKSI),'Paksi')}<input type="search" id="knQ" placeholder="Cari ID, nama, peraturan atau sumber, cth. N115, Raschke" value="${esc(f.q)}" aria-label="Cari registry Nxx"></div>
     ${sortTable({id:'kaedahn',rows,def:{k:'id',dir:1},limit:f.shown,empty:'Tiada baris sepadan.',foot:kakiLagi('knMore'),cols})}
   </div>
+  ${(()=>{const U=d.ujian||[];if(!U.length)return '';
+    const g=S.knu;let ur=g.pra==='semua'?U:U.filter(r=>r.pra===g.pra);
+    if(g.q){const q=g.q.toLowerCase();ur=ur.filter(r=>[r.k,r.pra,r.nota,r.gate].join(' ').toLowerCase().includes(q));}
+    const n=KN_PRA.map(([v])=>v==='semua'?U.length:U.filter(r=>r.pra===v).length);
+    const seg=KN_PRA.map(([v,t],i)=>[v,`${t} (${n[i]})`]);
+    const met=(v,nm)=>v==null?'<span class="mut">–</span>':`<b class="${nm==='kadar isi %'?'':cls(v)}">${sg2(v)}</b><span class="vv">${esc(nm||'')}</span>`;
+    const ucols=[
+      {k:'pra',t:'Pra',l:1,hc:'nw',f:r=>`<b>${esc(r.pra)}</b>`},
+      {k:'k',t:'Kombinasi',l:1,c:()=>'wrap',f:r=>`<b style="color:var(--fg)">${esc(r.k)}</b>${r.nota?`<span class="vv">${esc(r.nota)}</span>`:''}`},
+      {k:'n',t:'n',f:r=>r.n==null?'<span class="mut">–</span>':nf(r.n)},
+      {k:'m1',t:'Metrik 1',v:r=>r.m1,f:r=>met(r.m1,r.m1n)},
+      {k:'m2',t:'Metrik 2',v:r=>r.m2,f:r=>met(r.m2,r.m2n)},
+      {k:'m3',t:'Metrik 3',v:r=>r.m3,f:r=>met(r.m3,r.m3n)},
+      {k:'menang',t:'Menang',hc:'nw',f:r=>r.menang==null?'<span class="mut">–</span>':fx(r.menang,1)+'%'},
+      {k:'tanpa5',t:'Tanpa 5%',hc:'nw',v:r=>r.tanpa5,f:r=>r.tanpa5==null?'<span class="mut">–</span>':`<span class="${cls(r.tanpa5)}">${sg2(r.tanpa5)}</span>`},
+      {k:'p',t:'p',f:r=>r.p==null?'<span class="mut">–</span>':(r.p<0.001?r.p.toExponential(1):fx(r.p,4))},
+      {k:'lulus',t:'Gate',l:1,hc:'nw',v:r=>r.lulus?1:0,c:()=>'nw',f:r=>knGate(r.gate)+(r.lulus?' <b class="pos" title="lulus gate akhir">LULUS</b>':'')}];
+    return `<div class="panel"><div class="panel-h"><h2>Semua ujian dipradaftar</h2><span class="sub">${ur.length} daripada ${U.length} baris · ${U.filter(x=>x.lulus).length} lulus gate akhir · ketik tajuk untuk susun</span></div>
+    <div class="filters" style="margin-bottom:10px">${segH('knPra',g.pra,seg,'Pradaftar')}<input type="search" id="knUQ" placeholder="Cari kombinasi, cth. N115, GB02, C03, slot8" value="${esc(g.q)}" aria-label="Cari ujian"></div>
+    <p class="note" style="margin:0 0 10px"><b>Unit BERBEZA antara pradaftar.</b> A/B/GAB/SX memberi <b>lift dalam mata peratus</b> dan jangkaan %/dagangan; PORT memberi <b>CAGR %</b> dan MDD %; CARA memberi <b>jangkaan %/signal</b>. Setiap sel menamakan metriknya sendiri. Menyusun lajur Metrik merentas kumpulan membandingkan unit berlainan — tapis kepada satu pradaftar dahulu. ${U.length} baris = <b>413 ujian dipradaftar</b> serta baris <b>asas</b> (tiada penapis masuk), <b>kawalan</b> (masuk RAWAK) dan <b>semak pemalsuan</b>, disertakan supaya setiap nombor boleh disemak berbanding titik rujukannya sendiri.</p>
+    ${sortTable({id:'knujian',rows:ur,cols:ucols,def:{k:'lulus',dir:-1},limit:g.shown,empty:'Tiada ujian sepadan.',foot:kakiLagi('knUMore')})}
+  </div>`;})()}
   <div class="panel"><div class="panel-h"><h2>Nota</h2></div><p class="note">${esc(d.nota||'')}</p></div>`;
   bindSegH('knPaksi',v=>{f.paksi=v;f.shown=AWAL;});
+  bindSegH('knPra',v=>{S.knu.pra=v;S.knu.shown=AWAL;});
+  {const u=$('#knUQ');if(u){let tu;u.oninput=()=>{clearTimeout(tu);tu=setTimeout(()=>{S.knu.q=u.value.trim();S.knu.shown=AWAL;renderAll();const n=$('#knUQ');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length);}},220);};}}
+  bindLagi('knUMore',S.knu);
   const q=$('#knQ');if(q){let tm;q.oninput=()=>{clearTimeout(tm);tm=setTimeout(()=>{f.q=q.value.trim();f.shown=AWAL;renderAll();const n=$('#knQ');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length);}},220);};}
   bindLagi('knMore',f);
 }

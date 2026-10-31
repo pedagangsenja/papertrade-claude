@@ -554,7 +554,100 @@ def kaedah_n(dibina):
                      rugi=ff(r.get('rugi'), 2), tanpa5=ff(r.get('tanpa5')),
                      asas5=ff(r.get('asas5')), p=ff(r.get('p'), 6), n=ii(r.get('n_tahan')),
                      g3=bl(r.get('gate3'))) for r in X],
+        ujian=_ujian_n(A, B, G, X, rd(os.path.join(RV, 'portfolio_n_ringkas.csv')),
+                       rd(os.path.join(RV, 'cara.csv')), ff, ii, bl),
     )
+
+
+def _ujian_n(A, B, G, X, PO, CA, ff, ii, bl):
+    """Satu baris bagi SETIAP ujian dipradaftar merentas enam larian.
+
+    Unit BERBEZA antara pradaftar (lift mata lawan CAGR % lawan jangkaan %/signal), jadi
+    setiap baris membawa nama metriknya sendiri dan papan memaparkannya dalam sel. Menyusun
+    merentas kumpulan pada lajur nilai membandingkan unit berlainan — papan memberi amaran
+    dan menyediakan penapis kumpulan.
+    """
+    def gt(*pasangan):
+        return ' '.join(f'{k}{"Y" if v else "N"}' for k, v in pasangan if v is not None)
+
+    U = []
+    for r in A:
+        m = r.get('masuk', '')
+        U.append(dict(pra='A', k=f'{m} x {r.get("keluar")}', n=ii(r.get('n_tahan')),
+                      m1n='lift latih', m1=ff(r.get('lift_latih')),
+                      m2n='lift tahan', m2=ff(r.get('lift_tahan')),
+                      m3n='jangkaan', m3=ff(r.get('jangkaan_tahan')),
+                      menang=ff(r.get('menang'), 1), tanpa5=ff(r.get('tanpa5_tahan')),
+                      p=ff(r.get('p'), 6),
+                      gate=gt(('1', bl(r.get('gate1'))), ('2', bl(r.get('gate2'))),
+                              ('3', bl(r.get('gate3')))),
+                      lulus=bl(r.get('gate3')), nota='semak pemalsuan' if 'semak' in m else ''))
+    for r in B:
+        asas = r.get('masuk') == 'ASAS'
+        U.append(dict(pra='B', k=f'{r.get("masuk")} x {r.get("keluar")}',
+                      n=ii(r.get('n_tahan')),
+                      m1n='lift latih', m1=ff(r.get('lift_latih')),
+                      m2n='lift tahan', m2=ff(r.get('lift_tahan')),
+                      m3n='jangkaan', m3=ff(r.get('jangkaan_tahan')),
+                      menang=ff(r.get('menang'), 1), tanpa5=ff(r.get('tanpa5_tahan')),
+                      p=ff(r.get('p'), 6),
+                      gate=gt(('0', bl(r.get('gate0'))), ('1', bl(r.get('gate1'))),
+                              ('2', bl(r.get('gate2'))), ('3', bl(r.get('gate3')))),
+                      lulus=bl(r.get('gate3')),
+                      nota='asas tanpa penapis masuk' if asas else r.get('peraturan', '')))
+    for r in G:
+        asas = r.get('konfig') == 'ASAS'
+        U.append(dict(pra='GAB', k=r.get('konfig'), n=ii(r.get('n_tahan')),
+                      m1n='lift latih', m1=ff(r.get('lift_latih')),
+                      m2n='lift tahan', m2=ff(r.get('lift_tahan')),
+                      m3n='jangkaan', m3=ff(r.get('jangkaan_tahan')),
+                      menang=ff(r.get('menang'), 1), tanpa5=ff(r.get('tanpa5_tahan')),
+                      p=ff(r.get('p'), 6),
+                      gate=gt(('0', bl(r.get('gate0'))), ('1', bl(r.get('gate1'))),
+                              ('2', bl(r.get('gate2'))), ('3', bl(r.get('gate3')))),
+                      lulus=bl(r.get('gate3')), nota='asas' if asas else ''))
+    for r in X:
+        asas = r.get('masuk') == 'ASAS'
+        U.append(dict(pra='SX', k=f'{r.get("masuk")} x {r.get("keluar")}',
+                      n=ii(r.get('n_tahan')),
+                      m1n='lift latih', m1=ff(r.get('lift_latih')),
+                      m2n='lift tahan', m2=ff(r.get('lift_tahan')),
+                      m3n='jangkaan', m3=ff(r.get('jangkaan_tahan')),
+                      menang=ff(r.get('menang'), 1), tanpa5=ff(r.get('tanpa5')),
+                      p=ff(r.get('p'), 6),
+                      gate=gt(('0', bl(r.get('gate0'))), ('1', bl(r.get('gate1'))),
+                              ('2', bl(r.get('gate2'))), ('3', bl(r.get('gate3')))),
+                      lulus=bl(r.get('gate3')), nota='asas' if asas else ''))
+    for r in PO:
+        kaw = r.get('masuk') == 'RAWAK'
+        U.append(dict(pra='PORT',
+                      k=f'{r.get("masuk")} · {r.get("slot")} slot · {r.get("keluar")} · '
+                        f'{r.get("urutan")}',
+                      n=ii(r.get('n')),
+                      m1n='CAGR latih', m1=ff(r.get('cagr_latih')),
+                      m2n='CAGR tahan', m2=ff(r.get('cagr')),
+                      m3n='MDD', m3=ff(r.get('mdd')),
+                      menang=None, tanpa5=None, p=None,
+                      gate=gt(('P1', bl(r.get('P1'))), ('P2', bl(r.get('P2'))),
+                              ('P3', bl(r.get('P3'))), ('P4', bl(r.get('P4')))),
+                      lulus=bl(r.get('lulus')),
+                      nota=('kawalan tanpa isyarat · ' if kaw else '')
+                           + f'nisbah {ff(r.get("nisbah"), 2)} · dedah '
+                             f'{ff(r.get("dedah"), 0)}% · {ii(r.get("nb"))} benih'))
+    for r in CA:
+        U.append(dict(pra='CARA', k=f'{r.get("cara")} · {r.get("tingkap")}',
+                      n=ii(r.get('n_isyarat')),
+                      m1n='jangkaan/signal', m1=ff(r.get('jangkaan_sig')),
+                      m2n='jangkaan/isi', m2=ff(r.get('jangkaan_isi')),
+                      m3n='kadar isi %', m3=ff(r.get('kadar_isi'), 1),
+                      menang=ff(r.get('menang'), 1), tanpa5=ff(r.get('tanpa5')),
+                      p=ff(r.get('p'), 6),
+                      gate=gt(('1', bl(r.get('CARA1'))), ('2', bl(r.get('CARA2'))),
+                              ('3', bl(r.get('CARA3')))),
+                      lulus=bl(r.get('CARA1')) and bl(r.get('CARA2')) and bl(r.get('CARA3')),
+                      nota=f'henti hari-0 {ii(r.get("henti_hari0"))}'
+                           if ii(r.get('henti_hari0')) else ''))
+    return U
 
 
 # ---------------------------------------------------------------- utama
