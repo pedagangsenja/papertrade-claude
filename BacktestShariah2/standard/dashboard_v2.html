@@ -644,6 +644,13 @@ td .sbk{max-width:260px}
 .kpl{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 5px}.kpl .pill{font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;padding:1px 7px}
 .kring{display:block;margin-top:5px;padding:3px 0 3px 8px;border-left:2px solid var(--accent);color:var(--fg-2);font-size:.8rem;line-height:1.38;white-space:normal}.klg{display:flex;flex-wrap:wrap;align-items:center;gap:5px 6px;font-size:.78rem;color:var(--muted);margin:0 0 10px}.klg .pill{font-size:.62rem;letter-spacing:.04em;padding:1px 6px}.klg span.sp{margin-right:6px}
 
+/* Jadual "Semua ujian dipradaftar": 15 lajur sempit. `body.padat .tablewrap thead th`
+   memaksa white-space:normal (kekhususan 0,3,2), jadi tajuk pendek seperti SLOT pecah
+   huruf demi huruf. Peraturan berskop ini (0,4,3) mengatasinya untuk jadual itu sahaja. */
+body.padat .tablewrap table[data-st="knujian"] thead th,
+.tablewrap table[data-st="knujian"] thead th{white-space:nowrap;overflow-wrap:normal}
+@media (min-width:761px){.tablewrap table[data-st="knujian"] td{overflow-wrap:normal}}
+
 /* v3 (20 Okt 2026): elemen bacaan pantas — satu simbol satu maksud (Panduan › Petunjuk simbol) */
 .tt{display:inline-block;width:1.05em;text-align:center;margin-right:4px;font-size:.78rem;line-height:1}.tt.pos{color:var(--pos)}.tt.wrn{color:var(--warn)}.tt.neg{color:var(--neg)}.tt.mut{color:var(--muted)}
 .p-baru{background:transparent;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);padding:0 6px;margin-left:5px;font-size:.62rem;letter-spacing:.06em}
@@ -4162,24 +4169,35 @@ function renderKaedahN(){
   </div>
   ${(()=>{const U=d.ujian||[];if(!U.length)return '';
     const g=S.knu;let ur=g.pra==='semua'?U:U.filter(r=>r.pra===g.pra);
-    if(g.q){const q=g.q.toLowerCase();ur=ur.filter(r=>[r.k,r.pra,r.nota,r.gate].join(' ').toLowerCase().includes(q));}
+    if(g.q){const q=g.q.toLowerCase();ur=ur.filter(r=>[r.pra,r.masuk,r.cara,r.keluar,r.urutan,r.slot,r.nota,r.gate].join(' ').toLowerCase().includes(q));}
     const n=KN_PRA.map(([v])=>v==='semua'?U.length:U.filter(r=>r.pra===v).length);
     const seg=KN_PRA.map(([v,t],i)=>[v,`${t} (${n[i]})`]);
-    const met=(v,nm)=>v==null?'<span class="mut">–</span>':`<b class="${nm==='kadar isi %'?'':cls(v)}">${sg2(v)}</b><span class="vv">${esc(nm||'')}</span>`;
+    const MT=d.metrik||{};
+    const nmOf=(r,i)=>(MT[r.pra]||[])[i]||'';
+    const met=(r,i)=>{const v=[r.m1,r.m2,r.m3][i],nm=nmOf(r,i);
+      if(v==null)return '<span class="mut">–</span>';
+      const kadar=nm==='kadar isi %';   /* kadar bukan perubahan: tiada tanda +, tiada warna */
+      return `<b class="${kadar?'':cls(v)}">${kadar?fx(v,1)+'%':sg2(v)}</b><span class="vv">${esc(nm)}</span>`;};
+    const ax=(v,ttp)=>v==null||v===''?'<span class="mut">–</span>':`<span class="nw"${ttp?` title="${esc(ttp)}"`:''}>${esc(String(v))}</span>`;
     const ucols=[
       {k:'pra',t:'Pra',l:1,hc:'nw',f:r=>`<b>${esc(r.pra)}</b>`},
-      {k:'k',t:'Kombinasi',l:1,c:()=>'wrap',f:r=>`<b style="color:var(--fg)">${esc(r.k)}</b>${r.nota?`<span class="vv">${esc(r.nota)}</span>`:''}`},
+      {k:'masuk',t:'Masuk',l:1,c:()=>'nw',f:r=>`<b style="color:var(--fg)">${esc(r.masuk||'–')}</b>`},
+      {k:'cara',t:'Cara',l:1,hc:'nw',f:r=>ax(r.cara,'Paksi CARA: bagaimana pesanan diisi')},
+      {k:'keluar',t:'Keluar',l:1,hc:'nw',f:r=>ax(r.keluar)},
+      {k:'urutan',t:'Urutan',l:1,hc:'nw',f:r=>ax(r.urutan,'Paksi URUTAN: siapa dibeli bila isyarat melebihi slot')},
+      {k:'slot',t:'Slot',v:r=>r.slot,f:r=>r.slot==null?'<span class="mut">–</span>':r.slot},
       {k:'n',t:'n',f:r=>r.n==null?'<span class="mut">–</span>':nf(r.n)},
-      {k:'m1',t:'Metrik 1',v:r=>r.m1,f:r=>met(r.m1,r.m1n)},
-      {k:'m2',t:'Metrik 2',v:r=>r.m2,f:r=>met(r.m2,r.m2n)},
-      {k:'m3',t:'Metrik 3',v:r=>r.m3,f:r=>met(r.m3,r.m3n)},
+      {k:'m1',t:'Metrik 1',v:r=>r.m1,f:r=>met(r,0)},
+      {k:'m2',t:'Metrik 2',v:r=>r.m2,f:r=>met(r,1)},
+      {k:'m3',t:'Metrik 3',v:r=>r.m3,f:r=>met(r,2)},
       {k:'menang',t:'Menang',hc:'nw',f:r=>r.menang==null?'<span class="mut">–</span>':fx(r.menang,1)+'%'},
       {k:'tanpa5',t:'Tanpa 5%',hc:'nw',v:r=>r.tanpa5,f:r=>r.tanpa5==null?'<span class="mut">–</span>':`<span class="${cls(r.tanpa5)}">${sg2(r.tanpa5)}</span>`},
       {k:'p',t:'p',f:r=>r.p==null?'<span class="mut">–</span>':(r.p<0.001?r.p.toExponential(1):fx(r.p,4))},
-      {k:'lulus',t:'Gate',l:1,hc:'nw',v:r=>r.lulus?1:0,c:()=>'nw',f:r=>knGate(r.gate)+(r.lulus?' <b class="pos" title="lulus gate akhir">LULUS</b>':'')}];
+      {k:'lulus',t:'Gate',l:1,hc:'nw',v:r=>r.lulus?1:0,c:()=>'nw',f:r=>knGate(r.gate)+(r.lulus?' <b class="pos" title="lulus gate akhir">LULUS</b>':'')},
+      {k:'nota',t:'Nota',l:1,ns:1,c:()=>'wrap',f:r=>r.nota?`<span class="mut">${esc(r.nota)}</span>`:''}];
     return `<div class="panel"><div class="panel-h"><h2>Semua ujian dipradaftar</h2><span class="sub">${ur.length} daripada ${U.length} baris · ${U.filter(x=>x.lulus).length} lulus gate akhir · ketik tajuk untuk susun</span></div>
     <div class="filters" style="margin-bottom:10px">${segH('knPra',g.pra,seg,'Pradaftar')}<input type="search" id="knUQ" placeholder="Cari kombinasi, cth. N115, GB02, C03, slot8" value="${esc(g.q)}" aria-label="Cari ujian"></div>
-    <p class="note" style="margin:0 0 10px"><b>Unit BERBEZA antara pradaftar.</b> A/B/GAB/SX memberi <b>lift dalam mata peratus</b> dan jangkaan %/dagangan; PORT memberi <b>CAGR %</b> dan MDD %; CARA memberi <b>jangkaan %/signal</b>. Setiap sel menamakan metriknya sendiri. Menyusun lajur Metrik merentas kumpulan membandingkan unit berlainan — tapis kepada satu pradaftar dahulu. ${U.length} baris = <b>413 ujian dipradaftar</b> serta baris <b>asas</b> (tiada penapis masuk), <b>kawalan</b> (masuk RAWAK) dan <b>semak pemalsuan</b>, disertakan supaya setiap nombor boleh disemak berbanding titik rujukannya sendiri.</p>
+    <p class="note" style="margin:0 0 10px"><b>Unit BERBEZA antara pradaftar.</b> A/B/GAB/SX memberi <b>lift dalam mata peratus</b> dan jangkaan %/dagangan; PORT memberi <b>CAGR %</b> dan MDD %; CARA memberi <b>jangkaan %/signal</b>. Setiap sel menamakan metriknya sendiri. Menyusun lajur Metrik merentas kumpulan membandingkan unit berlainan — tapis kepada satu pradaftar dahulu. ${U.length} baris = <b>413 ujian dipradaftar</b> serta baris <b>asas</b> (tiada penapis masuk), <b>kawalan</b> (masuk RAWAK) dan <b>semak pemalsuan</b>, disertakan supaya setiap nombor boleh disemak berbanding titik rujukannya sendiri. Lajur <b>Cara</b>, <b>Urutan</b> dan <b>Slot</b> menunjukkan apa yang dikunci: <b>setiap</b> ujian memakai <code>C01</code> kecuali pradaftar CARA, dan hanya pradaftar PORT pernah memvariasikan urutan atau slot.</p>
     ${sortTable({id:'knujian',rows:ur,cols:ucols,def:{k:'lulus',dir:-1},limit:g.shown,empty:'Tiada ujian sepadan.',foot:kakiLagi('knUMore')})}
   </div>`;})()}
   <div class="panel"><div class="panel-h"><h2>Nota</h2></div><p class="note">${esc(d.nota||'')}</p></div>`;
