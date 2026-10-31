@@ -90,11 +90,17 @@ let gagal=0,nAudit=0;
       try{await btn.click({timeout:5000});}catch(e){continue;}await p.waitForTimeout(800);
       /* Had 6 melangkau panel 7+ secara SENYAP. Tab Kaedah N ada 9 panel rel, jadi
          Registry penuh dan Semua ujian dipradaftar tidak pernah diaudit (31 Okt 2026). */
-      const nSub=Math.min(PNAV_MAKS,await p.$$eval('.pnav-in button',bs=>bs.length).catch(()=>0));
+      /* Pemilih MESTI diskop kepada paparan yang kelihatan. `.pnav-in button` sahaja
+         memadankan rel dalam SEMUA section.view — termasuk yang [hidden], yang masih
+         dalam DOM. Maka bs[si] boleh menjadi butang paparan lain, kliknya tidak
+         menukar apa-apa, dan tab itu diaudit pada panel lalainya sahaja (31 Okt 2026:
+         6 jadual diaudit untuk seluruh papan, sifar daripada Kaedah N). */
+      const REL='section.view:not([hidden]) .pnav-in button';
+      const nSub=Math.min(PNAV_MAKS,await p.$$eval(REL,bs=>bs.length).catch(()=>0));
       for(let si=0;si<Math.max(1,nSub);si++){
         let nama='';
         if(nSub){try{
-          const bs=await p.$$('.pnav-in button');if(!bs[si])continue;
+          const bs=await p.$$(REL);if(!bs[si])continue;
           nama=await bs[si].evaluate(e=>e.textContent.trim().slice(0,22));
           await bs[si].click({timeout:4000});await p.waitForTimeout(450);
         }catch(e){continue;}}
