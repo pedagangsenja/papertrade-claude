@@ -98,6 +98,17 @@ dijalankan sebagai **semakan kesahan dua arah**, bukan sebagai dakwaan prestasi.
   ia semua akan diuji pada alam yang salah.
 - **JIKA bertahan** → E3.
 
+**SELESAI 31 Okt 2026 — laporan `ALAM.md`.** Gate (a) **lulus** (46.2% lawan ambang 25%):
+kelebihan isyarat **wujud** pada alam dagangan. Gate (b) **gagal** (27.5% lawan 50%): kesan
+had pegangan **tidak merentas alam**, kerana `AL02` membekalkan 7.7 isyarat/sesi lawan 105.2
+dan memotong pegangan di sana hanya memindahkan modal ke tunai. **Spec §5 tidak meliputi
+gabungan (a) lulus + (b) gagal**, dan kod mengira `kekal = (a) and (b)` lalu mencetak MATI —
+keputusan yang spec tidak benarkan. Rasional MATI ("kelebihan tidak wujud pada alam yang
+kita dagang") **dipalsukan**. Diserahkan kepada pengguna.
+
+**Pembetulan proses:** setiap spec selepas ini mesti menyenaraikan **setiap gabungan**
+keputusan gate, bukan hanya "semua lulus" dan "yang utama gagal".
+
 ### E3 · INSTRUMEN `IS02` — putaran ETF sektor
 **Bukti:** prior positif paling kuat dalam seluruh registry. `SETUP.md` mengukur SPY
 **+3.356%** dan QQQ **+4.419%** melepasi syarat ekor yang **598 daripada 598** setup saham
@@ -166,6 +177,7 @@ diambil, dan sebabnya. Ini rekod *mengapa* kita berada di langkah semasa.
 | — | PORTFOLIO (36) | **0 lulus P1–P4** | diagnosis: pegang 84.9 bar + ekor |
 | — | CARA (6) | 0 lulus; `C01` terbaik | paksi cara ditutup |
 | E1 | PEGANG × SLOT (320) | **T1 0 · T3 0 · lulus 0/320** (P1 29, P2 24, P3 101, P4 9) | **E2** |
+| E2 | ALAM `AL02` (160) | **T1 0 · T3 0**; gate (a) **lulus 46.2%**, gate (b) **gagal 27.5%** | **spec tidak meliputi kes ini — keputusan pengguna** |
 
 ## 7. Peraturan proses — supaya kesilapan yang sama tidak berulang
 

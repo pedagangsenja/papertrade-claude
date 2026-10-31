@@ -589,7 +589,7 @@ Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A dan
 
 **AL01** — `Release autotune-data-a02` · repo (repo) · DIUJI · SATU-SATUNYA alam yang pernah diguna dalam seluruh kajian. TIADA saham delist = bias survivorship (SPEC.md). Larangan A01 kekal: ia membuang saham meruap.
 
-**AL02** — `konstituen skrin Syariah SPUS sahaja` · repo data/skrin/etf_shariah.csv (repo) · SEDIA · JURANG YANG PENTING: repo menapis belian melalui SPUS tetapi seluruh kajian REVERSE guna A02 penuh. Alam kajian dan alam dagangan BUKAN sama.
+**AL02** — `konstituen skrin Syariah SPUS sahaja` · repo data/skrin/etf_shariah.csv (repo) · DIUJI · JURANG YANG PENTING: repo menapis belian melalui SPUS tetapi seluruh kajian REVERSE guna A02 penuh. Alam kajian dan alam dagangan BUKAN sama. | DIUJI: alam SPUS 214 ticker (SPTE dibuang - ETF global): T1 0, T3 0, tetapi isyarat mengalahkan kawalan rawak pada 46.2% sel. CAGR +2.69 mata dan MDD +6.19 mata lebih cetek daripada AL01 pada sel sepadan. Dapatan utama: tanpa5 = +2.682% (POSITIF buat kali pertama dalam kajian) lawan -0.081% pada AL01, dan 5% teratas membawa 47.9% jumlah pulangan lawan 101.7% - masalah EKOR ialah sifat alam a02, bukan hukum pasaran. HAD: keahlian SPUS semasa ditolak ke belakang, bias itu menghasilkan tepat kesan ini, jadi ia petunjuk bukan ukuran
 
 **AL03** — `had harga minimum USD3` · konsensus screener (umum) · SEDIA
 

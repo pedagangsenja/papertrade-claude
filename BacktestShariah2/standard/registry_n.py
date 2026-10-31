@@ -912,6 +912,15 @@ def semak():
 # Keputusan terukur bagi paksi SELAIN masuk. Tanpa ini lajur Status kekal 'SEDIA'
 # walaupun baris itu sudah ada angka, dan papan memberi gambaran liputan yang terkurang.
 HASIL_PAKSI = {
+    # ALAM: pradaftar SPEC_ALAM.md, larian step25 (REVERSE/ALAM.md), 160 konfigurasi.
+    'AL02': 'alam SPUS 214 ticker (SPTE dibuang - ETF global): T1 0, T3 0, tetapi isyarat '
+            'mengalahkan kawalan rawak pada 46.2% sel. CAGR +2.69 mata dan MDD +6.19 mata '
+            'lebih cetek daripada AL01 pada sel sepadan. Dapatan utama: tanpa5 = +2.682% '
+            '(POSITIF buat kali pertama dalam kajian) lawan -0.081% pada AL01, dan 5% '
+            'teratas membawa 47.9% jumlah pulangan lawan 101.7% - masalah EKOR ialah sifat '
+            'alam a02, bukan hukum pasaran. HAD: keahlian SPUS semasa ditolak ke belakang, '
+            'bias itu menghasilkan tepat kesan ini, jadi ia petunjuk bukan ukuran',
+
     # PEGANG + SAIZ: pradaftar SPEC_PEGANG_SLOT.md, larian step24 (REVERSE/PEGANG_SLOT.md).
     # 320 konfigurasi, tingkap TAHAN 2020-2025, masuk GB02_atau3, kos penuh.
     'PG02': 'had 10 bar: CAGR terbaik +31.15% (80 slot) tetapi MDD -70.2% dan seretan kos '
