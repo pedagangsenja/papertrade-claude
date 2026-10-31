@@ -169,6 +169,16 @@ ialah lever kedua pada paksi yang sama.
 **Kos:** rendah jika peta ticker→industri wujud; perlu disemak dahulu.
 - Cabang sama seperti E3.
 
+**SELESAI 31 Okt 2026 — laporan `KORELASI.md`.** Dijalankan pada **`AL04` titik-masa**
+(pembetulan dipaksa oleh E4). T1 0, T3 0 → **E6**. `P2` gagal kali **kelima**. Tetapi
+**`E5a` lulus kedua-dua bahagian**, dan jangkaan priori saya #3 salah: had industri **bukan**
+pertukaran. Had **1** memperbaiki **kedua-dua** paksi serentak — median **+1.65 mata CAGR
+dan +1.60 mata MDD lebih cetek**. Mekanismenya diukur: tanpa had, **6 daripada 8 slot** boleh
+berada dalam satu industri, jadi "8 slot" sebenarnya ~3 taruhan. Saiznya kecil — komponen,
+bukan penyelesaian. **Dapatan E4 berulang lebih kuat**: `RAWAK` +49.55% lawan `GB02_atau3`
++11.98% pada alam 500, jurang **37.6 mata**. "Jangan tapis dahulu kemudian peringkat" kini
+direplikasi pada dua alam bebas.
+
 ### E6 · GABUNGAN `GB07` — hierarki merentas paksi
 **Bukti:** satu-satunya operator gabungan yang belum diuji yang menggunakan signal pada
 **paksi berlainan** (signal A menentukan ALAM, signal B menentukan URUTAN). `GB01` `DAN`,
@@ -213,6 +223,7 @@ diambil, dan sebabnya. Ini rekod *mengapa* kita berada di langkah semasa.
 | E2 | ALAM `AL02` (160) | **T1 0 · T3 0**; gate (a) **lulus 46.2%**, gate (b) **gagal 27.5%** | **spec tidak meliputi kes ini — keputusan pengguna: E3 pada `AL02`** |
 | E3 | INSTRUMEN `IS02` (40) | **T1 0 · T3 0**; P1 26/40 tetapi **P2 0/40**; P3 5 (`U14` sahaja); P4 1 | **E4** |
 | E4 | KELUAR portfolio `X31`/`X32` (48) | **T1 0 · T3 0**; P1 33, **P2 0**, P3 16, P4 17; **`E4a` LULUS** (47.44% lawan 21.01%) | **E5** |
+| E5 | KORELASI `KR03` (96, `AL04` titik-masa) | **T1 0 · T3 0**; P1 23, **P2 0**; **`E5a` LULUS dua-dua** — had 1 beri **+1.65 CAGR DAN +1.60 MDD** | **E6** |
 
 ## 7. Peraturan proses — supaya kesilapan yang sama tidak berulang
 

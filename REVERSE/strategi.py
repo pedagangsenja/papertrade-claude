@@ -56,7 +56,8 @@ EKSPERIMEN = [
          fail='instrumen_ringkas.csv', gate='T1', pf=True, giliran=True),
     dict(id='E4', nama='KELUAR X31/X32 - keluar peringkat portfolio',
          fail='keluar_portfolio_ringkas.csv', gate='T1', pf=True, giliran=True),
-    dict(id='E5', nama='KORELASI KR03 - had setiap industri', fail=None, giliran=True),
+    dict(id='E5', nama='KORELASI KR03 - had setiap industri',
+         fail='korelasi_ringkas.csv', gate='T1', pf=True, giliran=True),
     dict(id='E6', nama='GABUNGAN GB07 - hierarki merentas paksi', fail=None, giliran=True),
 ]
 

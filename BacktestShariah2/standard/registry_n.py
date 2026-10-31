@@ -915,6 +915,17 @@ def semak():
 # Keputusan terukur bagi paksi SELAIN masuk. Tanpa ini lajur Status kekal 'SEDIA'
 # walaupun baris itu sudah ada angka, dan papan memberi gambaran liputan yang terkurang.
 HASIL_PAKSI = {
+    # KORELASI: pradaftar SPEC_KORELASI.md, larian step28 (REVERSE/KORELASI.md).
+    'KR03': 'had bilangan pegangan setiap industri, alam AL04 TITIK-MASA: T1 0, T3 0, '
+            'P2 0/96 - tetapi E5a LULUS kedua-dua bahagian. Had 1 memperbaiki KEDUA-DUA '
+            'paksi serentak: median +1.65 mata CAGR DAN +1.60 mata MDD lebih cetek lawan '
+            'tiada had (had 2: +0.76/+0.02; had 3: +0.47/+0.00). Bukan pertukaran - '
+            'kekangan yang membayar, yang pertama dalam kajian. Mekanisme: tanpa had, 6 '
+            'daripada 8 slot boleh berada dalam SATU industri, jadi "8 slot" sebenarnya ~3 '
+            'taruhan. Saiznya kecil jadi ia komponen bukan penyelesaian. MDD paling cetek '
+            'dalam baris gilir muncul di sini: -28.97%, 2.15 mata daripada SPUS, tetapi '
+            'CAGR cuma +10.41%',
+
     # KELUAR peringkat portfolio + ALAM titik-masa: pradaftar SPEC_KELUAR_PORTFOLIO.md,
     # larian step27 (REVERSE/KELUAR_PORTFOLIO.md).
     'X31': 'putaran berpangkat, metrik dikunci pulangan 252 hari (alam AL02): T1 0, T3 0, '
