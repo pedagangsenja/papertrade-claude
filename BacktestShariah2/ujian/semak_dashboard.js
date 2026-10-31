@@ -17,9 +17,13 @@
 const fs=require('fs'),path=require('path'),os=require('os');
 const {chromium}=require('playwright');
 const PNAV_MAKS=12;   // panel rel sisi terbanyak setakat ini: Kaedah N = 9
+/* --semua: cetak SETIAP jadual yang diaudit, bukan hanya yang bermasalah. Tanpa ini,
+   "tiada temuan" dan "tidak diperiksa" kelihatan SAMA dalam log — dan had PNAV_MAKS
+   lama membuktikan beza itu penting (31 Okt 2026). */
+const SEMUA=process.argv.includes('--semua');
 const DB=process.argv[2];
 if(!DB){console.error('guna: node semak_dashboard.js <folder db jana_db> [lebar ...]');process.exit(2);}
-const LEBAR=process.argv.slice(3).map(Number).filter(Boolean);
+const LEBAR=process.argv.slice(3).filter(x=>x!=='--semua').map(Number).filter(Boolean);
 const HTML=path.join(path.dirname(__dirname),'standard','dashboard_v2.html');
 const S=fs.mkdtempSync(path.join(os.tmpdir(),'dash-'));
 fs.writeFileSync(path.join(S,'live.html'),'<!doctype html><html><head><meta charset=utf8></head><body>'+fs.readFileSync(HTML,'utf8')+'</body></html>');
@@ -67,7 +71,7 @@ const AUDIT=()=>{
     keluar.push(o);});
   return keluar;};
 
-let gagal=0;
+let gagal=0,nAudit=0;
 (async()=>{
   const b=await chromium.launch({args:['--no-sandbox']});
   for(const lebar of (LEBAR.length?LEBAR:[1900,1600])){
@@ -99,7 +103,8 @@ let gagal=0;
           const berat=h.bertindih.length||h.tajuk.length||h.keluar||h.tepi.length;
           if(berat)gagal++;
           const ringan=h.kosong.length||h.sempit.length||h.valign.length||(h.tinggi[1]-h.tinggi[0]>30);
-          if(berat||ringan)console.log((berat?'GAGAL':'nota ')+' '+lebar+'px '+tab+(nama?'/'+nama:'')+' ['+h.id+'] '+
+          nAudit++;
+          if(berat||ringan||SEMUA)console.log((berat?'GAGAL':ringan?'nota ':'ok   ')+' '+lebar+'px '+tab+(nama?'/'+nama:'')+' ['+h.id+'] '+
             JSON.stringify({bertindih:h.bertindih,tajuk:h.tajuk,tepi:h.tepi,keluar:h.keluar,valign:h.valign,
               kosong:h.kosong.slice(0,4),sempit:h.sempit.slice(0,4),tinggi:h.tinggi,sbn:h.sbn}));});
       }
@@ -109,7 +114,8 @@ let gagal=0;
         const hasil=await p.evaluate(AUDIT);
         hasil.forEach(h=>{const berat=h.bertindih.length||h.tajuk.length||h.keluar||h.tepi.length;if(berat)gagal++;
           const ringan=h.kosong.length||h.sempit.length||h.valign.length||(h.tinggi[1]-h.tinggi[0]>30);
-          if(berat||ringan)console.log((berat?'GAGAL':'nota ')+' '+lebar+'px posisi/'+v+' ['+h.id+'] '+
+          nAudit++;
+          if(berat||ringan||SEMUA)console.log((berat?'GAGAL':ringan?'nota ':'ok   ')+' '+lebar+'px posisi/'+v+' ['+h.id+'] '+
             JSON.stringify({bertindih:h.bertindih,tajuk:h.tajuk,tepi:h.tepi,keluar:h.keluar,valign:h.valign,
               kosong:h.kosong.slice(0,4),sempit:h.sempit.slice(0,4),tinggi:h.tinggi,sbn:h.sbn}));});
       }
@@ -117,5 +123,7 @@ let gagal=0;
     await p.close();
   }
   await b.close();fs.rmSync(S,{recursive:true,force:true});
-  console.log(gagal?('RINGKASAN: '+gagal+' kegagalan berat'):'RINGKASAN: tiada kegagalan berat');
+  console.log('RINGKASAN: '+(gagal?gagal+' kegagalan berat':'tiada kegagalan berat')+
+    ' · '+nAudit+' jadual diaudit'+(SEMUA?'':' (guna --semua untuk senarai penuh; '+
+    '"tiada temuan" dan "tidak diperiksa" kelihatan sama tanpa ia)'));
   process.exit(gagal?1:0);})();
