@@ -639,6 +639,9 @@ URUTAN = [
   'Formula BELUM dibaca - laporan asal 2017 tidak ditemui dalam carian.'),
  ('U13', 'skor keluasan semakan analis', 'konsensus praktisi', 'blog/FMP',
   'PERLU:data_semakan', 'versi urutan bagi N145'),
+ ('U14', 'momentum 12-1 bulan (pulangan 12 bulan tolak bulan terakhir)',
+  'Jegadeesh & Titman; standard akademik', 'akademik', 'SEDIA',
+  'diperkenalkan dalam SPEC_INSTRUMEN.md E3 sebagai urutan bakul sektor'),
 ]
 
 # ===== TUJUH PAKSI BAHARU (30 Okt 2026) =====
@@ -912,6 +915,22 @@ def semak():
 # Keputusan terukur bagi paksi SELAIN masuk. Tanpa ini lajur Status kekal 'SEDIA'
 # walaupun baris itu sudah ada angka, dan papan memberi gambaran liputan yang terkurang.
 HASIL_PAKSI = {
+    # INSTRUMEN + URUTAN: pradaftar SPEC_INSTRUMEN.md, larian step26 (REVERSE/INSTRUMEN.md).
+    'IS02': 'putaran 11 bakul sektor sintetik berat sama rata (alam AL02): T1 0, T3 0. '
+            'P1 26/40 tetapi P2 0/40 - MDD gagal pada SETIAP sel, paling cetek -31.61% '
+            'lawan SPUS -26.82%. Pegang-semua k=11 beri +19.66%/-35.54%. HIPOTESIS '
+            'SETUP.md DISAHKAN: tanpa5 bakul POSITIF pada 8/8 sel (+0.55% hingga +4.77%) '
+            'lawan 0/598 setup saham - kepelbagaian merentas ekor memang membetulkan '
+            'masalah ekor, tetapi masalah berpindah kepada DRAWDOWN. Bakul sintetik bukan '
+            'ETF boleh dagang: tiada yuran, tiada ralat penjejakan',
+    'U11': 'pulangan gabungan 1+3+6 bulan sebagai urutan 11 bakul sektor: 0/8 sel '
+           'mengalahkan persentil-95 kawalan rawak',
+    'U14': 'momentum 12-1 bulan sebagai urutan 11 bakul sektor: 5/8 sel mengalahkan '
+           'persentil-95 kawalan rawak - SATU-SATUNYA urutan yang berfungsi (U11 0/8, '
+           'U03 Clenow 0/8). Terbaik k=1 imbang 21: CAGR +27.55% / MDD -36.81% / nisbah '
+           '0.75, satu-satunya sel yang melepasi P4. Tetap gagal T1 kerana MDD. Memegang '
+           'bakul Electronic Technology sahaja memberi +32.67%, mengalahkan setiap putaran',
+
     # ALAM: pradaftar SPEC_ALAM.md, larian step25 (REVERSE/ALAM.md), 160 konfigurasi.
     'AL02': 'alam SPUS 214 ticker (SPTE dibuang - ETF global): T1 0, T3 0, tetapi isyarat '
             'mengalahkan kawalan rawak pada 46.2% sel. CAGR +2.69 mata dan MDD +6.19 mata '

@@ -126,6 +126,17 @@ SPY + QQQ). Perlu muat turun ~11 ticker SPDR, 2009–2026, ke dalam stor yang sa
 - **JIKA hanya T2** → BERHENTI–SEPARA; baris gilir **diteruskan** ke E4.
 - **JIKA gagal** → E4.
 
+**SELESAI 31 Okt 2026 — laporan `INSTRUMEN.md`.** T1 0, T3 0 → **E4**. Pulangan lulus luas
+(P1 26/40) dan risiko gagal **sepenuhnya** (P2 **0/40**, paling cetek −31.61% lawan SPUS
+−26.82%) — kali **ketiga berturut-turut** corak itu, pada tiga mekanik berbeza.
+**Hipotesis `SETUP.md` DISAHKAN**: `tanpa5` bakul positif pada **8/8** sel (+0.55% hingga
+**+4.77%**, tertinggi dalam kajian) lawan **0/598** setup saham. Kepelbagaian merentas ekor
+memang membetulkan masalah ekor — tetapi masalah **berpindah kepada drawdown**. Hanya `U14`
+(momentum 12−1) mengalahkan kawalan rawak (5/8); `U11` dan `U03` Clenow 0/8. `U14` k=1
+nisbah 0.75 = **BERHENTI–SEPARA**, baris gilir diteruskan. Memegang bakul Electronic
+Technology **sahaja** memberi +32.67%, mengalahkan setiap putaran — dan itu pilihan selepas
+melihat keputusan; jalur kawalan `k=1` ialah **17.1 mata**.
+
 ### E4 · KELUAR `X31`/`X32` — keluar peringkat PORTFOLIO
 **Bukti:** pilihan keluar diukur **12× lebih berpengaruh** daripada masuk (sebaran 4.997
 mata lawan lift terbaik 0.392), tetapi **kesemua 23** keluar yang diuji ialah peraturan
@@ -183,7 +194,8 @@ diambil, dan sebabnya. Ini rekod *mengapa* kita berada di langkah semasa.
 | — | PORTFOLIO (36) | **0 lulus P1–P4** | diagnosis: pegang 84.9 bar + ekor |
 | — | CARA (6) | 0 lulus; `C01` terbaik | paksi cara ditutup |
 | E1 | PEGANG × SLOT (320) | **T1 0 · T3 0 · lulus 0/320** (P1 29, P2 24, P3 101, P4 9) | **E2** |
-| E2 | ALAM `AL02` (160) | **T1 0 · T3 0**; gate (a) **lulus 46.2%**, gate (b) **gagal 27.5%** | **spec tidak meliputi kes ini — keputusan pengguna** |
+| E2 | ALAM `AL02` (160) | **T1 0 · T3 0**; gate (a) **lulus 46.2%**, gate (b) **gagal 27.5%** | **spec tidak meliputi kes ini — keputusan pengguna: E3 pada `AL02`** |
+| E3 | INSTRUMEN `IS02` (40) | **T1 0 · T3 0**; P1 26/40 tetapi **P2 0/40**; P3 5 (`U14` sahaja); P4 1 | **E4** |
 
 ## 7. Peraturan proses — supaya kesilapan yang sama tidak berulang
 

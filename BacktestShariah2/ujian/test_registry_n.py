@@ -20,7 +20,7 @@ class TestStruktur(unittest.TestCase):
         self.assertEqual(len(R.MASUK), 147)
         self.assertEqual(len(R.KELUAR), 45)
         self.assertEqual(len(R.CARA), 12)
-        self.assertEqual(len(R.URUTAN), 13)
+        self.assertEqual(len(R.URUTAN), 14)   # U14 ditambah oleh E3 (SPEC_INSTRUMEN.md)
         self.assertEqual(len(R.GABUNGAN), 8)
         self.assertEqual(len(R.SAIZ), 10)
         self.assertEqual(len(R.ALAM), 8)
@@ -34,7 +34,7 @@ class TestStruktur(unittest.TestCase):
         self.assertEqual([b[0] for b in R.MASUK], [f'N{i:02d}' for i in range(1, 148)])
         self.assertEqual([b[0] for b in R.KELUAR], [f'X{i:02d}' for i in range(1, 46)])
         self.assertEqual([b[0] for b in R.CARA], [f'C{i:02d}' for i in range(1, 13)])
-        self.assertEqual([b[0] for b in R.URUTAN], [f'U{i:02d}' for i in range(1, 14)])
+        self.assertEqual([b[0] for b in R.URUTAN], [f'U{i:02d}' for i in range(1, 15)])
         for nama, baris, awalan in R.paksi():
             self.assertEqual([b[0] for b in baris],
                              [f'{awalan}{i:02d}' for i in range(1, len(baris) + 1)], nama)

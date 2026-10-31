@@ -47,8 +47,13 @@ EKSPERIMEN = [
     dict(id='CARA', nama='Paksi CARA (6 ujian)', fail='cara.csv', gate='CARA1'),
     dict(id='E1', nama='PEGANG x SLOT (320 konfigurasi)',
          fail='pegang_slot_ringkas.csv', gate='lulus', pf=True, giliran=True),
-    dict(id='E2', nama='ALAM AL02 - alam dagangan sebenar', fail=None, giliran=True),
-    dict(id='E3', nama='INSTRUMEN IS02 - putaran ETF sektor', fail=None, giliran=True),
+    # `tapis`: alam_ringkas.csv membawa KEDUA-DUA alam (AL01 rujukan + AL02 ujian), jadi
+    # tanpa tapisan kad E2 akan melaporkan baris AL01 sebagai keputusannya.
+    dict(id='E2', nama='ALAM AL02 - alam dagangan sebenar',
+         fail='alam_ringkas.csv', gate='lulus', pf=True, giliran=True,
+         tapis=('alam', 'AL02')),
+    dict(id='E3', nama='INSTRUMEN IS02 - putaran bakul sektor',
+         fail='instrumen_ringkas.csv', gate='T1', pf=True, giliran=True),
     dict(id='E4', nama='KELUAR X31/X32 - keluar peringkat portfolio', fail=None,
          giliran=True),
     dict(id='E5', nama='KORELASI KR03 - had setiap industri', fail=None, giliran=True),
@@ -101,6 +106,9 @@ def keadaan():
         R = baca(p)
         if e['fail'] == 'cara.csv':
             R = [r for r in R if r.get('tingkap') == 'tahan']
+        if e.get('tapis'):
+            k_, v_ = e['tapis']
+            R = [r for r in R if str(r.get(k_)) == v_]
         n = len(R)
         lulus = sum(1 for r in R if str(r.get(e['gate'])) == 'True')
         if e.get('pf'):
@@ -110,7 +118,8 @@ def keadaan():
             if tb:
                 r, c, m, nis = tb
                 nm = ' '.join(str(r.get(k, '')) for k in
-                              ('masuk', 'slot', 'keluar', 'pegang', 'urutan') if r.get(k))
+                              ('alam', 'masuk', 'slot', 'k', 'imbang', 'keluar', 'pegang',
+                               'urutan') if r.get(k))
                 s += f'\n        terbaik CAGR: {nm} -> {c:+.2f}% / MDD {m:.2f}% / nisbah {nis:.2f}'
         else:
             s = f'{n} baris · lulus gate akhir {lulus}'

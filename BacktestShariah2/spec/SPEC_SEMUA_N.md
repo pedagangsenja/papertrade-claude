@@ -32,9 +32,9 @@ Kelima-lima ini mengikut terus daripada ukuran yang repo **sudah** ada. Tiada sa
 - `SEDIA` — semua indikator yang diperlukan sudah dikira oleh kod repo (`REVERSE/teras/ind.py` atau `REVERSE/step15_setup.py` / `step17_kombinasi.py`); boleh diuji tanpa kod indikator baharu.
 - `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.
 
-Masuk: 147 (78 DIUJI, 0 SEDIA, 69 PERLU). Keluar: 45 (30 DIUJI, 3 SEDIA, 12 PERLU). Cara: 12 (6 DIUJI, 3 SEDIA, 3 PERLU). Urutan: 13 (6 DIUJI, 2 SEDIA, 5 PERLU).
+Masuk: 147 (78 DIUJI, 0 SEDIA, 69 PERLU). Keluar: 45 (30 DIUJI, 3 SEDIA, 12 PERLU). Cara: 12 (6 DIUJI, 3 SEDIA, 3 PERLU). Urutan: 14 (8 DIUJI, 1 SEDIA, 5 PERLU).
 
-Tujuh paksi baharu (30 Okt 2026): GABUNGAN 8 · SAIZ 10 · ALAM 8 · PEGANG 6 · IMBANG 5 · KORELASI 4 · INSTRUMEN 4. Jumlah semua paksi: 262 baris.
+Tujuh paksi baharu (30 Okt 2026): GABUNGAN 8 · SAIZ 10 · ALAM 8 · PEGANG 6 · IMBANG 5 · KORELASI 4 · INSTRUMEN 4. Jumlah semua paksi: 263 baris.
 
 Indikator baharu yang diperlukan: `adr_pct`, `alligator`, `alphatrend`, `arxiv`, `atrts`, `bar_mingguan`, `chop`, `coppock`, `crsi`, `darvas`, `data_13f`, `data_buyback`, `data_eps_suku`, `data_form4`, `data_keluasan`, `data_putcall`, `data_semakan`, `data_sentimen`, `data_short`, `donchian10`, `donchian50`, `efi`, `eri`, `fib_ayunan`, `fisher`, `ftd`, `gmma`, `gtja191`, `harmonik`, `htf`, `huggingface`, `intraday`, `isi_tutup`, `kalendar_cuti`, `kalendar_dagangan`, `kapitalisasi`, `keanggotaan`, `kelly`, `korelasi_signal`, `kst`, `kvo`, `ma5`, `matriks_kovarians`, `momentum_pinball`, `optimal_f`, `paksi_urutan`, `pgo`, `pivot_lantai`, `qqe`, `rwi`, `sejarah_stage`, `squeeze_ttm`, `stc`, `strat_bar`, `supertrend3`, `talib_cdl`, `tarikh_earnings`, `tarikh_ipo`, `td_seq`, `tinggi_swing`, `tmo`, `tsv`, `turtle_soup`, `vhf`, `vol_portfolio`, `vortex`, `vwap20`, `vwap_ankor`, `wyckoff_spring`.
 
@@ -520,6 +520,8 @@ Dan `SISTEM.md` mengukur sesuatu yang lebih kuat: urutan ikut **skor berterusan*
 
 **U13** — `skor keluasan semakan analis` · konsensus praktisi (blog/FMP) · PERLU:data_semakan · versi urutan bagi N145
 
+**U14** — `momentum 12-1 bulan (pulangan 12 bulan tolak bulan terakhir)` · Jegadeesh & Titman; standard akademik (akademik) · SEDIA · diperkenalkan dalam SPEC_INSTRUMEN.md E3 sebagai urutan bakul sektor
+
 ## Sapuan sumber: kadar pulangan sudah boleh diukur, dan ia berkurangan
 
 Enam sapuan dijalankan 30 Okt 2026. Pertambahan masuk setiap kali: **42 → +30 → +8 → +20 → +30 → +17**.
@@ -643,7 +645,7 @@ Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A dan
 
 **IS01** — `saham tunggal` · asas repo (repo) · DIUJI · SETUP.md: dagangan median -5.19% tetapi min +3.03% = terpencong kanan teruk
 
-**IS02** — `putaran ETF sektor` · konsensus (umum) · SEDIA · TITIK TENGAH yang belum diuji: SETUP.md mendapati SPY +3.356% dan QQQ +4.419% melepasi syarat ekor dengan mudah (menang ~77% lawan ~31%) kerana INDEKS ITULAH kepelbagaian merentas ekor. ETF sektor terletak antara saham tunggal (ekor teruk) dan SPUS (ekor baik).
+**IS02** — `putaran ETF sektor` · konsensus (umum) · DIUJI · TITIK TENGAH yang belum diuji: SETUP.md mendapati SPY +3.356% dan QQQ +4.419% melepasi syarat ekor dengan mudah (menang ~77% lawan ~31%) kerana INDEKS ITULAH kepelbagaian merentas ekor. ETF sektor terletak antara saham tunggal (ekor teruk) dan SPUS (ekor baik). | DIUJI: putaran 11 bakul sektor sintetik berat sama rata (alam AL02): T1 0, T3 0. P1 26/40 tetapi P2 0/40 - MDD gagal pada SETIAP sel, paling cetek -31.61% lawan SPUS -26.82%. Pegang-semua k=11 beri +19.66%/-35.54%. HIPOTESIS SETUP.md DISAHKAN: tanpa5 bakul POSITIF pada 8/8 sel (+0.55% hingga +4.77%) lawan 0/598 setup saham - kepelbagaian merentas ekor memang membetulkan masalah ekor, tetapi masalah berpindah kepada DRAWDOWN. Bakul sintetik bukan ETF boleh dagang: tiada yuran, tiada ralat penjejakan
 
 **IS03** — `SPUS + tunai diimbang bulanan` · ujian penguasaan SISTEM.md (repo) · DIUJI · INI YANG MENANG setakat ini: pada pendedahan sama ia mengalahkan Clenow pada KEDUA-DUA paksi. Nisbah CAGR/abs(MDD) hampir pemalar 0.642-0.669 merentas berat.
 
