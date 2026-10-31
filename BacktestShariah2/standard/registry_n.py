@@ -909,6 +909,42 @@ def semak():
     return masalah
 
 
+# Keputusan terukur bagi paksi SELAIN masuk. Tanpa ini lajur Status kekal 'SEDIA'
+# walaupun baris itu sudah ada angka, dan papan memberi gambaran liputan yang terkurang.
+HASIL_PAKSI = {
+    # KELUAR: asas tanpa penapis masuk, tingkap TAHAN 2020-2025 (REVERSE/NXX_KELUAR.md,
+    # larian B2 selepas henti berasaskan paras di ATAS harga masuk dibuang).
+    'X05': 'jangkaan asas +0.030%, menang 54.3%, n 4,420,650',
+    'X07': 'jangkaan asas -0.172%, menang 54.5%, n 4,420,650',
+    'X08': 'jangkaan asas +0.098%, menang 61.5%, n 4,420,650',
+    'X09': 'jangkaan asas -0.101%, menang 56.1%, n 4,420,650',
+    'X10': 'jangkaan asas -0.023%, menang 94.1%, n 4,420,650',
+    'X12': 'jangkaan asas +0.961%, menang 27.5%, n 4,143,657',
+    'X13': 'jangkaan asas +4.350%, menang 66.2%, n 4,420,650',
+    'X14': 'jangkaan asas +0.991%, menang 53.9%, n 4,420,650',
+    'X15': 'jangkaan asas +3.706%, menang 41.1%, n 4,420,650',
+    'X16': 'jangkaan asas +0.718%, menang 37.4%, n 4,420,650',
+    'X17': 'jangkaan asas +1.855%, menang 45.0%, n 4,420,650',
+    'X18': 'jangkaan asas -0.647%, menang 23.9%, n 4,300,516',
+    'X19': 'jangkaan asas -0.084%, menang 33.6%, n 4,420,650',
+    'X25': 'jangkaan asas -0.297%, menang 22.5%, n 2,638,445',
+    'X26': 'jangkaan asas -0.126%, menang 34.8%, n 4,420,650',
+    'X27': 'jangkaan asas +0.233%, menang 91.5%, n 4,420,650',
+    'X28': 'jangkaan asas -0.436%, menang 52.6%, n 4,420,650',
+    'X29': 'jangkaan asas +0.294%, menang 48.5%, n 4,420,650',
+    'X30': 'jangkaan asas +0.238%, menang 37.5%, n 4,420,650',
+    'X33': 'jangkaan asas -0.500%, menang 39.0%, n 4,420,650',
+    'X36': 'jangkaan asas +0.892%, menang 35.7%, n 4,420,650',
+    'X37': 'jangkaan asas +0.839%, menang 6.4%, n 4,138,081',
+    'X41': 'jangkaan asas +0.839%, menang 6.4%, n 4,138,081',
+    # GABUNGAN: 14 konfigurasi (REVERSE/GABUNGAN.md); nilai = konfigurasi terbaik keluarga itu.
+    'GB02': 'terbaik GB02_atau2: lift +0.793 latih / +3.299 tahan, jangkaan +5.893%, n 93,416; 2/6 lulus gate3',
+    'GB03': 'terbaik GB03_undi4: lift +0.858 latih / +3.036 tahan, jangkaan +5.630%, n 85,575; 0/3 lulus gate3',
+    'GB04': 'terbaik GB04_pangkat1: lift +0.023 latih / +1.813 tahan, jangkaan +4.407%, n 36,401; 0/4 lulus gate3',
+    'GB08': 'terbaik GB08_buang_buruk: lift +0.170 latih / +0.098 tahan, jangkaan +2.692%, n 3,167,080; 0/1 lulus gate3',
+}
+
+
 def kemas_masuk(b):
     """Terbitkan status DIUJI + nota keputusan bagi baris yang HASIL_NXX ada."""
     if b[0] not in HASIL_NXX:
@@ -916,6 +952,13 @@ def kemas_masuk(b):
     nota = (b[7] + ' | ' if b[7] else '') + 'DIUJI (NXX.md): ' + HASIL_NXX[b[0]]
     return b[:6] + ('DIUJI', nota)
 
+
+def kemas_paksi(b):
+    """Sama seperti kemas_masuk(), tetapi bagi paksi lain (status pada indeks 4)."""
+    if b[0] not in HASIL_PAKSI or b[4] == 'DIUJI':
+        return b
+    nota = (b[5] + ' | ' if b[5] else '') + 'DIUJI: ' + HASIL_PAKSI[b[0]]
+    return b[:4] + ('DIUJI', nota)
 
 def tulis_csv():
     os.makedirs(os.path.dirname(CSV), exist_ok=True)
@@ -926,7 +969,7 @@ def tulis_csv():
             w.writerow(list(kemas_masuk(b)))
         for nama, baris, _ in paksi():
             # paksi lain: id, keluarga, nama = peraturan, lajur masuk kosong
-            for b in baris:
+            for b in map(kemas_paksi, baris):
                 w.writerow([b[0], nama, b[1], '', b[2], b[3], b[4], b[5]])
     return len(MASUK) + sum(len(b) for _, b, _ in paksi())
 
@@ -941,9 +984,9 @@ def _kira(baris, idx_status):
 
 def tulis_spec():
     km = _kira([kemas_masuk(b) for b in MASUK], 6)
-    kk = _kira(KELUAR, 4)
-    kc = _kira(CARA, 4)
-    ku = _kira(URUTAN, 4)
+    kk = _kira([kemas_paksi(b) for b in KELUAR], 4)
+    kc = _kira([kemas_paksi(b) for b in CARA], 4)
+    ku = _kira([kemas_paksi(b) for b in URUTAN], 4)
     perlu = {b[6].split(':', 1)[1] for b in MASUK if b[6].startswith('PERLU:')}
     for _, baris, _a in paksi():
         perlu |= {b[4].split(':', 1)[1] for b in baris if b[4].startswith('PERLU:')}
@@ -1133,7 +1176,7 @@ def tulis_spec():
     for nama, baris, _a in paksi()[3:]:
         A(f'### {TAJUK_PAKSI[nama]}')
         A('')
-        for b in baris:
+        for b in map(kemas_paksi, baris):
             _id, aturan, sumber, plat, status, nota = b
             A(f'**{_id}** — `{aturan}` · {sumber} ({plat}) · {status}' +
               (f' · {nota}' if nota else ''))
@@ -1282,16 +1325,16 @@ def main():
     n = tulis_csv()
     tulis_spec()
     km = _kira([kemas_masuk(b) for b in MASUK], 6)
-    kk = _kira(KELUAR, 4)
-    kc = _kira(CARA, 4)
-    ku = _kira(URUTAN, 4)
+    kk = _kira([kemas_paksi(b) for b in KELUAR], 4)
+    kc = _kira([kemas_paksi(b) for b in CARA], 4)
+    ku = _kira([kemas_paksi(b) for b in URUTAN], 4)
     print(f'registry N: {n} baris merentas {1 + len(PAKSI_LAIN)} paksi')
     print(f'  masuk  : {km["DIUJI"]} DIUJI, {km["SEDIA"]} SEDIA, {km["PERLU"]} PERLU')
     print(f'  keluar : {kk["DIUJI"]} DIUJI, {kk["SEDIA"]} SEDIA, {kk["PERLU"]} PERLU')
     print(f'  cara   : {kc["DIUJI"]} DIUJI, {kc["SEDIA"]} SEDIA, {kc["PERLU"]} PERLU')
     print(f'  urutan : {ku["DIUJI"]} DIUJI, {ku["SEDIA"]} SEDIA, {ku["PERLU"]} PERLU')
     for nama, baris, _a in paksi()[3:]:
-        k = _kira(baris, 4)
+        k = _kira([kemas_paksi(b) for b in baris], 4)
         print(f'  {nama.lower():<10}: {len(baris):>3} baris — {k["DIUJI"]} DIUJI, '
               f'{k["SEDIA"]} SEDIA, {k["PERLU"]} PERLU')
     print(f'  -> {os.path.relpath(CSV, AKAR)}')

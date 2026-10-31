@@ -150,43 +150,43 @@ X01,KELUAR,"henti 1.5 x ATR14, sasaran 1 x ATR14",,pedagang forum,babypips,DIUJI
 X02,KELUAR,"henti 2 x ATR14, sasaran 4 x ATR14",,pelbagai,umum,DIUJI,asas tahan +0.953%
 X03,KELUAR,"henti 2 x ATR14, pegang 63 sesi",,asas kajian,repo,DIUJI,asas tahan +2.595% — TERBAIK; kadar menang 30.2%
 X04,KELUAR,ekori 2 x ATR14,,pelbagai,umum,DIUJI,asas tahan +1.156%
-X05,KELUAR,keluar pada jalur tengah BB(20),,therighttrader/StockSharp,blog,SEDIA,
+X05,KELUAR,keluar pada jalur tengah BB(20),,therighttrader/StockSharp,blog,DIUJI,"DIUJI: jangkaan asas +0.030%, menang 54.3%, n 4,420,650"
 X06,KELUAR,keluar bila tutup < SMA5,,Connors,buku,PERLU:ma5,
-X07,KELUAR,keluar bila rsi2 > 60,,Quantified Strategies,YouTube/Substack,SEDIA,
-X08,KELUAR,keluar bila rsi2 > 80,,Connors,buku,SEDIA,"sumber lapor CAGR 9% pada SPY 1993+, melabur hanya ~28% masa"
-X09,KELUAR,keluar bila rsi2 > 65,,EA MQL5,MQL5,SEDIA,
-X10,KELUAR,sasaran untung 2% tetap,,Fmz,Fmz,SEDIA,
+X07,KELUAR,keluar bila rsi2 > 60,,Quantified Strategies,YouTube/Substack,DIUJI,"DIUJI: jangkaan asas -0.172%, menang 54.5%, n 4,420,650"
+X08,KELUAR,keluar bila rsi2 > 80,,Connors,buku,DIUJI,"sumber lapor CAGR 9% pada SPY 1993+, melabur hanya ~28% masa | DIUJI: jangkaan asas +0.098%, menang 61.5%, n 4,420,650"
+X09,KELUAR,keluar bila rsi2 > 65,,EA MQL5,MQL5,DIUJI,"DIUJI: jangkaan asas -0.101%, menang 56.1%, n 4,420,650"
+X10,KELUAR,sasaran untung 2% tetap,,Fmz,Fmz,DIUJI,"DIUJI: jangkaan asas -0.023%, menang 94.1%, n 4,420,650"
 X11,KELUAR,keluar Donchian10 bertentangan,,Turtle,buku,PERLU:donchian10,
-X12,KELUAR,henti pada ekstrem luar jalur BB,,therighttrader,blog,SEDIA,
-X13,KELUAR,keluar bila rsi14 > 70,,LuxAlgo,LuxAlgo,SEDIA,
-X14,KELUAR,keluar bila rsi14 silang naik 50,,skrip awam,TradingView,SEDIA,
-X15,KELUAR,ekori Chandelier 4 x ATR14,,lorong 2 repo,repo,SEDIA,sudah dipakai Papertrade C
-X16,KELUAR,keluar bila supertrend berbalik (henti ekor),,StockSharp,StockSharp,SEDIA,
-X17,KELUAR,keluar bila adx14 < 20,,StockSharp VWAP+ADX,StockSharp,SEDIA,
-X18,KELUAR,keluar Donchian20 bertentangan,,Turtle sistem 2,buku,SEDIA,
-X19,KELUAR,ekori EMA21 (jual bila tutup < ema21),,panduan 8/21 EMA,blog,SEDIA,
+X12,KELUAR,henti pada ekstrem luar jalur BB,,therighttrader,blog,DIUJI,"DIUJI: jangkaan asas +0.961%, menang 27.5%, n 4,143,657"
+X13,KELUAR,keluar bila rsi14 > 70,,LuxAlgo,LuxAlgo,DIUJI,"DIUJI: jangkaan asas +4.350%, menang 66.2%, n 4,420,650"
+X14,KELUAR,keluar bila rsi14 silang naik 50,,skrip awam,TradingView,DIUJI,"DIUJI: jangkaan asas +0.991%, menang 53.9%, n 4,420,650"
+X15,KELUAR,ekori Chandelier 4 x ATR14,,lorong 2 repo,repo,DIUJI,"sudah dipakai Papertrade C | DIUJI: jangkaan asas +3.706%, menang 41.1%, n 4,420,650"
+X16,KELUAR,keluar bila supertrend berbalik (henti ekor),,StockSharp,StockSharp,DIUJI,"DIUJI: jangkaan asas +0.718%, menang 37.4%, n 4,420,650"
+X17,KELUAR,keluar bila adx14 < 20,,StockSharp VWAP+ADX,StockSharp,DIUJI,"DIUJI: jangkaan asas +1.855%, menang 45.0%, n 4,420,650"
+X18,KELUAR,keluar Donchian20 bertentangan,,Turtle sistem 2,buku,DIUJI,"DIUJI: jangkaan asas -0.647%, menang 23.9%, n 4,300,516"
+X19,KELUAR,ekori EMA21 (jual bila tutup < ema21),,panduan 8/21 EMA,blog,DIUJI,"DIUJI: jangkaan asas -0.084%, menang 33.6%, n 4,420,650"
 X20,KELUAR,"separa 1/3 pada 2R, ekori baki dengan EMA20",,panduan 8/21 EMA,blog,SEDIA,sumber: ambil separa pada 2R atau tinggi swing terdahulu
 X21,KELUAR,"jual 1/3 pada +10% atau hari-5, ekori MA20",,Minervini/Qullamaggie,buku,DIUJI,komponen Sistem A (SISTEM.md)
 X22,KELUAR,henti keras -8% daripada harga masuk,,O’Neil,buku,DIUJI,komponen Sistem A
 X23,KELUAR,keluar bila jatuh keluar 20 teratas pangkat momentum; imbang bulanan,,Clenow,buku,DIUJI,komponen Sistem B; sebaran benih 0.00
 X24,KELUAR,keluar pada tinggi swing terdahulu,,umum,blog,PERLU:tinggi_swing,
-X25,KELUAR,"henti 1% bawah EMA21 atau bawah rendah undur, mana lebih ketat",,panduan 8/21 EMA,blog,SEDIA,
-X26,KELUAR,"ekori 4% (peratus tetap, bukan ATR)",,QuantJourney O09,quantjourney-bt,SEDIA,"ekor diurus enjin isi, bukan dikemas kini strategi"
-X27,KELUAR,sasaran limit +3% atas harga masuk purata,,QuantJourney O03,quantjourney-bt,SEDIA,bandingkan dengan dapatan KOMBINASI.md: sasaran kecil merugikan
-X28,KELUAR,sasaran limit +4%; keluar pasaran jika tutup < MA50,,QuantJourney O04,quantjourney-bt,SEDIA,sasaran DAN kegagalan trend sebagai dua keluar berasingan
-X29,KELUAR,pegang tetap 10 bar kemudian keluar pasaran,,QuantJourney O05/O14,quantjourney-bt,SEDIA,
-X30,KELUAR,keluar bila macd < macd_sig,,QuantJourney W22,quantjourney-bt,SEDIA,
+X25,KELUAR,"henti 1% bawah EMA21 atau bawah rendah undur, mana lebih ketat",,panduan 8/21 EMA,blog,DIUJI,"DIUJI: jangkaan asas -0.297%, menang 22.5%, n 2,638,445"
+X26,KELUAR,"ekori 4% (peratus tetap, bukan ATR)",,QuantJourney O09,quantjourney-bt,DIUJI,"ekor diurus enjin isi, bukan dikemas kini strategi | DIUJI: jangkaan asas -0.126%, menang 34.8%, n 4,420,650"
+X27,KELUAR,sasaran limit +3% atas harga masuk purata,,QuantJourney O03,quantjourney-bt,DIUJI,"bandingkan dengan dapatan KOMBINASI.md: sasaran kecil merugikan | DIUJI: jangkaan asas +0.233%, menang 91.5%, n 4,420,650"
+X28,KELUAR,sasaran limit +4%; keluar pasaran jika tutup < MA50,,QuantJourney O04,quantjourney-bt,DIUJI,"sasaran DAN kegagalan trend sebagai dua keluar berasingan | DIUJI: jangkaan asas -0.436%, menang 52.6%, n 4,420,650"
+X29,KELUAR,pegang tetap 10 bar kemudian keluar pasaran,,QuantJourney O05/O14,quantjourney-bt,DIUJI,"DIUJI: jangkaan asas +0.294%, menang 48.5%, n 4,420,650"
+X30,KELUAR,keluar bila macd < macd_sig,,QuantJourney W22,quantjourney-bt,DIUJI,"DIUJI: jangkaan asas +0.238%, menang 37.5%, n 4,420,650"
 X31,KELUAR,keluar bila jatuh keluar 3 teratas pangkat 252 hari; imbang bulanan,,QuantJourney W15,quantjourney-bt,SEDIA,
 X32,KELUAR,"imbang semula berkala sahaja, tiada syarat keluar lain",,QuantJourney W04,quantjourney-bt,SEDIA,keluar hanya berlaku apabila pangkat berubah pada tarikh imbang
-X33,KELUAR,keluar pada tutup sesi masuk,,Connors & Raschke (80-20),buku,SEDIA,pegang satu sesi sahaja
+X33,KELUAR,keluar pada tutup sesi masuk,,Connors & Raschke (80-20),buku,DIUJI,"pegang satu sesi sahaja | DIUJI: jangkaan asas -0.500%, menang 39.0%, n 4,420,650"
 X34,KELUAR,keluar bila tutup silang naik SMA5,,Connors & Alvarez,buku,PERLU:ma5,
 X35,KELUAR,keluar pada tutup hari dagangan ke-3 bulan berikut,,Quantified Strategies,YouTube/Substack,PERLU:kalendar_dagangan,pasangan keluar bagi N101
-X36,KELUAR,keluar selepas DUA tutup di bawah MA rujukan,,Deepvue,blog,SEDIA,sumber TEGAS: jangan bertindak atas satu hari merah sahaja
-X37,KELUAR,henti bawah rendah hari gap; gagal jika tutup < buka hari gap,,therighttrader (PEG),blog,SEDIA,
+X36,KELUAR,keluar selepas DUA tutup di bawah MA rujukan,,Deepvue,blog,DIUJI,"sumber TEGAS: jangan bertindak atas satu hari merah sahaja | DIUJI: jangkaan asas +0.892%, menang 35.7%, n 4,420,650"
+X37,KELUAR,henti bawah rendah hari gap; gagal jika tutup < buka hari gap,,therighttrader (PEG),blog,DIUJI,"DIUJI: jangkaan asas +0.839%, menang 6.4%, n 4,138,081"
 X38,KELUAR,"biar henti sampai +2R, kemudian ekori bawah rendah ayunan harian terakhir",,therighttrader (PEG),blog,PERLU:tinggi_swing,
 X39,KELUAR,henti pada paras undur Fibonacci 78.6%,,konsensus blog,blog,PERLU:fib_ayunan,
 X40,KELUAR,henti bawah rendah shakeout,,Wyckoff,buku/blog,PERLU:wyckoff_spring,
-X41,KELUAR,henti pada rendah hari masuk,,"Zarattini, Barbon & Aziz (ORB)",SSRN/akademik,SEDIA,saiz asal: syer = risiko$ / (harga masuk - rendah hari)
+X41,KELUAR,henti pada rendah hari masuk,,"Zarattini, Barbon & Aziz (ORB)",SSRN/akademik,DIUJI,"saiz asal: syer = risiko$ / (harga masuk - rendah hari) | DIUJI: jangkaan asas +0.839%, menang 6.4%, n 4,138,081"
 X42,KELUAR,keluar bila histogram MACD mingguan tutup bawah garis isyarat,,"Elder, Trading for a Living",buku,PERLU:bar_mingguan,sumber lain kata ekori henti ke rendah semalam dan keluar bila stokastik terlebih beli
 X43,KELUAR,keluar pada TD Sequential sell countdown 13,,DeMark,buku/pustaka,PERLU:td_seq,
 X44,KELUAR,keluar pada zon D harmonik (sasaran 0.382 kemudian 0.618 CD),,Scott Carney,blog,PERLU:harmonik,
@@ -217,13 +217,13 @@ U11,URUTAN,pulangan gabungan 1 + 3 + 6 bulan tertinggi,,Qullamaggie,blog/screene
 U12,URUTAN,"191 alfa formula GTJA (harga, volum, volatiliti, VWAP)",,Guotai Junan Securities (2017),laporan/arXiv,PERLU:gtja191,"DAPATAN TERKUAT SAPUAN KEENAM: satu kertas 2026 melapor 17 daripada 191 MASIH menambah kuasa penerangan bagi pulangan saham AS selepas mengawal 151 faktor fundamental lain. Itu bukti kuantitatif LUARAN pertama bagi kemandirian mana-mana katalog dalam registry ini. Direka untuk A-share China; keluarga sama seperti U06 (skor peringkat, bukan penapis). Formula BELUM dibaca - laporan asal 2017 tidak ditemui dalam carian."
 U13,URUTAN,skor keluasan semakan analis,,konsensus praktisi,blog/FMP,PERLU:data_semakan,versi urutan bagi N145
 GB01,GABUNGAN,DAN (persilangan): semua syarat mesti benar,,asas semua 147 MASUK,repo,DIUJI,"INI yang SETUP.md ukur: 0 daripada 598 lift positif, sebab STRUKTUR bukan pemilihan. Setiap syarat tambahan membuang lebih banyak bar, dan bar yang dibuang termasuk ekor kanan."
-GB02,GABUNGAN,ATAU (kesatuan): mana-mana satu syarat benar,,akibat logik SETUP.md,repo,SEDIA,"BELUM PERNAH DIUJI, dan ia secara struktur BERTENTANGAN dengan kegagalan yang diukur: kesatuan MENAMBAH bar, bukan membuang. Jika masalahnya ""menapis membuang ekor"", maka operasi yang betul ialah kesatuan, bukan persilangan. Ini teknik yang saya tertinggal."
-GB03,GABUNGAN,Undi k-daripada-n syarat benar,,ensemble klasik,umum,SEDIA,"k=1 ialah GB02, k=n ialah GB01; k di antaranya belum pernah diuji"
-GB04,GABUNGAN,Agregat pangkat: purata pangkat merentas n signal -> satu skor,,ensemble klasik,umum,SEDIA,"menukar penapis menjadi URUTAN. SISTEM.md ukur urutan skor BERTERUSAN mempunyai sebaran benih 0.00 lawan 17.3 mata/tahun bagi susunan sewenang-wenang - jadi ini juga membaiki kebolehpercayaan keputusan, bukan hanya pulangan."
+GB02,GABUNGAN,ATAU (kesatuan): mana-mana satu syarat benar,,akibat logik SETUP.md,repo,DIUJI,"BELUM PERNAH DIUJI, dan ia secara struktur BERTENTANGAN dengan kegagalan yang diukur: kesatuan MENAMBAH bar, bukan membuang. Jika masalahnya ""menapis membuang ekor"", maka operasi yang betul ialah kesatuan, bukan persilangan. Ini teknik yang saya tertinggal. | DIUJI: terbaik GB02_atau2: lift +0.793 latih / +3.299 tahan, jangkaan +5.893%, n 93,416; 2/6 lulus gate3"
+GB03,GABUNGAN,Undi k-daripada-n syarat benar,,ensemble klasik,umum,DIUJI,"k=1 ialah GB02, k=n ialah GB01; k di antaranya belum pernah diuji | DIUJI: terbaik GB03_undi4: lift +0.858 latih / +3.036 tahan, jangkaan +5.630%, n 85,575; 0/3 lulus gate3"
+GB04,GABUNGAN,Agregat pangkat: purata pangkat merentas n signal -> satu skor,,ensemble klasik,umum,DIUJI,"menukar penapis menjadi URUTAN. SISTEM.md ukur urutan skor BERTERUSAN mempunyai sebaran benih 0.00 lawan 17.3 mata/tahun bagi susunan sewenang-wenang - jadi ini juga membaiki kebolehpercayaan keputusan, bukan hanya pulangan. | DIUJI: terbaik GB04_pangkat1: lift +0.023 latih / +1.813 tahan, jangkaan +4.407%, n 36,401; 0/4 lulus gate3"
 GB05,GABUNGAN,Jumlah berpemberat sama bagi skor ternormal,,ensemble klasik,umum,SEDIA,
 GB06,GABUNGAN,Berat songsang-korelasi antara signal,,ensemble klasik,umum,PERLU:korelasi_signal,
 GB07,GABUNGAN,"Hierarki: signal A tentukan ALAM, signal B tentukan URUTAN",,struktur,repo,SEDIA,"bukan penapis bertindan - setiap signal buat kerja BERBEZA, jadi ia tidak menambah pembuangan bar"
-GB08,GABUNGAN,"Penapis TERBALIK: buang yang terbukti rugi, bukan pilih yang terbukti untung",,akibat logik KOLAM_EKOR.md,repo,SEDIA,"pada taburan terpencong kanan, membuang ekor KIRI tidak menyentuh ekor KANAN. Itu operasi BERBEZA daripada memilih. KAEDAH_TERBAIK.md sudah kenal pasti 25 kaedah Mxx terbukti NEGATIF pada BH-FDR q <= 0.05 - senarai buang itu SUDAH ADA dan belum pernah diguna."
+GB08,GABUNGAN,"Penapis TERBALIK: buang yang terbukti rugi, bukan pilih yang terbukti untung",,akibat logik KOLAM_EKOR.md,repo,DIUJI,"pada taburan terpencong kanan, membuang ekor KIRI tidak menyentuh ekor KANAN. Itu operasi BERBEZA daripada memilih. KAEDAH_TERBAIK.md sudah kenal pasti 25 kaedah Mxx terbukti NEGATIF pada BH-FDR q <= 0.05 - senarai buang itu SUDAH ADA dan belum pernah diguna. | DIUJI: terbaik GB08_buang_buruk: lift +0.170 latih / +0.098 tahan, jangkaan +2.692%, n 3,167,080; 0/1 lulus gate3"
 SZ01,SAIZ,berat sama rata merentas slot,,asas repo,repo,DIUJI,asas setiap lorong portfolio_slot kecuali RISIKO_10
 SZ02,SAIZ,pariti risiko Clenow: nilai = 0.001 x ekuiti / ATR%,,Clenow,buku,DIUJI,Sistem B; memberi pendedahan 35.4% sahaja kerana ATR peneraju 5-6% (SISTEM.md)
 SZ03,SAIZ,"risiko 1% / (4 x ATR14%), had 2-25%",,repo fasa 1b,repo,DIUJI,RISIKO_10; DITOLAK untuk pulangan tetapi memperbaiki MDD 6/6 tahun (KEPUTUSAN_1B.md)

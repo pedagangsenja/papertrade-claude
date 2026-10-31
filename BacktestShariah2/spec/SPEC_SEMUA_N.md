@@ -32,7 +32,7 @@ Kelima-lima ini mengikut terus daripada ukuran yang repo **sudah** ada. Tiada sa
 - `SEDIA` — semua indikator yang diperlukan sudah dikira oleh kod repo (`REVERSE/teras/ind.py` atau `REVERSE/step15_setup.py` / `step17_kombinasi.py`); boleh diuji tanpa kod indikator baharu.
 - `PERLU:<x>` — perlu indikator baharu `<x>` dahulu.
 
-Masuk: 147 (78 DIUJI, 0 SEDIA, 69 PERLU). Keluar: 45 (7 DIUJI, 26 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
+Masuk: 147 (78 DIUJI, 0 SEDIA, 69 PERLU). Keluar: 45 (30 DIUJI, 3 SEDIA, 12 PERLU). Cara: 12 (1 DIUJI, 8 SEDIA, 3 PERLU). Urutan: 13 (5 DIUJI, 3 SEDIA, 5 PERLU).
 
 Tujuh paksi baharu (30 Okt 2026): GABUNGAN 8 · SAIZ 10 · ALAM 8 · PEGANG 6 · IMBANG 5 · KORELASI 4 · INSTRUMEN 4. Jumlah semua paksi: 262 baris.
 
@@ -549,11 +549,11 @@ Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A dan
 
 **GB01** — `DAN (persilangan): semua syarat mesti benar` · asas semua 147 MASUK (repo) · DIUJI · INI yang SETUP.md ukur: 0 daripada 598 lift positif, sebab STRUKTUR bukan pemilihan. Setiap syarat tambahan membuang lebih banyak bar, dan bar yang dibuang termasuk ekor kanan.
 
-**GB02** — `ATAU (kesatuan): mana-mana satu syarat benar` · akibat logik SETUP.md (repo) · SEDIA · BELUM PERNAH DIUJI, dan ia secara struktur BERTENTANGAN dengan kegagalan yang diukur: kesatuan MENAMBAH bar, bukan membuang. Jika masalahnya "menapis membuang ekor", maka operasi yang betul ialah kesatuan, bukan persilangan. Ini teknik yang saya tertinggal.
+**GB02** — `ATAU (kesatuan): mana-mana satu syarat benar` · akibat logik SETUP.md (repo) · DIUJI · BELUM PERNAH DIUJI, dan ia secara struktur BERTENTANGAN dengan kegagalan yang diukur: kesatuan MENAMBAH bar, bukan membuang. Jika masalahnya "menapis membuang ekor", maka operasi yang betul ialah kesatuan, bukan persilangan. Ini teknik yang saya tertinggal. | DIUJI: terbaik GB02_atau2: lift +0.793 latih / +3.299 tahan, jangkaan +5.893%, n 93,416; 2/6 lulus gate3
 
-**GB03** — `Undi k-daripada-n syarat benar` · ensemble klasik (umum) · SEDIA · k=1 ialah GB02, k=n ialah GB01; k di antaranya belum pernah diuji
+**GB03** — `Undi k-daripada-n syarat benar` · ensemble klasik (umum) · DIUJI · k=1 ialah GB02, k=n ialah GB01; k di antaranya belum pernah diuji | DIUJI: terbaik GB03_undi4: lift +0.858 latih / +3.036 tahan, jangkaan +5.630%, n 85,575; 0/3 lulus gate3
 
-**GB04** — `Agregat pangkat: purata pangkat merentas n signal -> satu skor` · ensemble klasik (umum) · SEDIA · menukar penapis menjadi URUTAN. SISTEM.md ukur urutan skor BERTERUSAN mempunyai sebaran benih 0.00 lawan 17.3 mata/tahun bagi susunan sewenang-wenang - jadi ini juga membaiki kebolehpercayaan keputusan, bukan hanya pulangan.
+**GB04** — `Agregat pangkat: purata pangkat merentas n signal -> satu skor` · ensemble klasik (umum) · DIUJI · menukar penapis menjadi URUTAN. SISTEM.md ukur urutan skor BERTERUSAN mempunyai sebaran benih 0.00 lawan 17.3 mata/tahun bagi susunan sewenang-wenang - jadi ini juga membaiki kebolehpercayaan keputusan, bukan hanya pulangan. | DIUJI: terbaik GB04_pangkat1: lift +0.023 latih / +1.813 tahan, jangkaan +4.407%, n 36,401; 0/4 lulus gate3
 
 **GB05** — `Jumlah berpemberat sama bagi skor ternormal` · ensemble klasik (umum) · SEDIA
 
@@ -561,7 +561,7 @@ Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A dan
 
 **GB07** — `Hierarki: signal A tentukan ALAM, signal B tentukan URUTAN` · struktur (repo) · SEDIA · bukan penapis bertindan - setiap signal buat kerja BERBEZA, jadi ia tidak menambah pembuangan bar
 
-**GB08** — `Penapis TERBALIK: buang yang terbukti rugi, bukan pilih yang terbukti untung` · akibat logik KOLAM_EKOR.md (repo) · SEDIA · pada taburan terpencong kanan, membuang ekor KIRI tidak menyentuh ekor KANAN. Itu operasi BERBEZA daripada memilih. KAEDAH_TERBAIK.md sudah kenal pasti 25 kaedah Mxx terbukti NEGATIF pada BH-FDR q <= 0.05 - senarai buang itu SUDAH ADA dan belum pernah diguna.
+**GB08** — `Penapis TERBALIK: buang yang terbukti rugi, bukan pilih yang terbukti untung` · akibat logik KOLAM_EKOR.md (repo) · DIUJI · pada taburan terpencong kanan, membuang ekor KIRI tidak menyentuh ekor KANAN. Itu operasi BERBEZA daripada memilih. KAEDAH_TERBAIK.md sudah kenal pasti 25 kaedah Mxx terbukti NEGATIF pada BH-FDR q <= 0.05 - senarai buang itu SUDAH ADA dan belum pernah diguna. | DIUJI: terbaik GB08_buang_buruk: lift +0.170 latih / +0.098 tahan, jangkaan +2.692%, n 3,167,080; 0/1 lulus gate3
 
 ### Saiz posisi (paksi KEENAM)
 
