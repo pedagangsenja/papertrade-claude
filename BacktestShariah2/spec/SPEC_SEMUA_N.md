@@ -583,7 +583,7 @@ Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A dan
 
 **SZ09** — `saiz berkadar dengan skor urutan` · struktur (repo) · SEDIA · menyambung paksi URUTAN kepada paksi SAIZ: skor tinggi dapat berat lebih besar
 
-**SZ10** — `berat sama rata atas KOLAM PENUH, bukan 8-10 slot` · akibat logik KOLAM_EKOR.md (repo) · SEDIA · KOLAM_EKOR.md SUDAH ukur: kolam berat sama rata SELURUH memberi +1.64%/bulan manakala saham MEDIAN kolam memberi +0.82% dan SPY +1.82%. Jadi memegang SEMUA mengalahkan memilih 10 dengan 0.82 mata sebulan, tanpa apa-apa signal. Ini BELUM pernah diuji sebagai lorong ke hadapan, dan ia satu-satunya pembinaan yang menangkap ekor secara struktur.
+**SZ10** — `berat sama rata atas KOLAM PENUH, bukan 8-10 slot` · akibat logik KOLAM_EKOR.md (repo) · DIUJI · KOLAM_EKOR.md SUDAH ukur: kolam berat sama rata SELURUH memberi +1.64%/bulan manakala saham MEDIAN kolam memberi +0.82% dan SPY +1.82%. Jadi memegang SEMUA mengalahkan memilih 10 dengan 0.82 mata sebulan, tanpa apa-apa signal. Ini BELUM pernah diuji sebagai lorong ke hadapan, dan ia satu-satunya pembinaan yang menangkap ekor secara struktur. | DIUJI: berat sama rata kolam penuh diukur pada slot 1280 (melepasi kapasiti 753 bagi lorong berhad): CAGR 9.19-16.71%, MDD -37% hingga -43%. Lengkung slot memuncak pada 80-160 dan MEROSOT selepas itu, jadi kolam penuh BUKAN jawapannya
 
 ### Definisi alam (paksi KETUJUH)
 
@@ -609,7 +609,7 @@ Awalan dua aksara supaya tiada kolisi dengan M, N, K, X, C, U, S, P, L, I, A dan
 
 **PG02** — `10 sesi` · swing (umum) · DIUJI · KAEDAH_TERBAIK.md: hanya kumpulan <= 10 hari hampir matang (53% terbuka)
 
-**PG03** — `21 sesi (~1 bulan)` · swing panjang (umum) · SEDIA
+**PG03** — `21 sesi (~1 bulan)` · swing panjang (umum) · DIUJI · DIUJI: had 21 bar: CAGR terbaik +30.49% (80 slot), MDD -45.6%, kos 7.2 mata/tahun; T1/T3 gagal
 
 **PG04** — `63 sesi (~3 bulan)` · asas kajian (repo) · DIUJI · asas SETUP.md dan KOMBINASI.md; keluar X03
 

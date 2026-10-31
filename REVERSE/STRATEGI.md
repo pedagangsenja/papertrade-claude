@@ -67,7 +67,14 @@ sehingga `E2` menjalankannya pada alam dagangan sebenar.
 Urutan dipilih mengikut **nilai jangkaan ÷ kos**, bukan minat. Setiap item menyatakan bukti
 repo yang menyebabkan ia wujud, supaya tiada eksperimen "sebab terfikir".
 
-### E1 · PEGANG × SLOT · *sedang berjalan*
+### E1 · PEGANG × SLOT · **SELESAI 31 Okt 2026 — gagal T1/T3 → E2**
+Laporan `PEGANG_SLOT.md`. Had pegangan **42 bar** mengalahkan "tiada had" dalam **72/128**
+sel, puncaknya **+39.24%** lawan +12.09% — lever tunggal terbesar yang pernah diukur dalam
+kajian ini. Tetapi `P1` (29) dan `P2` (24) **tidak bertindih langsung**: setiap tetapan yang
+menaikkan pulangan menaikkan MDD lebih banyak. `SZ10` DITOLAK: lengkung slot memuncak pada
+80–160 dan merosot; kolam penuh (slot 1280, melepasi kapasiti 753) memberi 9.19–16.71%.
+Hingar pemilihan pada sel terbaik ialah **42.8 mata peratus** merentas 20 benih.
+
 Pradaftar `SPEC_PEGANG_SLOT.md`, skrip `step24_pegang_slot.py` (komit `3370a4f`).
 **Bukti:** jangkaan/dagangan dan pusingan/tahun bergerak bertentangan dan hanya dua hujung
 pernah diukur (`X29` 10 bar +0.294%; `X13` ~85 bar +4.350%); lengkung slot menaik monoton
@@ -158,7 +165,7 @@ diambil, dan sebabnya. Ini rekod *mengapa* kita berada di langkah semasa.
 | — | Silang akhir (8) | 8 lulus gate setiap-dagangan | bawa ke portfolio |
 | — | PORTFOLIO (36) | **0 lulus P1–P4** | diagnosis: pegang 84.9 bar + ekor |
 | — | CARA (6) | 0 lulus; `C01` terbaik | paksi cara ditutup |
-| E1 | PEGANG × SLOT | *sedang berjalan* | — |
+| E1 | PEGANG × SLOT (320) | **T1 0 · T3 0 · lulus 0/320** (P1 29, P2 24, P3 101, P4 9) | **E2** |
 
 ## 7. Peraturan proses — supaya kesilapan yang sama tidak berulang
 

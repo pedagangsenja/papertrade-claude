@@ -912,6 +912,18 @@ def semak():
 # Keputusan terukur bagi paksi SELAIN masuk. Tanpa ini lajur Status kekal 'SEDIA'
 # walaupun baris itu sudah ada angka, dan papan memberi gambaran liputan yang terkurang.
 HASIL_PAKSI = {
+    # PEGANG + SAIZ: pradaftar SPEC_PEGANG_SLOT.md, larian step24 (REVERSE/PEGANG_SLOT.md).
+    # 320 konfigurasi, tingkap TAHAN 2020-2025, masuk GB02_atau3, kos penuh.
+    'PG02': 'had 10 bar: CAGR terbaik +31.15% (80 slot) tetapi MDD -70.2% dan seretan kos '
+            '14.3 mata/tahun pada 28 pusingan/slot/tahun; T1/T3 gagal',
+    'PG03': 'had 21 bar: CAGR terbaik +30.49% (80 slot), MDD -45.6%, kos 7.2 mata/tahun; '
+            'T1/T3 gagal',
+    'PG04': 'had 63 bar: CAGR terbaik +36.28% (80 slot), MDD -44.6%, kos 2.9 mata/tahun; '
+            'T1/T3 gagal',
+    'SZ10': 'berat sama rata kolam penuh diukur pada slot 1280 (melepasi kapasiti 753 bagi '
+            'lorong berhad): CAGR 9.19-16.71%, MDD -37% hingga -43%. Lengkung slot memuncak '
+            'pada 80-160 dan MEROSOT selepas itu, jadi kolam penuh BUKAN jawapannya',
+
     # KELUAR: asas tanpa penapis masuk, tingkap TAHAN 2020-2025 (REVERSE/NXX_KELUAR.md,
     # larian B2 selepas henti berasaskan paras di ATAS harga masuk dibuang).
     'X05': 'jangkaan asas +0.030%, menang 54.3%, n 4,420,650',
