@@ -82,6 +82,24 @@ posisi setiap ticker. Tingkap keputusan 2020–2025; latih 2012–2019 direkod.
 berat pilihan pengguna), **tiada eksperimen ke-7 ditambah selepas melihat keputusan ini**.
 Itu dipersetujui pengguna pada 31 Okt 2026 sebelum E1 dijalankan.
 
+## 4.1 Redundansi yang ditemui oleh ujian asap — dan pendedahan penuh
+
+Ujian asap mendapati `A2` dan `A3` menghasilkan ekuiti **identik** dengan `A0` apabila
+pemeringkat ialah `U02`. Itu bukan pepijat: menyaring ikut `rs_pst ≥ 50` kemudian
+memeringkat ikut `rs_pst` ialah **no-op**, kerana 8 teratas mengikut RS sudah pasti berada
+di atas mana-mana ambang RS. Hierarki hanya melakukan sesuatu apabila signal A dan signal B
+ialah **pemboleh ubah berbeza**.
+
+Semakan susulan mengesahkan `A2`/`A3` **bukan** no-op di bawah `U14` dan `U01`. Grid kekal
+seperti ditulis; sel `A2`/`A3` × `U02` akan dilaporkan sebagai **degenerat mengikut binaan**,
+bukan sebagai keputusan.
+
+**Pendedahan penuh:** semakan susulan itu mencetak CAGR bagi beberapa sel, jadi saya sudah
+melihat sebahagian keputusan sebelum gate dinilai. **Grid dan gate TIDAK diubah selepas itu**
+— kedua-duanya sudah ditulis di atas, dan jangkaan priori §5 di bawah ditulis **sebelum**
+semakan itu dijalankan. Saya merekodkannya di sini kerana menyembunyikannya akan menjadikan
+pradaftar ini tidak bermakna.
+
 ## 5. Jangkaan priori — ditulis sebelum larian
 
 1. **T1 = 0 dan T3 = 0** — kali keenam. Hujah strukturnya kini ada lima pengesahan bebas.
