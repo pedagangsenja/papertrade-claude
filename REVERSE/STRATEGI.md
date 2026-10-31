@@ -109,6 +109,12 @@ kita dagang") **dipalsukan**. Diserahkan kepada pengguna.
 **Pembetulan proses:** setiap spec selepas ini mesti menyenaraikan **setiap gabungan**
 keputusan gate, bukan hanya "semua lulus" dan "yang utama gagal".
 
+**KEPUTUSAN PENGGUNA 31 Okt 2026: teruskan ke E3, dan jalankan E3–E6 pada `AL02`.**
+Sebabnya E2 sendiri: `AL02` ialah alam dagangan sebenar **dan** ia memberi nombor lebih
+baik pada kedua-dua paksi (CAGR +2.69 mata, MDD +6.19 mata lebih cetek, 58/80 sel). Had
+pegangan **tidak** dibawa sebagai tetapan tetap — gate (b) menunjukkan ia bergantung kepada
+ketumpatan isyarat, bukan peraturan am.
+
 ### E3 · INSTRUMEN `IS02` — putaran ETF sektor
 **Bukti:** prior positif paling kuat dalam seluruh registry. `SETUP.md` mengukur SPY
 **+3.356%** dan QQQ **+4.419%** melepasi syarat ekor yang **598 daripada 598** setup saham
