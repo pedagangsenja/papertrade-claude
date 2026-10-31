@@ -16,6 +16,7 @@
 // Kod keluar 1 jika ada kegagalan (bertindih, tajuk, keluar, tepi).
 const fs=require('fs'),path=require('path'),os=require('os');
 const {chromium}=require('playwright');
+const PNAV_MAKS=12;   // panel rel sisi terbanyak setakat ini: Kaedah N = 9
 const DB=process.argv[2];
 if(!DB){console.error('guna: node semak_dashboard.js <folder db jana_db> [lebar ...]');process.exit(2);}
 const LEBAR=process.argv.slice(3).map(Number).filter(Boolean);
@@ -83,7 +84,9 @@ let gagal=0;
     for(const tab of tabs){
       const btn=await p.$(`#mainTabs button[data-tab="${tab}"]`);if(!btn)continue;
       try{await btn.click({timeout:5000});}catch(e){continue;}await p.waitForTimeout(800);
-        const nSub=Math.min(6,await p.$$eval('.pnav-in button',bs=>bs.length).catch(()=>0));
+      /* Had 6 melangkau panel 7+ secara SENYAP. Tab Kaedah N ada 9 panel rel, jadi
+         Registry penuh dan Semua ujian dipradaftar tidak pernah diaudit (31 Okt 2026). */
+      const nSub=Math.min(PNAV_MAKS,await p.$$eval('.pnav-in button',bs=>bs.length).catch(()=>0));
       for(let si=0;si<Math.max(1,nSub);si++){
         let nama='';
         if(nSub){try{
