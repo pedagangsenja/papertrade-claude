@@ -4904,8 +4904,16 @@ const PNAV_MIN=3,PNAV_TELEFON=['v-utama'],PNAV_ADA={};
 /* tajuk kumpulan rel (desktop): [tajuk, kunci panel pertama kumpulan] ('' = panel pertama); kunci tiada = tajuk tidak dipapar */
 /* bahagian lalai jika belum dipilih (selainnya item pertama) */
 const PNAV_LALAI={'v-pos':'posisi & keputusan','v-analisis':'kedudukan kaedah','v-utama':'__g','v-pr-c':'untung terkumpul lawan spy','v-pr-m':'untung terkumpul lawan spy','v-pr-gab':'untung terkumpul lawan spy'};
+/* v146 (2 Nov 2026): kunci kumpulan boleh jadi AWALAN, dan boleh jadi senarai calon (calon pertama
+   yang wujud dipakai). Perlu kerana tajuk panel tab Kombinasi N dijana daripada data — cth
+   "Produksi: 94 kombinasi yang BELUM diimbas" — jadi kunci tepat akan putus bila nombor berubah,
+   dan beberapa panel hanya wujud bila dokumen db membawanya. */
 const PNAV_KUMP={'v-pr-':[['Untung & rugi akaun',''],['Setiap kaedah','untung purata setiap kaedah'],['Eksperimen','banding dua lorong keluar']],
-  'v-analisis':[['Lejar Penuh (semua isyarat)',''],['Akaun Papertrade C','skor kaedah swing']]};
+  'v-analisis':[['Lejar Penuh (semua isyarat)',''],['Akaun Papertrade C','skor kaedah swing']],
+  /* susunan tab ini mengikut ayatnya sendiri: produksi = satu-satunya yang membeli, selebihnya rekod kajian */
+  'v-kaedahn':[['Produksi · yang membeli','produksi:'],
+    ['Rekod kajian · bukan isyarat',['⚠','keputusan akhir','empat pradaftar']],
+    ['Rujukan',['registry penuh','nota']]]};
 let pnavPilih={};try{pnavPilih=JSON.parse(localStorage.getItem('pbs2_pnav_pilih')||'{}');}catch(e){}
 S.pnav=true;try{S.pnav=localStorage.getItem('pbs2_pnav')!=='0';}catch(e){}
 const pnavLayak=vid=>!PNAV_TELEFON.includes(vid)||skrinKecil();
@@ -4932,7 +4940,9 @@ function applyNav(el,vid){
   let pilih=pnavPilih[vid];if(!item.some(x=>x.k===pilih))pilih=item.some(x=>x.k===PNAV_LALAI[vid])?PNAV_LALAI[vid]:item[0].k;
   const rel=document.createElement('nav');rel.className='pnav-rail';rel.setAttribute('aria-label','Bahagian tab');
   const kp=Object.entries(PNAV_KUMP).find(([a])=>vid.startsWith(a)),kj={};
-  if(kp)kp[1].forEach(([t,k])=>{const x=k?item.find(y=>y.k===k):item.find(y=>y.p);if(x)kj[x.k]=t;});
+  const cari=k=>item.find(y=>y.k===k)||item.find(y=>y.k.startsWith(k));
+  if(kp)kp[1].forEach(([t,k])=>{const x=!k?item.find(y=>y.p):(Array.isArray(k)?k.map(cari).find(Boolean):cari(k));
+    if(x&&!kj[x.k])kj[x.k]=t;});
   rel.innerHTML=`<div class="pnav-in">${item.map((x,i)=>{const pl=x.p&&x.p.querySelector(':scope>.panel-h .pill'),pn=pl&&(pl.textContent.trim().match(/^⚠?\s*\d+/)||[])[0];
     return `${kj[x.k]?`<div class="pn-k">${esc(kj[x.k])}</div>`:i===1&&adaG?'<hr>':''}<button type="button" data-pnk="${esc(x.k)}"${x.p&&x.p.classList.contains('danger')?' class="pn-dg"':''}><span>${esc(x.t)}</span>${pn?`<span class="pill ${esc([...pl.classList].filter(c=>c!=='pill').join(' '))}" title="${esc(pl.textContent.trim())}">${esc(pn)}</span>`:''}</button>`;}).join('')}</div>`;
   el.prepend(rel);
