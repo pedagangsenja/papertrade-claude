@@ -98,9 +98,21 @@ aside.rail{display:none}
   div.wrap{padding-left:calc(var(--rel) + 20px)}
   header.top{margin-left:calc(-1*(var(--rel) + 20px));padding-left:calc(var(--rel) + 20px)}
   aside.rail nav.tabs{flex-direction:column;gap:3px;margin-top:0;overflow:visible}
-  aside.rail nav.tabs button{width:100%;text-align:left;border-bottom:0;border-radius:8px;padding:9px 12px;font-size:.9rem}
-  aside.rail nav.tabs button:hover{background:var(--card);color:var(--fg)}
-  aside.rail nav.tabs button[aria-selected="true"]{background:linear-gradient(90deg,var(--accent-soft),transparent),var(--card);color:var(--fg);box-shadow:inset 3px 0 0 var(--accent)}
+  aside.rail nav.tabs>button{width:100%;text-align:left;border-bottom:0;border-radius:8px;padding:9px 12px;font-size:.9rem}
+  aside.rail nav.tabs>button:hover{background:var(--card);color:var(--fg)}
+  aside.rail nav.tabs>button[aria-selected="true"]{background:linear-gradient(90deg,var(--accent-soft),transparent),var(--card);color:var(--fg);box-shadow:inset 3px 0 0 var(--accent)}
+  /* v143 (2 Nov 2026, permintaan pengguna): rel bahagian panel (pnav, v93) BERSARANG di bawah tab yang
+     diklik, bukan rel kedua dalam kawasan kandungan — jadi satu rel sahaja, dan kandungan dapat balik
+     232px yang dahulu dimakan oleh rel kedua itu. */
+  aside.rail .pnav-rail{position:static;width:auto;top:auto;bottom:auto;margin:3px 0 7px;padding-left:11px;border-left:1px solid var(--line-2)}
+  aside.rail .pnav-in{position:static;max-height:none;overflow:visible;padding:0;gap:1px}
+  aside.rail .pnav-in button{font-size:.79rem;padding:6px 9px;border-radius:6px;white-space:normal;overflow-wrap:anywhere;align-items:flex-start;line-height:1.32}
+  aside.rail .pnav-in button>span:first-child{min-width:0}
+  aside.rail .pnav-in button[aria-current="true"]{box-shadow:inset 2px 0 0 var(--accent)}
+  aside.rail .pnav-in .pn-k{padding:9px 9px 3px}
+  aside.rail .pnav-in hr{margin:5px 3px}
+  section.view.pnav.pn-luar{padding-left:0}
+  section.view.pnav.pn-luar .pnav-rail{display:none}
 }
 .subbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 0}
 .subbar[hidden]{display:none}
@@ -1138,7 +1150,7 @@ document.addEventListener('click',e=>{const th=e.target.closest&&e.target.closes
 /* ================= navigasi ================= */
 function viewId(){if(S.tab==='backtest'){const b=S.sub.backtest;return b==='butiran'?(S.set==='2000'?'v-autotune':'v-'+S.b4):'v-keputusan';}if(S.tab==='prestasi')return 'v-pr-'+S.akaun;if(S.tab==='posisi')return 'v-pos';return 'v-'+S.tab;}
 function renderNav(){
-  document.querySelectorAll('#mainTabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===S.tab));
+  document.querySelectorAll('#mainTabs button[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===S.tab));
   const subs=SUBS[S.tab];const seg=$('#subSeg');
   seg.hidden=!subs;seg.innerHTML=subs?subs.map(([v,t])=>`<button type="button" role="tab" data-sub="${v}" aria-selected="${(S.tab==='prestasi'||S.tab==='posisi'?S.akaun:S.sub[S.tab])===v}">${t}</button>`).join(''):'';
   const showSet=S.tab==='backtest'&&S.sub.backtest==='butiran';$('#setSeg').hidden=!showSet;$('#setLbl').hidden=!showSet;
@@ -1146,7 +1158,7 @@ function renderNav(){
   const vid=viewId();document.querySelectorAll('section.view').forEach(v=>v.hidden=v.id!==vid);
 }
 function save(){try{localStorage.setItem('pbs3_tab',S.tab);localStorage.setItem('pbs3_akaun',S.akaun);localStorage.setItem('pbs2_sub',JSON.stringify(S.sub));localStorage.setItem('pbs_set',S.set);localStorage.setItem('pbs2_b4',S.b4);}catch(e){}}
-$('#mainTabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.tab=b.dataset.tab;save();renderNav();renderAll();window.scrollTo({top:0});};
+$('#mainTabs').onclick=e=>{const b=e.target.closest('button[data-tab]');if(!b)return;S.tab=b.dataset.tab;save();renderNav();renderAll();window.scrollTo({top:0});};
 $('#subSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(S.tab==='prestasi'||S.tab==='posisi')S.akaun=b.dataset.sub;else S.sub[S.tab]=b.dataset.sub;save();renderNav();renderAll();};
 $('#setSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.set=b.dataset.set;S.f.shown=40;save();renderNav();renderAll();};
 function setLive(on,txt){S.live=on;$('#dot').classList.toggle('on',on);$('#liveTxt').textContent=txt;}
@@ -4640,9 +4652,13 @@ function muatLajur(){
   });
 }
 /* v142: rel tab kiri (desktop >= 1100px) — nod #mainTabs dipindah, bukan diduplikasi */
-{const rl=$('#rail'),hdr=document.querySelector('header.top'),sb=$('#subBar'),nv=$('#mainTabs'),mq=window.matchMedia('(min-width:1100px)');
-  const pindah=()=>{if(!nv||!rl||!hdr)return;if(mq.matches){if(nv.parentElement!==rl)rl.appendChild(nv);}else if(nv.parentElement!==hdr)hdr.insertBefore(nv,sb);};
-  pindah();try{mq.addEventListener('change',pindah);}catch(e){try{mq.addListener(pindah);}catch(e2){}}}
+const MQ_REL=window.matchMedia('(min-width:1100px)');
+{const rl=$('#rail'),hdr=document.querySelector('header.top'),sb=$('#subBar'),nv=$('#mainTabs');
+  const pindah=()=>{if(!nv||!rl||!hdr)return;if(MQ_REL.matches){if(nv.parentElement!==rl)rl.appendChild(nv);}else if(nv.parentElement!==hdr)hdr.insertBefore(nv,sb);};
+  pindah();
+  /* melintasi 1100px menukar DI MANA senarai bahagian duduk, jadi paparan dilukis semula */
+  const tukar=()=>{pindah();try{renderAll();}catch(e){}};
+  try{MQ_REL.addEventListener('change',tukar);}catch(e){try{MQ_REL.addListener(tukar);}catch(e2){}}}
 {const hd=document.querySelector('header.top');const set=()=>document.documentElement.style.setProperty('--hdr',(hd?hd.offsetHeight:0)+'px');set();
   try{new ResizeObserver(set).observe(hd);}catch(e){}}
 let rzm;window.addEventListener('resize',()=>{clearTimeout(rzm);rzm=setTimeout(muatLajur,150);});
@@ -4880,7 +4896,13 @@ S.pnav=true;try{S.pnav=localStorage.getItem('pbs2_pnav')!=='0';}catch(e){}
 const pnavLayak=vid=>!PNAV_TELEFON.includes(vid)||skrinKecil();
 const pnavBoleh=vid=>S.pnav&&pnavLayak(vid)&&PNAV_ADA[vid]!==false;
 const pnavPanel=el=>[...el.querySelectorAll('.panel')].filter(p=>p.querySelector(':scope>.panel-h h2')&&!p.parentElement.closest('.panel')&&!p.closest('.pnav-rail'));
+/* v143: bila rel kiri aktif (desktop >= 1100px) senarai bahagian duduk DI DALAM rel itu, di bawah
+   butang tab yang dipilih. Nod `.pnav-rail` yang sama dipindah, jadi semua logik pnav kekal; `el._rel`
+   mengingati di mana ia berada supaya pertanyaan butang tidak bergantung kepada induknya. */
+const pnavBtn=el=>((el&&el._rel)||el).querySelectorAll('.pnav-in button');
+function pnavLuarBersih(){const r=document.getElementById('rail');if(r)r.querySelectorAll('.pnav-rail').forEach(x=>x.remove());}
 function applyNav(el,vid){
+  pnavLuarBersih();el._rel=null;el.classList.remove('pn-luar');
   const ps=pnavPanel(el),dulu=el.classList.contains('pnav');
   if(ps.length)PNAV_ADA[vid]=ps.length>=PNAV_MIN;
   const kini=pnavBoleh(vid)&&ps.length>=PNAV_MIN;el.classList.toggle('pnav',kini);
@@ -4899,15 +4921,17 @@ function applyNav(el,vid){
   rel.innerHTML=`<div class="pnav-in">${item.map((x,i)=>{const pl=x.p&&x.p.querySelector(':scope>.panel-h .pill'),pn=pl&&(pl.textContent.trim().match(/^⚠?\s*\d+/)||[])[0];
     return `${kj[x.k]?`<div class="pn-k">${esc(kj[x.k])}</div>`:i===1&&adaG?'<hr>':''}<button type="button" data-pnk="${esc(x.k)}"${x.p&&x.p.classList.contains('danger')?' class="pn-dg"':''}><span>${esc(x.t)}</span>${pn?`<span class="pill ${esc([...pl.classList].filter(c=>c!=='pill').join(' '))}" title="${esc(pl.textContent.trim())}">${esc(pn)}</span>`:''}</button>`;}).join('')}</div>`;
   el.prepend(rel);
+  if(MQ_REL&&MQ_REL.matches){const tb=document.querySelector('#rail #mainTabs button[data-tab][aria-selected="true"]');
+    if(tb){rel.setAttribute('role','group');tb.insertAdjacentElement('afterend',rel);el._rel=rel;el.classList.add('pn-luar');}}
   rel.onclick=e=>{const b=e.target.closest('button[data-pnk]');if(!b)return;pnavPilih[vid]=b.dataset.pnk;try{localStorage.setItem('pbs2_pnav_pilih',JSON.stringify(pnavPilih));}catch(e){}
     pnavTanda(el,b.dataset.pnk);const y=el.getBoundingClientRect().top+window.scrollY-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hdr'))||0);
     if(window.scrollY>y)window.scrollTo({top:Math.max(0,y)});requestAnimationFrame(()=>topScrolls(el));};
   pnavTanda(el,pilih);}
 function pnavTanda(el,k){
   el.querySelectorAll('.pn-x,.pn-j,.pn-a').forEach(x=>x.classList.remove('pn-x','pn-j','pn-a'));
-  el.querySelectorAll('.pnav-in button').forEach(b=>b.setAttribute('aria-current',String(b.dataset.pnk===k)));
+  pnavBtn(el).forEach(b=>b.setAttribute('aria-current',String(b.dataset.pnk===k)));
   const a=k==='__g'?null:el.querySelector(`.panel[data-pn="${CSS.escape(k)}"]`);
-  el.querySelectorAll('.pnav-in button').forEach(b=>{if(b.dataset.pnk!==k)return;const j=b.parentElement;if(j.scrollWidth>j.clientWidth)j.scrollLeft=b.offsetLeft-(j.clientWidth-b.offsetWidth)/2;});
+  pnavBtn(el).forEach(b=>{if(b.dataset.pnk!==k)return;const j=b.parentElement;if(j.scrollWidth>j.clientWidth)j.scrollLeft=b.offsetLeft-(j.clientWidth-b.offsetWidth)/2;});
   [...el.children].forEach(c=>{if(c.classList.contains('pnav-rail')||c.matches('.foot'))return;
     /* tapisan di atas sekali (cth. pemilih Butiran Backtest) kekal; tapisan lain hanya bagi panel selepasnya */
     if(c.matches('.filters')){let s=c.previousElementSibling;while(s&&s.matches('.pnav-rail,.filters'))s=s.previousElementSibling;
@@ -4918,7 +4942,7 @@ function pnavTanda(el,k){
     [...par.children].forEach(s=>{if(s!==n&&(s.matches('.panel')||s.querySelector('.panel')))s.classList.add('pn-x');});}}
 /* bawa ke panel yang mengandungi x (cth. jadual selepas ketik peta) bila mod tab sisi aktif */
 function pnavKe(x){const v=x&&x.closest('.view.pnav');if(!v)return false;let p=x.closest('.panel');while(p&&p.parentElement.closest('.panel'))p=p.parentElement.closest('.panel');
-  const b=p&&v.querySelector(`.pnav-in button[data-pnk="${CSS.escape(p.dataset.pn||'')}"]`);if(!b)return false;b.click();return true;}
+  const kk=p&&p.dataset.pn||'',b=kk&&[...pnavBtn(v)].find(x=>x.dataset.pnk===kk);if(!b)return false;b.click();return true;}
 $('#pnavTog').onclick=()=>{S.pnav=!S.pnav;try{localStorage.setItem('pbs2_pnav',S.pnav?'1':'0');}catch(e){}renderAll();};
 
 renderNav();renderAll();
