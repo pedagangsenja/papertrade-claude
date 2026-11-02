@@ -88,6 +88,20 @@ nav.tabs::-webkit-scrollbar{display:none}
 nav.tabs button{border:0;background:none;color:var(--muted);font-weight:600;font-size:.92rem;padding:10px 12px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
 nav.tabs button:hover{color:var(--fg-2)}
 nav.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent);background:linear-gradient(0deg,var(--accent-soft),transparent 70%)}
+/* v142 (2 Nov 2026, permintaan pengguna): tab utama jadi REL KIRI tetap di desktop (>= 1100px).
+   Nod #mainTabs yang sama dipindah oleh JS (pengendali klik kekal); telefon/tablet tidak berubah. */
+aside.rail{display:none}
+@media (min-width:1100px){
+  :root{--rel:204px}
+  aside.rail{display:block;position:fixed;left:0;top:0;bottom:0;width:var(--rel);z-index:30;background:var(--surface);border-right:1px solid var(--line);overflow-y:auto;scrollbar-width:thin;padding:14px 10px calc(16px + env(safe-area-inset-bottom,0px))}
+  aside.rail .rh{font-size:.64rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:2px 10px 9px}
+  div.wrap{padding-left:calc(var(--rel) + 20px)}
+  header.top{margin-left:calc(-1*(var(--rel) + 20px));padding-left:calc(var(--rel) + 20px)}
+  aside.rail nav.tabs{flex-direction:column;gap:3px;margin-top:0;overflow:visible}
+  aside.rail nav.tabs button{width:100%;text-align:left;border-bottom:0;border-radius:8px;padding:9px 12px;font-size:.9rem}
+  aside.rail nav.tabs button:hover{background:var(--card);color:var(--fg)}
+  aside.rail nav.tabs button[aria-selected="true"]{background:linear-gradient(90deg,var(--accent-soft),transparent),var(--card);color:var(--fg);box-shadow:inset 3px 0 0 var(--accent)}
+}
 .subbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 0}
 .subbar[hidden]{display:none}
 .seg{display:inline-flex;flex-wrap:wrap;max-width:100%;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:3px;gap:2px}
@@ -983,6 +997,7 @@ td.stc{white-space:nowrap}
 @media (min-width:761px){body.padat .tablewrap td .tra{display:none}body.padat .tablewrap td .trd{padding:1px 5px}body.padat .tablewrap td .l2bar{width:38px}}
 </style>
 
+<aside class="rail" id="rail"><div class="rh">Papan</div></aside>
 <div class="wrap">
   <header class="top">
     <div class="titlerow">
@@ -4557,6 +4572,10 @@ function muatLajur(){
     if(sor.length)w.insertAdjacentHTML('afterend',`<p class="sbn-nota">Lajur disembunyi kerana skrin tidak cukup lebar: ${esc(sor.join(', '))}. ${t.querySelector('tbody tr[tabindex]')?'Ketik baris untuk butiran penuh, atau besarkan tetingkap.':'Besarkan tetingkap untuk melihatnya.'}</p>`);
   });
 }
+/* v142: rel tab kiri (desktop >= 1100px) — nod #mainTabs dipindah, bukan diduplikasi */
+{const rl=$('#rail'),hdr=document.querySelector('header.top'),sb=$('#subBar'),nv=$('#mainTabs'),mq=window.matchMedia('(min-width:1100px)');
+  const pindah=()=>{if(!nv||!rl||!hdr)return;if(mq.matches){if(nv.parentElement!==rl)rl.appendChild(nv);}else if(nv.parentElement!==hdr)hdr.insertBefore(nv,sb);};
+  pindah();try{mq.addEventListener('change',pindah);}catch(e){try{mq.addListener(pindah);}catch(e2){}}}
 {const hd=document.querySelector('header.top');const set=()=>document.documentElement.style.setProperty('--hdr',(hd?hd.offsetHeight:0)+'px');set();
   try{new ResizeObserver(set).observe(hd);}catch(e){}}
 let rzm;window.addEventListener('resize',()=>{clearTimeout(rzm);rzm=setTimeout(muatLajur,150);});
