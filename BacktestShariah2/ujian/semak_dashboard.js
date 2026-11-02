@@ -83,11 +83,11 @@ let gagal=0;
     for(const tab of tabs){
       const btn=await p.$(`#mainTabs button[data-tab="${tab}"]`);if(!btn)continue;
       try{await btn.click({timeout:5000});}catch(e){continue;}await p.waitForTimeout(800);
-        const nSub=Math.min(6,await p.$$eval('.pnav-in button',bs=>bs.length).catch(()=>0));
+        const nSub=Math.min(6,await p.$$eval('#rail .pnav-in button, section.view:not([hidden]) .pnav-in button',bs=>bs.length).catch(()=>0));
       for(let si=0;si<Math.max(1,nSub);si++){
         let nama='';
         if(nSub){try{
-          const bs=await p.$$('.pnav-in button');if(!bs[si])continue;
+          const bs=await p.$$('#rail .pnav-in button, section.view:not([hidden]) .pnav-in button');if(!bs[si])continue;
           nama=await bs[si].evaluate(e=>e.textContent.trim().slice(0,22));
           await bs[si].click({timeout:4000});await p.waitForTimeout(450);
         }catch(e){continue;}}
