@@ -155,7 +155,17 @@ section.view.pnav .panel.pn-a>.panel-h{cursor:default}section.view.pnav .panel-h
 /* v144 (2 Nov 2026, permintaan pengguna): tajuk kumpulan nampak macam boleh ditekan padahal tidak.
    Ia kini dibaca sebagai PEMISAH, bukan baris: garis di atasnya, teks lebih kecil dan lebih pudar,
    dan inden tidak sejajar dengan teks butang supaya lajur butang kekal satu-satunya yang boleh diklik. */
-.pnav-in .pn-k{font-size:.61rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);opacity:.78;padding:9px 2px 5px;margin-top:9px;border-top:1px solid var(--line);cursor:default;user-select:none}
+/* Penanda warna setiap kumpulan guna slot kategori --k1..--k4 yang sudah ada (disahkan validator
+   dataviz: julat kecerahan, lantai kroma, pemisahan CVD dan kontras semuanya LULUS pada permukaan
+   gelap). Warna duduk pada penanda, BUKAN pada teks: teks kekal token pudar supaya hijau/merah/ambar
+   kekal bermaksud untung/rugi/amaran dan tajuk tidak terbaca sebagai status. Teal tidak diguna
+   kerana ia warna "sedang dipilih" dalam rel ini. */
+.pnav-in .pn-k{display:flex;align-items:flex-start;gap:7px;font-size:.61rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);opacity:.78;padding:9px 2px 5px;margin-top:9px;border-top:1px solid var(--line);cursor:default;user-select:none}
+.pnav-in .pn-k::before{content:"";flex:none;width:3px;height:9px;margin-top:2px;border-radius:2px;background:var(--kk,var(--line-2))}
+.pnav-in div.pn-k:nth-of-type(1){--kk:var(--k1)}
+.pnav-in div.pn-k:nth-of-type(2){--kk:var(--k2)}
+.pnav-in div.pn-k:nth-of-type(3){--kk:var(--k3)}
+.pnav-in div.pn-k:nth-of-type(4){--kk:var(--k4)}
 .pnav-in .pn-k:first-child{border-top:0;margin-top:0;padding-top:2px}
 @media (min-width:761px){
   section.view.pnav{padding-left:232px;position:relative}
