@@ -109,7 +109,7 @@ aside.rail{display:none}
   aside.rail .pnav-in button{font-size:.79rem;padding:6px 9px;border-radius:6px;white-space:normal;overflow-wrap:anywhere;align-items:flex-start;line-height:1.32}
   aside.rail .pnav-in button>span:first-child{min-width:0}
   aside.rail .pnav-in button[aria-current="true"]{box-shadow:inset 2px 0 0 var(--accent)}
-  aside.rail .pnav-in .pn-k{padding:9px 9px 3px}
+  aside.rail .pnav-in .pn-k{padding:8px 2px 4px;margin-top:8px}
   aside.rail .pnav-in hr{margin:5px 3px}
   section.view.pnav.pn-luar{padding-left:0}
   section.view.pnav.pn-luar .pnav-rail{display:none}
@@ -152,7 +152,11 @@ section.view.pnav .panel.pn-a>.panel-h{cursor:default}section.view.pnav .panel-h
 .pnav-in .pill{font-size:.66rem;padding:1px 6px;margin-left:auto;flex:none}
 .pnav-in .pn-n{margin-left:auto;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
 .pnav-in hr{border:0;border-top:1px solid var(--line);margin:6px 4px}
-.pnav-in .pn-k{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 10px 4px}
+/* v144 (2 Nov 2026, permintaan pengguna): tajuk kumpulan nampak macam boleh ditekan padahal tidak.
+   Ia kini dibaca sebagai PEMISAH, bukan baris: garis di atasnya, teks lebih kecil dan lebih pudar,
+   dan inden tidak sejajar dengan teks butang supaya lajur butang kekal satu-satunya yang boleh diklik. */
+.pnav-in .pn-k{font-size:.61rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);opacity:.78;padding:9px 2px 5px;margin-top:9px;border-top:1px solid var(--line);cursor:default;user-select:none}
+.pnav-in .pn-k:first-child{border-top:0;margin-top:0;padding-top:2px}
 @media (min-width:761px){
   section.view.pnav{padding-left:232px;position:relative}
   .pnav-rail{position:absolute;left:0;top:18px;bottom:0;width:216px}
