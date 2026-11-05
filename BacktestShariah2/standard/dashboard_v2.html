@@ -113,6 +113,21 @@ aside.rail{display:none}
   aside.rail .pnav-in hr{margin:5px 3px}
   section.view.pnav.pn-luar{padding-left:0}
   section.view.pnav.pn-luar .pnav-rail{display:none}
+  /* v151 (5 Nov 2026, permintaan pengguna): blok status kanan atas (kemas kini, cip saluran, Padat, ?,
+     Langsung) dipindah ke KAKI rel kiri, di bawah tab terakhir. Nod .kanan yang sama dipindah oleh JS. */
+  aside.rail{display:flex;flex-direction:column}
+  aside.rail nav.tabs{flex:0 0 auto}
+  aside.rail .kanan{max-width:none;align-items:flex-start;text-align:left;margin:14px 0 0;padding:10px 8px 2px;border-top:1px solid var(--line)}
+  aside.rail .kini{align-items:flex-start}
+  aside.rail .kbar{justify-content:flex-start;flex-wrap:wrap;gap:6px}
+  aside.rail .kbar{margin-top:5px}
+  /* cip + butang dikecilkan supaya ketiga-tiganya muat pada satu baris rel 204px */
+  aside.rail .salh{font-size:.7rem;padding:2px 7px}
+  aside.rail .bantu{width:23px;height:23px;font-size:.85rem}
+  aside.rail .padbtn{width:auto;border-radius:999px;padding:0 8px;font-size:.72rem;font-weight:600}
+  aside.rail .kanan .live{width:100%;font-size:.74rem;justify-content:flex-start;flex-wrap:nowrap;align-items:flex-start;gap:6px}
+  aside.rail .live .dot{flex:none;margin-top:5px}
+  aside.rail .live #liveTxt{min-width:0}
 }
 .subbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 0}
 .subbar[hidden]{display:none}
@@ -4744,8 +4759,11 @@ function muatLajur(){
 }
 /* v142: rel tab kiri (desktop >= 1100px) — nod #mainTabs dipindah, bukan diduplikasi */
 const MQ_REL=window.matchMedia('(min-width:1100px)');
-{const rl=$('#rail'),hdr=document.querySelector('header.top'),sb=$('#subBar'),nv=$('#mainTabs');
-  const pindah=()=>{if(!nv||!rl||!hdr)return;if(MQ_REL.matches){if(nv.parentElement!==rl)rl.appendChild(nv);}else if(nv.parentElement!==hdr)hdr.insertBefore(nv,sb);};
+{const rl=$('#rail'),hdr=document.querySelector('header.top'),sb=$('#subBar'),nv=$('#mainTabs'),tr=document.querySelector('.titlerow'),kn=document.querySelector('.titlerow .kanan');
+  /* v151: blok status .kanan ikut sama ke rel kiri (di bawah tab terakhir); di bawah 1100px ia kembali ke bar tajuk */
+  const pindah=()=>{if(!nv||!rl||!hdr)return;
+    if(MQ_REL.matches){if(nv.parentElement!==rl)rl.appendChild(nv);if(kn&&kn.parentElement!==rl)rl.appendChild(kn);}
+    else{if(nv.parentElement!==hdr)hdr.insertBefore(nv,sb);if(kn&&kn.parentElement!==tr)tr.appendChild(kn);}};
   pindah();
   /* melintasi 1100px menukar DI MANA senarai bahagian duduk, jadi paparan dilukis semula */
   const tukar=()=>{pindah();try{renderAll();}catch(e){}};
@@ -4975,9 +4993,12 @@ $('#foldAll').onclick=()=>foldAllNow(true);$('#openAll').onclick=()=>foldAllNow(
    Tab dengan >= 3 panel peringkat atas: rel kiri (telefon: jalur cip melekit di bawah pengepala) menyenaraikan Gambaran (tajuk
    ringkas, KPI, strip) dan setiap panel; satu bahagian dipapar, tapisan (.filters) dan kaki kekal. Kelas .pnav diset sebelum
    lukis supaya carta dilukis pada lebar sebenar (grid2 jadi satu lajur); pilihan disimpan setiap paparan. Butang "Papar senarai"
-   kembali ke susunan lama (lipat/buka). Ringkasan: telefon sahaja (v94; desktop dibaca sekali imbas). */
-/* Ringkasan: telefon sahaja (desktop dibaca sekali imbas) */
-const PNAV_MIN=3,PNAV_TELEFON=['v-utama'],PNAV_ADA={};
+   kembali ke susunan lama (lipat/buka). v151 (5 Nov 2026): Ringkasan tidak lagi telefon sahaja (v94). */
+/* v151 (5 Nov 2026, permintaan pengguna): Ringkasan dan Posisi pun memakai senarai bahagian, bukan lipat/buka.
+   PNAV_TELEFON dikosongkan (Ringkasan dahulunya telefon sahaja) dan ambang turun 3 -> 2 panel kerana tab
+   Posisi hanya ada DUA panel peringkat atas (Peta portfolio, Posisi & keputusan) jadi ambang 3 mematikannya.
+   Butang "Papar senarai" (#pnavTog) masih mengembalikan susunan lipat/buka bagi sesiapa yang mahu. */
+const PNAV_MIN=2,PNAV_TELEFON=[],PNAV_ADA={};
 /* tajuk kumpulan rel (desktop): [tajuk, kunci panel pertama kumpulan] ('' = panel pertama); kunci tiada = tajuk tidak dipapar */
 /* bahagian lalai jika belum dipilih (selainnya item pertama) */
 const PNAV_LALAI={'v-pos':'posisi & keputusan','v-analisis':'kedudukan kaedah','v-utama':'__g','v-pr-cm':'untung terkumpul lawan spy','v-pr-cn':'untung terkumpul lawan spy','v-pr-m':'untung terkumpul lawan spy','v-pr-gab':'untung terkumpul lawan spy'};

@@ -1,9 +1,9 @@
 {
   "artifact": "https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e",
-  "versi_artifact": "1793772113-3a1f",
-  "nombor": 181,
-  "sha256": "a2acd3ab65f84d76333ecdba758b4c0fe54bd05f39faa38d19e3fd536f3ddc72",
-  "bait": 673259,
-  "dikemas": "2026-11-04 06:02 UTC",
-  "nota": "v150: lajur 52W (jarak tutup ke tinggi intrahari 252 sesi, + sesi sejak tinggi itu) dalam jadual Posisi (penuh/ringkas/risiko/gred) dan Watchlist (penuh/ringkas). Sumber medan j52/t52/bar52 = harian/trend (trend_status.py). PAPARAN SAHAJA: kajian REVERSE/JARAK_52W.md ukur ia GAGAL sebagai penapis belian dan hanya sedikit berguna sebagai urutan, dengan kelebihan habis kira-kira -10%."
+  "versi_artifact": "1793840958-48db",
+  "nombor": 182,
+  "sha256": "a10fb4ec16d4312911b54a9d223a6b6516b16e4545313333fc9119429310c316",
+  "bait": 675040,
+  "dikemas": "2026-11-05 01:09 UTC",
+  "nota": "v151 (permintaan pengguna): blok status kanan atas (kemas kini terakhir, data tutup, cip saluran, Padat, ?, Langsung) dipindah ke KAKI rel kiri di bawah tab Sektor (>= 1100px; di bawah itu ia kembali ke bar tajuk). Ringkasan dan Posisi kini memakai senarai bahagian rel kiri, bukan lipat/buka: PNAV_TELEFON dikosongkan dan ambang panel turun 3 -> 2 kerana tab Posisi hanya ada dua panel. Butang 'Papar senarai' masih mengembalikan susunan lipat/buka."
 }
