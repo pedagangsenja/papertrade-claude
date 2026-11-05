@@ -1450,7 +1450,7 @@ function renderPapan(){
   $('#gayaChip').onclick=()=>{f.gaya=!f.gaya;if(f.gaya)SORT.papan={k:'avg',dir:-1};f.shown=40;renderAll();};
   $('#kepChips').onclick=e=>{const x=e.target.closest('button.chip');if(!x)return;const k=x.dataset.k;f.kep.has(k)?f.kep.delete(k):f.kep.add(k);f.shown=40;renderAll();};
   const q=$('#q');let tm;q.oninput=()=>{clearTimeout(tm);tm=setTimeout(()=>{f.q=q.value.trim();f.shown=40;renderAll();const n=$('#q');n.focus();n.setSelectionRange(n.value.length,n.value.length);},220);};
-  const m=$('#more');if(m)m.onclick=()=>{f.shown+=40;renderAll();};
+  const m=$('#more');if(m)m.onclick=()=>kekalSkrol(()=>{f.shown+=40;renderAll();});
 }
 /* baris backtest → helaian butiran (delegasi) */
 document.addEventListener('click',e=>{if(e.target.closest('th')||ketikLp(e))return;const t=e.target.closest&&e.target.closest('[data-dk]');if(t)openDetail(t.dataset.dk);});
@@ -1863,7 +1863,17 @@ function ptKpis(all,label){const rows=sahSahaja(all);const nv=all.length-rows.le
 const LAGI=TELEFON?25:100,AWAL=TELEFON?10:25;
 /* jadual panjang: papar 25 baris dahulu; "Papar lagi" menambah 100, "Papar semua" jika ≤ 400 baris */
 const kakiLagi=id=>(n,t)=>`<div class="tablefoot"><span>${n} daripada ${t}</span>${t>n?`<span style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="more" id="${id}">Papar ${Math.min(LAGI,t-n)} lagi</button>${t<=400?`<button type="button" class="more" id="${id}Semua">Papar semua</button>`:''}</span>`:''}</div>`;
-const bindLagi=(id,st,rr)=>{const b=$('#'+id),a=$('#'+id+'Semua');if(b)b.onclick=()=>{st.shown=(st.shown||AWAL)+LAGI;(rr||renderAll)();};if(a)a.onclick=()=>{st.shown=1e9;(rr||renderAll)();};};
+/* v153 (5 Nov 2026, permintaan pengguna): "Papar lagi" tidak boleh melompat ke atas. renderAll menulis
+   semula innerHTML paparan, jadi dokumen mengecut seketika dan pelayar MENGAPIT scrollY ke tinggi baharu;
+   bila kandungan kembali, skrol sudah hilang. Baris baharu ditambah DI BAWAH baris sedia ada, jadi
+   kedudukan skrol lama masih betul — simpan sebelum lukis dan kembalikan selepas (dua bingkai, kerana
+   topScrolls/muatLajur masih boleh menukar tinggi selepas lukisan pertama). */
+function kekalSkrol(fn){const sy=()=>window.scrollY||document.documentElement.scrollTop||0,y=sy();fn();
+  /* hanya betulkan apitan KE ATAS: jika pengguna sendiri menatal lebih ke bawah sementara carta dilukis,
+     jangan tarik dia balik. Dua bingkai + 150 ms kerana carta/peta boleh menukar tinggi selepas lukisan. */
+  const b=()=>{if(sy()<y-1)window.scrollTo(0,y);};
+  b();requestAnimationFrame(()=>{b();requestAnimationFrame(b);});setTimeout(b,150);}
+const bindLagi=(id,st,rr)=>{const b=$('#'+id),a=$('#'+id+'Semua');if(b)b.onclick=()=>kekalSkrol(()=>{st.shown=(st.shown||AWAL)+LAGI;(rr||renderAll)();});if(a)a.onclick=()=>kekalSkrol(()=>{st.shown=1e9;(rr||renderAll)();});};
 function ptFilterBar(id,rows,rr){rr=rr||renderAll;const st=S['pf_'+id]||(S['pf_'+id]={k:'',sk:'',ind:'',q:'',shown:AWAL});st.onUbah=()=>{st.shown=AWAL;};const kd=[...new Set(rows.filter(r=>okS(r,st)&&okI(r,st)).map(r=>r.kaedah))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
   return {st,html:`<div class="filters" style="margin-bottom:10px"><select id="${id}K" aria-label="Tapis kaedah"><option value="">Semua kaedah</option>${kd.map(k=>`<option value="${esc(k)}" ${st.k===k?'selected':''}>${esc(k)}</option>`).join('')}</select>${selSI(id,rows,st)}<input type="search" id="${id}Q" placeholder="Cari saham atau sektor" value="${esc(st.q)}" aria-label="Cari"></div>`,
    apply:rs=>rs.filter(r=>(!st.k||r.kaedah===st.k)&&(!st.sk||r.sektor===st.sk)&&(!st.ind||r.industri===st.ind)&&(!st.q||[r.saham,r.sektor,r.industri].join(' ').toLowerCase().includes(st.q.toLowerCase()))),

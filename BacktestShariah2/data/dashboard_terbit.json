@@ -1,9 +1,9 @@
 {
   "artifact": "https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e",
-  "versi_artifact": "1793849648-b598",
-  "nombor": 183,
-  "sha256": "8bf31c8c98838d58cc203cd848db9c1963045669e9a641d87ac8556ba68f779d",
-  "bait": 675759,
-  "dikemas": "2026-11-05 03:34 UTC",
-  "nota": "v152 (permintaan pengguna): blok status rel kiri disusun semula SATU LAJUR — setiap baris bermula pada x yang sama dengan label tab (12px) dan cip saluran mengambil lebar penuh, jadi tiada baris pecah bergantung lebar fon (v151 'tanda ?' jatuh sendirian). Blok 'Gred sekali pandang' (blokGredGrid) dibuang SEMENTARA daripada tab Posisi; fungsi kekal dan masih dipakai tab Watchlist."
+  "versi_artifact": "1793850663-e5c0",
+  "nombor": 184,
+  "sha256": "555df225a5dc560e21eaa28a0d238cab5dd8efe2e9976e92d887e60953fbcb75",
+  "bait": 676758,
+  "dikemas": "2026-11-05 03:51 UTC",
+  "nota": "v153 (permintaan pengguna): 'Papar lagi' tidak lagi melompat ke atas. renderAll menulis semula innerHTML paparan; pada telefon ini mengapit scrollY (diukur: y 5221 -> 4333 pada klik kedua tab Posisi, 202 -> 302 baris). kekalSkrol() menyimpan scrollY sebelum lukis dan membetulkan apitan KE ATAS sahaja (dua bingkai + 150 ms), jadi baris baharu bersambung di bawah. Dipakai oleh bindLagi (semua butang Papar lagi / Papar semua) dan butang 'Papar 40 lagi' tab Backtest."
 }
