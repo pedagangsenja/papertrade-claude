@@ -115,17 +115,21 @@ aside.rail{display:none}
   section.view.pnav.pn-luar .pnav-rail{display:none}
   /* v151 (5 Nov 2026, permintaan pengguna): blok status kanan atas (kemas kini, cip saluran, Padat, ?,
      Langsung) dipindah ke KAKI rel kiri, di bawah tab terakhir. Nod .kanan yang sama dipindah oleh JS. */
+  /* v152 (5 Nov 2026): susunan SATU LAJUR yang tetap. Setiap baris bermula pada x yang sama dengan
+     label tab (12px), dan cip saluran mengambil lebar penuh — jadi tiada baris yang pecah bergantung
+     kepada lebar fon (v151 cuba memuatkan cip + Padat + ? pada satu baris dan "?" jatuh sendirian). */
   aside.rail{display:flex;flex-direction:column}
   aside.rail nav.tabs{flex:0 0 auto}
-  aside.rail .kanan{max-width:none;align-items:flex-start;text-align:left;margin:14px 0 0;padding:10px 8px 2px;border-top:1px solid var(--line)}
-  aside.rail .kini{align-items:flex-start}
-  aside.rail .kbar{justify-content:flex-start;flex-wrap:wrap;gap:6px}
-  aside.rail .kbar{margin-top:5px}
-  /* cip + butang dikecilkan supaya ketiga-tiganya muat pada satu baris rel 204px */
-  aside.rail .salh{font-size:.7rem;padding:2px 7px}
+  aside.rail .kanan{max-width:none;align-items:stretch;text-align:left;gap:0;margin:14px 0 0;padding:11px 12px 2px;border-top:1px solid var(--line)}
+  aside.rail .kini{align-items:flex-start;gap:1px}
+  aside.rail .kini b{font-size:.85rem}
+  aside.rail .kini .kd{display:block;line-height:1.35}
+  aside.rail .kini .kd .pill{display:inline-block;margin-top:4px}
+  aside.rail .kbar{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:6px;margin-top:9px}
+  aside.rail .salh{flex:1 0 100%;text-align:left;border-radius:7px;padding:3px 9px;font-size:.73rem}
+  aside.rail .padbtn{width:auto;height:23px;border-radius:999px;padding:0 10px;font-size:.73rem;font-weight:600}
   aside.rail .bantu{width:23px;height:23px;font-size:.85rem}
-  aside.rail .padbtn{width:auto;border-radius:999px;padding:0 8px;font-size:.72rem;font-weight:600}
-  aside.rail .kanan .live{width:100%;font-size:.74rem;justify-content:flex-start;flex-wrap:nowrap;align-items:flex-start;gap:6px}
+  aside.rail .kanan .live{width:100%;margin-top:9px;font-size:.74rem;justify-content:flex-start;flex-wrap:nowrap;align-items:flex-start;gap:6px}
   aside.rail .live .dot{flex:none;margin-top:5px}
   aside.rail .live #liveTxt{min-width:0}
 }
@@ -1907,7 +1911,9 @@ function renderPos(){
   el.innerHTML=head+ptKpis(all,a==='m'?'Moomoo':a==='cm'?'Claude Mxx dibeli':a==='cn'?'Claude Nxx dibeli':'gabungan')+panelPeta(sahSahaja(peg),fb.st)+`
   <div class="panel"><div class="panel-h"><h2>Posisi & keputusan</h2><span class="sub">${rows.length} posisi · ketik baris untuk butiran · ketik tajuk lajur untuk susun</span></div>${rejimHtml()}
     ${panelPerhatian(peg)}
-    ${blokGredGrid(rows)}
+    ${''/* v152 (5 Nov 2026, permintaan pengguna): blok "Gred sekali pandang" dibuang SEMENTARA daripada
+         tab Posisi. Fungsi blokGredGrid kekal dan masih dipakai tab Watchlist (Hampir Signal);
+         panggil semula di sini untuk mengembalikannya. */}
     <div class="filters" style="margin-bottom:8px">${segH('posSt',ps.st,[['semua',`Semua (${all.length})`],['pegang',`Dipegang (${peg.length})`],['keluar',`Sudah keluar (${kel.length})`]],'Status')}${skrinKecil()?lajurSeg('pos'):pandSeg()}</div>
     ${fb.html}${(cols=>sortTable({id:'pos'+a,rows,cols,def:{k:cols.some(c=>c.k==='untung_pct')?'untung_pct':'isyarat_keluar',dir:-1},rcls:r=>rclsPT(r)+' click'+bukaC('p'+r._p),limit:fb.st.shown,attr:r=>`data-pos="${esc(r._p)}" tabindex="0"`,foot:kakiLagi('posMore')}))(pd?posColsP(pd,a==='gab'):rk?posColsR(a==='gab'):ptCols(a==='gab'))}</div>
   ${tdb.length?`<div class="panel"><div class="panel-h"><h2>Isyarat tidak dibeli</h2><span class="sub">${tdb.length} isyarat · dilangkau ikut peraturan kaedah · tidak dikira dalam Prestasi</span></div>${sortTable({id:'ptctdb',rows:tdb,def:{k:'kaedah',dir:1},limit:TELEFON?tdbS.shown:0,foot:TELEFON?kakiLagi('tdbMore'):null,lp:{key:r=>r.saham+'|'+r.kaedah+'|'+(r.tarikh_beli_dirancang||r.tarikh_beli),line:r=>`<b>${esc(r.saham)}</b><span class="mut">${esc(r.kaedah)}</span><span class="mlx">${esc(r.sebab_tidak_sah||'')}</span><span class="mlr mut">${esc(tkO(r.tarikh_beli_dirancang||r.tarikh_beli))}</span>${mlC}`},cols:[
