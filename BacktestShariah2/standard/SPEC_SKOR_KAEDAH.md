@@ -55,10 +55,10 @@ dipotong pada 0 dan 100. Metrik tiada data = 50 (neutral). Tiang = purata berber
 |---|---|---|---|
 | **A Keuntungan** | **35 %** | | |
 | A1 | 20 | Jangkaan % setiap posisi (`jangkaan` kad skor) | −2 · 0 · +2 |
-| A2 | 10 | Lebihan mata pulangan lorong T4 L1 lawan SPUS tingkap sama (`t4_lebih_spus`) | −10 · 0 · +10 |
+| A2 | 10 | Lebihan mata pulangan lorong T4 L1 (potongan LANGSUNG, pindaan (a)) lawan SPUS tingkap sama | −10 · 0 · +10 |
 | A3 | 5 | Payoff = untung purata ÷ \|rugi purata\| (`payoff`) | 0.5 · 1.0 · 2.0 |
 | **B Ketahanan** | **30 %** | | |
-| B1 | 12 | Pulangan ÷ \|MDD\| lorong T4 L1 (`t4_nisbah`, dipotong ±10) | −1 · 0 · +1 |
+| B1 | 12 | Pulangan ÷ \|MDD\| lorong T4 L1 (potongan LANGSUNG; MDD sifar → nisbah dipotong ±10) | −1 · 0 · +1 |
 | B2 | 6 | Ulcer Index % ekuiti T4 L1 = √purata(kejatuhan dari puncak²), puncak termasuk asas 1.0; kecil lebih baik | 10 · 5 · 0 |
 | B3 | 6 | CVaR10 = purata 10 % posisi terburuk (`cvar10`) | −24 · −16 · −8 |
 | B4 | 6 | `tanpa5` = jangkaan selepas buang 5 % posisi terbaik | −2 · 0 · +2 |
@@ -84,6 +84,22 @@ tahunan ~1.8 (Carver: jarang > 1); D3 Pardo 50 %.
 3. **Siling** ikut kad skor / pantau: NEGATIF ≤ 20, GANTUNG/BERSARA ≤ 30, GAGAL ≤ 40. TERBUKTI, CALON, BELUM CUKUP
    tiada siling.
 4. Papar lima nombor: Untung · Tahan · Bukti · Konsisten · **Skor**, bersama status kad skor setiap kaedah.
+
+## Pindaan 9 Nov 2026 (a) — metrik T4 dipotong pada mula LANGSUNG
+
+**Dipradaftar 9 Nov 2026, hari yang sama dengan pradaftar asal, selepas semakan semula atas permintaan pengguna
+("recheck sekali lagi") dan SEBELUM mana-mana keputusan dibuat dengan skor.** Dapatan semakan: lorong T4
+(`portfolio_t4.py`) bermula 2026-10-16 bagi SEMUA kaedah termasuk Nxx/GB, sedangkan posisi Nxx/GB hanya LANGSUNG sejak
+2026-11-03; sesi 16 Okt–2 Nov lorong Nxx/GB datang daripada posisi isian bina semula. Ini melanggar penyebut spec ini
+("LANGSUNG sahaja"). Contoh: `N50X14` lorong penuh +10.75 % (16 sesi) tetapi hanya +3.18 % atas 4 sesi LANGSUNG.
+
+Pembetulan (`skor_kaedah.lorong_langsung`): metrik A2, B1, B2, D1 dan pulangan T4 dalam sejarah Spearman dikira atas
+lorong T4 L1 **dipotong pada sesi LANGSUNG pertama kaedah itu** (≥ `mula_langsung` kad skor), diasas semula supaya
+tutup sesi sebelumnya = 1.0, MDD dengan puncak termasuk asas 1.0, SPUS berasas BUKA sesi pertama potongan (peraturan
+`BANDING_SPUS.md`). Bagi Mxx (lorong bermula 16 Okt, LANGSUNG sejak isyarat 15 Okt) potongan = lorong penuh, disahkan
+0 perbezaan pada 129 kaedah Mxx. Berat, sauh dan pemalar TIDAK berubah. Nota: gate G6 kad skor masih membaca lorong
+penuh `t4_ringkasan.csv`; pada 126 sesi bahagian isian (≤ 12 sesi) kecil, tetapi ia dicatat sebagai isu terbuka
+`KOORDINATOR`/keputusan pengguna, bukan diubah di sini.
 
 ## Apa yang sengaja TIDAK dimasukkan
 

@@ -67,6 +67,7 @@ NEUTRAL = 50.0
 AN = os.path.join(BS2, 'data', 'analisis')
 KS_JSON = os.environ.get('KS_JSON', os.path.join(AN, 'kad_skor.json'))
 T4_SIRI = os.environ.get('SK_T4_SIRI', os.path.join(BS2, 'portfolio_slot', 't4_siri.csv'))
+SPUS_HARIAN = os.environ.get('SPUS_HARIAN', os.path.join(BS2, 'data', 'penanda_aras', 'spus_harian.csv'))
 JSN = os.environ.get('SK_JSON', os.path.join(AN, 'skor_kaedah.json'))
 MD = os.environ.get('SK_MD', os.path.join(BS2, 'laporan', 'SKOR_KAEDAH.md'))
 SEJARAH = os.environ.get('SK_SEJARAH', os.path.join(AN, 'skor_kaedah_sejarah.csv'))
@@ -171,18 +172,74 @@ def wfe(r):
     return float(bm / (bp / bh))
 
 
+def mdd_asas(e):
+    """MDD % dengan puncak termasuk asas 1.0 (peraturan 3 BANDING_SPUS.md)."""
+    e = np.asarray(e, float)
+    puncak = np.maximum.accumulate(np.r_[1.0, e])[1:]
+    return float((e / puncak - 1.0).min() * 100)
+
+
+def lorong_langsung(T4, spus, mid, mula):
+    """Lorong T4 L1 kaedah `mid` DIPOTONG pada sesi LANGSUNG pertama (>= `mula`) dan diasas semula supaya tutup
+    sesi sebelumnya = 1.0 (sama seperti lorong yang bermula pada buka hari itu). SPUS: asas = BUKA sesi pertama
+    potongan (peraturan 1 BANDING_SPUS.md). Pindaan 9 Nov 2026 (a): lorong Nxx/GB bermula 16 Okt dengan posisi
+    isian bina semula; penyebut skor ialah LANGSUNG sahaja, jadi sesi sebelum mula LANGSUNG dibuang.
+    -> dict(sesi, pul, mdd, nisbah, spus, lebih_spus, ekuiti) atau None."""
+    kol = f'{mid}|L1'
+    if T4 is None or kol not in T4.columns:
+        return None
+    e = pd.to_numeric(T4[kol], errors='coerce').dropna()
+    if not len(e):
+        return None
+    mula = str(mula or '')
+    sebelum = e[e.index < mula]
+    e2 = e[e.index >= mula]
+    if not len(e2):
+        return None
+    ek = e2 / (float(sebelum.iloc[-1]) if len(sebelum) else 1.0)
+    pul = float(100 * (ek.iloc[-1] - 1))
+    md = mdd_asas(ek.to_numpy())
+    nis = pul / abs(md) if md < 0 else math.copysign(10.0, pul) if pul else 0.0
+    out = dict(sesi=int(len(ek)), pul=pul, mdd=md, nisbah=float(min(10.0, max(-10.0, nis))), spus=None,
+               lebih_spus=None, ekuiti=ek.tolist())
+    t0 = ek.index[0]
+    if spus is not None and t0 in spus.index and _ada(spus.buka.get(t0)) and spus.buka.loc[t0] > 0:
+        tt = spus.tutup.reindex(sorted(set(spus.index) | set(ek.index))).ffill().reindex(ek.index)
+        if tt.notna().all():
+            sp = float(100 * (tt.iloc[-1] / float(spus.buka.loc[t0]) - 1))
+            out.update(spus=sp, lebih_spus=pul - sp)
+    return out
+
+
+def muat_t4(path=None):
+    """DataFrame ekuiti lorong T4, indeks tarikh 'YYYY-MM-DD' (lajur 'ID|L1'/'ID|L2'); None jika fail tiada."""
+    path = path or T4_SIRI
+    if not os.path.exists(path):
+        return None
+    t = pd.read_csv(path, dtype={'tarikh': str})
+    return t.set_index('tarikh').sort_index()
+
+
+def muat_spus(path=None):
+    path = path or SPUS_HARIAN
+    if not os.path.exists(path):
+        return None
+    d = pd.read_csv(path, comment='#')
+    d['tarikh'] = pd.to_datetime(d.tarikh).dt.strftime('%Y-%m-%d')
+    return d.sort_values('tarikh').set_index('tarikh')[['buka', 'tutup']].astype(float)
+
+
 def metrik(r, siri_t4, n_kaedah):
-    """Nilai mentah dan markah 0-100 setiap metrik bagi satu baris kad skor."""
-    ek = siri_t4.get(r['id'])
+    """Nilai mentah dan markah 0-100 setiap metrik bagi satu baris kad skor. siri_t4: {id: dict lorong_langsung}."""
+    L = siri_t4.get(r['id']) or {}
+    ek = L.get('ekuiti')
     ui = ulcer(ek) if ek is not None else None
     kr = k_ratio(ek) if ek is not None else None
     tb = t_buku(r)
     ts = t_sauh(n_kaedah)
     ef = wfe(r)
-    nis = r.get('t4_nisbah')
-    nis = float(min(10.0, max(-10.0, nis))) if _ada(nis) else None   # MDD ~0 memberi nisbah tak terhingga; dipotong ±10
-    mentah = dict(A1=r.get('jangkaan'), A2=r.get('t4_lebih_spus'), A3=r.get('payoff'),
-                  B1=nis, B2=ui, B3=r.get('cvar10'), B4=r.get('tanpa5'),
+    mentah = dict(A1=r.get('jangkaan'), A2=L.get('lebih_spus'), A3=r.get('payoff'),
+                  B1=L.get('nisbah'), B2=ui, B3=r.get('cvar10'), B4=r.get('tanpa5'),
                   C1=tb, C2=None, C3=min(r.get('hari_on') or 0, r.get('hari_off') or 0),
                   D1=kr, D2=r.get('lift'), D3=ef)
     markah = {k: peta(mentah[k], SAUH[k]) for k in SAUH}
@@ -190,6 +247,9 @@ def metrik(r, siri_t4, n_kaedah):
     markah['C2'] = 0.5 * skala_log(r.get('hari_beli'), C2_HARI_PENUH) + 0.5 * skala_log(r.get('tutup'), C2_TUTUP_PENUH)
     markah['C3'] = float(min(100.0, 100.0 * mentah['C3'] / C3_REJIM_PENUH))
     markah['D2'] = skor_d2(r)
+    mentah['T4_sesi'] = L.get('sesi')
+    mentah['T4_pul'] = L.get('pul')
+    mentah['T4_mdd'] = L.get('mdd')
     return mentah, markah, ts
 
 
@@ -235,17 +295,15 @@ def skor_baris(r, siri_t4, n_kaedah):
                 t_sauh=round(ts, 2))
 
 
-def muat_siri_t4(path=T4_SIRI):
-    """{id: [ekuiti L1 setiap sesi]} daripada t4_siri.csv (lajur 'ID|L1')."""
-    if not os.path.exists(path):
-        return {}
-    t = pd.read_csv(path)
+def muat_siri_t4(kad, path=None, spus_path=None):
+    """{id: lorong_langsung(...)} bagi setiap baris kad skor (lorong T4 L1 dipotong pada mula LANGSUNG kaedah itu).
+    Laluan dibaca pada masa panggilan (bukan masa takrif) supaya ujian boleh menukar T4_SIRI/SPUS_HARIAN."""
+    T4, S = muat_t4(path or T4_SIRI), muat_spus(spus_path or SPUS_HARIAN)
     out = {}
-    for c in t.columns:
-        if c.endswith('|L1'):
-            v = pd.to_numeric(t[c], errors='coerce').dropna().tolist()
-            if v:
-                out[c[:-3]] = v
+    for r in kad:
+        L = lorong_langsung(T4, S, r['id'], r.get('mula_langsung'))
+        if L:
+            out[r['id']] = L
     return out
 
 
@@ -256,8 +314,9 @@ def baca_kad(path=KS_JSON):
 
 # ---------------------------------------------------------------- sejarah + Spearman
 def kemas_sejarah(path, harga_pada, rows, kad):
-    """Tambah snapshot (tarikh harga, id, skor, t4_pul) jika tarikh itu belum ada. Pulangkan DataFrame penuh."""
-    t4 = {r['id']: r.get('t4_pul') for r in kad}
+    """Tambah snapshot (tarikh harga, id, skor, t4_pul = pulangan lorong T4 L1 LANGSUNG) jika tarikh itu belum ada.
+    Pulangkan DataFrame penuh."""
+    t4 = {r['id']: r['mentah'].get('T4_pul') for r in rows}
     baru = pd.DataFrame(dict(tarikh=harga_pada, id=[r['id'] for r in rows], skor=[r['skor'] for r in rows],
                              t4_pul=[t4.get(r['id']) for r in rows]))
     if os.path.exists(path):
@@ -283,7 +342,7 @@ def spearman(S, harga_pada, rows, kad, hari=SPEARMAN_HARI):
         return None
     t0 = calon[-1]
     dulu = S[S.tarikh == t0].set_index('id')
-    kini = {r['id']: r.get('t4_pul') for r in kad}
+    kini = {r['id']: r['mentah'].get('T4_pul') for r in rows}
     x, y = [], []
     for mid, r in dulu.iterrows():
         a, b = r.get('t4_pul'), kini.get(mid)
@@ -353,21 +412,25 @@ def laporan(M, rows):
          'tinggi dengan status BELUM CUKUP bermaksud "paling menjanjikan setakat ini", bukan "selamat".',
          f"- Deflasi ujian berganda (López de Prado): sauh t Bukti C1 = maks({C1_T_MIN}, E[maks {M['kaedah']} normal]) = "
          f"{M['t_sauh']:.2f}.",
-         f'- **Semakan kebolehramalan:** {sp_t}', '',
+         f'- **Semakan kebolehramalan:** {sp_t}',
+         '- Metrik T4 (A2, B1, B2, D1) dikira atas lorong T4 L1 **dipotong pada sesi LANGSUNG pertama** kaedah itu '
+         '(Mxx 2026-10-16, Nxx/GB 2026-11-03) dan diasas semula; sesi isian bina semula tidak dikira (pindaan 9 Nov 2026 (a)). '
+         'Lajur "T4 sesi/pul" di bawah ialah potongan itu, bukan lorong penuh `T4_KAEDAH.md`.', '',
          '## Semua kaedah, susun ikut Skor', '',
          '| # | Kaedah | Skor | Untung | Tahan | Bukti | Konsisten | Status kad | Hari beli | Posisi/tutup | '
-         'Jangkaan % | T4 pul/|MDD| | Ulcer | t buku | Lift | WFE |',
-         '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|']
+         'Jangkaan % | T4 sesi | T4 pul % | T4 pul/|MDD| | Ulcer | t buku | Lift | WFE |',
+         '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|']
     for i, r in enumerate(rows, 1):
         m = r['mentah']
         A.append(f"| {i} | `{r['id']}` {str(r['nama'])[:30]} | **{r['skor']:.1f}**{'⌈' if r['siling'] else ''} | "
                  f"{r['untung']:.0f} | {r['tahan']:.0f} | {r['bukti']:.0f} | {r['konsisten']:.0f} | {r['status']} | "
-                 f"{r['hari_beli']} | {r['n']}/{r['tutup']} | {f(m.get('A1'), '{:+.2f}')} | {f(m.get('B1'), '{:+.2f}')} | "
+                 f"{r['hari_beli']} | {r['n']}/{r['tutup']} | {f(m.get('A1'), '{:+.2f}')} | {f(m.get('T4_sesi'), '{}')} | "
+                 f"{f(m.get('T4_pul'), '{:+.2f}')} | {f(m.get('B1'), '{:+.2f}')} | "
                  f"{f(m.get('B2'))} | {f(m.get('C1'), '{:+.2f}')} | {f(m.get('D2'), '{:+.2f}')} | {f(m.get('D3'), '{:.2f}')} |")
     A += ['', '## Metrik dan sauh (0 · 50 · 100)', '',
           '| Metrik | Berat | Apa | Sauh | Pakar |', '|---|---|---|---|---|',
           f"| A1 | 20 | Jangkaan % setiap posisi, ditanda-ke-pasaran, kos ditolak | {SAUH['A1']} | Tharp, Minervini, Radge |",
-          f"| A2 | 10 | Lebihan mata lorong T4 L1 lawan SPUS, tingkap sama | {SAUH['A2']} | Penanda aras SPUS (repo) |",
+          f"| A2 | 10 | Lebihan mata lorong T4 L1 (potongan LANGSUNG) lawan SPUS, tingkap sama | {SAUH['A2']} | Penanda aras SPUS (repo) |",
           f"| A3 | 5 | Payoff untung purata ÷ rugi purata | {SAUH['A3']} | Minervini 2:1 |",
           f"| B1 | 12 | Pulangan ÷ |MDD| lorong T4 L1 (MAR) | {SAUH['B1']} | Schwager, Radge, Faith |",
           f"| B2 | 6 | Ulcer Index ekuiti T4 L1 (%) — kecil lebih baik | {SAUH['B2']} | Martin |",
@@ -390,7 +453,7 @@ def main():
         print('skor_kaedah: kad_skor.json tiada; jalankan kad_skor.py dahulu', file=sys.stderr)
         return 1
     M, kad = baca_kad(KS_JSON)
-    siri = muat_siri_t4()
+    siri = muat_siri_t4(kad)
     n = len(kad)
     rows = [skor_baris(r, siri, n) for r in kad]
     rows.sort(key=lambda r: (-r['skor'], -r['skor_mentah'], r['id']))

@@ -111,12 +111,53 @@ class TestPeta(unittest.TestCase):
         self.assertIsNone(SK.wfe(dict(buku_harian=0.1, bt_purata=-2.0, bt_hari=10)))
 
 
+class TestLorongLangsung(unittest.TestCase):
+
+    def setUp(self):
+        import pandas as pd
+        tarikh = [f'2026-10-{16+i:02d}' for i in range(6)] + ['2026-11-03', '2026-11-04']
+        self.T4 = pd.DataFrame({'tarikh': tarikh, 'N1X1|L1': [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.65, 1.5],
+                                'M1|L1': [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
+                                'M2|L1': [np.nan] * 6 + [1.02, 1.03]}).set_index('tarikh')
+        self.S = pd.DataFrame({'buka': [100.0] * 8, 'tutup': [100.0, 101, 102, 103, 104, 105, 106, 107]},
+                              index=tarikh)
+
+    def test_mxx_lorong_penuh(self):
+        L = SK.lorong_langsung(self.T4, self.S, 'M1', '2026-10-15')
+        self.assertEqual(L['sesi'], 8)
+        self.assertAlmostEqual(L['pul'], 70.0)
+        self.assertAlmostEqual(L['spus'], 7.0)
+        self.assertAlmostEqual(L['lebih_spus'], 63.0)
+        self.assertAlmostEqual(L['mdd'], 0.0)
+        self.assertEqual(L['nisbah'], 10.0)                       # MDD sifar -> dipotong 10
+
+    def test_nxx_dipotong_dan_diasas_semula(self):
+        L = SK.lorong_langsung(self.T4, self.S, 'N1X1', '2026-11-03')
+        self.assertEqual(L['sesi'], 2)
+        self.assertAlmostEqual(L['ekuiti'][0], 1.65 / 1.5)        # asas = tutup sesi sebelum mula LANGSUNG
+        self.assertAlmostEqual(L['pul'], 0.0)
+        self.assertAlmostEqual(L['mdd'], (1.5 / 1.65 - 1) * 100)  # puncak 1.1 -> 1.0
+        self.assertAlmostEqual(L['spus'], 7.0)                    # asas buka 2026-11-03 = 100, tutup 107
+        self.assertAlmostEqual(L['lebih_spus'], -7.0)
+
+    def test_lorong_mula_selepas_langsung(self):
+        L = SK.lorong_langsung(self.T4, self.S, 'M2', '2026-11-03')
+        self.assertEqual(L['sesi'], 2)
+        self.assertAlmostEqual(L['ekuiti'][0], 1.02)              # tiada sesi sebelum: asas 1.0
+
+    def test_tiada(self):
+        self.assertIsNone(SK.lorong_langsung(self.T4, self.S, 'M9', '2026-10-15'))
+        self.assertIsNone(SK.lorong_langsung(self.T4, self.S, 'M1', '2026-12-01'))
+        self.assertIsNone(SK.lorong_langsung(None, self.S, 'M1', '2026-10-15'))
+        L = SK.lorong_langsung(self.T4, None, 'M1', '2026-10-15')
+        self.assertIsNone(L['lebih_spus'])
+
+
 def baris(**k):
     r = dict(id='M999', nama='Ujian', keluarga='M', status='BELUM CUKUP', pantau='OK', hari_beli=20, n=50, tutup=30,
              jangkaan=1.0, payoff=1.5, cvar10=-12.0, tanpa5=0.5, hari_on=10, hari_off=10,
              buku_harian=0.10, buku_ci_bawah=-0.02, buku_ci_atas=0.22, buku_sesi=20,
-             lift=None, lift_lulus=None, bt_purata=5.0, bt_hari=10.0,
-             t4_lebih_spus=3.0, t4_nisbah=0.8)
+             lift=None, lift_lulus=None, bt_purata=5.0, bt_hari=10.0, mula_langsung='2026-10-15')
     r.update(k)
     return r
 
@@ -145,7 +186,8 @@ class TestGabungan(unittest.TestCase):
 
     def test_skor_baris(self):
         ek = [1.0 + 0.002 * i for i in range(1, 21)]
-        r = SK.skor_baris(baris(), {'M999': ek}, 223)
+        L = {'M999': dict(sesi=20, pul=4.0, mdd=-1.0, nisbah=0.8, spus=1.0, lebih_spus=3.0, ekuiti=ek)}
+        r = SK.skor_baris(baris(), L, 223)
         self.assertEqual(set(r['markah']), set(SK.BERAT_METRIK))
         self.assertTrue(0 <= r['skor'] <= 100)
         self.assertGreater(r['skor'], 50)                         # kaedah baik, 20 hari beli -> atas 50
@@ -158,7 +200,7 @@ class TestGabungan(unittest.TestCase):
         self.assertEqual(r2['markah']['B2'], 50)
         self.assertEqual(r2['markah']['D1'], 50)
         # hari beli 1: skor hampir 50 walaupun metrik hebat
-        r3 = SK.skor_baris(baris(hari_beli=1, jangkaan=10, payoff=5), {'M999': ek}, 223)
+        r3 = SK.skor_baris(baris(hari_beli=1, jangkaan=10, payoff=5), L, 223)
         self.assertLess(abs(r3['skor'] - 50), 3)
 
     def test_wfe_markah(self):
@@ -178,10 +220,12 @@ class TestGabungan(unittest.TestCase):
             kj = os.path.join(d, 'kad_skor.json')
             KS.tulis_json(kj, dict(kini='2026-11-09', harga_pada='2026-11-06', hari_beli=16, hari_on=1, hari_off=15), rows)
             import pandas as pd
-            pd.DataFrame({'tarikh': [f'2026-10-{16+i:02d}' for i in range(10)],
-                          'M000|L1': [1 + 0.003 * i for i in range(10)], 'M000|L2': [1.0] * 10}).to_csv(
-                os.path.join(d, 't4_siri.csv'), index=False)
-            SK.KS_JSON, SK.T4_SIRI = kj, os.path.join(d, 't4_siri.csv')
+            T = {'tarikh': [f'2026-10-{16+i:02d}' for i in range(10)]}
+            for j in range(12):
+                T[f'M{j:03d}|L1'] = [1 + (0.004 - 0.0005 * j) * i for i in range(10)]
+                T[f'M{j:03d}|L2'] = [1.0] * 10
+            pd.DataFrame(T).to_csv(os.path.join(d, 't4_siri.csv'), index=False)
+            SK.KS_JSON, SK.T4_SIRI, SK.SPUS_HARIAN = kj, os.path.join(d, 't4_siri.csv'), os.path.join(d, 'tiada.csv')
             SK.JSN, SK.MD, SK.SEJARAH = (os.path.join(d, 'skor.json'), os.path.join(d, 'SKOR.md'),
                                          os.path.join(d, 'sejarah.csv'))
             self.assertEqual(SK.main(), 0)
