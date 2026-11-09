@@ -327,6 +327,34 @@ def pul_slip(P, rendah):
     return P.pul - rugi_lebih
 
 
+def pul_lorong2(P, akhir, kos):
+    """(pulangan lorong 2 %, lorong 2 sudah tutup) bagi setiap posisi: lorong 2 tutup = `untung_henti_pct`,
+    terbuka = ditanda pada tutup terakhir (sama seperti lorong 1 dalam `lift_kaedah.nilai`), tolak kos sama.
+    Keputusan pengguna 9 Nov 2026: banding dua lorong keluar dalam kad skor, MAKLUMAT sahaja (bukan gate).
+    Posisi TUTUP sahaja tidak boleh dibanding: lorong 2 hanya tutup awal apabila saham jatuh (pilihan berat
+    sebelah), jadi kedua-dua lorong ditanda pada tarikh yang sama."""
+    tk = P.get('tarikh_keluar_henti', pd.Series('', index=P.index)).fillna('').astype(str).str.strip()
+    tutup = tk.ne('') & tk.ne('nan')
+    u = pd.to_numeric(P.get('untung_henti_pct', pd.Series(np.nan, index=P.index)), errors='coerce')
+    kini = (P.saham.map(akhir) / pd.to_numeric(P.harga_beli, errors='coerce') - 1) * 100
+    return pd.Series(np.where(tutup, u, kini), index=P.index, dtype=float) - kos, tutup
+
+
+def banding_lorong(P, rows):
+    """Lorong 1 (keluar kaedah) lawan lorong 2 (pegang selagi naik) setiap keluarga, posisi yang sama, ditanda pada
+    tarikh yang sama. Maklumat sahaja (9 Nov 2026)."""
+    kel = pd.Series(np.where(P.id_kaedah.str.startswith('GB'), 'GB', P.id_kaedah.str[:1]), index=P.index)
+    out = {}
+    for k, g in P[P.pul_l2.notna()].groupby(kel):
+        R = [r for r in rows if r['keluarga'] == k and r.get('jangkaan_l2') is not None]
+        out[k] = dict(posisi=int(len(g)), l1=bulat(float(g.pul.mean())), l2=bulat(float(g.pul_l2.mean())),
+                      menang_l1=bulat(float((g.pul > 0).mean() * 100)),
+                      menang_l2=bulat(float((g.pul_l2 > 0).mean() * 100)),
+                      tutup_l1=int((~g.terbuka).sum()), tutup_l2=int(g.l2_tutup.sum()),
+                      kaedah=len(R), l2_lebih=int(sum(r['jangkaan_l2'] > r['jangkaan'] for r in R)))
+    return out
+
+
 def statistik(g):
     """Lajur setiap kaedah daripada posisi lorong 1 (DataFrame dengan pul, terbuka, tarikh_beli...)."""
     p = g.pul.to_numpy(float)
@@ -355,6 +383,10 @@ def statistik(g):
         v = pd.to_numeric(g.get(c), errors='coerce').dropna() if c in g else pd.Series(dtype=float)
         d[c[:3]] = float(v.median()) if len(v) else None
     d['jangkaan_slip'] = float(g.pul_slip.mean()) if 'pul_slip' in g else None
+    v2 = g.pul_l2.dropna() if 'pul_l2' in g else pd.Series(dtype=float)
+    d['jangkaan_l2'] = float(v2.mean()) if len(v2) else None
+    d['menang_l2'] = float((v2 > 0).mean() * 100) if len(v2) else None
+    d['tutup_l2'] = int(g.l2_tutup.sum()) if 'l2_tutup' in g else None
     h0 = (~g.terbuka) & (g.tarikh_keluar == g.tarikh_beli.astype(str)) & (g.sebab_keluar.astype(str) == 'henti')
     d['hari0'] = int(h0.sum())
     d['hari0_pct'] = float(h0.mean() * 100)
@@ -404,6 +436,7 @@ def main():
     _H = pd.concat([pd.read_csv(x, usecols=['ticker', 'date', 'low']) for x in
                     _glob.glob(os.path.join(lk.STOR, 'harga_[AB].csv'))], ignore_index=True)
     P['pul_slip'] = pul_slip(P, {(t, str(d)): v for t, d, v in zip(_H.ticker, _H.date, _H.low)})
+    P['pul_l2'], P['l2_tutup'] = pul_lorong2(P, akhir, lk.KOS)
     buku = buku_harian(P, sesi_h, C)
     rj = lk.rejim_qqq()
     P['on'] = P.tarikh_isyarat.astype(str).str.replace('-', '', regex=False).map(rj)
@@ -492,6 +525,7 @@ def main():
                 posisi_tercemar=n_cemar,
                 kaedah=len(rows), sd=bulat(sd), n_perlu=n_perlu(sd), hari_beli_perlu=perlu_g1,
                 t4_sesi_maks=t4_maks, tarikh_g1=tarikh_g1, tarikh_g6=tarikh_g6, kira=kira, tajuk=tajuk,
+                banding_lorong=banding_lorong(P, rows),
                 pradaftar='2026-11-06; pindaan 2026-11-07', spec='standard/SPEC_KAD_SKOR.md',
                 mula_langsung=lk.MULA_LANGSUNG,
                 ambang=dict(G1_HARI_BELI_MIN=G1_HARI_BELI_MIN, G1_LIFT_MATA=G1_LIFT_MATA, G1_REJIM_MIN=G1_REJIM_MIN,
@@ -560,16 +594,34 @@ def laporan(M, rows):
           f"Dibanding dengan SPUS **pada MDD {G6_MDD_HAD:.0f}%** (toleransi anda), bukan pada MDD SPUS penuh.",
           '', '## 20 kaedah teratas ikut lift masuk (calon, BUKAN pangkat sehingga status berubah)', '',
           '| Kaedah | Status | Posisi / tutup | Hari beli (ON/OFF) | Jangkaan % | Jika henti tergelincir % | '
-          'Buku harian % [95%] | Lift masuk | Menang % | Payoff | tanpa5 | Hari-0 | T4 sesi | T4 pada MDD -10% vs SPUS |',
-          '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|']
+          'Lorong 2 % | Buku harian % [95%] | Lift masuk | Menang % | Payoff | tanpa5 | Hari-0 | T4 sesi | '
+          'T4 pada MDD -10% vs SPUS |',
+          '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|']
     top = sorted(rows, key=lambda r: -(r['lift'] if r['lift'] is not None else -99))[:20]
     for r in top:
         t4 = ('–' if r.get('t4_r10') is None else f"{r['t4_r10']:+.2f} vs {f(r.get('t4_spus_r10'))}")
         A.append(f"| `{r['id']}` {str(r['nama'])[:28]} | {r['status']} | {r['n']} / {r['tutup']} | "
                  f"{r['hari_beli']} ({r['hari_on']}/{r['hari_off']}) | {f(r['jangkaan'])} | {f(r.get('jangkaan_slip'))} | "
+                 f"{f(r.get('jangkaan_l2'))} | "
                  f"{f(r['buku_harian'], '{:+.3f}')} [{f(r['buku_ci_bawah'], '{:+.3f}')}, {f(r['buku_ci_atas'], '{:+.3f}')}] | "
                  f"{f(r['lift'])} | {f(r['menang'], '{:.0f}')} | {f(r['payoff'], '{:.2f}')} | {f(r['tanpa5'])} | "
                  f"{r['hari0']} | {f(r['t4_sesi'], '{}')} | {t4} |")
+    B = M.get('banding_lorong') or {}
+    if B:
+        A += ['', '## Dua lorong keluar: kaedah lawan pegang selagi naik (maklumat, BUKAN gate)', '',
+              'Posisi langsung yang SAMA, kedua-dua lorong ditanda pada tutup yang sama (posisi terbuka = harga pasaran). '
+              'Lorong 2 = Chandelier tutup: keluar apabila tutup < tutup tertinggi sejak beli − 4×ATR14 (henti kaedah '
+              'tidak dipakai). Kad skor dan gate memakai lorong 1 sahaja.', '',
+              '| Keluarga | Posisi | Lorong 1 kaedah: jangkaan % · menang % | Lorong 2 selagi naik: jangkaan % · menang % | '
+              'Sudah tutup L1 / L2 | Kaedah dengan L2 > L1 |', '|---|---|---|---|---|---|']
+        for k in sorted(B):
+            b = B[k]
+            A.append(f"| {k} | {b['posisi']:,} | {f(b['l1'])} · {f(b['menang_l1'], '{:.0f}')} | "
+                     f"{f(b['l2'])} · {f(b['menang_l2'], '{:.0f}')} | {b['tutup_l1']:,} / {b['tutup_l2']:,} | "
+                     f"{b['l2_lebih']} / {b['kaedah']} |")
+        A += ['', f"Rejim semasa banyak OFF (ON {M['hari_on']}, OFF {M['hari_off']} hari beli): lorong 2 direka untuk "
+              'trend panjang, jadi perbandingan ini belum boleh disimpulkan sehingga data merentas kedua-dua rejim. '
+              'Jangan banding posisi TUTUP sahaja: lorong 2 hanya tutup awal apabila saham jatuh.']
     A += ['', '## Cara membaca', '',
           '- **Satu status sahaja yang bermakna untuk wang sebenar: TERBUKTI.**',
           '- **Lift masuk** = adakah kaedah memilih saham lebih baik daripada saham lain yang Lejar beli pada hari sama '
@@ -580,6 +632,8 @@ def laporan(M, rows):
           '- **Jika henti tergelincir** = jangkaan jika setiap keluar henti intrahari diisi pada titik tengah antara '
           'paras henti dan harga rendah hari itu (Lejar mengandaikan isian tepat pada henti; rendah hari itu di bawah '
           'henti pada ~95% kes). Maklumat sahaja: anggaran kos realistik pelaksanaan, bukan gate.',
+          '- **Lorong 2 %** = jangkaan jika posisi sama keluar ikut "pegang selagi naik" (Chandelier 4×ATR14), '
+          'bukan peraturan kaedah. Posisi terbuka ditanda pada harga pasaran. Maklumat sahaja, bukan gate.',
           '- Menang % sentiasa dibaca bersama payoff: `X10` menang 94.1% dengan jangkaan negatif.',
           '- `tanpa5` = jangkaan selepas membuang 5% posisi terbaik. Negatif bermaksud kelebihan hidup dalam ekor kanan.',
           '- Jangan ubah ambang gate selepas melihat data. Ia dikunci oleh ujian unit.', '']
