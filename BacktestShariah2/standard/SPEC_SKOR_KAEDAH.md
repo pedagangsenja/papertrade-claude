@@ -97,9 +97,9 @@ Pembetulan (`skor_kaedah.lorong_langsung`): metrik A2, B1, B2, D1 dan pulangan T
 lorong T4 L1 **dipotong pada sesi LANGSUNG pertama kaedah itu** (≥ `mula_langsung` kad skor), diasas semula supaya
 tutup sesi sebelumnya = 1.0, MDD dengan puncak termasuk asas 1.0, SPUS berasas BUKA sesi pertama potongan (peraturan
 `BANDING_SPUS.md`). Bagi Mxx (lorong bermula 16 Okt, LANGSUNG sejak isyarat 15 Okt) potongan = lorong penuh, disahkan
-0 perbezaan pada 129 kaedah Mxx. Berat, sauh dan pemalar TIDAK berubah. Nota: gate G6 kad skor masih membaca lorong
-penuh `t4_ringkasan.csv`; pada 126 sesi bahagian isian (≤ 12 sesi) kecil, tetapi ia dicatat sebagai isu terbuka
-`KOORDINATOR`/keputusan pengguna, bukan diubah di sini.
+0 perbezaan pada 129 kaedah Mxx. Berat, sauh dan pemalar TIDAK berubah. Susulan (keputusan pengguna 9 Nov 2026 "ya"):
+`portfolio_t4.py` kini membina lorong daripada posisi LANGSUNG sahaja (`SPEC_KAD_SKOR.md` pindaan 9 Nov 2026), jadi
+lorong penuh = potongan LANGSUNG; `lorong_langsung` kekal sebagai pengawal jika lorong pernah mengandungi sesi isian.
 
 ## Apa yang sengaja TIDAK dimasukkan
 
