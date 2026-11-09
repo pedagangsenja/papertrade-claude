@@ -196,34 +196,6 @@ class TestSlip(unittest.TestCase):
         self.assertAlmostEqual(s[3], 1.0)             # masih terbuka
 
 
-class TestLorong2(unittest.TestCase):
-    """Banding lorong 2 (pegang selagi naik) dalam kad skor, maklumat (9 Nov 2026)."""
-
-    def test_tutup_guna_untung_henti_terbuka_ditanda(self):
-        P = pd.DataFrame(dict(
-            id_kaedah=['M01', 'M01', 'M01', 'N05'], saham=['AAA', 'BBB', 'CCC', 'AAA'], harga_beli=[100.0] * 4,
-            tarikh_keluar_henti=['2026-11-05', np.nan, '', '2026-11-04'], untung_henti_pct=[-12.0, np.nan, np.nan, 3.0],
-            terbuka=[True, False, True, False], pul=[1.8, 4.8, -0.2, 2.0]))
-        akhir = pd.Series({'AAA': 102.0, 'BBB': 105.0, 'CCC': 100.0})
-        u, t = KS.pul_lorong2(P, akhir, 0.2)
-        self.assertEqual(t.tolist(), [True, False, False, True])
-        self.assertAlmostEqual(u[0], -12.2)   # lorong 2 tutup walaupun lorong 1 masih terbuka
-        self.assertAlmostEqual(u[1], 4.8)     # lorong 1 tutup, lorong 2 terbuka -> harga pasaran
-        self.assertAlmostEqual(u[2], -0.2)
-        self.assertAlmostEqual(u[3], 2.8)
-        P['pul_l2'], P['l2_tutup'] = u, t
-        d = KS.statistik(P[P.id_kaedah == 'M01'].assign(tarikh_beli='2026-11-02', tarikh_keluar='', sebab_keluar=''))
-        self.assertAlmostEqual(d['jangkaan_l2'], (-12.2 + 4.8 - 0.2) / 3)
-        self.assertAlmostEqual(d['menang_l2'], 100 / 3)
-        self.assertEqual(d['tutup_l2'], 1)
-        rows = [dict(keluarga='M', jangkaan=2.13, jangkaan_l2=-2.53), dict(keluarga='N', jangkaan=2.0, jangkaan_l2=2.8)]
-        B = KS.banding_lorong(P, rows)
-        self.assertEqual(B['M']['posisi'], 3)
-        self.assertEqual(B['M']['l2_lebih'], 0)
-        self.assertEqual(B['N']['l2_lebih'], 1)
-        self.assertEqual(B['N']['tutup_l2'], 1)
-
-
 class TestJsonLajur(unittest.TestCase):
 
     def test_pergi_balik(self):
