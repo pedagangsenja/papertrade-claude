@@ -1,9 +1,10 @@
 {
- "dikemaskini": "2026-11-10 10:04 UTC",
+ "dikemaskini": "2026-11-10 15:33 UTC",
  "bar_terakhir": 20261109,
  "laras": {
   "ARLP": 1.024948,
   "BSM": 1.025,
+  "HCC": 1.024345,
   "SUPN": 0.869412
  },
  "perlu_sejarah": [
@@ -14,7 +15,7 @@
   "bar_terakhir": 20261109
  },
  "harga_B.csv": {
-  "ticker_dikemaskini": 498,
+  "ticker_dikemaskini": 499,
   "bar_terakhir": 20261109
  },
  "harga_idx.csv": {
@@ -29,7 +30,7 @@
    "SUPN": "tidak konsisten: nisbah segar/stor 1.0706, serak 8.42% > 2%"
   }
  },
- "log_laras": 1,
+ "log_laras": 0,
  "faktor_dividen": [],
  "faktor_calon": [],
  "moomoo": 3
