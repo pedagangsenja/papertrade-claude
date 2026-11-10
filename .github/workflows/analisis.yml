@@ -103,6 +103,23 @@ jobs:
         id: siri
         continue-on-error: true
         run: python3 BacktestShariah2/standard/kaedah_siri.py
+      # Ringkasan mingguan 5 baris (kajian/FABLE_CADANGAN.md §3). Dipindah dari jadual/mingguan.md langkah 8b pada
+      # 10 Nov 2026 apabila tugasan berjadual Moomoo mingguan dimatikan (keputusan pengguna): ia tidak perlu Moomoo.
+      # Sabtu UTC sahaja (Lejar sesi Jumaat); larian kedua hari sama dilangkau supaya ntfy tidak berganda.
+      - name: Ringkasan mingguan (Sabtu)
+        id: mingguan
+        if: steps.kad.outcome == 'success'
+        continue-on-error: true
+        run: |
+          F=BacktestShariah2/laporan/RINGKASAN_MINGGUAN.md
+          if [ "$(date -u +%u)" != "6" ]; then echo "bukan Sabtu"; exit 0; fi
+          if [ -f "$F" ] && grep -q "^Dijana $(date -u +%Y-%m-%d)" "$F"; then echo "sudah dijana hari ini"; exit 0; fi
+          python3 BacktestShariah2/standard/koordinator.py --mingguan | tee /tmp/mingguan.txt
+          {
+            echo "pesan<<AKHIR"
+            python3 -c "l=open('/tmp/mingguan.txt',encoding='utf-8').read().splitlines(); print(' | '.join(l[0:1]+l[4:5])[:199])"
+            echo "AKHIR"
+          } >> "$GITHUB_OUTPUT"
       - name: Commit dan push
         run: |
           git config user.name "analisis[bot]"
@@ -118,7 +135,8 @@ jobs:
                    BacktestShariah2/laporan/KAD_SKOR.md BacktestShariah2/data/analisis/kaedah_siri.json \
                    BacktestShariah2/data/analisis/skor_kaedah.json BacktestShariah2/laporan/SKOR_KAEDAH.md \
                    BacktestShariah2/data/analisis/skor_kaedah_sejarah.csv \
-                   BacktestShariah2/laporan/CANTAS.md BacktestShariah2/data/analisis/cantas.json; do
+                   BacktestShariah2/laporan/CANTAS.md BacktestShariah2/data/analisis/cantas.json \
+                   BacktestShariah2/laporan/RINGKASAN_MINGGUAN.md; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
           if git diff --cached --quiet; then echo "tiada perubahan"; exit 0; fi
@@ -130,6 +148,14 @@ jobs:
           done
           echo "Push gagal; larian seterusnya menjana semula." >&2
           exit 1
+      - name: Notifikasi ntfy (ringkasan mingguan)
+        if: steps.mingguan.outputs.pesan != ''
+        env:
+          TOPIK: ${{ secrets.NTFY_TOPIC || 'claude_azim' }}
+          PESAN: ${{ steps.mingguan.outputs.pesan }}
+        run: |
+          curl -sS -m 20 -H "Title: Papertrade: ringkasan mingguan" -H "Tags: calendar" -d "$PESAN" \
+            "https://ntfy.sh/$TOPIK" > /dev/null || echo "::warning::ntfy gagal"
       # Dijalankan SELEPAS commit: data malam ini sudah selamat, jadi job boleh gagal dengan jujur.
       - name: Semak laporan sampingan berjaya
         if: >-
