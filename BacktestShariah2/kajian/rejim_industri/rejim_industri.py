@@ -223,6 +223,71 @@ def bahagian_semi(q, rg, d, lv, rank):
             s_, e_, len(sem), 100 * (sem > 0).mean(), 100 * sem.median(), len(oth), 100 * (oth > 0).mean(), 100 * oth.median()))
 
 
+# ---------- §5 rejim kita lawan penapis pasaran pakar ----------
+def qqq_volum():
+    out = []
+    for f in (R / 'data_mentah/index_benchmark.csv', S / 'data/harga/stor/harga_idx.csv'):
+        x = pd.read_csv(f); x = x[x.ticker == 'QQQ'].copy()
+        x['date'] = pd.to_datetime(x.date.astype(str))
+        out.append(x.set_index('date')[['close', 'volume']])
+    b, h = out
+    return pd.concat([b[b.index < h.index[0]], h]).sort_index()
+
+
+def oneil_anggaran(c, v):
+    """Anggaran keadaan pasaran IBD: ON selepas hari susulan (hari ke-4+ dari dasar, naik >= 1.25%
+    dengan volum > semalam); OFF apabila >= 5 hari agihan (turun >= 0.2% dengan volum > semalam)
+    dalam 25 sesi atau tutup di bawah dasar cubaan rali. Ambang IBD sebenar berbeza ikut sumber."""
+    st = np.full(len(c), np.nan); on = False; low = None; low_i = None; agih = []
+    r = c.pct_change().values; vv = v.values; cc = c.values
+    for i in range(1, len(c)):
+        naik_vol = vv[i] > vv[i - 1]
+        if r[i] <= -0.002 and naik_vol:
+            agih.append(i)
+        agih = [j for j in agih if i - j < 25]
+        if on:
+            if len(agih) >= 5 or cc[i] < low:
+                on = False; low = cc[i]; low_i = i; agih = []
+        else:
+            if low is None or cc[i] < low:
+                low = cc[i]; low_i = i
+            elif i - low_i >= 3 and r[i] >= 0.0125 and naik_vol:
+                on = True; agih = []
+        st[i] = on
+    return pd.Series(st, index=c.index)
+
+
+def bahagian_pakar():
+    print('\n## 5. Rejim kita lawan penapis pasaran pakar (pegang QQQ bila ON, tanpa kos)')
+    Q = qqq_volum(); c = Q.close
+    sma = lambda n: c.rolling(n).mean()
+    m = c.resample('ME').last(); m10 = m.rolling(10).mean()
+    w = c.resample('W-FRI').last(); w30 = w.rolling(30).mean()
+    P = {
+        'Kita (tutup>SMA50 & SMA10>SMA20)': ((c > sma(50)) & (sma(10) > sma(20))).where(sma(50).notna()),
+        'Qullamaggie (SMA10>SMA20)': (sma(10) > sma(20)).where(sma(20).notna()),
+        'SMA200 harian (Clenow/Faber)': (c > sma(200)).where(sma(200).notna()),
+        # keputusan akhir bulan/minggu terpakai sehingga keputusan berikutnya
+        'Faber bulanan (>SMA 10 bulan)': (m > m10).where(m10.notna()).reindex(c.index, method='ffill'),
+        'Weinstein (>SMA30 minggu naik)': ((w > w30) & (w30 > w30.shift(1))).where(w30.shift(1).notna())
+                                          .reindex(c.index, method='ffill'),
+        "O'Neil anggaran (FTD/agihan)": oneil_anggaran(c, Q.volume),
+    }
+    ret = c.pct_change(); m0 = '2019-03-15'; kita = P['Kita (tutup>SMA50 & SMA10>SMA20)'][m0:]
+    print('  %-34s %5s %8s %7s %7s %9s' % ('Peraturan', 'ON', 'Sepakat', 'CAGR', 'MDD', 'Tukar/thn'))
+    for k, s in P.items():
+        pos = s.shift(1)[m0:].fillna(0); s = s[m0:]
+        cg, dd = prestasi((ret[m0:] * pos).fillna(0))
+        print('  %-34s %4.0f%% %7.0f%% %6.1f%% %6.1f%% %9.1f' % (
+            k, 100 * s.mean(), 100 * (s == kita).mean(), cg, dd, s.diff().abs().sum() / (len(s) / 252)))
+    cg, dd = prestasi(ret[m0:].fillna(0))
+    print('  %-34s %5s %8s %6.1f%% %6.1f%%' % ('Pegang QQQ terus', '100%', '', cg, dd))
+    print('  Tarikh bertukar Mac-Nov 2026:')
+    for k, s in P.items():
+        s = s['2026-03-01':]; ch = s[s.diff().fillna(0) != 0]
+        print('    %-34s %s' % (k, ' '.join('%s %s' % (t.strftime('%d%b'), 'ON' if x == 1 else 'OFF') for t, x in ch.items())))
+
+
 if __name__ == '__main__':
     q = qqq(); rg = rejim(q); d = industri()
     lv, rank, ex = matriks_industri(d)
@@ -230,3 +295,4 @@ if __name__ == '__main__':
     bahagian_varians(q)
     bahagian_industri(rg, lv, rank, ex)
     bahagian_semi(q, rg, d, lv, rank)
+    bahagian_pakar()
