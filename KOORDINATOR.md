@@ -1,6 +1,6 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-10 10:05 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-10 12:26 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
@@ -84,6 +84,7 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 | Gred kumpulan | 2026-11-09 | 1 | OK |
 | SEC fundamental | fail diubah | 0 | OK |
 | Senarai bursa | fail diubah | 0 | OK |
+| Senarai Shariah (skrin Moomoo manual) | 2026-10-26 | 15 | OK (had 35 hari) |
 
 
 Ambang LEWAT: > 3 hari. Dua sebab biasa **bukan** kerosakan: hujung minggu atau cuti pasaran, dan salinan kerja yang lama (lihat §0). Periksa kedua-duanya, kemudian `penjaga_jadual` dan log workflow, sebelum menganggap saluran rosak.
