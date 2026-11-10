@@ -1,5 +1,5 @@
 {
- "dikemaskini": "2026-11-10 06:24 UTC",
+ "dikemaskini": "2026-11-10 10:04 UTC",
  "bar_terakhir": 20261109,
  "laras": {
   "ARLP": 1.024948,
@@ -10,7 +10,7 @@
   "SUPN"
  ],
  "harga_A.csv": {
-  "ticker_dikemaskini": 428,
+  "ticker_dikemaskini": 429,
   "bar_terakhir": 20261109
  },
  "harga_B.csv": {
@@ -29,12 +29,8 @@
    "SUPN": "tidak konsisten: nisbah segar/stor 1.0706, serak 8.42% > 2%"
   }
  },
- "log_laras": 0,
- "faktor_dividen": [
-  "HCC 2026-11-09 D=2 P=84.15 (2.4%)"
- ],
- "faktor_calon": [
-  "MBUU 2026-11-05 -0.1895"
- ],
+ "log_laras": 1,
+ "faktor_dividen": [],
+ "faktor_calon": [],
  "moomoo": 3
 }
