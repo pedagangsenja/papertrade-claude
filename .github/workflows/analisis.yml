@@ -183,3 +183,14 @@ jobs:
           fi
           echo "Papan penganalisis sudah dikomit; hanya laporan sampingan yang lapuk." >&2
           exit 1
+      # Larian ini sering dicetus oleh lejar.yml melalui GITHUB_TOKEN (aktor github-actions[bot]); kegagalan larian
+      # sedemikian TIDAK mencetus amaran_ntfy.yml (10 Nov 2026). Hantar terus; larian lain kekal melalui amaran_ntfy.
+      - name: Amaran ntfy (kegagalan larian dispatch bot)
+        if: failure() && github.actor == 'github-actions[bot]'
+        env:
+          TOPIK: ${{ secrets.NTFY_TOPIC || 'claude_azim' }}
+          URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -sS -m 20 -H "Title: papertrade-claude: Papan penganalisis (failure)" -H "Tags: warning" -H "Priority: high" \
+            -H "Click: $URL" -d "Papan penganalisis (dispatch bot) berakhir dengan status failure. Tekan untuk buka larian." \
+            "https://ntfy.sh/$TOPIK" > /dev/null || echo "::warning::ntfy gagal"
