@@ -1,12 +1,12 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-07 16:52 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-10 06:47 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
 | Cawangan | HEAD | Commit di belakang origin/main | origin/main (fetch terakhir) |
 |---|---|---|---|
-| main | 2026-11-07 | 0 | 2026-11-07 |
+| main | 2026-11-10 | 0 | 2026-11-10 |
 
 
 Selari dengan `origin/main` pada fetch terakhir — angka kesegaran di bawah boleh dipercayai.
@@ -31,13 +31,13 @@ REVERSE menguji **signal dan indikator** untuk ENTRY/HOLD/EXIT. Ia **tidak** men
 
 | Sumber | Hari dagangan | Mula | Akhir | Suku (anggaran) | Baris | Cukup? |
 |---|---|---|---|---|---|---|
-| RS pasaran | 30 | 2026-09-28 | 2026-11-06 | 0.5 |  | tidak |
-| Gred kumpulan | 31 | 2026-09-25 | 2026-11-06 | 0.5 |  | tidak |
-| SEC EPS/hasil | 4101 | 2009-04-15 | 2026-11-06 | 65.1 | 271033 | ya |
-| SEC earnings 8-K | 5454 | 2004-08-23 | 2026-11-06 | 86.6 | 179817 | ya |
+| RS pasaran | 30 | 2026-09-29 | 2026-11-09 | 0.5 |  | tidak |
+| Gred kumpulan | 32 | 2026-09-25 | 2026-11-09 | 0.5 |  | tidak |
+| SEC EPS/hasil | 4102 | 2009-04-15 | 2026-11-09 | 65.1 | 271365 | ya |
+| SEC earnings 8-K | 5455 | 2004-08-23 | 2026-11-09 | 86.6 | 179960 | ya |
 
 
-Leg **RS/gred**: terbaik **31 / 250** hari dagangan. Peristiwa sah ialah fungsi deterministik stor harga, jadi join peristiwa × data titik-masa boleh dibuat **retrospektif** — yang perlu ditunggu ialah masa, bukan kod.
+Leg **RS/gred**: terbaik **32 / 250** hari dagangan. Peristiwa sah ialah fungsi deterministik stor harga, jadi join peristiwa × data titik-masa boleh dibuat **retrospektif** — yang perlu ditunggu ialah masa, bukan kod.
 
 
 Leg **SEC** tidak menunggu: nilai pertama difail = titik-masa retrospektif sejak 2009 (`SPEC_FASA2.md` §4.1). Halangannya **liputan ticker**: 2848 daripada 3302 ticker universe ada data EPS/hasil, 0 belum diisi. Universe REVERSE kira-kira 2,300 setahun.
@@ -75,13 +75,13 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 
 | Sumber | Terakhir | Umur (hari) | Status |
 |---|---|---|---|
-| Stor harga | 20261106 | 1 | OK |
-| Trend D10H2-r2 | 20261106 | 1 | OK |
-| Lejar Penuh | 2026-11-06 | 1 | OK |
-| portfolio_slot | 2026-11-06 | 1 | OK |
-| Papan Penganalisis | 2026-11-07 | 0 | OK |
-| RS pasaran | 2026-11-06 | 1 | OK |
-| Gred kumpulan | 2026-11-06 | 1 | OK |
+| Stor harga | 20261109 | 1 | OK |
+| Trend D10H2-r2 | 20261109 | 1 | OK |
+| Lejar Penuh | 2026-11-06 | 4 | **LEWAT 4 hari** |
+| portfolio_slot | 2026-11-06 | 4 | **LEWAT 4 hari** |
+| Papan Penganalisis | 2026-11-08 | 2 | OK |
+| RS pasaran | 2026-11-09 | 1 | OK |
+| Gred kumpulan | 2026-11-09 | 1 | OK |
 | SEC fundamental | fail diubah | 0 | OK |
 | Senarai bursa | fail diubah | 0 | OK |
 
@@ -121,6 +121,7 @@ Workflow berjadual baharu **mesti** ditambah ke `JAGA` dalam `standard/penjaga_j
 | AUTOTUNE A02 (penalaan Optuna) | DITUTUP | 38400 konfigurasi diuji -> LULUS 0, CALON 0, TIDAK LULUS 40 |
 | REVERSE fasa 1 (2020–2025) | DITUTUP — DITOLAK | DITERIMA 0, CALON 11, DITOLAK 110; sasaran +10%/bulan 0 daripada 36 sistem-tahun |
 | REVERSE fasa 1b (saiz berskala risiko) | DITUTUP — DITOLAK | pulangan ditolak; MDD bertambah baik 6/6 tahun -> diuji hadapan sebagai lorong RISIKO_10 |
+| Kajian SATELIT (satelit GB02_atau3 x Chandelier 15% atas teras indeks 35% + tunai; kebenaran tunggal 9 Nov 2026) | DITUTUP — GAGAL | P1/P2/P3/P5 gagal: CAGR tahan +6.12% lawan indeks 50% +7.59% dan satelit rawak +7.82%; MDD -13.7%. Satelit kekal 0%; tunai sepenuhnya sehingga TERBUKTI, tiada ETF pasif (keputusan pengguna 9 Nov; kajian/FABLE_PENILAIAN.md §9) |
 | REVERSE fasa 2 leg RS/gred | SPEC DIKUNCI — menunggu masa | RS/gred dikira harian, tiada sejarah; anggaran ~Okt 2027 |
 | REVERSE fasa 2 leg SEC | SPEC DIKUNCI — menunggu liputan ticker | data titik-masa sejak 2009 (§4.1); menunggu isian awal 3,335 ticker, bukan masa |
 
@@ -130,4 +131,5 @@ Workflow berjadual baharu **mesti** ditambah ke `JAGA` dalam `standard/penjaga_j
 - **Penalaan parameter indikator.** AUTOTUNE A02: 38,400 konfigurasi dengan Optuna TPE, walk-forward, DSR dan PBO → LULUS 0, CALON 0. Setiap konfigurasi tambahan menaikkan ambang yang hasilnya mesti lepasi, bukan peluang menemui sesuatu.
 - **Signal entry berasaskan indikator harga.** REVERSE fasa 1: 6 tahun, 4 rejim, 20,640 ujian ENTRY → tiada signal lulus gate keras dalam lebih daripada satu tahun; portfolio signal kalah kepada entri rawak pada 3 daripada 5 tahun yang diuji.
 - **Signal EXIT berasaskan indikator.** FDR 0 pada setiap satu daripada enam tahun.
-- Baca `REVERSE/KEPUTUSAN_FASA1.md` dan `REVERSE/DIAGNOSIS_FASA1.md` sebelum mencadangkan kajian indikator baharu.
+- **Had pegang 10 sesi** atas gabungan terbaik (`GB02_atau3`): terburuk pada setiap slot, kos pusingan 14 mata/tahun, 8 slot CAGR +2.0% MDD -60% (`REVERSE/PEGANG_SLOT.md`). **Satelit kaedah 15% atas teras indeks**: kalah indeks 50% dan satelit rawak (`REVERSE/SATELIT.md`, 9 Nov 2026). Penapis RS/pemimpin: terbalik dalam rejim OFF (`kajian/FABLE_PENILAIAN.md` §5–6).
+- Baca `REVERSE/KEPUTUSAN_FASA1.md`, `REVERSE/DIAGNOSIS_FASA1.md` dan `kajian/FABLE_PENILAIAN.md` sebelum mencadangkan kajian baharu.

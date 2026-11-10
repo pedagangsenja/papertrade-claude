@@ -1,24 +1,40 @@
 {
- "dikemaskini": "2026-11-07 10:28 UTC",
- "bar_terakhir": 20261106,
+ "dikemaskini": "2026-11-10 06:24 UTC",
+ "bar_terakhir": 20261109,
  "laras": {
-  "SUPN": 1.288809
+  "ARLP": 1.024948,
+  "BSM": 1.025,
+  "SUPN": 0.869412
  },
- "perlu_sejarah": [],
+ "perlu_sejarah": [
+  "SUPN"
+ ],
  "harga_A.csv": {
-  "ticker_dikemaskini": 429,
-  "bar_terakhir": 20261106
+  "ticker_dikemaskini": 428,
+  "bar_terakhir": 20261109
  },
  "harga_B.csv": {
   "ticker_dikemaskini": 498,
-  "bar_terakhir": 20261106
+  "bar_terakhir": 20261109
  },
  "harga_idx.csv": {
   "ticker_dikemaskini": 2,
-  "bar_terakhir": 20261106
+  "bar_terakhir": 20261109
  },
- "log_laras": 2,
- "faktor_dividen": [],
- "faktor_calon": [],
- "moomoo": 9
+ "kuarantin": {
+  "baru": [],
+  "dilepaskan": [],
+  "kekal_beku": {
+   "INDV": "sejarah segar bertindih 1 bar < 20 sebelum 2026-11-03",
+   "SUPN": "tidak konsisten: nisbah segar/stor 1.0706, serak 8.42% > 2%"
+  }
+ },
+ "log_laras": 0,
+ "faktor_dividen": [
+  "HCC 2026-11-09 D=2 P=84.15 (2.4%)"
+ ],
+ "faktor_calon": [
+  "MBUU 2026-11-05 -0.1895"
+ ],
+ "moomoo": 3
 }
