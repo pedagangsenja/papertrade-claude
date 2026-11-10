@@ -1,8 +1,8 @@
 {
  "mula": "2026-10-15",
  "lorong2": "chandelier_tutup_4xATR14",
- "tidak_layak": "tidak_layak v3 (22 Okt 2026): tidak cair 3/2/100k, delist 10 sesi, kelas berganda; ambil_alih v1 (21 Okt 2026); senarai c8444e69; kelas 430e7d7f; peristiwa v1 (22 Okt 2026); faktor 6791e2cc",
- "tidak_layak_peraturan": "tidak_layak v3 (22 Okt 2026): tidak cair 3/2/100k, delist 10 sesi, kelas berganda; ambil_alih v1 (21 Okt 2026); kelas 430e7d7f; peristiwa v1 (22 Okt 2026); faktor 6791e2cc",
+ "tidak_layak": "tidak_layak v3 (22 Okt 2026): tidak cair 3/2/100k, delist 10 sesi, kelas berganda; delist ikut direktori Nasdaq v1 (7 Nov 2026); ambil_alih v1 (21 Okt 2026); senarai c8444e69; kelas 430e7d7f; peristiwa v1 (22 Okt 2026); faktor b301f1f7",
+ "tidak_layak_peraturan": "tidak_layak v3 (22 Okt 2026): tidak cair 3/2/100k, delist 10 sesi, kelas berganda; ambil_alih v1 (21 Okt 2026); kelas 430e7d7f; peristiwa v1 (22 Okt 2026); faktor b301f1f7",
  "keluar": "laluan penuh + dagangan sendiri v1 (22 Okt 2026)",
  "bina_semula": [
   {
@@ -46,10 +46,16 @@
    "dari": "tidak_layak v3 (22 Okt 2026): tidak cair 3/2/100k, delist 10 sesi, kelas berganda; ambil_alih v1 (21 Okt 2026); kelas 430e7d7f; peristiwa v1 (22 Okt 2026); faktor 38506be4",
    "ke": "tidak_layak v3 (22 Okt 2026): tidak cair 3/2/100k, delist 10 sesi, kelas berganda; ambil_alih v1 (21 Okt 2026); kelas 430e7d7f; peristiwa v1 (22 Okt 2026); faktor 6791e2cc",
    "sesi_terakhir_lama": "2026-11-05"
+  },
+  {
+   "tarikh": "2026-11-10 19:27 MYT",
+   "dari": "tidak_layak v3 (22 Okt 2026): tidak cair 3/2/100k, delist 10 sesi, kelas berganda; ambil_alih v1 (21 Okt 2026); kelas 430e7d7f; peristiwa v1 (22 Okt 2026); faktor 6791e2cc",
+   "ke": "tidak_layak v3 (22 Okt 2026): tidak cair 3/2/100k, delist 10 sesi, kelas berganda; ambil_alih v1 (21 Okt 2026); kelas 430e7d7f; peristiwa v1 (22 Okt 2026); faktor b301f1f7",
+   "sesi_terakhir_lama": "2026-11-06"
   }
  ],
- "sesi_terakhir": "2026-11-06",
- "kemaskini": "2026-11-07 22:16 MYT",
+ "sesi_terakhir": "2026-11-09",
+ "kemaskini": "2026-11-10 21:56 MYT",
  "bil_kaedah": 228,
  "larian": [
   {
@@ -63,7 +69,7 @@
    "kaedah_isyarat": 203,
    "ralat": [],
    "nota": [],
-   "masa_s": 202
+   "masa_s": 418
   },
   {
    "sesi": "2026-10-16",
@@ -76,7 +82,7 @@
    "kaedah_isyarat": 178,
    "ralat": [],
    "nota": [],
-   "masa_s": 223
+   "masa_s": 453
   },
   {
    "sesi": "2026-10-19",
@@ -89,7 +95,7 @@
    "kaedah_isyarat": 176,
    "ralat": [],
    "nota": [],
-   "masa_s": 226
+   "masa_s": 454
   },
   {
    "sesi": "2026-10-20",
@@ -102,7 +108,7 @@
    "kaedah_isyarat": 201,
    "ralat": [],
    "nota": [],
-   "masa_s": 236
+   "masa_s": 459
   },
   {
    "sesi": "2026-10-21",
@@ -115,7 +121,7 @@
    "kaedah_isyarat": 196,
    "ralat": [],
    "nota": [],
-   "masa_s": 243
+   "masa_s": 468
   },
   {
    "sesi": "2026-10-22",
@@ -128,7 +134,7 @@
    "kaedah_isyarat": 199,
    "ralat": [],
    "nota": [],
-   "masa_s": 254
+   "masa_s": 476
   },
   {
    "sesi": "2026-10-23",
@@ -141,33 +147,33 @@
    "kaedah_isyarat": 200,
    "ralat": [],
    "nota": [],
-   "masa_s": 245
+   "masa_s": 488
   },
   {
    "sesi": "2026-10-26",
    "beli": 3263,
    "tutup": 70,
    "langkau": 58,
-   "isyarat": 14793,
+   "isyarat": 14794,
    "terbuka": 35478,
-   "tunggu": 2579,
+   "tunggu": 2580,
    "kaedah_isyarat": 199,
    "ralat": [],
    "nota": [],
-   "masa_s": 240
+   "masa_s": 507
   },
   {
    "sesi": "2026-10-27",
-   "beli": 2529,
+   "beli": 2530,
    "tutup": 186,
    "langkau": 47,
    "isyarat": 15174,
-   "terbuka": 37821,
+   "terbuka": 37822,
    "tunggu": 3360,
    "kaedah_isyarat": 198,
    "ralat": [],
    "nota": [],
-   "masa_s": 245
+   "masa_s": 511
   },
   {
    "sesi": "2026-10-28",
@@ -175,12 +181,12 @@
    "tutup": 204,
    "langkau": 76,
    "isyarat": 15765,
-   "terbuka": 40898,
+   "terbuka": 40899,
    "tunggu": 3766,
    "kaedah_isyarat": 196,
    "ralat": [],
    "nota": [],
-   "masa_s": 254
+   "masa_s": 513
   },
   {
    "sesi": "2026-10-29",
@@ -188,12 +194,12 @@
    "tutup": 393,
    "langkau": 123,
    "isyarat": 16849,
-   "terbuka": 44148,
+   "terbuka": 44149,
    "tunggu": 3875,
    "kaedah_isyarat": 204,
    "ralat": [],
    "nota": [],
-   "masa_s": 253
+   "masa_s": 519
   },
   {
    "sesi": "2026-10-30",
@@ -201,12 +207,12 @@
    "tutup": 367,
    "langkau": 127,
    "isyarat": 14878,
-   "terbuka": 47529,
+   "terbuka": 47530,
    "tunggu": 2456,
    "kaedah_isyarat": 205,
    "ralat": [],
    "nota": [],
-   "masa_s": 255
+   "masa_s": 524
   },
   {
    "sesi": "2026-11-02",
@@ -214,12 +220,12 @@
    "tutup": 765,
    "langkau": 81,
    "isyarat": 16083,
-   "terbuka": 49137,
+   "terbuka": 49138,
    "tunggu": 3443,
    "kaedah_isyarat": 195,
    "ralat": [],
    "nota": [],
-   "masa_s": 261
+   "masa_s": 528
   },
   {
    "sesi": "2026-11-03",
@@ -227,12 +233,12 @@
    "tutup": 550,
    "langkau": 90,
    "isyarat": 13790,
-   "terbuka": 51938,
+   "terbuka": 51939,
    "tunggu": 2173,
    "kaedah_isyarat": 190,
    "ralat": [],
    "nota": [],
-   "masa_s": 263
+   "masa_s": 523
   },
   {
    "sesi": "2026-11-04",
@@ -240,25 +246,25 @@
    "tutup": 552,
    "langkau": 46,
    "isyarat": 19379,
-   "terbuka": 53511,
+   "terbuka": 53512,
    "tunggu": 5539,
    "kaedah_isyarat": 208,
    "ralat": [],
    "nota": [],
-   "masa_s": 264
+   "masa_s": 532
   },
   {
    "sesi": "2026-11-05",
    "beli": 5324,
-   "tutup": 2528,
+   "tutup": 2519,
    "langkau": 213,
    "isyarat": 14083,
-   "terbuka": 56307,
+   "terbuka": 56317,
    "tunggu": 2048,
    "kaedah_isyarat": 185,
    "ralat": [],
    "nota": [],
-   "masa_s": 266
+   "masa_s": 530
   },
   {
    "sesi": "2026-11-06",
@@ -266,12 +272,25 @@
    "tutup": 5041,
    "langkau": 59,
    "isyarat": 13794,
-   "terbuka": 53255,
+   "terbuka": 53265,
    "tunggu": 2247,
    "kaedah_isyarat": 183,
    "ralat": [],
    "nota": [],
-   "masa_s": 260
+   "masa_s": 536
+  },
+  {
+   "sesi": "2026-11-09",
+   "beli": 2225,
+   "tutup": 2072,
+   "langkau": 22,
+   "isyarat": 16292,
+   "terbuka": 53418,
+   "tunggu": 4148,
+   "kaedah_isyarat": 194,
+   "ralat": [],
+   "nota": [],
+   "masa_s": 520
   }
  ]
 }
