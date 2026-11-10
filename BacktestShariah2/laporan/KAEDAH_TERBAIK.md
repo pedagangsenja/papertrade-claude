@@ -4,7 +4,7 @@
 
 > Ujian dalam laporan ini memakai posisi DITUTUP sahaja dengan SE berkelompok ikut hari beli. Ujian plasebo 7 Nov 2026 (`laporan/PLASEBO_GATE.md`) mengukur SE jenis itu meluluskan pemilihan rawak sehingga 45% masa, dan penapisan keluar memesongkan sampel ditutup. Bilangan "terbukti NEGATIF/positif" di bawah ialah DIAGNOSTIK, bukan label kaedah; label yang sah hanya dalam kad skor.
 
-Dijana 2026-11-10 14:57 UTC oleh `standard/kaedah_terbaik.py`. Rekod analisis sahaja.
+Dijana 2026-11-10 17:52 UTC oleh `standard/kaedah_terbaik.py`. Rekod analisis sahaja.
 
 Papan Penganalisis (`laporan/PENGANALISIS.md`) sudah membanding semua kaedah dan dijana semula setiap malam. Dokumen ini tidak mengulanginya — ia menjawab soalan yang mesti dijawab **dahulu** sebelum mana-mana pangkat boleh dipercayai.
 
@@ -78,11 +78,11 @@ Jadi mana-mana kaedah bersasaran yang muncul positif di sini, dan mana-mana kaed
 
 | Kumpulan backtest | Kaedah | Posisi masih terbuka | Realisasi purata | Positif |
 |---|---|---|---|---|
-| pegang ≤ 10 hari | 20 | 26% | -2.13% | 2/17 |
-| pegang 11–20 hari | 27 | 40% | -4.27% | 0/23 |
-| pegang > 20 hari | 83 | 58% | -7.40% | 3/47 |
+| pegang ≤ 10 hari | 20 | 30% | -2.13% | 2/17 |
+| pegang 11–20 hari | 27 | 44% | -4.27% | 0/23 |
+| pegang > 20 hari | 83 | 60% | -7.40% | 3/47 |
 
-Kaedah pegang-panjang mempunyai **58% posisi masih terbuka**, jadi "realisasi" bagi mereka hanyalah himpunan posisi yang dihentikan awal — yang paling buruk daripada taburan. Angka itu bukan prestasi kaedah; ia prestasi hentinya dalam tiga minggu.
+Kaedah pegang-panjang mempunyai **60% posisi masih terbuka**, jadi "realisasi" bagi mereka hanyalah himpunan posisi yang dihentikan awal — yang paling buruk daripada taburan. Angka itu bukan prestasi kaedah; ia prestasi hentinya dalam tiga minggu.
 
 ## 5. "Setiap kaedah ada sebab musabab daripada pakar" — ya, dan ini yang diukur
 
@@ -114,7 +114,7 @@ Sekarang: median **23** posisi ditutup setiap kaedah, maksimum **187**. Jadi per
 
 1. **Jangan pilih kaedah sekarang.** Pangkat backtest tiada kuasa ramalan yang boleh diukur (bahagian 2); mana-mana kaedah yang kelihatan positif pada posisi ditutup tertakluk kepada penapisan keluar (bahagian 3a), dan lift yang dipadan ikut hari beli tidak bertahan BH-FDR bagi satu kaedah pun.
 2. **Betulkan kecacatan henti hari-0 dahulu.** `REVERSE/KOLAM_EKOR.md` §4a: 421 daripada 1,770 posisi dibeli dan dihentikan pada hari masuk dengan kadar menang 0.00% kerana paras henti terletak dalam julat intrabar hari masuk. Itu bukan prestasi kaedah, itu pepijat pelaksanaan, dan ia mencemari setiap pangkat di atas.
-3. **Perhatikan kaedah pegang-pendek dahulu.** Hanya kumpulan ≤ 10 hari ada data yang hampir matang (26% masih terbuka lawan 58% bagi pegang-panjang). Pangkat pegang-panjang tidak bermakna sebelum satu tempoh pegang penuh berlalu.
+3. **Perhatikan kaedah pegang-pendek dahulu.** Hanya kumpulan ≤ 10 hari ada data yang hampir matang (30% masih terbuka lawan 60% bagi pegang-panjang). Pangkat pegang-panjang tidak bermakna sebelum satu tempoh pegang penuh berlalu.
 4. **Baca semula selepas 6 bulan.** Papan dijana semula setiap malam tanpa kos. Jadual bahagian 6 memberi bilangan posisi yang diperlukan.
 
 **Ia tidak akan mencapai +10%/bulan.** Kaedah teratas papan ikut skor sebulan memberi +3.40% dengan status BELUM CUKUP dan 0 posisi hadapan matang. Lihat `REVERSE/SASARAN.md`.
