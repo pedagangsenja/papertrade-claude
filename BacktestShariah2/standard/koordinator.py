@@ -292,13 +292,33 @@ def semak_segar(lewat=SEMAK_HARI):
     tiada, yang sudah ditangani di tempat lain dan akan menghasilkan amaran berganda di sini.
     """
     buruk = [(n, t, u) for n, t, u, _ in kesegaran() if u is not None and u > lewat]
+    t, u = segar_shariah()
+    if u is not None and u > SHARIAH_HARI:
+        buruk.append((NAMA_SHARIAH, t, u))
     return (1 if buruk else 0), buruk
+
+
+# Senarai Shariah (data/harga/univ.txt) hanya boleh datang daripada skrin Shariah Moomoo: TradingView tiada medan
+# Shariah (0/4,148 saham, 10 Nov 2026) dan pegangan SPUS/SPTE ~327 saham sahaja. Sejak 10 Nov 2026 (keputusan
+# pengguna) skrin itu MANUAL sebulan sekali (jadual/mingguan.md) kerana tugasan berjadual tanpa connector Moomoo
+# gagal senyap. Ambangnya sendiri, bukan SEMAK_HARI: senarai Shariah berubah perlahan, tetapi tanpa tripwire
+# "manual" bermaksud "dilupakan". > 35 hari -> --semak gagal -> amaran_ntfy.
+SHARIAH_HARI = 35
+NAMA_SHARIAH = 'Senarai Shariah (skrin Moomoo manual)'
+UNIV_STATUS = os.path.join(BS2, 'data', 'harga', 'univ_status.json')
+
+
+def segar_shariah():
+    """(tarikh, umur hari) skrin Shariah Moomoo terakhir; (None, None) jika univ_status.json tiada."""
+    t = (_json(UNIV_STATUS, {}) or {}).get('tarikh')
+    return t, _umur(t)
 
 
 
 # ---------------------------------------------------------------- ringkasan mingguan 5 baris
 # Cadangan kajian/FABLE_CADANGAN.md §3 (9 Nov 2026): lima baris tetap, <= 120 aksara setiap satu, nombor daripada
-# fail analisis sedia ada; tiada tafsiran bebas. Dipanggil jadual/mingguan.md langkah 9 (ntfy topik claude_azim).
+# fail analisis sedia ada; tiada tafsiran bebas. Dipanggil analisis.yml pada hari Sabtu (ntfy topik claude_azim; sejak
+# 10 Nov 2026, dahulu jadual/mingguan.md langkah 8b).
 RINGKASAN_MINGGUAN = os.path.join(BS2, 'laporan', 'RINGKASAN_MINGGUAN.md')
 HAD_AKSARA = 120
 
@@ -483,7 +503,10 @@ def main():
           'dinilai ke hadapan lagi; penilaian penuh dijangka 15 Jan 2027 (`WFO/README.md`).\n')
 
     A('\n## 4. Kesegaran data\n')
-    A(jadual_md([(a, b, c, d) for a, b, c, d in kesegaran()],
+    ts, us = segar_shariah()
+    tanda_s = 'tiada' if us is None else ('OK' if us <= SHARIAH_HARI else f'**LEWAT {us} hari**')
+    A(jadual_md([(a, b, c, d) for a, b, c, d in kesegaran()]
+                + [(NAMA_SHARIAH, ts, us, f'{tanda_s} (had {SHARIAH_HARI} hari)')],
                 ['Sumber', 'Terakhir', 'Umur (hari)', 'Status']))
     A(f'\nAmbang LEWAT: > {LEWAT_HARI} hari. Dua sebab biasa **bukan** kerosakan: hujung minggu '
       'atau cuti pasaran, dan salinan kerja yang lama (lihat §0). Periksa kedua-duanya, kemudian '

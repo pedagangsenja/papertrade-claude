@@ -17,7 +17,7 @@ Dokumen ini **satu-satunya** rujukan peraturan bagi tugasan harian. Ia mengganti
 | Gred P sebelum buka | 11:47 UTC Isn–Jum | Actions `petang.yml` |
 | Beli maya | 9:40 pagi New York Isn–Jum + sandaran | Actions `beli.yml` (`standard/harian_c.py beli`) |
 | Tolak db dashboard | 10:20 pagi New York Isn–Sab | sesi Claude `jadual/tolak_db.md` |
-| Data Moomoo/SST (universe, sektor, SST, kewangan, peristiwa, akaun sim) | Ahad 10:47 pagi MYT | sesi Claude `jadual/mingguan.md` |
+| Data Moomoo/SST (universe, sektor, SST, kewangan, peristiwa) | MANUAL sebulan sekali (sejak 10 Nov 2026; tripwire senarai Shariah > 35 hari) | sesi Claude bersama pengguna `jadual/mingguan.md` |
 
 Notifikasi telefon (keputusan pengguna 27 Okt 2026): ntfy (topik `claude_azim`) — ringkasan setiap kerja papertrade baharu
 (`harian.yml`, `beli.yml` melalui `standard/notifikasi.py`) dan amaran bila mana-mana workflow utama gagal (`amaran_ntfy.yml`).
@@ -110,7 +110,7 @@ Gred keseluruhan (paparan) sejak 19 Okt 2026 = purata mata Industri (kecuali kae
   watchlist rutin Claude.
 - `BacktestShariah2/MOD_ACTIONS` = `bayang`: Actions menulis ke `BacktestShariah2/bayang/` sahaja dan rutin Claude kekal rasmi (§2);
   `rasmi`: Actions menulis ke `papertrade/`, rutin Claude dimatikan, dashboard ditolak oleh `jadual/tolak_db.md` dan data
-  Moomoo/SST dikumpul mingguan (`jadual/mingguan.md`).
+  Moomoo/SST dikumpul manual sebulan sekali (`jadual/mingguan.md`, sejak 10 Nov 2026).
 
 ## 11. Papan Penganalisis (keputusan pengguna 20 Okt 2026; rekod analisis sahaja, tidak menapis belian)
 - Satu jadual banding semua kaedah aktif: `standard/penganalisis.py` → `laporan/PENGANALISIS.md` + `data/analisis/papan.json` (db
