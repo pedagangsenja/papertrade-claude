@@ -563,3 +563,16 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - Watchlist 534 (baharu 293, dibuang 168, ke senarai beli 79). Isyarat direkod: 13780 (data/isyarat/2026-11-06_malam.csv.gz).
 - Ralat kaedah: tiada. Nota: C WLYB M30: tiada bar 2026-11-06 (harga terkini 2026-11-05); C KVUE M93: tiada bar 2026-11-06 (harga terkini 2026-10-30); C KVUE M74: tiada bar 2026-11-06 (harga terkini 2026-10-30); C WLYB M74: tiada bar 2026-11-06 (harga terkini 2026-11-05); C KVUE M99: tiada bar 2026-11-06 (harga terkini 2026-10-30); C KVUE M124: tiada bar 2026-11-06 (harga terkini 2026-10-30); C INDV M19: buka stor 34.92 lawan harga_beli 27.0948 (> 15%; split/data tidak sepadan) — tidak dinilai; C KVUE M80: tiada bar 2026-11-06 (harga terkini 2026-10-30).
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-09 23:09 MYT — GitHub Actions: beli maya 2026-11-09 (isyarat 2026-11-06)
+- Direkod 1325 (329 saham; belian semula 116; fail claude_166.csv); dilangkau 14. Harga: buka sementara yfinance 10:09 NY.
+- Dilangkau: XERS M06: buka 15.20 > buka_maks 14.43; G M08: buka 42.17 > buka_maks 40.95; TDC M12: buka 31.71 <= henti 32.36; G M41: isyarat batal pada buka (peraturan kaedah); SN M41: isyarat batal pada buka (peraturan kaedah); BDX M41: isyarat batal pada buka (peraturan kaedah); SONY M41: isyarat batal pada buka (peraturan kaedah); SWK M41: isyarat batal pada buka (peraturan kaedah); TDC M57: buka 31.71 <= henti 31.77; CHT M127: buka 48.95 <= henti 49.33; EXTR M153: isyarat batal pada buka (peraturan kaedah); BG M153: isyarat batal pada buka (peraturan kaedah); ATEN M153: isyarat batal pada buka (peraturan kaedah); CHT M153: isyarat batal pada buka (peraturan kaedah).
+- Tiada order. Tiada wang sebenar.
+
+## 2026-11-10 14:24 MYT — GitHub Actions: kemas kini + imbas (sesi AS 2026-11-09)
+- Keluar baharu 620 (C {'isyarat': 518, 'masa': 13, 'henti': 65, 'sasaran': 23}, M {'isyarat': 1}); menunggu buka sesi seterusnya: 201.
+- Harga beli sementara dibetulkan kepada buka rasmi bar harian: 283 (beza > 0.5%: 70). Tidak dibeli baharu: tiada.
+- Senarai beli 1642 baris (418 saham, 187 kaedah; 187 daripada watchlist; belian semula 177). Ditolak: {'dipegang': 2066, 'had': 11879, 'kelas_berganda': 50, 'ambil_alih': 300, 'tidak_cair': 200, 'mingguan': 140}.
+- Watchlist 566 (baharu 324, dibuang 105, ke senarai beli 187). Isyarat direkod: 16277 (data/isyarat/2026-11-09_malam.csv.gz).
+- Ralat kaedah: tiada. Nota: C WLYB M30: tiada bar 2026-11-09 (harga terkini 2026-11-06); C KVUE M93: tiada bar 2026-11-09 (harga terkini 2026-10-30); C KVUE M74: tiada bar 2026-11-09 (harga terkini 2026-10-30); C WLYB M74: tiada bar 2026-11-09 (harga terkini 2026-11-06); C KVUE M99: tiada bar 2026-11-09 (harga terkini 2026-10-30); C KVUE M124: tiada bar 2026-11-09 (harga terkini 2026-10-30); C KVUE M80: tiada bar 2026-11-09 (harga terkini 2026-10-30); C KVUE M141: tiada bar 2026-11-09 (harga terkini 2026-10-30).
+- Tiada order. Tiada wang sebenar.

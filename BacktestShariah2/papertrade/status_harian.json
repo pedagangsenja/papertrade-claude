@@ -1,114 +1,100 @@
 {
  "beli": {
-  "tarikh": "2026-11-06",
-  "masa": "2026-11-06 23:00 MYT",
-  "isyarat": "2026-11-05",
-  "calon": 1262,
-  "direkod": 1219,
-  "dilangkau": 43,
+  "tarikh": "2026-11-09",
+  "masa": "2026-11-09 23:09 MYT",
+  "isyarat": "2026-11-06",
+  "calon": 1339,
+  "direkod": 1325,
+  "dilangkau": 14,
   "langkau": [
-   "AEM M02: buka 184.53 <= henti 185.81",
-   "MGNI M06: buka 27.23 > buka_maks 26.12",
-   "AGL M06: buka 114.00 > buka_maks 102.92",
-   "XERS M06: buka 13.81 > buka_maks 11.99",
-   "VCEL M06: buka 51.84 > buka_maks 48.28",
-   "IPAR M06: buka 132.85 > buka_maks 132.84",
-   "BLLN M08: buka 112.22 > buka_maks 111.40",
-   "PCTY M12: buka 162.33 <= henti 165.31",
-   "INFY M13: buka 12.53 <= henti 12.56",
-   "BG M13: buka 98.00 <= henti 101.17",
-   "CRAI M13: buka 202.63 <= henti 208.67",
-   "SSL M14: buka 14.76 <= henti 15.02",
-   "SRAD M14: buka 13.76 <= henti 13.88",
-   "VMC M14: buka 277.85 <= henti 280.89",
-   "GLOB M23: buka 47.21 <= henti 48.67",
-   "SAP M23: buka 233.48 <= henti 243.05",
-   "CAH M46: buka 265.58 <= henti 267.61",
-   "XERS M47: isyarat batal pada buka (peraturan kaedah)",
-   "ATRC M70: buka 60.00 <= henti 60.58",
-   "ISRG M70: buka 456.49 <= henti 461.19",
-   "ZBH M70: buka 103.21 <= henti 105.50",
-   "LYFT M70: buka 16.63 <= henti 17.68",
-   "ARLO M70: buka 13.42 <= henti 14.28",
-   "REYN M70: buka 24.04 <= henti 24.12",
-   "SONY M74: buka 26.35 <= henti 26.60",
-   "MMSI M123: buka 88.33 <= henti 88.80",
-   "SAP M128: isyarat batal pada buka (peraturan kaedah)",
-   "CSGP M139: isyarat batal pada buka (peraturan kaedah)",
-   "BSX M139: isyarat batal pada buka (peraturan kaedah)",
-   "GIC M142: isyarat batal pada buka (peraturan kaedah)",
-   "GWW M142: isyarat batal pada buka (peraturan kaedah)",
-   "PNR M143: isyarat batal pada buka (peraturan kaedah)",
-   "RCKY M143: isyarat batal pada buka (peraturan kaedah)",
-   "WDFC M143: isyarat batal pada buka (peraturan kaedah)",
-   "SGC M143: isyarat batal pada buka (peraturan kaedah)",
-   "EPAM M153: isyarat batal pada buka (peraturan kaedah)",
-   "GLOB M153: isyarat batal pada buka (peraturan kaedah)",
-   "BSY M153: isyarat batal pada buka (peraturan kaedah)",
-   "CAH M153: isyarat batal pada buka (peraturan kaedah)",
-   "EW M153: isyarat batal pada buka (peraturan kaedah)",
-   "TS M153: isyarat batal pada buka (peraturan kaedah)",
-   "AEM M153: isyarat batal pada buka (peraturan kaedah)",
-   "MSFT M156: isyarat batal pada buka (peraturan kaedah)"
+   "XERS M06: buka 15.20 > buka_maks 14.43",
+   "G M08: buka 42.17 > buka_maks 40.95",
+   "TDC M12: buka 31.71 <= henti 32.36",
+   "G M41: isyarat batal pada buka (peraturan kaedah)",
+   "SN M41: isyarat batal pada buka (peraturan kaedah)",
+   "BDX M41: isyarat batal pada buka (peraturan kaedah)",
+   "SONY M41: isyarat batal pada buka (peraturan kaedah)",
+   "SWK M41: isyarat batal pada buka (peraturan kaedah)",
+   "TDC M57: buka 31.71 <= henti 31.77",
+   "CHT M127: buka 48.95 <= henti 49.33",
+   "EXTR M153: isyarat batal pada buka (peraturan kaedah)",
+   "BG M153: isyarat batal pada buka (peraturan kaedah)",
+   "ATEN M153: isyarat batal pada buka (peraturan kaedah)",
+   "CHT M153: isyarat batal pada buka (peraturan kaedah)"
   ],
-  "saham_unik": 263,
-  "sumber_buka": "buka sementara yfinance 10:00 NY",
-  "fail": "claude_154.csv",
-  "belian_semula": 55,
+  "saham_unik": 329,
+  "sumber_buka": "buka sementara yfinance 10:09 NY",
+  "fail": "claude_166.csv",
+  "belian_semula": 116,
   "buka_lewat": []
  },
  "malam": {
-  "sesi": "2026-11-06",
-  "masa": "2026-11-07 14:18 MYT",
+  "sesi": "2026-11-09",
+  "masa": "2026-11-10 14:24 MYT",
   "ralat_kaedah": [],
   "kaedah_tanpa_modul": [],
-  "masa_kaedah_s": 409,
+  "masa_kaedah_s": 319,
   "keluar_baru": {
    "M": {
-    "isyarat": 5
+    "isyarat": 1
    },
    "C": {
-    "henti": 332,
-    "masa": 16,
-    "isyarat": 600,
-    "sasaran": 5
+    "isyarat": 518,
+    "masa": 13,
+    "henti": 65,
+    "sasaran": 23
    }
   },
   "keluar_baru_jumlah": {
-   "M": 5,
-   "C": 953
+   "M": 1,
+   "C": 619
   },
-  "menunggu": 520,
+  "menunggu": 201,
   "keluar_keluarga": {
-   "M": 604,
-   "N": 349
+   "M": 254,
+   "N": 365
   },
   "menunggu_keluarga": {
-   "M": 153,
-   "N": 366
+   "M": 57,
+   "N": 142
   },
-  "harga_beli_dibetulkan": 316,
-  "harga_beli_beza_besar": 48,
+  "harga_beli_dibetulkan": 283,
+  "harga_beli_beza_besar": 70,
   "tidak_dibeli": [],
   "nota": [
-   "C WLYB M30: tiada bar 2026-11-06 (harga terkini 2026-11-05)",
-   "C KVUE M93: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C KVUE M74: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C WLYB M74: tiada bar 2026-11-06 (harga terkini 2026-11-05)",
-   "C KVUE M99: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C KVUE M124: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C INDV M19: buka stor 34.92 lawan harga_beli 27.0948 (> 15%; split/data tidak sepadan) — tidak dinilai",
-   "C KVUE M80: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C KVUE M141: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C KVUE M148: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C ACA M100: tiada bar 2026-11-06 (harga terkini 2026-10-22)",
-   "C KVUE M137: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C KVUE M81: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C KVUE M82: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
+   "C WLYB M30: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C KVUE M93: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C KVUE M74: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C WLYB M74: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C KVUE M99: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C KVUE M124: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C KVUE M80: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C KVUE M141: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C KVUE M148: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C ACA M100: tiada bar 2026-11-09 (harga terkini 2026-10-22)",
+   "C KVUE M137: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C KVUE M81: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C KVUE M82: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
    "C SUPN M106: buka stor 26.99 lawan harga_beli 42.07 (> 15%; split/data tidak sepadan) — tidak dinilai",
-   "C KVUE M147: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C KVUE M158: tiada bar 2026-11-06 (harga terkini 2026-10-30)",
-   "C KVUE M14: tiada bar 2026-11-06 (harga terkini 2026-10-30)"
+   "C KVUE M147: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C KVUE M158: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C KVUE M14: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C AAOI N75X14: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N75X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N75X15: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N75X17: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N16X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N16X15: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N119X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N119X15: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N19X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N73X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI M28: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N42X14: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N42X15: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N42X16: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N42X17: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
+   "C AAOI N42X36: tiada bar 2026-11-09 (harga terkini 2026-11-06)"
   ],
   "tidak_layak_posisi": {
    "ambil_alih": {
@@ -120,7 +106,8 @@
     "ditutup": 1,
     "saham": [
      "ACA"
-    ]
+    ],
+    "ditahan_tersenarai": []
    },
    "tidak_cair": {
     "tidak_sah": 0,
@@ -131,47 +118,33 @@
     "saham": []
    },
    "faktor": {
-    "dilaras": 2,
-    "semak": [
-     [
-      "claude_111.csv",
-      "BSM",
-      "N51X36",
-      "2026-11-02",
-      "2026-11-06"
-     ],
-     [
-      "claude_133.csv",
-      "BSM",
-      "N38X36",
-      "2026-11-04",
-      "2026-11-06"
-     ]
-    ],
+    "dilaras": 0,
+    "semak": [],
     "dibuka_semula": []
    }
   },
   "dagangan_betul": 1,
-  "senarai_beli": 1339,
-  "saham_unik": 331,
+  "senarai_beli": 1642,
+  "saham_unik": 418,
   "senarai_keluarga": {
-   "M": 555,
-   "N": 784
+   "M": 775,
+   "N": 867
   },
   "kaedah_keluarga": {
-   "N": 88,
-   "M": 90
+   "N": 91,
+   "M": 96
   },
-  "kaedah": 178,
-  "belian_semula": 116,
-  "dari_watchlist": 79,
-  "isyarat": 13780,
+  "kaedah": 187,
+  "belian_semula": 177,
+  "dari_watchlist": 187,
+  "isyarat": 16277,
   "ditolak": {
-   "dipegang": 1455,
-   "had": 10552,
-   "ambil_alih": 220,
-   "tidak_cair": 165,
-   "kelas_berganda": 49
+   "dipegang": 2066,
+   "had": 11879,
+   "kelas_berganda": 50,
+   "ambil_alih": 300,
+   "tidak_cair": 200,
+   "mingguan": 140
   },
   "tidak_layak": {
    "ACLS": "ambil alih",
@@ -188,6 +161,7 @@
    "INDV": "ambil alih",
    "KELYB": "tidak cair",
    "KEQU": "tidak cair",
+   "LVLU": "tidak cair",
    "MAYS": "tidak cair",
    "MRVL": "ambil alih",
    "NCEW": "tidak cair",
@@ -210,22 +184,22 @@
    "TECH": "ambil alih",
    "WLYB": "tidak cair"
   },
-  "watchlist": 534,
-  "watchlist_baharu": 293,
-  "watchlist_dibuang": 168,
-  "watchlist_ke_senarai": 79,
-  "minggu_akhir": true,
-  "fail_isyarat": "data/isyarat/2026-11-06_malam.csv.gz"
+  "watchlist": 566,
+  "watchlist_baharu": 324,
+  "watchlist_dibuang": 105,
+  "watchlist_ke_senarai": 187,
+  "minggu_akhir": false,
+  "fail_isyarat": "data/isyarat/2026-11-09_malam.csv.gz"
  },
  "gred": {
-  "tarikh": "2026-11-07",
-  "masa": "2026-11-07 14:26 MYT",
+  "tarikh": "2026-11-10",
+  "masa": "2026-11-10 20:27 MYT",
   "pemangkin": {
-   "D": 1087,
-   "A": 75,
-   "B": 85,
-   "C": 69,
-   "–": 23
+   "D": 1366,
+   "A": 82,
+   "C": 60,
+   "B": 126,
+   "–": 8
   }
  }
 }

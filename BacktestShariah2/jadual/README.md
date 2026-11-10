@@ -3,7 +3,7 @@
 Prompt tugasan berjadual (Routine) hanya perlu: clone repo, kemudian "ikut `BacktestShariah2/jadual/<fail>.md`". Prosedur dan peraturan disimpan di sini supaya berversi dalam git. Peraturan umum: `standard/tugasan_v3.md`.
 
 **Sejak 27 Okt 2026 kerja harian = GitHub Actions** (`harian.yml`, `beli.yml`, `petang.yml`); tiga rutin di bawah DIMATIKAN
-(rujukan/sandaran sahaja). Tugasan Claude aktif: `tolak_db.md` (Isn–Sab 10:20 NY) dan `mingguan.md` (Ahad 10:47 MYT).
+(rujukan/sandaran sahaja). Tugasan Claude aktif: `tolak_db.md` (Isn–Sab 10:20 NY). `mingguan.md` = MANUAL sebulan sekali sejak 10 Nov 2026.
 
 | Fail | Routine | Masa |
 |---|---|---|
@@ -33,5 +33,5 @@ Keputusan pengguna 17 Okt 2026 (jimat token): kerja harian dipindah ke GitHub Ac
 Mod dalam `BacktestShariah2/MOD_ACTIONS`: `rasmi` sejak 27 Okt 2026 (dahulu `bayang`) = Actions menulis ke `BacktestShariah2/bayang/` dan membanding setiap
 hari dengan rutin Claude (`bayang/BANDING_<tarikh>.md`, 16–23 Okt; kekal sebagai bukti).
 Selepas peralihan (27 Okt 2026, `PERALIHAN.md`): rutin di atas dan pengawas dimatikan; sesi Claude hanya `tolak_db.md` (Isn–Sab 10:20 NY)
-dan `mingguan.md` (Ahad). Notifikasi = ntfy daripada Actions (`harian.yml`, `beli.yml`, `amaran_ntfy.yml`); sesi Claude tidak
+dan `mingguan.md` (Ahad; MANUAL sebulan sekali sejak 10 Nov 2026). Notifikasi = ntfy daripada Actions (`harian.yml`, `beli.yml`, `amaran_ntfy.yml`); sesi Claude tidak
 boleh capai ntfy.sh (proksi 403), jadi mesej sesi Claude dihantar dengan `workflow_dispatch` `amaran_ntfy.yml` (input tajuk, mesej).

@@ -81,13 +81,45 @@ jobs:
         if: steps.lift.outcome == 'success' && steps.t4.outcome == 'success'
         continue-on-error: true
         run: python3 BacktestShariah2/standard/kad_skor.py
+      # Skor Kaedah 0-100 (keputusan pengguna 9 Nov 2026; pradaftar standard/SPEC_SKOR_KAEDAH.md): pangkat
+      # maklumat empat tiang atas penyebut kad skor, BUKAN keputusan. Membaca kad_skor.json + t4_siri.csv,
+      # jadi hanya selepas kad skor malam ini berjaya (jika tidak ia menskor fail larian lalu).
+      - name: Jana skor kaedah
+        id: skor
+        if: steps.kad.outcome == 'success'
+        continue-on-error: true
+        run: python3 BacktestShariah2/standard/skor_kaedah.py
       # Ringkasan setiap kaedah untuk helaian kaedah dashboard v161 (keputusan pengguna 8 Nov 2026):
       # sebab keluar, taburan pulangan dan tiga contoh dagangan sebenar dengan lilin. Populasi SAMA
       # seperti kad skor (Lejar Penuh lorong 1, terbuka ditanda-ke-pasaran); paparan sahaja.
+      # CANTAS (pradaftar standard/SPEC_CANTAS.md, 9 Nov 2026): label maklumat bulanan kaedah calon berhenti
+      # direkod (C1-C5 atas kad_skor.json). Tidak mengubah Lejar/kad skor; keputusan cantas = pengguna.
+      - name: Jana label cantas
+        id: cantas
+        if: steps.kad.outcome == 'success'
+        continue-on-error: true
+        run: python3 BacktestShariah2/standard/cantas.py
       - name: Jana ringkasan setiap kaedah
         id: siri
         continue-on-error: true
         run: python3 BacktestShariah2/standard/kaedah_siri.py
+      # Ringkasan mingguan 5 baris (kajian/FABLE_CADANGAN.md §3). Dipindah dari jadual/mingguan.md langkah 8b pada
+      # 10 Nov 2026 apabila tugasan berjadual Moomoo mingguan dimatikan (keputusan pengguna): ia tidak perlu Moomoo.
+      # Sabtu UTC sahaja (Lejar sesi Jumaat); larian kedua hari sama dilangkau supaya ntfy tidak berganda.
+      - name: Ringkasan mingguan (Sabtu)
+        id: mingguan
+        if: steps.kad.outcome == 'success'
+        continue-on-error: true
+        run: |
+          F=BacktestShariah2/laporan/RINGKASAN_MINGGUAN.md
+          if [ "$(date -u +%u)" != "6" ]; then echo "bukan Sabtu"; exit 0; fi
+          if [ -f "$F" ] && grep -q "^Dijana $(date -u +%Y-%m-%d)" "$F"; then echo "sudah dijana hari ini"; exit 0; fi
+          python3 BacktestShariah2/standard/koordinator.py --mingguan | tee /tmp/mingguan.txt
+          {
+            echo "pesan<<AKHIR"
+            python3 -c "l=open('/tmp/mingguan.txt',encoding='utf-8').read().splitlines(); print(' | '.join(l[0:1]+l[4:5])[:199])"
+            echo "AKHIR"
+          } >> "$GITHUB_OUTPUT"
       - name: Commit dan push
         run: |
           git config user.name "analisis[bot]"
@@ -100,7 +132,11 @@ jobs:
                    BacktestShariah2/laporan/KAEDAH_TERBAIK.md \
                    BacktestShariah2/portfolio_slot/t4_ringkasan.csv BacktestShariah2/portfolio_slot/t4_siri.csv \
                    BacktestShariah2/laporan/T4_KAEDAH.md BacktestShariah2/data/analisis/kad_skor.json \
-                   BacktestShariah2/laporan/KAD_SKOR.md BacktestShariah2/data/analisis/kaedah_siri.json; do
+                   BacktestShariah2/laporan/KAD_SKOR.md BacktestShariah2/data/analisis/kaedah_siri.json \
+                   BacktestShariah2/data/analisis/skor_kaedah.json BacktestShariah2/laporan/SKOR_KAEDAH.md \
+                   BacktestShariah2/data/analisis/skor_kaedah_sejarah.csv \
+                   BacktestShariah2/laporan/CANTAS.md BacktestShariah2/data/analisis/cantas.json \
+                   BacktestShariah2/laporan/RINGKASAN_MINGGUAN.md; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
           if git diff --cached --quiet; then echo "tiada perubahan"; exit 0; fi
@@ -112,12 +148,20 @@ jobs:
           done
           echo "Push gagal; larian seterusnya menjana semula." >&2
           exit 1
+      - name: Notifikasi ntfy (ringkasan mingguan)
+        if: steps.mingguan.outputs.pesan != ''
+        env:
+          TOPIK: ${{ secrets.NTFY_TOPIC || 'claude_azim' }}
+          PESAN: ${{ steps.mingguan.outputs.pesan }}
+        run: |
+          curl -sS -m 20 -H "Title: Papertrade: ringkasan mingguan" -H "Tags: calendar" -d "$PESAN" \
+            "https://ntfy.sh/$TOPIK" > /dev/null || echo "::warning::ntfy gagal"
       # Dijalankan SELEPAS commit: data malam ini sudah selamat, jadi job boleh gagal dengan jujur.
       - name: Semak laporan sampingan berjaya
         if: >-
           steps.lift.outcome == 'failure' || steps.terbaik.outcome == 'failure' ||
           steps.t4.outcome == 'failure' || steps.kad.outcome == 'failure' || steps.kad.outcome == 'skipped' ||
-          steps.siri.outcome == 'failure'
+          steps.skor.outcome == 'failure' || steps.skor.outcome == 'skipped' || steps.siri.outcome == 'failure'
         run: |
           if [ "${{ steps.lift.outcome }}" = "failure" ]; then
             echo "lift_kaedah.py GAGAL (lihat langkah 'Jana lift kaedah'); analisis/lift lapuk." >&2
@@ -130,6 +174,9 @@ jobs:
           fi
           if [ "${{ steps.kad.outcome }}" = "failure" ] || [ "${{ steps.kad.outcome }}" = "skipped" ]; then
             echo "kad_skor.py GAGAL (lihat langkah 'Jana kad skor keputusan'); analisis/kad_skor lapuk." >&2
+          fi
+          if [ "${{ steps.skor.outcome }}" = "failure" ] || [ "${{ steps.skor.outcome }}" = "skipped" ]; then
+            echo "skor_kaedah.py GAGAL (lihat langkah 'Jana skor kaedah'); SKOR_KAEDAH.md lapuk." >&2
           fi
           if [ "${{ steps.siri.outcome }}" = "failure" ]; then
             echo "kaedah_siri.py GAGAL (lihat langkah 'Jana ringkasan setiap kaedah'); analisis/kaedah_siri lapuk." >&2

@@ -22,9 +22,13 @@ import koordinator as ko
 class TestSemakSegar(unittest.TestCase):
     def setUp(self):
         self._asal = ko.kesegaran
+        self._asal_s = ko.segar_shariah
+        # Senarai Shariah sebenar repo menua setiap hari; ujian mesti tidak bergantung pada tarikh hari ini.
+        ko.segar_shariah = lambda: ('2026-11-01', 1)
 
     def tearDown(self):
         ko.kesegaran = self._asal
+        ko.segar_shariah = self._asal_s
 
     def _palsu(self, baris):
         ko.kesegaran = lambda: [(n, t, u, 'x') for n, t, u in baris]
@@ -84,3 +88,42 @@ class TestSemakSegar(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class TestSemakShariah(unittest.TestCase):
+    """Senarai Shariah = skrin Moomoo MANUAL bulanan (10 Nov 2026). Tanpa tripwire, "manual" = dilupakan."""
+
+    def setUp(self):
+        self._asal = ko.kesegaran
+        self._asal_s = ko.segar_shariah
+        ko.kesegaran = lambda: [('Stor harga', '2026-11-03', 1, 'OK')]
+
+    def tearDown(self):
+        ko.kesegaran = self._asal
+        ko.segar_shariah = self._asal_s
+
+    def test_senarai_lapuk_dikesan(self):
+        ko.segar_shariah = lambda: ('2026-09-01', ko.SHARIAH_HARI + 1)
+        kod, buruk = ko.semak_segar()
+        self.assertEqual(kod, 1)
+        self.assertEqual(buruk[0][0], ko.NAMA_SHARIAH)
+
+    def test_senarai_sebulan_tidak_berbunyi(self):
+        """Manual sebulan sekali: 30 hari ialah keadaan biasa, bukan rosak."""
+        ko.segar_shariah = lambda: ('2026-10-01', 30)
+        self.assertEqual(ko.semak_segar()[0], 0)
+
+    def test_ambang_shariah_bebas_daripada_lewat(self):
+        """--lewat melaras sumber harian sahaja; senarai Shariah kekal pada ambangnya sendiri."""
+        ko.segar_shariah = lambda: ('2026-10-01', 30)
+        self.assertEqual(ko.semak_segar(lewat=5)[0], 0)
+        self.assertGreater(ko.SHARIAH_HARI, 31)
+
+    def test_status_tiada_dilangkau(self):
+        ko.segar_shariah = lambda: (None, None)
+        self.assertEqual(ko.semak_segar()[0], 0)
+
+    def test_fail_status_repo_boleh_dibaca(self):
+        t, u = self._asal_s()
+        self.assertIsNotNone(t)
+        self.assertIsNotNone(u)

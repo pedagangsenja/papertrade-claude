@@ -1,9 +1,9 @@
 {
   "artifact": "https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e",
-  "versi_artifact": "1794144489-18d0",
-  "nombor": 197,
-  "sha256": "7ba65b8ec69040bd7ad7fdc446b64661c41a9283e6f448c28b9df64b19bc7c18",
-  "bait": 744891,
-  "dikemas": "2026-11-08 13:28 UTC",
-  "nota": "v165 (keputusan pengguna 8 Nov 2026): \"Gred sekali pandang\" dipulihkan di tab Posisi (grid gred 10 saham teratas, skala teal→kelabu→merah, kekal grid di telefon); Akaun, Watchlist dan Rujukan (Kaedah, Kombinasi N, Backtest, Sektor) kini dalam rupa v5.1."
+  "versi_artifact": "1794279818-4a78",
+  "nombor": 206,
+  "sha256": "f0edf97709a6355e8bb1c8bc6a635ac74479ea5f8bbc1b2bf7110a1072796d74",
+  "bait": 785898,
+  "dikemas": "2026-11-10 03:03 UTC",
+  "nota": "v175 (keputusan pengguna 10 Nov 2026 \"laksanakan 3 tempat\"): gaya tonjol — tajuk besar dua warna (.j30hero), cip sorotan (mark.tj) dan nombor penting berwarna (b.nk) di kad Jawapan 30 saat (Hari ini, Pilih kaedah, Posisi, Akaun); tajuk kotak keputusan helaian (.pv2v) besar berwarna ikut jenis; baris jawapan kad lipat dibuka (.kadjwp: posisi, watchlist, kad skor). Warna ikut maksud sedia ada. Audit fon dan audit mendalam 8 saiz skrin 0 cacat."
 }

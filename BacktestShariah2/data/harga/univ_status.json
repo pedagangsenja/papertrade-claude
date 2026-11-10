@@ -1,0 +1,6 @@
+{
+  "tarikh": "2026-10-26",
+  "bilangan": 912,
+  "sumber": "skrin Shariah Moomoo (quote_stock_screen), harga >= USD10",
+  "nota": "Isian awal 10 Nov 2026 daripada commit 064e375 (Imbas malam 2026-10-26). Dikemas kini oleh jadual/mingguan.md langkah 2 (manual bulanan). Dibaca oleh koordinator.py --semak (amaran > 35 hari)."
+}
