@@ -13051,3 +13051,17 @@ tarikh,simbol,peristiwa,nama,bursa,etf,biasa
 2026-11-10,TCBI,buang,"Texas Capital Bancshares, Inc. Common Stock",F,0,1
 2026-11-10,TLDR,buang,The Laddered T-Bill ETF,Cboe BZX,1,0
 2026-11-10,ULTI,buang,REX IncomeMax Option Strategy ETF,NASDAQ,1,0
+2026-11-10,BGRD,tambah,BNY Mellon Power Ecosystem ETF,Cboe BZX,1,0
+2026-11-10,EMDI,tambah,Principal Finisterre Emerging Markets Diversified Income ETF,NYSE Arca,1,0
+2026-11-10,LTEQ,tambah,Equity Partners ETF,NYSE,1,0
+2026-11-10,PGRW,tambah,Principal Growth ETF,Cboe BZX,1,0
+2026-11-10,QUIT,tambah,"Achieve Life Sciences, Inc.  - Common Shares",NASDAQ,0,1
+2026-11-10,XGPU,tambah,"Reliance Global Group, Inc. - Common Stock",NASDAQ,0,1
+2026-11-10,ACHV,buang,"Achieve Life Sciences, Inc.  - Common Shares",NASDAQ,0,1
+2026-11-10,EZRA,buang,"Reliance Global Group, Inc. - Common Stock",NASDAQ,0,1
+2026-11-10,HAUS,buang,Residential REIT ETF,Cboe BZX,1,0
+2026-11-10,PSQH,buang,"PSQ Holdings, Inc. Class A Common Stock",NYSE,0,1
+2026-11-10,PSQH.W,buang,"PSQ Holdings, Inc. Warrants, each exercisable for one share of Class A common stock at an exercise price of $11.50 per share",NYSE,0,0
+2026-11-10,REAI,buang,Intelligent Real Estate ETF,NASDAQ,1,0
+2026-11-10,SWAGW,buang,"Stran & Company, Inc. - Warrant",NASDAQ,0,0
+2026-11-10,GCBC,tukar_nama,"Greene Bancorp, Inc. - Common Stock",NASDAQ,0,1
