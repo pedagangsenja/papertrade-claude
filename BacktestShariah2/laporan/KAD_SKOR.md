@@ -1,12 +1,12 @@
 # Kad skor keputusan (satu jawapan)
 
-Dijana 2026-11-09 oleh `standard/kad_skor.py` (Actions `analisis.yml`). Gate: `standard/SPEC_KAD_SKOR.md` (pradaftar 2026-11-06; pindaan 2026-11-07). Rekod analisis sahaja: tiada order, tiada wang sebenar.
+Dijana 2026-11-10 oleh `standard/kad_skor.py` (Actions `analisis.yml`). Gate: `standard/SPEC_KAD_SKOR.md` (pradaftar 2026-11-06; pindaan 2026-11-07). Rekod analisis sahaja: tiada order, tiada wang sebenar.
 
-## Tiada kaedah lulus. Kematangan paling awal ~2026-11-12 dan ≥ 10 hari beli dalam setiap rejim (kini ON 1, OFF 15; bergantung pasaran); portfolio lawan SPUS pada MDD -10% ~2027-04-09
+## Tiada kaedah lulus. Kematangan paling awal ~2026-11-12 dan ≥ 10 hari beli dalam setiap rejim (kini ON 1, OFF 16; bergantung pasaran); portfolio lawan SPUS pada MDD -10% ~2027-04-09
 
-**Tindakan hari ini:** JANGAN guna wang sebenar: tiada kaedah TERBUKTI. Papertrade C dan Lejar terus mengumpul data. Rejim OFF sejak 2026-10-16 (16 sesi): saham momentum paling terjejas dalam fasa ini; data hari ini dikira dalam baldi OFF.
+**Tindakan hari ini:** JANGAN guna wang sebenar: tiada kaedah TERBUKTI. Papertrade C dan Lejar terus mengumpul data. Rejim OFF sejak 2026-10-16 (17 sesi): saham momentum paling terjejas dalam fasa ini; data hari ini dikira dalam baldi OFF.
 
-Penyebut: **28,296 posisi LANGSUNG** Lejar Penuh lorong 1 merentas 223 kaedah, 16 hari beli (rejim ON 1, OFF 15); 35,700 posisi isian bina semula dan 14 posisi dengan data harga dikuarantin tidak dikira (Mxx sejak isyarat 2026-10-15, Nxx/GB sejak 2026-11-03). Harga pada tutup 2026-11-06.
+Penyebut: **30,522 posisi LANGSUNG** Lejar Penuh lorong 1 merentas 223 kaedah, 17 hari beli (rejim ON 1, OFF 16); 35,700 posisi isian bina semula dan 14 posisi dengan data harga dikuarantin tidak dikira (Mxx sejak isyarat 2026-10-15, Nxx/GB sejak 2026-11-03). Harga pada tutup 2026-11-09.
 
 | Status | Bilangan |
 |---|---|
@@ -18,33 +18,33 @@ Penyebut: **28,296 posisi LANGSUNG** Lejar Penuh lorong 1 merentas 223 kaedah, 1
 
 ## Bila keputusan boleh dibuat
 
-- **G1 kematangan:** ≥ 20 hari beli langsung (ada 16) **dan** ≥ 10 dalam rejim ON (ada 1) **dan** ≥ 10 dalam rejim OFF (ada 15). Rejim ON = QQQ > SMA50 dan SMA10 > SMA20. Paling awal ~2026-11-12 jika rejim ON muncul cukup lama; jika pasaran kekal OFF, G1 menunggu.
-- **G6 portfolio:** 126 sesi lorong T4 (paling lama 16); ~2027-04-09. Dibanding dengan SPUS **pada MDD -10%** (toleransi anda), bukan pada MDD SPUS penuh.
+- **G1 kematangan:** ≥ 20 hari beli langsung (ada 17) **dan** ≥ 10 dalam rejim ON (ada 1) **dan** ≥ 10 dalam rejim OFF (ada 16). Rejim ON = QQQ > SMA50 dan SMA10 > SMA20. Paling awal ~2026-11-12 jika rejim ON muncul cukup lama; jika pasaran kekal OFF, G1 menunggu.
+- **G6 portfolio:** 126 sesi lorong T4 (paling lama 17); ~2027-04-09. Dibanding dengan SPUS **pada MDD -10%** (toleransi anda), bukan pada MDD SPUS penuh.
 
 ## 20 kaedah teratas ikut lift masuk (calon, BUKAN pangkat sehingga status berubah)
 
 | Kaedah | Status | Posisi / tutup | Hari beli (ON/OFF) | Jangkaan % | Jika henti tergelincir % | Buku harian % [95%] | Lift masuk | Menang % | Payoff | tanpa5 | Hari-0 | T4 sesi | T4 pada MDD -10% vs SPUS |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `M01` Bollinger Band + RSI | BELUM CUKUP | 101 / 12 | 16 (1/15) | -2.45 | -2.45 | -0.502 [-1.619, +0.616] | – | 38 | 0.82 | -3.66 | 0 | 16 | -6.67 vs -5.77 |
-| `M05` MACD Divergence + Pengesahan | BELUM CUKUP | 38 / 12 | 13 (1/12) | -1.57 | -1.86 | -0.128 [-0.483, +0.227] | – | 29 | 1.51 | -3.05 | 0 | 16 | +1.29 vs -5.77 |
-| `M07` Qullamaggie Breakout | BELUM CUKUP | 1 / 1 | 1 (1/0) | -2.53 | -3.60 | -0.143 [-1.539, +1.253] | – | 0 | – | – | 0 | 16 | -0.25 vs -5.77 |
-| `M100` Bulkowski Segi Empat & Segi  | BELUM CUKUP | 58 / 37 | 14 (1/13) | -0.36 | -0.58 | +0.039 [-0.517, +0.595] | – | 40 | 1.36 | -1.03 | 0 | 16 | +2.95 vs -5.77 |
-| `M104` High Tight Flag / Power Play | BELUM CUKUP | 1 / 0 | 1 (0/1) | +10.02 | +10.02 | – [–, –] | – | 100 | – | – | 0 | 1 | +1.02 vs +0.52 |
-| `M106` DMI Wilder | BELUM CUKUP | 99 / 49 | 14 (1/13) | -0.69 | -0.73 | -0.018 [-0.403, +0.368] | – | 42 | 1.05 | -1.68 | 0 | 16 | -3.49 vs -5.77 |
-| `M107` Golden Cross SMA50/200 | BELUM CUKUP | 28 / 7 | 14 (1/13) | -1.35 | -1.74 | -0.045 [-0.657, +0.567] | – | 46 | 0.77 | -2.82 | 0 | 16 | -0.40 vs -5.77 |
-| `M121` High 2 bull flag (Brooks) | BELUM CUKUP | 5 / 3 | 3 (0/3) | -11.65 | -11.84 | -1.234 [-3.504, +1.035] | – | 0 | – | -14.03 | 0 | 12 | -5.79 vs -4.88 |
-| `M126` Hidden Smash Day (beli, Larr | BELUM CUKUP | 18 / 11 | 10 (0/10) | -4.64 | -4.92 | -0.405 [-1.214, +0.405] | – | 17 | 0.66 | -5.46 | 0 | 15 | -5.36 vs -5.08 |
-| `M129` Wick Play | BELUM CUKUP | 23 / 9 | 9 (1/8) | -1.19 | -1.74 | +0.051 [-0.709, +0.810] | – | 39 | 1.27 | -3.87 | 0 | 16 | +3.56 vs -5.77 |
-| `M130` 多方炮 (dua lilin hijau mengapi | BELUM CUKUP | 9 / 3 | 6 (0/6) | -3.73 | -3.83 | -0.088 [-0.951, +0.775] | – | 44 | 0.53 | -5.46 | 0 | 14 | -3.15 vs -4.75 |
-| `M135` 3rd Watch | BELUM CUKUP | 12 / 2 | 7 (1/6) | -6.23 | -6.40 | -0.421 [-1.369, +0.527] | – | 8 | 0.26 | -6.96 | 0 | 16 | -7.22 vs -5.77 |
-| `M138` 直升机空中加油 (Helikopter isi miny | BELUM CUKUP | 2 / 0 | 2 (0/2) | -2.53 | -2.53 | -0.269 [-0.837, +0.299] | – | 0 | – | -4.89 | 0 | 9 | -0.47 vs -5.45 |
-| `M139` 均线首次粘合向上发散 (MA berhimpun kal | BELUM CUKUP | 65 / 16 | 16 (1/15) | -1.70 | -1.91 | -0.013 [-0.597, +0.572] | – | 49 | 0.71 | -3.22 | 0 | 16 | +2.96 vs -5.77 |
-| `M141` First Thrust (Landry) | BELUM CUKUP | 20 / 8 | 7 (1/6) | -3.61 | -4.32 | -0.399 [-1.035, +0.236] | – | 20 | 0.54 | -4.12 | 0 | 16 | -3.94 vs -5.77 |
-| `M142` Pecahan volum dari dasar (底部 | BELUM CUKUP | 37 / 4 | 12 (0/12) | +0.04 | -0.10 | -0.000 [-0.537, +0.537] | – | 46 | 1.20 | -0.93 | 0 | 14 | +1.26 vs -4.75 |
-| `M143` 장대양봉 이후 눌림목 / 5일선 매매 (Undur  | BELUM CUKUP | 11 / 1 | 8 (0/8) | -1.23 | -1.23 | -0.525 [-1.720, +0.669] | – | 64 | 0.31 | -1.81 | 0 | 15 | -1.16 vs -5.08 |
-| `M144` Screw Bar | BELUM CUKUP | 8 / 6 | 5 (0/5) | -2.88 | -2.88 | -1.546 [-4.387, +1.295] | – | 25 | 0.96 | -4.29 | 0 | 14 | -2.25 vs -4.75 |
-| `M145` Yum-Yum Continuation | BELUM CUKUP | 276 / 53 | 16 (1/15) | -0.87 | -1.06 | +0.005 [-0.474, +0.483] | – | 44 | 1.00 | -1.95 | 0 | 16 | +2.21 vs -5.77 |
-| `M147` Improved Three-Bar Pullback | BELUM CUKUP | 95 / 27 | 14 (1/13) | -3.15 | -3.56 | -0.261 [-0.634, +0.111] | – | 39 | 0.71 | -4.41 | 0 | 16 | +1.83 vs -5.77 |
+| `M01` Bollinger Band + RSI | BELUM CUKUP | 108 / 17 | 17 (1/16) | +1.66 | +1.66 | -0.200 [-1.207, +0.808] | – | 62 | 0.97 | +0.63 | 0 | 17 | -3.38 vs -4.21 |
+| `M05` MACD Divergence + Pengesahan | BELUM CUKUP | 38 / 12 | 13 (1/12) | +0.59 | +0.30 | +0.061 [-0.352, +0.474] | – | 50 | 1.17 | -1.11 | 0 | 17 | +4.61 vs -4.21 |
+| `M07` Qullamaggie Breakout | BELUM CUKUP | 1 / 1 | 1 (1/0) | -2.53 | -3.60 | -0.143 [-1.539, +1.253] | – | 0 | – | – | 0 | 17 | -0.25 vs -4.21 |
+| `M100` Bulkowski Segi Empat & Segi  | BELUM CUKUP | 58 / 39 | 14 (1/13) | +0.36 | +0.14 | +0.156 [-0.317, +0.628] | – | 53 | 0.97 | -0.27 | 0 | 17 | +4.05 vs -4.21 |
+| `M104` High Tight Flag / Power Play | BELUM CUKUP | 1 / 0 | 1 (0/1) | +14.81 | +14.81 | +7.234 [-3.372, +17.839] | – | 100 | – | – | 0 | 2 | +1.50 vs +2.18 |
+| `M106` DMI Wilder | BELUM CUKUP | 100 / 53 | 15 (1/14) | +0.61 | +0.58 | +0.128 [-0.183, +0.438] | – | 47 | 1.37 | -0.49 | 0 | 17 | -2.24 vs -4.21 |
+| `M107` Golden Cross SMA50/200 | BELUM CUKUP | 28 / 7 | 14 (1/13) | -0.10 | -0.49 | +0.054 [-0.472, +0.579] | – | 54 | 0.84 | -1.52 | 0 | 17 | -0.17 vs -4.21 |
+| `M121` High 2 bull flag (Brooks) | BELUM CUKUP | 5 / 3 | 3 (0/3) | -9.95 | -10.14 | -0.804 [-2.486, +0.878] | – | 40 | 0.08 | -13.07 | 0 | 13 | -4.94 vs -3.30 |
+| `M126` Hidden Smash Day (beli, Larr | BELUM CUKUP | 18 / 11 | 10 (0/10) | -3.79 | -4.07 | -0.244 [-0.922, +0.435] | – | 22 | 0.80 | -4.62 | 0 | 16 | -4.54 vs -3.52 |
+| `M129` Wick Play | BELUM CUKUP | 23 / 9 | 9 (1/8) | +0.50 | -0.04 | +0.200 [-0.430, +0.830] | – | 43 | 1.40 | -2.41 | 0 | 17 | +5.96 vs -4.21 |
+| `M130` 多方炮 (dua lilin hijau mengapi | BELUM CUKUP | 9 / 3 | 6 (0/6) | -0.23 | -0.33 | +0.255 [-0.526, +1.035] | – | 67 | 0.48 | -2.33 | 0 | 15 | +0.03 vs -3.17 |
+| `M135` 3rd Watch | BELUM CUKUP | 12 / 3 | 7 (1/6) | -5.04 | -5.22 | -0.309 [-1.095, +0.477] | – | 25 | 0.33 | -5.83 | 0 | 17 | -5.79 vs -4.21 |
+| `M138` 直升机空中加油 (Helikopter isi miny | BELUM CUKUP | 2 / 0 | 2 (0/2) | -0.86 | -0.86 | -0.071 [-0.392, +0.251] | – | 50 | 0.13 | -1.98 | 0 | 10 | -0.13 vs -3.88 |
+| `M139` 均线首次粘合向上发散 (MA berhimpun kal | BELUM CUKUP | 69 / 17 | 17 (1/16) | +0.16 | -0.05 | +0.119 [-0.364, +0.603] | – | 51 | 1.00 | -1.42 | 0 | 17 | +5.56 vs -4.21 |
+| `M141` First Thrust (Landry) | BELUM CUKUP | 20 / 8 | 7 (1/6) | -1.99 | -2.71 | -0.217 [-0.721, +0.287] | – | 40 | 0.70 | -2.76 | 0 | 17 | -1.90 vs -4.21 |
+| `M142` Pecahan volum dari dasar (底部 | BELUM CUKUP | 40 / 5 | 13 (0/13) | +3.22 | +3.09 | +0.234 [-0.322, +0.789] | – | 82 | 0.74 | +2.06 | 0 | 15 | +3.80 vs -3.17 |
+| `M143` 장대양봉 이후 눌림목 / 5일선 매매 (Undur  | BELUM CUKUP | 13 / 1 | 9 (0/9) | +0.67 | +0.67 | -0.376 [-1.548, +0.796] | – | 69 | 0.58 | +0.08 | 0 | 16 | +0.74 vs -3.52 |
+| `M144` Screw Bar | BELUM CUKUP | 8 / 6 | 5 (0/5) | +0.11 | +0.11 | +0.119 [-3.150, +3.388] | – | 38 | 1.71 | -1.80 | 0 | 15 | +0.10 vs -3.17 |
+| `M145` Yum-Yum Continuation | BELUM CUKUP | 280 / 54 | 17 (1/16) | +0.91 | +0.73 | +0.131 [-0.235, +0.496] | – | 55 | 1.01 | -0.36 | 0 | 17 | +4.51 vs -4.21 |
+| `M146` 3-Bar Momentum Pattern | BELUM CUKUP | 76 / 28 | 16 (1/15) | +2.18 | +1.83 | +0.413 [+0.073, +0.754] | – | 62 | 1.23 | +1.20 | 4 | 17 | +6.45 vs -4.21 |
 
 ## Cara membaca
 
