@@ -53,6 +53,7 @@ Peraturan tetap: laporan lain (PENGANALISIS, KAEDAH_TERBAIK, RINGKASAN portfolio
 - Alam kajian A02 tiada saham delist (bias survivorship); setiap CAGR kajian condong ke atas.
 - **Had pegang 10 sesi** atas gabungan terbaik (`GB02_atau3`) terburuk pada setiap slot: kos pusingan 14 mata/tahun, 8 slot CAGR +2.0% MDD -60% (`REVERSE/PEGANG_SLOT.md`). Sasaran "+5% setiap dagangan dalam 10 sesi" tidak disokong data (`kajian/FABLE_PENILAIAN.md` §3).
 - **Satelit kaedah 15% atas teras indeks 35% + tunai** (kajian tunggal 9 Nov 2026, `REVERSE/SATELIT.md`): kalah indeks 50% dan satelit RAWAK; MDD -13.7%. Satelit kekal 0% sehingga TERBUKTI. **Keputusan pengguna 9 Nov 2026: tiada ETF pasif** — wang sebenar kekal tunai sehingga satu kaedah saham TERBUKTI; SPUS hanya kayu ukur (`FABLE_PENILAIAN.md` §9, §12).
+- **Rejim QQQ dan industri sebelum membeli** (`kajian/KAJIAN_REJIM_INDUSTRI.md`, 10 Nov 2026): rejim ialah brek risiko (memotong MDD), bukan peramal pulangan; membeli industri teratas hampir syiling dan bergantung rejim; kes semikonduktor 2026 — isyarat industri yang sama menyala di puncak Jun, keluar yang menyelamatkan.
 - Pangkat backtest tidak bertahan pada data langsung (Spearman jangkaan −0.23); RS tinggi dan pemimpin rugi paling teruk dalam rejim OFF; sektor/industri berguna sebagai **kawalan risiko** (had 1 saham setiap industri), bukan skor pemilihan.
 
 ## Peraturan

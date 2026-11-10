@@ -1,8 +1,8 @@
 # Skor Kaedah 0–100 (pangkat maklumat, BUKAN keputusan)
 
-> **Status keputusan (kad skor, harga 2026-11-06):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
+> **Status keputusan (kad skor, harga 2026-11-09):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
-Dijana 2026-11-09 oleh `standard/skor_kaedah.py` (Actions `analisis.yml`, selepas kad skor). Harga pada tutup 2026-11-06; 223 kaedah; 16 hari beli langsung (rejim ON 1, OFF 15). Pradaftar 2026-11-09: `standard/SPEC_SKOR_KAEDAH.md` (berat dan sauh dikunci `ujian/test_skor_kaedah.py::TestKunci`). Rekod analisis sahaja: tiada order, tiada wang sebenar.
+Dijana 2026-11-10 oleh `standard/skor_kaedah.py` (Actions `analisis.yml`, selepas kad skor). Harga pada tutup 2026-11-09; 223 kaedah; 17 hari beli langsung (rejim ON 1, OFF 16). Pradaftar 2026-11-09: `standard/SPEC_SKOR_KAEDAH.md` (berat dan sauh dikunci `ujian/test_skor_kaedah.py::TestKunci`). Rekod analisis sahaja: tiada order, tiada wang sebenar.
 
 ## Cara membaca
 
@@ -10,236 +10,236 @@ Dijana 2026-11-09 oleh `standard/skor_kaedah.py` (Actions `analisis.yml`, selepa
 - **Siling** ikut kad skor: NEGATIF ≤ 20, GANTUNG/BERSARA ≤ 30, GAGAL ≤ 40. Tanda ⌈ = siling terpakai.
 - **Satu-satunya status yang membenarkan wang sebenar ialah TERBUKTI dalam `laporan/KAD_SKOR.md`.** Skor tinggi dengan status BELUM CUKUP bermaksud "paling menjanjikan setakat ini", bukan "selamat".
 - Deflasi ujian berganda (López de Prado): sauh t Bukti C1 = maks(2.0, E[maks 223 normal]) = 2.80.
-- **Semakan kebolehramalan:** belum ada snapshot skor ≥ 7 hari lalu (sejarah bermula 2026-11-06); skor dipercayai sebagai pangkat hanya selepas 8–12 minggu semakan positif.
+- **Semakan kebolehramalan:** belum ada snapshot skor ≥ 7 hari lalu (sejarah bermula 2026-11-09); skor dipercayai sebagai pangkat hanya selepas 8–12 minggu semakan positif.
 - Metrik T4 (A2, B1, B2, D1) dikira atas lorong T4 L1 **dipotong pada sesi LANGSUNG pertama** kaedah itu (Mxx 2026-10-16, Nxx/GB 2026-11-03) dan diasas semula; sesi isian bina semula tidak dikira (pindaan 9 Nov 2026 (a)). Lajur "T4 sesi/pul" di bawah ialah potongan itu, bukan lorong penuh `T4_KAEDAH.md`.
 
 ## Semua kaedah, susun ikut Skor
 
 | # | Kaedah | Skor | Untung | Tahan | Bukti | Konsisten | Status kad | Hari beli | Posisi/tutup | Jangkaan % | T4 sesi | T4 pul % | T4 pul/|MDD| | Ulcer | t buku | Lift | WFE |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | `M133` Bull Hook (Crabel) | **61.1** | 94 | 89 | 58 | 85 | BELUM CUKUP | 11 | 38/19 | +1.69 | 16 | +5.43 | +1.31 | 1.6 | +1.39 | – | 15.39 |
-| 2 | `M33` Supertrend + SMA10 | **60.5** | 79 | 78 | 59 | 85 | BELUM CUKUP | 16 | 195/35 | +0.93 | 16 | +7.90 | +2.96 | 1.4 | +1.15 | – | 4.53 |
-| 3 | `M146` 3-Bar Momentum Pattern | **59.2** | 73 | 73 | 60 | 85 | BELUM CUKUP | 16 | 76/27 | +0.70 | 16 | +3.28 | +0.53 | 1.9 | +1.38 | – | 2.92 |
-| 4 | `M118` Expansion Pivot (Cooper) | **57.1** | 62 | 79 | 52 | 85 | BELUM CUKUP | 16 | 69/19 | -0.19 | 16 | +8.71 | +3.22 | 0.9 | +0.59 | – | 2.00 |
-| 5 | `M25` VWAP Wave (proksi harian) | **56.5** | 64 | 69 | 57 | 80 | BELUM CUKUP | 15 | 138/81 | -0.34 | 16 | +4.24 | +0.73 | 2.9 | +0.54 | – | 3.77 |
-| 6 | `M151` Outside Bar Failure | **56.4** | 64 | 80 | 51 | 67 | BELUM CUKUP | 15 | 81/44 | -0.43 | 16 | +6.36 | +5.23 | 0.5 | +0.16 | – | 0.41 |
-| 7 | `M124` 'Last' Stochastic Technique (C | **54.8** | 59 | 66 | 55 | 69 | BELUM CUKUP | 16 | 328/156 | -0.42 | 16 | +3.35 | +0.73 | 2.5 | +0.21 | – | 0.48 |
-| 8 | `M100` Bulkowski Segi Empat & Segi Ti | **54.5** | 60 | 66 | 50 | 81 | BELUM CUKUP | 14 | 58/37 | -0.36 | 16 | +2.95 | +0.67 | 2.2 | +0.15 | – | 0.87 |
-| 9 | `M105` Supertrend tulen | **53.9** | 59 | 53 | 57 | 85 | BELUM CUKUP | 16 | 307/85 | +0.01 | 16 | +0.59 | +0.08 | 2.5 | +0.50 | – | 1.40 |
-| 10 | `M111` Sistem Volatiliti Wilder | **53.7** | 58 | 54 | 55 | 85 | BELUM CUKUP | 16 | 223/70 | -0.30 | 16 | +2.73 | +0.41 | 3.5 | +0.42 | – | 1.08 |
-| 11 | `M74` Lulus Baharu Trend Template Mi | **53.3** | 57 | 64 | 51 | 58 | BELUM CUKUP | 16 | 76/48 | -0.68 | 16 | +1.83 | +0.44 | 2.2 | +0.05 | – | 0.11 |
-| 12 | `M13` Garis Trend Action/Safety Line | **53.2** | 55 | 70 | 49 | 55 | BELUM CUKUP | 16 | 650/399 | -0.95 | 16 | +5.94 | +1.67 | 1.3 | -0.52 | – | -1.07 |
-| 13 | `M91` Stochastic Pop (Bernstein/Stec | **52.9** | 54 | 64 | 50 | 85 | BELUM CUKUP | 11 | 33/10 | -0.93 | 16 | +5.31 | +0.68 | 2.3 | +0.68 | – | 3.16 |
-| 14 | `M160` Measured Move Up | **52.4** | 47 | 58 | 58 | 85 | BELUM CUKUP | 14 | 81/39 | -1.31 | 16 | +0.85 | +0.18 | 2.2 | +1.01 | – | 9.08 |
-| 15 | `M15` Break & Retest + Henti ATR | **52.3** | 66 | 49 | 56 | 42 | BELUM CUKUP | 16 | 254/138 | +0.59 | 16 | -3.47 | -0.47 | 2.7 | +0.32 | – | 0.69 |
-| 16 | `M145` Yum-Yum Continuation | **52.3** | 49 | 67 | 51 | 56 | BELUM CUKUP | 16 | 276/53 | -0.87 | 16 | +2.21 | +1.01 | 1.4 | +0.02 | – | 0.02 |
-| 17 | `M89` Chande 65sma-3cc | **52.2** | 48 | 67 | 51 | 55 | BELUM CUKUP | 16 | 148/77 | -1.24 | 16 | +3.50 | +0.73 | 1.8 | -0.09 | – | -0.30 |
-| 18 | `M10` EMA3 + CCI + MACD | **52.0** | 48 | 67 | 50 | 55 | BELUM CUKUP | 16 | 99/46 | -1.19 | 16 | +7.11 | +1.35 | 1.7 | +0.00 | – | 0.01 |
-| 19 | `M142` Pecahan volum dari dasar (底部放量 | **51.7** | 61 | 63 | 40 | 55 | BELUM CUKUP | 12 | 37/4 | +0.04 | 14 | +1.26 | +0.26 | 1.8 | -0.00 | – | -0.00 |
-| 20 | `M158` Doubly Adaptive Profit Targets | **51.6** | 60 | 46 | 59 | 47 | BELUM CUKUP | 16 | 330/111 | +0.12 | 16 | -2.10 | -0.34 | 2.2 | +0.67 | – | 2.02 |
-| 21 | `M93` Bollinger Kaedah II: %b + MFI | **51.5** | 55 | 46 | 54 | 70 | BELUM CUKUP | 16 | 239/69 | -0.17 | 16 | -0.86 | -0.14 | 2.0 | +0.31 | – | 0.52 |
-| 22 | `M21` Marius 3 Persediaan (Pecahan+J | **51.3** | 69 | 60 | 44 | 45 | BELUM CUKUP | 5 | 5/2 | +0.33 | 8 | +0.21 | +0.10 | 1.2 | +1.09 | – | 2.36 |
-| 23 | `M137` Livermore System | **51.2** | 47 | 60 | 51 | 59 | BELUM CUKUP | 16 | 148/52 | -1.40 | 16 | +3.27 | +0.55 | 2.5 | +0.05 | – | 0.13 |
-| 24 | `M129` Wick Play | **51.0** | 48 | 61 | 44 | 77 | BELUM CUKUP | 9 | 23/9 | -1.19 | 16 | +3.56 | +1.26 | 1.0 | +0.14 | – | 0.74 |
-| 25 | `M80` Radge Saluran Purata Bergerak  | **50.9** | 60 | 45 | 56 | 43 | BELUM CUKUP | 16 | 241/46 | +0.29 | 16 | -2.04 | -0.29 | 3.2 | +0.61 | – | 0.93 |
-| 26 | `M48` Cooper 1-2-3-4 | **50.5** | 46 | 53 | 48 | 80 | BELUM CUKUP | 14 | 45/15 | -1.36 | 16 | +4.65 | +0.85 | 2.2 | +0.27 | – | 0.82 |
-| 27 | `M23` Breitstein Kapitulasi + Kesina | **50.5** | 44 | 50 | 54 | 77 | BELUM CUKUP | 16 | 107/65 | -1.22 | 16 | -1.58 | -0.31 | 2.1 | +0.34 | – | 1.62 |
-| 28 | `M104` High Tight Flag / Power Play | **50.4** | 79 | 80 | 27 | 50 | BELUM CUKUP | 1 | 1/0 | +10.02 | 1 | +1.02 | +10.00 | – | – | – | – |
-| 29 | `M30` BB Free Bar + Himpitan 50/2.5 | **50.4** | 52 | 44 | 56 | 56 | BELUM CUKUP | 16 | 212/57 | -0.51 | 16 | +0.10 | +0.01 | 4.6 | +0.54 | – | 1.17 |
-| 30 | `M92` CCI-50 | **50.2** | 50 | 49 | 50 | 55 | BELUM CUKUP | 16 | 458/264 | -0.54 | 16 | -0.98 | -0.17 | 2.1 | -0.29 | – | -0.69 |
-| 31 | `M70` Pecahan Hari Dalam | **50.0** | 59 | 60 | 52 | 15 | BELUM CUKUP | 16 | 352/289 | -0.50 | 16 | +0.50 | +0.10 | 2.4 | -0.14 | – | -0.46 |
-| 32 | `N68X16` Bullish engulfing + EMA21 → ke | **49.9** | 47 | 66 | 38 | 50 | BELUM CUKUP | 3 | 15/5 | -0.58 | 3 | +1.05 | +0.51 | 1.5 | +0.26 | – | – |
-| 33 | `N68X36` Bullish engulfing + EMA21 → ke | **49.8** | 50 | 58 | 38 | 50 | BELUM CUKUP | 3 | 14/3 | -0.42 | 3 | -0.12 | -0.05 | 1.7 | +0.45 | – | – |
-| 34 | `N45X16` Undur EMA21 cerun positif → ke | **49.6** | 37 | 75 | 36 | 50 | BELUM CUKUP | 3 | 61/23 | -1.64 | 3 | +3.61 | +10.00 | 0.0 | -0.52 | – | – |
-| 35 | `M02` MACD + SMA200 | **49.4** | 40 | 65 | 44 | 55 | BELUM CUKUP | 16 | 102/52 | -1.92 | 16 | +7.73 | +1.75 | 1.7 | -0.78 | – | -4.61 |
-| 36 | `M159` Heikin-Ashi Trend | **49.4** | 54 | 58 | 46 | 23 | BELUM CUKUP | 16 | 1396/1102 | -0.67 | 16 | +2.87 | +0.47 | 3.9 | -0.83 | – | -5.38 |
-| 37 | `M07` Qullamaggie Breakout | **49.2** | 29 | 65 | 27 | 15 | BELUM CUKUP | 1 | 1/1 | -2.53 | 16 | -0.25 | -0.21 | 0.6 | -0.22 | – | -1.12 |
-| 38 | `M37` Weinstein Peringkat 2 | **48.8** | 45 | 58 | 20 | 25 | BELUM CUKUP | 2 | 3/0 | -0.78 | 10 | -0.17 | -0.34 | 0.2 | -1.01 | – | -0.76 |
-| 39 | `M27` Price Action 4 Tiang | **48.8** | 42 | 39 | 41 | 15 | BELUM CUKUP | 2 | 547/427 | -1.09 | 16 | -2.75 | -0.53 | 2.8 | -0.66 | – | -2.65 |
-| 40 | `N39X36` NR7 kemudian pecah → keluar se | **48.8** | 21 | 22 | 27 | 50 | BELUM CUKUP | 1 | 16/0 | -5.64 | 2 | -3.62 | -1.00 | 3.2 | – | – | – |
-| 41 | `M39` Radge Pecahan Bollinger 100 ha | **48.7** | 34 | 65 | 47 | 55 | BELUM CUKUP | 16 | 213/44 | -3.29 | 16 | +3.98 | +1.66 | 1.3 | -0.42 | – | -1.25 |
-| 42 | `M51` O'Neil Cawan & Pemegang | **48.7** | 27 | 48 | 32 | 45 | BELUM CUKUP | 2 | 3/0 | -2.03 | 6 | -0.55 | -0.55 | 0.6 | +0.45 | – | 1.93 |
-| 43 | `M05` MACD Divergence + Pengesahan | **48.6** | 41 | 58 | 39 | 55 | BELUM CUKUP | 13 | 38/12 | -1.57 | 16 | +1.29 | +0.38 | 1.4 | -0.77 | – | -1.27 |
-| 44 | `M45` High 52 Minggu (George & Hwang | **48.6** | 25 | 35 | 9 | 15 | BELUM CUKUP | 1 | 2/1 | -7.63 | 5 | -1.50 | -0.83 | 1.1 | -2.31 | – | -5.78 |
-| 45 | `M84` Jarak purata bergerak MAD 21/2 | **48.4** | 17 | 15 | 15 | 15 | BELUM CUKUP | 1 | 58/35 | -4.85 | 5 | -7.85 | -1.00 | 5.3 | -3.06 | – | -7.55 |
-| 46 | `M134` First Kiss After Daylight (Lan | **48.3** | 45 | 41 | 49 | 55 | BELUM CUKUP | 13 | 38/16 | -0.79 | 16 | -2.29 | -0.33 | 2.6 | +0.33 | – | 0.51 |
-| 47 | `M132` Ascending Scallop (Bulkowski) | **48.2** | 34 | 58 | 48 | 55 | BELUM CUKUP | 15 | 88/32 | -2.32 | 16 | +2.20 | +0.59 | 2.1 | -0.11 | – | -1.09 |
-| 48 | `M88` O'Neil Shakeout +3 | **48.2** | 37 | 54 | 45 | 55 | BELUM CUKUP | 13 | 48/27 | -2.55 | 16 | +2.65 | +0.32 | 2.7 | -0.34 | – | -0.82 |
-| 49 | `M96` Momo India: Ranking Sharpe 3/6 | **48.2** | 17 | 12 | 9 | 15 | BELUM CUKUP | 1 | 6/5 | -12.54 | 5 | -7.49 | -1.00 | 4.5 | -3.78 | – | -16.54 |
-| 50 | `M131` Ross Hook (Joe Ross) | **48.0** | 42 | 46 | 53 | 39 | BELUM CUKUP | 16 | 241/102 | -1.12 | 16 | -1.81 | -0.28 | 2.5 | +0.04 | – | 0.12 |
-| 51 | `M138` 直升机空中加油 (Helikopter isi minyak | **48.0** | 28 | 45 | 19 | 15 | BELUM CUKUP | 2 | 2/0 | -2.53 | 9 | -0.47 | -0.72 | 0.2 | -1.09 | – | -2.67 |
-| 52 | `M94` Pecutan Momentum (Chen, Yu & W | **47.9** | 12 | 4 | 3 | 15 | BELUM CUKUP | 1 | 33/0 | -11.42 | 5 | -11.78 | -1.00 | 7.8 | -3.54 | – | -11.60 |
-| 53 | `M139` 均线首次粘合向上发散 (MA berhimpun kali  | **47.7** | 34 | 56 | 46 | 55 | BELUM CUKUP | 16 | 65/16 | -1.70 | 16 | +2.96 | +0.59 | 1.7 | -0.05 | – | -0.19 |
-| 54 | `N45X36` Undur EMA21 cerun positif → ke | **47.7** | 25 | 46 | 26 | 50 | BELUM CUKUP | 3 | 53/7 | -2.18 | 3 | -0.39 | -0.19 | 1.6 | -1.29 | – | – |
-| 55 | `N53X36` Supertrend + ADX>25 → keluar s | **47.6** | 22 | 43 | 30 | 50 | BELUM CUKUP | 3 | 65/8 | -2.14 | 3 | -1.68 | -0.42 | 3.1 | -0.88 | – | – |
-| 56 | `M78` Alvarez Pecahan Mingguan DTAYS | **47.6** | 18 | 25 | 40 | 15 | BELUM CUKUP | 2 | 73/38 | -2.41 | 15 | -7.87 | -0.76 | 5.5 | -0.14 | – | -0.65 |
-| 57 | `N66X36` 52w tinggi + pengesahan 1% → k | **47.6** | 14 | 28 | 28 | 50 | BELUM CUKUP | 2 | 27/0 | -2.81 | 2 | -4.15 | -1.00 | 4.0 | – | – | – |
-| 58 | `N53X16` Supertrend + ADX>25 → keluar b | **47.5** | 23 | 46 | 26 | 50 | BELUM CUKUP | 3 | 58/1 | -1.96 | 3 | -1.30 | -0.35 | 3.0 | -0.69 | – | – |
-| 59 | `N36X16` Pocket pivot → keluar bila sup | **47.5** | 21 | 67 | 17 | 50 | BELUM CUKUP | 3 | 98/31 | -3.08 | 3 | +0.74 | +1.07 | 0.5 | -6.14 | – | – |
-| 60 | `M117` Landry Pullback (high 2 bulan) | **47.4** | 53 | 36 | 50 | 28 | BELUM CUKUP | 14 | 81/17 | -0.00 | 16 | -5.90 | -0.75 | 3.0 | +0.38 | – | 0.45 |
-| 61 | `N22X36` BB pecah atas + RSI → keluar s | **47.4** | 20 | 38 | 35 | 50 | BELUM CUKUP | 3 | 62/5 | -2.74 | 3 | -2.12 | -0.56 | 2.9 | -0.10 | – | – |
-| 62 | `N53X17` Supertrend + ADX>25 → keluar b | **47.4** | 23 | 44 | 23 | 50 | BELUM CUKUP | 3 | 54/0 | -1.99 | 3 | -1.55 | -0.41 | 3.1 | -0.70 | – | – |
-| 63 | `N22X16` BB pecah atas + RSI → keluar b | **47.4** | 19 | 38 | 35 | 50 | BELUM CUKUP | 3 | 59/14 | -2.59 | 3 | -2.40 | -0.67 | 2.7 | -0.47 | – | – |
-| 64 | `M148` Natural Number Method | **47.2** | 33 | 58 | 42 | 55 | BELUM CUKUP | 16 | 176/114 | -2.22 | 16 | +1.86 | +0.37 | 1.7 | -1.24 | – | -5.56 |
-| 65 | `M41` FW Penyatuan Mingguan | **47.2** | 23 | 26 | 39 | 37 | BELUM CUKUP | 3 | 33/6 | -1.73 | 15 | -5.79 | -0.70 | 3.6 | +0.32 | – | 0.74 |
-| 66 | `N41X16` CMF20>0 + tutup>EMA20 → keluar | **47.2** | 23 | 43 | 20 | 50 | BELUM CUKUP | 3 | 112/57 | -2.68 | 3 | -0.74 | -0.35 | 1.6 | -5.44 | – | – |
-| 67 | `N07X16` Tiga MA tersusun → keluar bila | **47.1** | 20 | 38 | 24 | 50 | BELUM CUKUP | 3 | 56/5 | -2.19 | 3 | -2.58 | -0.64 | 2.6 | -1.37 | – | – |
-| 68 | `N50X17` Mampat + pecah volum 1.5x → ke | **47.1** | 18 | 23 | 8 | 50 | BELUM CUKUP | 2 | 11/1 | -6.09 | 3 | -6.14 | -0.67 | 6.5 | -2.59 | – | – |
-| 69 | `N40X36` OBV tinggi baharu + MA50 → kel | **47.0** | 21 | 34 | 22 | 50 | BELUM CUKUP | 3 | 23/3 | -2.67 | 3 | -3.76 | -0.78 | 3.7 | -1.46 | – | – |
-| 70 | `N50X14` Mampat + pecah volum 1.5x → ke | **47.0** | 18 | 23 | 7 | 50 | BELUM CUKUP | 2 | 11/0 | -5.94 | 3 | -5.95 | -0.65 | 6.4 | -2.47 | – | – |
-| 71 | `M115` Bow Tie (Landry) | **46.9** | 31 | 42 | 46 | 50 | BELUM CUKUP | 8 | 31/18 | -2.29 | 16 | -4.22 | -0.54 | 2.7 | +0.13 | – | 0.98 |
-| 72 | `N40X16` OBV tinggi baharu + MA50 → kel | **46.9** | 22 | 33 | 20 | 50 | BELUM CUKUP | 3 | 30/13 | -2.56 | 3 | -4.26 | -0.80 | 3.9 | -2.14 | – | – |
-| 73 | `N75X17` RSI14 < 40 tanpa penapis → kel | **46.9** | 24 | 34 | 18 | 50 | BELUM CUKUP | 3 | 193/32 | -1.56 | 3 | -3.99 | -1.00 | 3.0 | -4.61 | – | – |
-| 74 | `N07X36` Tiga MA tersusun → keluar sele | **46.9** | 20 | 36 | 21 | 50 | BELUM CUKUP | 3 | 58/2 | -2.36 | 3 | -2.54 | -0.64 | 2.5 | -1.45 | – | – |
-| 75 | `N57X16` ADX bangkit daripada <20 → kel | **46.9** | 20 | 39 | 19 | 50 | BELUM CUKUP | 3 | 37/2 | -3.66 | 3 | -1.01 | -0.30 | 2.5 | -1.70 | – | – |
-| 76 | `N08X16` tutup>EMA20 tidak terlalu jauh | **46.7** | 19 | 32 | 21 | 50 | BELUM CUKUP | 3 | 161/86 | -2.47 | 3 | -2.50 | -0.80 | 2.9 | -5.76 | – | – |
-| 77 | `N57X36` ADX bangkit daripada <20 → kel | **46.7** | 20 | 39 | 15 | 50 | BELUM CUKUP | 3 | 39/0 | -3.64 | 3 | -1.01 | -0.30 | 2.5 | -1.65 | – | – |
-| 78 | `N76X16` Tutup > MA50 (penapis trend tu | **46.7** | 19 | 34 | 19 | 50 | BELUM CUKUP | 3 | 103/47 | -2.98 | 3 | -2.19 | -0.63 | 2.6 | -5.12 | – | – |
-| 79 | `N51X16` BB squeeze + Supertrend → kelu | **46.7** | 17 | 37 | 18 | 50 | BELUM CUKUP | 3 | 4/1 | -3.94 | 3 | -1.52 | -0.59 | 1.9 | -1.55 | – | – |
-| 80 | `M38` Darvas Kotak | **46.7** | 16 | 29 | 32 | 35 | BELUM CUKUP | 3 | 15/1 | -6.14 | 15 | -4.29 | -0.43 | 3.3 | -0.02 | – | -0.13 |
-| 81 | `N08X36` tutup>EMA20 tidak terlalu jauh | **46.7** | 18 | 33 | 20 | 50 | BELUM CUKUP | 3 | 141/60 | -2.82 | 3 | -3.27 | -0.60 | 4.1 | -6.45 | – | – |
-| 82 | `N41X36` CMF20>0 + tutup>EMA20 → keluar | **46.7** | 20 | 31 | 18 | 50 | BELUM CUKUP | 3 | 94/42 | -3.11 | 3 | -3.10 | -0.63 | 3.6 | -4.86 | – | – |
-| 83 | `N47X36` NR7 + EMA9>EMA21 → keluar sele | **46.7** | 10 | 23 | 8 | 50 | BELUM CUKUP | 2 | 21/2 | -6.32 | 3 | -6.92 | -1.00 | 5.4 | -4.02 | – | – |
-| 84 | `M46` Jurang Naik Boleh Beli (Buyabl | **46.6** | 33 | 52 | 43 | 30 | BELUM CUKUP | 10 | 33/16 | -1.73 | 16 | -1.08 | -0.22 | 1.7 | -0.30 | – | -0.51 |
-| 85 | `M64` O'Neil Tiga Minggu Ketat | **46.6** | 25 | 25 | 27 | 15 | BELUM CUKUP | 3 | 3/1 | -10.28 | 16 | -3.03 | -0.80 | 1.8 | -0.78 | – | -11.82 |
-| 86 | `N64X17` Episodic pivot → keluar bila a | **46.6** | 22 | 38 | 12 | 50 | BELUM CUKUP | 3 | 36/5 | -1.89 | 3 | -3.30 | -0.82 | 3.0 | -3.62 | – | – |
-| 87 | `N124X15` Episodic pivot gap 8-10% → eko | **46.5** | 22 | 35 | 11 | 50 | BELUM CUKUP | 3 | 28/0 | -2.01 | 3 | -4.32 | -0.65 | 4.6 | -2.13 | – | – |
-| 88 | `N124X36` Episodic pivot gap 8-10% → kel | **46.5** | 22 | 31 | 12 | 50 | BELUM CUKUP | 3 | 28/5 | -2.19 | 3 | -4.94 | -1.00 | 3.9 | -2.69 | – | – |
-| 89 | `N25X36` Supertrend + EMA + ADX>23 → ke | **46.5** | 16 | 34 | 18 | 50 | BELUM CUKUP | 3 | 60/8 | -2.57 | 3 | -3.79 | -0.85 | 3.6 | -2.25 | – | – |
-| 90 | `N51X36` BB squeeze + Supertrend → kelu | **46.5** | 17 | 35 | 15 | 50 | BELUM CUKUP | 3 | 4/0 | -4.20 | 3 | -1.61 | -0.63 | 1.9 | -1.65 | – | – |
-| 91 | `N28X16` ADX>25 + DI+ > DI- → keluar bi | **46.4** | 18 | 29 | 18 | 50 | BELUM CUKUP | 3 | 118/35 | -1.84 | 3 | -5.06 | -0.81 | 4.9 | -5.28 | – | – |
-| 92 | `N64X16` Episodic pivot → keluar bila s | **46.4** | 22 | 39 | 9 | 50 | BELUM CUKUP | 3 | 36/2 | -2.00 | 3 | -3.10 | -0.77 | 2.9 | -3.87 | – | – |
-| 93 | `N22X14` BB pecah atas + RSI → keluar b | **46.4** | 17 | 29 | 17 | 50 | BELUM CUKUP | 3 | 64/0 | -3.08 | 3 | -3.82 | -0.84 | 3.5 | -1.48 | – | – |
-| 94 | `N74X16` MACD atas garis isyarat (keada | **46.4** | 17 | 25 | 21 | 50 | BELUM CUKUP | 3 | 170/80 | -1.66 | 3 | -6.88 | -0.94 | 6.3 | -2.92 | – | – |
-| 95 | `N64X36` Episodic pivot → keluar selepa | **46.4** | 22 | 36 | 9 | 50 | BELUM CUKUP | 3 | 36/2 | -2.17 | 3 | -3.59 | -0.90 | 3.1 | -4.29 | – | – |
-| 96 | `N36X36` Pocket pivot → keluar selepas  | **46.4** | 17 | 30 | 16 | 50 | BELUM CUKUP | 3 | 98/19 | -3.37 | 3 | -2.73 | -0.52 | 3.6 | -6.20 | – | – |
-| 97 | `N27X16` Ichimoku atas awan → keluar bi | **46.3** | 16 | 33 | 15 | 50 | BELUM CUKUP | 3 | 67/15 | -3.30 | 3 | -2.46 | -0.84 | 2.3 | -7.89 | – | – |
-| 98 | `N80X36` Tinggi sepanjang masa → keluar | **46.3** | 22 | 32 | 10 | 50 | BELUM CUKUP | 3 | 23/0 | -1.84 | 3 | -3.17 | -0.92 | 2.4 | -2.23 | – | – |
-| 99 | `N25X16` Supertrend + EMA + ADX>23 → ke | **46.3** | 16 | 35 | 13 | 50 | BELUM CUKUP | 3 | 57/1 | -2.52 | 3 | -3.75 | -0.78 | 3.8 | -2.19 | – | – |
-| 100 | `M153` Range Leader | **46.2** | 49 | 40 | 52 | 15 | BELUM CUKUP | 16 | 1040/855 | -0.35 | 16 | -3.63 | -0.37 | 5.8 | -0.12 | – | -0.90 |
-| 101 | `M35` Pocket Pivot Morales & Kacher | **46.2** | 50 | 39 | 52 | 15 | BELUM CUKUP | 16 | 281/191 | -0.59 | 16 | -4.96 | -0.54 | 4.8 | -0.10 | – | -0.67 |
-| 102 | `N37X17` Gap and go → keluar bila adx14 | **46.2** | 17 | 28 | 14 | 50 | BELUM CUKUP | 3 | 57/12 | -3.27 | 3 | -2.67 | -0.72 | 2.6 | -9.27 | – | – |
-| 103 | `N76X36` Tutup > MA50 (penapis trend tu | **46.2** | 18 | 28 | 13 | 50 | BELUM CUKUP | 3 | 63/8 | -2.99 | 3 | -4.65 | -0.85 | 4.4 | -4.31 | – | – |
-| 104 | `N56X16` RSI>50 + ADX>20 → keluar bila  | **46.2** | 17 | 25 | 16 | 50 | BELUM CUKUP | 3 | 80/23 | -1.90 | 3 | -5.10 | -1.00 | 4.4 | -4.11 | – | – |
-| 105 | `N25X17` Supertrend + EMA + ADX>23 → ke | **46.2** | 16 | 35 | 11 | 50 | BELUM CUKUP | 3 | 55/0 | -2.37 | 3 | -3.76 | -0.78 | 3.8 | -2.11 | – | – |
-| 106 | `N28X36` ADX>25 + DI+ > DI- → keluar se | **46.2** | 14 | 27 | 18 | 50 | BELUM CUKUP | 3 | 114/32 | -1.96 | 3 | -5.32 | -0.85 | 5.0 | -5.12 | – | – |
-| 107 | `N24X36` Supertrend(10,3) + ADX>20 → ke | **46.2** | 17 | 25 | 15 | 50 | BELUM CUKUP | 3 | 66/15 | -3.27 | 3 | -4.14 | -0.91 | 3.6 | -4.14 | – | – |
-| 108 | `N09X36` Undur EMA10 + penapis EMA50 →  | **46.1** | 15 | 29 | 15 | 50 | BELUM CUKUP | 3 | 72/14 | -4.31 | 3 | -3.31 | -0.85 | 3.0 | -4.92 | – | – |
-| 109 | `M121` High 2 bull flag (Brooks) | **46.1** | 20 | 19 | 24 | 15 | BELUM CUKUP | 3 | 5/3 | -11.65 | 12 | -5.79 | -0.79 | 3.1 | -1.20 | – | -24.49 |
-| 110 | `N19X13` Bawah jalur BB + RSI<30 → kelu | **46.1** | 23 | 37 | 5 | 50 | BELUM CUKUP | 3 | 87/0 | -1.62 | 3 | -2.91 | -0.88 | 2.6 | -4.95 | – | – |
-| 111 | `N33X16` Donchian20 + penapis MA200 → k | **46.1** | 15 | 36 | 10 | 50 | BELUM CUKUP | 3 | 46/3 | -3.02 | 3 | -2.89 | -0.82 | 2.6 | -4.14 | – | – |
-| 112 | `N37X16` Gap and go → keluar bila super | **46.1** | 17 | 26 | 13 | 50 | BELUM CUKUP | 3 | 58/7 | -3.32 | 3 | -3.06 | -0.83 | 2.8 | -9.33 | – | – |
-| 113 | `N24X16` Supertrend(10,3) + ADX>20 → ke | **46.1** | 19 | 30 | 9 | 50 | BELUM CUKUP | 3 | 50/2 | -2.37 | 3 | -2.96 | -0.87 | 2.6 | -3.25 | – | – |
-| 114 | `N37X36` Gap and go → keluar selepas DU | **46.1** | 18 | 23 | 13 | 50 | BELUM CUKUP | 3 | 58/9 | -3.61 | 3 | -3.55 | -0.96 | 3.0 | -11.07 | – | – |
-| 115 | `N42X16` Lonjakan volum 2x → keluar bil | **46.1** | 13 | 26 | 17 | 50 | BELUM CUKUP | 3 | 104/31 | -2.58 | 3 | -5.59 | -0.86 | 5.1 | -3.87 | – | – |
-| 116 | `N64X14` Episodic pivot → keluar bila r | **46.1** | 22 | 39 | 5 | 50 | BELUM CUKUP | 3 | 36/0 | -1.91 | 3 | -3.10 | -0.77 | 2.9 | -3.63 | – | – |
-| 117 | `M18` EMA9/21 Pullback | **46.0** | 55 | 33 | 53 | 15 | BELUM CUKUP | 16 | 271/202 | -0.12 | 16 | -6.02 | -1.00 | 4.2 | -0.04 | – | -0.18 |
-| 118 | `M150` Trend Bar Failure (Brooks) | **46.0** | 49 | 42 | 46 | 15 | BELUM CUKUP | 15 | 79/33 | -0.39 | 16 | -4.24 | -0.76 | 2.1 | -0.41 | – | -1.75 |
-| 119 | `N37X14` Gap and go → keluar bila rsi14 | **46.0** | 18 | 31 | 9 | 50 | BELUM CUKUP | 3 | 58/2 | -3.10 | 3 | -2.33 | -0.63 | 2.5 | -7.98 | – | – |
-| 120 | `N24X17` Supertrend(10,3) + ADX>20 → ke | **46.0** | 18 | 33 | 8 | 50 | BELUM CUKUP | 3 | 58/1 | -2.30 | 3 | -2.87 | -0.77 | 2.8 | -2.78 | – | – |
-| 121 | `N56X17` RSI>50 + ADX>20 → keluar bila  | **46.0** | 16 | 30 | 11 | 50 | BELUM CUKUP | 3 | 60/4 | -2.39 | 3 | -4.04 | -0.81 | 3.8 | -4.17 | – | – |
-| 122 | `N47X16` NR7 + EMA9>EMA21 → keluar bila | **46.0** | 13 | 31 | 13 | 50 | BELUM CUKUP | 3 | 23/7 | -4.46 | 3 | -4.36 | -1.00 | 3.3 | -4.25 | – | – |
-| 123 | `N42X36` Lonjakan volum 2x → keluar sel | **46.0** | 12 | 25 | 17 | 50 | BELUM CUKUP | 3 | 102/27 | -2.62 | 3 | -6.16 | -0.83 | 5.7 | -3.86 | – | – |
-| 124 | `N48X36` Inside day pecah → keluar sele | **45.9** | 17 | 18 | 17 | 50 | BELUM CUKUP | 3 | 75/26 | -4.17 | 3 | -8.00 | -0.95 | 7.0 | -7.95 | – | – |
-| 125 | `N35X36` Pecah 52 minggu tinggi → kelua | **45.9** | 18 | 36 | 5 | 50 | BELUM CUKUP | 3 | 30/0 | -2.43 | 3 | -1.27 | -0.71 | 1.4 | -2.86 | – | – |
-| 126 | `M32` Momentum Burst | **45.8** | 47 | 28 | 49 | 24 | BELUM CUKUP | 11 | 51/32 | -0.77 | 16 | -5.06 | -0.46 | 6.1 | +0.10 | – | 0.31 |
-| 127 | `N38X36` VCP pecah → keluar selepas DUA | **45.8** | 15 | 32 | 8 | 50 | BELUM CUKUP | 3 | 11/1 | -2.93 | 3 | -3.15 | -0.97 | 2.5 | -3.63 | – | – |
-| 128 | `N113X36` 80-20 bar (sisi beli) → keluar | **45.8** | 16 | 14 | 18 | 50 | BELUM CUKUP | 3 | 74/43 | -4.38 | 3 | -6.52 | -0.95 | 6.1 | -4.70 | – | – |
-| 129 | `N29X16` PSAR naik + tutup>MA50 → kelua | **45.8** | 10 | 22 | 18 | 50 | BELUM CUKUP | 3 | 86/38 | -3.96 | 3 | -6.42 | -0.87 | 5.9 | -5.07 | – | – |
-| 130 | `M68` Kell Base n' Break | **45.7** | 28 | 43 | 43 | 55 | BELUM CUKUP | 11 | 40/10 | -3.52 | 16 | -0.64 | -0.14 | 1.5 | -0.14 | – | -1.31 |
-| 131 | `M157` Consolidation Pivot Breakout ( | **45.7** | 19 | 35 | 27 | 15 | BELUM CUKUP | 4 | 4/3 | -5.75 | 13 | -2.28 | -0.78 | 0.9 | -0.91 | – | -4.55 |
-| 132 | `N75X14` RSI14 < 40 tanpa penapis → kel | **45.7** | 14 | 32 | 8 | 50 | BELUM CUKUP | 3 | 153/1 | -2.03 | 3 | -4.93 | -0.90 | 4.5 | -4.70 | – | – |
-| 133 | `N33X36` Donchian20 + penapis MA200 → k | **45.7** | 16 | 35 | 5 | 50 | BELUM CUKUP | 3 | 46/0 | -2.97 | 3 | -2.96 | -0.81 | 2.7 | -3.99 | – | – |
-| 134 | `N65X14` Gap 4% + volum + hampir 52w →  | **45.7** | 17 | 33 | 5 | 50 | BELUM CUKUP | 3 | 24/0 | -2.63 | 3 | -4.17 | -1.00 | 3.4 | -4.02 | – | – |
-| 135 | `N65X36` Gap 4% + volum + hampir 52w →  | **45.7** | 17 | 33 | 5 | 50 | BELUM CUKUP | 3 | 24/0 | -2.63 | 3 | -4.17 | -1.00 | 3.4 | -4.02 | – | – |
-| 136 | `N28X14` ADX>25 + DI+ > DI- → keluar bi | **45.7** | 15 | 27 | 8 | 50 | BELUM CUKUP | 3 | 74/1 | -2.50 | 3 | -5.39 | -0.88 | 4.7 | -3.20 | – | – |
-| 137 | `N33X14` Donchian20 + penapis MA200 → k | **45.7** | 15 | 34 | 5 | 50 | BELUM CUKUP | 3 | 53/0 | -3.23 | 3 | -3.31 | -0.80 | 3.2 | -2.85 | – | – |
-| 138 | `N43X36` Undur EMA8 + penapis MA50 → ke | **45.7** | 14 | 22 | 10 | 50 | BELUM CUKUP | 3 | 60/3 | -4.83 | 3 | -3.90 | -1.00 | 3.0 | -4.13 | – | – |
-| 139 | `N75X13` RSI14 < 40 tanpa penapis → kel | **45.7** | 16 | 33 | 5 | 50 | BELUM CUKUP | 3 | 100/0 | -2.18 | 3 | -3.73 | -1.00 | 2.9 | -4.43 | – | – |
-| 140 | `N75X15` RSI14 < 40 tanpa penapis → eko | **45.7** | 16 | 33 | 5 | 50 | BELUM CUKUP | 3 | 100/0 | -2.18 | 3 | -3.73 | -1.00 | 2.9 | -4.43 | – | – |
-| 141 | `N31X36` Turtle sistem 2 → keluar selep | **45.7** | 18 | 28 | 5 | 50 | BELUM CUKUP | 3 | 65/0 | -3.83 | 3 | -3.53 | -0.97 | 2.9 | -5.00 | – | – |
-| 142 | `N42X17` Lonjakan volum 2x → keluar bil | **45.7** | 10 | 22 | 17 | 50 | BELUM CUKUP | 3 | 108/24 | -2.88 | 3 | -7.80 | -0.80 | 7.3 | -3.74 | – | – |
-| 143 | `N56X36` RSI>50 + ADX>20 → keluar selep | **45.7** | 11 | 19 | 16 | 50 | BELUM CUKUP | 3 | 74/20 | -3.04 | 3 | -6.79 | -0.93 | 6.1 | -7.27 | – | – |
-| 144 | `N54X16` Supertrend + RSI>50 → keluar b | **45.6** | 12 | 24 | 10 | 50 | BELUM CUKUP | 3 | 57/3 | -2.38 | 3 | -5.43 | -0.68 | 5.9 | -3.11 | – | – |
-| 145 | `N27X36` Ichimoku atas awan → keluar se | **45.6** | 13 | 24 | 9 | 50 | BELUM CUKUP | 3 | 50/2 | -3.96 | 3 | -4.37 | -1.00 | 3.4 | -6.86 | – | – |
-| 146 | `N113X16` 80-20 bar (sisi beli) → keluar | **45.6** | 14 | 12 | 19 | 50 | BELUM CUKUP | 3 | 72/47 | -5.07 | 3 | -6.80 | -0.97 | 6.3 | -6.64 | – | – |
-| 147 | `N06X36` Golden cross MA50/MA200 → kelu | **45.6** | 15 | 29 | 5 | 50 | BELUM CUKUP | 3 | 8/0 | -4.44 | 3 | -3.40 | -0.83 | 3.1 | -3.83 | – | – |
-| 148 | `N55X13` BB + RSI + ADX>20 → keluar bil | **45.5** | 13 | 31 | 5 | 50 | BELUM CUKUP | 3 | 32/0 | -2.29 | 3 | -4.51 | -0.98 | 3.7 | -3.36 | – | – |
-| 149 | `N36X14` Pocket pivot → keluar bila rsi | **45.5** | 12 | 21 | 9 | 50 | BELUM CUKUP | 3 | 96/2 | -3.84 | 3 | -5.14 | -0.76 | 4.9 | -5.09 | – | – |
-| 150 | `N54X36` Supertrend + RSI>50 → keluar s | **45.4** | 9 | 17 | 15 | 50 | BELUM CUKUP | 3 | 74/14 | -3.27 | 3 | -7.60 | -0.94 | 6.6 | -5.13 | – | – |
-| 151 | `N73X13` Tutup bawah jalur bawah BB(20, | **45.4** | 12 | 31 | 5 | 50 | BELUM CUKUP | 3 | 114/0 | -2.36 | 3 | -5.45 | -0.86 | 4.0 | -3.68 | – | – |
-| 152 | `N28X17` ADX>25 + DI+ > DI- → keluar bi | **45.4** | 14 | 24 | 5 | 50 | BELUM CUKUP | 3 | 50/0 | -2.56 | 3 | -6.13 | -0.85 | 5.5 | -3.62 | – | – |
-| 153 | `M04` BB Squeeze Breakout | **45.3** | 30 | 39 | 52 | 48 | BELUM CUKUP | 15 | 138/38 | -1.83 | 16 | -0.46 | -0.06 | 4.0 | +0.25 | – | 0.52 |
-| 154 | `M107` Golden Cross SMA50/200 | **45.3** | 35 | 49 | 42 | 21 | BELUM CUKUP | 14 | 28/7 | -1.35 | 16 | -0.40 | -0.11 | 1.5 | -0.16 | – | -0.32 |
-| 155 | `M143` 장대양봉 이후 눌림목 / 5일선 매매 (Undur ke | **45.3** | 31 | 46 | 27 | 29 | BELUM CUKUP | 8 | 11/1 | -1.23 | 15 | -1.16 | -0.39 | 1.6 | -0.94 | – | -11.52 |
-| 156 | `N29X36` PSAR naik + tutup>MA50 → kelua | **45.3** | 8 | 20 | 12 | 50 | BELUM CUKUP | 3 | 68/6 | -3.58 | 3 | -8.44 | -0.87 | 7.5 | -4.63 | – | – |
-| 157 | `N119X13` 3 tutup turun berturut → kelua | **45.3** | 8 | 18 | 12 | 50 | BELUM CUKUP | 3 | 36/5 | -4.79 | 3 | -7.86 | -0.95 | 7.2 | -4.45 | – | – |
-| 158 | `N119X15` 3 tutup turun berturut → ekori | **45.2** | 10 | 24 | 5 | 50 | BELUM CUKUP | 3 | 14/0 | -4.84 | 3 | -6.59 | -0.97 | 5.6 | -4.91 | – | – |
-| 159 | `M116` 2/20 EMA Breakout (Landry) | **45.1** | 44 | 36 | 52 | 15 | BELUM CUKUP | 16 | 508/318 | -0.52 | 16 | -3.87 | -0.31 | 6.4 | -0.06 | – | -0.32 |
-| 160 | `M87` IBD Tapak Menaik | **45.1** | 31 | 33 | 38 | 15 | BELUM CUKUP | 7 | 10/6 | -3.32 | 16 | -3.30 | -0.57 | 3.1 | -0.30 | – | -1.24 |
-| 161 | `M144` Screw Bar | **45.1** | 24 | 32 | 26 | 15 | BELUM CUKUP | 5 | 8/6 | -2.88 | 14 | -2.25 | -0.86 | 1.0 | -1.33 | – | -4.71 |
-| 162 | `N42X14` Lonjakan volum 2x → keluar bil | **45.1** | 10 | 22 | 5 | 50 | BELUM CUKUP | 3 | 100/0 | -2.62 | 3 | -7.96 | -0.72 | 8.0 | -3.13 | – | – |
-| 163 | `N16X13` RSI2<10 tanpa penapis → keluar | **45.1** | 7 | 19 | 10 | 50 | BELUM CUKUP | 3 | 90/3 | -3.24 | 3 | -9.00 | -1.00 | 6.5 | -6.63 | – | – |
-| 164 | `N42X15` Lonjakan volum 2x → ekori Chan | **45.1** | 10 | 21 | 5 | 50 | BELUM CUKUP | 3 | 96/0 | -2.69 | 3 | -8.04 | -0.70 | 8.2 | -3.18 | – | – |
-| 165 | `M106` DMI Wilder | **44.8** | 44 | 34 | 49 | 15 | BELUM CUKUP | 14 | 99/49 | -0.69 | 16 | -3.49 | -0.77 | 2.4 | -0.10 | – | -0.22 |
-| 166 | `M152` Spike & Ledge | **44.7** | 24 | 48 | 40 | 55 | BELUM CUKUP | 13 | 39/6 | -2.91 | 16 | +0.67 | +0.16 | 2.1 | -0.41 | – | -1.65 |
-| 167 | `M77` Undercut & Rally pada Purata B | **44.6** | 29 | 44 | 37 | 55 | BELUM CUKUP | 14 | 44/32 | -2.12 | 16 | -1.60 | -0.51 | 1.7 | -1.40 | – | -2.04 |
-| 168 | `N16X15` RSI2<10 tanpa penapis → ekori  | **44.4** | 3 | 15 | 5 | 50 | BELUM CUKUP | 3 | 88/0 | -3.64 | 3 | -11.69 | -1.00 | 7.8 | -8.19 | – | – |
-| 169 | `M127` Slingshot Bullish | **44.2** | 32 | 47 | 43 | 15 | BELUM CUKUP | 14 | 91/68 | -1.95 | 16 | -2.51 | -0.37 | 3.0 | -1.00 | – | -1.79 |
-| 170 | `M34` Carter TTM Squeeze | **44.1** | 29 | 37 | 46 | 50 | BELUM CUKUP | 16 | 94/44 | -2.18 | 16 | -1.12 | -0.16 | 3.0 | -0.47 | – | -2.05 |
-| 171 | `M06` Minervini VCP Breakout | **44.1** | 26 | 46 | 44 | 36 | BELUM CUKUP | 16 | 70/31 | -2.51 | 16 | -2.30 | -0.36 | 2.2 | -0.57 | – | -2.09 |
-| 172 | `M08` SMA20 + SMA200 | **44.0** | 36 | 28 | 48 | 32 | BELUM CUKUP | 14 | 128/84 | -1.32 | 16 | -4.80 | -0.90 | 4.0 | -0.43 | – | -1.51 |
-| 173 | `M14` Walking with the Whales | **43.8** | 42 | 32 | 48 | 15 | BELUM CUKUP | 16 | 774/536 | -0.79 | 16 | -7.95 | -0.75 | 5.2 | -0.61 | – | -1.38 |
-| 174 | `M49` Ichimoku (Tutup Atas Awan + Te | **43.7** | 30 | 42 | 46 | 24 | BELUM CUKUP | 16 | 241/134 | -2.03 | 16 | -2.07 | -0.31 | 2.9 | -0.76 | – | -1.59 |
-| 175 | `M03` BB Break + Divergence RSI | **43.7** | 34 | 41 | 46 | 15 | BELUM CUKUP | 16 | 323/281 | -1.01 | 16 | -2.50 | -0.40 | 2.7 | -0.81 | – | -2.78 |
-| 176 | `M102` Stockbee SLTB | **43.6** | 36 | 36 | 48 | 15 | BELUM CUKUP | 16 | 313/236 | -1.57 | 16 | -5.10 | -0.47 | 5.0 | -0.54 | – | -2.03 |
-| 177 | `M130` 多方炮 (dua lilin hijau mengapit  | **43.6** | 17 | 24 | 34 | 15 | BELUM CUKUP | 6 | 9/3 | -3.73 | 14 | -3.15 | -0.58 | 2.4 | -0.22 | – | -0.25 |
-| 178 | `M20` EMA10/15 Crossover + Sudut | **43.5** | 33 | 37 | 41 | 26 | BELUM CUKUP | 16 | 369/316 | -1.57 | 16 | -3.73 | -0.64 | 2.6 | -1.39 | – | -10.80 |
-| 179 | `M99` Three Line Break | **43.5** | 32 | 37 | 47 | 22 | BELUM CUKUP | 16 | 129/84 | -3.19 | 16 | -0.90 | -0.15 | 3.1 | -0.58 | – | -3.17 |
-| 180 | `M155` Market Cycle Strategy | **43.3** | 38 | 33 | 47 | 15 | BELUM CUKUP | 16 | 591/211 | -1.19 | 16 | -3.00 | -0.50 | 3.2 | -0.72 | – | -1.35 |
-| 181 | `M141` First Thrust (Landry) | **43.3** | 18 | 34 | 30 | 15 | BELUM CUKUP | 7 | 20/8 | -3.61 | 16 | -3.94 | -0.77 | 1.8 | -1.34 | – | -3.66 |
-| 182 | `M136` Short/Intermediate-term Low (L | **43.1** | 31 | 40 | 48 | 15 | BELUM CUKUP | 16 | 625/236 | -1.79 | 16 | -2.02 | -0.43 | 2.3 | -0.54 | – | -0.36 |
-| 183 | `M44` Tapak Rata IBD | **43.1** | 26 | 38 | 20 | 15 | BELUM CUKUP | 8 | 9/4 | -4.57 | 16 | -3.99 | -0.84 | 2.3 | -2.36 | – | -42.45 |
-| 184 | `M54` IBD Power Trend | **43.0** | 29 | 39 | 48 | 15 | BELUM CUKUP | 15 | 193/100 | -1.93 | 16 | -1.90 | -0.18 | 5.3 | -0.51 | – | -1.56 |
-| 185 | `M147` Improved Three-Bar Pullback | **43.0** | 28 | 46 | 35 | 18 | BELUM CUKUP | 14 | 95/27 | -3.15 | 16 | +1.83 | +0.22 | 4.0 | -1.49 | – | -1.27 |
-| 186 | `M149` 3-Step Pullback | **43.0** | 31 | 30 | 51 | 19 | BELUM CUKUP | 14 | 150/50 | -1.39 | 16 | -5.90 | -0.55 | 4.6 | +0.13 | – | 0.14 |
-| 187 | `M120` Reversal New Highs | **43.0** | 32 | 34 | 38 | 15 | BELUM CUKUP | 12 | 18/12 | -2.49 | 16 | -3.72 | -0.56 | 2.9 | -0.79 | – | -5.15 |
-| 188 | `M31` Band Walk (BB 20/2) | **42.8** | 36 | 27 | 51 | 20 | BELUM CUKUP | 16 | 369/47 | -1.10 | 16 | -3.89 | -0.35 | 6.2 | +0.07 | – | 0.17 |
-| 189 | `M19` Sneaky Pivot (proksi harian) | **42.6** | 24 | 37 | 41 | 41 | BELUM CUKUP | 15 | 265/215 | -4.35 | 16 | -2.02 | -0.27 | 2.9 | -1.36 | – | -22.43 |
-| 190 | `M67` Rayner Teo: Ujian Ketiga pada  | **42.5** | 26 | 34 | 36 | 15 | BELUM CUKUP | 11 | 25/16 | -4.15 | 16 | -6.55 | -0.59 | 4.8 | -1.10 | – | -7.15 |
-| 191 | `M140` 猎豹出击 (Serangan Cheetah) | **42.5** | 18 | 32 | 29 | 15 | BELUM CUKUP | 8 | 37/11 | -2.59 | 16 | -4.73 | -0.76 | 2.5 | -1.66 | – | -2.10 |
-| 192 | `M36` Turtle 55/20 | **42.3** | 29 | 34 | 51 | 15 | BELUM CUKUP | 16 | 297/144 | -1.70 | 16 | -4.80 | -0.40 | 6.1 | -0.20 | – | -0.64 |
-| 193 | `M135` 3rd Watch | **42.2** | 12 | 28 | 30 | 15 | BELUM CUKUP | 7 | 12/2 | -6.23 | 16 | -7.22 | -0.91 | 2.7 | -0.95 | – | -7.18 |
-| 194 | `M125` 2-Bar Breakout | **41.8** | 26 | 36 | 46 | 15 | BELUM CUKUP | 16 | 872/400 | -2.09 | 16 | -2.34 | -0.37 | 2.4 | -0.77 | – | -0.49 |
-| 195 | `M128` Inventory Retracement Bar (IRB | **41.7** | 32 | 27 | 49 | 15 | BELUM CUKUP | 16 | 126/70 | -1.33 | 16 | -6.97 | -0.63 | 5.6 | -0.28 | – | -1.92 |
-| 196 | `M12` Parabolic SAR | **41.4** | 25 | 33 | 48 | 15 | BELUM CUKUP | 16 | 325/164 | -2.35 | 16 | -3.54 | -0.61 | 3.0 | -0.54 | – | -1.75 |
-| 197 | `M156` Single Penetration (DiNapoli) | **41.4** | 20 | 31 | 46 | 48 | BELUM CUKUP | 16 | 196/115 | -2.09 | 16 | -6.85 | -0.53 | 5.0 | -0.88 | – | -4.39 |
-| 198 | `M26` Garis Trend Undur 3 Sentuhan + | **41.4** | 24 | 31 | 42 | 15 | BELUM CUKUP | 13 | 54/39 | -1.44 | 16 | -6.78 | -0.84 | 3.0 | -0.89 | – | -1.86 |
-| 199 | `M126` Hidden Smash Day (beli, Larry  | **41.2** | 16 | 32 | 33 | 15 | BELUM CUKUP | 10 | 18/11 | -4.64 | 15 | -5.36 | -0.74 | 3.1 | -1.07 | – | -2.62 |
-| 200 | `M50` Elder Triple Screen | **41.1** | 31 | 24 | 48 | 15 | BELUM CUKUP | 16 | 478/295 | -1.17 | 16 | -11.05 | -1.00 | 6.1 | -0.57 | – | -1.36 |
-| 201 | `M55` Guppy GMMA | **40.5** | 26 | 27 | 47 | 15 | BELUM CUKUP | 16 | 177/110 | -2.64 | 16 | -7.08 | -0.81 | 4.2 | -0.72 | – | -2.90 |
-| 202 | `M73` ADX(5) > 40 + Julat Terkecil 6 | **40.5** | 30 | 23 | 45 | 15 | BELUM CUKUP | 16 | 643/549 | -0.65 | 16 | -8.00 | -1.00 | 4.4 | -0.97 | – | -8.27 |
-| 203 | `M66` IBD Undur Pertama ke Purata 50 | **40.3** | 24 | 27 | 47 | 15 | BELUM CUKUP | 16 | 193/125 | -2.08 | 16 | -7.24 | -0.63 | 5.6 | -0.68 | – | -2.52 |
-| 204 | `M95` Nisbah Kebaharuan High 52 Ming | **40.3** | 20 | 33 | 44 | 15 | BELUM CUKUP | 15 | 110/60 | -2.85 | 16 | -5.90 | -0.70 | 3.7 | -0.77 | – | -2.80 |
-| 205 | `M28` VWAP Separator + Kiss Pivot | **40.0** | 21 | 27 | 40 | 15 | BELUM CUKUP | 14 | 88/82 | -2.02 | 16 | -8.46 | -1.00 | 5.2 | -1.37 | – | -16.12 |
-| 206 | `M29` EMA3 + RSI75 + Stokastik | **40.0** | 16 | 30 | 36 | 15 | BELUM CUKUP | 12 | 31/26 | -3.30 | 16 | -9.94 | -0.79 | 5.9 | -1.32 | – | -9.59 |
-| 207 | `M57` Landry Trend Knockout (TKO) | **39.6** | 24 | 26 | 40 | 15 | BELUM CUKUP | 16 | 140/99 | -2.77 | 16 | -6.95 | -0.82 | 4.0 | -1.52 | – | -6.10 |
-| 208 | `M119` 180 Bullish (Cooper) | **39.6** | 19 | 28 | 44 | 15 | BELUM CUKUP | 15 | 113/57 | -2.09 | 16 | -8.27 | -0.77 | 4.0 | -0.82 | – | -3.58 |
-| 209 | `M11` NR7 Breakout + Volume | **39.3** | 19 | 27 | 40 | 15 | BELUM CUKUP | 15 | 95/68 | -1.70 | 16 | -8.64 | -0.72 | 5.3 | -1.30 | – | -1.96 |
-| 210 | `M59` Anjakan Julat RSI | **39.2** | 16 | 24 | 41 | 15 | BELUM CUKUP | 13 | 35/15 | -5.66 | 16 | -4.78 | -0.60 | 2.7 | -0.61 | – | -3.35 |
-| 211 | `M79` Radge: 20% Flipper | **39.1** | 18 | 30 | 41 | 15 | BELUM CUKUP | 16 | 254/71 | -3.60 | 16 | -5.48 | -0.60 | 3.9 | -1.25 | – | -2.86 |
-| 212 | `M82` Arthur Hill Rotasi Sasaran 10% | **38.8** | 18 | 20 | 47 | 32 | BELUM CUKUP | 16 | 507/172 | -2.21 | 16 | -7.45 | -0.47 | 6.4 | -0.72 | – | -3.87 |
-| 213 | `M101` Bulkowski: Tiga lembah menaik | **38.6** | 14 | 25 | 43 | 15 | BELUM CUKUP | 14 | 43/17 | -4.56 | 16 | -7.69 | -0.62 | 4.5 | -0.45 | – | -1.92 |
-| 214 | `M47` Holy Grail Raschke | **38.4** | 9 | 18 | 27 | 15 | BELUM CUKUP | 10 | 21/18 | -4.70 | 16 | -9.71 | -0.98 | 4.5 | -2.16 | – | -27.83 |
-| 215 | `M09` Volumatic VIDYA Pivot Retest | **38.3** | 6 | 12 | 29 | 15 | BELUM CUKUP | 9 | 23/14 | -5.47 | 16 | -11.73 | -1.00 | 6.4 | -1.76 | – | -14.83 |
-| 216 | `M161` EMA 10/21 + Supertrend (10,3) | **38.0** | 23 | 14 | 49 | 15 | BELUM CUKUP | 16 | 393/168 | -1.28 | 16 | -12.39 | -0.89 | 8.2 | -0.44 | – | -1.35 |
-| 217 | `M122` Moving Momentum (ChartSchool) | **37.2** | 17 | 22 | 33 | 15 | BELUM CUKUP | 16 | 92/56 | -3.86 | 16 | -8.57 | -1.00 | 4.7 | -2.11 | – | -7.38 |
-| 218 | `M154` HOLP (High of Low Period) | **37.1** | 8 | 18 | 35 | 15 | BELUM CUKUP | 12 | 63/30 | -5.92 | 16 | -12.69 | -0.98 | 5.8 | -1.47 | – | -8.51 |
-| 219 | `M01` Bollinger Band + RSI | **37.0** | 17 | 18 | 38 | 15 | BELUM CUKUP | 16 | 101/12 | -2.45 | 16 | -7.21 | -0.67 | 4.4 | -0.96 | – | -5.04 |
-| 220 | `M123` CCI Correction (Lambert, Chart | **36.5** | 11 | 28 | 31 | 15 | BELUM CUKUP | 16 | 154/139 | -1.91 | 16 | -10.77 | -1.00 | 5.8 | -2.59 | – | -6.56 |
-| 221 | `M76` Undercut & Rally pada Low Pent | **35.9** | 9 | 21 | 34 | 15 | BELUM CUKUP | 15 | 46/42 | -3.11 | 16 | -10.93 | -1.00 | 5.7 | -1.81 | – | -8.33 |
-| 222 | `M81` Bensdorp Long Trend High Momen | **34.0** | 2 | 5 | 41 | 15 | BELUM CUKUP | 12 | 331/131 | -5.64 | 16 | -22.09 | -0.96 | 11.9 | -1.25 | – | -5.77 |
-| 223 | `M90` Pring KST | **33.1** | 4 | 12 | 40 | 15 | BELUM CUKUP | 15 | 64/38 | -5.20 | 16 | -15.34 | -0.83 | 9.1 | -1.17 | – | -7.32 |
+| 1 | `M33` Supertrend + SMA10 | **66.0** | 95 | 88 | 70 | 85 | BELUM CUKUP | 17 | 204/37 | +2.99 | 17 | +8.34 | +3.12 | 1.4 | +2.31 | – | 7.19 |
+| 2 | `M146` 3-Bar Momentum Pattern | **65.8** | 94 | 90 | 71 | 85 | BELUM CUKUP | 16 | 76/28 | +2.18 | 17 | +6.45 | +1.05 | 2.0 | +2.57 | – | 4.00 |
+| 3 | `M118` Expansion Pivot (Cooper) | **64.3** | 90 | 88 | 62 | 85 | BELUM CUKUP | 17 | 73/20 | +1.69 | 17 | +10.93 | +4.04 | 0.9 | +1.65 | – | 4.39 |
+| 4 | `M133` Bull Hook (Crabel) | **62.8** | 99 | 92 | 59 | 85 | BELUM CUKUP | 12 | 47/19 | +2.23 | 17 | +6.49 | +1.56 | 1.6 | +1.51 | – | 15.72 |
+| 5 | `M25` VWAP Wave (proksi harian) | **61.6** | 83 | 81 | 61 | 80 | BELUM CUKUP | 16 | 169/82 | +0.84 | 17 | +5.74 | +0.99 | 3.0 | +1.04 | – | 6.38 |
+| 6 | `M124` 'Last' Stochastic Technique (C | **61.6** | 80 | 78 | 63 | 85 | BELUM CUKUP | 17 | 344/163 | +0.90 | 17 | +6.36 | +1.39 | 2.4 | +1.11 | – | 2.00 |
+| 7 | `M111` Sistem Volatiliti Wilder | **60.7** | 84 | 66 | 64 | 85 | BELUM CUKUP | 17 | 232/72 | +1.48 | 17 | +3.92 | +0.58 | 3.5 | +1.38 | – | 2.80 |
+| 8 | `M151` Outside Bar Failure | **60.4** | 75 | 84 | 58 | 85 | BELUM CUKUP | 16 | 82/45 | +0.41 | 17 | +8.39 | +6.90 | 0.5 | +0.91 | – | 1.76 |
+| 9 | `M105` Supertrend tulen | **60.4** | 85 | 62 | 66 | 85 | BELUM CUKUP | 17 | 320/88 | +1.79 | 17 | +1.31 | +0.18 | 2.9 | +1.50 | – | 3.13 |
+| 10 | `M91` Stochastic Pop (Bernstein/Stec | **60.3** | 93 | 78 | 58 | 85 | BELUM CUKUP | 12 | 34/12 | +1.67 | 17 | +10.08 | +1.29 | 2.4 | +1.54 | – | 5.22 |
+| 11 | `M142` Pecahan volum dari dasar (底部放量 | **59.6** | 85 | 88 | 48 | 85 | BELUM CUKUP | 13 | 40/5 | +3.22 | 15 | +3.80 | +0.79 | 1.9 | +0.90 | – | 1.50 |
+| 12 | `M10` EMA3 + CCI + MACD | **59.6** | 78 | 71 | 58 | 85 | BELUM CUKUP | 17 | 102/47 | +0.71 | 17 | +9.74 | +1.85 | 1.8 | +0.79 | – | 2.20 |
+| 13 | `M13` Garis Trend Action/Safety Line | **59.6** | 74 | 74 | 58 | 85 | BELUM CUKUP | 17 | 662/407 | +0.29 | 17 | +8.69 | +2.44 | 1.3 | +0.52 | – | 1.02 |
+| 14 | `M145` Yum-Yum Continuation | **59.3** | 76 | 75 | 58 | 72 | BELUM CUKUP | 17 | 280/54 | +0.91 | 17 | +4.51 | +2.07 | 1.4 | +0.76 | – | 0.58 |
+| 15 | `M93` Bollinger Kaedah II: %b + MFI | **58.8** | 81 | 59 | 62 | 85 | BELUM CUKUP | 17 | 247/69 | +1.55 | 17 | +0.71 | +0.11 | 2.3 | +1.19 | – | 1.50 |
+| 16 | `M23` Breitstein Kapitulasi + Kesina | **58.4** | 67 | 71 | 61 | 84 | BELUM CUKUP | 17 | 111/66 | +0.02 | 17 | +2.56 | +0.50 | 2.1 | +1.12 | – | 4.60 |
+| 17 | `M137` Livermore System | **58.1** | 68 | 73 | 56 | 85 | BELUM CUKUP | 17 | 151/53 | +0.06 | 17 | +6.09 | +1.03 | 2.4 | +0.62 | – | 1.24 |
+| 18 | `M15` Break & Retest + Henti ATR | **57.9** | 87 | 59 | 64 | 45 | BELUM CUKUP | 17 | 265/145 | +1.88 | 17 | -1.60 | -0.22 | 2.9 | +1.27 | – | 2.36 |
+| 19 | `M89` Chande 65sma-3cc | **57.9** | 67 | 70 | 58 | 85 | BELUM CUKUP | 17 | 151/79 | +0.08 | 17 | +3.64 | +0.76 | 2.1 | +0.70 | – | 1.83 |
+| 20 | `M74` Lulus Baharu Trend Template Mi | **57.6** | 68 | 74 | 54 | 77 | BELUM CUKUP | 17 | 82/50 | -0.02 | 17 | +3.29 | +0.79 | 2.3 | +0.41 | – | 0.73 |
+| 21 | `M160` Measured Move Up | **57.3** | 61 | 75 | 61 | 85 | BELUM CUKUP | 15 | 85/44 | -0.40 | 17 | +4.63 | +0.99 | 2.2 | +1.28 | – | 10.26 |
+| 22 | `M100` Bulkowski Segi Empat & Segi Ti | **57.2** | 66 | 75 | 55 | 85 | BELUM CUKUP | 14 | 58/39 | +0.36 | 17 | +4.05 | +0.93 | 2.1 | +0.70 | – | 3.48 |
+| 23 | `M80` Radge Saluran Purata Bergerak  | **56.6** | 82 | 54 | 65 | 45 | BELUM CUKUP | 17 | 252/50 | +2.06 | 17 | -1.47 | -0.21 | 3.5 | +1.60 | – | 1.79 |
+| 24 | `M158` Doubly Adaptive Profit Targets | **56.6** | 80 | 57 | 64 | 45 | BELUM CUKUP | 17 | 335/123 | +1.50 | 17 | -0.55 | -0.09 | 2.4 | +1.20 | – | 3.08 |
+| 25 | `M139` 均线首次粘合向上发散 (MA berhimpun kali  | **56.5** | 66 | 67 | 52 | 85 | BELUM CUKUP | 17 | 69/17 | +0.16 | 17 | +5.56 | +1.11 | 1.8 | +0.52 | – | 1.76 |
+| 26 | `M05` MACD Divergence + Pengesahan | **56.4** | 72 | 76 | 48 | 73 | BELUM CUKUP | 13 | 38/12 | +0.59 | 17 | +4.61 | +1.36 | 1.4 | +0.31 | – | 0.61 |
+| 27 | `M92` CCI-50 | **56.4** | 68 | 60 | 58 | 82 | BELUM CUKUP | 17 | 471/296 | +0.57 | 17 | +0.93 | +0.16 | 2.3 | +0.52 | – | 0.92 |
+| 28 | `M88` O'Neil Shakeout +3 | **56.0** | 70 | 65 | 52 | 82 | BELUM CUKUP | 14 | 54/27 | +0.28 | 17 | +5.27 | +0.63 | 3.0 | +0.48 | – | 0.89 |
+| 29 | `M30` BB Free Bar + Himpitan 50/2.5 | **55.7** | 75 | 53 | 63 | 53 | BELUM CUKUP | 17 | 217/67 | +1.11 | 17 | +0.91 | +0.12 | 4.8 | +1.27 | – | 2.21 |
+| 30 | `M70` Pecahan Hari Dalam | **55.4** | 66 | 71 | 56 | 41 | BELUM CUKUP | 17 | 372/291 | -0.05 | 17 | +2.76 | +0.57 | 2.4 | +0.32 | – | 0.87 |
+| 31 | `M159` Heikin-Ashi Trend | **54.5** | 65 | 72 | 53 | 35 | BELUM CUKUP | 17 | 1414/1137 | -0.11 | 17 | +6.32 | +1.03 | 3.8 | +0.01 | – | 0.04 |
+| 32 | `M46` Jurang Naik Boleh Beli (Buyabl | **54.4** | 65 | 70 | 50 | 77 | BELUM CUKUP | 10 | 33/16 | -0.05 | 17 | +1.96 | +0.40 | 1.7 | +0.53 | – | 1.00 |
+| 33 | `M129` Wick Play | **54.3** | 74 | 61 | 49 | 85 | BELUM CUKUP | 9 | 23/9 | +0.50 | 17 | +5.96 | +2.11 | 1.0 | +0.67 | – | 2.93 |
+| 34 | `M02` MACD + SMA200 | **54.3** | 63 | 65 | 50 | 55 | BELUM CUKUP | 17 | 105/54 | -0.30 | 17 | +10.49 | +2.37 | 1.7 | -0.07 | – | -0.38 |
+| 35 | `M48` Cooper 1-2-3-4 | **53.9** | 62 | 56 | 52 | 85 | BELUM CUKUP | 14 | 45/15 | -0.08 | 17 | +8.12 | +1.49 | 2.1 | +0.70 | – | 1.96 |
+| 36 | `N68X36` Bullish engulfing + EMA21 → ke | **53.8** | 86 | 90 | 53 | 50 | BELUM CUKUP | 4 | 35/5 | +1.61 | 4 | +3.88 | +1.80 | 1.5 | +1.89 | – | – |
+| 37 | `M117` Landry Pullback (high 2 bulan) | **53.6** | 79 | 47 | 56 | 45 | BELUM CUKUP | 14 | 81/17 | +1.79 | 17 | -4.67 | -0.59 | 3.3 | +1.14 | – | 1.25 |
+| 38 | `M131` Ross Hook (Joe Ross) | **53.6** | 61 | 54 | 60 | 54 | BELUM CUKUP | 17 | 247/102 | +0.19 | 17 | -0.90 | -0.14 | 2.8 | +0.77 | – | 1.72 |
+| 39 | `M21` Marius 3 Persediaan (Pecahan+J | **53.5** | 88 | 71 | 46 | 58 | BELUM CUKUP | 5 | 5/2 | +1.58 | 9 | +0.83 | +0.41 | 1.2 | +1.37 | – | 2.78 |
+| 40 | `N68X16` Bullish engulfing + EMA21 → ke | **53.4** | 80 | 89 | 50 | 50 | BELUM CUKUP | 4 | 36/6 | +1.32 | 4 | +4.65 | +2.25 | 1.3 | +1.52 | – | – |
+| 41 | `M132` Ascending Scallop (Bulkowski) | **52.6** | 47 | 65 | 52 | 85 | BELUM CUKUP | 15 | 88/34 | -1.07 | 17 | +3.53 | +0.94 | 2.1 | +0.27 | – | 2.25 |
+| 42 | `M18` EMA9/21 Pullback | **52.6** | 66 | 48 | 57 | 45 | BELUM CUKUP | 17 | 315/207 | +0.54 | 17 | -2.79 | -0.46 | 4.1 | +0.49 | – | 1.69 |
+| 43 | `M150` Trend Bar Failure (Brooks) | **52.3** | 67 | 50 | 52 | 43 | BELUM CUKUP | 16 | 81/39 | +0.78 | 17 | -3.06 | -0.55 | 2.3 | +0.29 | – | 0.93 |
+| 44 | `M35` Pocket Pivot Morales & Kacher | **52.2** | 62 | 48 | 57 | 45 | BELUM CUKUP | 17 | 291/200 | +0.12 | 17 | -1.74 | -0.19 | 4.8 | +0.48 | – | 2.68 |
+| 45 | `N45X16` Undur EMA21 cerun positif → ke | **52.1** | 64 | 82 | 48 | 50 | BELUM CUKUP | 4 | 74/26 | +0.01 | 4 | +7.13 | +10.00 | 0.0 | +0.77 | – | – |
+| 46 | `M37` Weinstein Peringkat 2 | **52.0** | 74 | 94 | 34 | 70 | BELUM CUKUP | 3 | 7/0 | +1.32 | 11 | +1.07 | +2.11 | 0.2 | +0.49 | – | 0.50 |
+| 47 | `N64X36` Episodic pivot → keluar selepa | **51.9** | 85 | 74 | 33 | 50 | BELUM CUKUP | 4 | 39/2 | +1.65 | 4 | +1.13 | +0.28 | 2.7 | -0.08 | – | – |
+| 48 | `N53X36` Supertrend + ADX>25 → keluar s | **51.8** | 72 | 66 | 47 | 50 | BELUM CUKUP | 4 | 79/13 | +1.06 | 4 | +0.73 | +0.18 | 2.8 | +0.88 | – | – |
+| 49 | `N64X14` Episodic pivot → keluar bila r | **51.8** | 89 | 73 | 30 | 50 | BELUM CUKUP | 4 | 39/0 | +2.10 | 4 | +0.35 | +0.09 | 2.5 | +0.00 | – | – |
+| 50 | `M106` DMI Wilder | **51.8** | 64 | 45 | 58 | 45 | BELUM CUKUP | 15 | 100/53 | +0.61 | 17 | -2.24 | -0.49 | 2.5 | +0.87 | – | 1.58 |
+| 51 | `M77` Undercut & Rally pada Purata B | **51.8** | 52 | 68 | 44 | 55 | BELUM CUKUP | 15 | 49/33 | -0.74 | 17 | +1.95 | +0.62 | 1.6 | -0.61 | – | -0.85 |
+| 52 | `N124X15` Episodic pivot gap 8-10% → eko | **51.7** | 89 | 72 | 31 | 50 | BELUM CUKUP | 4 | 36/0 | +2.83 | 4 | +0.12 | +0.02 | 4.0 | +0.04 | – | – |
+| 53 | `N64X17` Episodic pivot → keluar bila a | **51.7** | 77 | 73 | 36 | 50 | BELUM CUKUP | 4 | 39/7 | +1.05 | 4 | +1.44 | +0.36 | 2.6 | -0.21 | – | – |
+| 54 | `N64X16` Episodic pivot → keluar bila s | **51.6** | 82 | 70 | 34 | 50 | BELUM CUKUP | 4 | 39/3 | +1.50 | 4 | +0.35 | +0.09 | 2.5 | -0.13 | – | – |
+| 55 | `M134` First Kiss After Daylight (Lan | **51.5** | 58 | 48 | 55 | 56 | BELUM CUKUP | 14 | 39/16 | +0.30 | 17 | -1.35 | -0.19 | 3.0 | +0.96 | – | 1.14 |
+| 56 | `M04` BB Squeeze Breakout | **51.4** | 54 | 46 | 57 | 62 | BELUM CUKUP | 16 | 142/47 | -0.30 | 17 | +1.42 | +0.18 | 4.0 | +0.72 | – | 1.24 |
+| 57 | `N124X36` Episodic pivot gap 8-10% → kel | **51.3** | 82 | 60 | 36 | 50 | BELUM CUKUP | 4 | 36/5 | +1.70 | 4 | -1.79 | -0.36 | 3.5 | -0.00 | – | – |
+| 58 | `N53X17` Supertrend + ADX>25 → keluar b | **51.3** | 70 | 69 | 37 | 50 | BELUM CUKUP | 4 | 66/0 | +1.02 | 4 | +0.80 | +0.21 | 2.8 | +0.83 | – | – |
+| 59 | `M153` Range Leader | **51.3** | 57 | 47 | 58 | 45 | BELUM CUKUP | 17 | 1053/905 | +0.08 | 17 | -0.97 | -0.10 | 5.9 | +0.56 | – | 3.25 |
+| 60 | `N45X36` Undur EMA21 cerun positif → ke | **51.2** | 58 | 76 | 43 | 50 | BELUM CUKUP | 4 | 67/18 | +0.16 | 4 | +1.88 | +0.90 | 1.4 | +0.26 | – | – |
+| 61 | `N53X16` Supertrend + ADX>25 → keluar b | **51.2** | 66 | 67 | 40 | 50 | BELUM CUKUP | 4 | 71/2 | +0.76 | 4 | +0.55 | +0.15 | 2.7 | +0.74 | – | – |
+| 62 | `M51` O'Neil Cawan & Pemegang | **51.0** | 77 | 66 | 42 | 54 | BELUM CUKUP | 2 | 3/0 | +1.02 | 7 | +0.36 | +0.36 | 0.5 | +1.64 | – | 6.56 |
+| 63 | `M116` 2/20 EMA Breakout (Landry) | **50.9** | 58 | 43 | 59 | 45 | BELUM CUKUP | 17 | 512/325 | +0.32 | 17 | -1.69 | -0.14 | 6.7 | +0.66 | – | 2.71 |
+| 64 | `N07X16` Tiga MA tersusun → keluar bila | **50.7** | 60 | 63 | 40 | 50 | BELUM CUKUP | 4 | 76/8 | +0.53 | 4 | +0.12 | +0.03 | 2.3 | +0.27 | – | – |
+| 65 | `N22X36` BB pecah atas + RSI → keluar s | **50.7** | 53 | 61 | 50 | 50 | BELUM CUKUP | 4 | 68/16 | -0.33 | 4 | +1.13 | +0.30 | 2.5 | +1.16 | – | – |
+| 66 | `M104` High Tight Flag / Power Play | **50.5** | 78 | 90 | 27 | 65 | BELUM CUKUP | 1 | 1/0 | +14.81 | 2 | +1.50 | +10.00 | 0.0 | – | – | 41.96 |
+| 67 | `N37X14` Gap and go → keluar bila rsi14 | **50.5** | 67 | 65 | 31 | 50 | BELUM CUKUP | 4 | 63/2 | +0.60 | 4 | +1.67 | +0.45 | 2.2 | -0.37 | – | – |
+| 68 | `N56X17` RSI>50 + ADX>20 → keluar bila  | **50.4** | 66 | 59 | 34 | 50 | BELUM CUKUP | 4 | 76/6 | +0.75 | 4 | -0.86 | -0.17 | 3.3 | -0.33 | – | – |
+| 69 | `N19X13` Bawah jalur BB + RSI<30 → kelu | **50.4** | 79 | 55 | 29 | 50 | BELUM CUKUP | 4 | 98/0 | +2.01 | 4 | -2.83 | -0.86 | 2.6 | -0.19 | – | – |
+| 70 | `N25X17` Supertrend + EMA + ADX>23 → ke | **50.4** | 64 | 63 | 32 | 50 | BELUM CUKUP | 4 | 69/0 | +0.63 | 4 | -0.15 | -0.03 | 3.3 | +0.18 | – | – |
+| 71 | `N28X14` ADX>25 + DI+ > DI- → keluar bi | **50.3** | 68 | 56 | 33 | 50 | BELUM CUKUP | 4 | 95/2 | +1.10 | 4 | -1.63 | -0.27 | 4.2 | -0.12 | – | – |
+| 72 | `N36X16` Pocket pivot → keluar bila sup | **50.3** | 50 | 70 | 38 | 50 | BELUM CUKUP | 4 | 114/37 | -0.76 | 4 | +4.25 | +6.13 | 0.4 | -0.51 | – | – |
+| 73 | `N24X17` Supertrend(10,3) + ADX>20 → ke | **50.3** | 61 | 63 | 33 | 50 | BELUM CUKUP | 4 | 72/3 | +0.30 | 4 | +0.04 | +0.01 | 2.4 | -0.26 | – | – |
+| 74 | `M155` Market Cycle Strategy | **50.3** | 65 | 40 | 56 | 32 | BELUM CUKUP | 17 | 599/214 | +0.74 | 17 | -2.43 | -0.41 | 3.4 | +0.33 | – | 0.58 |
+| 75 | `M39` Radge Pecahan Bollinger 100 ha | **50.3** | 39 | 65 | 51 | 58 | BELUM CUKUP | 17 | 215/48 | -1.60 | 17 | +5.57 | +2.32 | 1.2 | +0.05 | – | 0.11 |
+| 76 | `N07X36` Tiga MA tersusun → keluar sele | **50.2** | 58 | 56 | 39 | 50 | BELUM CUKUP | 4 | 78/7 | +0.51 | 4 | -0.78 | -0.20 | 2.5 | +0.19 | – | – |
+| 77 | `N42X14` Lonjakan volum 2x → keluar bil | **50.2** | 71 | 53 | 31 | 50 | BELUM CUKUP | 4 | 129/3 | +1.23 | 4 | -2.16 | -0.20 | 7.0 | -0.47 | – | – |
+| 78 | `N80X36` Tinggi sepanjang masa → keluar | **50.1** | 65 | 54 | 34 | 50 | BELUM CUKUP | 3 | 23/0 | +0.82 | 4 | -0.81 | -0.24 | 2.1 | +0.55 | – | – |
+| 79 | `N25X16` Supertrend + EMA + ADX>23 → ke | **50.1** | 58 | 60 | 35 | 50 | BELUM CUKUP | 4 | 72/2 | +0.32 | 4 | -0.62 | -0.13 | 3.3 | +0.07 | – | – |
+| 80 | `M143` 장대양봉 이후 눌림목 / 5일선 매매 (Undur ke | **50.1** | 60 | 69 | 30 | 43 | BELUM CUKUP | 9 | 13/1 | +0.67 | 16 | +0.74 | +0.25 | 1.6 | -0.68 | – | -8.24 |
+| 81 | `N25X36` Supertrend + EMA + ADX>23 → ke | **50.1** | 54 | 58 | 39 | 50 | BELUM CUKUP | 4 | 75/11 | -0.00 | 4 | -0.56 | -0.13 | 3.2 | +0.02 | – | – |
+| 82 | `M08` SMA20 + SMA200 | **50.0** | 55 | 44 | 52 | 47 | BELUM CUKUP | 15 | 156/86 | -0.05 | 17 | -1.68 | -0.31 | 3.9 | +0.02 | – | 0.06 |
+| 83 | `M148` Natural Number Method | **49.9** | 42 | 63 | 46 | 55 | BELUM CUKUP | 17 | 181/119 | -1.39 | 17 | +3.06 | +0.62 | 1.9 | -0.79 | – | -2.89 |
+| 84 | `N22X16` BB pecah atas + RSI → keluar b | **49.9** | 47 | 55 | 47 | 50 | BELUM CUKUP | 4 | 66/15 | -0.51 | 4 | -0.14 | -0.04 | 2.5 | +0.83 | – | – |
+| 85 | `N41X16` CMF20>0 + tutup>EMA20 → keluar | **49.9** | 42 | 70 | 41 | 50 | BELUM CUKUP | 4 | 129/66 | -1.01 | 4 | +2.01 | +0.94 | 1.4 | -0.47 | – | – |
+| 86 | `N37X36` Gap and go → keluar selepas DU | **49.9** | 55 | 60 | 33 | 50 | BELUM CUKUP | 4 | 63/9 | -0.37 | 4 | +1.94 | +0.53 | 2.6 | -0.60 | – | – |
+| 87 | `N37X17` Gap and go → keluar bila adx14 | **49.9** | 51 | 64 | 34 | 50 | BELUM CUKUP | 4 | 62/16 | -0.62 | 4 | +2.86 | +0.77 | 2.3 | -0.72 | – | – |
+| 88 | `N75X17` RSI14 < 40 tanpa penapis → kel | **49.8** | 53 | 57 | 36 | 50 | BELUM CUKUP | 4 | 225/91 | +0.14 | 4 | -1.23 | -0.31 | 2.7 | -1.17 | – | – |
+| 89 | `N28X17` ADX>25 + DI+ > DI- → keluar bi | **49.8** | 65 | 56 | 27 | 50 | BELUM CUKUP | 4 | 57/0 | +0.83 | 4 | -1.02 | -0.14 | 4.7 | -0.39 | – | – |
+| 90 | `N37X16` Gap and go → keluar bila super | **49.7** | 54 | 56 | 34 | 50 | BELUM CUKUP | 4 | 63/11 | -0.21 | 4 | +1.17 | +0.32 | 2.4 | -0.61 | – | – |
+| 91 | `N42X15` Lonjakan volum 2x → ekori Chan | **49.7** | 70 | 53 | 26 | 50 | BELUM CUKUP | 4 | 123/0 | +1.15 | 4 | -1.77 | -0.15 | 7.2 | -0.52 | – | – |
+| 92 | `N24X16` Supertrend(10,3) + ADX>20 → ke | **49.7** | 58 | 57 | 31 | 50 | BELUM CUKUP | 4 | 65/2 | +0.22 | 4 | -0.49 | -0.15 | 2.3 | -0.41 | – | – |
+| 93 | `N42X36` Lonjakan volum 2x → keluar sel | **49.7** | 57 | 47 | 38 | 50 | BELUM CUKUP | 4 | 138/38 | +0.43 | 4 | -2.15 | -0.29 | 5.1 | -0.60 | – | – |
+| 94 | `N42X17` Lonjakan volum 2x → keluar bil | **49.6** | 55 | 48 | 38 | 50 | BELUM CUKUP | 4 | 137/30 | +0.30 | 4 | -2.62 | -0.27 | 6.5 | -0.54 | – | – |
+| 95 | `N33X36` Donchian20 + penapis MA200 → k | **49.6** | 53 | 55 | 34 | 50 | BELUM CUKUP | 4 | 51/7 | -0.27 | 4 | -0.76 | -0.21 | 2.4 | -0.45 | – | – |
+| 96 | `N56X16` RSI>50 + ADX>20 → keluar bila  | **49.6** | 53 | 47 | 40 | 50 | BELUM CUKUP | 4 | 102/29 | +0.16 | 4 | -2.31 | -0.45 | 4.0 | -0.29 | – | – |
+| 97 | `N65X14` Gap 4% + volum + hampir 52w →  | **49.6** | 67 | 55 | 23 | 50 | BELUM CUKUP | 3 | 24/0 | +0.59 | 4 | -1.18 | -0.28 | 3.0 | -0.71 | – | – |
+| 98 | `N65X36` Gap 4% + volum + hampir 52w →  | **49.6** | 67 | 55 | 23 | 50 | BELUM CUKUP | 3 | 24/0 | +0.59 | 4 | -1.18 | -0.28 | 3.0 | -0.71 | – | – |
+| 99 | `M31` Band Walk (BB 20/2) | **49.5** | 61 | 34 | 58 | 45 | BELUM CUKUP | 17 | 373/65 | +0.68 | 17 | -3.57 | -0.32 | 6.6 | +0.76 | – | 1.30 |
+| 100 | `M144` Screw Bar | **49.5** | 61 | 51 | 38 | 26 | BELUM CUKUP | 5 | 8/6 | +0.11 | 15 | +0.10 | +0.04 | 0.9 | +0.09 | – | 0.36 |
+| 101 | `N75X14` RSI14 < 40 tanpa penapis → kel | **49.5** | 62 | 52 | 28 | 50 | BELUM CUKUP | 4 | 176/4 | +0.84 | 4 | -2.80 | -0.51 | 4.1 | -0.92 | – | – |
+| 102 | `N42X16` Lonjakan volum 2x → keluar bil | **49.5** | 55 | 45 | 38 | 50 | BELUM CUKUP | 4 | 141/37 | +0.37 | 4 | -2.92 | -0.45 | 4.7 | -0.57 | – | – |
+| 103 | `N50X14` Mampat + pecah volum 1.5x → ke | **49.5** | 58 | 54 | 27 | 50 | BELUM CUKUP | 3 | 12/0 | +0.31 | 4 | -0.38 | -0.04 | 5.6 | -0.30 | – | – |
+| 104 | `N35X36` Pecah 52 minggu tinggi → kelua | **49.5** | 46 | 67 | 28 | 50 | BELUM CUKUP | 3 | 30/0 | -0.39 | 4 | +0.98 | +0.54 | 1.2 | -0.21 | – | – |
+| 105 | `N50X17` Mampat + pecah volum 1.5x → ke | **49.3** | 51 | 52 | 29 | 50 | BELUM CUKUP | 3 | 12/1 | -0.29 | 4 | +0.13 | +0.01 | 5.6 | -0.33 | – | – |
+| 106 | `M136` Short/Intermediate-term Low (L | **49.2** | 57 | 48 | 56 | 20 | BELUM CUKUP | 17 | 629/243 | +0.03 | 17 | -0.69 | -0.15 | 2.4 | +0.29 | – | 0.17 |
+| 107 | `M03` BB Break + Divergence RSI | **49.2** | 47 | 55 | 54 | 27 | BELUM CUKUP | 17 | 333/294 | -0.39 | 17 | +1.07 | +0.17 | 2.7 | +0.10 | – | 0.39 |
+| 108 | `N28X36` ADX>25 + DI+ > DI- → keluar se | **49.2** | 50 | 42 | 40 | 50 | BELUM CUKUP | 4 | 137/60 | +0.19 | 4 | -2.69 | -0.43 | 4.6 | -0.47 | – | – |
+| 109 | `N33X16` Donchian20 + penapis MA200 → k | **49.2** | 47 | 57 | 31 | 50 | BELUM CUKUP | 4 | 51/5 | -0.61 | 4 | -0.10 | -0.03 | 2.3 | -0.59 | – | – |
+| 110 | `N22X14` BB pecah atas + RSI → keluar b | **49.2** | 47 | 49 | 37 | 50 | BELUM CUKUP | 4 | 73/4 | -0.44 | 4 | -0.83 | -0.18 | 3.1 | +0.19 | – | – |
+| 111 | `N66X36` 52w tinggi + pengesahan 1% → k | **49.2** | 53 | 48 | 29 | 50 | BELUM CUKUP | 3 | 28/1 | +0.10 | 3 | -1.55 | -0.37 | 3.4 | -0.31 | – | – |
+| 112 | `M07` Qullamaggie Breakout | **49.2** | 27 | 64 | 27 | 15 | BELUM CUKUP | 1 | 1/1 | -2.53 | 17 | -0.25 | -0.21 | 0.6 | -0.22 | – | -1.12 |
+| 113 | `N73X13` Tutup bawah jalur bawah BB(20, | **49.1** | 56 | 56 | 24 | 50 | BELUM CUKUP | 4 | 131/0 | +0.30 | 4 | -1.05 | -0.17 | 3.6 | -0.70 | – | – |
+| 114 | `N75X13` RSI14 < 40 tanpa penapis → kel | **49.1** | 54 | 61 | 22 | 50 | BELUM CUKUP | 4 | 115/0 | +0.15 | 4 | -0.20 | -0.05 | 2.5 | -0.94 | – | – |
+| 115 | `N75X15` RSI14 < 40 tanpa penapis → eko | **49.1** | 54 | 61 | 22 | 50 | BELUM CUKUP | 4 | 115/0 | +0.15 | 4 | -0.20 | -0.05 | 2.5 | -0.94 | – | – |
+| 116 | `M27` Price Action 4 Tiang | **49.1** | 49 | 41 | 46 | 15 | BELUM CUKUP | 2 | 547/432 | -0.61 | 17 | -2.69 | -0.52 | 2.9 | -0.03 | – | -0.09 |
+| 117 | `N33X14` Donchian20 + penapis MA200 → k | **49.0** | 47 | 54 | 30 | 50 | BELUM CUKUP | 4 | 60/1 | -0.57 | 4 | -0.46 | -0.11 | 2.8 | -0.33 | – | – |
+| 118 | `N39X36` NR7 kemudian pecah → keluar se | **49.0** | 20 | 42 | 22 | 50 | BELUM CUKUP | 1 | 16/4 | -3.11 | 3 | -0.08 | -0.02 | 2.6 | -1.17 | – | – |
+| 119 | `N57X36` ADX bangkit daripada <20 → kel | **48.9** | 41 | 58 | 32 | 50 | BELUM CUKUP | 4 | 46/3 | -0.95 | 4 | +1.21 | +0.36 | 2.3 | -0.38 | – | – |
+| 120 | `N40X36` OBV tinggi baharu + MA50 → kel | **48.9** | 43 | 48 | 37 | 50 | BELUM CUKUP | 4 | 25/7 | -0.77 | 4 | -1.09 | -0.23 | 3.3 | -0.09 | – | – |
+| 121 | `N57X16` ADX bangkit daripada <20 → kel | **48.9** | 41 | 57 | 32 | 50 | BELUM CUKUP | 4 | 44/4 | -0.96 | 4 | +1.21 | +0.36 | 2.3 | -0.40 | – | – |
+| 122 | `N28X16` ADX>25 + DI+ > DI- → keluar bi | **48.9** | 46 | 44 | 38 | 50 | BELUM CUKUP | 4 | 144/60 | -0.13 | 4 | -2.64 | -0.42 | 4.5 | -0.74 | – | – |
+| 123 | `N74X16` MACD atas garis isyarat (keada | **48.9** | 46 | 40 | 42 | 50 | BELUM CUKUP | 4 | 200/118 | -0.13 | 4 | -3.88 | -0.53 | 5.8 | -0.52 | – | – |
+| 124 | `M107` Golden Cross SMA50/200 | **48.8** | 52 | 52 | 46 | 26 | BELUM CUKUP | 14 | 28/7 | -0.10 | 17 | -0.17 | -0.05 | 1.6 | +0.22 | – | 0.38 |
+| 125 | `N40X16` OBV tinggi baharu + MA50 → kel | **48.8** | 41 | 47 | 38 | 50 | BELUM CUKUP | 4 | 33/14 | -1.05 | 4 | -0.91 | -0.17 | 3.4 | -0.14 | – | – |
+| 126 | `M45` High 52 Minggu (George & Hwang | **48.8** | 17 | 41 | 29 | 15 | BELUM CUKUP | 1 | 2/1 | -4.72 | 6 | -0.92 | -0.51 | 1.1 | -0.02 | – | -0.13 |
+| 127 | `M01` Bollinger Band + RSI | **48.7** | 74 | 44 | 44 | 15 | BELUM CUKUP | 17 | 108/17 | +1.66 | 17 | -3.66 | -0.34 | 4.4 | -0.42 | – | -2.01 |
+| 128 | `M41` FW Penyatuan Mingguan | **48.7** | 48 | 35 | 44 | 45 | BELUM CUKUP | 4 | 63/8 | +0.35 | 16 | -5.21 | -0.63 | 4.0 | +0.78 | – | 1.39 |
+| 129 | `N24X36` Supertrend(10,3) + ADX>20 → ke | **48.7** | 48 | 38 | 38 | 50 | BELUM CUKUP | 4 | 83/22 | -0.34 | 4 | -2.23 | -0.49 | 3.3 | -0.42 | – | – |
+| 130 | `N36X36` Pocket pivot → keluar selepas  | **48.7** | 43 | 45 | 36 | 50 | BELUM CUKUP | 4 | 113/38 | -0.92 | 4 | +0.09 | +0.02 | 3.2 | -0.87 | – | – |
+| 131 | `N76X36` Tutup > MA50 (penapis trend tu | **48.7** | 46 | 40 | 36 | 50 | BELUM CUKUP | 4 | 82/28 | -0.35 | 4 | -2.79 | -0.51 | 4.1 | -0.70 | – | – |
+| 132 | `N54X16` Supertrend + RSI>50 → keluar b | **48.5** | 51 | 41 | 27 | 50 | BELUM CUKUP | 4 | 70/3 | +0.16 | 4 | -3.02 | -0.38 | 5.4 | -0.92 | – | – |
+| 133 | `N08X36` tutup>EMA20 tidak terlalu jauh | **48.5** | 37 | 45 | 38 | 50 | BELUM CUKUP | 4 | 165/94 | -1.11 | 4 | -0.35 | -0.06 | 3.6 | -0.96 | – | – |
+| 134 | `M138` 直升机空中加油 (Helikopter isi minyak | **48.5** | 36 | 56 | 24 | 15 | BELUM CUKUP | 2 | 2/0 | -0.86 | 10 | -0.13 | -0.20 | 0.2 | -0.50 | – | -0.70 |
+| 135 | `M84` Jarak purata bergerak MAD 21/2 | **48.5** | 15 | 17 | 33 | 15 | BELUM CUKUP | 1 | 58/35 | -3.70 | 6 | -7.13 | -0.91 | 5.6 | -0.71 | – | -3.04 |
+| 136 | `N08X16` tutup>EMA20 tidak terlalu jauh | **48.4** | 39 | 41 | 39 | 50 | BELUM CUKUP | 4 | 192/100 | -0.88 | 4 | -1.45 | -0.46 | 2.6 | -0.82 | – | – |
+| 137 | `N47X16` NR7 + EMA9>EMA21 → keluar bila | **48.4** | 39 | 51 | 29 | 50 | BELUM CUKUP | 4 | 41/9 | -0.42 | 4 | -1.64 | -0.38 | 3.0 | -1.12 | – | – |
+| 138 | `N27X16` Ichimoku atas awan → keluar bi | **48.3** | 37 | 53 | 29 | 50 | BELUM CUKUP | 4 | 88/21 | -1.01 | 4 | -0.36 | -0.12 | 2.0 | -1.41 | – | – |
+| 139 | `M94` Pecutan Momentum (Chen, Yu & W | **48.3** | 13 | 13 | 16 | 15 | BELUM CUKUP | 1 | 33/0 | -6.98 | 6 | -7.08 | -0.60 | 7.7 | -1.21 | – | -5.48 |
+| 140 | `M32` Momentum Burst | **48.2** | 60 | 29 | 51 | 45 | BELUM CUKUP | 11 | 51/32 | +0.19 | 17 | -4.31 | -0.39 | 6.4 | +0.38 | – | 1.15 |
+| 141 | `N41X36` CMF20>0 + tutup>EMA20 → keluar | **48.2** | 34 | 44 | 39 | 50 | BELUM CUKUP | 4 | 108/64 | -1.34 | 4 | -0.48 | -0.10 | 3.2 | -0.69 | – | – |
+| 142 | `N36X14` Pocket pivot → keluar bila rsi | **48.2** | 44 | 37 | 31 | 50 | BELUM CUKUP | 4 | 113/6 | -0.54 | 4 | -2.91 | -0.43 | 4.5 | -0.66 | – | – |
+| 143 | `M96` Momo India: Ranking Sharpe 3/6 | **48.2** | 14 | 11 | 9 | 15 | BELUM CUKUP | 1 | 6/5 | -12.74 | 6 | -7.61 | -1.00 | 5.1 | -5.12 | – | -14.74 |
+| 144 | `N38X36` VCP pecah → keluar selepas DUA | **48.1** | 39 | 47 | 28 | 50 | BELUM CUKUP | 4 | 15/4 | -0.84 | 4 | -1.32 | -0.41 | 2.3 | -0.96 | – | – |
+| 145 | `N76X16` Tutup > MA50 (penapis trend tu | **48.1** | 34 | 48 | 33 | 50 | BELUM CUKUP | 4 | 129/57 | -1.32 | 4 | -0.31 | -0.09 | 2.3 | -1.35 | – | – |
+| 146 | `M36` Turtle 55/20 | **48.0** | 47 | 39 | 56 | 40 | BELUM CUKUP | 17 | 304/145 | -0.48 | 17 | -2.57 | -0.22 | 6.3 | +0.33 | – | 0.82 |
+| 147 | `M127` Slingshot Bullish | **47.8** | 48 | 57 | 48 | 15 | BELUM CUKUP | 15 | 94/69 | -1.14 | 17 | +0.84 | +0.12 | 2.9 | -0.46 | – | -0.69 |
+| 148 | `M68` Kell Base n' Break | **47.7** | 30 | 53 | 47 | 85 | BELUM CUKUP | 12 | 41/11 | -1.88 | 17 | +1.25 | +0.28 | 1.6 | +0.26 | – | 1.97 |
+| 149 | `M130` 多方炮 (dua lilin hijau mengapit  | **47.7** | 44 | 35 | 42 | 37 | BELUM CUKUP | 6 | 9/3 | -0.23 | 15 | +0.03 | +0.01 | 2.4 | +0.70 | – | 0.72 |
+| 150 | `M78` Alvarez Pecahan Mingguan DTAYS | **47.7** | 18 | 25 | 42 | 24 | BELUM CUKUP | 2 | 73/39 | -1.83 | 16 | -7.77 | -0.75 | 5.9 | +0.07 | – | 0.29 |
+| 151 | `N27X36` Ichimoku atas awan → keluar se | **47.6** | 36 | 38 | 28 | 50 | BELUM CUKUP | 4 | 59/5 | -0.90 | 4 | -2.61 | -0.60 | 3.2 | -0.95 | – | – |
+| 152 | `N31X36` Turtle sistem 2 → keluar selep | **47.6** | 36 | 43 | 24 | 50 | BELUM CUKUP | 4 | 71/0 | -1.11 | 4 | -1.21 | -0.33 | 2.6 | -0.75 | – | – |
+| 153 | `M149` 3-Step Pullback | **47.5** | 49 | 35 | 56 | 33 | BELUM CUKUP | 15 | 151/52 | -0.16 | 17 | -4.20 | -0.39 | 5.0 | +0.67 | – | 0.61 |
+| 154 | `N09X36` Undur EMA10 + penapis EMA50 →  | **47.5** | 26 | 45 | 34 | 50 | BELUM CUKUP | 4 | 88/25 | -1.63 | 4 | -0.65 | -0.17 | 2.6 | -0.94 | – | – |
+| 155 | `N06X36` Golden cross MA50/MA200 → kelu | **47.5** | 23 | 48 | 22 | 50 | BELUM CUKUP | 3 | 8/2 | -1.78 | 4 | -1.33 | -0.33 | 2.8 | -1.25 | – | – |
+| 156 | `M115` Bow Tie (Landry) | **47.4** | 35 | 44 | 48 | 45 | BELUM CUKUP | 9 | 33/18 | -1.48 | 17 | -3.12 | -0.40 | 3.1 | +0.38 | – | 2.39 |
+| 157 | `N55X13` BB + RSI + ADX>20 → keluar bil | **47.3** | 40 | 42 | 18 | 50 | BELUM CUKUP | 4 | 45/0 | -0.40 | 4 | -3.53 | -0.77 | 3.7 | -1.42 | – | – |
+| 158 | `N56X36` RSI>50 + ADX>20 → keluar selep | **47.2** | 32 | 31 | 33 | 50 | BELUM CUKUP | 4 | 93/31 | -0.84 | 4 | -4.76 | -0.65 | 5.8 | -1.07 | – | – |
+| 159 | `M140` 猎豹出击 (Serangan Cheetah) | **47.1** | 50 | 47 | 38 | 15 | BELUM CUKUP | 9 | 38/12 | -0.10 | 17 | -1.69 | -0.27 | 2.5 | -0.72 | – | -1.04 |
+| 160 | `N54X36` Supertrend + RSI>50 → keluar s | **47.1** | 33 | 29 | 32 | 50 | BELUM CUKUP | 4 | 90/28 | -0.94 | 4 | -4.60 | -0.57 | 6.2 | -1.11 | – | – |
+| 161 | `N51X36` BB squeeze + Supertrend → kelu | **47.1** | 20 | 38 | 23 | 50 | BELUM CUKUP | 3 | 4/2 | -3.38 | 4 | -1.32 | -0.52 | 1.9 | -1.22 | – | – |
+| 162 | `N47X36` NR7 + EMA9>EMA21 → keluar sele | **47.0** | 20 | 34 | 24 | 50 | BELUM CUKUP | 3 | 37/8 | -1.34 | 4 | -4.35 | -0.63 | 5.2 | -1.47 | – | – |
+| 163 | `M147` Improved Three-Bar Pullback | **46.9** | 36 | 53 | 42 | 39 | BELUM CUKUP | 14 | 95/29 | -1.52 | 17 | +4.77 | +0.56 | 3.8 | -0.80 | – | -0.55 |
+| 164 | `N43X36` Undur EMA8 + penapis MA50 → ke | **46.9** | 23 | 42 | 30 | 50 | BELUM CUKUP | 4 | 76/16 | -1.86 | 4 | -0.65 | -0.17 | 2.7 | -1.24 | – | – |
+| 165 | `N119X13` 3 tutup turun berturut → kelua | **46.9** | 35 | 33 | 22 | 50 | BELUM CUKUP | 4 | 129/6 | -0.10 | 4 | -7.37 | -0.89 | 7.2 | -1.74 | – | – |
+| 166 | `N51X16` BB squeeze + Supertrend → kelu | **46.9** | 16 | 41 | 25 | 50 | BELUM CUKUP | 3 | 4/1 | -2.63 | 4 | -1.00 | -0.39 | 1.8 | -0.78 | – | – |
+| 167 | `M14` Walking with the Whales | **46.6** | 54 | 38 | 53 | 15 | BELUM CUKUP | 17 | 820/547 | -0.00 | 17 | -6.14 | -0.58 | 5.5 | -0.05 | – | -0.10 |
+| 168 | `N29X36` PSAR naik + tutup>MA50 → kelua | **46.6** | 28 | 25 | 32 | 50 | BELUM CUKUP | 4 | 83/26 | -1.08 | 4 | -7.15 | -0.74 | 7.4 | -1.11 | – | – |
+| 169 | `M20` EMA10/15 Crossover + Sudut | **46.5** | 42 | 48 | 47 | 23 | BELUM CUKUP | 17 | 381/323 | -1.04 | 17 | -1.00 | -0.17 | 2.6 | -0.71 | – | -5.29 |
+| 170 | `M49` Ichimoku (Tutup Atas Awan + Te | **46.5** | 48 | 45 | 51 | 15 | BELUM CUKUP | 17 | 253/138 | -0.81 | 17 | -1.14 | -0.17 | 3.1 | -0.22 | – | -0.32 |
+| 171 | `M125` 2-Bar Breakout | **46.5** | 49 | 42 | 52 | 15 | BELUM CUKUP | 17 | 895/403 | -0.50 | 17 | -0.58 | -0.09 | 2.5 | -0.08 | – | -0.05 |
+| 172 | `N119X15` 3 tutup turun berturut → ekori | **46.5** | 33 | 38 | 14 | 50 | BELUM CUKUP | 4 | 37/0 | -0.42 | 4 | -4.60 | -0.68 | 5.4 | -1.85 | – | – |
+| 173 | `M64` O'Neil Tiga Minggu Ketat | **46.5** | 23 | 24 | 27 | 15 | BELUM CUKUP | 3 | 3/1 | -10.36 | 17 | -3.06 | -0.80 | 2.0 | -0.79 | – | -11.27 |
+| 174 | `M34` Carter TTM Squeeze | **46.2** | 44 | 36 | 50 | 34 | BELUM CUKUP | 16 | 94/46 | -0.79 | 17 | -1.19 | -0.16 | 3.4 | -0.02 | – | -0.07 |
+| 175 | `M38` Darvas Kotak | **46.1** | 16 | 32 | 34 | 49 | BELUM CUKUP | 4 | 23/1 | -2.25 | 16 | -2.21 | -0.22 | 3.8 | +0.20 | – | 1.24 |
+| 176 | `M157` Consolidation Pivot Breakout ( | **46.0** | 21 | 37 | 28 | 15 | BELUM CUKUP | 4 | 4/3 | -4.95 | 14 | -1.96 | -0.67 | 1.1 | -0.83 | – | -2.99 |
+| 177 | `N16X13` RSI2<10 tanpa penapis → keluar | **46.0** | 25 | 24 | 23 | 50 | BELUM CUKUP | 4 | 109/3 | -0.94 | 4 | -8.13 | -0.90 | 7.0 | -1.45 | – | – |
+| 178 | `M102` Stockbee SLTB | **45.8** | 46 | 41 | 52 | 15 | BELUM CUKUP | 17 | 319/237 | -0.93 | 17 | -2.64 | -0.25 | 5.3 | -0.13 | – | -0.39 |
+| 179 | `M54` IBD Power Trend | **45.8** | 43 | 43 | 52 | 15 | BELUM CUKUP | 16 | 195/100 | -0.98 | 17 | -0.12 | -0.01 | 5.4 | -0.11 | – | -0.28 |
+| 180 | `N113X36` 80-20 bar (sisi beli) → keluar | **45.8** | 18 | 23 | 32 | 50 | BELUM CUKUP | 4 | 111/51 | -1.72 | 4 | -4.84 | -0.70 | 5.8 | -1.41 | – | – |
+| 181 | `N29X16` PSAR naik + tutup>MA50 → kelua | **45.7** | 15 | 29 | 29 | 50 | BELUM CUKUP | 4 | 105/41 | -2.18 | 4 | -4.81 | -0.65 | 5.6 | -1.62 | – | – |
+| 182 | `N48X36` Inside day pecah → keluar sele | **45.7** | 17 | 24 | 31 | 50 | BELUM CUKUP | 4 | 80/37 | -2.56 | 4 | -5.93 | -0.70 | 6.7 | -1.41 | – | – |
+| 183 | `M121` High 2 bull flag (Brooks) | **45.7** | 12 | 21 | 25 | 15 | BELUM CUKUP | 3 | 5/3 | -9.95 | 13 | -4.94 | -0.67 | 3.5 | -1.04 | – | -15.94 |
+| 184 | `M06` Minervini VCP Breakout | **45.6** | 37 | 49 | 48 | 21 | BELUM CUKUP | 17 | 71/34 | -1.29 | 17 | -1.41 | -0.22 | 2.6 | -0.18 | – | -0.54 |
+| 185 | `M87` IBD Tapak Menaik | **45.6** | 26 | 38 | 42 | 30 | BELUM CUKUP | 7 | 10/6 | -1.93 | 17 | -1.92 | -0.33 | 3.2 | +0.12 | – | 0.49 |
+| 186 | `M152` Spike & Ledge | **45.4** | 28 | 48 | 43 | 49 | BELUM CUKUP | 14 | 40/7 | -1.49 | 17 | +0.66 | +0.16 | 2.3 | -0.14 | – | -0.49 |
+| 187 | `N113X16` 80-20 bar (sisi beli) → keluar | **45.4** | 15 | 20 | 31 | 50 | BELUM CUKUP | 4 | 112/50 | -1.84 | 4 | -5.34 | -0.76 | 6.0 | -1.48 | – | – |
+| 188 | `M12` Parabolic SAR | **45.0** | 41 | 40 | 53 | 15 | BELUM CUKUP | 17 | 335/177 | -1.10 | 17 | -1.50 | -0.26 | 3.0 | -0.05 | – | -0.13 |
+| 189 | `M50` Elder Triple Screen | **44.9** | 47 | 32 | 54 | 17 | BELUM CUKUP | 17 | 496/300 | -0.19 | 17 | -8.80 | -0.80 | 6.3 | +0.03 | – | 0.06 |
+| 190 | `M128` Inventory Retracement Bar (IRB | **44.8** | 44 | 29 | 53 | 29 | BELUM CUKUP | 17 | 128/73 | -0.50 | 17 | -6.16 | -0.56 | 6.0 | +0.08 | – | 0.46 |
+| 191 | `N16X15` RSI2<10 tanpa penapis → ekori  | **44.7** | 15 | 17 | 16 | 50 | BELUM CUKUP | 4 | 106/0 | -1.30 | 4 | -10.85 | -0.93 | 8.7 | -1.66 | – | – |
+| 192 | `M99` Three Line Break | **44.3** | 32 | 44 | 52 | 19 | BELUM CUKUP | 17 | 133/84 | -1.98 | 17 | +1.06 | +0.17 | 3.2 | -0.14 | – | -0.65 |
+| 193 | `M73` ADX(5) > 40 + Julat Terkecil 6 | **44.3** | 42 | 36 | 50 | 15 | BELUM CUKUP | 17 | 729/556 | +0.08 | 17 | -5.79 | -0.72 | 4.5 | -0.44 | – | -3.34 |
+| 194 | `M141` First Thrust (Landry) | **44.3** | 21 | 42 | 34 | 15 | BELUM CUKUP | 7 | 20/8 | -1.99 | 17 | -1.90 | -0.37 | 1.9 | -0.91 | – | -1.99 |
+| 195 | `M19` Sneaky Pivot (proksi harian) | **44.1** | 26 | 43 | 48 | 37 | BELUM CUKUP | 16 | 266/219 | -3.44 | 17 | +0.53 | +0.07 | 3.0 | -0.60 | – | -10.15 |
+| 196 | `M156` Single Penetration (DiNapoli) | **44.0** | 33 | 34 | 47 | 36 | BELUM CUKUP | 17 | 226/121 | -1.10 | 17 | -4.17 | -0.32 | 5.4 | -0.70 | – | -2.94 |
+| 197 | `M55` Guppy GMMA | **43.8** | 38 | 35 | 51 | 15 | BELUM CUKUP | 17 | 183/114 | -1.32 | 17 | -3.51 | -0.40 | 4.3 | -0.26 | – | -0.90 |
+| 198 | `M26` Garis Trend Undur 3 Sentuhan + | **43.5** | 34 | 35 | 45 | 15 | BELUM CUKUP | 14 | 56/39 | -0.77 | 17 | -5.33 | -0.66 | 3.3 | -0.47 | – | -0.82 |
+| 199 | `M119` 180 Bullish (Cooper) | **43.3** | 37 | 33 | 48 | 15 | BELUM CUKUP | 16 | 114/58 | -0.94 | 17 | -5.17 | -0.48 | 4.3 | -0.38 | – | -1.37 |
+| 200 | `M66` IBD Undur Pertama ke Purata 50 | **42.9** | 36 | 32 | 50 | 15 | BELUM CUKUP | 17 | 197/129 | -1.23 | 17 | -4.47 | -0.39 | 5.8 | -0.32 | – | -1.00 |
+| 201 | `M44` Tapak Rata IBD | **42.9** | 19 | 42 | 24 | 15 | BELUM CUKUP | 8 | 9/5 | -3.57 | 17 | -3.12 | -0.66 | 2.4 | -1.90 | – | -32.31 |
+| 202 | `M161` EMA 10/21 + Supertrend (10,3) | **42.5** | 43 | 20 | 54 | 22 | BELUM CUKUP | 17 | 421/200 | +0.04 | 17 | -10.51 | -0.76 | 8.5 | +0.09 | – | 0.22 |
+| 203 | `M95` Nisbah Kebaharuan High 52 Ming | **42.4** | 28 | 37 | 48 | 15 | BELUM CUKUP | 16 | 112/61 | -1.61 | 17 | -3.99 | -0.47 | 3.9 | -0.35 | – | -1.02 |
+| 204 | `M120` Reversal New Highs | **42.4** | 27 | 34 | 39 | 15 | BELUM CUKUP | 12 | 18/12 | -2.38 | 17 | -3.54 | -0.54 | 3.1 | -0.73 | – | -4.40 |
+| 205 | `M135` 3rd Watch | **42.4** | 12 | 31 | 32 | 15 | BELUM CUKUP | 7 | 12/3 | -5.04 | 17 | -5.79 | -0.73 | 3.1 | -0.83 | – | -5.27 |
+| 206 | `M79` Radge: 20% Flipper | **42.1** | 31 | 34 | 47 | 15 | BELUM CUKUP | 17 | 277/74 | -1.23 | 17 | -3.60 | -0.40 | 4.1 | -0.56 | – | -1.11 |
+| 207 | `M67` Rayner Teo: Ujian Ketiga pada  | **41.9** | 23 | 32 | 37 | 15 | BELUM CUKUP | 11 | 25/18 | -3.80 | 17 | -6.34 | -0.57 | 5.3 | -1.04 | – | -6.04 |
+| 208 | `M82` Arthur Hill Rotasi Sasaran 10% | **41.8** | 34 | 24 | 51 | 21 | BELUM CUKUP | 17 | 544/184 | -0.79 | 17 | -4.95 | -0.31 | 7.0 | -0.28 | – | -1.24 |
+| 209 | `M126` Hidden Smash Day (beli, Larry  | **41.6** | 17 | 34 | 35 | 15 | BELUM CUKUP | 10 | 18/11 | -3.79 | 16 | -4.54 | -0.63 | 3.4 | -0.77 | – | -1.58 |
+| 210 | `M11` NR7 Breakout + Volume | **41.4** | 29 | 29 | 43 | 15 | BELUM CUKUP | 15 | 95/69 | -1.14 | 17 | -7.04 | -0.59 | 5.7 | -1.02 | – | -1.06 |
+| 211 | `M57` Landry Trend Knockout (TKO) | **41.0** | 26 | 34 | 42 | 15 | BELUM CUKUP | 17 | 144/101 | -2.01 | 17 | -3.65 | -0.43 | 4.0 | -1.29 | – | -4.29 |
+| 212 | `M28` VWAP Separator + Kiss Pivot | **40.8** | 24 | 30 | 42 | 15 | BELUM CUKUP | 15 | 91/82 | -1.74 | 17 | -6.99 | -0.83 | 5.3 | -1.17 | – | -12.16 |
+| 213 | `M123` CCI Correction (Lambert, Chart | **40.7** | 26 | 34 | 39 | 15 | BELUM CUKUP | 17 | 160/142 | -1.41 | 17 | -7.45 | -0.69 | 5.9 | -1.69 | – | -4.17 |
+| 214 | `M29` EMA3 + RSI75 + Stokastik | **40.3** | 18 | 32 | 38 | 15 | BELUM CUKUP | 13 | 32/26 | -2.72 | 17 | -8.48 | -0.68 | 6.3 | -1.07 | – | -7.38 |
+| 215 | `M122` Moving Momentum (ChartSchool) | **39.5** | 22 | 30 | 41 | 15 | BELUM CUKUP | 17 | 94/56 | -2.36 | 17 | -4.84 | -0.56 | 4.7 | -1.17 | – | -4.29 |
+| 216 | `M59` Anjakan Julat RSI | **39.5** | 16 | 25 | 43 | 15 | BELUM CUKUP | 13 | 35/16 | -4.61 | 17 | -4.04 | -0.50 | 3.2 | -0.38 | – | -1.85 |
+| 217 | `M101` Bulkowski: Tiga lembah menaik | **38.8** | 14 | 26 | 45 | 15 | BELUM CUKUP | 14 | 43/19 | -3.40 | 17 | -6.89 | -0.56 | 5.2 | -0.20 | – | -0.72 |
+| 218 | `M154` HOLP (High of Low Period) | **37.8** | 11 | 20 | 40 | 15 | BELUM CUKUP | 13 | 68/30 | -3.54 | 17 | -10.49 | -0.81 | 6.2 | -0.97 | – | -5.17 |
+| 219 | `M09` Volumatic VIDYA Pivot Retest | **37.7** | 7 | 13 | 32 | 15 | BELUM CUKUP | 10 | 26/15 | -4.49 | 17 | -10.49 | -0.89 | 6.7 | -1.54 | – | -11.90 |
+| 220 | `M47` Holy Grail Raschke | **36.8** | 6 | 17 | 27 | 15 | BELUM CUKUP | 11 | 22/20 | -4.67 | 17 | -10.11 | -0.98 | 5.1 | -2.29 | – | -27.58 |
+| 221 | `M76` Undercut & Rally pada Low Pent | **36.6** | 10 | 27 | 40 | 15 | BELUM CUKUP | 16 | 53/43 | -2.12 | 17 | -8.56 | -0.78 | 5.9 | -1.21 | – | -5.47 |
+| 222 | `M81` Bensdorp Long Trend High Momen | **34.6** | 3 | 8 | 44 | 15 | BELUM CUKUP | 12 | 331/135 | -4.11 | 17 | -19.31 | -0.84 | 12.5 | -0.92 | – | -3.58 |
+| 223 | `M90` Pring KST | **33.0** | 4 | 12 | 42 | 15 | BELUM CUKUP | 16 | 67/41 | -4.02 | 17 | -13.43 | -0.73 | 9.7 | -0.95 | – | -5.16 |
 
 ## Metrik dan sauh (0 · 50 · 100)
 
