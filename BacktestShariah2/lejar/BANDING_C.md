@@ -1,11 +1,11 @@
 # Banding Papertrade C dengan Lejar Penuh (fasa 1)
 
-Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-06. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
+Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-09. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
 
-- Posisi C (isyarat >= 2026-10-15): 14317; ada dalam lejar: 10730; tiada: 3587 {'isyarat ada, dipegang lejar': 3550, 'tiada isyarat dalam lejar': 20, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 11}
-- Posisi lejar: 64010 (C hanya 14317; lejar 4.5×)
-- Harga beli berbeza > 0.5%: 53 daripada 10730
-- Status keluar sama: 10728 daripada 10730; berbeza: 2
+- Posisi C (isyarat >= 2026-10-15): 15641; ada dalam lejar: 11485; tiada: 4156 {'isyarat ada, dipegang lejar': 4120, 'tiada isyarat dalam lejar': 19, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 11}
+- Posisi lejar: 66236 (C hanya 15641; lejar 4.2×)
+- Harga beli berbeza > 0.5%: 52 daripada 11485
+- Status keluar sama: 11483 daripada 11485; berbeza: 2
 
 ## Harga beli berbeza > 0.5%
 
@@ -59,7 +59,6 @@ Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir
 - N75X17 AUGO 2026-10-30: C 67.62 / lejar 68.005 (-0.57%)
 - N07X36 LFST 2026-10-30: C 13.6 / lejar 13.5 (+0.74%)
 - M70 BSM 2026-10-15: C 14.75 / lejar 14.3902 (+2.50%)
-- M19 INDV 2026-10-20: C 27.0948 / lejar 34.92 (-22.41%)
 - M31 ARLP 2026-10-26: C 25.7769 / lejar 26.42 (-2.43%)
 - M34 BSM 2026-10-15: C 14.75 / lejar 14.3902 (+2.50%)
 
