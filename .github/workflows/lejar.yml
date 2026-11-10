@@ -81,7 +81,8 @@ jobs:
         # always(): simpan sesi yang sudah siap walaupun langkah imbasan tamat masa atau ranap.
         # Selamat hanya kerana tambah_bulan kini idempoten (lihat nota had masa di atas). Job
         # tetap dilapor GAGAL apabila imbasan gagal, jadi amaran_ntfy masih berbunyi - langkah
-        # ini menyimpan kemajuan, ia tidak menyembunyikan kegagalan.
+        # ini menyimpan kemajuan, ia tidak menyembunyikan kegagalan. (Larian dispatch bot TIDAK mencetus
+        # amaran_ntfy; lihat langkah amaran di hujung fail ini.)
         if: always()
         run: |
           git config user.name "lejar[bot]"
@@ -96,8 +97,27 @@ jobs:
           if git diff --cached --quiet; then echo "tiada perubahan"; exit 0; fi
           SESI=$(python3 -c "import json;print(json.load(open('BacktestShariah2/lejar/status.json')).get('sesi_terakhir'))")
           git commit -q -m "Lejar penuh: sesi $SESI"
+          # 10 Nov 2026 (larian #62): bina semula penuh ~2.7 jam bertindih dengan harian.yml, yang juga menulis
+          # stor harga; rebase berkonflik pada stor/status.json + log_laras.csv dan ketiga-tiga push gagal, jadi
+          # sesi itu hilang dan larian seterusnya membina semula sekali lagi. Konflik yang HANYA pada stor harga
+          # diselesaikan dengan versi main (lebih baharu; stor ialah cache yfinance, larian seterusnya mengambil
+          # semula apa yang tertinggal; log_laras.csv digabung `union` melalui .gitattributes). Konflik pada fail
+          # lain (lejar/, konteks/) masih menggagalkan push seperti dahulu.
+          selesai_konflik_stor() {
+            local C
+            while C=$(git diff --name-only --diff-filter=U) && [ -n "$C" ]; do
+              if printf '%s\n' "$C" | grep -qv '^BacktestShariah2/data/harga/stor/'; then return 1; fi
+              echo "Konflik stor harga, ambil versi main: $C" >&2
+              printf '%s\n' "$C" | xargs git checkout --ours --
+              printf '%s\n' "$C" | xargs git add --
+              GIT_EDITOR=true git rebase --continue >/dev/null 2>&1 && return 0
+            done
+            return 1
+          }
           for n in 1 2 3; do
-            if git pull -q --rebase origin main && git push -q origin HEAD:main; then exit 0; fi
+            if git pull -q --rebase origin main || selesai_konflik_stor; then
+              if git push -q origin HEAD:main; then exit 0; fi
+            fi
             git rebase --abort 2>/dev/null || true
             sleep $((n * 15))
           done
@@ -110,3 +130,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run analisis.yml --ref main --repo "$GITHUB_REPOSITORY"
+      # Atas sebab yang sama, kegagalan larian dispatch bot TIDAK mencetus amaran_ntfy.yml (10 Nov 2026: larian #62
+      # gagal push selepas 2.7 jam tanpa sebarang amaran). Hantar terus; larian jadual/manusia kekal melalui
+      # amaran_ntfy supaya tiada amaran berganda.
+      - name: Amaran ntfy (kegagalan larian dispatch bot)
+        if: failure() && github.actor == 'github-actions[bot]'
+        env:
+          TOPIK: ${{ secrets.NTFY_TOPIC || 'claude_azim' }}
+          URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -sS -m 20 -H "Title: papertrade-claude: Lejar penuh (failure)" -H "Tags: warning" -H "Priority: high" \
+            -H "Click: $URL" -d "Lejar penuh (dispatch bot) berakhir dengan status failure. Tekan untuk buka larian." \
+            "https://ntfy.sh/$TOPIK" > /dev/null || echo "::warning::ntfy gagal"
