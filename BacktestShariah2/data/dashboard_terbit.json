@@ -1,9 +1,9 @@
 {
   "artifact": "https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e",
-  "versi_artifact": "1794363301-b607",
-  "nombor": 207,
-  "sha256": "c159f83f3561184f1cb39d5c5fa604cf22bf50c2ddd19afd4920967b6a5aff58",
-  "bait": 787443,
-  "dikemas": "2026-11-11 02:15 UTC",
-  "nota": "v176 (keputusan pengguna 11 Nov 2026 \"susun elok, guna penuh ruang kiri kanan\"): jadual Skor Kaedah di komputer — lajur pengisi dibuang, lebar tetap ikut peratus (Kaedah 22, Skor 10, empat tiang 9 setiap satu, Hari beli 6, Metrik 26), bar tiang memanjang, metrik dibalut dalam mod Padat; kontras sub-tajuk panel Paling Teruk. Audit fon dan audit mendalam 8 saiz skrin 0 cacat."
+  "versi_artifact": "1794383040-0e54",
+  "nombor": 208,
+  "sha256": "3c7af222fd16d9cc42a479dd67540b7572212b2588d9a878cb9537351a21b104",
+  "bait": 788241,
+  "dikemas": "2026-11-11 07:44 UTC",
+  "nota": "v177 (keputusan pengguna 11 Nov 2026, jadual Posisi & keputusan dan jadual lain disusun seperti Skor Kaedah): lajur pengisi .isi dibuang daripada SEMUA jadual di komputer (ruang kosong di kanan sehingga 1,300px pada 1920px); sel Sektor/Industri yang belum digred kini cip \"–\" + belum (selari dengan baris bergred). Audit fon dan audit mendalam 8 saiz skrin 0 cacat."
 }
