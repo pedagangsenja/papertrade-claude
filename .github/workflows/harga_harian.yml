@@ -44,8 +44,14 @@ jobs:
           if git diff --cached --quiet; then echo "tiada perubahan"; exit 0; fi
           SESI=$(python3 -c "import json;print(json.load(open('BacktestShariah2/data/harga/status.json'))['terkini']['sesi'])")
           git commit -q -m "Harga harian (yfinance): sesi $SESI"
-          for n in 1 2 3; do
-            git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0
-            sleep $((n * 10))
+          # 11 Nov 2026 (larian #72): cetusan jadual lewat bertindih dengan harian.yml, yang juga menulis
+          # data/harga (status.json); rebase berkonflik, tiada `rebase --abort`, jadi ketiga-tiga cubaan gagal.
+          # Cara sama dengan harian.yml: konflik diselesaikan dengan versi larian ini (data yfinance terbaharu),
+          # dan rebase yang gagal dibatalkan sebelum cubaan seterusnya.
+          for n in 1 2 3 4; do
+            if git pull -q --rebase -X theirs origin main && git push -q origin HEAD:main; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((n * 15))
           done
+          echo "Push gagal; harian.yml dan larian seterusnya mengambil semula harga." >&2
           exit 1
