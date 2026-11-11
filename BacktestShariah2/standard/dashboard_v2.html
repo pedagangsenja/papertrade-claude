@@ -1377,6 +1377,11 @@ b.nk.nk-c{color:var(--neg-tx)}b.nk.nk-t{color:var(--pos)}b.nk.nk-v{color:#C9B8FF
 }
 /* v176: sub-tajuk panel "Paling Teruk" di atas latar merah pudar — kontras 4.24 -> naik ke fg-2 */
 .panel.danger .panel-h .sub{color:var(--fg-2)}
+/* v177 (11 Nov 2026, keputusan pengguna "guna penuh ruang kiri kanan", selepas Skor Kaedah v176): lajur pengisi (.isi)
+   dibuang daripada SEMUA jadual di komputer. Pengukuran pada 1920px: ruang kosong di kanan sehingga 1,300px (Senarai beli,
+   Isyarat tidak dibeli, jadual Akaun, Backtest, Kombinasi N, Aliran institusi) dan ~300px pada Posisi & keputusan. Lebar
+   baki kini dibahagi kepada lajur kandungan; muatLajur masih menyembunyikan lajur keutamaan rendah apabila tidak muat. */
+@media (min-width:761px){th.isi,td.isi{display:none!important}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2039,7 +2044,8 @@ const grSel1=(g,body,bawah)=>GORD[g]!=null?`<div class="grc">${grB(g)}<div class
 /* peta disimpan di luar objek db: objek data langsung boleh dibekukan (iPhone), jadi jangan tulis medan padanya */
 function grKump(r,jenis){const g=r[jenis==='Sektor'?'gred_sektor':'gred_industri'],sk=grNil(r[jenis==='Sektor'?'skor_sektor':'skor_industri']);
   const asal=jenis==='Sektor'?r.sektor:r.industri,us=jenis==='Sektor'?r.sektor_us:r.industri_us;const x=null;
-  if(GORD[g]==null)return asal?`<span class="grt" title="${esc(asal)}">${esc(asal)}</span>`:'<span class="mut">belum</span>';
+  /* v177: belum digred -> struktur sama dengan baris bergred (cip "–" + teks), supaya lajur kekal selari; nama dalam .vv */
+  if(GORD[g]==null)return `<div class="grc"><span class="gr g-x" title="${jenis} belum digred">–</span><div class="grt"><span class="mut nw">belum</span>${asal?`<span class="vv nm1" title="${esc(asal)}">${esc(asal)}</span>`:''}</div></div>`;
   return grSel1(g,`<span class="nw" title="Skor ${jenis.toLowerCase()} daripada 100"><b>${sk==null?'–':fx(sk,0)}</b></span><span class="vv nm1" title="${esc(asal||us||'')}">${esc(asal||us||'')}</span>${x&&x.prestasi_1m!=null?`<span class="vv">1B kini <span class="${cls(x.prestasi_1m)}">${sg2(x.prestasi_1m)}</span></span>`:''}`);}
 /* skema RS 18 Okt 2026: A/B hanya jika disahkan (saham naik 12 bulan, SPY > SMA200, Mansfield > 0); rs_tanda = sebab/risiko */
 function grRS(r){const v=grNil(r.rs_rating),ri=grNil(r.rs_industri),t=String(r.rs_tanda||'');
