@@ -1,9 +1,9 @@
 {
   "artifact": "https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e",
-  "versi_artifact": "1794279818-4a78",
-  "nombor": 206,
-  "sha256": "f0edf97709a6355e8bb1c8bc6a635ac74479ea5f8bbc1b2bf7110a1072796d74",
-  "bait": 785898,
-  "dikemas": "2026-11-10 03:03 UTC",
-  "nota": "v175 (keputusan pengguna 10 Nov 2026 \"laksanakan 3 tempat\"): gaya tonjol — tajuk besar dua warna (.j30hero), cip sorotan (mark.tj) dan nombor penting berwarna (b.nk) di kad Jawapan 30 saat (Hari ini, Pilih kaedah, Posisi, Akaun); tajuk kotak keputusan helaian (.pv2v) besar berwarna ikut jenis; baris jawapan kad lipat dibuka (.kadjwp: posisi, watchlist, kad skor). Warna ikut maksud sedia ada. Audit fon dan audit mendalam 8 saiz skrin 0 cacat."
+  "versi_artifact": "1794363301-b607",
+  "nombor": 207,
+  "sha256": "c159f83f3561184f1cb39d5c5fa604cf22bf50c2ddd19afd4920967b6a5aff58",
+  "bait": 787443,
+  "dikemas": "2026-11-11 02:15 UTC",
+  "nota": "v176 (keputusan pengguna 11 Nov 2026 \"susun elok, guna penuh ruang kiri kanan\"): jadual Skor Kaedah di komputer — lajur pengisi dibuang, lebar tetap ikut peratus (Kaedah 22, Skor 10, empat tiang 9 setiap satu, Hari beli 6, Metrik 26), bar tiang memanjang, metrik dibalut dalam mod Padat; kontras sub-tajuk panel Paling Teruk. Audit fon dan audit mendalam 8 saiz skrin 0 cacat."
 }
