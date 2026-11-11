@@ -1,9 +1,9 @@
 {
   "artifact": "https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e",
-  "versi_artifact": "1794383040-0e54",
-  "nombor": 208,
-  "sha256": "3c7af222fd16d9cc42a479dd67540b7572212b2588d9a878cb9537351a21b104",
-  "bait": 788241,
-  "dikemas": "2026-11-11 07:44 UTC",
-  "nota": "v177 (keputusan pengguna 11 Nov 2026, jadual Posisi & keputusan dan jadual lain disusun seperti Skor Kaedah): lajur pengisi .isi dibuang daripada SEMUA jadual di komputer (ruang kosong di kanan sehingga 1,300px pada 1920px); sel Sektor/Industri yang belum digred kini cip \"–\" + belum (selari dengan baris bergred). Audit fon dan audit mendalam 8 saiz skrin 0 cacat."
+  "versi_artifact": "1794388459-6b9b",
+  "nombor": 209,
+  "sha256": "a76cd1b2ae438eeb295c8c5daf9201d710991617e4266bfa50f514b820fb24e5",
+  "bait": 791893,
+  "dikemas": "2026-11-11 09:14 UTC",
+  "nota": "v178 (keputusan pengguna 11 Nov 2026 \"seragamkan warna semua tab, ikut gaya histogram pertama\"): satu palet carta — bar untung gradien teal->biru, bar rugi gradien merah->oren, amaran kuning; bucu bulat, jarak antara bar, label bilangan (Taburan untung % dan R di Akaun, Jangkaan setiap kaedah, Menang/payoff, Neraca, bar Skor Kaedah, bar mendatar, corong, bar tangkapan); teal tunggal #1EE3B4 dan merah tunggal #FF5D73; sebab keluar sama warna dalam donut dan bar; sektor diwarna ikut nama (sama di donut dan bar, tanpa warna bermaksud). Audit fon dan audit mendalam 8 saiz skrin 0 cacat."
 }
