@@ -589,3 +589,8 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - Watchlist 551 (baharu 294, dibuang 204, ke senarai beli 105). Isyarat direkod: 13275 (data/isyarat/2026-11-10_malam.csv.gz).
 - Ralat kaedah: tiada. Nota: C WLYB M30: tiada bar 2026-11-10 (harga terkini 2026-11-09); C KVUE M93: tiada bar 2026-11-10 (harga terkini 2026-10-30); C KVUE M74: tiada bar 2026-11-10 (harga terkini 2026-10-30); C WLYB M74: tiada bar 2026-11-10 (harga terkini 2026-11-09); C KVUE M99: tiada bar 2026-11-10 (harga terkini 2026-10-30); C KVUE M124: tiada bar 2026-11-10 (harga terkini 2026-10-30); C KVUE M80: tiada bar 2026-11-10 (harga terkini 2026-10-30); C KVUE M141: tiada bar 2026-11-10 (harga terkini 2026-10-30).
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-11 23:07 MYT — GitHub Actions: beli maya 2026-11-11 (isyarat 2026-11-10)
+- Direkod 1226 (354 saham; belian semula 112; fail claude_193.csv); dilangkau 17. Harga: buka sementara yfinance 10:07 NY.
+- Dilangkau: GRDN M06: buka 49.75 > buka_maks 49.38; SSNC M13: buka 78.99 <= henti 81.33; BLDR M14: buka 62.00 <= henti 62.30; LPX M14: buka 74.73 <= henti 74.82; JD M14: buka 27.99 <= henti 28.09; TOL M14: buka 150.05 <= henti 150.51; KBH M14: buka 49.75 <= henti 49.80; INFY M18: buka 12.25 <= henti 12.30; CTSH M49: buka 64.28 <= henti 64.31; AEO M70: buka 21.35 <= henti 21.40; BIIB M70: buka 249.78 <= henti 250.44; RDY M70: buka 14.67 <= henti 14.86; TTEK M70: buka 40.17 <= henti 40.42; INFY M102: buka 12.25 <= henti 12.30; INFY M128: isyarat batal pada buka (peraturan kaedah); REGN M143: isyarat batal pada buka (peraturan kaedah); SGC M156: isyarat batal pada buka (peraturan kaedah).
+- Tiada order. Tiada wang sebenar.
