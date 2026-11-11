@@ -1,6 +1,6 @@
 {
  "terkini": {
-  "dijana": "2026-11-11 06:25 UTC",
+  "dijana": "2026-11-11 07:47 UTC",
   "sesi": 20261110,
   "bil_ticker": 930,
   "bil_universe": 932,
@@ -17,10 +17,10 @@
    "WLYB"
   ],
   "bil_tiada_bar_sesi": 6,
-  "dividen_baharu": 13
+  "dividen_baharu": 0
  },
  "sejarah": {
-  "dijana": "2026-11-10 22:25 UTC",
+  "dijana": "2026-11-11 07:47 UTC",
   "bil_ticker": 1,
   "diminta": [
    "SUPN"
