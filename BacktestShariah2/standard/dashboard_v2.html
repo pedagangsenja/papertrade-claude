@@ -1357,6 +1357,23 @@ b.nk.nk-c{color:var(--neg-tx)}b.nk.nk-t{color:var(--pos)}b.nk.nk-v{color:#C9B8FF
 .kadjwp.t{border-left-color:var(--pos)}.kadjwp.t b.h{color:var(--pos)}
 .kadjwp.s{border-left-color:#8A9BBF}.kadjwp.s b.h{color:#C3CCDD}
 @media (max-width:760px){.j30hero{font-size:1.75rem}.pv2v>div>b{font-size:1.3rem}}
+/* v176 (11 Nov 2026, keputusan pengguna "susun elok, guna penuh ruang kiri kanan"): jadual Skor Kaedah di komputer.
+   Lajur pengisi (.isi) dahulu menyerap ~400px kosong di kanan dan menghimpit lajur lain. Kini lebar tetap ikut peratus
+   (jumlah 100%), jadi seluruh lebar panel digunakan dan bar tiang memanjang ikut lajur. Telefon tidak berubah (kad lipat). */
+@media (min-width:761px){
+  table[data-st="skorkaedah"]{table-layout:fixed;width:100%}
+  table[data-st="skorkaedah"] th.isi,table[data-st="skorkaedah"] td.isi{display:none}
+  table[data-st="skorkaedah"] th:nth-child(1){width:22%}
+  table[data-st="skorkaedah"] th:nth-child(2){width:10%}
+  table[data-st="skorkaedah"] th:nth-child(3),table[data-st="skorkaedah"] th:nth-child(4),
+  table[data-st="skorkaedah"] th:nth-child(5),table[data-st="skorkaedah"] th:nth-child(6){width:9%}
+  table[data-st="skorkaedah"] th:nth-child(7){width:6%}
+  table[data-st="skorkaedah"] th:nth-child(8){width:26%}
+  body.padat .tablewrap table[data-st="skorkaedah"] tbody td.name{max-width:none}
+  body.padat .tablewrap table[data-st="skorkaedah"] tbody td:nth-child(8),table[data-st="skorkaedah"] td:nth-child(8) .nw{white-space:normal}
+  table[data-st="skorkaedah"] td .ksbar{height:6px}
+  table[data-st="skorkaedah"] th,table[data-st="skorkaedah"] td{padding-inline:8px}
+}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
