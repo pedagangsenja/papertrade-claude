@@ -54,8 +54,8 @@
    "sesi_terakhir_lama": "2026-11-06"
   }
  ],
- "sesi_terakhir": "2026-11-09",
- "kemaskini": "2026-11-10 21:56 MYT",
+ "sesi_terakhir": "2026-11-10",
+ "kemaskini": "2026-11-11 19:19 MYT",
  "bil_kaedah": 228,
  "larian": [
   {
@@ -291,6 +291,19 @@
    "ralat": [],
    "nota": [],
    "masa_s": 520
+  },
+  {
+   "sesi": "2026-11-10",
+   "beli": 4031,
+   "tutup": 531,
+   "langkau": 117,
+   "isyarat": 13275,
+   "terbuka": 56918,
+   "tunggu": 1772,
+   "kaedah_isyarat": 189,
+   "ralat": [],
+   "nota": [],
+   "masa_s": 367
   }
  ]
 }

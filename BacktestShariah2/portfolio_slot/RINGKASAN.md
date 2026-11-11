@@ -10,9 +10,9 @@ Tempoh: 2026-10-16 hingga 2026-11-10 (18 sesi). SPY dalam tempoh sama: -3.02% (r
 |---|---|---|---|---|---|---|
 | RS_10 — RS pasaran tertinggi | -21.58 | -27.55 | 10 | 8 | 0 | -30.88 |
 | RAWAK_10 — Rawak (kawalan) | -6.60 | -10.08 | 10 | 8 | 0 | -14.47 |
-| GABUNGAN_10 — Gabungan kaedah beku | +2.28 | -4.59 | 10 | 27 | 4 | -2.05 |
+| GABUNGAN_10 — Gabungan kaedah beku | +2.20 | -4.59 | 9 | 28 | 7 | -1.40 |
 | TOP1_10 — Kaedah #1 sahaja | -0.55 | -4.02 | 10 | 29 | 0 | -1.90 |
-| RAWAK_KAEDAH_10 — Kaedah rawak (kawalan gabungan) | -2.52 | -6.99 | 10 | 3 | 0 | -17.45 |
+| RAWAK_KAEDAH_10 — Kaedah rawak (kawalan gabungan) | -2.54 | -6.99 | 10 | 3 | 0 | -17.45 |
 | RISIKO_10 — RS pasaran tertinggi, saiz berskala risiko | -5.68 | -8.62 | 10 | 8 | 0 | -30.88 |
 
 ## RS_10 — posisi dipegang
@@ -52,7 +52,6 @@ Tempoh: 2026-10-16 hingga 2026-11-10 (18 sesi). SPY dalam tempoh sama: -3.02% (r
 | AMSC | M03 | 6 | 2026-10-22 | 25.58 | 25.47 | -0.43 |
 | BDC | M03 | 40 | 2026-10-22 | 105.50 | 104.90 | -0.57 |
 | ESAB | M03 | 5 | 2026-10-22 | 64.79 | 87.13 | +34.48 |
-| DD | M18 | 65 | 2026-10-23 | 133.99 | 156.88 | +17.08 |
 | AYI | M70 | 26 | 2026-10-26 | 324.16 | 331.94 | +2.40 |
 | ESCA | M70 | 81 | 2026-11-02 | 19.60 | 20.98 | +7.04 |
 | LIVN | M70 | 78 | 2026-11-03 | 80.40 | 91.14 | +13.36 |
@@ -86,7 +85,7 @@ Tempoh: 2026-10-16 hingga 2026-11-10 (18 sesi). SPY dalam tempoh sama: -3.02% (r
 | NVST | M11 | 46 | 2026-10-22 | 23.10 | 25.84 | +11.86 |
 | RGLD | M148 | 80 | 2026-10-22 | 236.64 | 274.57 | +16.03 |
 | ROG | M148 | 82 | 2026-10-22 | 136.15 | 128.28 | -5.78 |
-| CP | M11 | 58 | 2026-10-28 | 91.03 | 94.03 | +3.30 |
+| CP | M11 | 58 | 2026-10-28 | 91.03 | 93.79 | +3.03 |
 | DASH | M11 | 18 | 2026-11-05 | 190.71 | 178.25 | -6.53 |
 | FNV | M148 | 74 | 2026-11-06 | 247.81 | 255.79 | +3.22 |
 
@@ -109,9 +108,9 @@ Tempoh: 2026-10-16 hingga 2026-11-10 (18 sesi). SPY dalam tempoh sama: -3.02% (r
 
 | Portfolio | Kaedah (slot, lorong) | Sesi | Pulangan % | SPY tempoh sama % |
 |---|---|---|---|---|
-| GABUNGAN_10 | M70 (4, kaedah), M03 (3, henti), M18 (3, kaedah) | 14 | +2.28 | -2.15 |
+| GABUNGAN_10 | M70 (4, kaedah), M03 (3, henti), M18 (3, kaedah) | 14 | +2.20 | -2.15 |
 | TOP1_10 | M70 (10, kaedah) | 14 | -0.55 | -2.15 |
-| RAWAK_KAEDAH_10 | M11 (4, henti), M111 (3, henti), M148 (3, henti) | 14 | -2.52 | -2.15 |
+| RAWAK_KAEDAH_10 | M11 (4, henti), M111 (3, henti), M148 (3, henti) | 14 | -2.54 | -2.15 |
 
 Penilaian adil memerlukan sekurang-kurangnya 6–12 bulan (KAJIAN_PORTFOLIO.md). Kelebihan yang dicari: RS_10 mengatasi RAWAK_10 dan SPY dengan MDD yang setanding; GABUNGAN_10 mengatasi TOP1_10, RAWAK_KAEDAH_10 dan SPY.
 
@@ -121,13 +120,13 @@ RISIKO_10 dipasangkan dengan RS_10: susunan calon SAMA, hanya saiz berbeza (risi
 
 ### Jalur kawalan rawak (20 cabutan, sesi 2026-11-10)
 
-Jalur: min 0.9473 | p10 0.9632 | median 1.0279 | p90 1.0670 | maks 1.1025
+Jalur: min 0.9479 | p10 0.9609 | median 1.0279 | p90 1.0648 | maks 1.1025
 
 | Lorong | Ekuiti | Persentil dalam jalur | Di luar jalur? |
 |---|---|---|---|
-| GABUNGAN_10 | 1.0228 | 40 | tidak |
+| GABUNGAN_10 | 1.0220 | 45 | tidak |
 | RAWAK_10 | 0.9340 | 0 | YA (bawah) |
-| RAWAK_KAEDAH_10 | 0.9748 | 15 | tidak |
+| RAWAK_KAEDAH_10 | 0.9746 | 15 | tidak |
 | RISIKO_10 | 0.9432 | 0 | YA (bawah) |
 | RS_10 | 0.7842 | 0 | YA (bawah) |
 | TOP1_10 | 0.9945 | 30 | tidak |
