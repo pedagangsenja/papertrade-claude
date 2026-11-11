@@ -49,72 +49,57 @@
   ]
  },
  "malam": {
-  "sesi": "2026-11-09",
-  "masa": "2026-11-10 14:24 MYT",
+  "sesi": "2026-11-10",
+  "masa": "2026-11-11 14:25 MYT",
   "ralat_kaedah": [],
   "kaedah_tanpa_modul": [],
-  "masa_kaedah_s": 319,
+  "masa_kaedah_s": 343,
   "keluar_baru": {
    "M": {
-    "isyarat": 1
+    "henti": 1,
+    "isyarat": 2
    },
    "C": {
-    "isyarat": 518,
-    "masa": 13,
-    "henti": 65,
-    "sasaran": 23
+    "masa": 20,
+    "henti": 149,
+    "isyarat": 201,
+    "sasaran": 9
    }
   },
   "keluar_baru_jumlah": {
-   "M": 1,
-   "C": 619
+   "M": 3,
+   "C": 379
   },
-  "menunggu": 201,
+  "menunggu": 249,
   "keluar_keluarga": {
-   "M": 254,
-   "N": 365
+   "M": 235,
+   "N": 144
   },
   "menunggu_keluarga": {
-   "M": 57,
-   "N": 142
+   "M": 65,
+   "N": 184
   },
-  "harga_beli_dibetulkan": 283,
-  "harga_beli_beza_besar": 70,
+  "harga_beli_dibetulkan": 276,
+  "harga_beli_beza_besar": 95,
   "tidak_dibeli": [],
   "nota": [
-   "C WLYB M30: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C KVUE M93: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C KVUE M74: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C WLYB M74: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C KVUE M99: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C KVUE M124: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C KVUE M80: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C KVUE M141: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C KVUE M148: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C ACA M100: tiada bar 2026-11-09 (harga terkini 2026-10-22)",
-   "C KVUE M137: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C KVUE M81: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C KVUE M82: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
+   "C WLYB M30: tiada bar 2026-11-10 (harga terkini 2026-11-09)",
+   "C KVUE M93: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M74: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C WLYB M74: tiada bar 2026-11-10 (harga terkini 2026-11-09)",
+   "C KVUE M99: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M124: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M80: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M141: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M148: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C ACA M100: tiada bar 2026-11-10 (harga terkini 2026-10-22)",
+   "C KVUE M137: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M81: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M82: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
    "C SUPN M106: buka stor 26.99 lawan harga_beli 42.07 (> 15%; split/data tidak sepadan) — tidak dinilai",
-   "C KVUE M147: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C KVUE M158: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C KVUE M14: tiada bar 2026-11-09 (harga terkini 2026-10-30)",
-   "C AAOI N75X14: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N75X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N75X15: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N75X17: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N16X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N16X15: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N119X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N119X15: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N19X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N73X13: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI M28: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N42X14: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N42X15: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N42X16: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N42X17: tiada bar 2026-11-09 (harga terkini 2026-11-06)",
-   "C AAOI N42X36: tiada bar 2026-11-09 (harga terkini 2026-11-06)"
+   "C KVUE M147: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M158: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M14: tiada bar 2026-11-10 (harga terkini 2026-10-30)"
   ],
   "tidak_layak_posisi": {
    "ambil_alih": {
@@ -144,27 +129,27 @@
    }
   },
   "dagangan_betul": 1,
-  "senarai_beli": 1642,
-  "saham_unik": 418,
+  "senarai_beli": 1243,
+  "saham_unik": 358,
   "senarai_keluarga": {
-   "M": 775,
-   "N": 867
+   "M": 466,
+   "N": 777
   },
   "kaedah_keluarga": {
-   "N": 91,
-   "M": 96
+   "M": 94,
+   "N": 91
   },
-  "kaedah": 187,
-  "belian_semula": 177,
-  "dari_watchlist": 187,
-  "isyarat": 16277,
+  "kaedah": 185,
+  "belian_semula": 121,
+  "dari_watchlist": 105,
+  "isyarat": 13275,
   "ditolak": {
-   "dipegang": 2066,
-   "had": 11879,
-   "kelas_berganda": 50,
-   "ambil_alih": 300,
-   "tidak_cair": 200,
-   "mingguan": 140
+   "dipegang": 2011,
+   "had": 9502,
+   "ambil_alih": 275,
+   "kelas_berganda": 59,
+   "tidak_cair": 168,
+   "mingguan": 17
   },
   "tidak_layak": {
    "ACLS": "ambil alih",
@@ -172,6 +157,7 @@
    "ATKR": "ambil alih",
    "BELFA": "kelas berganda",
    "BIO.B": "tidak cair",
+   "BKHA": "tidak cair",
    "BRZE": "ambil alih",
    "CRTO": "ambil alih",
    "DV": "ambil alih",
@@ -181,7 +167,6 @@
    "INDV": "ambil alih",
    "KELYB": "tidak cair",
    "KEQU": "tidak cair",
-   "LVLU": "tidak cair",
    "MAYS": "tidak cair",
    "MRVL": "ambil alih",
    "NCEW": "tidak cair",
@@ -204,22 +189,22 @@
    "TECH": "ambil alih",
    "WLYB": "tidak cair"
   },
-  "watchlist": 566,
-  "watchlist_baharu": 324,
-  "watchlist_dibuang": 105,
-  "watchlist_ke_senarai": 187,
+  "watchlist": 551,
+  "watchlist_baharu": 294,
+  "watchlist_dibuang": 204,
+  "watchlist_ke_senarai": 105,
   "minggu_akhir": false,
-  "fail_isyarat": "data/isyarat/2026-11-09_malam.csv.gz"
+  "fail_isyarat": "data/isyarat/2026-11-10_malam.csv.gz"
  },
  "gred": {
-  "tarikh": "2026-11-10",
-  "masa": "2026-11-10 20:27 MYT",
+  "tarikh": "2026-11-11",
+  "masa": "2026-11-11 14:32 MYT",
   "pemangkin": {
-   "D": 1366,
-   "A": 82,
-   "C": 60,
-   "B": 126,
-   "–": 8
+   "D": 1070,
+   "C": 40,
+   "B": 84,
+   "–": 19,
+   "A": 30
   }
  }
 }
