@@ -1,14 +1,12 @@
 {
- "larian": "2026-11-10 12:48 UTC",
+ "larian": "2026-11-11 00:43 UTC",
  "masa_fail": [
-  "1110202607:00",
-  "1110202607:00"
+  "1110202618:01",
+  "1110202618:01"
  ],
- "simbol": 12864,
+ "simbol": 12867,
  "saham_biasa": 5356,
  "peristiwa": {
-  "buang": 7,
-  "tambah": 6,
-  "tukar_nama": 1
+  "tambah": 3
  }
 }

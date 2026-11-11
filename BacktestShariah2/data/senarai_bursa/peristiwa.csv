@@ -13065,3 +13065,6 @@ tarikh,simbol,peristiwa,nama,bursa,etf,biasa
 2026-11-10,REAI,buang,Intelligent Real Estate ETF,NASDAQ,1,0
 2026-11-10,SWAGW,buang,"Stran & Company, Inc. - Warrant",NASDAQ,0,0
 2026-11-10,GCBC,tukar_nama,"Greene Bancorp, Inc. - Common Stock",NASDAQ,0,1
+2026-11-11,SCQC,tambah,SPACCircle Acquisition Corp. - Class A Ordinary Shares,NASDAQ,0,0
+2026-11-11,SCQCR,tambah,SPACCircle Acquisition Corp. - Rights,NASDAQ,0,0
+2026-11-11,SCQCW,tambah,SPACCircle Acquisition Corp. - Warrants,NASDAQ,0,0
