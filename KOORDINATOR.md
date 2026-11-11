@@ -1,6 +1,6 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-11 11:16 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-11 12:43 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
@@ -54,9 +54,9 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 |---|---|---|---|---|
 | RS_10 | 0.784235 | 10 | 8 | 2026-11-10 |
 | RAWAK_10 | 0.934 | 10 | 8 | 2026-11-10 |
-| GABUNGAN_10 | 1.022814 | 10 | 27 | 2026-11-10 |
+| GABUNGAN_10 | 1.021961 | 9 | 28 | 2026-11-10 |
 | TOP1_10 | 0.994516 | 10 | 29 | 2026-11-10 |
-| RAWAK_KAEDAH_10 | 0.97482 | 10 | 3 | 2026-11-10 |
+| RAWAK_KAEDAH_10 | 0.974583 | 10 | 3 | 2026-11-10 |
 | RISIKO_10 | 0.943225 | 10 | 8 | 2026-11-10 |
 
 
@@ -77,7 +77,7 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 |---|---|---|---|
 | Stor harga | 20261110 | 1 | OK |
 | Trend D10H2-r2 | 20261110 | 1 | OK |
-| Lejar Penuh | 2026-11-09 | 2 | OK |
+| Lejar Penuh | 2026-11-10 | 1 | OK |
 | portfolio_slot | 2026-11-10 | 1 | OK |
 | Papan Penganalisis | 2026-11-11 | 0 | OK |
 | RS pasaran | 2026-11-10 | 1 | OK |
