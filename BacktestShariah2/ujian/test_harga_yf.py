@@ -81,6 +81,28 @@ class UjiHargaYf(unittest.TestCase):
         self.assertGreater(len(s), 400)
         self.assertNotIn('SPY', s)
 
+    def test_akhir_bar(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as dd:
+            p = os.path.join(dd, 'terkini.csv')
+            self.assertIsNone(H.akhir_bar(p))
+            pd.DataFrame(dict(ticker=['A', 'A', 'B'], date=[20261020, 20261021, 20261009])).to_csv(p, index=False)
+            self.assertEqual(H.akhir_bar(p), {'A': 20261021, 'B': 20261009})
+
+    def test_langkau_delist(self):
+        # 11 Nov 2026: hanya saham delist (direktori / ambil alih selesai) DAN tanpa bar >= 10 sesi dilangkau
+        sesi = [int(x.strftime('%Y%m%d')) for x in pd.bdate_range('2026-10-13', '2026-11-10')]
+        b = dict(semasa={'AAPL', 'BARU'}, peristiwa={'KVUE': [('2026-10-27', 'asas'), ('2026-11-03', 'buang')]},
+                 tamat={'BLFS': '2026-10-06'})
+        akhir = {'AAPL': 20261110, 'STRS': 20261110, 'KVUE': 20261030, 'ACA': 20261022}
+        saham = ['AAPL', 'BARU', 'STRS', 'KVUE', 'ACA', 'BLFS', 'QRVO']
+        r = H.langkau_delist(saham, 20261110, b, akhir, sesi)
+        # AAPL/BARU tersenarai (BARU tiada bar lama: saham baharu, tetap ditarik); STRS tiada dalam direktori tetapi masih
+        # berdagang; KVUE dibuang 3 Nov tetapi baru 7 sesi tanpa bar; ACA 13 sesi; BLFS/QRVO tiada bar dalam tetingkap
+        self.assertEqual(r, ['ACA', 'BLFS', 'QRVO'])
+        self.assertEqual(H.langkau_delist(saham, 20261110, None, akhir, sesi), [])
+        self.assertEqual(H.langkau_delist(saham, 20261110, b, None, sesi), [])
+
 
 if __name__ == '__main__':
     unittest.main()

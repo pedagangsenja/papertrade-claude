@@ -15,6 +15,8 @@ Universe = set 431 (data_mentah/dataset_S*.csv) + semua saham dalam papertrade/*
 (senarai skrin Shariah Moomoo, ditulis oleh imbasan 8:02 malam) + saham posisi Lejar terbuka dan isyarat Lejar menunggu
 (lejar/terbuka.csv, lejar/tunggu.csv; sejak 7 Nov 2026) + SPY, QQQ. Tanpa Lejar, saham yang keluar daripada univ.txt
 (NEGG jatuh bawah skrin $10 pada 23 Okt 2026) berhenti mendapat bar dan posisi Lejarnya ditutup 'delist' secara palsu.
+`terkini` tidak menarik saham yang delist (tidak_layak.sah_delist) DAN tanpa bar >= 10 sesi (langkau_delist, 11 Nov 2026);
+senarainya dalam status.json `terkini.delist_dilangkau`.
 Kuarantin (7 Nov 2026; standard/kuarantin.py, data/harga/kuarantin.csv): keputusan 'anomali', faktor kembar dan peristiwa
 direktori Nasdaq tukar_nama/buang dalam tetingkap bar baharu MEMBEKUKAN bar stor ticker itu (tiada timpa, tiada tambah);
 ticker kuarantin dimuat turun semula sejarah penuh (`sejarah`) dan dilepaskan hanya apabila sejarah segar konsisten dengan
@@ -34,6 +36,7 @@ HARGA = os.path.join(BS2, 'data', 'harga')
 sys.path.insert(0, os.path.join(BS2, 'kod'))
 from stor import LAJ, SIMPAN_BAR, TOL_LARAS, baca_kline, nisbah_laras  # noqa: E402
 import kuarantin as KR  # noqa: E402
+import tidak_layak as TL  # noqa: E402
 
 IDX = ['SPY', 'QQQ']
 TOLERANSI = 0.005
@@ -166,10 +169,53 @@ def liputan_sesi(path, sesi):
     return int(d.loc[d.date == sesi, 'ticker'].nunique())
 
 
+def akhir_bar(path):
+    """{ticker: tarikh bar terakhir YYYYMMDD} dalam fail terkini `path`; None jika fail tiada/rosak (tidak diketahui)."""
+    if not os.path.exists(path):
+        return None
+    try:
+        d = pd.read_csv(path, usecols=['ticker', 'date'])
+    except Exception:
+        return None
+    return {str(t): int(v) for t, v in d.groupby('ticker').date.max().items()}
+
+
+def langkau_delist(saham, sesi, bursa, akhir, sesi_pasaran):
+    """Saham yang tidak dimuat turun lagi (keputusan pengguna 11 Nov 2026; BLFS/QRVO diambil alih Okt 2026 tetapi masih
+    ditarik setiap hari kerana berada dalam set 431). DUA syarat: delist menurut tidak_layak.sah_delist pada `sesi`
+    (direktori Nasdaq / ambil alih selesai) DAN tiada bar bagi >= DELIST_SESI sesi pasaran (`sesi_pasaran`: tarikh sesi
+    YYYYMMDD; `akhir`: bar terakhir dalam terkini.csv lama, tiada = tiada bar dalam tetingkap itu). Syarat bar perlu kerana
+    STRS tiada dalam direktori semasa tetapi masih berdagang. Saham yang kembali ke direktori ditarik semula secara automatik.
+    bursa/akhir None (tidak diketahui) -> tiada yang dilangkau."""
+    if bursa is None or akhir is None:
+        return []
+    out = []
+    for t in saham:
+        if not TL.sah_delist(t, str(sesi), bursa)[0]:
+            continue
+        a = akhir.get(t, 0)
+        if sum(1 for s in sesi_pasaran if a < s <= sesi) >= TL.DELIST_SESI:
+            out.append(t)
+    return out
+
+
+def sesi_pasaran_lalu(sesi, hari=45):
+    """Tarikh sesi NYSE (YYYYMMDD) dalam `hari` hari kalendar hingga `sesi`."""
+    import exchange_calendars as xc
+    s = pd.Timestamp(str(sesi))
+    return [int(x.strftime('%Y%m%d')) for x in xc.get_calendar('XNYS').sessions_in_range(s - pd.Timedelta(days=hari), s)]
+
+
 def cmd_terkini(a):
     os.makedirs(HARGA, exist_ok=True)
     saham, idx = universe()
     sesi = sesi_terakhir()
+    lama = os.path.join(HARGA, 'terkini.csv')
+    try:
+        dilangkau = langkau_delist(saham, sesi, TL.muat_bursa(), akhir_bar(lama), sesi_pasaran_lalu(sesi))
+    except Exception as e:   # langkau ialah penjimatan sahaja; kegagalannya tidak menghalang harga
+        print(f'langkau delist: {type(e).__name__}: {e}', file=sys.stderr); dilangkau = []
+    saham = [t for t in saham if t not in set(dilangkau)]
     div = []
     d, gagal = muat_turun(saham + idx, period='1mo', dividen=div)
     d = d[d.date <= sesi].groupby('ticker', group_keys=False).tail(a.hari)
@@ -182,7 +228,6 @@ def cmd_terkini(a):
     lewat = sorted(akhir[akhir < sesi].index)
     if d.ticker.nunique() < 0.5 * (len(saham) + len(idx)):
         print(f'GAGAL: hanya {d.ticker.nunique()} ticker; fail lama dikekalkan', file=sys.stderr); sys.exit(1)
-    lama = os.path.join(HARGA, 'terkini.csv')
     n_lama, n_baru = liputan_sesi(lama, sesi), int((akhir == sesi).sum())
     if n_baru < 0.5 * n_lama:
         # Yahoo kerap membuang bar sesi terakhir ~00:00–01:00 UTC (lengkap semula ~05:00): jangan timpa tarikan yang jauh
@@ -191,8 +236,10 @@ def cmd_terkini(a):
         return
     d.to_csv(lama, index=False, float_format='%.6g')
     tulis_status('terkini', sesi=sesi, bil_ticker=int(d.ticker.nunique()), bil_universe=len(saham) + len(idx),
-                 tiada_data=gagal, tiada_bar_sesi=lewat[:200], bil_tiada_bar_sesi=len(lewat), dividen_baharu=n_div)
-    print(json.dumps(dict(sesi=sesi, ticker=int(d.ticker.nunique()), gagal=len(gagal), lewat=len(lewat))))
+                 tiada_data=gagal, tiada_bar_sesi=lewat[:200], bil_tiada_bar_sesi=len(lewat), dividen_baharu=n_div,
+                 delist_dilangkau=dilangkau)
+    print(json.dumps(dict(sesi=sesi, ticker=int(d.ticker.nunique()), gagal=len(gagal), lewat=len(lewat),
+                          delist_dilangkau=len(dilangkau))))
 
 
 def cmd_sejarah(a):
