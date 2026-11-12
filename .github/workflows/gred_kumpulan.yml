@@ -69,3 +69,20 @@ jobs:
             sleep $((n * 15))
           done
           exit 1
+      # 12 Nov 2026: panel "Peta industri" dashboard (db kumpulan/peta) dibina daripada fail di atas oleh
+      # standard/peta_kumpulan.py semasa tolak db malam (jadual/tolak_db.md). Semak di sini supaya data yang
+      # tidak boleh dibina menjadi kegagalan Actions hari itu, bukan panel basi yang senyap.
+      - name: Semak peta industri boleh dibina dan segar
+        run: |
+          python3 BacktestShariah2/standard/peta_kumpulan.py
+          python3 - <<'PY'
+          import csv, sys
+          sys.path.insert(0, 'BacktestShariah2/standard')
+          import peta_kumpulan as P
+          d = P.bina()
+          t = next(csv.DictReader(open(P.KINI, encoding='utf-8')))['tarikh']
+          n = {j: sum(r['j'] == j for r in d['rows']) for j in 'SI'}
+          assert d['tarikh'] == t, f"peta {d['tarikh']} != gred_kumpulan.csv {t}"
+          assert n['S'] >= 8 and n['I'] >= 50, f'kumpulan terlalu sedikit: {n}'
+          print('peta industri:', d['tarikh'], n)
+          PY
