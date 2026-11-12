@@ -1,8 +1,8 @@
 # Papan Penganalisis — banding semua kaedah (backtest + papertrade)
 
-Dijana 2026-11-12 15:37 MYT oleh `standard/penganalisis.py` (GitHub Actions `analisis.yml`, selepas Lejar Penuh). Data harga hingga 11 Nov 2026; Lejar sesi terakhir 11 Nov 2026. Rekod analisis sahaja: tiada order, tiada wang sebenar. Dashboard: tab Analisis (db `analisis/papan`).
+Dijana 2026-11-12 19:34 MYT oleh `standard/penganalisis.py` (GitHub Actions `analisis.yml`, selepas Lejar Penuh). Data harga hingga 11 Nov 2026; Lejar sesi terakhir 11 Nov 2026. Rekod analisis sahaja: tiada order, tiada wang sebenar. Dashboard: tab Analisis (db `analisis/papan`).
 
-> **Status keputusan (kad skor, harga 2026-11-10):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
+> **Status keputusan (kad skor, harga 2026-11-11):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
 ## 3 penemuan utama
 
