@@ -2123,7 +2123,7 @@ CFG,"Citizens Financial Group, Inc. Common Stock",NYSE,0,1,2026-10-27
 CFIT,Cambria Fixed Income Trend ETF,Cboe BZX,1,0,2026-10-27
 CFND,C1 Fund Inc. Common Stock,NYSE,0,0,2026-10-27
 CFO,VictoryShares US 500 Enhanced Volatility Wtd ETF,NASDAQ,1,0,2026-10-27
-CFR,"Cullen/Frost Bankers, Inc. Common Stock",NYSE,0,1,2026-10-27
+CFR,"Cullen/Frost Bankers, Inc. Common Stock",F,0,1,2026-10-27
 CG,The Carlyle Group Inc. - Common Stock,NASDAQ,0,1,2026-10-27
 CGABL,The Carlyle Group Inc. - 4.625% Subordinated Notes due 2061,NASDAQ,0,0,2026-10-27
 CGAU,Centerra Gold Inc. Common Shares,NYSE,0,1,2026-10-27
@@ -2595,6 +2595,7 @@ CRMD,CorMedix Inc. - Common Stock,NASDAQ,0,1,2026-10-27
 CRMG,Leverage Shares 2X Long CRM Daily ETF,NASDAQ,1,0,2026-10-27
 CRML,Critical Metals Corp. - Ordinary Shares,NASDAQ,0,1,2026-10-27
 CRMLW,Critical Metals Corp. - Warrants,NASDAQ,0,0,2026-10-27
+CRMN,Skyline Builders Group Holding Limited - Class A Ordinary Shares,NASDAQ,0,1,2026-11-12
 CRMT,"America's Car-Mart, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 CRMX,Tradr 2X Long CRML Daily ETF,Cboe BZX,1,0,2026-10-27
 CRNC,Cerence Inc. - Common Stock,NASDAQ,0,1,2026-10-27
@@ -4807,6 +4808,7 @@ GLIBK,Liberty Capital Corporation - Series C GCI Group Common Stock,NASDAQ,0,1,2
 GLIN,VanEck India Growth Leaders ETF,NYSE Arca,1,0,2026-10-27
 GLIX,Lazard Listed Infrastructure ETF,NYSE Arca,1,0,2026-10-27
 GLL,ProShares UltraShort Gold,NYSE Arca,1,0,2026-10-27
+GLLD,"MicroSectors Gold 3X Leveraged ETNs due January 29, 2043",NYSE Arca,1,0,2026-11-12
 GLND,Greenland Energy Company - Common Stock,NASDAQ,0,1,2026-10-27
 GLNDW,Greenland Energy Company - Warrant,NASDAQ,0,0,2026-10-27
 GLNG,Golar LNG Limited - Common Shares,NASDAQ,0,1,2026-10-27
@@ -6366,7 +6368,6 @@ KARS,KraneShares Electric Vehicles and Future Mobility Index ETF,NYSE Arca,1,0,2
 KAT,Scharf ETF,NASDAQ,1,0,2026-10-27
 KATT,T-REX 2X Long PURR Daily Target ETF,Cboe BZX,1,0,2026-10-27
 KAUG,Innovator US Small Cap Power Buffer ETF - August,Cboe BZX,1,0,2026-10-27
-KAZR,Skyline Builders Group Holding Limited - Class A Ordinary Shares,NASDAQ,0,1,2026-10-27
 KB,KB Financial Group Inc,NYSE,0,1,2026-10-27
 KBA,KraneShares Bosera MSCI China A 50 Connect Index ETF,NYSE Arca,1,0,2026-10-27
 KBDC,"Kayne Anderson BDC, Inc. Common Stock",NYSE,0,1,2026-10-27
@@ -6378,6 +6379,7 @@ KBONU,Karbon Capital Partners Corp. - Units,NASDAQ,0,0,2026-10-27
 KBONW,Karbon Capital Partners Corp. - Warrant,NASDAQ,0,0,2026-10-27
 KBR,"KBR, Inc. Common Stock",NYSE,0,1,2026-10-27
 KBSX,FST Corp. - Ordinary Shares,NASDAQ,0,1,2026-10-27
+KBTY,Guinness Atkinson K-Beauty ETF,NYSE Arca,1,0,2026-11-12
 KBUF,KraneShares 90% KWEB Defined Outcome January 2027 ETF,NYSE Arca,1,0,2026-10-27
 KBWB,Invesco KBW Bank ETF,NASDAQ,1,0,2026-10-27
 KBWD,Invesco KBW High Dividend Yield Financial ETF,NASDAQ,1,0,2026-10-27
@@ -6493,7 +6495,6 @@ KNOP,KNOT Offshore Partners LP Common Units representing Limited Partner Interes
 KNOV,Innovator U.S. Small Cap Power Buffer ETF - November,Cboe BZX,1,0,2026-10-27
 KNOW,Fundamentals First ETF,Cboe BZX,1,0,2026-10-27
 KNRG,Simplify Kayne Anderson Energy and Infrastructure Credit ETF,NYSE Arca,1,0,2026-10-27
-KNRX,KNOREX LTD. Class A Ordinary Shares,NYSE American,0,1,2026-10-27
 KNSA,"Kiniksa Pharmaceuticals International, plc - Class A Ordinary Shares",NASDAQ,0,1,2026-10-27
 KNSL,"Kinsale Capital Group, Inc. Common Stock",NYSE,0,1,2026-10-27
 KNTK,Kinetik Holdings Inc. Class A Common Stock,NYSE,0,1,2026-10-27
@@ -7003,6 +7004,7 @@ MAGC,Roundhill China Magnificent Seven ETF,Cboe BZX,1,0,2026-10-27
 MAGG,Madison Aggregate Bond ETF,NYSE Arca,1,0,2026-10-27
 MAGH,Magnitude International Ltd - Ordinary Shares,NASDAQ,0,1,2026-10-27
 MAGN,Magnera Corporation Common Stock,NYSE,0,1,2026-10-27
+MAGP,Roundhill Magnificent Seven Plus ETF,Cboe BZX,1,0,2026-11-12
 MAGS,Roundhill Magnificent Seven ETF,Cboe BZX,1,0,2026-10-27
 MAGX,Roundhill Daily 2X Long Magnificent Seven ETF,Cboe BZX,1,0,2026-10-27
 MAGY,Roundhill Magnificent Seven Covered Call ETF,Cboe BZX,1,0,2026-10-27
@@ -7885,6 +7887,7 @@ NIXT,Research Affiliates Deletions ETF,NASDAQ,1,0,2026-10-27
 NIXX,"Nixxy, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 NJAN,Innovator Growth-100 Power Buffer ETF - January,Cboe BZX,1,0,2026-10-27
 NJNK,Columbia U.S. High Yield ETF,NYSE Arca,1,0,2026-10-27
+NJPN,Nomura Japan Equity ETF,NYSE Arca,1,0,2026-11-12
 NJR,NewJersey Resources Corporation Common Stock,NYSE,0,1,2026-10-27
 NJUL,Innovator Growth-100 Power Buffer ETF - July,Cboe BZX,1,0,2026-10-27
 NJUN,Innovator Growth-100 Power Buffer ETF - June,Cboe BZX,1,0,2026-10-27
@@ -8176,7 +8179,6 @@ NXTG,First Trust Indxx NextG ETF,NASDAQ,1,0,2026-10-27
 NXTS,Nexentis Technologies Inc. - Common Stock,NASDAQ,0,1,2026-10-27
 NXTT,Next Technology Holding Inc. - Ordinary Shares,NASDAQ,0,1,2026-10-27
 NXUS,Nuveen International Aggregate Bond ETF,NYSE Arca,1,0,2026-10-27
-NXXT,"NextNRG, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 NYAX,Nayax Ltd. - Ordinary Shares,NASDAQ,0,1,2026-10-27
 NYC,American Strategic Investment Co. Class A Common Stock,NYSE,0,1,2026-10-27
 NYF,iShares New York Muni Bond ETF,NYSE Arca,1,0,2026-10-27
@@ -10220,7 +10222,6 @@ SHLS,"Shoals Technologies Group, Inc. - Class A Common Stock",NASDAQ,0,1,2026-10
 SHM,State Street SPDR Nuveen ICE Short Term Municipal Bond ETF,NYSE Arca,1,0,2026-10-27
 SHMD,SCHMID Group N.V. - Class A Ordinary Shares,NASDAQ,0,1,2026-10-27
 SHMDW,SCHMID Group N.V. - Warrants,NASDAQ,0,0,2026-10-27
-SHNY,"MicroSectors Gold 3X Leveraged ETNs due January 29, 2043",NYSE Arca,1,0,2026-10-27
 SHO,"Sunstone Hotel Investors, Inc. Sunstone Hotel Investors, Inc. Common Shares",NYSE,0,1,2026-10-27
 SHOC,Strive U.S. Semiconductor ETF,NYSE,1,0,2026-10-27
 SHOE,"Shoe Station Group, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
@@ -11916,6 +11917,7 @@ VEL,"Velocity Financial, Inc. Common Stock",NYSE,0,1,2026-10-27
 VELL,Defiance Daily Target 2X Long VELO ETF,Cboe BZX,1,0,2026-10-27
 VELO,"Velo3D, Inc. - Common stock",NASDAQ,0,1,2026-10-27
 VEM,Virtus Emerging Markets Dividend ETF,NYSE Arca,1,0,2026-10-27
+VEMB,Vanguard Emerging Markets Bond Active ETF,Cboe BZX,1,0,2026-11-12
 VEMY,Virtus Stone Harbor Emerging Markets High Yield Bond ETF,NYSE Arca,1,0,2026-10-27
 VENU,Venu Holding Corporation Common Stock,NYSE American,0,1,2026-10-27
 VEON,VEON Ltd. - American Depositary Shares,NASDAQ,0,1,2026-10-27
