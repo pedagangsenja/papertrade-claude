@@ -1,0 +1,80 @@
+jumlah gabungan 940
+lulus tapis ketat (untung kedua-dua separuh, >=6/7 tahun untung, lift positif kedua-dua separuh, lift >=5 tahun): 27
+
+-- 25 teratas ikut untung purata --
+                                                                    masuk                                        keluar     n  jgk   med   mng      pmng  prugi  hari    A    B  thn_untung  terburuk  lift  thn_lift  tanpa5   nV  jgkV  mngV  liftV
+    D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%)             TANPA henti: dua tutup bawah MA50   661 6.13 -2.75 41.45 27.200001  -8.79 39.78 5.28 6.81           6     -0.55  4.37         5   -0.37   24 -1.87 20.83  -0.68
+    D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%)                 TANPA henti: Chandelier 4xATR   661 6.09 -2.11 44.93 26.740000 -10.76 47.66 6.58 5.69           7      1.97  2.42         5   -0.26   24  0.28 37.50   1.66
+    D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%)                  biar lari (henti -8% sahaja)   661 5.27 -8.50 24.21 48.779999  -8.63 52.66 3.83 6.42           6     -1.85  1.59         6   -0.89   24 -1.33 25.00  -0.41
+D01 Saham tidur melonjak (ADX<25, Bollinger sempit, naik>=4%, volum 1.5x)                 TANPA henti: Chandelier 4xATR  2260 4.65 -3.36 42.17 25.350000 -10.45 47.78 4.57 4.70           6     -0.69  1.36         5   -0.84  114 -4.32 31.58  -4.12
+                                         A09 RSI2<10 atas MA200 (Connors)                  biar lari (henti -8% sahaja) 30114 4.11 -8.50 30.07 34.080002  -8.77 60.36 3.67 4.44           6     -2.58  0.57         5   -0.53 1926 -0.21 31.62  -1.49
+D01 Saham tidur melonjak (ADX<25, Bollinger sempit, naik>=4%, volum 1.5x)             TANPA henti: dua tutup bawah MA50  2260 3.78 -3.07 38.10 22.870001  -7.96 37.04 3.17 4.24           6     -0.94  2.13         6   -0.97  114 -3.78 23.68  -3.11
+    D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%)                          dua tutup bawah MA20   661 3.46 -3.39 38.12 20.160000  -6.82 19.03 2.18 4.49           6     -0.21  3.03         7   -1.03   24 -1.64 29.17  -0.82
+    D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%)                               MA10 bawah MA20   661 3.13 -1.93 40.85 16.959999  -6.43 18.11 2.21 3.87           6     -0.56  2.92         6   -1.05   24 -0.81 33.33   0.06
+                        B02 Episodic pivot (gap >=8%, volum 3x, bertahan)                               MA10 bawah MA20   429 2.64 -3.04 39.63 17.280001  -6.97 16.96 1.23 3.41           6     -1.16  2.26         6   -1.44   52 -0.46 25.00  -0.67
+                        B02 Episodic pivot (gap >=8%, volum 3x, bertahan)                                pegang 40 hari   429 2.54 -8.50 37.76 20.940001  -8.63 22.87 1.44 3.14           6     -2.52  0.83         5   -0.30   52  1.71 26.92   0.48
+                                                A05 MA20 silang atas MA50             TANPA henti: dua tutup bawah MA50  5997 2.15 -2.74 35.57 18.040001  -6.62 33.60 1.98 2.28           6     -2.18  0.71         6   -1.28  452  0.84 35.18   0.63
+                                         A09 RSI2<10 atas MA200 (Connors)                              Chandelier 4xATR 30114 1.95 -5.35 34.05 19.660000  -7.19 36.51 1.70 2.14           6     -2.10  0.29         5   -1.44 1926 -0.40 32.45  -1.46
+                                      A16 Ichimoku: tutup pecah atas awan                              Chandelier 4xATR  8104 1.92 -6.15 33.85 20.080000  -7.37 36.41 1.51 2.26           6     -2.11  0.50         6   -1.64  576  0.29 32.99   0.46
+                                             A14 Supertrend bertukar naik             TANPA henti: dua tutup bawah MA50  8256 1.76 -2.89 33.35 17.870001  -6.30 29.72 1.24 2.15           6     -1.77  0.52         6   -1.68  470 -0.55 32.13  -0.43
+                                         A09 RSI2<10 atas MA200 (Connors) pulang modal selepas +8%, kemudian Chandelier 30114 1.75 -2.90 29.53 20.160000  -5.97 33.95 1.54 1.90           6     -1.90  0.34         7   -1.43 1926 -0.08 26.38  -0.99
+                                         A09 RSI2<10 atas MA200 (Connors)                                pegang 40 hari 30114 1.52 -8.50 40.77 15.470000  -8.08 27.70 1.31 1.68           6     -1.35  0.25         5   -0.88 1926 -0.09 34.63  -1.57
+                                             A14 Supertrend bertukar naik                          dua tutup bawah MA50  8256 1.35 -3.29 31.25 17.059999  -5.80 27.21 0.86 1.71           6     -1.78  0.46         5   -1.82  470 -0.38 28.72   0.07
+D01 Saham tidur melonjak (ADX<25, Bollinger sempit, naik>=4%, volum 1.5x)                                pegang 20 hari  2260 1.33 -2.16 45.00 12.180000  -7.54 15.28 0.82 1.71           7      0.22  0.76         5   -0.77  114 -1.44 29.82  -1.55
+                  B11 Volum kering kemudian meletup (naik >=2%, volum 2x)                                pegang 40 hari  1982 1.26 -8.50 36.98 17.430000  -8.23 25.30 0.08 2.21           6     -1.77  0.30         5   -1.41  164 -0.42 31.71  -0.59
+              C08 Undur ke MA50 yang naik (sentuh, tutup atas, hari naik)                                  sasaran +16% 17360 1.04 -8.50 40.93 15.240000  -8.80 32.41 1.03 1.05           6     -1.31  0.15         5    0.13 1231  0.16 39.40  -0.72
+                                             A14 Supertrend bertukar naik                     Supertrend bertukar turun  8256 1.03 -4.53 34.74 15.950000  -6.91 29.65 0.71 1.27           6     -1.89  0.67         6   -1.76  470 -0.50 29.57   0.17
+                                                A05 MA20 silang atas MA50                     Supertrend bertukar turun  5997 0.97 -2.90 34.95 13.780000  -5.92 25.66 0.72 1.16           6     -2.18  0.54         6   -1.57  452 -0.11 31.86   0.24
+                                                A05 MA20 silang atas MA50                               MA10 bawah MA20  5997 0.75 -1.51 39.39 10.120000  -5.34 17.20 0.34 1.08           6     -1.25  0.60         7   -1.32  452  0.04 36.95   0.14
+                                         A09 RSI2<10 atas MA200 (Connors)                                pegang 20 hari 30114 0.70 -1.11 46.32  9.650000  -7.02 16.65 0.53 0.82           6     -1.05  0.22         5   -0.86 1926  0.96 43.82  -0.44
+                                                A04 MA10 silang atas MA20                     Supertrend bertukar turun 14960 0.56 -1.33 35.90  9.950000  -4.70 17.86 0.61 0.51           6     -0.96  0.14         5   -1.66  961 -0.41 34.13   0.05
+
+-- 15 teratas ikut kadar menang (antara yang lulus) --
+                                                                    masuk                            keluar     n  jgk   med   mng      pmng  prugi  hari    A    B  thn_untung  terburuk  lift  thn_lift  tanpa5   nV  jgkV  mngV  liftV
+                                         A09 RSI2<10 atas MA200 (Connors)                    pegang 10 hari 30114 0.28 -0.22 48.77  6.570000  -5.71  9.72 0.15 0.38           6     -1.14  0.12         6   -0.81 1926  1.29 51.77   0.24
+                                         A09 RSI2<10 atas MA200 (Connors)                    pegang 20 hari 30114 0.70 -1.11 46.32  9.650000  -7.02 16.65 0.53 0.82           6     -1.05  0.22         5   -0.86 1926  0.96 43.82  -0.44
+D01 Saham tidur melonjak (ADX<25, Bollinger sempit, naik>=4%, volum 1.5x)                    pegang 20 hari  2260 1.33 -2.16 45.00 12.180000  -7.54 15.28 0.82 1.71           7      0.22  0.76         5   -0.77  114 -1.44 29.82  -1.55
+    D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%)     TANPA henti: Chandelier 4xATR   661 6.09 -2.11 44.93 26.740000 -10.76 47.66 6.58 5.69           7      1.97  2.42         5   -0.26   24  0.28 37.50   1.66
+D01 Saham tidur melonjak (ADX<25, Bollinger sempit, naik>=4%, volum 1.5x)     TANPA henti: Chandelier 4xATR  2260 4.65 -3.36 42.17 25.350000 -10.45 47.78 4.57 4.70           6     -0.69  1.36         5   -0.84  114 -4.32 31.58  -4.12
+    D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%) TANPA henti: dua tutup bawah MA50   661 6.13 -2.75 41.45 27.200001  -8.79 39.78 5.28 6.81           6     -0.55  4.37         5   -0.37   24 -1.87 20.83  -0.68
+              C08 Undur ke MA50 yang naik (sentuh, tutup atas, hari naik)                      sasaran +16% 17360 1.04 -8.50 40.93 15.240000  -8.80 32.41 1.03 1.05           6     -1.31  0.15         5    0.13 1231  0.16 39.40  -0.72
+    D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%)                   MA10 bawah MA20   661 3.13 -1.93 40.85 16.959999  -6.43 18.11 2.21 3.87           6     -0.56  2.92         6   -1.05   24 -0.81 33.33   0.06
+                                         A09 RSI2<10 atas MA200 (Connors)                    pegang 40 hari 30114 1.52 -8.50 40.77 15.470000  -8.08 27.70 1.31 1.68           6     -1.35  0.25         5   -0.88 1926 -0.09 34.63  -1.57
+                        B02 Episodic pivot (gap >=8%, volum 3x, bertahan)                   MA10 bawah MA20   429 2.64 -3.04 39.63 17.280001  -6.97 16.96 1.23 3.41           6     -1.16  2.26         6   -1.44   52 -0.46 25.00  -0.67
+                                                A05 MA20 silang atas MA50                   MA10 bawah MA20  5997 0.75 -1.51 39.39 10.120000  -5.34 17.20 0.34 1.08           6     -1.25  0.60         7   -1.32  452  0.04 36.95   0.14
+    D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%)              dua tutup bawah MA20   661 3.46 -3.39 38.12 20.160000  -6.82 19.03 2.18 4.49           6     -0.21  3.03         7   -1.03   24 -1.64 29.17  -0.82
+D01 Saham tidur melonjak (ADX<25, Bollinger sempit, naik>=4%, volum 1.5x) TANPA henti: dua tutup bawah MA50  2260 3.78 -3.07 38.10 22.870001  -7.96 37.04 3.17 4.24           6     -0.94  2.13         6   -0.97  114 -3.78 23.68  -3.11
+                        B02 Episodic pivot (gap >=8%, volum 3x, bertahan)                    pegang 40 hari   429 2.54 -8.50 37.76 20.940001  -8.63 22.87 1.44 3.14           6     -2.52  0.83         5   -0.30   52  1.71 26.92   0.48
+                  B11 Volum kering kemudian meletup (naik >=2%, volum 2x)                    pegang 40 hari  1982 1.26 -8.50 36.98 17.430000  -8.23 25.30 0.08 2.21           6     -1.77  0.30         5   -1.41  164 -0.42 31.71  -0.59
+
+-- lulus tapis ketat DAN positif pada 498 saham lain (n>=30) -- 6
+                                            masuk                            keluar     n  jgk   med   mng      pmng  prugi  hari    A    B  thn_untung  terburuk  lift  thn_lift  tanpa5   nV  jgkV  mngV  liftV
+B02 Episodic pivot (gap >=8%, volum 3x, bertahan)                    pegang 40 hari   429 2.54 -8.50 37.76 20.940001  -8.63 22.87 1.44 3.14           6     -2.52  0.83         5   -0.30   52  1.71 26.92   0.48
+                        A05 MA20 silang atas MA50 TANPA henti: dua tutup bawah MA50  5997 2.15 -2.74 35.57 18.040001  -6.62 33.60 1.98 2.28           6     -2.18  0.71         6   -1.28  452  0.84 35.18   0.63
+              A16 Ichimoku: tutup pecah atas awan                  Chandelier 4xATR  8104 1.92 -6.15 33.85 20.080000  -7.37 36.41 1.51 2.26           6     -2.11  0.50         6   -1.64  576  0.29 32.99   0.46
+                        A05 MA20 silang atas MA50                   MA10 bawah MA20  5997 0.75 -1.51 39.39 10.120000  -5.34 17.20 0.34 1.08           6     -1.25  0.60         7   -1.32  452  0.04 36.95   0.14
+                 A02 MACD silang naik bawah sifar                 MACD silang turun 12074 0.35 -2.85 34.63 11.480000  -5.55 15.16 0.07 0.57           6     -1.03  0.29         5   -1.49  716  0.18 35.20   0.33
+                 A09 RSI2<10 atas MA200 (Connors)                    pegang 10 hari 30114 0.28 -0.22 48.77  6.570000  -5.71  9.72 0.15 0.38           6     -1.14  0.12         6   -0.81 1926  1.29 51.77   0.24
+
+-- asas: beli semua, ikut keluar --
+                                       keluar   jgk   mng  hari  jgkV  mngV
+                 biar lari (henti -8% sahaja)  3.61 29.47 59.02  0.83 33.88
+                             Chandelier 4xATR  1.68 33.52 36.04  0.52 33.77
+pulang modal selepas +8%, kemudian Chandelier  1.36 28.84 33.21  0.40 27.72
+                         dua tutup bawah MA50  0.71 35.01 19.37  0.14 34.88
+                         dua tutup bawah MA20  0.09 35.41 11.51 -0.20 35.15
+                            tutup bawah EMA10 -0.30 33.50  5.85 -0.32 33.68
+                              MA10 bawah MA20  0.04 38.92 10.44 -0.07 39.46
+                    Supertrend bertukar turun  0.21 35.84 15.60 -0.23 35.49
+                            MACD silang turun -0.17 37.25  7.08 -0.21 37.68
+                               RSI14 bawah 50 -0.05 33.39 10.28 -0.30 33.21
+                   tutup bawah rendah 10 hari  0.50 31.00 19.05  0.17 31.76
+                   tutup bawah rendah 20 hari  1.44 29.45 30.41  0.62 30.95
+                                 sasaran +16%  0.93 40.17 29.56  0.99 41.93
+                                 sasaran +24%  1.47 34.26 39.55  1.05 36.94
+                               pegang 10 hari  0.01 47.49  9.65  0.25 47.46
+                               pegang 20 hari  0.39 45.12 16.37  0.73 44.42
+                               pegang 40 hari  1.09 39.82 27.03  1.00 38.19
+                TANPA henti: Chandelier 4xATR  3.03 40.49 46.18  1.25 43.37
+            TANPA henti: dua tutup bawah MA50  1.09 36.71 21.52  0.56 37.90
+      jual separuh hari ke-5, baki ikut EMA10 -0.25 41.31  5.60 -0.17 41.66

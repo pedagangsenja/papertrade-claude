@@ -1,0 +1,115 @@
+tarikh 20200102 20260331 HENTI 0.08
+
+== ASAS (beli setiap bar), semua tempoh ==
+                                                              n  ...  kena henti%
+keluar                                                           ...             
+pegang 126 hari (rujukan)                              609837.0  ...         0.00
+Chandelier 4xATR TANPA henti (lorong 2 kini)           609837.0  ...         0.00
+RSI14>70 TANPA henti (X13)                             609837.0  ...         0.00
+henti sahaja                                           609837.0  ...        69.02
+henti + Chandelier 4xATR                               609837.0  ...        44.08
+henti -> pulang modal selepas +henti, + Chandelier 4x  609837.0  ...        57.51
+henti + RSI14>70                                       609837.0  ...        53.29
+henti + dua tutup bawah MA50                           609837.0  ...        20.01
+henti + Chandelier 3xATR                               609837.0  ...        34.72
+henti + ADX<20                                         609837.0  ...        23.24
+henti + sasaran 3R                                     609837.0  ...        64.40
+henti + masa 20 hari                                   609837.0  ...        39.80
+henti + sasaran 2R                                     609837.0  ...        58.92
+henti + ekori 8% dari tutup tertinggi                  609837.0  ...        32.57
+henti + masa 10 hari                                   609837.0  ...        25.68
+henti + tutup bawah EMA21                              609837.0  ...         6.79
+henti + MACD silang turun                              609837.0  ...         9.15
+
+[17 rows x 8 columns]
+
+== ASAS: jangkaan% dan %/hari ikut tempoh dan rejim ==
+                                                      jangkaan%  ... %/hari
+                                                      A 2020-22  ...   True
+keluar                                                           ...       
+Chandelier 4xATR TANPA henti (lorong 2 kini)              5.160  ...  0.086
+RSI14>70 TANPA henti (X13)                                7.325  ...  0.087
+henti + ADX<20                                            0.321  ...  0.044
+henti + Chandelier 3xATR                                  1.317  ...  0.039
+henti + Chandelier 4xATR                                  2.092  ...  0.056
+henti + MACD silang turun                                -0.000  ... -0.015
+henti + RSI14>70                                          1.491  ...  0.046
+henti + dua tutup bawah MA50                              0.720  ...  0.061
+henti + ekori 8% dari tutup tertinggi                     0.555  ...  0.024
+henti + masa 10 hari                                      0.036  ...  0.008
+henti + masa 20 hari                                      0.524  ...  0.024
+henti + sasaran 2R                                        0.752  ...  0.033
+henti + sasaran 3R                                        1.381  ...  0.039
+henti + tutup bawah EMA21                                -0.079  ...  0.004
+henti -> pulang modal selepas +henti, + Chandelier 4x     1.564  ...  0.048
+henti sahaja                                              4.434  ...  0.077
+pegang 126 hari (rujukan)                                16.160  ...  0.112
+
+[17 rows x 8 columns]
+
+== LIFT isyarat atas ASAS pada keluar sama (jangkaan%, mata) ==
+
+-- henti sahaja
+tempoh                                A 2020-22  ...  jangkaan B
+masuk                                            ...            
+ASAS setiap bar                            0.00  ...        4.89
+S1 pecah tinggi 20h + volum 1.5x          -0.77  ...        6.66
+S2 templat trend Minervini                -2.14  ...        5.12
+S3 pullback RSI2<10 dalam trend naik      -0.13  ...        5.41
+S4 pecah tapak ketat (ala VCP)            -3.94  ...        4.16
+S5 MACD silang naik atas MA200            -0.82  ...        5.51
+S6 tinggi 52 minggu baharu                -3.03  ...        5.61
+
+[7 rows x 5 columns]
+
+-- henti + Chandelier 4xATR
+tempoh                                A 2020-22  ...  jangkaan B
+masuk                                            ...            
+ASAS setiap bar                            0.00  ...        2.50
+S1 pecah tinggi 20h + volum 1.5x          -0.87  ...        2.99
+S2 templat trend Minervini                -1.41  ...        1.82
+S3 pullback RSI2<10 dalam trend naik      -0.08  ...        2.47
+S4 pecah tapak ketat (ala VCP)            -2.77  ...        0.99
+S5 MACD silang naik atas MA200            -0.41  ...        2.44
+S6 tinggi 52 minggu baharu                -2.04  ...        1.99
+
+[7 rows x 5 columns]
+
+-- henti + RSI14>70
+tempoh                                A 2020-22  ...  jangkaan B
+masuk                                            ...            
+ASAS setiap bar                            0.00  ...        1.18
+S1 pecah tinggi 20h + volum 1.5x          -1.52  ...       -0.02
+S2 templat trend Minervini                -0.94  ...        0.53
+S3 pullback RSI2<10 dalam trend naik      -0.01  ...        1.62
+S4 pecah tapak ketat (ala VCP)            -1.24  ...        0.21
+S5 MACD silang naik atas MA200            -0.88  ...        0.60
+S6 tinggi 52 minggu baharu                -1.48  ...       -0.22
+
+[7 rows x 5 columns]
+
+-- henti + dua tutup bawah MA50
+tempoh                                A 2020-22  ...  jangkaan B
+masuk                                            ...            
+ASAS setiap bar                            0.00  ...        1.25
+S1 pecah tinggi 20h + volum 1.5x           0.67  ...        4.28
+S2 templat trend Minervini                -0.27  ...        2.14
+S3 pullback RSI2<10 dalam trend naik       0.02  ...        0.98
+S4 pecah tapak ketat (ala VCP)            -1.57  ...        1.25
+S5 MACD silang naik atas MA200             0.20  ...        2.07
+S6 tinggi 52 minggu baharu                -0.74  ...        2.81
+
+[7 rows x 5 columns]
+
+-- henti + masa 20 hari
+tempoh                                A 2020-22  ...  jangkaan B
+masuk                                            ...            
+ASAS setiap bar                            0.00  ...        0.74
+S1 pecah tinggi 20h + volum 1.5x          -0.66  ...        1.14
+S2 templat trend Minervini                -0.21  ...        0.69
+S3 pullback RSI2<10 dalam trend naik       0.21  ...        0.93
+S4 pecah tapak ketat (ala VCP)            -0.73  ...        1.23
+S5 MACD silang naik atas MA200            -0.13  ...        0.36
+S6 tinggi 52 minggu baharu                -0.69  ...        0.62
+
+[7 rows x 5 columns]

@@ -1,0 +1,90 @@
+                                                              n     jgk     mng    pmng   prugi     hari  pct_hari   henti   jgk_A   ph_A   jgk_B   ph_B  jgk_ON  ph_ON  jgk_OFF  ph_OFF
+keluar                                                                                                                                                                                  
+pegang 126 hari (rujukan)                              609837.0  14.503  60.494  35.442 -17.558  127.000     0.114   0.000  16.160  0.127  13.103  0.103  14.166  0.112   15.020   0.118
+Chandelier 4xATR TANPA henti (lorong 2 kini)           609837.0   4.614  41.436  24.888  -9.731   46.618     0.099   0.000   5.160  0.109   4.153  0.090   3.938  0.086    5.649   0.119
+RSI14>70 TANPA henti (X13)                             609837.0   6.005  70.768  15.041 -15.871   61.215     0.098   0.000   7.325  0.116   4.890  0.082   5.041  0.087    7.481   0.113
+henti sahaja                                           609837.0   4.679  29.327  37.159  -8.799   58.145     0.080  69.016   4.434  0.082   4.887  0.080   4.577  0.077    4.835   0.086
+henti + Chandelier 4xATR                               609837.0   2.313  33.455  21.655  -7.411   35.549     0.065  44.080   2.092  0.062   2.500  0.068   2.016  0.056    2.768   0.080
+henti -> pulang modal selepas +henti, + Chandelier 4x  609837.0   1.852  28.554  21.854  -6.141   32.545     0.057  57.514   1.564  0.052   2.096  0.061   1.581  0.048    2.267   0.072
+henti + RSI14>70                                       609837.0   1.322  43.025  14.241  -8.434   23.700     0.056  53.293   1.491  0.066   1.179  0.048   1.039  0.046    1.756   0.070
+henti + dua tutup bawah MA50                           609837.0   1.007  35.172  12.017  -4.967   19.029     0.053  20.006   0.720  0.039   1.249  0.064   1.332  0.061    0.510   0.035
+henti + Chandelier 3xATR                               609837.0   1.392  35.030  16.588  -6.800   26.615     0.052  34.718   1.317  0.052   1.456  0.053   1.049  0.039    1.918   0.073
+henti + ADX<20                                         609837.0   0.647  41.153   8.513  -4.855   13.953     0.046  23.237   0.321  0.027   0.922  0.059   0.659  0.044    0.628   0.050
+henti + sasaran 3R                                     609837.0   1.591  34.408  21.421  -8.810   37.821     0.042  64.395   1.381  0.041   1.769  0.043   1.573  0.039    1.619   0.047
+henti + masa 20 hari                                   609837.0   0.638  44.704  10.436  -7.282   16.131     0.040  39.803   0.524  0.034   0.735  0.044   0.402  0.024    1.001   0.065
+henti + sasaran 2R                                     609837.0   1.001  40.371  15.532  -8.837   28.209     0.035  58.925   0.752  0.031   1.211  0.039   1.004  0.033    0.996   0.040
+henti + ekori 8% dari tutup tertinggi                  609837.0   0.941  36.317  14.506  -6.794   28.901     0.033  32.567   0.555  0.022   1.268  0.040   0.719  0.024    1.282   0.047
+henti + masa 10 hari                                   609837.0   0.142  47.288   6.889  -5.912    9.546     0.015  25.677   0.036  0.004   0.231  0.023   0.082  0.008    0.233   0.025
+henti + tutup bawah EMA21                              609837.0   0.006  33.723   6.800  -3.450    8.640     0.001   6.790  -0.079 -0.009   0.078  0.009   0.035  0.004   -0.038  -0.005
+henti + MACD silang turun                              609837.0  -0.000  37.372   6.070  -3.622    7.094    -0.000   9.149  -0.000 -0.000   0.000  0.000  -0.105 -0.015    0.160   0.023
+
+-- pegang 126 hari (rujukan)
+                                           n   jgk_A   jgk_B  lift_A  lift_B   ph_A   ph_B
+masuk                                                                                     
+ASAS setiap bar                       609837  16.160  13.103   0.000   0.000  0.127  0.103
+S1 pecah tinggi 20h + volum 1.5x       11686  15.348  17.217  -0.812   4.113  0.121  0.136
+S2 templat trend Minervini            159254   9.535  13.693  -6.625   0.590  0.075  0.108
+S3 pullback RSI2<10 dalam trend naik   30759  12.845  13.801  -3.316   0.698  0.101  0.109
+S4 pecah tapak ketat (ala VCP)          2493   5.792   9.639 -10.369  -3.464  0.046  0.076
+S5 MACD silang naik atas MA200         14690  12.300  14.423  -3.860   1.320  0.097  0.114
+S6 tinggi 52 minggu baharu             15371   8.465  14.462  -7.695   1.359  0.067  0.114
+-- henti sahaja
+                                           n  jgk_A  jgk_B  lift_A  lift_B   ph_A   ph_B
+masuk                                                                                   
+ASAS setiap bar                       609837  4.434  4.887   0.000   0.000  0.082  0.080
+S1 pecah tinggi 20h + volum 1.5x       11686  3.666  6.657  -0.768   1.770  0.073  0.111
+S2 templat trend Minervini            159254  2.290  5.122  -2.144   0.235  0.040  0.083
+S3 pullback RSI2<10 dalam trend naik   30759  4.303  5.411  -0.131   0.525  0.077  0.087
+S4 pecah tapak ketat (ala VCP)          2493  0.491  4.155  -3.942  -0.732  0.008  0.060
+S5 MACD silang naik atas MA200         14690  3.613  5.513  -0.821   0.626  0.065  0.090
+S6 tinggi 52 minggu baharu             15371  1.399  5.613  -3.035   0.726  0.025  0.089
+-- henti + Chandelier 4xATR
+                                           n  jgk_A  jgk_B  lift_A  lift_B   ph_A   ph_B
+masuk                                                                                   
+ASAS setiap bar                       609837  2.092  2.500   0.000   0.000  0.062  0.068
+S1 pecah tinggi 20h + volum 1.5x       11686  1.226  2.986  -0.866   0.486  0.039  0.083
+S2 templat trend Minervini            159254  0.679  1.821  -1.412  -0.679  0.020  0.051
+S3 pullback RSI2<10 dalam trend naik   30759  2.013  2.469  -0.079  -0.031  0.058  0.067
+S4 pecah tapak ketat (ala VCP)          2493 -0.676  0.990  -2.768  -1.510 -0.020  0.026
+S5 MACD silang naik atas MA200         14690  1.681  2.442  -0.411  -0.058  0.049  0.067
+S6 tinggi 52 minggu baharu             15371  0.050  1.985  -2.042  -0.514  0.001  0.054
+-- Chandelier 4xATR TANPA henti (lorong 2 kini)
+                                           n  jgk_A  jgk_B  lift_A  lift_B   ph_A   ph_B
+masuk                                                                                   
+ASAS setiap bar                       609837  5.160  4.153   0.000   0.000  0.109  0.090
+S1 pecah tinggi 20h + volum 1.5x       11686  4.172  5.251  -0.988   1.098  0.090  0.114
+S2 templat trend Minervini            159254  1.872  3.310  -3.288  -0.842  0.042  0.075
+S3 pullback RSI2<10 dalam trend naik   30759  3.725  3.880  -1.435  -0.272  0.080  0.085
+S4 pecah tapak ketat (ala VCP)          2493 -0.301  1.337  -5.461  -2.815 -0.007  0.031
+S5 MACD silang naik atas MA200         14690  3.450  3.855  -1.710  -0.297  0.075  0.086
+S6 tinggi 52 minggu baharu             15371  1.343  3.497  -3.818  -0.655  0.030  0.079
+-- henti + dua tutup bawah MA50
+                                           n  jgk_A  jgk_B  lift_A  lift_B   ph_A   ph_B
+masuk                                                                                   
+ASAS setiap bar                       609837  0.720  1.249   0.000   0.000  0.039  0.064
+S1 pecah tinggi 20h + volum 1.5x       11686  1.394  4.278   0.674   3.029  0.045  0.120
+S2 templat trend Minervini            159254  0.447  2.142  -0.273   0.892  0.016  0.071
+S3 pullback RSI2<10 dalam trend naik   30759  0.735  0.985   0.015  -0.264  0.054  0.070
+S4 pecah tapak ketat (ala VCP)          2493 -0.852  1.251  -1.572   0.002 -0.025  0.033
+S5 MACD silang naik atas MA200         14690  0.924  2.072   0.204   0.823  0.038  0.081
+S6 tinggi 52 minggu baharu             15371 -0.021  2.806  -0.741   1.557 -0.001  0.078
+-- henti + RSI14>70
+                                           n  jgk_A  jgk_B  lift_A  lift_B   ph_A   ph_B
+masuk                                                                                   
+ASAS setiap bar                       609837  1.491  1.179   0.000   0.000  0.066  0.048
+S1 pecah tinggi 20h + volum 1.5x       11686 -0.024 -0.022  -1.515  -1.201 -0.003 -0.003
+S2 templat trend Minervini            159254  0.548  0.530  -0.943  -0.650  0.030  0.030
+S3 pullback RSI2<10 dalam trend naik   30759  1.480  1.616  -0.011   0.437  0.052  0.053
+S4 pecah tapak ketat (ala VCP)          2493  0.247  0.209  -1.244  -0.970  0.022  0.020
+S5 MACD silang naik atas MA200         14690  0.613  0.601  -0.878  -0.579  0.032  0.030
+S6 tinggi 52 minggu baharu             15371  0.008 -0.215  -1.483  -1.394  0.001 -0.022
+-- henti + masa 20 hari
+                                           n  jgk_A  jgk_B  lift_A  lift_B   ph_A   ph_B
+masuk                                                                                   
+ASAS setiap bar                       609837  0.524  0.735   0.000   0.000  0.034  0.044
+S1 pecah tinggi 20h + volum 1.5x       11686 -0.132  1.142  -0.655   0.407 -0.009  0.070
+S2 templat trend Minervini            159254  0.311  0.689  -0.213  -0.046  0.019  0.041
+S3 pullback RSI2<10 dalam trend naik   30759  0.732  0.928   0.208   0.193  0.047  0.055
+S4 pecah tapak ketat (ala VCP)          2493 -0.206  1.230  -0.730   0.495 -0.012  0.069
+S5 MACD silang naik atas MA200         14690  0.396  0.356  -0.127  -0.379  0.025  0.021
+S6 tinggi 52 minggu baharu             15371 -0.169  0.616  -0.693  -0.119 -0.011  0.036

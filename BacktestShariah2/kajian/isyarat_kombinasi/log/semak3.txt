@@ -1,0 +1,17 @@
+
+== adakah lulus tapis utama meramal hasil pada saham lain? ==
+serentak 2 (31 keadaan)    rawak: purata lain  0.46, positif lawan kawalan  61% (n 465) | lulus utama: purata lain  1.36, positif 100% (n 3)
+serentak 3 (31 keadaan)    rawak: purata lain  0.07, positif lawan kawalan  40% (n 600) | lulus utama: purata lain  0.13, positif  36% (n 14)
+serentak 4 (31 keadaan)    rawak: purata lain -0.10, positif lawan kawalan  32% (n 600) | lulus utama: purata lain -0.36, positif  13% (n 167)
+serentak 5 (31 keadaan)    rawak: purata lain -0.48, positif lawan kawalan  19% (n 599) | lulus utama: purata lain -0.59, positif  11% (n 600)
+serentak 6 (31 keadaan)    rawak: purata lain -0.65, positif lawan kawalan  16% (n 599) | lulus utama: purata lain -0.90, positif   9% (n 600)
+serentak 7 (17 asal)       rawak: purata lain -1.87, positif lawan kawalan   3% (n 591) | lulus utama: purata lain -1.16, positif   6% (n 349)
+serentak 8 (17 asal)       rawak: purata lain -1.98, positif lawan kawalan   3% (n 587) | lulus utama: purata lain -1.27, positif   5% (n 364)
+serentak 9 (17 asal)       rawak: purata lain -2.30, positif lawan kawalan   3% (n 586) | lulus utama: purata lain -1.38, positif   4% (n 275)
+turutan 2 langkah (5h)     rawak: purata lain -0.06, positif lawan kawalan  37% (n 566) | lulus utama: purata lain -0.33, positif  29% (n 21)
+turutan 3 langkah (5h)     rawak: purata lain -0.35, positif lawan kawalan  31% (n 466) | lulus utama: purata lain -0.60, positif  32% (n 525)
+turutan 2 langkah (10h)    rawak: purata lain -0.04, positif lawan kawalan  33% (n 586) | lulus utama: purata lain  0.18, positif  43% (n 14)
+turutan 3 langkah (10h)    rawak: purata lain -0.33, positif lawan kawalan  31% (n 515) | lulus utama: purata lain -0.25, positif  36% (n 566)
+turutan 4 langkah (10h)    rawak: purata lain -0.35, positif lawan kawalan  33% (n 415) | lulus utama: purata lain -0.29, positif  38% (n 455)
+turutan 2 langkah (20h)    rawak: purata lain  0.12, positif lawan kawalan  41% (n 589) | lulus utama: purata lain  0.55, positif  50% (n 4)
+turutan 3 langkah (20h)    rawak: purata lain  0.02, positif lawan kawalan  43% (n 562) | lulus utama: purata lain  0.08, positif  44% (n 330)

@@ -1,0 +1,106 @@
+                          isyarat      n  jgk   mng      pmng  prugi  hari    A    B thn_untung  terburuk    nV  jgkV  mngV
+KAWALAN: mana-mana hari atas MA50 310876 1.36 30.94 17.889999  -6.05 29.76 0.82 1.78        5/7     -2.34 22377  0.26  30.6
+
+== 1. SEMUA isyarat tunggal (saham atas MA50; henti -8% + dua tutup bawah MA50) ==
+                                                                   isyarat      n  jgk   mng      pmng  prugi  hari     A    B thn_untung  terburuk    nV  jgkV  mngV
+                         B02 Episodic pivot (gap >=8%, volum 3x, bertahan)    398 4.89 34.92 29.200001  -8.16 33.93  1.54 6.62        5/7     -2.46    51  0.33 21.57
+            C03 Qullamaggie: naik >=30% dahulu, rehat ketat, pecah + volum    357 3.67 27.45 33.750000  -7.72 31.37 -2.20 8.94        4/7     -6.55    22 -0.17 22.73
+     D02 Saham tidur melonjak kuat (ADX<20, Bollinger 30% bawah, naik>=6%)    641 3.22 33.70 24.200001  -7.45 31.36  2.00 4.21        5/7     -1.56    24 -2.50 16.67
+                       B15 Pecah tinggi hari gap (sambungan dalam 10 hari)   1423 3.12 32.96 24.820000  -7.54 34.80  2.45 3.55        5/7     -3.87   131 -0.83 20.61
+ D01 Saham tidur melonjak (ADX<25, Bollinger sempit, naik>=4%, volum 1.5x)   2051 2.65 32.62 22.770000  -7.09 32.24  1.84 3.26        5/7     -1.49   102 -3.28 21.57
+                 B01 Gap and go (buka >2% atas tinggi semalam, volum 1.5x)   2171 2.65 32.38 23.290001  -7.24 33.76  1.36 3.42        5/7     -2.33   189 -1.04 24.34
+      B10 Bangkit dari jatuh: >=30% bawah puncak, silang atas MA50 + volum    346 2.29 28.61 25.049999  -6.83 26.30  3.98 0.89        3/6     -4.34    30  3.40 26.67
+                                         C04 RS >=90 & atas MA50 (keadaan)  45254 2.22 28.49 26.330000  -7.39 27.28 -0.18 4.14        5/7     -3.07  3255 -0.30 21.26
+                     B04 Lonjakan (B03) selepas tidur: julat 60 hari <=30%    984 2.20 37.30 16.840000  -6.50 38.82  1.96 2.34        5/7     -1.41    50  1.22 42.00
+                                             C05 RS baru masuk 10% teratas   3572 2.11 30.94 22.490000  -7.02 30.82  0.02 3.77        5/7     -2.24   255 -0.97 23.14
+                   B11 Volum kering kemudian meletup (naik >=2%, volum 2x)   1622 2.07 31.81 21.760000  -7.12 32.22  0.87 3.00        5/7     -2.18   133 -1.99 21.80
+            C07 O'Neil: pecah tinggi 50 hari + volum + RS>=80 + atas MA200   3507 2.06 30.82 24.530001  -7.95 31.96 -0.36 3.76        4/7     -3.79   295 -0.50 24.41
+                                               A06 Golden cross MA50/MA200   1568 2.03 33.23 18.540001  -6.18 32.57  2.47 1.74        4/7     -1.38   116  1.67 35.34
+         B14 Jatuh lama, rendah lebih tinggi, pecah tinggi 20 hari + volum   1110 1.86 26.94 28.760000  -8.05 28.24  0.60 2.84        3/7     -6.24    69  7.44 34.78
+                         B03 Lonjakan >=4% + volum 2x + tutup dekat tinggi   2570 1.77 30.70 22.799999  -7.55 31.58 -0.10 3.14        5/7     -3.37   273  0.36 29.30
+               B05 Lonjakan (B03) selepas tidur: ADX<20 & Bollinger sempit    527 1.74 33.02 19.330000  -6.93 32.27 -1.68 3.94        4/7     -2.83    21 -0.12 28.57
+                                                 A05 MA20 silang atas MA50   5254 1.65 32.39 18.379999  -6.36 32.30  1.16 2.04        5/7     -2.50   380  1.12 32.37
+                                              A14 Supertrend bertukar naik   6816 1.60 30.66 19.420000  -6.27 30.69  1.10 1.98        6/7     -1.93   424 -0.47 27.59
+                                           A03 MACD silang naik atas sifar   9865 1.59 30.63 20.000000  -6.54 31.51  0.71 2.28        5/7     -2.61   752  0.02 29.26
+                                     B07 Pecah tinggi 6 bulan + volum 1.5x   5701 1.52 32.82 20.000000  -7.50 34.77  0.30 2.38        3/7     -2.46   486 -0.87 25.31
+                                       A16 Ichimoku: tutup pecah atas awan   7712 1.42 30.64 18.580000  -6.16 29.70  1.26 1.55        4/7     -1.67   554  0.42 30.51
+                                          A09 RSI2<10 atas MA200 (Connors)  13987 1.41 31.04 15.810000  -5.08 24.86  0.93 1.75        4/7     -1.08   886  1.01 35.55
+                                          A15 ADX silang atas 25 & +DI>-DI   5401 1.39 33.73 18.150000  -7.14 35.40  0.88 1.77        5/7     -2.53   413 -0.74 28.33
+                                                      A01 MACD silang naik  12688 1.39 29.82 19.100000  -6.14 29.46  0.59 2.02        5/7     -2.53   956  0.19 29.18
+                                              A10 Tutup pecah atas Keltner  17419 1.37 33.14 18.500000  -7.11 35.42  0.59 1.96        4/7     -2.32  1129 -0.48 28.08
+                                                 A04 MA10 silang atas MA20   9189 1.29 29.62 18.200001  -5.83 28.65  1.18 1.37        5/7     -2.40   654 -0.10 28.59
+C06 Pemimpin undur ke MA20 (RS>=80, dekat puncak, sentuh MA20, tutup atas)   6155 1.23 29.11 19.969999  -6.47 26.81 -0.05 2.30        5/7     -2.28   473 -1.77 16.91
+                                                  A18 Pecah tinggi 20 hari  41122 1.23 32.47 18.280001  -6.97 34.69  0.16 2.10        5/7     -2.69  2646 -0.29 28.76
+                                 A11 Tutup pecah atas jalur atas Bollinger  17798 1.21 31.44 18.709999  -6.81 32.92  0.74 1.58        5/7     -2.34  1386 -0.21 28.50
+                                                  A07 RSI14 silang atas 50  19424 1.18 27.88 17.410000  -5.09 23.87  0.86 1.45        5/7     -2.00  1473  0.03 28.24
+                                  A17 Stochastic silang naik dari bawah 20   4917 1.15 28.05 16.680000  -4.91 22.43  0.93 1.30        5/7     -2.39   325  0.04 33.23
+               C09 EMA crossback: MA10>MA20>MA50, sentuh EMA20, tutup atas  15441 1.14 29.71 17.879999  -5.94 27.90  0.87 1.36        4/7     -1.13  1222  0.65 32.41
+                        B09 Stage 1->2: silang atas MA150 mendatar + volum    532 1.13 35.90 14.340000  -6.27 33.17  0.12 1.70        5/7     -1.23    34 -0.31 44.12
+                     C10 Dalam 5% dari puncak 52 minggu & RS>=80 (keadaan)  45369 1.10 30.45 19.530001  -6.97 31.65 -1.14 2.69        4/7     -3.13  2997 -1.80 22.86
+                                                  A19 Pecah tinggi 55 hari  27782 1.09 32.87 17.950001  -7.17 35.58 -0.26 2.14        4/7     -3.05  1885 -0.76 27.32
+                                     C01 Templat trend Minervini (keadaan) 150190 1.08 31.34 16.750000  -6.08 29.68  0.21 1.83        5/7     -2.75 11444 -1.20 25.68
+                                                 A13 Squeeze lepas ke atas   6854 1.03 30.30 18.000000  -6.35 31.25  1.00 1.05        5/7     -1.76   591 -0.37 28.60
+                       B12 Pocket pivot (volum > semua hari turun 10 hari)  24729 0.94 32.21 15.300000  -5.88 31.82  0.28 1.39        5/7     -1.54  1573  0.13 32.80
+                  B13 Squeeze panjang (>=15/20 hari) lepas ke atas + volum    254 0.79 31.10 18.200001  -7.06 32.81  0.35 1.14        5/7     -2.44    34  0.55 26.47
+                    B06 Pecah tapak 3 bulan (kedalaman <=35%) + volum 1.5x   4022 0.69 35.23 14.580000  -6.86 38.26  0.58 0.76        4/7     -1.67   243 -0.18 34.16
+                                          A02 MACD silang naik bawah sifar   2823 0.69 26.99 15.540000  -4.80 22.28  0.18 1.10        6/7     -2.39   204  0.82 28.92
+                            B08 Tinggi 52 minggu pertama selepas >=6 bulan   1199 0.69 30.61 17.620001  -6.78 35.03 -0.79 1.91        3/7     -2.77   219  0.61 32.42
+               C08 Undur ke MA50 yang naik (sentuh, tutup atas, hari naik)  17360 0.49 26.22 14.140000  -4.36 20.69  0.48 0.49        4/7     -1.25  1231 -1.25 26.48
+                    C02 VCP: templat + tapak ketat 10 hari + pecah + volum   1787 0.20 34.25 12.830000  -6.38 36.35 -0.93 0.95        4/7     -1.58    94  0.36 30.85
+        A20 Holy Grail: ADX>30, undur sentuh EMA20, tutup > tinggi semalam   1868 0.09 27.78 16.120001  -6.07 25.41 -0.48 0.42        3/7     -2.38   122 -0.98 26.23
+
+== 2. KONTEKS sahaja (mana-mana hari atas MA50 + syarat) ==
+                            isyarat      n  jgk   mng      pmng  prugi  hari     A    B thn_untung  terburuk    nV  jgkV  mngV
+                   KAWALAN + RS>=80  88879 1.59 29.55 21.820000  -6.90 28.57 -0.02 2.87        5/7     -2.77  6408 -0.86 22.32
+               KAWALAN + atas MA200 254775 1.50 31.42 18.000000  -6.06 30.53  0.99 1.89        5/7     -2.26 18436 -0.19 29.78
+                   KAWALAN + QQQ ON 218991 1.54 31.46 18.090000  -6.06 30.79  0.96 1.98        4/7     -3.99 13158  0.34 29.75
+                  KAWALAN + QQQ OFF  91885 0.92 29.70 17.370001  -6.03 27.29  0.53 1.28        4/7     -1.27  9219  0.15 31.80
+KAWALAN + dalam 10% dari puncak 52w 175785 1.09 31.85 16.030001  -5.89 31.68  0.34 1.68        5/7     -2.69 11465 -0.92 28.30
+    KAWALAN + 30%+ bawah puncak 52w  34040 1.76 28.39 23.980000  -7.05 25.60  0.98 2.46        4/7     -2.75  2515  2.98 28.87
+             KAWALAN + volum >=1.5x  32594 1.60 31.66 19.030001  -6.47 30.35  1.45 1.71        5/7     -0.78  2911 -0.53 27.48
+          KAWALAN + ADX semalam <20 119576 1.24 30.14 16.990000  -5.56 27.66  0.89 1.56        5/7     -2.09  9284  0.88 31.36
+         KAWALAN + ADX semalam >=30  80425 1.54 31.74 19.200001  -6.67 32.26  0.88 1.96        3/7     -2.80  5174 -0.18 27.85
+           KAWALAN + 0-5% atas MA50 121219 0.66 28.14 14.270000  -4.66 24.33  0.42 0.84        5/7     -2.00  7544  0.20 30.67
+           KAWALAN + >10% atas MA50  96995 2.37 32.52 23.070000  -7.61 33.16  1.41 3.24        4/7     -2.74  8859 -0.02 28.27
+
+== 3. PASANGAN: bil diuji 890 | purata jgk 1.68 | median 1.47 | bahagian lebih baik drpd kawalan 1.36: 54 %
+lulus tapis (n>=300, untung dua separuh, >=6 tahun untung): 41
+                                                                          isyarat    n  jgk   mng      pmng  prugi  hari    A    B thn_untung  terburuk  nV  jgkV  mngV
+      A09+C07 | RSI2<10 atas MA200 (Connors) + O'Neil: pecah tinggi 50 hari + vol  426 5.98 34.98 30.580000  -7.25 34.08 2.93 8.05        6/7     -1.67  30  4.19 30.00
+ B02+C01 | Episodic pivot (gap >=8%, volum 3x + Templat trend Minervini (keadaan)  828 5.78 36.47 29.549999  -7.87 34.14 1.06 8.43        6/7     -2.54 117  0.80 24.79
+          A14+B04 | Supertrend bertukar naik + Lonjakan (B03) selepas tidur: jula  440 4.56 40.23 21.059999  -6.55 40.95 6.36 3.68        6/7     -2.35  23 -0.80 30.43
+B06+B15 | Pecah tapak 3 bulan (kedalaman <=3 + Pecah tinggi hari gap (sambungan d  382 4.43 43.98 19.510000  -7.42 43.60 8.61 2.29        6/7     -0.82  29 -2.66 34.48
+          A14+B06 | Supertrend bertukar naik + Pecah tapak 3 bulan (kedalaman <=3  941 3.70 39.21 20.490000  -7.14 41.33 6.66 2.02        6/7     -2.43  57 -0.43 42.11
+         C05+C07 | RS baru masuk 10% teratas + O'Neil: pecah tinggi 50 hari + vol 1284 3.42 34.35 24.820000  -7.77 34.60 1.90 4.52        6/7     -3.10 117  1.12 26.50
+          B07+C05 | Pecah tinggi 6 bulan + volum 1.5x + RS baru masuk 10% teratas 1216 3.30 34.29 24.410000  -7.71 34.86 1.70 4.44        6/7     -3.40 118  1.08 26.27
+   A16+D01 | Ichimoku: tutup pecah atas awan + Saham tidur melonjak (ADX<25, Boll  627 3.11 34.29 22.850000  -7.19 33.22 2.60 3.48        6/7     -1.98  35 -2.29 25.71
+          A14+D01 | Supertrend bertukar naik + Saham tidur melonjak (ADX<25, Boll  953 2.99 35.05 21.780001  -7.15 34.35 2.69 3.18        7/7      0.37  47 -2.79 21.28
+             A04+D01 | MA10 silang atas MA20 + Saham tidur melonjak (ADX<25, Boll 1098 2.89 33.52 22.420000  -6.95 33.45 3.69 2.37        6/7     -0.87  48 -3.10 14.58
+                    A02+A19 | MACD silang naik bawah sifar + Pecah tinggi 55 hari  469 2.63 40.51 17.250000  -7.33 40.14 2.66 2.61        6/7     -0.20  22 -2.52 22.73
+C08+D01 | Undur ke MA50 yang naik (sentuh, t + Saham tidur melonjak (ADX<25, Boll  681 2.60 34.36 19.850000  -6.42 31.23 2.22 2.89        6/7     -1.99  48 -4.91 18.75
+           A09+C04 | RSI2<10 atas MA200 (Connors) + RS >=90 & atas MA50 (keadaan) 9196 2.53 29.44 24.570000  -6.66 24.47 0.60 4.09        6/7     -2.25 625  0.74 25.60
+                   A05+A15 | MA20 silang atas MA50 + ADX silang atas 25 & +DI>-DI 1474 2.49 35.48 20.110001  -7.20 37.56 2.28 2.63        6/7     -2.47  95 -0.84 27.37
+                       A05+A10 | MA20 silang atas MA50 + Tutup pecah atas Keltner 3314 2.25 35.27 19.440001  -7.11 37.01 1.97 2.48        6/7     -2.19 199 -0.31 27.64
+              A07+B04 | RSI14 silang atas 50 + Lonjakan (B03) selepas tidur: jula  624 2.12 36.22 16.590000  -6.10 36.96 0.55 2.91        6/7     -2.75  30  1.61 36.67
+             A14+A16 | Supertrend bertukar naik + Ichimoku: tutup pecah atas awan 2325 1.81 32.39 19.440001  -6.64 33.09 1.48 2.07        6/7     -0.95 158 -0.14 29.75
+                A04+A16 | MA10 silang atas MA20 + Ichimoku: tutup pecah atas awan 2228 1.80 30.75 19.830000  -6.20 30.32 2.11 1.57        6/7     -1.48 143  0.26 28.67
+    A16+B07 | Ichimoku: tutup pecah atas awan + Pecah tinggi 6 bulan + volum 1.5x  375 1.78 38.13 16.809999  -7.49 37.92 3.11 0.77        6/7     -1.14  22 -1.59 40.91
+                       A04+A14 | MA10 silang atas MA20 + Supertrend bertukar naik 4742 1.74 31.55 19.010000  -6.22 31.29 1.58 1.85        6/7     -1.56 273 -1.79 24.54
+
+antara yang lulus & ada >=30 isyarat pada saham lain: 34 | purata jgk set utama 2.02 | purata jgk saham lain -0.64 | korelasi 0.3 | bahagian positif pd saham lain 38 %
+20 teratas: set utama 2.73 -> saham lain -0.65 | positif 8 /20
+
+-- pasangan yang >2% set utama DAN >1% saham lain -- 4
+                                                                    isyarat    n  jgk   mng  pmng  prugi  hari    A    B thn_untung  terburuk  nV  jgkV  mngV
+A09+C07 | RSI2<10 atas MA200 (Connors) + O'Neil: pecah tinggi 50 hari + vol  426 5.98 34.98 30.58  -7.25 34.08 2.93 8.05        6/7     -1.67  30  4.19 30.00
+   C05+C07 | RS baru masuk 10% teratas + O'Neil: pecah tinggi 50 hari + vol 1284 3.42 34.35 24.82  -7.77 34.60 1.90 4.52        6/7     -3.10 117  1.12 26.50
+    B07+C05 | Pecah tinggi 6 bulan + volum 1.5x + RS baru masuk 10% teratas 1216 3.30 34.29 24.41  -7.71 34.86 1.70 4.44        6/7     -3.40 118  1.08 26.27
+        A07+B04 | RSI14 silang atas 50 + Lonjakan (B03) selepas tidur: jula  624 2.12 36.22 16.59  -6.10 36.96 0.55 2.91        6/7     -2.75  30  1.61 36.67
+
+== 4. BILANGAN isyarat indikator sepakat ==
+                                isyarat     n  jgk   mng      pmng  prugi  hari    A    B thn_untung  terburuk   nV  jgkV  mngV
+ 1-1 isyarat indikator sepakat (5 hari) 13693 1.16 29.48 16.920000  -5.43 26.10 0.59 1.62        5/7     -2.03 1096  0.37 28.28
+ 2-2 isyarat indikator sepakat (5 hari) 16931 1.24 29.67 17.709999  -5.70 27.99 0.75 1.64        4/7     -2.58 1259 -0.41 29.07
+ 3-4 isyarat indikator sepakat (5 hari) 33847 1.20 30.92 17.930000  -6.29 31.00 0.37 1.88        5/7     -2.83 2229  0.15 30.15
+ 5-6 isyarat indikator sepakat (5 hari) 21009 1.50 31.78 18.940001  -6.63 32.96 1.04 1.86        5/7     -2.00 1431 -0.31 28.30
+7-17 isyarat indikator sepakat (5 hari) 12640 1.18 32.33 18.309999  -7.01 34.12 0.75 1.47        5/7     -2.04  899 -0.68 28.03
