@@ -1,6 +1,6 @@
 {
  "dibina": "2026-10-17",
- "nota": "Mxx kaedah pedagang bernama. 94 kombinasi Nxx = masuk x keluar daripada grid penuh 1,495 sel (REVERSE/jejak_semua.csv). Nxx tiada registry 431.",
+ "nota": "Mxx kaedah pedagang bernama. 94 kombinasi Nxx = masuk x keluar daripada grid penuh 1,495 sel (REVERSE/jejak_semua.csv). Nxx tiada registry 431. 4 kombinasi N201X36-N204X36 = kohort KOMBINASI MA50 (kajian/SPEC_JEJAK_KOMBINASI.md; LANGSUNG sejak isyarat 2026-11-12).",
  "rows": [
   {
    "id": "M01",
@@ -2737,6 +2737,54 @@
    "keluar": "Lorong 1 = X16: keluar bila supertrend berbalik; jual pada buka esok. Lorong 2 = X15 Chandelier tutup 4xATR14 (automatik).",
    "pegang": "Had 126 bar (ufuk IMBAS kajian).",
    "henti": "Tiada henti; stop = NaN menjadikan kecacatan henti hari-0 mustahil."
+  },
+  {
+   "id": "N201X36",
+   "nama": "MA20 silang MA50 atas MA50 x X36",
+   "varian": "V1 kombinasi MA50",
+   "pencipta": "Tinjauan isyarat kombinasi 11-12 Nov 2026 (kohort KOMBINASI MA50)",
+   "sumber": "kajian/KAJIAN_ISYARAT_KOMBINASI.md; pradaftar kajian/SPEC_JEJAK_KOMBINASI.md; LANGSUNG sejak isyarat 2026-11-12. CALON, bukan bukti: tinjauan +2.40% (n 5,254), saham lain +1.20% (n 380); rujukan sama cara N76X36 +2.01% / saham lain +0.90%",
+   "masuk": "ma20 silang naik ma50 DAN tutup > ma50; beli pada buka esok. rank = U14 momentum 12-1.",
+   "keluar": "Lorong 1 = X36: keluar selepas DUA tutup bawah ma50; jual pada buka esok. Lorong 2 = X15 Chandelier tutup 4xATR14 (automatik).",
+   "pegang": "Had 126 bar (ufuk IMBAS kajian).",
+   "henti": "Tiada henti; stop = NaN menjadikan kecacatan henti hari-0 mustahil.",
+   "varian_kod": "V1 kombinasi MA50"
+  },
+  {
+   "id": "N202X36",
+   "nama": "RSI2<10 dalam trend naik x X36",
+   "varian": "V1 kombinasi MA50",
+   "pencipta": "Tinjauan isyarat kombinasi 11-12 Nov 2026 (kohort KOMBINASI MA50)",
+   "sumber": "kajian/KAJIAN_ISYARAT_KOMBINASI.md; pradaftar kajian/SPEC_JEJAK_KOMBINASI.md; LANGSUNG sejak isyarat 2026-11-12. CALON, bukan bukti: tinjauan +1.76% (n 13,987), saham lain +1.62% (n 886); rujukan sama cara N76X36 +2.01% / saham lain +0.90%",
+   "masuk": "rsi2 < 10 DAN tutup > ma200 DAN tutup > ma50; beli pada buka esok. rank = U14 momentum 12-1.",
+   "keluar": "Lorong 1 = X36: keluar selepas DUA tutup bawah ma50; jual pada buka esok. Lorong 2 = X15 Chandelier tutup 4xATR14 (automatik).",
+   "pegang": "Had 126 bar (ufuk IMBAS kajian).",
+   "henti": "Tiada henti; stop = NaN menjadikan kecacatan henti hari-0 mustahil.",
+   "varian_kod": "V1 kombinasi MA50"
+  },
+  {
+   "id": "N203X36",
+   "nama": "Gap 2% lalu MA20 silang MA50 x X36",
+   "varian": "V1 kombinasi MA50",
+   "pencipta": "Tinjauan isyarat kombinasi 11-12 Nov 2026 (kohort KOMBINASI MA50)",
+   "sumber": "kajian/KAJIAN_ISYARAT_KOMBINASI.md; pradaftar kajian/SPEC_JEJAK_KOMBINASI.md; LANGSUNG sejak isyarat 2026-11-12. CALON, bukan bukti: tinjauan +6.01% (n 1,424), saham lain +0.46% (n 83); rujukan sama cara N76X36 +2.01% / saham lain +0.90%",
+   "masuk": "buka > tinggi[-1] x 1.02 dalam 10 bar terakhir DAN ma20 silang naik ma50 DAN tutup > ma50; beli pada buka esok. rank = U14 momentum 12-1.",
+   "keluar": "Lorong 1 = X36: keluar selepas DUA tutup bawah ma50; jual pada buka esok. Lorong 2 = X15 Chandelier tutup 4xATR14 (automatik).",
+   "pegang": "Had 126 bar (ufuk IMBAS kajian).",
+   "henti": "Tiada henti; stop = NaN menjadikan kecacatan henti hari-0 mustahil.",
+   "varian_kod": "V1 kombinasi MA50"
+  },
+  {
+   "id": "N204X36",
+   "nama": "Undur RSI2, gap 2%, RSI silang 50 x X36",
+   "varian": "V1 kombinasi MA50",
+   "pencipta": "Tinjauan isyarat kombinasi 11-12 Nov 2026 (kohort KOMBINASI MA50)",
+   "sumber": "kajian/KAJIAN_ISYARAT_KOMBINASI.md; pradaftar kajian/SPEC_JEJAK_KOMBINASI.md; LANGSUNG sejak isyarat 2026-11-12. CALON, bukan bukti: tinjauan +4.68% (n 922), saham lain +3.38% (n 68); rujukan sama cara N76X36 +2.01% / saham lain +0.90%",
+   "masuk": "rsi2 silang bawah 10, kemudian (dalam 5 bar) buka > tinggi[-1] x 1.02, kemudian (dalam 5 bar) rsi14 silang naik 50; DAN tutup > ma50; beli pada buka esok. rank = U14 momentum 12-1.",
+   "keluar": "Lorong 1 = X36: keluar selepas DUA tutup bawah ma50; jual pada buka esok. Lorong 2 = X15 Chandelier tutup 4xATR14 (automatik).",
+   "pegang": "Had 126 bar (ufuk IMBAS kajian).",
+   "henti": "Tiada henti; stop = NaN menjadikan kecacatan henti hari-0 mustahil.",
+   "varian_kod": "V1 kombinasi MA50"
   }
  ]
 }

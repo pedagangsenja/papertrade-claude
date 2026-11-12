@@ -164,7 +164,8 @@ class TestKolamPortfolioSlot(unittest.TestCase):
 
 
 class TestModulNxx(unittest.TestCase):
-    """94 kombinasi: setiap satu mesti lengkap masuk + keluar + cara, bukan separuh."""
+    """94 kombinasi grid REVERSE + 4 kohort KOMBINASI MA50 (12 Nov 2026, `kajian/SPEC_JEJAK_KOMBINASI.md`):
+    setiap satu mesti lengkap masuk + keluar + cara, bukan separuh."""
 
     @classmethod
     def setUpClass(cls):
@@ -172,7 +173,7 @@ class TestModulNxx(unittest.TestCase):
         cls.fail = sorted(glob.glob(os.path.join(AKAR, 'BacktestShariah2', 'kod', 'kaedah', 'N*.py')))
 
     def test_bilangan(self):
-        self.assertEqual(len(self.fail), 94)
+        self.assertEqual(len(self.fail), 94 + 4)
 
     def test_id_sepadan_nama_fail(self):
         import re
