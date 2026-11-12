@@ -594,3 +594,11 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - Direkod 1226 (354 saham; belian semula 112; fail claude_193.csv); dilangkau 17. Harga: buka sementara yfinance 10:07 NY.
 - Dilangkau: GRDN M06: buka 49.75 > buka_maks 49.38; SSNC M13: buka 78.99 <= henti 81.33; BLDR M14: buka 62.00 <= henti 62.30; LPX M14: buka 74.73 <= henti 74.82; JD M14: buka 27.99 <= henti 28.09; TOL M14: buka 150.05 <= henti 150.51; KBH M14: buka 49.75 <= henti 49.80; INFY M18: buka 12.25 <= henti 12.30; CTSH M49: buka 64.28 <= henti 64.31; AEO M70: buka 21.35 <= henti 21.40; BIIB M70: buka 249.78 <= henti 250.44; RDY M70: buka 14.67 <= henti 14.86; TTEK M70: buka 40.17 <= henti 40.42; INFY M102: buka 12.25 <= henti 12.30; INFY M128: isyarat batal pada buka (peraturan kaedah); REGN M143: isyarat batal pada buka (peraturan kaedah); SGC M156: isyarat batal pada buka (peraturan kaedah).
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-12 13:57 MYT — GitHub Actions: kemas kini + imbas (sesi AS 2026-11-11)
+- Keluar baharu 345 (C {'sasaran': 16, 'isyarat': 250, 'masa': 18, 'henti': 60}, M {'sasaran': 1}); menunggu buka sesi seterusnya: 307.
+- Harga beli sementara dibetulkan kepada buka rasmi bar harian: 240 (beza > 0.5%: 61). Tidak dibeli baharu: tiada.
+- Senarai beli 1454 baris (391 saham, 200 kaedah; 143 daripada watchlist; belian semula 199). Ditolak: {'dipegang': 2262, 'had': 10600, 'ambil_alih': 290, 'tidak_cair': 132, 'kelas_berganda': 64, 'mingguan': 32}.
+- Watchlist 587 (baharu 305, dibuang 126, ke senarai beli 143). Isyarat direkod: 14834 (data/isyarat/2026-11-11_malam.csv.gz).
+- Ralat kaedah: tiada. Nota: C KVUE M93: tiada bar 2026-11-11 (harga terkini 2026-10-30); C KVUE M74: tiada bar 2026-11-11 (harga terkini 2026-10-30); C KVUE M99: tiada bar 2026-11-11 (harga terkini 2026-10-30); C KVUE M124: tiada bar 2026-11-11 (harga terkini 2026-10-30); C KVUE M80: tiada bar 2026-11-11 (harga terkini 2026-10-30); C KVUE M141: tiada bar 2026-11-11 (harga terkini 2026-10-30); C KVUE M148: tiada bar 2026-11-11 (harga terkini 2026-10-30); C ACA M100: tiada bar 2026-11-11 (harga terkini 2026-10-22).
+- Tiada order. Tiada wang sebenar.

@@ -34,57 +34,54 @@
   ]
  },
  "malam": {
-  "sesi": "2026-11-10",
-  "masa": "2026-11-11 14:25 MYT",
+  "sesi": "2026-11-11",
+  "masa": "2026-11-12 13:57 MYT",
   "ralat_kaedah": [],
   "kaedah_tanpa_modul": [],
-  "masa_kaedah_s": 343,
+  "masa_kaedah_s": 257,
   "keluar_baru": {
    "M": {
-    "henti": 1,
-    "isyarat": 2
+    "sasaran": 1
    },
    "C": {
-    "masa": 20,
-    "henti": 149,
-    "isyarat": 201,
-    "sasaran": 9
+    "sasaran": 16,
+    "isyarat": 250,
+    "masa": 18,
+    "henti": 60
    }
   },
   "keluar_baru_jumlah": {
-   "M": 3,
-   "C": 379
+   "M": 1,
+   "C": 344
   },
-  "menunggu": 249,
+  "menunggu": 307,
   "keluar_keluarga": {
-   "M": 235,
-   "N": 144
-  },
-  "menunggu_keluarga": {
-   "M": 65,
+   "M": 160,
    "N": 184
   },
-  "harga_beli_dibetulkan": 276,
-  "harga_beli_beza_besar": 95,
+  "menunggu_keluarga": {
+   "M": 82,
+   "N": 223
+  },
+  "harga_beli_dibetulkan": 240,
+  "harga_beli_beza_besar": 61,
   "tidak_dibeli": [],
   "nota": [
-   "C WLYB M30: tiada bar 2026-11-10 (harga terkini 2026-11-09)",
-   "C KVUE M93: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C KVUE M74: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C WLYB M74: tiada bar 2026-11-10 (harga terkini 2026-11-09)",
-   "C KVUE M99: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C KVUE M124: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C KVUE M80: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C KVUE M141: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C KVUE M148: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C ACA M100: tiada bar 2026-11-10 (harga terkini 2026-10-22)",
-   "C KVUE M137: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C KVUE M81: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C KVUE M82: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
+   "C KVUE M93: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M74: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M99: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M124: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M80: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M141: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M148: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C ACA M100: tiada bar 2026-11-11 (harga terkini 2026-10-22)",
+   "C KVUE M137: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M81: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M82: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
    "C SUPN M106: buka stor 26.99 lawan harga_beli 42.07 (> 15%; split/data tidak sepadan) — tidak dinilai",
-   "C KVUE M147: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C KVUE M158: tiada bar 2026-11-10 (harga terkini 2026-10-30)",
-   "C KVUE M14: tiada bar 2026-11-10 (harga terkini 2026-10-30)"
+   "C KVUE M147: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M158: tiada bar 2026-11-11 (harga terkini 2026-10-30)",
+   "C KVUE M14: tiada bar 2026-11-11 (harga terkini 2026-10-30)"
   ],
   "tidak_layak_posisi": {
    "ambil_alih": {
@@ -114,27 +111,27 @@
    }
   },
   "dagangan_betul": 1,
-  "senarai_beli": 1243,
-  "saham_unik": 358,
+  "senarai_beli": 1454,
+  "saham_unik": 391,
   "senarai_keluarga": {
-   "M": 466,
-   "N": 777
+   "M": 623,
+   "N": 831
   },
   "kaedah_keluarga": {
-   "M": 94,
-   "N": 91
+   "N": 97,
+   "M": 103
   },
-  "kaedah": 185,
-  "belian_semula": 121,
-  "dari_watchlist": 105,
-  "isyarat": 13275,
+  "kaedah": 200,
+  "belian_semula": 199,
+  "dari_watchlist": 143,
+  "isyarat": 14834,
   "ditolak": {
-   "dipegang": 2011,
-   "had": 9502,
-   "ambil_alih": 275,
-   "kelas_berganda": 59,
-   "tidak_cair": 168,
-   "mingguan": 17
+   "dipegang": 2262,
+   "had": 10600,
+   "ambil_alih": 290,
+   "tidak_cair": 132,
+   "kelas_berganda": 64,
+   "mingguan": 32
   },
   "tidak_layak": {
    "ACLS": "ambil alih",
@@ -152,6 +149,7 @@
    "INDV": "ambil alih",
    "KELYB": "tidak cair",
    "KEQU": "tidak cair",
+   "LVLU": "tidak cair",
    "MAYS": "tidak cair",
    "MRVL": "ambil alih",
    "NCEW": "tidak cair",
@@ -174,22 +172,22 @@
    "TECH": "ambil alih",
    "WLYB": "tidak cair"
   },
-  "watchlist": 551,
-  "watchlist_baharu": 294,
-  "watchlist_dibuang": 204,
-  "watchlist_ke_senarai": 105,
+  "watchlist": 587,
+  "watchlist_baharu": 305,
+  "watchlist_dibuang": 126,
+  "watchlist_ke_senarai": 143,
   "minggu_akhir": false,
-  "fail_isyarat": "data/isyarat/2026-11-10_malam.csv.gz"
+  "fail_isyarat": "data/isyarat/2026-11-11_malam.csv.gz"
  },
  "gred": {
-  "tarikh": "2026-11-11",
-  "masa": "2026-11-11 20:23 MYT",
+  "tarikh": "2026-11-12",
+  "masa": "2026-11-12 14:03 MYT",
   "pemangkin": {
-   "D": 1070,
-   "C": 40,
-   "B": 84,
-   "–": 19,
-   "A": 30
+   "D": 1236,
+   "B": 117,
+   "A": 50,
+   "C": 44,
+   "–": 7
   }
  }
 }

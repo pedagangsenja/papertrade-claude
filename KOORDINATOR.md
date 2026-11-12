@@ -1,22 +1,23 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-11 18:42 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-12 06:19 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
 | Cawangan | HEAD | Commit di belakang origin/main | origin/main (fetch terakhir) |
 |---|---|---|---|
-| main | 2026-11-11 | 0 | 2026-11-11 |
+| main | 2026-11-12 | 0 | 2026-11-12 |
 
 
 Selari dengan `origin/main` pada fetch terakhir — angka kesegaran di bawah boleh dipercayai.
 
 
-## 1. Perlu keputusan anda (1)
+## 1. Perlu keputusan anda (2)
 
 | Dibuka | Perkara | Catatan |
 |---|---|---|
 | 2026-11-06 | Pilih berat T4 (SPUS 80/20, 70/30 atau 50/50) untuk wang sebenar | Keputusan pengguna 6 Nov 2026 (audit dashboard v154 Pilihan B + T4): papar ketiga-tiga berat dan tangguh pilihan sehingga satu kaedah mencapai TERBUKTI (G6 lulus; paling awal ~9 Apr 2027). Sumber: laporan/KAD_SKOR.md, laporan/T4_KAEDAH.md. Jangan pilih kaedah atau berat sebelum itu. |
+| 2026-11-12 | Gabung cabang kohort KOMBINASI MA50 ke main dan tolak dokumen db kaedah/katalog | Modul N201X36-N204X36 dikomit pada cabang claude/ecstatic-wright-jwyehc. Jejak hanya bermula apabila modul berada di main (Actions harian/lejar berjalan di main). Selepas gabung: set kaedah/katalog dengan standard/katalog_kaedah.json (standard/dashboard.md langkah 4). Tukar ke selesai selepas kedua-duanya dibuat. |
 
 
 Sunting `BacktestShariah2/koordinator/keputusan.csv` — tukar `status` ke `selesai` apabila diputuskan (tambah sahaja; jangan buang baris).
@@ -31,13 +32,13 @@ REVERSE menguji **signal dan indikator** untuk ENTRY/HOLD/EXIT. Ia **tidak** men
 
 | Sumber | Hari dagangan | Mula | Akhir | Suku (anggaran) | Baris | Cukup? |
 |---|---|---|---|---|---|---|
-| RS pasaran | 30 | 2026-09-30 | 2026-11-10 | 0.5 |  | tidak |
-| Gred kumpulan | 33 | 2026-09-25 | 2026-11-10 | 0.5 |  | tidak |
+| RS pasaran | 30 | 2026-10-01 | 2026-11-11 | 0.5 |  | tidak |
+| Gred kumpulan | 34 | 2026-09-25 | 2026-11-11 | 0.5 |  | tidak |
 | SEC EPS/hasil | 4103 | 2009-04-15 | 2026-11-10 | 65.1 | 271511 | ya |
 | SEC earnings 8-K | 5456 | 2004-08-23 | 2026-11-10 | 86.6 | 180043 | ya |
 
 
-Leg **RS/gred**: terbaik **33 / 250** hari dagangan. Peristiwa sah ialah fungsi deterministik stor harga, jadi join peristiwa × data titik-masa boleh dibuat **retrospektif** — yang perlu ditunggu ialah masa, bukan kod.
+Leg **RS/gred**: terbaik **34 / 250** hari dagangan. Peristiwa sah ialah fungsi deterministik stor harga, jadi join peristiwa × data titik-masa boleh dibuat **retrospektif** — yang perlu ditunggu ialah masa, bukan kod.
 
 
 Leg **SEC** tidak menunggu: nilai pertama difail = titik-masa retrospektif sejak 2009 (`SPEC_FASA2.md` §4.1). Halangannya **liputan ticker**: 2848 daripada 3302 ticker universe ada data EPS/hasil, 0 belum diisi. Universe REVERSE kira-kira 2,300 setahun.
@@ -75,16 +76,16 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 
 | Sumber | Terakhir | Umur (hari) | Status |
 |---|---|---|---|
-| Stor harga | 20261110 | 1 | OK |
-| Trend D10H2-r2 | 20261110 | 1 | OK |
-| Lejar Penuh | 2026-11-10 | 1 | OK |
-| portfolio_slot | 2026-11-10 | 1 | OK |
-| Papan Penganalisis | 2026-11-12 | -1 | OK |
-| RS pasaran | 2026-11-10 | 1 | OK |
-| Gred kumpulan | 2026-11-10 | 1 | OK |
+| Stor harga | 20261111 | 1 | OK |
+| Trend D10H2-r2 | 20261111 | 1 | OK |
+| Lejar Penuh | 2026-11-10 | 2 | OK |
+| portfolio_slot | 2026-11-10 | 2 | OK |
+| Papan Penganalisis | 2026-11-12 | 0 | OK |
+| RS pasaran | 2026-11-11 | 1 | OK |
+| Gred kumpulan | 2026-11-11 | 1 | OK |
 | SEC fundamental | fail diubah | 0 | OK |
 | Senarai bursa | fail diubah | 0 | OK |
-| Senarai Shariah (skrin Moomoo manual) | 2026-10-26 | 16 | OK (had 35 hari) |
+| Senarai Shariah (skrin Moomoo manual) | 2026-10-26 | 17 | OK (had 35 hari) |
 
 
 Ambang LEWAT: > 3 hari. Dua sebab biasa **bukan** kerosakan: hujung minggu atau cuti pasaran, dan salinan kerja yang lama (lihat §0). Periksa kedua-duanya, kemudian `penjaga_jadual` dan log workflow, sebelum menganggap saluran rosak.
