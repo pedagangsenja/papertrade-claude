@@ -1,0 +1,16 @@
+id,nama,n,tutup,pul_tutup,pul_buka,jangkaan,tanpa5
+M01,Bollinger Band + RSI,112,20,13.48,0.78,3.05,1.85
+N75X14,RSI14 < 40 tanpa penapis → keluar bila rsi14 silang naik 50,188,21,7.23,1.75,2.36,1.64
+M82,Arthur Hill Rotasi Sasaran 10%,565,208,2.43,-2.17,-0.48,-1.67
+N48X36,Inside day pecah → keluar selepas DUA tutup di bawah MA rujukan,256,158,1.86,-0.28,1.04,0.33
+N119X13,3 tutup turun berturut → keluar bila rsi14 > 70,144,33,1.05,-0.14,0.14,-0.44
+M100,Bulkowski Segi Empat & Segi Tiga Menaik,58,40,1.02,-0.59,0.52,-0.10
+M73,ADX(5) > 40 + Julat Terkecil 6 Hari,877,699,0.64,-1.76,0.15,-0.42
+N75X17,RSI14 < 40 tanpa penapis → keluar bila adx14 < 20,267,110,0.51,1.80,1.27,0.55
+N113X36,80-20 bar (sisi beli) → keluar selepas DUA tutup di bawah MA rujukan,244,148,0.08,1.05,0.46,-0.44
+N113X16,80-20 bar (sisi beli) → keluar bila supertrend berbalik (henti ekor),256,162,0.02,2.61,0.97,-0.53
+M153,Range Leader,1242,1026,-0.17,2.43,0.28,-0.73
+M116,2/20 EMA Breakout (Landry),539,353,-0.26,0.66,0.06,-0.96
+N28X36,ADX>25 + DI+ > DI- → keluar selepas DUA tutup di bawah MA rujukan,222,106,-0.37,2.01,0.88,-0.88
+M03,BB Break + Divergence RSI,395,311,-0.54,1.70,-0.06,-0.88
+N28X16,ADX>25 + DI+ > DI- → keluar bila supertrend berbalik (henti ekor),233,115,-0.82,0.79,-0.01,-0.75

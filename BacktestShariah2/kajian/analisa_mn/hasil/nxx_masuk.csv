@@ -1,0 +1,46 @@
+masuk_n,nama,kombinasi,posisi,langsung_jangkaan,langsung_lift5,langsung_r3,backtest_tahan,backtest_lift
+N19,Bawah jalur BB + RSI<30,1,101,4.61,1.23,1.59,11.29,6.94
+N124,Episodic pivot gap 8-10%,2,78,2.86,-0.17,2.66,11.02,8.72
+N40,OBV tinggi baharu + MA50,2,108,2.42,1.54,-1.18,1.70,0.90
+N75,RSI14 < 40 tanpa penapis,4,703,2.05,1.07,0.36,4.81,2.08
+N64,Episodic pivot,4,184,1.98,-0.05,1.83,3.81,2.70
+N73,"Tutup bawah jalur bawah BB(20,2)",1,136,1.95,0.24,-0.09,6.89,2.54
+N42,Lonjakan volum 2x,5,825,1.52,1.02,0.99,3.28,1.65
+N48,Inside day pecah,1,256,1.04,-1.31,-1.93,1.28,0.38
+N113,80-20 bar (sisi beli),2,500,0.71,1.42,-1.95,0.90,0.09
+N55,BB + RSI + ADX>20,1,57,0.67,-0.91,-0.17,4.45,0.10
+N65,Gap 4% + volum + hampir 52w,2,56,0.61,-0.37,0.34,3.48,2.54
+N53,Supertrend + ADX>25,3,287,0.59,1.63,1.00,2.80,1.64
+N16,RSI2<10 tanpa penapis,2,222,0.33,-1.25,-1.56,5.10,1.08
+N43,Undur EMA8 + penapis MA50,1,136,0.26,-2.10,-1.76,1.66,0.77
+N28,ADX>25 + DI+ > DI-,4,672,0.25,0.31,0.42,2.31,1.20
+N80,Tinggi sepanjang masa,1,32,0.20,1.06,-0.03,0.99,0.09
+N66,52w tinggi + pengesahan 1%,1,33,0.15,0.02,0.47,1.84,0.95
+N25,Supertrend + EMA + ADX>23,3,302,0.07,1.70,-0.95,2.28,1.13
+N76,Tutup > MA50 (penapis trend tunggal),2,360,0.06,0.30,-0.90,1.45,0.65
+N50,Mampat + pecah volum 1.5x,2,24,0.03,-1.61,-3.16,3.09,1.67
+N37,Gap and go,4,303,0.03,-1.98,0.66,3.96,2.85
+N45,Undur EMA21 cerun positif,2,214,0.02,1.20,-0.48,1.62,0.82
+N36,Pocket pivot,3,407,0.02,0.04,-0.66,1.70,0.83
+N24,"Supertrend(10,3) + ADX>20",3,318,0.00,0.33,-0.23,2.32,1.16
+N09,Undur EMA10 + penapis EMA50,1,146,-0.01,-1.74,-1.16,1.54,0.65
+N56,RSI>50 + ADX>20,3,412,-0.11,0.79,-0.94,2.01,0.85
+N54,Supertrend + RSI>50,2,247,-0.16,0.60,-1.20,1.74,0.94
+N07,Tiga MA tersusun,2,228,-0.21,0.22,-0.53,1.68,0.88
+N74,"MACD atas garis isyarat (keadaan, bukan sila",1,320,-0.21,0.55,-0.00,1.15,0.44
+N119,3 tutup turun berturut,2,184,-0.22,-3.40,-0.90,4.51,0.48
+N22,BB pecah atas + RSI,3,327,-0.34,-0.20,-0.28,1.65,0.78
+N68,Bullish engulfing + EMA21,2,100,-0.40,7.20,-0.60,1.36,0.55
+N08,tutup>EMA20 tidak terlalu jauh,2,573,-0.42,0.56,-1.02,1.29,0.49
+N33,Donchian20 + penapis MA200,3,254,-0.42,-0.20,-0.46,1.52,0.65
+N35,Pecah 52 minggu tinggi,1,42,-0.48,0.15,-0.95,1.34,0.44
+N41,CMF20>0 + tutup>EMA20,2,389,-0.61,1.27,-0.80,1.31,0.50
+N47,NR7 + EMA9>EMA21,2,210,-0.71,-2.28,-2.60,1.53,0.73
+N38,VCP pecah,1,22,-0.79,0.98,-1.20,2.29,1.40
+N27,Ichimoku atas awan,2,212,-0.90,-1.91,-1.11,1.47,0.66
+N06,Golden cross MA50/MA200,1,14,-0.95,-3.31,-3.04,2.90,2.01
+N31,Turtle sistem 2,1,91,-1.01,-1.67,-1.39,1.79,0.89
+N29,PSAR naik + tutup>MA50,2,283,-1.03,-0.42,-1.55,1.51,0.70
+N57,ADX bangkit daripada <20,2,118,-1.68,-2.32,-1.98,1.58,0.77
+N51,BB squeeze + Supertrend,2,12,-2.29,-5.21,-2.77,0.90,0.09
+N39,NR7 kemudian pecah,1,18,-3.09,-2.21,-2.83,1.50,0.61

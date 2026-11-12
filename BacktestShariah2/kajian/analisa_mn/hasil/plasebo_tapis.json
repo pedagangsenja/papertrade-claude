@@ -1,0 +1,26 @@
+{
+ "semua hari beli": {
+  "kaedah": 101,
+  "lulus_sebenar": 32,
+  "bebas_purata": 15.286666666666667,
+  "bebas_p5": 10.0,
+  "bebas_p95": 22.0,
+  "p_bebas": 0.0,
+  "tindih_purata": 15.616666666666667,
+  "tindih_p5": 9.0,
+  "tindih_p95": 24.0,
+  "p_tindih": 0.0
+ },
+ "tanpa hari beli pertama 2026-10-16": {
+  "kaedah": 101,
+  "lulus_sebenar": 24,
+  "bebas_purata": 15.426666666666666,
+  "bebas_p5": 9.0,
+  "bebas_p95": 22.0,
+  "p_bebas": 0.02,
+  "tindih_purata": 15.08,
+  "tindih_p5": 9.0,
+  "tindih_p95": 23.0,
+  "p_tindih": 0.03333333333333333
+ }
+}

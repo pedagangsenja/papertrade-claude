@@ -1,0 +1,15 @@
+{
+ "pasangan_mungkin": 8128,
+ "pasangan_cukup": 395,
+ "lift_purata": 0.9056548018833704,
+ "lift_p5": -1.0345219086216726,
+ "lift_p95": 2.861817442027887,
+ "positif_pct": 78.9873417721519,
+ "pasangan_dua_separuh": 229,
+ "spearman_A_B": -0.07432774074925307,
+ "top20_A_pada_A": 3.794550126398972,
+ "top20_A_pada_B": 0.41745549740705157,
+ "semua_pada_B": 0.11176135565400758,
+ "top20_B_pada_A": 1.1685234080430376,
+ "semua_pada_A": 1.3511785961415466
+}

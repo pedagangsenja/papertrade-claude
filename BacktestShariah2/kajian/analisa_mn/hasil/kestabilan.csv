@@ -1,0 +1,9 @@
+label,hari,kaedah,pecahan,spearman_median,spearman_p5,spearman_p95,top10_lebih_median,top10_lebih_p5,top10_lebih_p95,top10_lebih_positif_pct
+Mxx lift 3 sesi,17,102,500.000,-0.077,-0.234,0.073,-0.165,-0.822,0.332,30.600
+Nxx lift 3 sesi,4,79,500.000,-0.030,-0.144,0.179,0.169,-1.289,0.207,68.200
+Mxx lift 5 sesi,15,99,500.000,0.071,-0.115,0.240,0.024,-0.746,0.766,52.800
+Nxx lift 5 sesi,2,0,,,,,,,,
+Mxx lift 10 sesi,10,86,500.000,0.154,0.014,0.285,0.323,-0.842,1.341,73.800
+Nxx lift 10 sesi,0,0,,,,,,,,
+Mxx lift 5 sesi tanpa 2026-10-16,14,97,500.000,0.050,-0.149,0.206,0.430,-0.383,1.169,78.800
+Mxx lift 3 sesi tanpa 2026-10-16,16,99,500.000,-0.098,-0.263,0.047,-0.246,-0.773,0.208,23.400
