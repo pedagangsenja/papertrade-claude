@@ -1,6 +1,6 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-12 11:36 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-12 13:45 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
@@ -33,8 +33,8 @@ REVERSE menguji **signal dan indikator** untuk ENTRY/HOLD/EXIT. Ia **tidak** men
 |---|---|---|---|---|---|---|
 | RS pasaran | 30 | 2026-10-01 | 2026-11-11 | 0.5 |  | tidak |
 | Gred kumpulan | 34 | 2026-09-25 | 2026-11-11 | 0.5 |  | tidak |
-| SEC EPS/hasil | 4103 | 2009-04-15 | 2026-11-10 | 65.1 | 271511 | ya |
-| SEC earnings 8-K | 5456 | 2004-08-23 | 2026-11-10 | 86.6 | 180043 | ya |
+| SEC EPS/hasil | 4104 | 2009-04-15 | 2026-11-12 | 65.1 | 271561 | ya |
+| SEC earnings 8-K | 5457 | 2004-08-23 | 2026-11-12 | 86.6 | 180078 | ya |
 
 
 Leg **RS/gred**: terbaik **34 / 250** hari dagangan. Peristiwa sah ialah fungsi deterministik stor harga, jadi join peristiwa × data titik-masa boleh dibuat **retrospektif** — yang perlu ditunggu ialah masa, bukan kod.
