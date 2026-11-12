@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "skills": {
+    "backtest-expert": {
+      "source": "tradermonty/claude-trading-skills",
+      "sourceType": "github",
+      "skillPath": "skills/backtest-expert/SKILL.md",
+      "computedHash": "ae1854a6eabafd21083e6c0882cc6dfd620fd3d2047aeb47b8e3212272e3487d",
+      "installMode": "copy"
+    },
+    "residual-edge-analyzer": {
+      "source": "tradermonty/claude-trading-skills",
+      "sourceType": "github",
+      "skillPath": "skills/residual-edge-analyzer/SKILL.md",
+      "computedHash": "1a2346f3a8ac2a884adbeae866772617090fa781b311ce6b1ae5fdd5fb833f52",
+      "installMode": "copy"
+    },
+    "statistical-analysis": {
+      "source": "k-dense-ai/scientific-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/statistical-analysis/SKILL.md",
+      "computedHash": "7428d347cfe2f52324cba1aaf30031fc480d47a65dfb932879ec25ca5c7eac7f",
+      "installMode": "copy"
+    },
+    "stock-liquidity": {
+      "source": "himself65/finance-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/market-analysis/skills/stock-liquidity/SKILL.md",
+      "computedHash": "c79c3b2feeaccf09c1fddec1259ce8eb65754522d31f82953e3ea5d123bfc9a1",
+      "installMode": "copy"
+    },
+    "validate-data": {
+      "source": "anthropics/knowledge-work-plugins",
+      "sourceType": "github",
+      "skillPath": "data/skills/validate-data/SKILL.md",
+      "computedHash": "987f2eed5fcb84cc84f62f3c38636dffffe0356c8b1caa36bd152568987e25c3",
+      "installMode": "copy"
+    },
+    "yfinance-data": {
+      "source": "himself65/finance-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/market-analysis/skills/yfinance-data/SKILL.md",
+      "computedHash": "750aea542970ba0878c79c34b73025a85d7f6d827df85df05d0fc6e30c81f566",
+      "installMode": "copy"
+    }
+  }
+}
