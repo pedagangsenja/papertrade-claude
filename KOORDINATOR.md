@@ -1,6 +1,6 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-12 07:59 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-12 11:36 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
@@ -12,12 +12,11 @@ Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-12 07:59 (waktu p
 Selari dengan `origin/main` pada fetch terakhir — angka kesegaran di bawah boleh dipercayai.
 
 
-## 1. Perlu keputusan anda (2)
+## 1. Perlu keputusan anda (1)
 
 | Dibuka | Perkara | Catatan |
 |---|---|---|
 | 2026-11-06 | Pilih berat T4 (SPUS 80/20, 70/30 atau 50/50) untuk wang sebenar | Keputusan pengguna 6 Nov 2026 (audit dashboard v154 Pilihan B + T4): papar ketiga-tiga berat dan tangguh pilihan sehingga satu kaedah mencapai TERBUKTI (G6 lulus; paling awal ~9 Apr 2027). Sumber: laporan/KAD_SKOR.md, laporan/T4_KAEDAH.md. Jangan pilih kaedah atau berat sebelum itu. |
-| 2026-11-12 | Gabung cabang kohort KOMBINASI MA50 ke main dan tolak dokumen db kaedah/katalog | Modul N201X36-N204X36 dikomit pada cabang claude/ecstatic-wright-jwyehc. Jejak hanya bermula apabila modul berada di main (Actions harian/lejar berjalan di main). Selepas gabung: set kaedah/katalog dengan standard/katalog_kaedah.json (standard/dashboard.md langkah 4). Tukar ke selesai selepas kedua-duanya dibuat. |
 
 
 Sunting `BacktestShariah2/koordinator/keputusan.csv` — tukar `status` ke `selesai` apabila diputuskan (tambah sahaja; jangan buang baris).
