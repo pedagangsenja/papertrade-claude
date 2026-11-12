@@ -120,3 +120,17 @@ lorong L1/L2 setiap kaedah bermula pada belian LANGSUNG pertamanya dan jalur raw
 sama. Lorong Mxx tidak berubah (LANGSUNG sejak 15 Okt; lorong bermula 16 Okt). Ambang G6 (`G6_SESI`, `G6_MDD_HAD`) TIDAK
 berubah; ini mengetatkan penyebut, bukan melonggarkan gate. Kesan: lorong Nxx/GB kini ~4 sesi, jadi anggaran G6 Nxx/GB
 beralih ~12 sesi kemudian (~akhir April 2027).
+
+## Pindaan 12 Nov 2026 — tarikh LANGSUNG kohort KOMBINASI MA50 (`N201X36`–`N204X36`)
+
+**Dipradaftar 12 Nov 2026**, dikomit bersama modul kohort itu dan **sebelum mana-mana isyaratnya dibeli**. Keputusan pengguna
+12 Nov 2026 ("ya, simpan kajian ke repo dan jejak dalam papertrade"; `koordinator/keputusan.csv`). Pradaftar kohort:
+`kajian/SPEC_JEJAK_KOMBINASI.md`.
+
+Empat modul baharu berawalan `N` akan mewarisi `N/GB: 2026-11-03` daripada `MULA_LANGSUNG`. Itu salah bagi mereka: modulnya
+tidak wujud sebelum 12 Nov 2026, jadi baris bertarikh 3–11 Nov (yang hanya boleh muncul melalui bina semula Lejar) ialah
+isian, bukan rekod hadapan — kelas masalah yang sama dengan pindaan 7 dan 9 Nov. Pembetulan:
+`lift_kaedah.MULA_KOHORT = {N201X36..N204X36: '2026-11-12'}` dirujuk dahulu oleh `mula_langsung()`. `MULA_LANGSUNG` keluarga
+(M: 2026-10-15, N/GB: 2026-11-03) **tidak berubah** dan kekal dikunci `TestKunci`; `MULA_KOHORT` dikunci
+`ujian/test_kombo_ma50.py`. Tiada ambang gate berubah. Ini mengetatkan penyebut bagi empat kaedah baharu sahaja, tidak
+menyentuh 223 kaedah sedia ada, dan tidak boleh mengubah mana-mana status yang sudah dilihat (kohort ini belum ada data).

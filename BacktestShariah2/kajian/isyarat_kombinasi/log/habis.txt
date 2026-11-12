@@ -1,0 +1,167 @@
+KAWALAN sebenar: semua 1.36 A 0.82 B 1.78 lain 0.26 | plasebo: A 0.63 B 1.01 lain 1.70
+serentak 2-6/31 siap 1565s, rekod 936007
+serentak 7-9/17 siap 52s, rekod 53648
+turutan N=5 siap 14s, jumlah rekod 1003335
+turutan N=10 siap 300s, jumlah rekod 1323776
+turutan N=20 siap 26s, jumlah rekod 1345507
+
+JUMLAH gabungan direkod (>=200 dagangan, >=100 setiap separuh): 1345507
+
+== RINGKASAN SETIAP KELUARGA ==
+               keluarga  diuji  purata  atasi_kawalan_2separuh  korelasi_AB  top20A_ke_B  top20B_ke_A  lulus_utama  plasebo_lulus_utama  lulus_semua  plasebo_lulus_semua
+serentak 2 (31 keadaan)    465    1.41                   22.15        -0.00        -0.02         0.33            3                    6            0                    0
+serentak 3 (31 keadaan)   4495    1.40                   25.61        -0.09        -0.12        -0.27           14                  125            1                   26
+serentak 4 (31 keadaan)  31446    1.38                   26.13        -0.15        -0.99        -0.38          164                 1349           14                  339
+serentak 5 (31 keadaan) 169402    1.36                   23.85        -0.18        -0.33        -0.93         1138                10619           93                 2476
+serentak 6 (31 keadaan) 730199    1.34                   20.48        -0.21         0.02        -1.06         6075                61723          468                13360
+   serentak 7 (17 asal)  17197    1.21                   13.53        -0.20         0.46        -1.00          349                 4244           13                  867
+   serentak 8 (17 asal)  19490    1.15                   12.51        -0.20         1.17        -1.06          364                 5202           12                  967
+   serentak 9 (17 asal)  16961    1.10                   11.12        -0.21         2.21        -1.18          275                 4623            8                  749
+ turutan 2 langkah (5h)    755    1.45                   23.58         0.04         0.46        -0.30           21                   31            5                    1
+ turutan 3 langkah (5h)  12925    1.53                   25.84         0.09         1.11        -0.55          614                  579          144                    2
+turutan 2 langkah (10h)    787    1.49                   26.30         0.01         0.39         0.23           15                   28            5                    2
+turutan 3 langkah (10h)  17769    1.56                   29.89         0.12        -0.81         0.16          637                  818          182                    6
+turutan 4 langkah (10h) 301885    1.63                   30.52         0.12         1.77         0.19        13883                12794         3305                   22
+turutan 2 langkah (20h)    809    1.51                   25.59        -0.03        -0.33         0.41            4                   24            2                    6
+turutan 3 langkah (20h)  20922    1.58                   30.59         0.08        -1.04        -0.88          354                  764          109                   49
+
+JUMLAH: diuji 1345507 | lulus utama 23910 (plasebo 102929) | lulus semua 4361 (plasebo 18872)
+
+-- serentak 3 (31 keadaan): lulus semua 1; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                nama    n  jgk   mng    A    B  yp  yv  nV  jgkV
+MA20>MA50 + MA50>MA200 + tutup>MA200 4239 1.93 33.33 1.37 2.34   6   7 311   0.7
+
+-- serentak 4 (31 keadaan): lulus semua 14; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                              nama   n  jgk   mng    A    B  yp  yv  nV  jgkV
+          MA50>MA200 + squeeze ON + squeeze lepas(10h) + atas PSAR 678 2.63 32.60 2.29 2.95   6   7  80  1.45
+ squeeze ON + squeeze lepas(10h) + atas PSAR + trend mingguan naik 691 2.42 31.11 2.17 2.64   6   7  76  1.68
+            MA50>MA200 + squeeze ON + squeeze lepas(10h) + +DI>-DI 870 2.45 31.84 2.56 2.35   6   7  91  0.85
+         MA50>MA200 + squeeze ON + squeeze lepas(10h) + EMA8>EMA21 922 2.22 30.91 2.10 2.32   6   7  99  1.47
+         tutup>MA200 + squeeze ON + squeeze lepas(10h) + atas PSAR 787 2.40 32.27 2.52 2.29   6   7  92  1.69
+        MACD hijau + tutup>MA200 + squeeze ON + squeeze lepas(10h) 531 2.30 32.39 2.34 2.28   6   7  65  0.85
+             MACD>0 + MA50>MA200 + squeeze ON + squeeze lepas(10h) 902 2.20 30.60 2.12 2.27   6   7  96  1.28
+MA50>MA200 + squeeze ON + squeeze lepas(10h) + trend mingguan naik 855 2.04 29.36 1.85 2.21   6   7  91  1.28
+
+-- serentak 5 (31 keadaan): lulus semua 93; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                                                nama   n  jgk   mng    A    B  yp  yv  nV  jgkV
+                   MA50>MA200 + squeeze ON + squeeze lepas(10h) + MFI>50 + atas PSAR 573 3.03 35.43 2.33 3.70   6   7  72  1.04
+MACD hijau + squeeze ON + squeeze lepas(10h) + Williams%R>-50 + dalam 10% puncak 52w 337 3.22 33.23 2.26 4.01   6   7  40  0.58
+                   MA50>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) + atas PSAR 701 2.64 32.81 2.18 3.08   6   7  81  1.19
+                MA10>MA20 + MA50>MA200 + squeeze ON + squeeze lepas(10h) + atas PSAR 623 2.74 32.42 2.40 3.07   6   7  71  1.41
+           MACD hijau + MA20>MA50 + squeeze ON + squeeze lepas(10h) + Williams%R>-50 542 2.71 35.06 2.26 3.07   6   7  65  0.73
+           squeeze ON + squeeze lepas(10h) + CCI>0 + atas PSAR + trend mingguan naik 702 2.65 31.91 2.25 3.03   6   7  81  0.74
+                  MA50>MA200 + squeeze ON + squeeze lepas(10h) + atas PSAR + +DI>-DI 644 2.74 33.39 2.43 3.02   6   7  73  1.40
+     MA50>MA200 + squeeze ON + squeeze lepas(10h) + atas PSAR + atas tengah Donchian 671 2.52 32.64 2.00 3.01   6   7  76  0.63
+
+-- serentak 6 (31 keadaan): lulus semua 468; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                                                             nama   n  jgk   mng    A    B  yp  yv  nV  jgkV
+   MACD hijau + squeeze ON + squeeze lepas(10h) + Williams%R>-50 + +DI>-DI + dalam 10% puncak 52w 309 3.68 35.28 2.65 4.55   7   7  36  1.05
+       MACD hijau + MA50>MA200 + squeeze ON + squeeze lepas(10h) + +DI>-DI + dalam 10% puncak 52w 310 3.67 35.81 2.62 4.51   7   7  36  0.58
+                   MACD hijau + MA20>MA50 + MA50>MA200 + squeeze ON + squeeze lepas(10h) + MFI>50 306 3.45 36.60 3.32 3.54   6   7  38  0.99
+                  MACD hijau + MA20>MA50 + MA50>MA200 + squeeze ON + squeeze lepas(10h) + +DI>-DI 342 3.03 35.67 2.47 3.45   6   7  38  0.59
+           MACD hijau + RSI>50 + squeeze ON + squeeze lepas(10h) + +DI>-DI + dalam 10% puncak 52w 329 3.43 35.26 2.45 4.21   7   7  38  0.68
+     MACD hijau + MA20>MA50 + MA50>MA200 + squeeze ON + squeeze lepas(10h) + atas tengah Donchian 346 3.23 34.10 2.44 3.85   6   7  41  0.66
+MACD hijau + squeeze ON + squeeze lepas(10h) + atas PSAR + Aroon naik>turun + trend mingguan naik 324 3.09 34.26 2.64 3.40   6   7  34  0.92
+                    MA10>MA20 + MA50>MA200 + squeeze ON + squeeze lepas(10h) + MFI>50 + atas PSAR 532 3.12 35.53 2.42 3.80   6   7  69  1.22
+
+-- serentak 7 (17 asal): lulus semua 13; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                                                                 nama   n  jgk   mng    A    B  yp  yv  nV  jgkV
+           MACD hijau + MACD>0 + MA10>MA20 + MA20>MA50 + MA50>MA200 + squeeze ON + squeeze lepas(10h) 337 3.00 34.72 2.83 3.13   7   7  42  0.81
+      MACD hijau + MA10>MA20 + MA20>MA50 + MA50>MA200 + tutup>MA200 + squeeze ON + squeeze lepas(10h) 337 3.00 34.72 2.83 3.13   7   7  42  0.81
+             MACD hijau + MACD>0 + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) 429 2.53 33.80 2.21 2.76   6   7  53  1.06
+       MACD hijau + MA10>MA20 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + atas awan 379 2.60 34.30 2.42 2.73   7   7  46  0.85
+     MACD hijau + MACD>0 + MA10>MA20 + MA50>MA200 + squeeze ON + squeeze lepas(10h) + Supertrend naik 327 2.97 34.86 3.38 2.62   6   7  39  0.70
+MACD hijau + MA10>MA20 + MA50>MA200 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + Supertrend naik 329 2.92 34.65 3.38 2.54   6   7  39  0.70
+        MACD hijau + MACD>0 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + tutup>EMA20 414 2.29 32.85 1.98 2.52   6   7  53  1.03
+        MACD hijau + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) + tutup>EMA20 414 2.30 32.85 2.00 2.51   6   7  54  0.85
+
+-- serentak 8 (17 asal): lulus semua 12; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                                                                            nama   n  jgk   mng    A    B  yp  yv  nV  jgkV
+        MACD hijau + MACD>0 + MA10>MA20 + MA20>MA50 + MA50>MA200 + tutup>MA200 + squeeze ON + squeeze lepas(10h) 337 3.00 34.72 2.83 3.13   7   7  42  0.81
+         MACD hijau + MACD>0 + MA10>MA20 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + atas awan 379 2.60 34.30 2.42 2.73   7   7  46  0.85
+         MACD hijau + MA10>MA20 + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) + atas awan 376 2.59 34.04 2.41 2.72   7   7  45  0.66
+  MACD hijau + MACD>0 + MA10>MA20 + MA50>MA200 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + Supertrend naik 327 2.97 34.86 3.38 2.62   6   7  39  0.70
+MACD hijau + MA10>MA20 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + Supertrend naik + atas awan 334 2.61 34.73 2.70 2.54   6   7  42  0.84
+          MACD hijau + MACD>0 + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) + tutup>EMA20 414 2.29 32.85 1.98 2.52   6   7  53  1.03
+    MACD hijau + MA10>MA20 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + atas awan + tutup>EMA20 361 2.35 33.24 2.18 2.47   7   7  45  0.61
+   MACD hijau + MACD>0 + MA10>MA20 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + Supertrend naik 348 2.58 34.77 2.75 2.45   6   7  46  1.63
+
+-- serentak 9 (17 asal): lulus semua 8; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                                                                                          nama   n  jgk   mng    A    B  yp  yv  nV  jgkV
+              MACD hijau + MACD>0 + MA10>MA20 + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) + atas awan 376 2.59 34.04 2.41 2.72   7   7  45  0.66
+     MACD hijau + MACD>0 + MA10>MA20 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + Supertrend naik + atas awan 334 2.61 34.73 2.70 2.54   6   7  42  0.84
+     MACD hijau + MA10>MA20 + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) + Supertrend naik + atas awan 332 2.59 34.64 2.69 2.52   6   7  41  0.63
+         MACD hijau + MACD>0 + MA10>MA20 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + atas awan + tutup>EMA20 361 2.35 33.24 2.18 2.47   7   7  45  0.61
+         MACD hijau + MA10>MA20 + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) + atas awan + tutup>EMA20 361 2.35 33.24 2.18 2.47   7   7  45  0.61
+        MACD hijau + MACD>0 + MA10>MA20 + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) + Supertrend naik 344 2.53 34.30 2.76 2.36   6   7  44  1.41
+MACD hijau + MA10>MA20 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas(10h) + Supertrend naik + atas awan + tutup>EMA20 320 2.33 33.75 2.53 2.17   6   7  41  0.58
+            MACD hijau + MACD>0 + MA10>MA20 + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas(10h) + tutup>EMA20 380 2.24 32.89 2.40 2.13   7   7  49  1.23
+
+-- turutan 2 langkah (5h): lulus semua 5; 8 teratas ikut lebihan terkecil antara dua separuh --
+                              nama    n  jgk   mng    A    B  yp  yv  nV  jgkV
+   gap naik 2% -> silang atas MA50 2708 3.01 30.83 2.42 3.49   6   7 176  0.87
+     pecah Keltner -> golden cross  461 2.60 37.09 2.35 2.76   6   7  33  2.22
+    undur RSI2<10 -> squeeze lepas  468 2.26 33.55 1.77 2.57   6   7  46  1.22
+pecah tinggi 20h -> +DI silang -DI 2217 2.06 33.47 1.46 2.58   6   7 160  1.05
+         pecah NR7 -> golden cross  396 3.35 37.37 4.78 2.35   5   6  34  1.59
+
+-- turutan 3 langkah (5h): lulus semua 144; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                nama    n  jgk   mng    A    B  yp  yv  nV  jgkV
+       undur RSI2<10 -> gap naik 2% -> RSI silang 50  922 4.65 30.80 4.39 4.86   6   7  68  4.40
+EMA8 silang EMA21 -> silang atas MA50 -> gap naik 2% 1131 4.31 34.31 3.99 4.54   6   7  74  1.66
+ undur RSI2<10 -> pecah tinggi 20h -> +DI silang -DI  381 4.23 32.81 4.14 4.28   6   7  39  1.10
+   MA10 silang MA20 -> CCI silang 100 -> gap naik 2% 1060 3.87 34.25 3.30 4.31   6   7  82  1.08
+    gap naik 2% -> OBV tinggi baharu -> Aroon silang  905 3.85 32.93 3.46 4.10   6   7  55  1.44
+gap naik 2% -> EMA8 silang EMA21 -> silang atas MA50 1208 3.88 32.78 3.58 4.10   6   7  71  1.51
+  gap naik 2% -> EMA8 silang EMA21 -> +DI silang -DI  663 3.85 33.79 3.03 4.53   6   7  46  2.37
+gap naik 2% -> OBV tinggi baharu -> MA20 silang MA50  611 3.84 36.66 3.70 3.94   5   6  36  3.56
+
+-- turutan 2 langkah (10h): lulus semua 5; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                 nama    n  jgk   mng    A    B  yp  yv  nV  jgkV
+        pecah Keltner -> golden cross  783 2.74 35.50 2.41 2.94   6   7  60  1.81
+            pecah NR7 -> golden cross  728 3.07 35.58 3.31 2.92   6   7  53  1.42
+     MACD silang naik -> golden cross  582 2.94 33.68 1.78 3.60   7   7  45  1.28
+OBV tinggi baharu -> MA20 silang MA50 4052 1.88 33.17 1.35 2.30   6   7 252  1.38
+     Aroon silang -> MA20 silang MA50 3375 1.86 33.78 1.18 2.36   6   7 194  1.29
+
+-- turutan 3 langkah (10h): lulus semua 182; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                nama    n  jgk   mng    A    B  yp  yv  nV  jgkV
+   gap naik 2% -> +DI silang -DI -> MA20 silang MA50  733 5.67 36.02 6.42 5.04   6   7  49  3.38
+ MA10 silang MA20 -> gap naik 2% -> MA20 silang MA50  929 5.30 39.94 5.73 5.01   6   7  41  2.47
+    bullish engulfing -> gap naik 2% -> Aroon silang  585 5.12 37.78 5.48 4.88   7   7  34  4.55
+     Aroon silang -> gap naik 2% -> MA20 silang MA50 1150 4.77 38.17 4.71 4.81   6   7  42  2.85
+EMA8 silang EMA21 -> silang atas MA50 -> gap naik 2% 2045 4.76 35.06 4.74 4.78   6   7  96  0.90
+gap naik 2% -> OBV tinggi baharu -> MA20 silang MA50 1292 4.48 36.92 4.21 4.69   6   7  63  2.63
+OBV tinggi baharu -> gap naik 2% -> MA20 silang MA50 1089 4.91 37.47 5.24 4.68   6   7  51  1.36
+   gap naik 2% -> CCI silang 100 -> MA20 silang MA50 1235 5.03 37.49 5.81 4.40   6   7  62  1.27
+
+-- turutan 4 langkah (10h): lulus semua 3305; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                                    nama    n  jgk   mng    A    B  yp  yv  nV  jgkV
+       bullish engulfing -> MFI silang 50 -> gap naik 2% -> Aroon silang  483 7.06 41.82 7.25 6.94   7   7  30  5.81
+MA10 silang MA20 -> EMA8 silang EMA21 -> silang atas MA50 -> gap naik 2% 1187 6.42 36.82 5.85 6.85   6   7  43  0.89
+ undur RSI2<10 -> lonjakan 4%+volum 2x -> CCI silang 100 -> CMF silang 0  436 6.27 36.01 5.98 6.42   6   7  45  4.50
+ Supertrend naik -> EMA8 silang EMA21 -> silang atas MA50 -> gap naik 2%  923 6.18 38.79 5.36 6.79   7   7  42  0.73
+             hammer -> undur RSI2<10 -> gap naik 2% -> OBV tinggi baharu  801 7.74 37.08 9.58 6.30   6   7  37  1.54
+   gap naik 2% -> silang atas MA50 -> +DI silang -DI -> MA20 silang MA50  677 5.83 34.56 5.58 6.05   6   7  35  3.15
+   gap naik 2% -> +DI silang -DI -> silang atas MA50 -> MA20 silang MA50 1061 5.64 36.19 5.01 6.21   6   7  48  2.77
+      gap naik 2% -> RSI silang 50 -> +DI silang -DI -> MA20 silang MA50  735 5.79 36.19 5.62 5.95   6   7  38  3.83
+
+-- turutan 2 langkah (20h): lulus semua 2; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                 nama    n  jgk   mng    A    B  yp  yv  nV  jgkV
+     MACD silang naik -> golden cross  968 2.41 33.16 2.58 2.32   6   7  74  0.87
+OBV tinggi baharu -> MA20 silang MA50 4636 1.81 32.72 1.25 2.24   6   7 283  1.34
+
+-- turutan 3 langkah (20h): lulus semua 109; 8 teratas ikut lebihan terkecil antara dua separuh --
+                                                       nama    n  jgk   mng    A    B  yp  yv  nV  jgkV
+        MA10 silang MA20 -> gap naik 2% -> MA20 silang MA50 1701 4.51 36.68 4.28 4.70   6   7  64  1.79
+       OBV tinggi baharu -> gap naik 2% -> MA20 silang MA50 1580 4.52 35.44 4.31 4.68   6   7  66  1.17
+           MFI silang 50 -> gap naik 2% -> MA20 silang MA50 1936 4.31 36.05 3.98 4.57   6   7  78  1.12
+       bullish engulfing -> gap naik 2% -> MA20 silang MA50 1116 4.39 36.65 3.46 5.06   6   7  41  1.95
+          +DI silang -DI -> gap naik 2% -> MA20 silang MA50 2038 3.98 35.72 3.63 4.25   6   7  95  1.26
+       gap naik 2% -> EMA8 silang EMA21 -> MA20 silang MA50 2059 3.98 34.63 3.97 3.99   6   7  87  1.01
+          gap naik 2% -> CCI silang 100 -> MA20 silang MA50 2194 3.83 34.96 3.71 3.93   6   7  97  0.87
+squeeze mula ON -> lonjakan 4%+volum 2x -> MA10 silang MA20  484 3.52 31.82 3.04 3.88   6   7  47  2.36
+
+PALING KERAP dalam gabungan yang lulus semua: [('undur RSI2<10', 970), ('CMF silang 0', 955), ('gap naik 2%', 868), ('+DI silang -DI', 851), ('Aroon silang', 823), ('CCI silang 100', 777), ('pecah tinggi 20h', 693), ('pecah awan', 687), ('MFI silang 50', 685), ('EMA8 silang EMA21', 668), ('silang atas MA50', 664), ('RSI silang 50', 609), ('squeeze ON', 608), ('squeeze lepas(10h)', 608), ('PSAR bertukar naik', 583)]
+
+[exited with code 0]

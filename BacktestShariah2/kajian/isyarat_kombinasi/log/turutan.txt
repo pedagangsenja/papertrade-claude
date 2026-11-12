@@ -1,0 +1,97 @@
+KAWALAN (mana-mana hari atas MA50): semua 1.36 | A 0.82 | B 1.78 | saham lain 0.26
+
+== 1. BILANGAN keadaan hijau serentak (daripada 17 ) — beli pada hari pertama bilangan mencapai paras ==
+                              nama     n  jgk   mng     A    B    nA    nB  thn_untung  thn   nV  jgkV
+  tepat 0-5 hijau (mana-mana hari) 13346 0.82 27.27  0.23 1.34  6348  6998           4    7  895  2.26
+  tepat 6-8 hijau (mana-mana hari) 61234 1.31 28.94  0.95 1.61 27687 33547           4    7 4411  0.99
+ tepat 9-10 hijau (mana-mana hari) 71588 1.42 30.57  1.12 1.66 31393 40195           4    7 5143  1.47
+tepat 11-12 hijau (mana-mana hari) 96083 1.58 32.53  1.18 1.90 42444 53639           5    7 6517 -0.35
+tepat 13-14 hijau (mana-mana hari) 62714 1.13 31.84  0.10 1.91 27284 35430           4    7 4777 -0.90
+tepat 15-17 hijau (mana-mana hari)  5911 1.04 29.08 -1.14 2.64  2512  3399           5    7  634 -2.41
+   hari pertama mencapai >=8 hijau 17817 1.49 29.42  1.40 1.56  7909  9908           5    7 1278  0.32
+  hari pertama mencapai >=10 hijau 20152 1.48 30.44  1.27 1.65  8847 11305           5    7 1454  0.38
+  hari pertama mencapai >=11 hijau 19488 1.64 31.32  1.36 1.86  8476 11012           4    7 1398 -0.50
+  hari pertama mencapai >=12 hijau 18506 1.61 32.08  1.23 1.92  8206 10300           5    7 1355 -0.45
+  hari pertama mencapai >=13 hijau 16114 1.40 32.68  1.04 1.69  7138  8976           5    7 1188 -1.44
+  hari pertama mencapai >=14 hijau  9911 1.04 31.10 -0.19 1.95  4207  5704           4    7  864 -1.99
+  hari pertama mencapai >=15 hijau  3260 0.99 29.39 -0.54 2.13  1387  1873           4    7  346 -2.86
+
+(masa 29s)
+
+### 2. SERENTAK 4 keadaan (beli hari pertama semua hijau): 2369 gabungan dengan >=100 dagangan setiap separuh
+  purata untung 1.33 | median 1.37 | bahagian lebih baik drpd kawalan (kedua-dua separuh): 19%
+  korelasi pangkat separuh A lawan separuh B (lebihan atas kawalan): -0.20
+  20 terbaik dipilih pada 2020-22: lebihan di sana +1.86 -> lebihan pada 2023-26 -0.37 (positif 7/20)
+  20 terbaik dipilih pada 2023-26: lebihan di sana +2.31 -> lebihan pada 2020-22 -0.48 (positif 4/20)
+  lulus tapis (n>=300, lebihan >0.3 kedua-dua separuh, untung >=6/7 tahun): 33 | drpdnya ada >=30 isyarat pada saham lain: 33, purata lebihan di sana -0.92, positif 6%
+  -- lulus SEMUA (termasuk saham lain): 2
+                                                                          nama   n  jgk   mng    A    B  nA  nB  thn_untung  thn  nV  jgkV
+MACD hijau (MACD>isyarat) + tutup>MA200 + squeeze ON + squeeze lepas (10 hari) 531  2.3 32.39 2.34 2.28 220 311           6    7  65  0.85
+           MACD atas sifar + MA50>MA200 + squeeze ON + squeeze lepas (10 hari) 902  2.2 30.60 2.12 2.27 425 477           6    7  96  1.28
+
+### 2. SERENTAK 5 keadaan (beli hari pertama semua hijau): 6051 gabungan dengan >=100 dagangan setiap separuh
+  purata untung 1.29 | median 1.33 | bahagian lebih baik drpd kawalan (kedua-dua separuh): 17%
+  korelasi pangkat separuh A lawan separuh B (lebihan atas kawalan): -0.21
+  20 terbaik dipilih pada 2020-22: lebihan di sana +2.30 -> lebihan pada 2023-26 -0.98 (positif 4/20)
+  20 terbaik dipilih pada 2023-26: lebihan di sana +4.17 -> lebihan pada 2020-22 -0.68 (positif 3/20)
+  lulus tapis (n>=300, lebihan >0.3 kedua-dua separuh, untung >=6/7 tahun): 103 | drpdnya ada >=30 isyarat pada saham lain: 103, purata lebihan di sana -1.07, positif 9%
+  -- lulus SEMUA (termasuk saham lain): 5
+                                                                                            nama   n  jgk   mng    A    B  nA  nB  thn_untung  thn  nV  jgkV
+      MACD hijau (MACD>isyarat) + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas (10 hari) 432 2.59 34.03 2.30 2.80 179 253           6    7  54  0.99
+MACD hijau (MACD>isyarat) + MACD atas sifar + tutup>MA200 + squeeze ON + squeeze lepas (10 hari) 527 2.40 32.64 2.42 2.39 223 304           6    7  63  0.70
+                 MACD atas sifar + MA10>MA20 + MA50>MA200 + squeeze ON + squeeze lepas (10 hari) 842 2.24 30.76 2.25 2.23 399 443           6    7  88  1.19
+               MACD atas sifar + MA50>MA200 + tutup>MA200 + squeeze ON + squeeze lepas (10 hari) 907 2.17 30.43 2.11 2.22 426 481           6    7  98  1.16
+      MACD hijau (MACD>isyarat) + MA10>MA20 + tutup>MA200 + squeeze ON + squeeze lepas (10 hari) 486 2.40 32.72 2.68 2.19 208 278           6    7  60  0.89
+
+### 2. SERENTAK 6 keadaan (beli hari pertama semua hijau): 11662 gabungan dengan >=100 dagangan setiap separuh
+  purata untung 1.25 | median 1.29 | bahagian lebih baik drpd kawalan (kedua-dua separuh): 15%
+  korelasi pangkat separuh A lawan separuh B (lebihan atas kawalan): -0.21
+  20 terbaik dipilih pada 2020-22: lebihan di sana +2.58 -> lebihan pada 2023-26 -0.11 (positif 10/20)
+  20 terbaik dipilih pada 2023-26: lebihan di sana +5.33 -> lebihan pada 2020-22 -1.15 (positif 0/20)
+  lulus tapis (n>=300, lebihan >0.3 kedua-dua separuh, untung >=6/7 tahun): 236 | drpdnya ada >=30 isyarat pada saham lain: 236, purata lebihan di sana -1.22, positif 7%
+  -- lulus SEMUA (termasuk saham lain): 9
+                                                                                                        nama   n  jgk   mng    A    B  nA  nB  thn_untung  thn  nV  jgkV
+       MACD hijau (MACD>isyarat) + MA10>MA20 + MA20>MA50 + MA50>MA200 + squeeze ON + squeeze lepas (10 hari) 337 3.00 34.72 2.83 3.13 147 190           7    7  42  0.81
+MACD hijau (MACD>isyarat) + MACD atas sifar + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas (10 hari) 432 2.58 34.03 2.27 2.80 179 253           6    7  54  1.21
+         MACD hijau (MACD>isyarat) + MA20>MA50 + tutup>MA200 + RSI>50 + squeeze ON + squeeze lepas (10 hari) 429 2.53 33.80 2.23 2.75 180 249           6    7  54  0.88
+ MACD hijau (MACD>isyarat) + MA10>MA20 + MA50>MA200 + squeeze ON + squeeze lepas (10 hari) + Supertrend naik 328 2.94 34.76 3.38 2.58 150 178           6    7  39  0.70
+    MACD hijau (MACD>isyarat) + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas (10 hari) + tutup>EMA20 414 2.30 32.85 2.00 2.51 174 240           6    7  54  0.85
+      MACD hijau (MACD>isyarat) + MA10>MA20 + MA20>MA50 + tutup>MA200 + squeeze ON + squeeze lepas (10 hari) 398 2.55 34.17 2.65 2.48 167 231           7    7  51  1.47
+  MACD hijau (MACD>isyarat) + MA10>MA20 + MA20>MA50 + squeeze ON + squeeze lepas (10 hari) + Supertrend naik 482 2.34 35.27 2.43 2.27 209 273           6    7  59  0.69
+MACD hijau (MACD>isyarat) + MACD atas sifar + MA10>MA20 + tutup>MA200 + squeeze ON + squeeze lepas (10 hari) 485 2.44 32.78 2.79 2.19 208 277           6    7  60  0.89
+
+(masa 3s)
+
+### 3. BERTURUTAN 2 langkah (setiap langkah dalam 10 hari selepas langkah sebelumnya; beli pada langkah terakhir): 196 gabungan dengan >=100 dagangan setiap separuh
+  purata untung 1.42 | median 1.43 | bahagian lebih baik drpd kawalan (kedua-dua separuh): 25%
+  korelasi pangkat separuh A lawan separuh B (lebihan atas kawalan): -0.13
+  20 terbaik dipilih pada 2020-22: lebihan di sana +2.04 -> lebihan pada 2023-26 -0.35 (positif 7/20)
+  20 terbaik dipilih pada 2023-26: lebihan di sana +1.58 -> lebihan pada 2020-22 -0.34 (positif 8/20)
+  lulus tapis (n>=300, lebihan >0.3 kedua-dua separuh, untung >=6/7 tahun): 7 | drpdnya ada >=30 isyarat pada saham lain: 6, purata lebihan di sana -0.16, positif 33%
+  -- lulus SEMUA (termasuk saham lain): 2
+                            nama   n  jgk   mng    A    B  nA  nB  thn_untung  thn  nV  jgkV
+   pecah Keltner -> golden cross 783 2.74 35.50 2.41 2.94 294 489           6    7  60  1.81
+MACD silang naik -> golden cross 582 2.94 33.68 1.78 3.60 212 370           7    7  45  1.28
+
+### 3. BERTURUTAN 3 langkah (setiap langkah dalam 10 hari selepas langkah sebelumnya; beli pada langkah terakhir): 1749 gabungan dengan >=100 dagangan setiap separuh
+  purata untung 1.36 | median 1.38 | bahagian lebih baik drpd kawalan (kedua-dua separuh): 24%
+  korelasi pangkat separuh A lawan separuh B (lebihan atas kawalan): 0.05
+  20 terbaik dipilih pada 2020-22: lebihan di sana +4.60 -> lebihan pada 2023-26 -1.29 (positif 4/20)
+  20 terbaik dipilih pada 2023-26: lebihan di sana +3.41 -> lebihan pada 2020-22 +0.04 (positif 8/20)
+  lulus tapis (n>=300, lebihan >0.3 kedua-dua separuh, untung >=6/7 tahun): 52 | drpdnya ada >=30 isyarat pada saham lain: 50, purata lebihan di sana -0.44, positif 42%
+  -- lulus SEMUA (termasuk saham lain): 16
+                                                           nama    n  jgk   mng    A    B   nA   nB  thn_untung  thn  nV  jgkV
+   squeeze lepas ke atas -> MACD silang naik -> squeeze mula ON  391 3.72 32.48 3.52 3.92  193  198           5    6  41  1.29
+pecah tinggi 20 hari -> MACD silang naik -> pecah awan Ichimoku  734 2.77 32.97 2.32 3.11  319  415           6    7  48  1.25
+           MA10 silang MA20 -> Supertrend naik -> RSI silang 50  899 2.98 32.48 1.93 3.82  398  501           7    7  42  1.36
+              Supertrend naik -> pecah Keltner -> RSI silang 50 1103 2.76 31.82 2.78 2.75  422  681           6    7  56  3.70
+             pecah Keltner -> MA20 silang MA50 -> undur RSI2<10 1050 2.38 33.90 1.75 2.81  425  625           6    7  46  3.08
+ pecah tinggi 20 hari -> pecah awan Ichimoku -> Supertrend naik 1336 2.58 34.43 2.50 2.64  559  777           6    7  90  1.08
+       tutup silang atas MA50 -> undur RSI2<10 -> RSI silang 50 3123 2.20 31.06 1.72 2.58 1383 1740           6    7 199  1.71
+ tutup silang atas MA50 -> undur RSI2<10 -> pecah awan Ichimoku 2265 2.22 32.85 1.52 2.74  980 1285           6    7 147  1.01
+
+  ADAKAH SUSUNAN PENTING? 1634 turutan dalam 306 set. Korelasi pangkat (kesan susunan 2020-22 lawan 2023-26): 0.00
+CONTOH ANDA: MACD silang naik -> squeeze mula ON -> MA10 silang MA20 1384 0.82 27.1 0.94 0.73 625 759 5 7 107 -0.92
+squeeze mula ON -> MACD silang naik -> MA10 silang MA20 2550 1.31 29.65 1.48 1.16 1167 1383 5 7 207 1.5
+squeeze mula ON -> squeeze lepas -> MA10 silang MA20 1441 0.81 29.08 0.74 0.87 663 778 4 7 117 -0.83
+versi longgar: MA10 silang MA20 semasa MACD hijau dan squeeze ON dalam 10 hari 3765 0.89 29.06 1.18 0.65 1678 2087 5 7 321 0.56

@@ -57,9 +57,17 @@ MULA_LANGSUNG = {'M': '2026-10-15', 'N': '2026-11-03', 'GB': '2026-11-03'}   # t
 Z_KUASA = 0.8416
 
 
+# Kohort yang ditambah SELEPAS tarikh keluarga: modulnya belum wujud sebelum tarikh ini, jadi apa-apa
+# baris bertarikh lebih awal (cth. daripada bina semula Lejar) ialah isian, bukan rekod hadapan.
+# Pindaan 12 Nov 2026 SPEC_KAD_SKOR.md: hanya MENGETATKAN penyebut; MULA_LANGSUNG keluarga tidak berubah.
+MULA_KOHORT = {'N201X36': '2026-11-12', 'N202X36': '2026-11-12', 'N203X36': '2026-11-12', 'N204X36': '2026-11-12'}
+
+
 def mula_langsung(mid):
     """Tarikh isyarat pertama yang dikira data hadapan langsung bagi kaedah `mid`."""
     mid = str(mid)
+    if mid in MULA_KOHORT:
+        return MULA_KOHORT[mid]
     if mid.startswith('GB'):
         return MULA_LANGSUNG['GB']
     return MULA_LANGSUNG.get(mid[:1], MULA_LANGSUNG['M'])

@@ -1,0 +1,54 @@
+N201X36 MA20 silang atas MA50 (tutup>MA50) | TANPA henti: dua tutup bawah MA50
+   utama {'n': 5254, 'jgk': np.float64(2.4), 'med': -3.18, 'mng': np.float64(35.9), 'pmng': np.float64(19.4), 'prugi': np.float64(-7.1), 'hari': 36.7, 'A': np.float64(2.06), 'B': np.float64(2.66), 'thn': [10.9, -0.0, -2.4, 1.6, 0.5, 4.8, 8.6], 'p1': -22.4, 'p5': -14.3, 'lebih15': np.float64(4.5)}
+   lain  {'n': 380, 'jgk': np.float64(1.2), 'mng': np.float64(35.8)}
+N201X36 MA20 silang atas MA50 (tutup>MA50) | dua tutup bawah MA50
+   utama {'n': 5254, 'jgk': np.float64(1.65), 'med': -3.97, 'mng': np.float64(32.4), 'pmng': np.float64(18.4), 'prugi': np.float64(-6.4), 'hari': 36.7, 'A': np.float64(1.16), 'B': np.float64(2.04), 'thn': [7.9, -0.1, -2.5, 1.8, 0.1, 3.6, 5.3], 'p1': -12.5, 'p5': -8.8, 'lebih15': np.float64(0.7)}
+   lain  {'n': 380, 'jgk': np.float64(1.12), 'mng': np.float64(32.4)}
+N201X36 MA20 silang atas MA50 (tutup>MA50) | TANPA henti: Chandelier 4xATR
+   utama {'n': 5254, 'jgk': np.float64(2.87), 'med': -2.95, 'mng': np.float64(41.5), 'pmng': np.float64(19.8), 'prugi': np.float64(-9.1), 'hari': 36.7, 'A': np.float64(2.3), 'B': np.float64(3.32), 'thn': [13.3, -0.1, -3.3, 2.3, 0.8, 5.4, 11.3], 'p1': -25.9, 'p5': -17.5, 'lebih15': np.float64(8.7)}
+   lain  {'n': 380, 'jgk': np.float64(2.21), 'mng': np.float64(45.3)}
+N202X36 RSI2<10 & tutup>MA200 & tutup>MA50 | TANPA henti: dua tutup bawah MA50
+   utama {'n': 13987, 'jgk': np.float64(1.76), 'med': -2.43, 'mng': np.float64(32.1), 'pmng': np.float64(16.6), 'prugi': np.float64(-5.3), 'hari': 26.3, 'A': np.float64(1.2), 'B': np.float64(2.17), 'thn': [4.7, -0.0, -1.1, -0.4, 1.3, 5.5, 3.5], 'p1': -18.1, 'p5': -11.8, 'lebih15': np.float64(2.3)}
+   lain  {'n': 886, 'jgk': np.float64(1.62), 'mng': np.float64(38.9)}
+N202X36 RSI2<10 & tutup>MA200 & tutup>MA50 | dua tutup bawah MA50
+   utama {'n': 13987, 'jgk': np.float64(1.41), 'med': -2.62, 'mng': np.float64(31.0), 'pmng': np.float64(15.8), 'prugi': np.float64(-5.1), 'hari': 26.3, 'A': np.float64(0.93), 'B': np.float64(1.75), 'thn': [4.1, -0.2, -1.1, -0.3, 1.2, 4.6, 1.4], 'p1': -11.4, 'p5': -8.5, 'lebih15': np.float64(0.4)}
+   lain  {'n': 886, 'jgk': np.float64(1.01), 'mng': np.float64(35.6)}
+N202X36 RSI2<10 & tutup>MA200 & tutup>MA50 | TANPA henti: Chandelier 4xATR
+   utama {'n': 13987, 'jgk': np.float64(2.65), 'med': -3.09, 'mng': np.float64(39.7), 'pmng': np.float64(19.9), 'prugi': np.float64(-8.7), 'hari': 26.3, 'A': np.float64(2.66), 'B': np.float64(2.65), 'thn': [7.7, 1.3, -1.5, 0.5, 1.3, 5.9, 5.5], 'p1': -25.9, 'p5': -17.4, 'lebih15': np.float64(8.0)}
+   lain  {'n': 886, 'jgk': np.float64(0.28), 'mng': np.float64(41.9)}
+N203X36 gap naik 2% (10h) -> MA20 silang MA50 (tutup>MA50) | TANPA henti: dua tutup bawah MA50
+   utama {'n': 1424, 'jgk': np.float64(6.01), 'med': -2.08, 'mng': np.float64(43.4), 'pmng': np.float64(24.8), 'prugi': np.float64(-8.4), 'hari': 45.1, 'A': np.float64(6.37), 'B': np.float64(5.73), 'thn': [18.5, 0.0, -1.4, 3.9, 1.0, 8.6, 21.0], 'p1': -26.7, 'p5': -16.5, 'lebih15': np.float64(6.7)}
+   lain  {'n': 83, 'jgk': np.float64(0.46), 'mng': np.float64(33.7)}
+N203X36 gap naik 2% (10h) -> MA20 silang MA50 (tutup>MA50) | dua tutup bawah MA50
+   utama {'n': 1424, 'jgk': np.float64(4.55), 'med': -4.05, 'mng': np.float64(37.0), 'pmng': np.float64(24.1), 'prugi': np.float64(-7.0), 'hari': 45.1, 'A': np.float64(4.33), 'B': np.float64(4.71), 'thn': [12.8, -0.1, -1.2, 4.3, 1.5, 6.7, 8.6], 'p1': -12.4, 'p5': -9.1, 'lebih15': np.float64(0.6)}
+   lain  {'n': 83, 'jgk': np.float64(1.54), 'mng': np.float64(31.3)}
+N203X36 gap naik 2% (10h) -> MA20 silang MA50 (tutup>MA50) | TANPA henti: Chandelier 4xATR
+   utama {'n': 1424, 'jgk': np.float64(5.9), 'med': -1.19, 'mng': np.float64(46.9), 'pmng': np.float64(23.9), 'prugi': np.float64(-10.0), 'hari': 45.1, 'A': np.float64(6.04), 'B': np.float64(5.79), 'thn': [18.2, 0.7, -2.4, 2.9, 1.3, 9.5, 19.0], 'p1': -28.4, 'p5': -18.7, 'lebih15': np.float64(9.8)}
+   lain  {'n': 83, 'jgk': np.float64(1.36), 'mng': np.float64(42.2)}
+N204X36 RSI2<10 -> gap 2% (5h) -> RSI14 silang 50 (5h) (tutup>MA50) | TANPA henti: dua tutup bawah MA50
+   utama {'n': 922, 'jgk': np.float64(4.68), 'med': -3.37, 'mng': np.float64(32.5), 'pmng': np.float64(27.7), 'prugi': np.float64(-6.4), 'hari': 29.8, 'A': np.float64(4.42), 'B': np.float64(4.88), 'thn': [9.2, -1.1, 1.1, 1.6, 4.2, 6.5, 9.7], 'p1': -19.8, 'p5': -13.5, 'lebih15': np.float64(3.5)}
+   lain  {'n': 68, 'jgk': np.float64(3.38), 'mng': np.float64(35.3)}
+N204X36 RSI2<10 -> gap 2% (5h) -> RSI14 silang 50 (5h) (tutup>MA50) | dua tutup bawah MA50
+   utama {'n': 922, 'jgk': np.float64(4.65), 'med': -3.73, 'mng': np.float64(30.8), 'pmng': np.float64(28.8), 'prugi': np.float64(-6.1), 'hari': 29.8, 'A': np.float64(4.39), 'B': np.float64(4.86), 'thn': [8.9, -1.1, 1.4, 1.8, 4.2, 6.3, 9.6], 'p1': -13.3, 'p5': -9.0, 'lebih15': np.float64(0.7)}
+   lain  {'n': 68, 'jgk': np.float64(4.4), 'mng': np.float64(35.3)}
+N204X36 RSI2<10 -> gap 2% (5h) -> RSI14 silang 50 (5h) (tutup>MA50) | TANPA henti: Chandelier 4xATR
+   utama {'n': 922, 'jgk': np.float64(4.56), 'med': -3.24, 'mng': np.float64(42.3), 'pmng': np.float64(24.8), 'prugi': np.float64(-10.3), 'hari': 29.8, 'A': np.float64(3.88), 'B': np.float64(5.11), 'thn': [9.5, -1.6, -1.1, 2.3, 2.0, 9.5, 7.5], 'p1': -26.5, 'p5': -19.4, 'lebih15': np.float64(12.5)}
+   lain  {'n': 68, 'jgk': np.float64(4.7), 'mng': np.float64(51.5)}
+rujukan N06X36 golden cross (tanpa syarat MA50) | TANPA henti: dua tutup bawah MA50
+   utama {'n': 1725, 'jgk': np.float64(2.69), 'med': -2.41, 'mng': np.float64(36.0), 'pmng': np.float64(19.1), 'prugi': np.float64(-6.5), 'hari': 34.2, 'A': np.float64(3.32), 'B': np.float64(2.28), 'thn': [9.4, -0.9, -1.0, -1.5, 0.4, 6.9, 5.0], 'p1': -22.2, 'p5': -14.2, 'lebih15': np.float64(4.1)}
+   lain  {'n': 120, 'jgk': np.float64(3.13), 'mng': np.float64(44.2)}
+rujukan N06X36 golden cross (tanpa syarat MA50) | dua tutup bawah MA50
+   utama {'n': 1725, 'jgk': np.float64(1.86), 'med': -2.9, 'mng': np.float64(33.7), 'pmng': np.float64(17.1), 'prugi': np.float64(-5.9), 'hari': 34.2, 'A': np.float64(2.18), 'B': np.float64(1.65), 'thn': [6.5, -1.0, -0.7, -1.4, 0.5, 5.2, 2.4], 'p1': -12.6, 'p5': -8.5, 'lebih15': np.float64(0.8)}
+   lain  {'n': 120, 'jgk': np.float64(1.6), 'mng': np.float64(35.8)}
+rujukan N06X36 golden cross (tanpa syarat MA50) | TANPA henti: Chandelier 4xATR
+   utama {'n': 1725, 'jgk': np.float64(3.61), 'med': -2.95, 'mng': np.float64(40.3), 'pmng': np.float64(21.7), 'prugi': np.float64(-8.6), 'hari': 34.2, 'A': np.float64(4.83), 'B': np.float64(2.81), 'thn': [12.5, -0.3, -0.7, -1.2, 0.5, 7.5, 7.7], 'p1': -25.3, 'p5': -17.4, 'lebih15': np.float64(7.1)}
+   lain  {'n': 120, 'jgk': np.float64(2.05), 'mng': np.float64(47.5)}
+rujukan N76X36 mana-mana hari tutup>MA50 | TANPA henti: dua tutup bawah MA50
+   utama {'n': 310876, 'jgk': np.float64(2.01), 'med': -3.07, 'mng': np.float64(33.7), 'pmng': np.float64(18.9), 'prugi': np.float64(-6.6), 'hari': 33.5, 'A': np.float64(1.39), 'B': np.float64(2.49), 'thn': [6.8, -0.7, -2.3, 0.5, 0.4, 6.1, 4.0], 'p1': -21.8, 'p5': -14.1, 'lebih15': np.float64(4.1)}
+   lain  {'n': 22377, 'jgk': np.float64(0.9), 'mng': np.float64(35.2)}
+rujukan N76X36 mana-mana hari tutup>MA50 | dua tutup bawah MA50
+   utama {'n': 310876, 'jgk': np.float64(1.36), 'med': -3.64, 'mng': np.float64(30.9), 'pmng': np.float64(17.9), 'prugi': np.float64(-6.0), 'hari': 33.5, 'A': np.float64(0.82), 'B': np.float64(1.78), 'thn': [5.2, -0.7, -2.3, 0.5, 0.2, 4.6, 1.7], 'p1': -12.3, 'p5': -8.8, 'lebih15': np.float64(0.5)}
+   lain  {'n': 22377, 'jgk': np.float64(0.26), 'mng': np.float64(30.6)}
+rujukan N76X36 mana-mana hari tutup>MA50 | TANPA henti: Chandelier 4xATR
+   utama {'n': 310876, 'jgk': np.float64(2.68), 'med': -3.31, 'mng': np.float64(39.8), 'pmng': np.float64(20.3), 'prugi': np.float64(-9.0), 'hari': 33.5, 'A': np.float64(2.4), 'B': np.float64(2.89), 'thn': [9.3, 0.1, -2.8, 0.9, 0.3, 6.6, 6.0], 'p1': -25.5, 'p5': -17.7, 'lebih15': np.float64(8.7)}
+   lain  {'n': 22377, 'jgk': np.float64(0.42), 'mng': np.float64(41.1)}

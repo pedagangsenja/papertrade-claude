@@ -1,0 +1,5 @@
+isyarat_tunggal.csv 45
+matriks_masuk_keluar.csv 940
+kombo_pasangan.csv 890
+pusingan2_lulus_semua.csv 4361
+pradaftar.json 6

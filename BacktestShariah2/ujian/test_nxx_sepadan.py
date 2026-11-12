@@ -45,6 +45,10 @@ NXX = (
     'N74X16', 'N68X16', 'N76X16', 'N27X16', 'N41X16', 'N80X36',
     'N113X36', 'N51X36', 'N51X16', 'N113X16',
 )
+# Kohort KOMBINASI MA50 (12 Nov 2026): kontrak berasingan, pradaftar `kajian/SPEC_JEJAK_KOMBINASI.md`.
+# BUKAN daripada grid REVERSE, jadi ia TIADA baris `jejak_semua.csv` dan TIADA pariti `step18`; pariti
+# dan ketiadaan pandang-hadapan dikunci `ujian/test_kombo_ma50.py`.
+KOMBO = ('N201X36', 'N202X36', 'N203X36', 'N204X36')
 N_TICKER = 25
 MIN_BAR = 300
 
@@ -219,10 +223,13 @@ class TestKohortLengkap(unittest.TestCase):
         ada = {os.path.basename(p)[:-3]
                for q in pola
                for p in glob.glob(str(AKAR / 'BacktestShariah2' / 'kod' / 'kaedah' / q))}
-        self.assertEqual(ada, set(NXX),
-                         f'modul tanpa dalam senarai: {sorted(ada - set(NXX))}; '
-                         f'dalam senarai tanpa modul: {sorted(set(NXX) - ada)}')
+        semua = set(NXX) | set(KOMBO)
+        self.assertEqual(ada, semua,
+                         f'modul tanpa dalam senarai: {sorted(ada - semua)}; '
+                         f'dalam senarai tanpa modul: {sorted(semua - ada)}')
         self.assertEqual(len(NXX), 94)
+        self.assertEqual(len(KOMBO), 4)
+        self.assertFalse(set(NXX) & set(KOMBO))
 
     def test_setiap_kohort_ada_baris_jejak40(self):
         """Setiap modul mesti sepadan satu baris `REVERSE/jejak40.csv` — kontrak."""
