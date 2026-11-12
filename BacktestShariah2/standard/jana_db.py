@@ -7,7 +7,7 @@
 #      supaya setiap tulisan membawa if_version; dokumen tanpa versi = dokumen baharu.
 # Dokumen: papertrade/moomoo, papertrade/claude… (1:1 dengan claude*.csv), papertrade/senarai_beli (dipulihkan 6 Nov 2026),
 # papertrade/watchlist(+_2…), prestasi/mae, prestasi/mae_atr (dibahagi), prestasi/harian_kaedah, prestasi/portfolio_slot, analisis/papan, analisis/lift (lift_kaedah.py), analisis/kad_skor (kad_skor.py), analisis/skor_kaedah (skor_kaedah.py), analisis/kaedah_siri (kaedah_siri.py; dibahagi), harian/status,
-# harian/trend (trend_status.py), harian/stage (stage.py), posisi/lorong2(+_2…; lorong2_siri.py), institusi/kumpulan (institusi_13f.py). sektor/snapshot dijana oleh tugasan
+# harian/trend (trend_status.py), harian/stage (stage.py), posisi/lorong2(+_2…; lorong2_siri.py), institusi/kumpulan (institusi_13f.py), kumpulan/peta (peta_kumpulan.py). sektor/snapshot dijana oleh tugasan
 # mingguan (data/db/sektor_snapshot.json, jika ada; medan posisi dikemas kini di sini).
 import argparse, csv, glob, hashlib, json, os, re, statistics as stt, sys
 
@@ -1575,6 +1575,13 @@ def main(argv=None):
     pi = os.path.join(BS2, 'data', 'institusi', 'db.json')
     if os.path.exists(pi):
         docs['institusi/kumpulan'] = json.load(open(pi, encoding='utf-8'))
+    # kumpulan/peta: pangkat kekuatan sektor/industri + perubahan pangkat 5/21 sesi (standard/peta_kumpulan.py daripada
+    # data/kumpulan/gred_kumpulan*.csv, gred_kumpulan.yml harian; 12 Nov 2026). Paparan sahaja dalam Rujukan → Sektor
+    # (panel "Peta industri"). ~35–45 KB pada 149 kumpulan, jauh di bawah HAD_DB.
+    import peta_kumpulan
+    pk = peta_kumpulan.bina()
+    if pk:
+        docs['kumpulan/peta'] = pk
     # sektor/snapshot (dijana mingguan; medan posisi dikemas kini jika fail ada)
     snap = os.path.join(BS2, 'data', 'db', 'sektor_snapshot.json')
     if os.path.exists(snap):

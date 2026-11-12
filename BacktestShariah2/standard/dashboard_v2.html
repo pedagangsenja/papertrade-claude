@@ -366,6 +366,8 @@ td.tk b{color:var(--fg);font-weight:700}
 .frz{position:sticky;left:0;z-index:2;background:var(--surface);box-shadow:1px 0 0 var(--line)}
 th.frz{z-index:3;background:var(--sunk)}
 .rkn{display:inline-block;min-width:1.7em;color:var(--muted);font-size:.78rem}
+.ptw{display:inline-flex;gap:3px;align-items:center}.ptw i{width:8px;height:8px;border-radius:50%;background:var(--line-2)}.ptw i.y{background:var(--pos)}.ptw small{margin-left:4px;color:var(--muted);font-size:.74rem}
+.ptsp{display:inline-block;width:96px;vertical-align:middle}.mk .ptsp{display:block;width:100%;max-width:260px}
 .dots{display:inline-flex;gap:3px;vertical-align:middle}.dots i{width:9px;height:9px;border-radius:50%;display:inline-block;background:var(--line-2)}.dots i.y{background:var(--pos)}.dots i.n{background:var(--neg)}
 .pg{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:.78rem;padding:2px 9px;border-radius:999px;white-space:nowrap}
 .pg-GUNA{background:rgba(234,179,8,.16);color:#facc15}.pg-UJI{background:rgba(203,213,225,.13);color:#e2e8f0}.pg-SIMPAN{background:rgba(217,119,6,.16);color:#f59e0b}.pg-x{background:var(--neg-soft);color:var(--neg-tx)}
@@ -3352,16 +3354,62 @@ const LP_INST={key:r=>'inst|'+r.j+'|'+r.n,
     <div class="mkz mkg2">${mkS('Median saham',`<span class="${cls(r.m)}">${sg1(r.m)}</span>`,'inst_median')}${mkS('Saham bersih dibeli',r.b==null?'–':fx(r.b,0)+'%','inst_bersih')}
       ${mkS('Aliran USD',`<span class="${cls(r.u)}">${juta(r.u)}</span>`,'inst_usd')}${mkS('Dana baru · keluar',`<span class="pos">${fx(r.nb,0)}</span> · <span class="neg">${fx(r.nk,0)}</span>`,'inst_dana')}</div>
     <div class="mkr" style="margin-top:6px">${(r.t||[]).map(pilInst).join(' ')}</div></div>`};
+/* ================= v179 (12 Nov 2026): panel "Peta industri" di atas bahagian Sektor =================
+   Keputusan pengguna 12 Nov 2026: "saya perlu tahu sektor dan industri mana tengah hot". Data: db `kumpulan/peta`
+   (standard/peta_kumpulan.py daripada data/kumpulan/gred_kumpulan*.csv; gred_kumpulan.yml harian). Halaman TIDAK
+   mengira skor: ia memapar pangkat, perubahan pangkat 5/21 sesi, median 1 bulan, % saham atas SMA200, 3 syarat
+   Weinstein dan siri skor. PAPARAN SAHAJA (kajian/KAJIAN_REJIM_INDUSTRI.md): industri teratas hanya kekal teratas
+   23% selepas 21 sesi dan lebihannya terbalik ketika rejim QQQ OFF; skor ini bukan penapis beli. */
+const ptUbah=v=>v==null?'<span class="mut">–</span>':v>0?`<b class="pos">▲ ${v}</b>`:v<0?`<b class="neg">▼ ${-v}</b>`:'<span class="mut">0</span>';
+const ptW=r=>{if(!r.w)return '<span class="mut">–</span>';const N=['RS lawan SPY positif','RS sedang naik','Trend 30 minggu naik'];
+  return `<span class="ptw" title="${esc(r.w.map((x,i)=>(x?'✓ ':'✗ ')+N[i]).join(' · '))}">${r.w.map(x=>`<i class="${x?'y':''}"></i>`).join('')}<small>${r.w.reduce((a,b)=>a+b,0)}/3</small></span>`;};
+const ptSpark=r=>r.sp&&r.sp.length>1?'<span class="ptsp">'+sparkG(r.sp,{W:84,H:24,p:3,ref:50,col:r.sp[r.sp.length-1]>=50?'--pos':'--neg',lbl:'Skor '+r.n+': '+r.sp[0]+' → '+r.sp[r.sp.length-1]})+'</span>':'<span class="mut">–</span>';
+const LP_PETA={key:r=>'peta|'+r.j+'|'+r.n,
+  line:r=>`<span class="mut">${r.p==null?'–':r.p}</span><b class="mlx" style="color:var(--fg);font-size:.9rem">${esc(r.n)}</b>${r.g?`<span class="pill p-mute">${esc(r.g)}</span>`:''}<span class="mlr">${ptUbah(r.d5)}</span>${mlC}`,
+  kad:r=>`<div class="mk"><div class="mk1"><span class="mkt"><b>${esc(r.n)}</b>${r.sk==null?'':cipN(r.sk,'Skor kekuatan',1)} <b>${esc(r.g||'')}</b></span><b class="mku ${cls(r.m)}">${sg1(r.m)}<small class="mut"> 1 bulan</small></b></div>
+    <div class="mkr">${r.j==='I'?esc(r.s)+' · ':''}${r.c} saham · pangkat ${r.p==null?'–':r.p}</div>
+    <div class="mkz mkg2">${mkS('Pangkat 5 sesi',ptUbah(r.d5),'peta_ubah')}${mkS('Pangkat 21 sesi',ptUbah(r.d21),'peta_ubah')}
+      ${mkS('Saham atas SMA200',r.a==null?'–':fx(r.a,0)+'%','peta_a200')}${mkS('Syarat Weinstein',ptW(r),'peta_w')}</div>
+    <div class="mkr" style="margin-top:6px">${ptSpark(r)}</div></div>`};
+function petaHtml(){
+  const d=S.peta,h='<div class="panel-h"><h2>Peta industri</h2>';
+  if(!d||!Array.isArray(d.rows)||!d.rows.length)return `<div class="panel" style="margin-bottom:14px">${h}</div><div class="empty">${S.petaSiap||S.live?'Belum ditolak ke pangkalan data (kumpulan/peta).':'Memuatkan peta industri…'}</div></div>`;
+  const pf=S.ptf||(S.ptf={j:'I',sek:''});
+  const semua=d.rows.filter(r=>r.j===pf.j);let rows=semua;if(pf.j==='I'&&pf.sek)rows=rows.filter(r=>r.s===pf.sek);
+  const ada=semua.filter(r=>r.p!=null).sort((a,b)=>a.p-b.p),nm=r=>`<b>${esc(r.n)}</b>`;
+  const gerak=semua.filter(r=>r.d5!=null&&r.d5!==0).sort((a,b)=>b.d5-a.d5),naik=gerak.filter(r=>r.d5>0).slice(0,3),turun=gerak.filter(r=>r.d5<0).slice(-3).reverse();
+  const R=S.ks&&S.ks.rejim,rj=R?`<div class="rejim${R.on?'':' rj-t'}"><b>Rejim QQQ: ${esc(R.label||(R.on?'ON':'OFF'))}</b>${R.sejak?` sejak ${esc(tkO(R.sejak))}`:''}${R.sesi?` (${R.sesi} sesi)`:''}${R.on?' · belian baharu dibenarkan; industri teratas sedikit membantu hanya dalam rejim ini.':' · tiada belian baharu; dalam rejim ini industri teratas TIDAK lebih baik daripada yang lain.'}</div>`:'';
+  const seg=`<div class="seg" id="petaJ">${[['I','Industri'],['S','Sektor']].map(([v,t])=>`<button type="button" data-v="${v}" aria-pressed="${pf.j===v}">${t}</button>`).join('')}</div>`;
+  const sek=[...new Set(d.rows.filter(r=>r.j==='I').map(r=>r.s).filter(Boolean))].sort();
+  const sel=pf.j==='I'?`<select id="petaSek" aria-label="Tapis sektor"><option value="">Semua sektor</option>${sek.map(n=>`<option ${pf.sek===n?'selected':''}>${esc(n)}</option>`).join('')}</select>`:'';
+  const J=pf.j==='I'?'industri':'sektor';
+  return `<p class="headline">Setakat tutup ${esc(tkO(d.tarikh))}: ${J} <b>terkuat</b> ${ada.slice(0,3).map(nm).join(', ')}; <b>terlemah</b> ${ada.slice(-3).reverse().map(nm).join(', ')}.${naik.length?` Paling laju <b class="pos">naik</b> pangkat dalam 5 sesi: ${naik.map(r=>nm(r)+' (▲ '+r.d5+')').join(', ')}.`:''}${turun.length?` Paling laju <b class="neg">turun</b>: ${turun.map(r=>nm(r)+' (▼ '+(-r.d5)+')').join(', ')}.`:''} <b>Paparan sahaja</b>, bukan isyarat beli.</p>
+  <div class="panel" style="margin:12px 0 18px">${h}<span class="sub">${semua.length} ${J} · seluruh pasaran AS (harga ≥ USD 5) · pangkat lawan ${d.tarikh_5?esc(tkO(d.tarikh_5)):'–'} dan ${d.tarikh_21?esc(tkO(d.tarikh_21)):'–'}</span></div>
+    ${rj}<div class="filters" style="margin-bottom:10px">${seg}${sel}</div>
+    ${sortTable({id:'peta-'+pf.j,rows,lp:LP_PETA,limit:pf.shown||AWAL,foot:kakiLagi('petaMore'),def:{k:'p',dir:1},cols:[
+      {k:'n',t:pf.j==='S'?'Sektor':'Industri',l:1,frz:1,f:r=>`<span class="rkn">${r.p==null?'–':r.p}</span><b>${esc(r.n)}</b><span class="vv">${r.j==='I'?esc(r.s)+' · ':''}${r.c} saham</span>`,c:()=>'name'},
+      {k:'p',t:'Skor',tip:'peta_skor',l:1,f:r=>r.sk==null?'<span class="mut">–</span>':`<span class="grc" style="gap:6px">${cipN(r.sk,'Skor kekuatan (0–100)',1)}<b>${esc(r.g||'')}</b></span>`},
+      {k:'d5',t:'Pangkat 5 sesi',tip:'peta_ubah',f:r=>ptUbah(r.d5)},
+      {k:'d21',t:'Pangkat 21 sesi',tip:'peta_ubah',f:r=>ptUbah(r.d21)},
+      {k:'m',t:'Median 1 bulan',tip:'peta_m1',f:r=>`<span class="${cls(r.m)}">${sg1(r.m)}</span>`},
+      {k:'a',t:'Saham atas SMA200',tip:'peta_a200',f:r=>r.a==null?'–':`<span class="${r.a>=60?'pos':r.a<40?'neg':''}">${fx(r.a,0)}%</span>`},
+      {k:'_w',t:'Weinstein',tip:'peta_w',ns:1,f:ptW},
+      {k:'_s',t:'Skor '+(d.sesi>=30?30:d.sesi)+' sesi',tip:'peta_siri',ns:1,f:ptSpark}]})}
+    <p class="sub" style="margin-top:10px"><b>Cara baca:</b> skor tinggi = ramai saham dalam kumpulan itu sedang kuat berbanding pasaran; ▲ = sedang naik pangkat, ▼ = sedang turun; kumpulan yang ▲ sambil kumpulan lain ▼ ialah tanda putaran. <b>Had:</b> dalam kajian kita, industri 20% teratas hanya kekal teratas 23% selepas 21 sesi, dan semikonduktor masih kelihatan "terkuat" pada 22 Jun 2026 sejurus sebelum jatuh lebih 30%. Guna untuk <b>tahu keadaan dan hadkan risiko</b> (1 saham setiap industri), bukan untuk memilih saham. Dibina ${esc(d.dibina||'')}.</p></div>`;}
+function petaBind(){const pf=S.ptf;if(!pf)return;
+  const s1=$('#petaJ');if(s1)s1.onclick=e=>{const b=e.target.closest('button');if(!b)return;pf.j=b.dataset.v;pf.sek='';pf.shown=0;renderAll();};
+  const s2=$('#petaSek');if(s2)s2.onchange=e=>{pf.sek=e.target.value;pf.shown=0;renderAll();};
+  bindLagi('petaMore',pf);}
 function renderSektor(){
-  const el=$('#v-sektor'),d=S.inst,h='<div class="panel-h"><h2>Aliran institusi (13F)</h2>';
-  if(!d||!Array.isArray(d.rows)||!d.rows.length){el.innerHTML=`<div class="panel">${h}</div><div class="empty">${S.live?'Belum ditolak ke pangkalan data (institusi/kumpulan).':'Memuatkan aliran institusi…'}</div></div>`;return;}
+  const el=$('#v-sektor'),d=S.inst,h='<div class="panel-h"><h2>Aliran institusi (13F)</h2>',P=petaHtml();
+  if(!d||!Array.isArray(d.rows)||!d.rows.length){el.innerHTML=P+`<div class="panel">${h}</div><div class="empty">${S.live?'Belum ditolak ke pangkalan data (institusi/kumpulan).':'Memuatkan aliran institusi…'}</div></div>`;petaBind();return;}
   const sf=S.isf||(S.isf={j:'S',sek:''});
   let rows=d.rows.filter(r=>r.j===sf.j);if(sf.j==='I'&&sf.sek)rows=rows.filter(r=>r.s===sf.sek);
   const sek=d.rows.filter(r=>r.j==='S'),ber=d.rows.filter(r=>r.j===sf.j&&r.sk!=null).sort((a,b)=>b.sk-a.sk);
   const nm=r=>`<b>${esc(r.n)}</b> ${sg1(r.a)}`;
   const seg=`<div class="seg" id="instJ">${[['S','Sektor'],['I','Industri']].map(([v,t])=>`<button type="button" data-v="${v}" aria-pressed="${sf.j===v}">${t}</button>`).join('')}</div>`;
   const sel=sf.j==='I'?`<select id="instSek" aria-label="Tapis sektor"><option value="">Semua sektor</option>${sek.map(r=>r.n).sort().map(n=>`<option ${sf.sek===n?'selected':''}>${esc(n)}</option>`).join('')}</select>`:'';
-  el.innerHTML=`<p class="headline">${ber.length?`Suku ${esc(d.tempoh)}: ${sf.j==='S'?'sektor':'industri'} dengan skor aliran institusi <b>tertinggi</b> ${ber.slice(0,3).map(nm).join(', ')}; <b>terendah</b> ${ber.slice(-3).reverse().map(nm).join(', ')}. Skor adalah relatif: angka positif di bawah bermakna institusi tetap menambah, cuma kurang daripada kumpulan lain.`:''} Data 13F, <b>paparan sahaja</b>, bukan penapis beli.</p>
+  el.innerHTML=P+`<p class="headline">${ber.length?`Suku ${esc(d.tempoh)}: ${sf.j==='S'?'sektor':'industri'} dengan skor aliran institusi <b>tertinggi</b> ${ber.slice(0,3).map(nm).join(', ')}; <b>terendah</b> ${ber.slice(-3).reverse().map(nm).join(', ')}. Skor adalah relatif: angka positif di bawah bermakna institusi tetap menambah, cuma kurang daripada kumpulan lain.`:''} Data 13F, <b>paparan sahaja</b>, bukan penapis beli.</p>
   <div class="panel">${h}<span class="sub">Pegangan ${esc(d.tempoh)} lawan ${esc(d.tempoh_lalu)} · ${fx(d.pemfail,0)} dana yang memfail kedua-dua suku · ${fx(d.saham,0)} saham · SEC Form 13F</span></div>
     <div class="filters" style="margin-bottom:10px">${seg}${sel}</div>
     ${sortTable({id:'inst-'+sf.j,rows,lp:LP_INST,limit:TELEFON?sf.shown||AWAL*2:0,foot:TELEFON?kakiLagi('instMore'):null,def:{k:'sk',dir:-1},cols:[
@@ -3376,7 +3424,7 @@ function renderSektor(){
     <p class="sub" style="margin-top:10px"><b>Aliran (nilai)</b> = perubahan saham yang dipegang institusi, ditimbang nilai (dikuasai saham besar); <b>median saham</b> = perubahan bagi saham biasa dalam kumpulan itu. Skor = purata pangkat kedua-duanya. Data 13F ialah pegangan akhir suku yang difail sehingga 45 hari kemudian, jadi ia <b>2.5–3.5 bulan lapuk</b> dan <b>belum diuji sebagai peramal</b> pulangan: paparan sahaja, bukan penapis beli. Dibina ${esc(d.dibina||'')}.</p></div>`;
   const s1=$('#instJ');if(s1)s1.onclick=e=>{const b=e.target.closest('button');if(!b)return;sf.j=b.dataset.v;sf.sek='';sf.shown=0;renderAll();};
   const s2=$('#instSek');if(s2)s2.onchange=e=>{sf.sek=e.target.value;sf.shown=0;renderAll();};
-  bindLagi('instMore',sf);}
+  bindLagi('instMore',sf);petaBind();}
 
 /* kad bagi 10 industri 1M terkuat (menggantikan jubin gaya lama) */
 
@@ -5444,6 +5492,12 @@ const TIPS={
   breadth_pasaran:{t:'Breadth pasaran',d:'Peratus semua saham AS harga ≥ USD5 yang naik dalam sebulan (screener Moomoo). Di bawah 40% = pasaran lemah; di atas 60% = sihat.',e:''},
   volum_relatif:{t:'Volum relatif',d:'Median nisbah volum purata 5 hari terakhir berbanding purata 50 hari. Melebihi 1× = lebih ramai pedagang memberi fokus.',e:'1.3× = volum 30% lebih tinggi daripada biasa.'},
   aliran_institusi:{t:'Aliran institusi',d:'Bilangan saham kumpulan dalam senarai 20 teratas pengumpulan institusi tolak bilangan dalam senarai 20 teratas pengagihan (SST institutional_flow, perubahan % pegangan institusi).',e:'+2 = dua saham lebih banyak sedang dikumpul berbanding diagihkan.'},
+  peta_skor:{t:'Skor kekuatan kumpulan',d:'Industri: pangkat persentil (3 syarat Weinstein + median pulangan 1 bulan) antara semua industri, 0–100. Sektor: pangkat persentil % saham di atas SMA200 antara 11 sektor. Gred A > 80, B > 60, C > 40, D > 20, E ≤ 20. Nombor kecil di kiri nama = pangkat (1 = terkuat). Sumber: standard/gred_kumpulan.py, seluruh pasaran AS. Paparan sahaja.',e:'Skor 95, gred A = lebih kuat daripada 95% industri lain hari ini.'},
+  peta_ubah:{t:'Perubahan pangkat',d:'Pangkat hari ini lawan pangkat 5 atau 21 sesi lalu. ▲ = naik pangkat (semakin kuat berbanding kumpulan lain), ▼ = turun. Inilah tanda putaran (rotation): kekuatan berpindah dari kumpulan yang ▼ ke kumpulan yang ▲. Ia mengukur harga, bukan aliran wang sebenar.',e:'▲ 16 = naik 16 anak tangga, contohnya dari pangkat 20 ke pangkat 4.'},
+  peta_m1:{t:'Median 1 bulan',d:'Median pulangan 21 sesi saham dalam kumpulan itu. Median, jadi satu saham besar tidak menguasainya.',e:'+12% = saham biasa dalam kumpulan ini naik 12% dalam sebulan.'},
+  peta_a200:{t:'Saham atas SMA200',d:'% saham kumpulan itu yang tutup di atas purata 200 hari. Mengukur keluasan: adakah ramai saham naik bersama, atau hanya beberapa.',e:'90% = sembilan daripada sepuluh saham dalam trend naik jangka panjang; 0% = tiada satu pun.'},
+  peta_w:{t:'Syarat Weinstein',d:'Tiga syarat pada indeks sama rata kumpulan itu: (1) kekuatan relatif lawan SPY di atas purata 52 minggunya, (2) kekuatan relatif itu naik dalam 21 sesi, (3) indeks di atas purata 30 minggu yang sedang naik. Industri sahaja digred dengan syarat ini.',e:'3/3 = ketiga-tiga dipenuhi (Stage 2 yang sihat).'},
+  peta_siri:{t:'Siri skor',d:'Skor kumpulan itu setiap sesi (sehingga 30 sesi terakhir). Garis putus = 50 (tengah). Menunjukkan sama ada kekuatan itu baharu, lama atau sedang pudar.',e:'Garis naik dari bawah 50 ke atas 80 = kumpulan yang baru menjadi kuat.'},
   inst_skor:{t:'Skor aliran institusi',d:'Purata pangkat persentil aliran (nilai) dan median saham antara kumpulan sejenis, 0–100; gred A > 80 … E ≤ 20. Kumpulan < 3 saham tiada skor. Sumber: SEC Form 13F (standard/institusi_13f.py). Paparan sahaja, belum diuji sebagai peramal.',e:'A = institusi menambah pegangan dalam kumpulan ini lebih daripada kebanyakan kumpulan lain pada suku itu.'},
   inst_aliran:{t:'Aliran (nilai)',d:'Jumlah perubahan saham dipegang institusi × harga akhir suku, dibahagi nilai pegangan suku lalu. Hanya dana yang memfail 13F bagi KEDUA-DUA suku; pecahan saham dilaras. Ditimbang nilai, jadi saham besar menguasai.',e:'+3.0% = institusi memegang 3% lebih banyak saham kumpulan ini (ikut nilai) berbanding suku lalu.'},
   inst_median:{t:'Median saham',d:'Median perubahan % saham dipegang institusi bagi saham kumpulan ini yang ada ≥ 5 pemegang suku lalu. Berat sama: tidak dikuasai saham besar.',e:'+5% = saham biasa dalam kumpulan ini dipegang 5% lebih banyak oleh institusi.'},
@@ -5588,7 +5642,7 @@ const PNAV_MIN=2,PNAV_TELEFON=[],PNAV_ADA={};
 /* tajuk kumpulan rel (desktop): [tajuk, kunci panel pertama kumpulan] ('' = panel pertama); kunci tiada = tajuk tidak dipapar */
 /* bahagian lalai jika belum dipilih (selainnya item pertama) */
 /* v158: Posisi dan Akaun dibuka pada Gambaran (jubin KPI + graf v5.1), seperti Hari ini */
-const PNAV_LALAI={'v-pos':'__g','v-analisis':'kedudukan kaedah','v-utama':'__g','v-pr-cm':'__g','v-pr-cn':'__g','v-pr-m':'__g','v-pr-gab':'__g'};
+const PNAV_LALAI={'v-pos':'__g','v-analisis':'kedudukan kaedah','v-utama':'__g','v-pr-cm':'__g','v-pr-cn':'__g','v-pr-m':'__g','v-pr-gab':'__g','v-sektor':'peta industri'};
 /* v146 (2 Nov 2026): kunci kumpulan boleh jadi AWALAN, dan boleh jadi senarai calon (calon pertama
    yang wujud dipakai). Perlu kerana tajuk panel tab Kombinasi N dijana daripada data — cth
    "Produksi: 94 kombinasi yang BELUM diimbas" — jadi kunci tepat akan putus bila nombor berubah,
@@ -5849,6 +5903,7 @@ renderNav();renderAll();
     subPtc(2);subPtc(3);});
   subBhg('papertrade/watchlist','watch',['watch']);
   sub('institusi/kumpulan','inst',['sektor']);
+  sub('kumpulan/peta','peta',['sektor']);
   /* v156: senarai beli sebenar (henti, buka_maks, sasaran) untuk tab Hari ini */
   subBhg('papertrade/senarai_beli','sb',['utama']);
   langgan('harian/status',s=>{S.hst=s.exists?s.data():null;renderData();},e=>dbErr('harian/status',e));
@@ -5864,7 +5919,7 @@ renderNav();renderAll();
   /* v158: siri untung semua posisi lawan SPUS (Hari ini) dan siri lorong T4 setiap kaedah (Pilih kaedah) */
   sub('prestasi/untung_siri','us',['utama']);sub('analisis/t4_siri','t4s',['analisis']);
   /* v155: kad skor keputusan (standard/kad_skor.py) - tab Pilih kaedah + tajuk tab Hari ini */
-  sub('analisis/kad_skor','ks',['analisis','utama','kaedah']);
+  sub('analisis/kad_skor','ks',['analisis','utama','kaedah','sektor']);
   /* v167: Skor Kaedah 0–100 (standard/skor_kaedah.py) — panel di Pilih kaedah + jubin helaian kaedah; maklumat, bukan keputusan */
   sub('analisis/skor_kaedah','skk',['analisis','kaedah']);
   sub('kaedah/katalog','kat',['kaedah']);

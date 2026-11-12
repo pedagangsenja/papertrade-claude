@@ -1,9 +1,9 @@
 {
   "artifact": "https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e",
-  "versi_artifact": "1794388459-6b9b",
-  "nombor": 209,
-  "sha256": "a76cd1b2ae438eeb295c8c5daf9201d710991617e4266bfa50f514b820fb24e5",
-  "bait": 791893,
-  "dikemas": "2026-11-11 09:14 UTC",
-  "nota": "v178 (keputusan pengguna 11 Nov 2026 \"seragamkan warna semua tab, ikut gaya histogram pertama\"): satu palet carta — bar untung gradien teal->biru, bar rugi gradien merah->oren, amaran kuning; bucu bulat, jarak antara bar, label bilangan (Taburan untung % dan R di Akaun, Jangkaan setiap kaedah, Menang/payoff, Neraca, bar Skor Kaedah, bar mendatar, corong, bar tangkapan); teal tunggal #1EE3B4 dan merah tunggal #FF5D73; sebab keluar sama warna dalam donut dan bar; sektor diwarna ikut nama (sama di donut dan bar, tanpa warna bermaksud). Audit fon dan audit mendalam 8 saiz skrin 0 cacat."
+  "versi_artifact": "1794455677-8856",
+  "nombor": 210,
+  "sha256": "f942ae89ad804a4bccdc8f2d44885e7b33579a520ba080e64a9051978c79c3b5",
+  "bait": 801021,
+  "dikemas": "2026-11-12 03:54 UTC",
+  "nota": "v179 (keputusan pengguna 12 Nov 2026 \"buat panel Peta industri di dashboard\"): Rujukan → Sektor dibuka pada panel Peta industri (db kumpulan/peta, standard/peta_kumpulan.py): pangkat kekuatan sektor/industri, perubahan pangkat 5/21 sesi, median 1 bulan, % saham atas SMA200, 3 syarat Weinstein, siri skor, baris rejim QQQ. Paparan sahaja, bukan penapis beli."
 }
