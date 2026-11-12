@@ -4,7 +4,7 @@
 
 > Ujian dalam laporan ini memakai posisi DITUTUP sahaja dengan SE berkelompok ikut hari beli. Ujian plasebo 7 Nov 2026 (`laporan/PLASEBO_GATE.md`) mengukur SE jenis itu meluluskan pemilihan rawak sehingga 45% masa, dan penapisan keluar memesongkan sampel ditutup. Bilangan "terbukti NEGATIF/positif" di bawah ialah DIAGNOSTIK, bukan label kaedah; label yang sah hanya dalam kad skor.
 
-Dijana 2026-11-11 17:55 UTC oleh `standard/kaedah_terbaik.py`. Rekod analisis sahaja.
+Dijana 2026-11-12 07:37 UTC oleh `standard/kaedah_terbaik.py`. Rekod analisis sahaja.
 
 Papan Penganalisis (`laporan/PENGANALISIS.md`) sudah membanding semua kaedah dan dijana semula setiap malam. Dokumen ini tidak mengulanginya — ia menjawab soalan yang mesti dijawab **dahulu** sebelum mana-mana pangkat boleh dipercayai.
 
@@ -12,13 +12,13 @@ Papan Penganalisis (`laporan/PENGANALISIS.md`) sudah membanding semua kaedah dan
 
 ## 1. Jawapan pendek
 
-**2 kaedah lulus ujian itu — tetapi baca bahagian 3a sebelum mempercayainya.** Daripada 118 kaedah yang mempunyai cukup posisi ditutup untuk diuji, **90 terbukti NEGATIF** pada BH-FDR q ≤ 0.05 dengan ralat piawai berkelompok ikut hari beli, dan **2 terbukti positif**.
+**2 kaedah lulus ujian itu — tetapi baca bahagian 3a sebelum mempercayainya.** Daripada 125 kaedah yang mempunyai cukup posisi ditutup untuk diuji, **90 terbukti NEGATIF** pada BH-FDR q ≤ 0.05 dengan ralat piawai berkelompok ikut hari beli, dan **2 terbukti positif**.
 
 Itu bukan bermakna semua kaedah buruk. Ia bermakna tingkap hadapan masih terlalu pendek, dan bahagian 2 menunjukkan mengapa pangkat yang anda lihat sekarang tidak boleh diguna.
 
 ## 2. Adakah pangkat backtest meramal prestasi hadapan?
 
-Korelasi mentah jangkaan backtest lawan pulangan realisasi Papertrade C merentas **124 kaedah**: Spearman rho **-0.642**, p 0.0000.
+Korelasi mentah jangkaan backtest lawan pulangan realisasi Papertrade C merentas **124 kaedah**: Spearman rho **-0.639**, p 0.0000.
 
 Negatif. Dibaca mentah, itu bermakna kaedah dengan backtest LEBIH BAIK berprestasi LEBIH BURUK ke hadapan — dan itu akan menjadi dapatan yang besar. **Ia salah.**
 
@@ -26,36 +26,36 @@ Jangkaan backtest berkorelasi **+0.876** dengan hari pegang backtest — sepele:
 
 | Korelasi | rho | p |
 |---|---|---|
-| Mentah: backtest → realisasi | **-0.642** | 0.0000 |
-| Separa, kawal lebar henti | -0.580 | 0.0000 |
-| **Separa, kawal hari pegang** | **+0.039** | **0.6636** |
+| Mentah: backtest → realisasi | **-0.639** | 0.0000 |
+| Separa, kawal lebar henti | -0.577 | 0.0000 |
+| **Separa, kawal hari pegang** | **+0.036** | **0.6942** |
 
-Mengawal hari pegang, korelasi bertukar daripada -0.642 kepada **+0.039** dan **tidak lagi signifikan** (p 0.664). Jadi tanda negatif itu **artifak panjang tingkap**, bukan bukti pangkat terbalik.
+Mengawal hari pegang, korelasi bertukar daripada -0.639 kepada **+0.036** dan **tidak lagi signifikan** (p 0.694). Jadi tanda negatif itu **artifak panjang tingkap**, bukan bukti pangkat terbalik.
 
 **Kesimpulan bahagian ini:** pangkat backtest tidak mempunyai kuasa ramalan yang boleh diukur pada data hadapan sekarang — tidak positif, tidak negatif. Jadi "kaedah teratas papan" bukan jawapan kepada "kaedah terbaik".
 
 ## 3. Ada kaedah yang positif secara boleh ukur?
 
-Ujian: purata pulangan realisasi setiap kaedah dengan ≥ 20 posisi ditutup, t dengan ralat piawai **berkelompok ikut hari beli** (posisi hari sama bergerak bersama pasaran), BH-FDR q ≤ 0.05 merentas 118 kaedah yang diuji.
+Ujian: purata pulangan realisasi setiap kaedah dengan ≥ 20 posisi ditutup, t dengan ralat piawai **berkelompok ikut hari beli** (posisi hari sama bergerak bersama pasaran), BH-FDR q ≤ 0.05 merentas 125 kaedah yang diuji.
 
 | Kaedah | n | Hari beli | Realisasi | Median | Menang | t | p | FDR | Backtest hari |
 |---|---|---|---|---|---|---|---|---|---|
 | `M39` Radge Pecahan Bollinger 10 | 46 | 16 | -16.35% | -14.91% | 0% | -34.2 | 0.0000 | **lulus** | 95.5 |
 | `M136` Short/Intermediate-term Lo | 69 | 15 | -9.32% | -9.43% | 0% | -31.0 | 0.0000 | **lulus** | 343.2 |
-| `M14` Walking with the Whales | 176 | 24 | -2.46% | -1.92% | 0% | -14.2 | 0.0000 | **lulus** | 15.2 |
+| `M14` Walking with the Whales | 183 | 25 | -2.45% | -1.94% | 0% | -14.4 | 0.0000 | **lulus** | 15.2 |
+| `M36` Turtle 55/20 | 108 | 20 | -7.29% | -6.27% | 0% | -16.6 | 0.0000 | **lulus** | 29.6 |
 | `M89` Chande 65sma-3cc | 89 | 16 | -6.32% | -5.86% | 1% | -21.7 | 0.0000 | **lulus** | 26.0 |
-| `M36` Turtle 55/20 | 106 | 20 | -7.23% | -6.27% | 0% | -16.5 | 0.0000 | **lulus** | 29.6 |
-| `M55` Guppy GMMA | 105 | 20 | -5.92% | -4.94% | 0% | -14.3 | 0.0000 | **lulus** | 28.2 |
+| `M55` Guppy GMMA | 107 | 21 | -5.90% | -4.94% | 0% | -14.1 | 0.0000 | **lulus** | 28.2 |
 | `M81` Bensdorp Long Trend High M | 105 | 17 | -12.73% | -11.86% | 0% | -16.9 | 0.0000 | **lulus** | 105.3 |
 | `M147` Improved Three-Bar Pullbac | 26 | 12 | -14.33% | -14.48% | 0% | -25.7 | 0.0000 | **lulus** | 441.7 |
-| `M102` Stockbee SLTB | 150 | 24 | -3.71% | -2.80% | 1% | -10.8 | 0.0000 | **lulus** | 15.6 |
-| `M79` Radge: 20% Flipper | 48 | 14 | -12.56% | -13.35% | 0% | -15.8 | 0.0000 | **lulus** | 59.8 |
+| `M102` Stockbee SLTB | 155 | 24 | -3.64% | -2.80% | 1% | -11.4 | 0.0000 | **lulus** | 15.6 |
+| `M80` Radge Saluran Purata Berge | 66 | 18 | -10.91% | -8.64% | 0% | -12.9 | 0.0000 | **lulus** | 65.9 |
 
-**90 daripada 118 kaedah terbukti negatif; 2 terbukti positif.** Jadual di atas 10 teratas ikut p.
+**90 daripada 125 kaedah terbukti negatif; 2 terbukti positif.** Jadual di atas 10 teratas ikut p.
 
-Calon positif terbaik ialah `M01` Bollinger Band + RSI: **+10.80%** atas 24 posisi ditutup merentas 12 hari beli, kadar menang 100%, median +9.07%, t +8.74, p 0.0000.
+Calon positif terbaik ialah `M01` Bollinger Band + RSI: **+10.72%** atas 25 posisi ditutup merentas 12 hari beli, kadar menang 100%, median +9.00%, t +8.72, p 0.0000.
 
-Ia **bertahan** pembetulan pelbagai ujian (p 0.0000 ≤ ambang BH 0.0182 merentas 118 kaedah). Itu syarat statistik sahaja; bahagian 3a menunjukkan mengapa ia masih belum boleh dibaca sebagai kelebihan.
+Ia **bertahan** pembetulan pelbagai ujian (p 0.0000 ≤ ambang BH 0.0180 merentas 125 kaedah). Itu syarat statistik sahaja; bahagian 3a menunjukkan mengapa ia masih belum boleh dibaca sebagai kelebihan.
 
 ### 3a. HAD YANG MENGIKAT: ujian ini melihat posisi DITUTUP sahaja
 
@@ -78,17 +78,17 @@ Jadi mana-mana kaedah bersasaran yang muncul positif di sini, dan mana-mana kaed
 
 | Kumpulan backtest | Kaedah | Posisi masih terbuka | Realisasi purata | Positif |
 |---|---|---|---|---|
-| pegang ≤ 10 hari | 20 | 30% | -2.06% | 2/18 |
-| pegang 11–20 hari | 27 | 44% | -4.24% | 0/23 |
-| pegang > 20 hari | 83 | 60% | -7.38% | 3/47 |
+| pegang ≤ 10 hari | 20 | 29% | -1.94% | 2/18 |
+| pegang 11–20 hari | 27 | 42% | -4.19% | 0/24 |
+| pegang > 20 hari | 83 | 59% | -7.36% | 3/47 |
 
-Kaedah pegang-panjang mempunyai **60% posisi masih terbuka**, jadi "realisasi" bagi mereka hanyalah himpunan posisi yang dihentikan awal — yang paling buruk daripada taburan. Angka itu bukan prestasi kaedah; ia prestasi hentinya dalam tiga minggu.
+Kaedah pegang-panjang mempunyai **59% posisi masih terbuka**, jadi "realisasi" bagi mereka hanyalah himpunan posisi yang dihentikan awal — yang paling buruk daripada taburan. Angka itu bukan prestasi kaedah; ia prestasi hentinya dalam tiga minggu.
 
 ## 5. "Setiap kaedah ada sebab musabab daripada pakar" — ya, dan ini yang diukur
 
 Premis itu betul: kaedah ini datang daripada pedagang yang berjaya dengannya. Tetapi repo ini sudah menguji versi mekanikalnya di luar sampel, dan hasilnya:
 
-- Lulus S1–S4: **6** daripada 228 kaedah
+- Lulus S1–S4: **6** daripada 232 kaedah
 - Lulus WFO 2023–2026: **22**
 - Lulus AUTOTUNE 2000 saham AS 2013–2024: **0**
 - Lulus **≥ 2 daripada 3**: **0**
@@ -99,22 +99,22 @@ Semakan 2000-saham-AS ialah yang paling menuntut kerana ia menguji kaedah LENGKA
 
 ## 6. Bila pangkat kaedah boleh dipercayai
 
-Sisihan piawai pulangan setiap posisi (median dalam-kaedah): **5.15 mata**.
+Sisihan piawai pulangan setiap posisi (median dalam-kaedah): **5.28 mata**.
 
 | Untuk membezakan dua kaedah yang berbeza | Perlu posisi DITUTUP setiap kaedah |
 |---|---|
-| 3.0 mata setiap posisi | ~23 |
-| 2.0 mata setiap posisi | ~52 |
-| 1.0 mata setiap posisi | ~208 |
-| 0.5 mata setiap posisi | ~831 |
+| 3.0 mata setiap posisi | ~24 |
+| 2.0 mata setiap posisi | ~55 |
+| 1.0 mata setiap posisi | ~219 |
+| 0.5 mata setiap posisi | ~875 |
 
-Sekarang: median **25** posisi ditutup setiap kaedah, maksimum **194**. Jadi perbezaan bawah ~2 mata setiap posisi belum boleh dilihat bagi hampir semua kaedah.
+Sekarang: median **26** posisi ditutup setiap kaedah, maksimum **201**. Jadi perbezaan bawah ~2 mata setiap posisi belum boleh dilihat bagi hampir semua kaedah.
 
 ## 7. Syor
 
 1. **Jangan pilih kaedah sekarang.** Pangkat backtest tiada kuasa ramalan yang boleh diukur (bahagian 2); mana-mana kaedah yang kelihatan positif pada posisi ditutup tertakluk kepada penapisan keluar (bahagian 3a), dan lift yang dipadan ikut hari beli tidak bertahan BH-FDR bagi satu kaedah pun.
 2. **Betulkan kecacatan henti hari-0 dahulu.** `REVERSE/KOLAM_EKOR.md` §4a: 421 daripada 1,770 posisi dibeli dan dihentikan pada hari masuk dengan kadar menang 0.00% kerana paras henti terletak dalam julat intrabar hari masuk. Itu bukan prestasi kaedah, itu pepijat pelaksanaan, dan ia mencemari setiap pangkat di atas.
-3. **Perhatikan kaedah pegang-pendek dahulu.** Hanya kumpulan ≤ 10 hari ada data yang hampir matang (30% masih terbuka lawan 60% bagi pegang-panjang). Pangkat pegang-panjang tidak bermakna sebelum satu tempoh pegang penuh berlalu.
+3. **Perhatikan kaedah pegang-pendek dahulu.** Hanya kumpulan ≤ 10 hari ada data yang hampir matang (29% masih terbuka lawan 59% bagi pegang-panjang). Pangkat pegang-panjang tidak bermakna sebelum satu tempoh pegang penuh berlalu.
 4. **Baca semula selepas 6 bulan.** Papan dijana semula setiap malam tanpa kos. Jadual bahagian 6 memberi bilangan posisi yang diperlukan.
 
 **Ia tidak akan mencapai +10%/bulan.** Kaedah teratas papan ikut skor sebulan memberi +3.40% dengan status BELUM CUKUP dan 0 posisi hadapan matang. Lihat `REVERSE/SASARAN.md`.
