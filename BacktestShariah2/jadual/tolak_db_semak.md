@@ -13,7 +13,7 @@ satu-satunya semakan kedua.
 tidak menolak apa-apa, tidak menghantar notifikasi, dan tamat dalam beberapa minit. Sesi yang
 menolak semula setiap hari hanya menggandakan beban dan menyembunyikan kegagalan sebenar.
 
-Alat (satu panggilan ToolSearch): `select:ArtifactData,mcp__github__actions_run_trigger`
+Alat (satu panggilan ToolSearch): `select:ArtifactData,mcp__github__actions_run_trigger,mcp__github__actions_list`
 Dashboard: https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e — jangan cipta artifact baharu.
 Notifikasi: ntfy SAHAJA (`amaran_ntfy.yml`), dan **hanya** apabila sesuatu dipulihkan atau gagal.
 
@@ -32,6 +32,10 @@ Notifikasi: ntfy SAHAJA (`amaran_ntfy.yml`), dan **hanya** apabila sesuatu dipul
 4. **Semakan A — kesegaran.** Banding `harian/status` hidup (langkah 3) dengan
    `<scratchpad>/db0/harian/status.json` pada tiga medan: `harga_tutup_pada`, `tarikh_data`,
    `beli_pada`. Ketiga-tiganya sama → db segar.
+   Pengecualian (sejak 13 Nov 2026, `paparan_awal.md`): jika hidup `paparan_awal` = true dan
+   `harga_tutup_pada` hidup LEBIH BAHARU daripada tempatan, harian.yml belum memproses sesi itu. Itu BUKAN
+   kegagalan: JANGAN tolak (data tempatan lebih lama). Tembak `harian.yml` sekali jika tiada larian
+   `queued`/`in_progress`, dan tamat dengan `paparan awal <tarikh> lebih baharu; harian.yml ditembak`.
 
 5. **Semakan B — daftar versi.** `meta/versi_db` hidup: medan `data.sesi` mesti sama dengan `sesi` dalam
    `<scratchpad>/db0/ringkas.json`. Daftar hanya ditulis selepas SEMUA batch diterima (tolak_db.md 5c), jadi

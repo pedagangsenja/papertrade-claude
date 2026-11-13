@@ -28,6 +28,12 @@ Kalau tugasan ini gagal senyap, itulah satu-satunya perkara yang akan menangkapn
    method `list_workflow_runs`, owner `pedagangsenja`, repo `papertrade-claude`, resource_id nama workflow, perPage 1).
    Jika tiada larian `queued`/`in_progress`, tembak sekali (`mcp__github__actions_run_trigger`, method `run_workflow`,
    workflow_id nama workflow, ref `main`). Jangan tunggu; teruskan dengan data sedia ada dan catat dalam notifikasi.
+2b. **Jangan timpa paparan awal yang lebih baharu** (sejak 13 Nov 2026, `paparan_awal.md`). `ArtifactData` `get`
+   koleksi `harian` doc_id `status` (TANPA out_dir; dokumen kecil). Jika `data.paparan_awal` = true DAN
+   `data.harga_tutup_pada` LEBIH BAHARU daripada `harga_tutup_pada` dalam `<scratchpad>/db0/harian/status.json`
+   (harian.yml belum memproses sesi itu), JANGAN tolak: data hidup lebih baharu daripada repo. Pastikan
+   `harian.yml` ditembak (langkah 2) dan TAMAT dengan satu baris `paparan awal <tarikh> lebih baharu; tidak ditolak`.
+   Tiada amaran. Selainnya teruskan.
 3. **Versi dokumen db = DAFTAR, bukan senarai** (sejak 6 Nov 2026). `ArtifactData` kini MENOLAK `list`/`get`
    dengan `out_dir` bagi dokumen yang "mungkin ditulis orang lain", dan tanpa `out_dir` 36 MB kandungan masuk ke
    perbualan — itulah sebab tolakan gagal 4–6 Nov 2026. JANGAN guna `list` atau `out_dir` lagi.
