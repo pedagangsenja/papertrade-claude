@@ -1,6 +1,13 @@
 # Tolak db dashboard harian (sesi Claude BAHARU setiap kali; aktif sejak peralihan 27 Okt 2026, lihat `PERALIHAN.md`)
 
-Masa: 10:20 pagi New York, Isnin–Sabtu (= 10:20 atau 11:20 malam MYT), iaitu selepas belian 9:35 NY.
+Masa: DUA larian, prosedur sama (sejak 13 Nov 2026). Paparan lebih awal (6:47 pagi MYT, data belum muktamad,
+tidak dikomit) ialah prosedur berasingan: `paparan_awal.md`.
+- **16:41 MYT, Selasa–Sabtu** (trig_01Hw4DBHPm1scwXSXghQYRdg "Tolak db petang") — selepas `harian.yml` memproses tutup semalam (biasanya siap
+  06:20–07:10 UTC). Tujuan: harga dashboard = harga tutup terakhir yang Moomoo tunjuk sebagai "prev close" sepanjang
+  petang/malam MYT. Sebelum ini dashboard ketinggalan satu sesi dari ~05:00 hingga 23:20 MYT (kes TANH 12 Nov 2026:
+  papan 30.56 = tutup 10 Nov, Moomoo 40.00 = tutup 11 Nov).
+- **10:20 pagi New York, Isnin–Sabtu** (= 10:20 atau 11:20 malam MYT) — selepas belian 9:35 NY (posisi baharu hari itu).
+Dashboard TIDAK memapar harga semasa pasaran (intrahari); semua harga = tutup harian muktamad.
 Model `claude-sonnet-5-5`. Automatik; jangan tanya soalan. Tiada order Moomoo, tiada wang sebenar.
 Semua pengiraan dibuat oleh GitHub Actions (`standard/harian_c.py`, `.github/workflows/harian.yml` dan `beli.yml`).
 Sesi ini hanya (1) memastikan Actions sudah berjalan dan (2) menolak fail yang sudah dijana ke db dashboard.
