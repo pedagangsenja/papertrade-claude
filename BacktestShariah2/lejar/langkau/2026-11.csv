@@ -660,3 +660,66 @@ N36X14,LVLU,2026-11-10,2026-11-11,saham tidak cair,,
 N36X16,LVLU,2026-11-10,2026-11-11,saham tidak cair,,
 N36X36,LVLU,2026-11-10,2026-11-11,saham tidak cair,,
 N74X16,LVLU,2026-11-10,2026-11-11,saham tidak cair,,
+M06,AXGN,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),57.75,35.64
+M06,AZTA,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),46.6,34.5807
+M06,EML,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),31.52,23.5818
+M06,SONO,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),19.0,15.246
+M35,S,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),23.37,23.73
+M102,WSM,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),258.72,261.11
+M123,FEIM,2026-11-11,2026-11-12,buka <= henti,66.35,67.59
+M123,NSIT,2026-11-11,2026-11-12,buka <= henti,167.74,168.61
+M123,S,2026-11-11,2026-11-12,buka <= henti,23.37,23.73
+M125,DGII,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),53.09,57.2386
+M125,HQ,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),12.36,10.8715
+M136,DELL,2026-11-11,2026-11-12,buka <= henti,336.09,336.312
+M136,MNRO,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),11.5,10.377
+M136,SMCI,2026-11-11,2026-11-12,buka <= henti,27.28,27.387
+M144,ELVR,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),26.15,23.6725
+M153,AAOI,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),51.12,49.1568
+M153,ALKS,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),46.0,42.1432
+M153,ARM,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),190.365,178.9568
+M153,ASST,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),21.43,20.416
+M153,ASYS,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),12.22,11.1848
+M153,AXON,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),309.25,277.5696
+M153,AXTI,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),42.78,41.3336
+M153,AZTA,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),46.6,43.032
+M153,BE,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),195.89,184.3336
+M153,CAT,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),592.91,529.4168
+M153,CECO,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),54.34,47.08
+M153,CGNX,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),49.55,45.5136
+M153,CNXN,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),83.52,73.436
+M153,CRSR,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),12.4,11.2024
+M153,CSCO,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),99.61,88.6688
+M153,DAKT,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),19.84,17.5208
+M153,DELL,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),336.09,328.8384
+M153,EDN,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),14.29,12.804
+M153,EXTR,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),26.18,23.4696
+M153,FCX,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),60.65,54.6656
+M153,FORM,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),90.39,84.2864
+M153,FTK,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),25.6,23.2584
+M153,GNRC,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),188.62,170.72
+M153,GRAL,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),120.505,110.5632
+M153,HUBB,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),436.01,390.2624
+M153,KE,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),20.05,17.1864
+M153,KMT,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),24.22,21.6392
+M153,MOD,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),102.0,93.8696
+M153,MTRN,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),206.15,185.2488
+M153,MU,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),769.31,713.944
+M153,NTCT,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),32.11,28.7936
+M153,NVEC,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),82.18,73.8936
+M153,PDFS,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),40.45,36.7752
+M153,PSIX,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),38.01,34.936
+M153,QCOM,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),175.11,155.3816
+M153,RAL,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),69.65,62.92
+M153,REX,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),40.16,35.1384
+M153,ROK,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),402.61,357.4472
+M153,SILC,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),30.95,28.16
+M153,SIMO,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),174.5,161.612
+M153,SKHY,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),134.25,125.18
+M153,SMCI,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),27.28,26.7784
+M153,SNDK,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),887.395,860.3672
+M153,STRS,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),17.0,14.96
+M153,VECO,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),39.76,36.0184
+M153,VMI,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),425.24,373.8504
+M153,WLDN,2026-11-11,2026-11-12,isyarat batal pada buka (peraturan kaedah),68.19,60.852
+M155,CTVA,2026-11-11,2026-11-12,buka <= henti,10.51,10.7139
