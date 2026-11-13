@@ -607,3 +607,11 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - Direkod 1436 (390 saham; belian semula 193; fail claude_204.csv); dilangkau 18. Harga: buka sementara yfinance 10:21 NY.
 - Dilangkau: AXGN M06: buka 57.75 > buka_maks 55.39; SONO M06: buka 19.00 > buka_maks 18.78; AZTA M06: buka 46.60 > buka_maks 43.80; EML M06: buka 31.91 > buka_maks 31.31; IR M14: buka 84.42 <= henti 84.50; ZTO M14: buka 20.15 <= henti 20.22; S M20: buka 23.37 <= henti 23.49; S M35: buka 23.37 <= henti 23.73; WSM M102: buka 258.72 <= henti 261.11; S M123: buka 23.37 <= henti 23.73; NSIT M123: buka 167.74 <= henti 168.61; FEIM M123: buka 66.35 <= henti 67.59; ELVR M144: isyarat batal pada buka (peraturan kaedah); ASST M153: isyarat batal pada buka (peraturan kaedah); GRAL M153: isyarat batal pada buka (peraturan kaedah); EXTR M153: isyarat batal pada buka (peraturan kaedah); VIV M153: isyarat batal pada buka (peraturan kaedah); CTVA M155: buka 10.51 <= henti 10.71.
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-13 14:23 MYT — GitHub Actions: kemas kini + imbas (sesi AS 2026-11-12)
+- Keluar baharu 495 (C {'isyarat': 305, 'henti': 164, 'masa': 21, 'sasaran': 3}, M {'isyarat': 2}); menunggu buka sesi seterusnya: 383.
+- Harga beli sementara dibetulkan kepada buka rasmi bar harian: 247 (beza > 0.5%: 43). Tidak dibeli baharu: SNPS M20.
+- Senarai beli 1036 baris (341 saham, 156 kaedah; 59 daripada watchlist; belian semula 132). Ditolak: {'dipegang': 2175, 'had': 8890, 'tidak_cair': 221, 'ambil_alih': 265, 'mingguan': 57, 'kelas_berganda': 43}.
+- Watchlist 548 (baharu 262, dibuang 242, ke senarai beli 59). Isyarat direkod: 12687 (data/isyarat/2026-11-12_malam.csv.gz).
+- Ralat kaedah: tiada. Nota: C KVUE M93: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M74: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M99: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M124: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M80: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M141: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M148: tiada bar 2026-11-12 (harga terkini 2026-10-30); C ACA M100: tiada bar 2026-11-12 (harga terkini 2026-10-22).
+- Tiada order. Tiada wang sebenar.
