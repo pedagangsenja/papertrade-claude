@@ -7,7 +7,11 @@
 # menjana db (jana_db.py --awal) untuk ditolak oleh sesi Claude (jadual/paparan_awal.md).
 #
 # Batas: repo TIDAK disentuh dan tiada apa dikomit; keputusan rasmi kekal harian.yml dengan data muktamad. Tiada imbasan
-# (senarai beli / watchlist kekal sesi sebelumnya). Harga belum muktamad: harga buka kadang-kadang berubah (URBN 16 Okt 2026).
+# (senarai beli / watchlist kekal sesi sebelumnya).
+# Ketepatan tarikan awal (diukur 13 Nov 2026, 8 sesi, tarikan ~22:20 UTC lawan tarikan harian.yml ~06:xx UTC): harga TUTUP
+# sama (0 beza > 0.1% dalam 7/8 sesi); harga BUKA ~35 saham berbeza > 0.5% (masih berubah pada 00:57 UTC; muktamad
+# pada 03:49 UTC); ~40–48 saham tiada bar sesi itu (33/775 saham posisi terbuka pada 12 Nov). Saham tanpa bar diisi
+# daripada carta Yahoo v8 (isi_bar: tutup = regularMarketPrice; buka = lilin 5 minit pertama), dalam salinan sahaja.
 #
 #   python3 BacktestShariah2/standard/paparan_awal.py --kerja <dir> --keluar <dir> [--versi versi.json] [--tunggu 1200]
 #   Keluar 0 + JSON: {"langkau": sebab} (tiada apa untuk ditolak) atau {"sesi", "keluar", "batch", ...}.
@@ -53,6 +57,62 @@ def keadaan(bs2, masa=None):
     return None, data, rasmi, jangka
 
 
+def ke_yahoo(t):
+    return t.replace('.', '-')
+
+
+def bar_carta(t, sesi, sesi_http=None):
+    """Bar harian sesi 'YYYY-MM-DD' bagi ticker t daripada carta Yahoo v8 (5 minit + meta), atau None."""
+    import requests
+    h = sesi_http or requests
+    try:
+        r = h.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ke_yahoo(t)}?range=5d&interval=5m',
+                  headers={'User-Agent': 'Mozilla/5.0'}, timeout=20)
+        d = r.json()['chart']['result'][0]
+    except Exception:
+        return None
+    m = d.get('meta', {}); ts = d.get('timestamp') or []; q = (d.get('indicators', {}).get('quote') or [{}])[0]
+    if not m.get('regularMarketPrice') or not m.get('regularMarketTime'):
+        return None
+    hari = pd.Timestamp(m['regularMarketTime'], unit='s', tz='UTC').tz_convert('America/New_York')
+    if str(hari.date()) != sesi or hari.hour < 16:   # harga tutup sesi itu sahaja, bukan harga semasa pasaran
+        return None
+    x = pd.DataFrame(dict(t=pd.to_datetime(ts, unit='s', utc=True).tz_convert('America/New_York'), o=q.get('open'),
+                          h=q.get('high'), l=q.get('low'), v=q.get('volume'))).dropna(subset=['o'])
+    x = x[(x.t.dt.date.astype(str) == sesi) & (x.t.dt.hour * 60 + x.t.dt.minute >= 570) & (x.t.dt.hour < 16)]
+    c = float(m['regularMarketPrice'])
+    o = float(x.o.iloc[0]) if len(x) else c
+    hi = max([c, o] + [v for v in (m.get('regularMarketDayHigh'), x.h.max() if len(x) else None) if v == v and v])
+    lo = min([c, o] + [v for v in (m.get('regularMarketDayLow'), x.l.min() if len(x) else None) if v == v and v])
+    vol = int(m.get('regularMarketVolume') or (x.v.sum() if len(x) else 0))
+    return dict(ticker=t, date=int(sesi.replace('-', '')), open=round(o, 4), high=round(float(hi), 4), low=round(float(lo), 4),
+                close=round(c, 4), volume=vol)
+
+
+def isi_bar(harga_dir, sesi, semua=False):
+    """Tambah bar sesi bagi saham tanpa bar dalam terkini.csv salinan (semua=True: setiap saham universe). Pulang bilangan."""
+    import requests
+    p = os.path.join(harga_dir, 'terkini.csv')
+    tk = pd.read_csv(p) if os.path.exists(p) else pd.DataFrame(columns=['ticker', 'date', 'open', 'high', 'low', 'close', 'volume'])
+    ada = set(tk.loc[tk.date == int(sesi.replace('-', '')), 'ticker'])
+    st = baca(os.path.join(harga_dir, 'status.json')).get('terkini', {})
+    if semua or not ada:
+        u = os.path.join(harga_dir, 'univ.txt')
+        calon = sorted({x.strip().replace('US.', '') for x in open(u) if x.strip()} if os.path.exists(u) else set(tk.ticker))
+    else:
+        calon = sorted(set(st.get('tiada_bar_sesi', [])) | set(st.get('tiada_data', [])))
+    calon = [t for t in calon if t not in ada]
+    h = requests.Session(); baru = []
+    for t in calon:
+        b = bar_carta(t, sesi, h)
+        if b:
+            baru.append(b)
+        time.sleep(0.15)
+    if baru:
+        pd.concat([tk, pd.DataFrame(baru)], ignore_index=True).to_csv(p, index=False)
+    return dict(dicuba=len(calon), diisi=len(baru))
+
+
 def jalan(cmd, cwd, log):
     t0 = time.time()
     r = subprocess.run([sys.executable] + cmd, cwd=cwd, capture_output=True, text=True)
@@ -77,6 +137,10 @@ def main(argv=None):
         time.sleep(60)
         subprocess.run(['git', '-C', ROOT, 'pull', '-q', '--ff-only', 'origin', 'main'], capture_output=True)
         sebab, data, rasmi, jangka = keadaan(BS2)
+    # harga_harian.yml masih belum menarik sesi itu: bina SEMUA bar sesi daripada carta Yahoo (salinan sahaja)
+    semua = bool(sebab and sebab.startswith('harga_harian.yml'))
+    if semua:
+        sebab = None
     if sebab:
         print(json.dumps(dict(langkau=sebab, sesi_data=data, sesi_rasmi=rasmi, sesi_jangka=jangka), ensure_ascii=False))
         return 0
@@ -90,6 +154,8 @@ def main(argv=None):
     S2 = os.path.join(kerja, 'BacktestShariah2'); std = os.path.join(S2, 'standard')
     pt = os.path.join(S2, 'papertrade'); stor = os.path.join(S2, 'data', 'harga', 'stor')
     os.environ.pop('LEJAR_STOR', None)
+    t0 = time.time(); isi = isi_bar(os.path.join(S2, 'data', 'harga'), jangka, semua)
+    log.append(dict(langkah='isi_bar carta Yahoo' + (' (semua)' if semua else ''), kod=0, saat=round(time.time() - t0), **isi))
     jalan([os.path.join(std, 'lejar.py'), 'stor'], kerja, log)
     jalan([os.path.join(std, 'harian_c.py'), 'malam', '--folder', pt, '--stor', stor, '--isyarat', '', '--tanpa-imbas',
            '--paksa', '--proses', str(a.proses)], kerja, log)

@@ -41,5 +41,52 @@ class TestKeadaan(unittest.TestCase):
         self.assertIn('sudah memproses', P.keadaan(folder('2026-11-25', '2026-11-25'), m)[0])
 
 
+class Respon:
+    def __init__(self, d):
+        self.d = d
+
+    def json(self):
+        return self.d
+
+
+class Sesi:
+    """Pengganti requests.Session: carta Yahoo v8 tiruan (ARW 12 Nov 2026, nilai sebenar)."""
+    def __init__(self, masa_tutup='2026-11-12 16:00:02'):
+        self.masa = int(pd.Timestamp(masa_tutup, tz='America/New_York').timestamp())
+
+    def get(self, url, **kw):
+        t = [int(pd.Timestamp(x, tz='America/New_York').timestamp()) for x in
+             ('2026-11-11 15:55', '2026-11-12 09:30', '2026-11-12 09:35', '2026-11-12 15:55')]
+        return Respon({'chart': {'result': [{
+            'meta': {'regularMarketPrice': 198.2, 'regularMarketTime': self.masa, 'regularMarketDayHigh': 202.565,
+                     'regularMarketDayLow': 195.467, 'regularMarketVolume': 398284},
+            'timestamp': t,
+            'indicators': {'quote': [{'open': [199.0, 195.31, 196.0, 198.0], 'high': [199.5, 196.2, 202.0, 198.3],
+                                      'low': [198.0, 194.9, 195.9, 197.8], 'volume': [1000, 5000, 4000, 9000]}]}}]}})
+
+
+class TestIsiBar(unittest.TestCase):
+    def test_bar_carta(self):
+        b = P.bar_carta('ARW', '2026-11-12', Sesi())
+        self.assertEqual((b['open'], b['high'], b['low'], b['close'], b['volume']), (195.31, 202.565, 194.9, 198.2, 398284))
+        self.assertEqual(b['date'], 20261112)
+
+    def test_bukan_sesi_itu_atau_belum_tutup(self):
+        self.assertIsNone(P.bar_carta('ARW', '2026-11-11', Sesi()))                       # meta = sesi lain
+        self.assertIsNone(P.bar_carta('ARW', '2026-11-12', Sesi('2026-11-12 15:10:00')))  # harga semasa pasaran
+
+    def test_isi_bar_hanya_yang_tiada(self):
+        import unittest.mock as um
+        d = tempfile.mkdtemp()
+        pd.DataFrame([dict(ticker='AAA', date=20261112, open=1, high=1, low=1, close=1, volume=1)]).to_csv(
+            os.path.join(d, 'terkini.csv'), index=False)
+        json.dump({'terkini': {'tiada_bar_sesi': ['ARW'], 'tiada_data': []}}, open(os.path.join(d, 'status.json'), 'w'))
+        with um.patch('requests.Session', Sesi), um.patch('time.sleep'):
+            r = P.isi_bar(d, '2026-11-12')
+        self.assertEqual(r, {'dicuba': 1, 'diisi': 1})
+        x = pd.read_csv(os.path.join(d, 'terkini.csv'))
+        self.assertEqual(sorted(x.ticker), ['AAA', 'ARW'])
+
+
 if __name__ == '__main__':
     unittest.main()

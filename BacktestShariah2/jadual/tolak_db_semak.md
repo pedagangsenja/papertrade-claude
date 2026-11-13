@@ -15,7 +15,8 @@ menolak semula setiap hari hanya menggandakan beban dan menyembunyikan kegagalan
 
 Alat (satu panggilan ToolSearch): `select:ArtifactData,mcp__github__actions_run_trigger,mcp__github__actions_list`
 Dashboard: https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e — jangan cipta artifact baharu.
-Notifikasi: ntfy SAHAJA (`amaran_ntfy.yml`), dan **hanya** apabila sesuatu dipulihkan atau gagal.
+Notifikasi: ntfy SAHAJA (`standard/amaran.py`; `amaran_ntfy.yml` hanya jika alat GitHub ada dan amaran.py gagal),
+dan **hanya** apabila sesuatu dipulihkan atau gagal. Alat GitHub tiada dalam sesi berjadual: langkau tembakan workflow.
 
 ---
 
@@ -46,10 +47,10 @@ Notifikasi: ntfy SAHAJA (`amaran_ntfy.yml`), dan **hanya** apabila sesuatu dipul
 
 7. **Mana-mana semakan gagal** → jalankan `BacktestShariah2/jadual/tolak_db.md` langkah 3–5c
    sepenuhnya (versi dokumen → `jana_db.py --versi` → `ArtifactData batch` mengikut urutan
-   `batch_0, batch_1, …` → sahkan penghimpunan). Kemudian cetus ntfy:
-   `mcp__github__actions_run_trigger` (method `run_workflow`, owner `pedagangsenja`,
-   repo `papertrade-claude`, workflow_id `amaran_ntfy.yml`, ref `main`,
-   inputs `{"tajuk": "tolak db dipulihkan", "mesej": "<tarikh>: <semakan mana gagal>, <n> batch ditolak"}`).
+   `batch_0, batch_1, …` → sahkan penghimpunan). Kemudian hantar ntfy:
+   `python3 BacktestShariah2/standard/amaran.py --tajuk "tolak db dipulihkan" --mesej "<tarikh>: <semakan mana gagal>, <n> batch ditolak"` (ntfy terus; sesi
+   berjadual TIADA alat GitHub sejak 13 Nov 2026). Hanya jika ia keluar 1 DAN alat GitHub ada: `amaran_ntfy.yml`
+   melalui `mcp__github__actions_run_trigger` (`run_workflow`, ref `main`, inputs {"tajuk", "mesej"}).
 
 8. **Tolakan itu sendiri gagal** → cetus ntfy dengan tajuk `tolak db semak GAGAL` dan sebabnya.
    JANGAN laporkan kejayaan.
