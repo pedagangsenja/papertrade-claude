@@ -13,6 +13,7 @@ Dijana `kajian/carian_setup/cs_hadapan.py`; harga hingga 20261112; isyarat sejak
 | `F28` | M92 CCI-50 (benih M, varian 2: cci_50=91, rma_atr_14=15, rma_atr_kali_2=2.496) | F20 >= 30% di bawah puncak 52 minggu DAN F27 rejim QQQ OFF | H4 4xATR14 | X20 tutup < 92% tutup tertinggi sejak beli DAN X21 Stochastic silang turun di atas 80 | 0 | 0 | 0 | 0 | – | – | 0 | – | – |
 | `F38` | P13 RSI14 silang atas 60 [tala daripada F29] | RS >= 95 DAN ATR% >= 4 | H2 -10% | X14 Supertrend turun ATAU X18 Chandelier 3xATR14 (dari tutup tertinggi sejak beli) | 0 | 0 | 0 | 0 | – | – | 0 | – | – |
 | `F30` | N43 Undur EMA8 + penapis MA50 (benih N) | F15 Supertrend naik DAN F23 ATR% >= 4 | H4 4xATR14 | X21 Stochastic silang turun di atas 80 DAN X22 hari turun dengan volum >= 1.5x | 0 | 0 | 0 | 0 | – | – | 0 | – | – |
+| `F24` | M49 Ichimoku (Tutup Atas Awan + Tenkan Silang Kijun) (benih M, varian 2: rolling_26=33, rolling_52=93, rolling_9=8, shift_26=40) | F17 RS >= 90 DAN F23 ATR% >= 4 | H4 4xATR14 | X11 RSI14 < 50 DAN X22 hari turun dengan volum >= 1.5x | 0 | 0 | 0 | 0 | – | – | 0 | – | – |
 
 - "Lari" = naik ≥ 5 % minggu pertama, capai ≥ 10 % sebelum henti −8 %, masih ≥ 10 % pada minggu ke-4; hanya dikira selepas 20 sesi berlalu. "Rawak" = saham layak lain pada hari yang sama dan tahap turun-naik yang sama.
 - Bacaan awal tidak bermakna: perlu sekurang-kurangnya 100 belian dengan tetingkap lengkap bagi setiap setup sebelum kadar tangkap boleh dibandingkan dengan backtest (`kajian/CARIAN_SETUP.md`).

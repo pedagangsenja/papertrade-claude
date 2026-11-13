@@ -56,9 +56,12 @@ def dari_takrif(tk_):
     return {'pencetus': pc, 'fs': fs, 'amb': amb, 'lajur': s * cari.NR + r}
 
 
+TAMBAHAN = ['F24']            # pindaan (g), POST-HOC: induk yang untung setiap dagangan dalam K1-K3 walaupun anaknya dipilih
+
+
 def bina_kohort():
     """Peraturan pindaan (f): anak jika ditala dan mengatasi induk pada kumpulan B (gabungan DAN K3); selainnya induk;
-    masuk kohort hanya jika T1 dan T2 benar."""
+    masuk kohort hanya jika T1 dan T2 benar. Kemudian TAMBAHAN pindaan (g)."""
     reg = pd.read_csv(lapor.REG_F, dtype=str).fillna('').set_index('id')
     T = pd.read_csv(os.path.join(SINI, 'hasil', 'CS04', 'papan.csv'))
     ahli, log = [], []
@@ -71,6 +74,13 @@ def bina_kohort():
                    f"T1 {r['T1']} T2 {r['T2']} -> {'MASUK' if lulus else 'tidak'}")
         if lulus:
             ahli.append({'id': fid, 'induk': x.induk, 'takrif': r['takrif'],
+                         'param': json.loads(r['param']) if r['param'] else None, 'masuk': r['masuk'],
+                         'penapis': r['penapis'], 'henti': r['henti'], 'keluar': r['keluar'], **dari_takrif(r['takrif'])})
+    for fid in TAMBAHAN:
+        if fid not in {x['id'] for x in ahli}:
+            r = reg.loc[fid]
+            log.append(f'{fid}: TAMBAHAN pindaan (g), post-hoc')
+            ahli.append({'id': fid, 'induk': fid, 'takrif': r['takrif'],
                          'param': json.loads(r['param']) if r['param'] else None, 'masuk': r['masuk'],
                          'penapis': r['penapis'], 'henti': r['henti'], 'keluar': r['keluar'], **dari_takrif(r['takrif'])})
     os.makedirs(KELUAR, exist_ok=True)

@@ -238,6 +238,15 @@ stor harga (senarai Shariah semasa); layak seperti set 431. Hanya isyarat pada a
 (tiada isian ke belakang). Kad skor kekal satu-satunya keputusan wang sebenar: setup F yang terbukti dalam jejak ini
 masih perlu keputusan pengguna dan integrasi Lejar sebelum boleh dinilai kad skor.
 
+### Pindaan 13 Nov 2026 (g) — tambahan kohort selepas hasil dilihat (POST-HOC, dilabel begitu)
+
+Semakan semula lawan matlamat pengguna (menangkap saham yang naik kuat **dan untung**): peraturan (f) memilih anak `F34`
+menggantikan induk `F24` kerana kadar tangkapnya lebih tinggi, tetapi dengan cara pegang terbaik masing-masing induk
+`F24` positif setiap dagangan dalam K1, K2 dan K3 (+0.79 / +1.19 / +0.50 %) manakala `F34` tidak (+0.07 / −0.77 / −0.83 %).
+`F24` juga lulus `T1`, `T2` dan `T3`. Maka **`F24` ditambah ke kohort** supaya kedua-dua versi dijejak ke hadapan.
+Ini keputusan selepas melihat hasil, bukan pradaftar; ia hanya MENAMBAH satu ahli dan tidak membuang mana-mana ahli
+peraturan (f). Tiada tambahan lain.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

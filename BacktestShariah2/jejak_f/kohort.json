@@ -157,6 +157,31 @@
     null
    ],
    "lajur": 2302
+  },
+  {
+   "id": "F24",
+   "induk": "F24",
+   "takrif": "M49.2|F17+F23|H4|X11 DAN X22",
+   "param": {
+    "rolling_26": 33,
+    "rolling_52": 93,
+    "rolling_9": 8,
+    "shift_26": 40
+   },
+   "masuk": "M49 Ichimoku (Tutup Atas Awan + Tenkan Silang Kijun) (benih M, varian 2: rolling_26=33, rolling_52=93, rolling_9=8, shift_26=40)",
+   "penapis": "F17 RS >= 90 DAN F23 ATR% >= 4",
+   "henti": "H4 4xATR14",
+   "keluar": "X11 RSI14 < 50 DAN X22 hari turun dengan volum >= 1.5x",
+   "pencetus": "M49.2",
+   "fs": [
+    16,
+    22
+   ],
+   "amb": [
+    null,
+    null
+   ],
+   "lajur": 2227
   }
  ],
  "log": [
@@ -169,6 +194,7 @@
   "F27: calon F27 (induk); T1 True T2 True -> MASUK",
   "F28: calon F28 (induk); T1 True T2 True -> MASUK",
   "F29: calon F38 (anak mengatasi induk); T1 True T2 True -> MASUK",
-  "F30: calon F30 (induk); T1 True T2 True -> MASUK"
+  "F30: calon F30 (induk); T1 True T2 True -> MASUK",
+  "F24: TAMBAHAN pindaan (g), post-hoc"
  ]
 }
