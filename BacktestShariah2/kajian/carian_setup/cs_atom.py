@@ -1,7 +1,7 @@
 """Carian setup CS01 — atom: pencetus, penapis dan atom keluar (pradaftar `kajian/SPEC_CARIAN_SETUP.md`).
 
 Semua nilai bar i hanya memakai data <= i (tiada pandang ke hadapan; diuji `ujian/test_carian_setup.py`).
-Isyarat dikira pada TUTUP bar i; pembelian berlaku pada BUKA bar i+1 (lihat `teras.py`).
+Isyarat dikira pada TUTUP bar i; pembelian berlaku pada BUKA bar i+1 (lihat `cs_teras.py`).
 Senarai PENCETUS, PENAPIS dan KELUAR di bawah ialah sebahagian daripada pradaftar: jangan ubah tanpa pindaan
 bertarikh pada spec.
 """

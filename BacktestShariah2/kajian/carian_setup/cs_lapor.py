@@ -1,5 +1,5 @@
 """Carian setup CS01 — laporan: `kajian/CARIAN_SETUP.md` + `carian_setup/hasil/*.csv`.
-Guna: python3 lapor.py <kerja>   (selepas cari.py besar, tepat, kunci). Jangan sunting keluaran secara manual."""
+Guna: python3 cs_lapor.py <kerja>   (selepas cari.py besar, tepat, kunci). Jangan sunting keluaran secara manual."""
 import json
 import os
 import pickle
@@ -10,9 +10,9 @@ import pandas as pd
 
 SINI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SINI)
-import atom  # noqa: E402
-import cari  # noqa: E402
-import teras  # noqa: E402
+import cs_atom as atom  # noqa: E402
+import cs_cari as cari  # noqa: E402
+import cs_teras as teras  # noqa: E402
 
 BS2 = os.path.normpath(os.path.join(SINI, '..', '..'))
 sys.path.insert(0, os.path.join(BS2, 'standard'))
@@ -162,7 +162,7 @@ def main(kerja):
     except Exception:
         status = '> **Status keputusan:** lihat `laporan/KAD_SKOR.md`; laporan ini BUKAN keputusan.'
     A = ['# Carian Setup CS01 — papan 10 teratas (backtest, BUKAN bukti)', '', status, '',
-         'Dijana `kajian/carian_setup/lapor.py`. Pradaftar: `kajian/SPEC_CARIAN_SETUP.md` (13 Nov 2026, dikomit '
+         'Dijana `kajian/carian_setup/cs_lapor.py`. Pradaftar: `kajian/SPEC_CARIAN_SETUP.md` (13 Nov 2026, dikomit '
          'sebelum keputusan dilihat). **Jangan sunting secara manual.**', '',
          '## 1. Apa yang dicari', '',
          'Setup lengkap (masuk, pegang, keluar) yang menangkap saham ketika ia mula naik kuat dan memegangnya '
@@ -234,9 +234,9 @@ def main(kerja):
           '(senarai dalam `carian_setup/hasil/meta.json`).', '',
           '## 6. Jana semula', '',
           '```', 'W=<folder kerja di luar repo>', 'cd BacktestShariah2/kajian/carian_setup',
-          'python3 cari.py panel $W 431 && python3 cari.py benih $W 431 && python3 cari.py besar $W',
-          'python3 cari.py tepat $W && python3 cari.py panel $W kunci && python3 cari.py kunci $W',
-          'python3 lapor.py $W', '```', '']
+          'python3 cs_cari.py panel $W 431 && python3 cs_cari.py benih $W 431 && python3 cs_cari.py besar $W',
+          'python3 cs_cari.py tepat $W && python3 cs_cari.py panel $W kunci && python3 cs_cari.py kunci $W',
+          'python3 cs_lapor.py $W', '```', '']
     open(os.path.join(BS2, 'kajian', 'CARIAN_SETUP.md'), 'w', encoding='utf-8').write('\n'.join(A))
     print('laporan ditulis:', len(papan), 'setup papan; rho', round(rho, 3), 'p95 rawak', round(p95, 4))
 

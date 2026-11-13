@@ -9,8 +9,8 @@ import pandas as pd
 
 SINI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(SINI, '..', 'kajian', 'carian_setup'))
-import atom  # noqa: E402
-import teras  # noqa: E402
+import cs_atom as atom  # noqa: E402
+import cs_teras as teras  # noqa: E402
 
 A1, A2, OP = teras.peraturan_keluar(len(atom.KELUAR))
 NR = len(A1)

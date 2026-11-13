@@ -1,12 +1,12 @@
 """Carian setup CS01 — pemacu (pradaftar `kajian/SPEC_CARIAN_SETUP.md`).
 
 Guna (folder kerja di luar repo; fail perantaraan besar tidak dikomit):
-  python3 cari.py panel  <kerja> 431|kunci     bina panel indikator
-  python3 cari.py benih  <kerja> 431           isyarat benih M (asal + 2 varian) dan N pada set 431
-  python3 cari.py besar  <kerja>               peringkat besar: semua masuk x henti x keluar (SPEC §6.1)
-  python3 cari.py tepat  <kerja>               peringkat tepat + papan 10 teratas + kolam rawak (SPEC §6.2-6.3)
-  python3 cari.py kunci  <kerja>               nilai pada Kunci K1/K2 (SPEC §6.4)
-Laporan: lapor.py.
+  python3 cs_cari.py panel  <kerja> 431|kunci     bina panel indikator
+  python3 cs_cari.py benih  <kerja> 431           isyarat benih M (asal + 2 varian) dan N pada set 431
+  python3 cs_cari.py besar  <kerja>               peringkat besar: semua masuk x henti x keluar (SPEC §6.1)
+  python3 cs_cari.py tepat  <kerja>               peringkat tepat + papan 10 teratas + kolam rawak (SPEC §6.2-6.3)
+  python3 cs_cari.py kunci  <kerja>               nilai pada Kunci K1/K2 (SPEC §6.4)
+Laporan: cs_lapor.py.
 """
 import glob
 import importlib
@@ -26,8 +26,8 @@ AKAR = os.path.normpath(os.path.join(SINI, '..', '..', '..'))
 for _p in (SINI, AKAR, os.path.join(AKAR, 'AUTOTUNE', 'kaedah'), os.path.join(AKAR, 'BacktestShariah2', 'kod')):
     if _p not in sys.path:
         sys.path.insert(0, _p)
-import atom  # noqa: E402
-import teras  # noqa: E402
+import cs_atom as atom  # noqa: E402
+import cs_teras as teras  # noqa: E402
 
 LAJUR = ['open', 'high', 'low', 'close', 'volume', 'turnover']
 N_MIN = 100
@@ -157,8 +157,10 @@ def benih(kerja, set_, hanya=None):
                 sedia['ralat'][nama] = ralat
             else:
                 sedia['sig'][nama] = bit
-            if (k + 1) % 50 == 0:
+            if (k + 1) % 20 == 0:                            # simpan berperingkat: larian boleh disambung
                 log(f'  {k + 1}/{len(tugas)}')
+                pickle.dump(sedia, open(f + '.tmp', 'wb'), protocol=4)
+                os.replace(f + '.tmp', f)
     for nama, _, P in tugas:
         sedia['param'][nama] = P
     pickle.dump(sedia, open(f, 'wb'), protocol=4)

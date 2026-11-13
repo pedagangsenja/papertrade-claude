@@ -55,7 +55,7 @@ kedua-dua set (angka condong ke atas); K2 berkongsi tahun dengan Latih/Sah (saha
 
 **Masuk** = satu pencetus DAN 0, 1 atau 2 penapis.
 
-- Pencetus indikator: senarai `PENCETUS` dalam `carian_setup/atom.py` (silang MA, MACD, RSI, pecah tinggi N hari,
+- Pencetus indikator: senarai `PENCETUS` dalam `carian_setup/cs_atom.py` (silang MA, MACD, RSI, pecah tinggi N hari,
   Keltner/Bollinger, squeeze, Supertrend, ADX, Ichimoku, Stochastic, gap/lonjakan volum, tapak, undur dalam trend).
 - Benih M: lajur `sig` setiap modul `AUTOTUNE/kaedah/Mxx.py` dengan parameter asal, **dan dua varian parameter** setiap
   kaedah: setiap parameter `tala = Y` diambil seragam dalam [`bawah`, `atas`] `param_julat.csv` (benih 20261113 + nombor
@@ -104,14 +104,14 @@ rawak.
 
 ## 7. Keluaran
 
-`kajian/CARIAN_SETUP.md` (dijana `carian_setup/lapor.py`), `kajian/carian_setup/hasil/*.csv`. Fail perantaraan besar
+`kajian/CARIAN_SETUP.md` (dijana `carian_setup/cs_lapor.py`), `kajian/carian_setup/hasil/*.csv`. Fail perantaraan besar
 ditulis ke folder kerja di luar repo. Jangan sunting keluaran secara manual.
 
 ### Pindaan 13 Nov 2026 (a) — keluarga F (sebelum carian dijalankan; tiada keputusan dilihat)
 
 Keputusan pengguna 13 Nov 2026: kaedah baharu daripada carian ini didaftarkan dengan nombor bermula **`Fxx`**.
 Setiap setup papan mendapat ID `F01`, `F02`, … mengikut kedudukan papan, dalam `data/registry_F.csv` (dijana
-`carian_setup/lapor.py`). ID **kekal**: takrif (`pencetus|penapis|henti|keluar`) yang sudah berdaftar mengekalkan
+`carian_setup/cs_lapor.py`). ID **kekal**: takrif (`pencetus|penapis|henti|keluar`) yang sudah berdaftar mengekalkan
 ID-nya pada pusingan berikutnya; takrif baharu mendapat nombor seterusnya. Lajur `status` = `BACKTEST` bermaksud belum
 papertrade: tiada modul `kod/kaedah/Fxx.py`, tiada dalam Lejar atau kad skor. Pendaftaran tidak mengubah pemilihan
 atau pangkat (§6).
