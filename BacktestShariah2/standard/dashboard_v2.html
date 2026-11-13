@@ -5831,8 +5831,15 @@ renderNav();renderAll();
       S[keyName]=nyahkod(asas,ch,km);S[keyName+'Siap']=true;S.live=true;re();};
     /* `sekali` = baca sekali, lepas slot. Bahagian hanya berubah apabila db ditolak, dan
        apabila itu berlaku INDUK asas berubah juga - jadi anak dibuka semula di bawah. */
+    /* 13 Nov 2026: anak yang `induk`-nya SUDAH sepadan dengan asas dilepaskan serta-merta. Kandungan
+       anak bagi satu induk tidak berubah (tolakan baharu = induk baharu), jadi salinan itu muktamad.
+       Dahulu setiap anak memegang slot sehingga SEMUA tiba: ringkas_c tumbuh ke 38 anak + ~24
+       langganan kekal > had pelanggan ~60, jadi 3 anak terakhir tidak pernah dibuka dan halaman
+       tersekat "36/39 bahagian" sepanjang hari pada db yang lengkap. */
     const anak=(id,simpan)=>{if(dah.has(id))return;dah.add(id);
-      tok[id]=langgan('papertrade/'+id,t=>{simpan(t.exists?t.data():null);cuba();},
+      tok[id]=langgan('papertrade/'+id,t=>{const d=t.exists?t.data():null;simpan(d);
+          if(d&&asas&&asas.bahagian&&d.induk===asas.bahagian.id&&tok[id]){try{tok[id].batal();}catch(e){}delete tok[id];}
+          cuba();},
         e=>{simpan(null);dbErr('papertrade/'+id,e);cuba();});};
     langgan('papertrade/'+nama,s=>{if(!s.exists){if(!dahLama){dahLama=true;lama();}return;}
       asas=s.data();const B=asas.bahagian||{n:1,nk:0};
@@ -5877,7 +5884,9 @@ renderNav();renderAll();
       if(b&&idLama!==null&&idLama!==b.id){lepasAnak();dah.clear();for(const k in ch)delete ch[k];}
       if(b)idLama=b.id;
       for(let i=2;i<=n;i++){if(dah.has(i))continue;dah.add(i);
-        tok[i]=langgan(path+'_'+i,t=>{ch[i]=t.exists?t.data():null;gabung();},
+        tok[i]=langgan(path+'_'+i,t=>{ch[i]=t.exists?t.data():null;
+            if(ch[i]&&b&&ch[i].induk===b.id&&tok[i]){try{tok[i].batal();}catch(e){}delete tok[i];}
+            gabung();},
           e=>{ch[i]=null;dbErr(path+'_'+i,e);gabung();});}
       gabung();},e=>dbErr(path,e));};
   /* Langganan ringkas_m/ringkas_c diletak SELEPAS takrifan subBhg (3 Nov 2026): sandaran
