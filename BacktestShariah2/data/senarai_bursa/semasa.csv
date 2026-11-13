@@ -1839,6 +1839,7 @@ BWIN,"The Baldwin Insurance Group, Inc. - Class A Common Stock",NASDAQ,0,1,2026-
 BWIV,Blue Water Acquisition Corp. IV Class A Ordinary Shares,NYSE,0,0,2026-10-27
 BWIV.U,"Blue Water Acquisition Corp. IV Units, each consisting of one Class A ordinary share and one-half of one redeemable warrant",NYSE,0,0,2026-10-27
 BWIV.W,Blue Water Acquisition Corp. IV Warrants entitling the holder to purchase one Class A ordinary share at a price of $11.50 per share,NYSE,0,0,2026-10-27
+BWLB,Brandywine Large Cap ETF,NYSE Arca,1,0,2026-11-13
 BWLP,BW LPG Limited Common Shares,NYSE,0,1,2026-10-27
 BWMX,"Betterware de Mexico, S.A.P.I. de C.V. Ordinary Shares",NYSE,0,1,2026-10-27
 BWQG,BWM Quality Growth ETF,Cboe BZX,1,0,2026-10-27
@@ -2289,7 +2290,6 @@ CLDT,Chatham Lodging Trust (REIT) Common Shares of Beneficial Interest,NYSE,0,0,
 CLDX,"Celldex Therapeutics, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 CLF,Cleveland-Cliffs Inc. Common Stock,NYSE,0,1,2026-10-27
 CLFD,"Clearfield, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
-CLGN,CollPlant Biotechnologies Ltd. - Ordinary Shares,NASDAQ,0,1,2026-10-27
 CLH,"Clean Harbors, Inc. Common Stock",NYSE,0,1,2026-10-27
 CLIK,Click Holdings Limited - Ordinary Share,NASDAQ,0,1,2026-10-27
 CLIM,Climate Global - Climate Resilient REIT Index ETF,NYSE Arca,1,0,2026-10-27
@@ -3977,10 +3977,8 @@ FDD,First Trust STOXX European Select Dividend Index Fund,NYSE Arca,1,0,2026-10-
 FDEC,FT Vest U.S. Equity Buffer ETF - December,Cboe BZX,1,0,2026-10-27
 FDEM,Fidelity Emerging Markets Multifactor ETF,Cboe BZX,1,0,2026-10-27
 FDEV,Fidelity International Multifactor ETF,Cboe BZX,1,0,2026-10-27
-FDFF,Fidelity Disruptive Finance ETF,NASDAQ,1,0,2026-10-27
 FDG,American Century Focused Dynamic Growth ETF,NYSE Arca,1,0,2026-10-27
 FDHY,Fidelity Enhanced High Yield ETF,NYSE Arca,1,0,2026-10-27
-FDIF,Fidelity Disruptors ETF,NASDAQ,1,0,2026-10-27
 FDIG,Fidelity Crypto Industry and Digital Payments ETF,NASDAQ,1,0,2026-10-27
 FDIQ,Invesco Bloomberg Financial Data Providers ETF,NASDAQ,1,0,2026-10-27
 FDIS,Fidelity MSCI Consumer Discretionary Index ETF,NYSE Arca,1,0,2026-10-27
@@ -4272,8 +4270,6 @@ FMC,FMC Corporation Common Stock,NYSE,0,1,2026-10-27
 FMCE,FM Compounders Equity ETF,NYSE Arca,1,0,2026-10-27
 FMCX,FM Focus Equity ETF,NYSE Arca,1,0,2026-10-27
 FMDE,Fidelity Enhanced Mid Cap Core ETF,NYSE Arca,1,0,2026-10-27
-FMED,Fidelity Disruptive Medicine ETF,NASDAQ,1,0,2026-10-27
-FMET,Fidelity Metaverse ETF,NASDAQ,1,0,2026-10-27
 FMF,First Trust Managed Futures Strategy Fund,NYSE Arca,1,0,2026-10-27
 FMFC,Kandal M Venture Limited - Class A ordinary Shares,NASDAQ,0,1,2026-10-27
 FMHI,First Trust Municipal High Income ETF,NASDAQ,1,0,2026-10-27
@@ -4354,7 +4350,6 @@ FPF,First Trust Intermediate Duration Preferred & Income Fund Common Shares of B
 FPFD,Fidelity Preferred Securities & Income ETF,Cboe BZX,1,0,2026-10-27
 FPH,"Five Point Holdings, LLC Class A Common Shares",NYSE,0,1,2026-10-27
 FPI,Farmland Partners Inc. Common Stock,NYSE,0,1,2026-10-27
-FPRO,Fidelity Real Estate Investment ETF,Cboe BZX,1,0,2026-10-27
 FPS,"Forgent Power Solutions, Inc. Class A Common Stock",NYSE,0,1,2026-10-27
 FPSX,Leverage Shares 2X Long FPS Daily ETF,Cboe BZX,1,0,2026-10-27
 FPWR,First Trust EIP Power Solutions ETF,NYSE Arca,1,0,2026-10-27
@@ -7135,6 +7130,7 @@ MDLN,Medline Inc. - Class A common stock,NASDAQ,0,1,2026-10-27
 MDLV,Morgan Dempsey Large Cap Value ETF,Cboe BZX,1,0,2026-10-27
 MDLZ,"Mondelez International, Inc. - Class A Common Stock",NASDAQ,0,1,2026-10-27
 MDPL,Monarch Dividend Plus Index ETF,Cboe BZX,1,0,2026-10-27
+MDRN,Modern Mining Technology Corp. Common Shares,NYSE American,0,1,2026-11-13
 MDRR,"Medalist Diversified, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 MDST,Westwood Salient Enhanced Midstream Income ETF,NYSE,1,0,2026-10-27
 MDT,Medtronic plc. Ordinary Shares,NYSE,0,1,2026-10-27
@@ -8319,7 +8315,7 @@ OKYO,OKYO Pharma Limited - Ordinary Shares,NASDAQ,0,1,2026-10-27
 OLB,"The OLB Group, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 OLED,Universal Display Corporation - Common Stock,NASDAQ,0,1,2026-10-27
 OLLI,"Ollie's Bargain Outlet Holdings, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
-OLMA,"Olema Pharmaceuticals, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
+OLMA,"Olema Oncology, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 OLN,Olin Corporation Common Stock,NYSE,0,1,2026-10-27
 OLOX,Olenox Industries Inc. - Common Stock,NASDAQ,0,1,2026-10-27
 OLP,"One Liberty Properties, Inc. Common Stock",NYSE,0,1,2026-10-27
@@ -8389,6 +8385,7 @@ OPER,ETF ClearShares Ultra-Short Maturity ETF,NYSE Arca,1,0,2026-10-27
 OPEX,Tradr 2X Long OPEN Daily ETF,Cboe BZX,1,0,2026-10-27
 OPFI,OppFi Inc. Class A Common Stock,NYSE,0,1,2026-10-27
 OPHC,"OptimumBank Holdings, Inc. Common Stock",NYSE American,0,1,2026-10-27
+OPHI,CollPlant Biotechnologies Ltd. - Ordinary Shares,NASDAQ,0,1,2026-11-13
 OPI,Office Properties Income Trust - Common shares of beneficial interest,NASDAQ,0,0,2026-10-27
 OPK,"Opko Health, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 OPLN,"OPENLANE, Inc. Common Stock",NYSE,0,1,2026-10-27
@@ -9146,7 +9143,6 @@ PTIR,GraniteShares 2x Long PLTR Daily ETF,NASDAQ,1,0,2026-10-27
 PTIV,Pineapple Financial Inc. Common Stock,NYSE American,0,1,2026-10-27
 PTL,Inspire 500 ETF,NYSE Arca,1,0,2026-10-27
 PTLC,Pacer Trendpilot US Large Cap ETF,Cboe BZX,1,0,2026-10-27
-PTLE,PTL LTD - Class A Ordinary Shares,NASDAQ,0,1,2026-10-27
 PTLO,Portillo's Inc. - Class A Common Stock,NASDAQ,0,1,2026-10-27
 PTMC,Pacer Trendpilot US Mid Cap ETF,Cboe BZX,1,0,2026-10-27
 PTN,"Palatin Technologies, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
@@ -11755,7 +11751,6 @@ USEW,Cambria US EW ETF,Cboe BZX,1,0,2026-10-27
 USFD,US Foods Holding Corp. Common Stock,NYSE,0,1,2026-10-27
 USFE,First Eagle US Equity ETF,NYSE Arca,1,0,2026-10-27
 USFR,WisdomTree Floating Rate Treasury Fund,NYSE Arca,1,0,2026-10-27
-USG,USCF Gold Strategy Plus Income Fund,NYSE Arca,1,0,2026-10-27
 USGG,Leverage Shares 2X Long USAR Daily ETF,NASDAQ,1,0,2026-10-27
 USGO,U.S. GoldMining Inc. - Common stock,NASDAQ,0,1,2026-10-27
 USGX,Corgi U.S. Growth 2x Daily ETF,Cboe BZX,1,0,2026-10-27
@@ -12159,6 +12154,7 @@ VV,Vanguard Morningstar Large-Cap ETF,NYSE Arca,1,0,2026-10-27
 VVOS,"Vivos Therapeutics, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 VVR,Invesco Senior Income Trust Common Stock (DE),NYSE,0,1,2026-10-27
 VVV,Valvoline Inc. Common Stock,NYSE,0,1,2026-10-27
+VVVV,vVARDIS Holding AG Class A Ordinary Shares,NYSE,0,1,2026-11-13
 VVX,"V2X, Inc. Common Stock",NYSE,0,1,2026-10-27
 VWAV,"VisionWave Holdings, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 VWAVW,"VisionWave Holdings, Inc. - Warrant",NASDAQ,0,0,2026-10-27
@@ -12271,7 +12267,7 @@ WFC,Wells Fargo & Company Common Stock,NYSE,0,1,2026-10-27
 WFCF,"Where Food Comes From, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 WFF,WF Holding Limited - Ordinary Shares,NASDAQ,0,1,2026-10-27
 WFG,West Fraser Timber Co. Ltd Common stock,NYSE,0,1,2026-10-27
-WFRD,Weatherford International plc - Ordinary shares,NASDAQ,0,1,2026-10-27
+WFRD,Weatherford International Corp - Common Stock,NASDAQ,0,1,2026-10-27
 WGMI,CoinShares Bitcoin Mining and Digital Power ETF,NASDAQ,1,0,2026-10-27
 WGO,"Winnebago Industries, Inc. Common Stock",NYSE,0,1,2026-10-27
 WGS,GeneDx Holdings Corp. - Class A Common Stock,NASDAQ,0,1,2026-10-27
@@ -12869,3 +12865,4 @@ ZVRA,"Zevra Therapeutics, Inc.  - Common Stock",NASDAQ,0,1,2026-10-27
 ZWS,Zurn Elkay Water Solutions Corporation Common Stock,NYSE,0,1,2026-10-27
 ZYBT,Zhengye Biotechnology Holding Limited - Class A Ordinary Shares,NASDAQ,0,1,2026-10-27
 ZYME,Zymeworks Inc. - Common Stock,NASDAQ,0,1,2026-10-27
+ZYN,PTL LTD - Class A Ordinary Shares,NASDAQ,0,1,2026-11-13
