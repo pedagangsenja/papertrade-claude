@@ -14,6 +14,8 @@ Sesi ini hanya (1) memastikan Actions sudah berjalan dan (2) menolak fail yang s
 Jangan baca fail CSV besar dan jangan bina JSON dengan tangan; guna skrip.
 
 Alat (satu panggilan ToolSearch): `select:ArtifactData,Artifact,mcp__github__actions_list,mcp__github__actions_run_trigger`
+(alat GitHub TIADA dalam sesi berjadual sejak sekurang-kurangnya 13 Nov 2026: langkau tembakan workflow —
+`penjaga_jadual.yml` mencetus workflow yang lewat — dan hantar amaran dengan `standard/amaran.py`).
 Notifikasi (keputusan pengguna 27 Okt 2026): ntfy SAHAJA (ringkasan belian dihantar oleh `beli.yml`); JANGAN guna PushNotification.
 Dashboard: https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e
 
@@ -73,9 +75,10 @@ Kalau tugasan ini gagal senyap, itulah satu-satunya perkara yang akan menangkapn
    pin, kemas entri itu dalam fail = (versi sebenar + 1) dengan Edit. Kemudian `ArtifactData` `set`, koleksi
    `meta`, doc_id `versi_db`, `file_path` fail itu, `if_version` = versi `meta/versi_db` daripada langkah 3.
    Daftar yang salah tidak merosakkan data — langkah 5 esok membetulkannya — tetapi ia melambatkan tolakan.
-6. Amaran (hanya jika langkah 2–5b gagal atau db tidak ditolak): `mcp__github__actions_run_trigger` (method `run_workflow`,
-   owner `pedagangsenja`, repo `papertrade-claude`, workflow_id `amaran_ntfy.yml`, ref `main`, inputs
-   {"tajuk": "tolak db gagal", "mesej": "<tarikh>: <sebab ringkas, < 200 aksara>"}). Berjaya → tiada notifikasi.
+6. Amaran (hanya jika langkah 2–5b gagal atau db tidak ditolak): `python3 BacktestShariah2/standard/amaran.py --tajuk "tolak db gagal" --mesej "<tarikh>: <sebab ringkas, < 200 aksara>"` (ntfy terus; sesi
+   berjadual TIADA alat GitHub sejak 13 Nov 2026). Hanya jika ia keluar 1 DAN alat GitHub ada: `amaran_ntfy.yml`
+   melalui `mcp__github__actions_run_trigger` (`run_workflow`, ref `main`, inputs {"tajuk", "mesej"}).
+   Berjaya → tiada notifikasi.
 7. **Dashboard hidup lawan repo** (satu-satunya tempat semakan ini boleh dibuat: GitHub Actions
    tidak dapat membaca artifact kerana `/api/artifacts/...` dilindungi cabaran Cloudflare).
    `Artifact` `read`, `url` dashboard. Baris pertama hasilnya menyatakan version id, contohnya
@@ -85,7 +88,7 @@ Kalau tugasan ini gagal senyap, itulah satu-satunya perkara yang akan menangkapn
    Banding dengan medan `versi_artifact` dalam `BacktestShariah2/data/dashboard_terbit.json`.
    - Sama → tiada tindakan.
    - BERBEZA → artifact diterbitkan tanpa dikomit (ini berlaku dua kali pada 30–31 Okt 2026:
-     v132–v138, kemudian v139). JANGAN terbit apa-apa dan JANGAN tulis ganti. Cetus amaran
-     `amaran_ntfy.yml` dengan mesej `dashboard hidup <versi> != repo <versi>; perlu gabung`,
+     v132–v138, kemudian v139). JANGAN terbit apa-apa dan JANGAN tulis ganti. Hantar amaran
+     (langkah 6) dengan mesej `dashboard hidup <versi> != repo <versi>; perlu gabung`,
      dan catat dalam notifikasi. Penggabungan dibuat oleh sesi kerja bersama pengguna, bukan di sini.
 Tiada commit diperlukan (sesi ini tidak mengubah fail repo).
