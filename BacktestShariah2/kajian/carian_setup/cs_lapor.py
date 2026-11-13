@@ -230,6 +230,9 @@ def main(kerja):
           '- Peringkat besar membenarkan isyarat bertindih; angka papan dikira semula dengan satu posisi setiap '
           'saham. MDD buku = semua posisi sama berat, bukan portfolio berslot.',
           '- Benih M yang bergantung pada saham lain (persentil RS) dikira dalam alam masing-masing.',
+          *(['- `N201` (MA20 silang atas MA50 DAN tutup > MA50) dan `P07` (MA20 silang atas MA50) hampir sama; '
+             'pradaftar mengira keluarga ikut ID, jadi kedua-duanya boleh muncul dalam papan.']
+            if {'N201', 'P07'} <= set(papan.pencetus) else []),
           f"- Benih gagal dijalankan: set 431 {len(meta.get('ralat_benih', {}))}, Kunci {len(ralat_kunci)} "
           '(senarai dalam `carian_setup/hasil/meta.json`).', '',
           '## 6. Jana semula', '',
