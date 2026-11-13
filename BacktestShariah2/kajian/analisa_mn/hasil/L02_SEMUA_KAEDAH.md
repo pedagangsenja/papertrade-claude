@@ -1,8 +1,8 @@
-# Semua kaedah M dan N, satu per satu (data langsung; maklumat, BUKAN keputusan)
+# Semua kaedah M dan N, satu per satu (langkah 2; data langsung; maklumat, BUKAN keputusan)
 
 > **Status keputusan (kad skor, harga 2026-11-11):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
-Dijana `kajian/analisa_mn/analisa.py` atas kad skor harga 2026-11-11. Jangan ubah manual. Penjelasan lajur dan bacaan: `kajian/KAJIAN_M_N_SATU_PER_SATU.md`. Jadual penuh (semua lajur, teks masuk / pegang / keluar): `hasil/kaedah.csv`.
+Dijana `kajian/analisa_mn/analisa.py` atas kad skor harga 2026-11-11. Jangan ubah manual. Bacaan setiap langkah: `kajian/KAJIAN_M_N_SATU_PER_SATU.md`. Jadual penuh (semua lajur, teks masuk / pegang / keluar / henti): `hasil/L02_kaedah.csv`.
 
 Lajur: **Jangkaan** = purata semua posisi termasuk yang masih terbuka (ditanda ke pasaran), ikut keluar kaedah. **r3/r5/r10** = pulangan purata selepas 3/5/10 sesi tanpa mengira peraturan keluar. **Lift 5** = r5 tolak saham lain yang Lejar beli pada hari dan tahap turun-naik sama. **A/B** = lift 5 pada dua separuh hari beli. **L2** = jangkaan jika keluar ikut Chandelier. **Backtest** = purata setiap dagangan (Mxx set 431; Nxx tingkap tahan).
 

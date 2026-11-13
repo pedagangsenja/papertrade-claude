@@ -1,0 +1,855 @@
+{
+ "harga_pada": "2026-11-11",
+ "L01": {
+  "harga_pada": "2026-11-11",
+  "sesi_lejar": "20261111",
+  "bar_stor_terakhir": "20261111",
+  "posisi_lejar_semua": 72006,
+  "posisi_langsung": 36292,
+  "posisi_kad_skor": 36292,
+  "sepadan_kad_skor": true,
+  "posisi_isian_tidak_dikira": 35700,
+  "posisi_kuarantin_tidak_dikira": 14,
+  "kaedah": 223,
+  "kaedah_M": 129,
+  "kaedah_N": 94,
+  "saham_unik": 890,
+  "pendua_kaedah_saham_hari_beli": 0,
+  "harga_beli_tidak_sah": 0,
+  "pulangan_kosong": 0,
+  "posisi_M": 25776,
+  "posisi_N": 10516,
+  "hari_beli_M": 19,
+  "hari_beli_N": 6,
+  "hari_beli_pertama_M": "2026-10-16",
+  "hari_beli_pertama_N": "2026-11-04",
+  "hari_beli_terakhir": "2026-11-11",
+  "hari_on": 1,
+  "hari_off": 18,
+  "masih_terbuka_pct": 54.13314229031192,
+  "beza_maks_jangkaan_lawan_kad_skor": 0.004957979320786232,
+  "pulangan_min": -52.52,
+  "pulangan_maks": 235.93445378151262,
+  "lulus": true,
+  "posisi_pulangan_luar_biasa": 32,
+  "saham_luar_biasa": {
+   "APP": {
+    "posisi": 3,
+    "posisi_N": 1,
+    "purata": 61.08865157794069,
+    "nilai_dagangan_median_usd": 963133951.5,
+    "cair": true
+   },
+   "AXGN": {
+    "posisi": 1,
+    "posisi_N": 0,
+    "purata": 60.51820175438598,
+    "nilai_dagangan_median_usd": 47759174.0,
+    "cair": true
+   },
+   "TANH": {
+    "posisi": 25,
+    "posisi_N": 22,
+    "purata": 135.05868155012172,
+    "nilai_dagangan_median_usd": 698957.0,
+    "cair": false
+   },
+   "XERS": {
+    "posisi": 3,
+    "posisi_N": 0,
+    "purata": 64.34183266932271,
+    "nilai_dagangan_median_usd": 22870536.5,
+    "cair": true
+   }
+  },
+  "posisi_tidak_cair_pct": 15.615011572798412
+ },
+ "L02": {
+  "kelas": {
+   "CAMPUR": {
+    "M": 63,
+    "N": 0
+   },
+   "LEMAH": {
+    "M": 22,
+    "N": 0
+   },
+   "PANTAU": {
+    "M": 4,
+    "N": 0
+   },
+   "STRUKTUR GAGAL": {
+    "M": 10,
+    "N": 0
+   },
+   "TERLALU AWAL": {
+    "M": 30,
+    "N": 94
+   }
+  },
+  "cukup_posisi": 184,
+  "jangkaan_positif": 79,
+  "had_bawah_positif": 0,
+  "tanpa5_positif": 22,
+  "median_jangkaan_M": -0.35,
+  "median_jangkaan_N": -0.01
+ },
+ "L03": {
+  "mxx_diuji": 101,
+  "lift5_positif": 70,
+  "lift5_median": 0.3989571779435006,
+  "lift5_lebih_2": 7,
+  "lift5_kurang_neg2": 4,
+  "dua_separuh_positif": 40,
+  "nxx_hari_beli_5sesi": 2,
+  "nxx_masuk": 45,
+  "nxx_spearman_bt_langsung": 0.5156955106720671,
+  "nxx_spearman_p": 0.000288366728387099,
+  "nxx_spearman_lift": 0.26271409749670616,
+  "nxx_spearman_lift_p": 0.08124307872278014
+ },
+ "L04": {
+  "asas": {
+   "1": {
+    "hari_beli": 19,
+    "saham_hari": 9958,
+    "r_purata": -0.3128528962713842,
+    "menang": 45.13958626230167,
+    "spus_tingkap_sama": -0.13196133112916703
+   },
+   "3": {
+    "hari_beli": 17,
+    "saham_hari": 8736,
+    "r_purata": -0.1940286762488221,
+    "menang": 49.977106227106226,
+    "spus_tingkap_sama": -0.5796563581467915
+   },
+   "5": {
+    "hari_beli": 15,
+    "saham_hari": 7663,
+    "r_purata": -0.5819097458282971,
+    "menang": 49.210491974422546,
+    "spus_tingkap_sama": -1.3409772776040088
+   },
+   "10": {
+    "hari_beli": 10,
+    "saham_hari": 5151,
+    "r_purata": -0.7764380759811512,
+    "menang": 49.85439720442633,
+    "spus_tingkap_sama": -2.634580826488146
+   },
+   "15": {
+    "hari_beli": 5,
+    "saham_hari": 2641,
+    "r_purata": -1.1454025258762388,
+    "menang": 47.86065884134798,
+    "spus_tingkap_sama": -4.207848196542516
+   }
+  },
+  "kolam_hari_min": -3.430725095682196,
+  "kolam_hari_maks": 1.7264164187496542,
+  "kolam_hari_sd": 1.8170348159591831,
+  "sd_lift_kaedah": 1.3559745663129341,
+  "mxx_ufuk10": 99,
+  "mxx_r3_r5_r10_positif": 23,
+  "bt_mxx": 129,
+  "bt_median_r5": 0.3,
+  "bt_median_r10": 0.8,
+  "bt_median_r20": 1.8,
+  "bt_median_r60": 5.6,
+  "bt_naik_dengan_masa": 129,
+  "sejajar": {
+   "1": {
+    "hari_beli": 10,
+    "saham_hari": 5151,
+    "r_purata": -0.07659276193529295,
+    "r_median": -0.12731339110987322,
+    "menang": 47.00058241118229
+   },
+   "3": {
+    "hari_beli": 10,
+    "saham_hari": 5151,
+    "r_purata": -0.054602178002155416,
+    "r_median": 0.02854240731333685,
+    "menang": 50.22325761987963
+   },
+   "5": {
+    "hari_beli": 10,
+    "saham_hari": 5151,
+    "r_purata": 0.05825500771393588,
+    "r_median": 0.478833741375473,
+    "menang": 53.71772471364784
+   },
+   "10": {
+    "hari_beli": 10,
+    "saham_hari": 5151,
+    "r_purata": -0.7764380759811512,
+    "r_median": -0.0584142394822072,
+    "menang": 49.85439720442633
+   }
+  },
+  "mxx_sejajar": 95,
+  "ufuk_terbaik_sejajar": {
+   "5": 59,
+   "10": 14,
+   "1": 13,
+   "3": 9
+  }
+ },
+ "L05": {
+  "sebab": {
+   "M": {
+    "delist": {
+     "posisi": 21,
+     "bahagian_pct": 0.08147113594040968,
+     "purata": 0.22947619047619047,
+     "menang": 23.809523809523807
+    },
+    "henti": {
+     "posisi": 5863,
+     "bahagian_pct": 22.745965238982,
+     "purata": -8.64003206549548,
+     "menang": 0.0
+    },
+    "henti pada hari beli": {
+     "posisi": 1661,
+     "bahagian_pct": 6.443978895096214,
+     "purata": -3.2931348585189646,
+     "menang": 0.0
+    },
+    "isyarat keluar": {
+     "posisi": 4907,
+     "bahagian_pct": 19.037088764742396,
+     "purata": -2.174798960668433,
+     "menang": 29.97758304463012
+    },
+    "masa": {
+     "posisi": 850,
+     "bahagian_pct": 3.29764121663563,
+     "purata": 5.795983764705882,
+     "menang": 83.88235294117648
+    },
+    "masih terbuka": {
+     "posisi": 11965,
+     "bahagian_pct": 46.4191495965239,
+     "purata": 4.367028659335221,
+     "menang": 69.8035938152946
+    },
+    "sasaran": {
+     "posisi": 509,
+     "bahagian_pct": 1.9747051520794539,
+     "purata": 6.461322986247544,
+     "menang": 91.55206286836936
+    }
+   },
+   "N": {
+    "isyarat keluar": {
+     "posisi": 2835,
+     "bahagian_pct": 26.95891974134652,
+     "purata": -1.9375386948853615,
+     "menang": 38.05996472663139
+    },
+    "masih terbuka": {
+     "posisi": 7681,
+     "bahagian_pct": 73.04108025865348,
+     "purata": 1.1562367730442218,
+     "menang": 50.52727509438875
+    }
+   }
+  },
+  "lorong_mxx": {
+   "kaedah": 104,
+   "l1_purata_kaedah": -0.3949038461538462,
+   "l2_purata_kaedah": -0.7137335179773561,
+   "l2_lebih_baik_pct": 32.69230769230769,
+   "posisi": 25776,
+   "l1_semua_posisi": -0.24543866352630675,
+   "l2_semua_posisi": -0.554255757438765,
+   "l1_rugi_lebih_15_pct": 3.1230602110490375,
+   "l2_rugi_lebih_15_pct": 9.671787709497206
+  },
+  "keluar_nxx": {
+   "X15": {
+    "peraturan": "ekori Chandelier 4 x ATR14",
+    "kombinasi": 5,
+    "posisi": 460,
+    "tutup_pct": 0.0,
+    "langsung_jangkaan": 1.6862173913043481,
+    "langsung_tanpa5": 0.592,
+    "langsung_menang": 55.869282608695656,
+    "beza_berpasangan": 0.4421666666666667,
+    "backtest_tahan": 7.0949322,
+    "backtest_lift": 3.3890230000000003,
+    "backtest_tanpa5": -1.6898959999999998,
+    "backtest_menang": 41.89469379999999,
+    "backtest_rugi_min": -21.918038,
+    "backtest_rugi_maks": -13.646802
+   },
+   "X13": {
+    "peraturan": "keluar bila rsi14 > 70",
+    "kombinasi": 6,
+    "posisi": 675,
+    "tutup_pct": 5.62962962962963,
+    "langsung_jangkaan": 1.6609777777777779,
+    "langsung_tanpa5": 0.8666666666666667,
+    "langsung_menang": 58.96275555555555,
+    "beza_berpasangan": 0.42888888888888893,
+    "backtest_tahan": 6.840032833333333,
+    "backtest_lift": 2.4899526666666665,
+    "backtest_tanpa5": 1.9729511666666666,
+    "backtest_menang": 63.85694433333334,
+    "backtest_rugi_min": -23.958724,
+    "backtest_rugi_maks": -21.294382
+   },
+   "X17": {
+    "peraturan": "keluar bila adx14 < 20",
+    "kombinasi": 10,
+    "posisi": 1051,
+    "tutup_pct": 20.076117982873456,
+    "langsung_jangkaan": 0.5252045670789725,
+    "langsung_tanpa5": -0.688,
+    "langsung_menang": 48.71629876308278,
+    "beza_berpasangan": -0.41325,
+    "backtest_tahan": 3.8463933000000003,
+    "backtest_lift": 1.9909667,
+    "backtest_tanpa5": -2.5047193,
+    "backtest_menang": 43.7901608,
+    "backtest_rugi_min": -12.716272,
+    "backtest_rugi_maks": -8.827494
+   },
+   "X14": {
+    "peraturan": "keluar bila rsi14 silang naik 50",
+    "kombinasi": 10,
+    "posisi": 974,
+    "tutup_pct": 8.213552361396303,
+    "langsung_jangkaan": 0.8303285420944558,
+    "langsung_tanpa5": -0.4920000000000001,
+    "langsung_menang": 50.102792607802876,
+    "beza_berpasangan": 0.047583333333333325,
+    "backtest_tahan": 2.2080642,
+    "backtest_lift": 1.217074,
+    "backtest_tanpa5": -1.8833995,
+    "backtest_menang": 46.8685799,
+    "backtest_rugi_min": -13.460739,
+    "backtest_rugi_maks": -7.645676
+   },
+   "X36": {
+    "peraturan": "keluar selepas DUA tutup bawah ma50",
+    "kombinasi": 37,
+    "posisi": 3841,
+    "tutup_pct": 31.60635251236657,
+    "langsung_jangkaan": 0.21453788076021868,
+    "langsung_tanpa5": -1.2713513513513512,
+    "langsung_menang": 44.88508461338193,
+    "beza_berpasangan": 0.26651234567901233,
+    "backtest_tahan": 2.1090964054054053,
+    "backtest_lift": 1.2168214324324325,
+    "backtest_tanpa5": -2.782299675675676,
+    "backtest_menang": 33.568171324324325,
+    "backtest_rugi_min": -14.729318,
+    "backtest_rugi_maks": -5.741537
+   },
+   "X16": {
+    "peraturan": "keluar bila supertrend berbalik",
+    "kombinasi": 26,
+    "posisi": 3515,
+    "tutup_pct": 36.75675675675676,
+    "langsung_jangkaan": -0.19719487908961592,
+    "langsung_tanpa5": -1.228846153846154,
+    "langsung_menang": 44.977832147937406,
+    "beza_berpasangan": -0.2814666666666667,
+    "backtest_tahan": 1.5017379230769228,
+    "backtest_lift": 0.7840348846153847,
+    "backtest_tanpa5": -2.541690730769231,
+    "backtest_menang": 35.62786161538462,
+    "backtest_rugi_min": -11.927186,
+    "backtest_rugi_maks": -6.110088
+   }
+  }
+ },
+ "L06": {
+  "M": {
+   "posisi": 25776,
+   "rugi8_pct": 14.393234016139045,
+   "rugi15_pct": 3.1230602110490375,
+   "rugi25_pct": 0.5547796399751708,
+   "terburuk": -52.52,
+   "kaedah": 104,
+   "kaedah_terburuk_bawah_25": 59,
+   "median_cvar10": -13.515,
+   "kaedah_ada_henti_hari_beli": 84,
+   "t4_mdd_median": -6.915,
+   "t4_mdd_terburuk": -23.06,
+   "t4_mdd_lebih_10": 26
+  },
+  "N": {
+   "posisi": 10516,
+   "rugi8_pct": 6.570939520730315,
+   "rugi15_pct": 1.397869912514264,
+   "rugi25_pct": 0.199695701787752,
+   "terburuk": -36.4617,
+   "kaedah": 85,
+   "kaedah_terburuk_bawah_25": 19,
+   "median_cvar10": -10.19,
+   "kaedah_ada_henti_hari_beli": 0,
+   "t4_mdd_median": -4.4,
+   "t4_mdd_terburuk": -11.69,
+   "t4_mdd_lebih_10": 3
+  },
+  "backtest_M": {
+   "kaedah": 129,
+   "mdd_median": -34.61,
+   "mdd_terbaik": -17.37,
+   "mdd_dalam_10": 0
+  },
+  "kecairan_M": {
+   "posisi_tidak_cair_pct": 15.332091868404717,
+   "jangkaan_semua": -0.24543866352630675,
+   "jangkaan_cair": -0.14907346728261828,
+   "jangkaan_tidak_cair": -0.7775930265886165,
+   "kaedah_jangkaan_positif": 38,
+   "kaedah_jangkaan_cair_positif": 47,
+   "kaedah_tanpa5_positif": 6,
+   "kaedah_tanpa5_cair_positif": 10
+  },
+  "kecairan_N": {
+   "posisi_tidak_cair_pct": 16.308482312666413,
+   "jangkaan_semua": 0.32218832766761774,
+   "jangkaan_cair": 0.043286769342004074,
+   "jangkaan_tidak_cair": 1.7534493275648346,
+   "kaedah_jangkaan_positif": 41,
+   "kaedah_jangkaan_cair_positif": 36,
+   "kaedah_tanpa5_positif": 16,
+   "kaedah_tanpa5_cair_positif": 15
+  }
+ },
+ "L07": {
+  "kaedah": 118,
+  "sesi_maks": 19,
+  "status": {
+   "INSUFFICIENT_EVIDENCE": 118
+  },
+  "layak": {
+   "REVIEW_REQUIRED": 118
+  },
+  "r2_kolam_median": 0.7356328269,
+  "beta_kolam_median": 1.0254747446999999,
+  "r2_spus_median": 0.3299985393,
+  "alpha_t_lebih_2": 1,
+  "alpha_t_kurang_neg2": 3,
+  "alpha_t_lebih_2_kedua_asas": 1,
+  "sauh_t_berganda": 3.5248461468125836
+ },
+ "L08": {
+  "kaedah": 129,
+  "keputusan": {
+   "VALIDATION_REQUIRED": 126,
+   "REJECT": 3
+  },
+  "sebab": {
+   "no_slippage_test": 129,
+   "excessive_drawdown": 3
+  },
+  "keputusan_had_mdd10": {
+   "RISK_LIMIT_EXCEEDED": 126,
+   "REJECT": 3
+  },
+  "tahun_diuji": 6.91854891492073,
+  "h1_dan_h2_positif": 115
+ },
+ "L09": {
+  "nxx_kombinasi": 94,
+  "nxx_spearman_bt_langsung": 0.5314061335552909,
+  "top10_backtest_jangkaan_langsung": 1.964,
+  "semua_nxx_jangkaan_langsung": 0.24840425531914895,
+  "top10_backtest_positif": 9,
+  "pasangan": {
+   "pasangan_mungkin": 8128,
+   "pasangan_cukup": 395,
+   "lift_purata": 0.9056548018833704,
+   "lift_p5": -1.0345219086216726,
+   "lift_p95": 2.861817442027887,
+   "positif_pct": 78.9873417721519,
+   "pasangan_dua_separuh": 229,
+   "spearman_A_B": -0.07432774074925307,
+   "top20_A_pada_A": 3.794550126398972,
+   "top20_A_pada_B": 0.41745549740705157,
+   "semua_pada_B": 0.11176135565400758,
+   "top20_B_pada_A": 1.1685234080430376,
+   "semua_pada_A": 1.3511785961415466
+  },
+  "sepakat": [
+   {
+    "ufuk": 5,
+    "set": "semua hari",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "0",
+    "saham_hari": 279,
+    "saham": 250,
+    "hari_beli": 2,
+    "r": -0.7438859474902125,
+    "menang": 41.21863799283154,
+    "lift": 0.531628449492535,
+    "t": NaN
+   },
+   {
+    "ufuk": 5,
+    "set": "semua hari",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "1",
+    "saham_hari": 2900,
+    "saham": 859,
+    "hari_beli": 15,
+    "r": -0.8528403732269161,
+    "menang": 47.93103448275862,
+    "lift": -0.28193770830796555,
+    "t": -1.0737555292521734
+   },
+   {
+    "ufuk": 5,
+    "set": "semua hari",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "2",
+    "saham_hari": 1519,
+    "saham": 739,
+    "hari_beli": 15,
+    "r": -0.8344928499499183,
+    "menang": 48.8479262672811,
+    "lift": -0.141469297982925,
+    "t": -0.5001030525589809
+   },
+   {
+    "ufuk": 5,
+    "set": "semua hari",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "3-4",
+    "saham_hari": 1505,
+    "saham": 701,
+    "hari_beli": 15,
+    "r": -0.23181209376118395,
+    "menang": 50.033222591362126,
+    "lift": 0.33272995879781125,
+    "t": 1.2766560182578635
+   },
+   {
+    "ufuk": 5,
+    "set": "semua hari",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "5-9",
+    "saham_hari": 1191,
+    "saham": 589,
+    "hari_beli": 15,
+    "r": -0.425768273835111,
+    "menang": 51.55331654072208,
+    "lift": -0.015007638948857984,
+    "t": -0.03962075432017231
+   },
+   {
+    "ufuk": 5,
+    "set": "semua hari",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "10+",
+    "saham_hari": 269,
+    "saham": 238,
+    "hari_beli": 15,
+    "r": 1.2831551440435292,
+    "menang": 58.36431226765799,
+    "lift": 1.4918304472792927,
+    "t": 1.6708205221305819
+   },
+   {
+    "ufuk": 5,
+    "set": "tanpa hari beli pertama 2026-10-16",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "0",
+    "saham_hari": 279,
+    "saham": 250,
+    "hari_beli": 2,
+    "r": -0.7438859474902125,
+    "menang": 41.21863799283154,
+    "lift": 0.531628449492535,
+    "t": NaN
+   },
+   {
+    "ufuk": 5,
+    "set": "tanpa hari beli pertama 2026-10-16",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "1",
+    "saham_hari": 2737,
+    "saham": 852,
+    "hari_beli": 14,
+    "r": -0.6911663397682212,
+    "menang": 49.10485933503836,
+    "lift": -0.1435752606398037,
+    "t": -0.6176101619816721
+   },
+   {
+    "ufuk": 5,
+    "set": "tanpa hari beli pertama 2026-10-16",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "2",
+    "saham_hari": 1420,
+    "saham": 720,
+    "hari_beli": 14,
+    "r": -0.7771810579860647,
+    "menang": 49.225352112676056,
+    "lift": -0.061203703550489874,
+    "t": -0.2101959613074365
+   },
+   {
+    "ufuk": 5,
+    "set": "tanpa hari beli pertama 2026-10-16",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "3-4",
+    "saham_hari": 1333,
+    "saham": 668,
+    "hari_beli": 14,
+    "r": -0.25021343239976,
+    "menang": 49.887471867966994,
+    "lift": 0.35885970830376535,
+    "t": 1.2374192887701914
+   },
+   {
+    "ufuk": 5,
+    "set": "tanpa hari beli pertama 2026-10-16",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "5-9",
+    "saham_hari": 986,
+    "saham": 551,
+    "hari_beli": 14,
+    "r": -0.7955976885423592,
+    "menang": 48.88438133874239,
+    "lift": -0.21432199923762751,
+    "t": -0.549699267694999
+   },
+   {
+    "ufuk": 5,
+    "set": "tanpa hari beli pertama 2026-10-16",
+    "jenis": "kaedah Mxx sepakat",
+    "baldi": "10+",
+    "saham_hari": 175,
+    "saham": 164,
+    "hari_beli": 14,
+    "r": -0.10075199075853485,
+    "menang": 49.714285714285715,
+    "lift": 0.36863948619315523,
+    "t": 0.7104622208493706
+   }
+  ]
+ },
+ "L10": {
+  "kestabilan": {
+   "Mxx lift 3 sesi": {
+    "hari": 17,
+    "kaedah": 102,
+    "pecahan": 500.0,
+    "spearman_median": -0.07723946121267737,
+    "spearman_p5": -0.23404961685943984,
+    "spearman_p95": 0.07301004800651388,
+    "top10_lebih_median": -0.16524977507776864,
+    "top10_lebih_p5": -0.8218799074291762,
+    "top10_lebih_p95": 0.33221162822197214,
+    "top10_lebih_positif_pct": 30.599999999999998
+   },
+   "Nxx lift 3 sesi": {
+    "hari": 4,
+    "kaedah": 79,
+    "pecahan": 500.0,
+    "spearman_median": -0.02975275877111441,
+    "spearman_p5": -0.1436562965461892,
+    "spearman_p95": 0.17892174890378074,
+    "top10_lebih_median": 0.16864130563272142,
+    "top10_lebih_p5": -1.2891406560914593,
+    "top10_lebih_p95": 0.2068534184793801,
+    "top10_lebih_positif_pct": 68.2
+   },
+   "Mxx lift 5 sesi": {
+    "hari": 15,
+    "kaedah": 99,
+    "pecahan": 500.0,
+    "spearman_median": 0.07118435790064817,
+    "spearman_p5": -0.11537070935266348,
+    "spearman_p95": 0.24042950958998566,
+    "top10_lebih_median": 0.02369601604335822,
+    "top10_lebih_p5": -0.7463005884035806,
+    "top10_lebih_p95": 0.7663375042247844,
+    "top10_lebih_positif_pct": 52.800000000000004
+   },
+   "Nxx lift 5 sesi": {
+    "hari": 2,
+    "kaedah": 0,
+    "pecahan": NaN,
+    "spearman_median": NaN,
+    "spearman_p5": NaN,
+    "spearman_p95": NaN,
+    "top10_lebih_median": NaN,
+    "top10_lebih_p5": NaN,
+    "top10_lebih_p95": NaN,
+    "top10_lebih_positif_pct": NaN
+   },
+   "Mxx lift 10 sesi": {
+    "hari": 10,
+    "kaedah": 86,
+    "pecahan": 500.0,
+    "spearman_median": 0.153937854211452,
+    "spearman_p5": 0.013712224847655791,
+    "spearman_p95": 0.28538205980066444,
+    "top10_lebih_median": 0.3231191686744857,
+    "top10_lebih_p5": -0.8417213572456791,
+    "top10_lebih_p95": 1.3414126358410208,
+    "top10_lebih_positif_pct": 73.8
+   },
+   "Nxx lift 10 sesi": {
+    "hari": 0,
+    "kaedah": 0,
+    "pecahan": NaN,
+    "spearman_median": NaN,
+    "spearman_p5": NaN,
+    "spearman_p95": NaN,
+    "top10_lebih_median": NaN,
+    "top10_lebih_p5": NaN,
+    "top10_lebih_p95": NaN,
+    "top10_lebih_positif_pct": NaN
+   },
+   "Mxx lift 5 sesi tanpa 2026-10-16": {
+    "hari": 14,
+    "kaedah": 97,
+    "pecahan": 500.0,
+    "spearman_median": 0.05004199328107503,
+    "spearman_p5": -0.14921968027579993,
+    "spearman_p95": 0.20598976961918783,
+    "top10_lebih_median": 0.43007668286561385,
+    "top10_lebih_p5": -0.38275294391319936,
+    "top10_lebih_p95": 1.168784019778025,
+    "top10_lebih_positif_pct": 78.8
+   },
+   "Mxx lift 3 sesi tanpa 2026-10-16": {
+    "hari": 16,
+    "kaedah": 99,
+    "pecahan": 500.0,
+    "spearman_median": -0.09753246753246753,
+    "spearman_p5": -0.2626486818784971,
+    "spearman_p95": 0.046902130789309375,
+    "top10_lebih_median": -0.24551269453955638,
+    "top10_lebih_p5": -0.772596215710977,
+    "top10_lebih_p95": 0.20836610066088423,
+    "top10_lebih_positif_pct": 23.400000000000002
+   }
+  },
+  "plasebo": {
+   "semua hari beli": {
+    "kaedah": 101,
+    "lulus_sebenar": 32,
+    "bebas_purata": 15.286666666666667,
+    "bebas_p5": 10.0,
+    "bebas_p95": 22.0,
+    "p_bebas": 0.0,
+    "tindih_purata": 15.616666666666667,
+    "tindih_p5": 9.0,
+    "tindih_p95": 24.0,
+    "p_tindih": 0.0
+   },
+   "tanpa hari beli pertama 2026-10-16": {
+    "kaedah": 101,
+    "lulus_sebenar": 24,
+    "bebas_purata": 15.426666666666666,
+    "bebas_p5": 9.0,
+    "bebas_p95": 22.0,
+    "p_bebas": 0.02,
+    "tindih_purata": 15.08,
+    "tindih_p5": 9.0,
+    "tindih_p95": 23.0,
+    "p_tindih": 0.03333333333333333
+   }
+  },
+  "mxx_bt_lawan_langsung": {
+   "n": 90,
+   "jangkaan": -0.045297572741987924,
+   "p": 0.6716086536802077,
+   "lift5": 0.1190319395147193,
+   "p_lift5": 0.26381081490977937
+  }
+ },
+ "L11": {
+  "corong": [
+   {
+    "tahap": 0,
+    "tapis": "Semua kaedah dalam kad skor",
+    "Mxx": 129,
+    "Nxx": 94,
+    "baki": ""
+   },
+   {
+    "tahap": 1,
+    "tapis": "Cukup data: >= 30 posisi dan >= 10 hari beli",
+    "Mxx": 99,
+    "Nxx": 0,
+    "baki": ""
+   },
+   {
+    "tahap": 2,
+    "tapis": "Bukan struktur gagal: henti hari beli < 20% posisi",
+    "Mxx": 89,
+    "Nxx": 0,
+    "baki": ""
+   },
+   {
+    "tahap": 3,
+    "tapis": "Jangkaan > 0 (semua posisi, termasuk terbuka)",
+    "Mxx": 34,
+    "Nxx": 0,
+    "baki": ""
+   },
+   {
+    "tahap": 4,
+    "tapis": "tanpa5 > 0 (untung selepas buang 5% posisi terbaik)",
+    "Mxx": 6,
+    "Nxx": 0,
+    "baki": "M01, M133, M142, M146, M33, M80"
+   },
+   {
+    "tahap": 5,
+    "tapis": "Lift 5 dan 10 sesi > 0 (pilih saham lebih baik daripada kolam)",
+    "Mxx": 5,
+    "Nxx": 0,
+    "baki": "M133, M142, M146, M33, M80"
+   },
+   {
+    "tahap": 6,
+    "tapis": "Lift 5 sesi > 0 pada kedua-dua separuh hari beli",
+    "Mxx": 4,
+    "Nxx": 0,
+    "baki": "M133, M142, M146, M80"
+   },
+   {
+    "tahap": 7,
+    "tapis": "Backtest sedia ada > 0",
+    "Mxx": 4,
+    "Nxx": 0,
+    "baki": "M133, M142, M146, M80"
+   },
+   {
+    "tahap": 8,
+    "tapis": "Maklumat: sifar henti pada hari beli (gate G4 kad skor)",
+    "Mxx": 2,
+    "Nxx": 0,
+    "baki": "M142, M80"
+   }
+  ],
+  "pantau": [
+   "M142",
+   "M133",
+   "M146",
+   "M80"
+  ],
+  "nxx_awal": [
+   "N124X15",
+   "N19X13",
+   "N75X13",
+   "N73X13",
+   "N124X36",
+   "N75X15",
+   "N42X15"
+  ]
+ }
+}

@@ -26,7 +26,7 @@ Cari kaedah swing yang **untung bersih melebihi rugi** (jangkaan positif; kadar 
 | Penilaian keseluruhan 223 kaedah, kelas PANTAU/BUANG/BELUM, satu pelan terukur (9 Nov 2026) | `BacktestShariah2/kajian/FABLE_PENILAIAN.md`; cadangan `kajian/FABLE_CADANGAN.md` |
 | Kaedah calon berhenti direkod (label maklumat bulanan C1–C5, BUKAN tindakan) | `BacktestShariah2/laporan/CANTAS.md` (`standard/cantas.py`, pradaftar `standard/SPEC_CANTAS.md`) |
 | Indikator, kombinasi isyarat (serentak/berturutan) dan cara pegang/jual: apa yang sudah diuji (tinjauan ~1.35 juta gabungan, 12 Nov 2026) | `BacktestShariah2/kajian/KAJIAN_ISYARAT_KOMBINASI.md`; kohort jejak `N201X36`–`N204X36` dipradaftar `kajian/SPEC_JEJAK_KOMBINASI.md` |
-| Semua kaedah M dan N dinilai satu per satu pada data langsung: pegang 1–15 sesi, lift, masuk × keluar, kestabilan, senarai pantau (12 Nov 2026; maklumat, BUKAN pangkat) | `BacktestShariah2/kajian/KAJIAN_M_N_SATU_PER_SATU.md`; jadual setiap kaedah `kajian/analisa_mn/hasil/` (`kajian/analisa_mn/analisa.py`) |
+| Semua kaedah M dan N dinilai satu per satu dalam 11 langkah (data, kad kaedah, masuk, pegang, keluar, risiko, pasaran lawan kaedah, kualiti backtest, kombinasi, kebolehpercayaan, corong; 12 Nov 2026; maklumat, BUKAN pangkat) | `BacktestShariah2/kajian/KAJIAN_M_N_SATU_PER_SATU.md`; fail setiap langkah `kajian/analisa_mn/hasil/L01`–`L11` (`kajian/analisa_mn/analisa.py`) |
 
 Peraturan tetap: laporan lain (PENGANALISIS, KAEDAH_TERBAIK, RINGKASAN portfolio, T4) memaparkan baris status kad skor (`standard/status_kad.py`) dan BUKAN keputusan.
 

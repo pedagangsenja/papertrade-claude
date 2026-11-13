@@ -1,0 +1,224 @@
+id,nama,keluarga,kelas,n,n_cair,jangkaan,jangkaan_cair,tanpa5,tanpa5_cair,beza
+N40X36,OBV tinggi baharu + MA50 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,47,38,2.820,0.015,-0.370,-0.768,-2.805
+M129,Wick Play,M,TERLALU AWAL,26,21,0.060,-2.633,-2.640,-5.321,-2.693
+N40X16,OBV tinggi baharu + MA50 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,61,52,2.010,-0.294,-0.730,-1.188,-2.304
+N53X36,Supertrend + ADX>25 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,106,85,1.820,-0.464,-1.210,-1.413,-2.284
+N24X36,"Supertrend(10,3) + ADX>20 → keluar selepas DUA tutup di bawah MA rujukan",N,TERLALU AWAL,121,101,0.750,-1.238,-1.910,-2.042,-1.988
+M06,Minervini VCP Breakout,M,CAMPUR,80,66,-1.140,-2.771,-2.530,-3.465,-1.631
+M21,Marius 3 Persediaan (Pecahan+Jurang+Kesinambungan),M,TERLALU AWAL,5,4,-0.060,-1.548,-1.920,-4.526,-1.488
+N25X36,Supertrend + EMA + ADX>23 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,108,90,0.580,-0.869,-1.110,-1.445,-1.449
+N28X36,ADX>25 + DI+ > DI- → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,222,168,0.880,-0.454,-0.880,-1.242,-1.334
+N54X36,Supertrend + RSI>50 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,140,114,0.100,-0.894,-1.380,-1.642,-0.994
+N76X36,Tutup > MA50 (penapis trend tunggal) → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,144,116,0.700,-0.263,-0.960,-1.179,-0.963
+N50X14,Mampat + pecah volum 1.5x → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,12,10,-0.080,-0.980,-1.000,-1.920,-0.900
+N43X36,Undur EMA8 + penapis MA50 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,136,115,0.260,-0.636,-1.320,-1.454,-0.896
+N42X36,Lonjakan volum 2x → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,171,145,0.930,0.036,-0.580,-0.936,-0.894
+N42X16,Lonjakan volum 2x → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,175,149,0.840,-0.040,-0.640,-0.991,-0.880
+N50X17,Mampat + pecah volum 1.5x → keluar bila adx14 < 20,N,TERLALU AWAL,12,10,0.140,-0.712,-1.380,-2.669,-0.852
+N56X36,RSI>50 + ADX>20 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,145,121,-0.040,-0.876,-1.480,-1.543,-0.836
+N42X15,Lonjakan volum 2x → ekori Chandelier 4 x ATR14,N,TERLALU AWAL,148,128,2.330,1.535,0.560,0.404,-0.795
+M88,O'Neil Shakeout +3,M,CAMPUR,70,60,-0.230,-1.017,-1.710,-2.193,-0.787
+N09X36,Undur EMA10 + penapis EMA50 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,146,122,-0.010,-0.787,-1.590,-1.668,-0.777
+N42X14,Lonjakan volum 2x → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,159,138,2.190,1.473,0.590,0.496,-0.717
+M91,Stochastic Pop (Bernstein/Steckler),M,CAMPUR,37,33,0.180,-0.531,-2.020,-2.566,-0.711
+N39X36,NR7 kemudian pecah → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,18,16,-3.090,-3.768,-3.680,-4.478,-0.678
+N22X14,BB pecah atas + RSI → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,111,91,-0.540,-1.218,-1.510,-2.180,-0.678
+N42X17,Lonjakan volum 2x → keluar bila adx14 < 20,N,TERLALU AWAL,172,146,1.290,0.635,-0.270,-0.374,-0.655
+N113X16,80-20 bar (sisi beli) → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,256,214,0.970,0.361,-0.530,-0.494,-0.609
+N36X36,Pocket pivot → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,135,103,0.110,-0.457,-1.750,-1.714,-0.567
+N22X36,BB pecah atas + RSI → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,107,89,-0.160,-0.688,-1.180,-1.692,-0.528
+N36X14,Pocket pivot → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,133,105,-0.030,-0.557,-1.770,-1.593,-0.527
+M152,Spike & Ledge,M,CAMPUR,42,38,-1.390,-1.909,-2.810,-3.184,-0.519
+M118,Expansion Pivot (Cooper),M,CAMPUR,84,67,1.130,0.616,-0.290,-0.404,-0.514
+M101,Bulkowski: Tiga lembah menaik,M,CAMPUR,44,36,-3.240,-3.747,-4.640,-4.852,-0.507
+N33X16,Donchian20 + penapis MA200 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,83,69,-0.500,-0.970,-1.430,-1.762,-0.470
+N33X36,Donchian20 + penapis MA200 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,81,68,-0.160,-0.603,-1.210,-1.530,-0.443
+M95,Nisbah Kebaharuan High 52 Minggu (Bhootra & Hur),M,CAMPUR,120,106,-1.390,-1.829,-2.350,-2.728,-0.439
+N33X14,Donchian20 + penapis MA200 → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,90,73,-0.600,-1.039,-1.580,-1.924,-0.439
+N41X36,CMF20>0 + tutup>EMA20 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,182,157,-0.350,-0.785,-1.850,-1.663,-0.435
+M90,Pring KST,M,CAMPUR,78,64,-3.100,-3.507,-4.110,-4.790,-0.407
+N31X36,Turtle sistem 2 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,91,78,-1.010,-1.416,-2.020,-2.302,-0.406
+M34,Carter TTM Squeeze,M,CAMPUR,102,81,-0.240,-0.636,-1.940,-2.371,-0.396
+N80X36,Tinggi sepanjang masa → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,32,28,0.200,-0.174,-0.720,-1.273,-0.374
+M160,Measured Move Up,M,CAMPUR,107,92,-0.150,-0.513,-1.300,-1.451,-0.363
+N25X16,Supertrend + EMA + ADX>23 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,99,84,-0.170,-0.514,-0.790,-1.112,-0.344
+N27X36,Ichimoku atas awan → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,85,78,-0.920,-1.262,-1.830,-1.955,-0.342
+N29X36,PSAR naik + tutup>MA50 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,126,106,-0.640,-0.981,-1.590,-1.850,-0.341
+M151,Outside Bar Failure,M,CAMPUR,96,81,0.190,-0.144,-1.200,-1.651,-0.334
+M122,Moving Momentum (ChartSchool),M,LEMAH,102,74,-2.490,-2.817,-3.960,-4.145,-0.327
+N119X13,3 tutup turun berturut → keluar bila rsi14 > 70,N,TERLALU AWAL,144,129,0.140,-0.186,-0.440,-0.666,-0.326
+N47X36,NR7 + EMA9>EMA21 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,100,86,-1.050,-1.354,-1.430,-1.781,-0.304
+M146,3-Bar Momentum Pattern,M,PANTAU,77,65,1.700,1.425,0.680,0.184,-0.275
+N75X15,RSI14 < 40 tanpa penapis → ekori Chandelier 4 x ATR14,N,TERLALU AWAL,124,107,2.320,2.045,1.360,1.161,-0.275
+N35X36,Pecah 52 minggu tinggi → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,42,36,-0.480,-0.749,-1.350,-1.535,-0.269
+N22X16,BB pecah atas + RSI → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,109,87,-0.320,-0.582,-1.210,-1.428,-0.262
+M55,Guppy GMMA,M,CAMPUR,205,163,-0.910,-1.169,-2.760,-2.961,-0.259
+M59,Anjakan Julat RSI,M,LEMAH,36,33,-4.460,-4.714,-5.780,-6.171,-0.254
+N25X17,Supertrend + EMA + ADX>23 → keluar bila adx14 < 20,N,TERLALU AWAL,95,81,-0.210,-0.460,-0.840,-1.079,-0.250
+M156,Single Penetration (DiNapoli),M,LEMAH,229,195,-0.910,-1.160,-2.230,-2.322,-0.250
+N08X36,tutup>EMA20 tidak terlalu jauh → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,270,217,-0.230,-0.478,-1.490,-1.334,-0.248
+N36X16,Pocket pivot → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,139,108,-0.010,-0.257,-1.790,-1.369,-0.247
+N64X16,Episodic pivot → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,46,41,2.000,1.767,0.740,0.332,-0.233
+M119,180 Bullish (Cooper),M,CAMPUR,147,122,-0.700,-0.911,-1.840,-2.040,-0.211
+M02,MACD + SMA200,M,LEMAH,117,90,-0.190,-0.400,-2.160,-2.261,-0.210
+M38,Darvas Kotak,M,TERLALU AWAL,23,19,-2.000,-2.209,-2.980,-2.753,-0.209
+N64X14,Episodic pivot → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,46,41,2.140,1.933,1.120,0.756,-0.207
+N64X36,Episodic pivot → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,46,41,2.250,2.048,1.010,0.634,-0.202
+N65X14,Gap 4% + volum + hampir 52w → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,28,27,0.580,0.380,-0.690,-0.957,-0.200
+N27X16,Ichimoku atas awan → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,127,118,-0.870,-1.067,-1.610,-1.666,-0.197
+N65X36,Gap 4% + volum + hampir 52w → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,28,27,0.640,0.443,-0.630,-0.889,-0.197
+N75X13,RSI14 < 40 tanpa penapis → keluar bila rsi14 > 70,N,TERLALU AWAL,124,107,2.240,2.045,1.360,1.161,-0.195
+M36,Turtle 55/20,M,CAMPUR,330,293,-0.570,-0.760,-1.760,-1.852,-0.190
+M23,Breitstein Kapitulasi + Kesinambungan,M,STRUKTUR GAGAL,121,105,0.050,-0.116,-1.000,-1.166,-0.166
+M100,Bulkowski Segi Empat & Segi Tiga Menaik,M,CAMPUR,58,48,0.520,0.357,-0.100,-0.410,-0.163
+N47X16,NR7 + EMA9>EMA21 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,110,96,-0.370,-0.532,-0.820,-0.996,-0.162
+N119X15,3 tutup turun berturut → ekori Chandelier 4 x ATR14,N,TERLALU AWAL,40,35,-0.580,-0.737,-1.070,-1.272,-0.157
+M123,"CCI Correction (Lambert, ChartSchool)",M,STRUKTUR GAGAL,175,134,-1.360,-1.516,-1.890,-2.036,-0.156
+N66X36,52w tinggi + pengesahan 1% → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,33,28,0.150,-0.001,-0.940,-1.316,-0.151
+M04,BB Squeeze Breakout,M,CAMPUR,151,125,-0.450,-0.594,-1.760,-2.007,-0.144
+M73,ADX(5) > 40 + Julat Terkecil 6 Hari,M,CAMPUR,877,748,0.150,0.011,-0.420,-0.531,-0.139
+M39,Radge Pecahan Bollinger 100 hari,M,LEMAH,233,203,-1.280,-1.399,-2.700,-2.816,-0.119
+N28X16,ADX>25 + DI+ > DI- → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,233,182,-0.010,-0.127,-0.750,-0.971,-0.117
+M140,猎豹出击 (Serangan Cheetah),M,LEMAH,41,32,-0.620,-0.737,-1.700,-1.636,-0.117
+M20,EMA10/15 Crossover + Sudut,M,LEMAH,443,350,-0.680,-0.794,-1.660,-1.629,-0.114
+M19,Sneaky Pivot (proksi harian),M,LEMAH,377,320,-1.470,-1.579,-2.590,-2.687,-0.109
+M28,VWAP Separator + Kiss Pivot,M,LEMAH,112,93,-1.000,-1.107,-1.920,-2.067,-0.107
+M54,IBD Power Trend,M,CAMPUR,201,180,-1.000,-1.102,-2.200,-2.172,-0.102
+N74X16,"MACD atas garis isyarat (keadaan, bukan silang) → keluar bila supertrend berbalik (henti ekor)",N,TERLALU AWAL,320,253,-0.210,-0.300,-0.970,-0.995,-0.090
+M67,Rayner Teo: Ujian Ketiga pada Purata 50,M,TERLALU AWAL,28,27,-2.330,-2.407,-4.970,-5.160,-0.077
+M12,Parabolic SAR,M,CAMPUR,362,301,-1.010,-1.085,-2.270,-2.365,-0.075
+N64X17,Episodic pivot → keluar bila adx14 < 20,N,TERLALU AWAL,46,41,1.510,1.437,0.230,-0.024,-0.073
+M93,Bollinger Kaedah II: %b + MFI,M,CAMPUR,258,225,1.570,1.506,-0.180,0.040,-0.064
+M46,Jurang Naik Boleh Beli (Buyable Gap Up),M,STRUKTUR GAGAL,35,30,-0.030,-0.088,-1.070,-1.316,-0.058
+N29X16,PSAR naik + tutup>MA50 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,157,131,-1.430,-1.485,-2.160,-2.231,-0.055
+M92,CCI-50,M,CAMPUR,527,440,0.500,0.449,-1.040,-0.874,-0.051
+N45X36,Undur EMA21 cerun positif → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,97,76,-0.100,-0.151,-1.160,-1.200,-0.051
+M76,Undercut & Rally pada Low Penting,M,LEMAH,71,56,-1.150,-1.198,-1.750,-1.802,-0.048
+M111,Sistem Volatiliti Wilder,M,CAMPUR,253,208,0.830,0.795,-0.580,-0.560,-0.035
+M30,BB Free Bar + Himpitan 50/2.5,M,CAMPUR,226,196,0.700,0.672,-0.590,-0.537,-0.028
+N124X15,Episodic pivot gap 8-10% → ekori Chandelier 4 x ATR14,N,TERLALU AWAL,39,33,3.790,3.765,2.770,2.548,-0.025
+M35,Pocket Pivot Morales & Kacher,M,STRUKTUR GAGAL,307,251,0.170,0.147,-1.080,-1.023,-0.023
+M41,FW Penyatuan Mingguan,M,TERLALU AWAL,63,55,-0.240,-0.258,-1.490,-1.446,-0.018
+N75X17,RSI14 < 40 tanpa penapis → keluar bila adx14 < 20,N,TERLALU AWAL,267,211,1.270,1.256,0.550,0.576,-0.014
+M10,EMA3 + CCI + MACD,M,CAMPUR,113,89,0.550,0.537,-1.230,-1.205,-0.013
+N28X14,ADX>25 + DI+ > DI- → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,132,108,0.080,0.068,-0.970,-0.868,-0.012
+M70,Pecahan Hari Dalam,M,STRUKTUR GAGAL,441,373,-0.050,-0.057,-1.150,-1.081,-0.007
+M143,장대양봉 이후 눌림목 / 5일선 매매 (Undur ke MA5 selepas lilin naik panjang),M,TERLALU AWAL,21,13,0.160,0.154,-0.380,-0.285,-0.006
+N113X36,80-20 bar (sisi beli) → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,244,205,0.460,0.456,-0.440,-0.422,-0.004
+M78,Alvarez Pecahan Mingguan DTAYS,M,TERLALU AWAL,73,73,-1.710,-1.714,-3.040,-3.035,-0.004
+M138,直升机空中加油 (Helikopter isi minyak di udara),M,TERLALU AWAL,3,3,-0.810,-0.814,-1.720,-1.717,-0.004
+M104,High Tight Flag / Power Play,M,TERLALU AWAL,1,1,19.600,19.597,,,-0.003
+M142,Pecahan volum dari dasar (底部放量),M,PANTAU,45,37,3.310,3.307,1.880,1.910,-0.003
+M81,Bensdorp Long Trend High Momentum,M,LEMAH,331,331,-3.940,-3.942,-5.190,-5.194,-0.002
+N51X16,BB squeeze + Supertrend → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,6,6,-2.340,-2.342,-3.880,-3.879,-0.002
+N76X16,Tutup > MA50 (penapis trend tunggal) → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,216,184,-0.580,-0.582,-1.280,-1.319,-0.002
+M126,"Hidden Smash Day (beli, Larry Williams)",M,TERLALU AWAL,18,18,-4.060,-4.061,-4.820,-4.815,-0.001
+M130,多方炮 (dua lilin hijau mengapit satu merah),M,TERLALU AWAL,9,9,-2.600,-2.600,-4.610,-4.612,-0.000
+M07,Qullamaggie Breakout,M,TERLALU AWAL,1,1,-2.530,-2.530,,,0.000
+M37,Weinstein Peringkat 2,M,TERLALU AWAL,7,7,0.890,0.893,0.310,0.305,0.003
+N51X36,BB squeeze + Supertrend → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,6,6,-2.250,-2.247,-3.760,-3.764,0.003
+M64,O'Neil Tiga Minggu Ketat,M,TERLALU AWAL,3,3,-10.590,-10.586,-13.640,-13.641,0.004
+M157,Consolidation Pivot Breakout (versi angka),M,TERLALU AWAL,4,4,-5.160,-5.155,-8.980,-8.975,0.005
+M51,O'Neil Cawan & Pemegang,M,TERLALU AWAL,3,3,-0.460,-0.455,-4.630,-4.634,0.005
+M102,Stockbee SLTB,M,STRUKTUR GAGAL,359,323,-0.800,-0.783,-2.140,-2.081,0.017
+M84,Jarak purata bergerak MAD 21/200,M,TERLALU AWAL,58,44,-3.090,-3.066,-5.290,-6.015,0.024
+N06X36,Golden cross MA50/MA200 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,14,13,-0.950,-0.925,-1.370,-1.382,0.025
+N28X17,ADX>25 + DI+ > DI- → keluar bila adx14 < 20,N,TERLALU AWAL,85,71,0.040,0.066,-0.920,-0.948,0.026
+N16X15,RSI2<10 tanpa penapis → ekori Chandelier 4 x ATR14,N,TERLALU AWAL,109,94,0.170,0.210,-0.660,-0.539,0.040
+M148,Natural Number Method,M,LEMAH,210,186,-1.470,-1.427,-2.570,-2.530,0.043
+M49,Ichimoku (Tutup Atas Awan + Tenkan Silang Kijun),M,CAMPUR,289,241,-0.890,-0.846,-1.970,-1.937,0.044
+M127,Slingshot Bullish,M,STRUKTUR GAGAL,105,97,-1.360,-1.301,-2.190,-2.080,0.059
+M154,HOLP (High of Low Period),M,LEMAH,79,62,-2.000,-1.934,-3.600,-3.999,0.066
+M47,Holy Grail Raschke,M,TERLALU AWAL,29,24,-3.310,-3.243,-3.880,-3.888,0.067
+M153,Range Leader,M,CAMPUR,1242,1055,0.280,0.358,-0.730,-0.623,0.078
+N53X16,Supertrend + ADX>25 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,94,77,-0.030,0.052,-0.910,-0.846,0.082
+M82,Arthur Hill Rotasi Sasaran 10%,M,LEMAH,565,528,-0.480,-0.397,-1.670,-1.521,0.083
+M33,Supertrend + SMA10,M,CAMPUR,218,183,1.880,1.972,0.560,0.613,0.092
+M25,VWAP Wave (proksi harian),M,CAMPUR,173,154,0.480,0.575,-0.640,-0.588,0.095
+N54X16,Supertrend + RSI>50 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,107,89,-0.430,-0.331,-1.150,-1.040,0.099
+M13,Garis Trend Action/Safety Line,M,CAMPUR,711,586,-0.080,0.030,-1.490,-1.348,0.110
+M125,2-Bar Breakout,M,CAMPUR,959,795,-0.750,-0.637,-2.320,-2.197,0.113
+N16X13,RSI2<10 tanpa penapis → keluar bila rsi14 > 70,N,TERLALU AWAL,113,97,0.480,0.596,-0.300,-0.096,0.116
+N48X36,Inside day pecah → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,256,216,1.040,1.157,0.330,0.425,0.117
+M57,Landry Trend Knockout (TKO),M,LEMAH,160,137,-1.680,-1.560,-3.040,-2.843,0.120
+N24X16,"Supertrend(10,3) + ADX>20 → keluar bila supertrend berbalik (henti ekor)",N,TERLALU AWAL,96,80,-0.390,-0.268,-1.130,-0.984,0.122
+M31,Band Walk (BB 20/2),M,CAMPUR,392,340,0.460,0.585,-0.790,-0.635,0.125
+N56X16,RSI>50 + ADX>20 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,157,136,-0.160,-0.034,-0.800,-0.643,0.126
+N45X16,Undur EMA21 cerun positif → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,117,95,0.150,0.277,-0.750,-0.584,0.127
+M158,Doubly Adaptive Profit Targets,M,CAMPUR,349,296,1.240,1.371,-0.220,0.020,0.131
+M05,MACD Divergence + Pengesahan,M,CAMPUR,40,35,0.120,0.254,-1.520,-1.619,0.134
+M159,Heikin-Ashi Trend,M,CAMPUR,1570,1297,-0.150,-0.016,-1.150,-1.003,0.134
+N56X17,RSI>50 + ADX>20 → keluar bila adx14 < 20,N,TERLALU AWAL,110,94,-0.120,0.018,-0.910,-0.743,0.138
+M03,BB Break + Divergence RSI,M,CAMPUR,395,326,-0.060,0.082,-0.880,-0.751,0.142
+M50,Elder Triple Screen,M,CAMPUR,558,475,-0.340,-0.191,-1.440,-1.311,0.149
+N53X17,Supertrend + ADX>25 → keluar bila adx14 < 20,N,TERLALU AWAL,87,71,-0.030,0.131,-0.980,-0.843,0.161
+N55X13,BB + RSI + ADX>20 → keluar bila rsi14 > 70,N,TERLALU AWAL,57,50,0.670,0.835,0.040,0.121,0.165
+M115,Bow Tie (Landry),M,LEMAH,35,31,-1.370,-1.198,-2.720,-2.720,0.172
+N41X16,CMF20>0 + tutup>EMA20 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,207,179,-0.880,-0.704,-1.670,-1.499,0.176
+M66,IBD Undur Pertama ke Purata 50 Hari,M,CAMPUR,229,183,-0.830,-0.650,-2.360,-2.039,0.180
+M80,Radge Saluran Purata Bergerak (MAC),M,PANTAU,273,242,1.340,1.532,0.070,0.258,0.192
+N37X16,Gap and go → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,76,70,-0.000,0.193,-1.040,-0.931,0.193
+M150,Trend Bar Failure (Brooks),M,CAMPUR,99,88,0.560,0.754,-0.400,-0.227,0.194
+M161,"EMA 10/21 + Supertrend (10,3)",M,CAMPUR,458,385,-0.120,0.079,-1.570,-1.424,0.199
+N24X17,"Supertrend(10,3) + ADX>20 → keluar bila adx14 < 20",N,TERLALU AWAL,101,85,-0.360,-0.159,-1.160,-0.934,0.201
+M137,Livermore System,M,CAMPUR,166,146,-0.160,0.046,-1.590,-1.336,0.206
+M79,Radge: 20% Flipper,M,LEMAH,353,306,-0.640,-0.424,-1.750,-1.566,0.216
+M99,Three Line Break,M,LEMAH,147,122,-1.800,-1.580,-3.560,-3.484,0.220
+N57X36,ADX bangkit daripada <20 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,60,49,-1.660,-1.438,-2.390,-2.321,0.222
+N75X14,RSI14 < 40 tanpa penapis → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,188,155,2.360,2.592,1.640,1.856,0.232
+N37X36,Gap and go → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,76,70,0.120,0.355,-0.910,-0.760,0.235
+M32,Momentum Burst,M,CAMPUR,53,46,0.200,0.436,-2.300,-2.453,0.236
+N07X16,Tiga MA tersusun → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,113,96,-0.230,0.009,-0.950,-0.740,0.239
+N37X14,Gap and go → keluar bila rsi14 silang naik 50,N,TERLALU AWAL,75,69,0.140,0.380,-0.750,-0.582,0.240
+M116,2/20 EMA Breakout (Landry),M,CAMPUR,539,473,0.060,0.309,-0.960,-0.713,0.249
+M155,Market Cycle Strategy,M,CAMPUR,654,531,0.310,0.570,-1.320,-1.058,0.260
+M18,EMA9/21 Pullback,M,CAMPUR,348,307,0.300,0.561,-0.790,-0.579,0.261
+M117,Landry Pullback (high 2 bulan),M,CAMPUR,132,117,1.490,1.751,-0.050,0.331,0.261
+N73X13,"Tutup bawah jalur bawah BB(20,2) → keluar bila rsi14 > 70",N,TERLALU AWAL,136,115,1.950,2.212,1.050,1.286,0.262
+M145,Yum-Yum Continuation,M,CAMPUR,300,261,0.420,0.682,-0.850,-0.560,0.262
+M141,First Thrust (Landry),M,TERLALU AWAL,23,22,-1.920,-1.647,-3.220,-2.987,0.273
+N07X36,Tiga MA tersusun → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,115,98,-0.180,0.099,-1.040,-0.748,0.279
+M26,Garis Trend Undur 3 Sentuhan + Pecahan,M,CAMPUR,69,62,-0.210,0.071,-1.240,-1.066,0.281
+M89,Chande 65sma-3cc,M,CAMPUR,165,135,0.110,0.398,-1.490,-1.109,0.288
+N124X36,Episodic pivot gap 8-10% → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,39,33,1.930,2.240,0.810,0.925,0.310
+M120,Reversal New Highs,M,TERLALU AWAL,19,16,-1.240,-0.926,-2.750,-2.714,0.314
+M136,Short/Intermediate-term Low (Larry Williams),M,CAMPUR,725,590,-0.100,0.216,-1.550,-1.234,0.316
+M128,"Inventory Retracement Bar (IRB, Rob Hoffman)",M,CAMPUR,151,132,-0.350,-0.030,-1.500,-1.159,0.320
+M149,3-Step Pullback,M,CAMPUR,201,177,-0.360,-0.037,-1.610,-1.182,0.323
+M105,Supertrend tulen,M,CAMPUR,355,300,0.900,1.223,-0.410,-0.056,0.323
+M14,Walking with the Whales,M,CAMPUR,882,732,-0.150,0.176,-1.430,-1.084,0.326
+N37X17,Gap and go → keluar bila adx14 < 20,N,TERLALU AWAL,76,70,-0.150,0.184,-1.200,-0.942,0.334
+M11,NR7 Breakout + Volume,M,LEMAH,108,83,-0.810,-0.470,-1.670,-1.441,0.340
+N57X16,ADX bangkit daripada <20 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,58,47,-1.700,-1.357,-2.450,-2.275,0.343
+M27,Price Action 4 Tiang,M,TERLALU AWAL,547,467,-0.730,-0.384,-1.800,-1.439,0.346
+M77,Undercut & Rally pada Purata Bergerak (MAU&R),M,STRUKTUR GAGAL,54,46,0.200,0.554,-0.690,-0.476,0.354
+M144,Screw Bar,M,TERLALU AWAL,9,8,-0.420,-0.062,-2.130,-1.961,0.358
+M132,Ascending Scallop (Bulkowski),M,CAMPUR,94,83,-1.080,-0.710,-2.510,-2.311,0.370
+M09,Volumatic VIDYA Pivot Retest,M,TERLALU AWAL,29,25,-4.350,-3.978,-5.100,-4.610,0.372
+M29,EMA3 + RSI75 + Stokastik,M,STRUKTUR GAGAL,33,30,-2.150,-1.759,-3.420,-3.128,0.391
+M15,Break & Retest + Henti ATR,M,CAMPUR,291,241,1.040,1.464,-0.250,0.168,0.424
+M131,Ross Hook (Joe Ross),M,CAMPUR,257,222,-0.230,0.204,-1.270,-0.886,0.434
+M74,Lulus Baharu Trend Template Minervini,M,STRUKTUR GAGAL,90,75,0.600,1.060,-0.940,-0.498,0.460
+N08X16,tutup>EMA20 tidak terlalu jauh → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,303,250,-0.610,-0.121,-1.510,-0.995,0.489
+M124,'Last' Stochastic Technique (ChartSchool),M,CAMPUR,380,312,0.260,0.749,-1.050,-0.564,0.489
+M08,SMA20 + SMA200,M,CAMPUR,181,160,-0.100,0.391,-1.450,-0.943,0.491
+M106,DMI Wilder,M,CAMPUR,116,98,0.180,0.711,-0.920,-0.423,0.531
+M133,Bull Hook (Crabel),M,PANTAU,49,43,1.800,2.366,0.490,0.901,0.566
+M139,"均线首次粘合向上发散 (MA berhimpun kali pertama, berkipas naik)",M,LEMAH,82,66,-0.240,0.329,-1.680,-1.163,0.569
+M87,IBD Tapak Menaik,M,TERLALU AWAL,10,9,-3.090,-2.521,-5.920,-5.631,0.569
+M01,Bollinger Band + RSI,M,CAMPUR,112,85,3.050,3.690,1.850,2.332,0.640
+M68,Kell Base n' Break,M,LEMAH,42,38,-2.030,-1.376,-3.510,-2.462,0.654
+N68X16,Bullish engulfing + EMA21 → keluar bila supertrend berbalik (henti ekor),N,TERLALU AWAL,50,41,-0.770,-0.108,-1.740,-1.252,0.662
+M134,First Kiss After Daylight (Landry),M,CAMPUR,53,47,-0.090,0.577,-1.370,-0.830,0.667
+M107,Golden Cross SMA50/200,M,LEMAH,34,27,-0.180,0.498,-1.320,-0.908,0.678
+M135,3rd Watch,M,TERLALU AWAL,14,13,-3.810,-2.994,-4.690,-3.875,0.816
+M147,Improved Three-Bar Pullback,M,CAMPUR,97,75,-2.750,-1.815,-4.120,-3.248,0.935
+N68X36,Bullish engulfing + EMA21 → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,50,42,-0.020,0.990,-1.540,-0.762,1.010
+M48,Cooper 1-2-3-4,M,CAMPUR,52,48,0.620,1.694,-1.860,-0.795,1.074
+N19X13,Bawah jalur BB + RSI<30 → keluar bila rsi14 > 70,N,TERLALU AWAL,101,77,4.610,5.801,3.490,4.740,1.191
+M44,Tapak Rata IBD,M,TERLALU AWAL,9,7,-4.030,-2.836,-5.700,-4.861,1.194
+N38X36,VCP pecah → keluar selepas DUA tutup di bawah MA rujukan,N,TERLALU AWAL,22,17,-0.790,0.911,-2.120,-0.180,1.701
+M96,Momo India: Ranking Sharpe 3/6/12 bulan,M,TERLALU AWAL,6,5,-13.400,-11.516,-14.140,-11.966,1.884
+M121,High 2 bull flag (Brooks),M,TERLALU AWAL,6,5,-10.610,-8.129,-13.240,-10.795,2.481
+M94,"Pecutan Momentum (Chen, Yu & Wang)",M,TERLALU AWAL,33,22,-3.790,-0.214,-6.170,-3.542,3.576
+M45,High 52 Minggu (George & Hwang),M,TERLALU AWAL,2,1,-2.770,7.586,-13.130,,10.356

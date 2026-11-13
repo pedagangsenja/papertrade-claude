@@ -1,0 +1,10 @@
+tahap,tapis,Mxx,Nxx,baki
+0,Semua kaedah dalam kad skor,129,94,
+1,Cukup data: >= 30 posisi dan >= 10 hari beli,99,0,
+2,Bukan struktur gagal: henti hari beli < 20% posisi,89,0,
+3,"Jangkaan > 0 (semua posisi, termasuk terbuka)",34,0,
+4,tanpa5 > 0 (untung selepas buang 5% posisi terbaik),6,0,"M01, M133, M142, M146, M33, M80"
+5,Lift 5 dan 10 sesi > 0 (pilih saham lebih baik daripada kolam),5,0,"M133, M142, M146, M33, M80"
+6,Lift 5 sesi > 0 pada kedua-dua separuh hari beli,4,0,"M133, M142, M146, M80"
+7,Backtest sedia ada > 0,4,0,"M133, M142, M146, M80"
+8,Maklumat: sifar henti pada hari beli (gate G4 kad skor),2,0,"M142, M80"

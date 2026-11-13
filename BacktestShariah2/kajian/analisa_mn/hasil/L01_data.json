@@ -1,0 +1,64 @@
+{
+ "harga_pada": "2026-11-11",
+ "sesi_lejar": "20261111",
+ "bar_stor_terakhir": "20261111",
+ "posisi_lejar_semua": 72006,
+ "posisi_langsung": 36292,
+ "posisi_kad_skor": 36292,
+ "sepadan_kad_skor": true,
+ "posisi_isian_tidak_dikira": 35700,
+ "posisi_kuarantin_tidak_dikira": 14,
+ "kaedah": 223,
+ "kaedah_M": 129,
+ "kaedah_N": 94,
+ "saham_unik": 890,
+ "pendua_kaedah_saham_hari_beli": 0,
+ "harga_beli_tidak_sah": 0,
+ "pulangan_kosong": 0,
+ "posisi_M": 25776,
+ "posisi_N": 10516,
+ "hari_beli_M": 19,
+ "hari_beli_N": 6,
+ "hari_beli_pertama_M": "2026-10-16",
+ "hari_beli_pertama_N": "2026-11-04",
+ "hari_beli_terakhir": "2026-11-11",
+ "hari_on": 1,
+ "hari_off": 18,
+ "masih_terbuka_pct": 54.13314229031192,
+ "beza_maks_jangkaan_lawan_kad_skor": 0.004957979320786232,
+ "pulangan_min": -52.52,
+ "pulangan_maks": 235.93445378151262,
+ "lulus": true,
+ "posisi_pulangan_luar_biasa": 32,
+ "saham_luar_biasa": {
+  "APP": {
+   "posisi": 3,
+   "posisi_N": 1,
+   "purata": 61.08865157794069,
+   "nilai_dagangan_median_usd": 963133951.5,
+   "cair": true
+  },
+  "AXGN": {
+   "posisi": 1,
+   "posisi_N": 0,
+   "purata": 60.51820175438598,
+   "nilai_dagangan_median_usd": 47759174.0,
+   "cair": true
+  },
+  "TANH": {
+   "posisi": 25,
+   "posisi_N": 22,
+   "purata": 135.05868155012172,
+   "nilai_dagangan_median_usd": 698957.0,
+   "cair": false
+  },
+  "XERS": {
+   "posisi": 3,
+   "posisi_N": 0,
+   "purata": 64.34183266932271,
+   "nilai_dagangan_median_usd": 22870536.5,
+   "cair": true
+  }
+ },
+ "posisi_tidak_cair_pct": 15.615011572798412
+}

@@ -1,7 +1,90 @@
-Kad skor harga 2026-11-11: 223 kaedah, 36292 posisi langsung, 19 hari beli (ON 1, OFF 18)
-Posisi langsung dimuat: 36292 (223 kaedah)
 
-== Kadar asas kolam (saham-hari unik; beli buka -> tutup sesi ke-h; kos 0.2%) ==
+====================================================================================================
+LANGKAH 1: DATA DAN SEMAKAN KUALITI
+====================================================================================================
+  harga_pada: 2026-11-11
+  sesi_lejar: 20261111
+  bar_stor_terakhir: 20261111
+  posisi_lejar_semua: 72006
+  posisi_langsung: 36292
+  posisi_kad_skor: 36292
+  sepadan_kad_skor: True
+  posisi_isian_tidak_dikira: 35700
+  posisi_kuarantin_tidak_dikira: 14
+  kaedah: 223
+  kaedah_M: 129
+  kaedah_N: 94
+  saham_unik: 890
+  pendua_kaedah_saham_hari_beli: 0
+  harga_beli_tidak_sah: 0
+  pulangan_kosong: 0
+  posisi_M: 25776
+  posisi_N: 10516
+  hari_beli_M: 19
+  hari_beli_N: 6
+  hari_beli_pertama_M: 2026-10-16
+  hari_beli_pertama_N: 2026-11-04
+  hari_beli_terakhir: 2026-11-11
+  hari_on: 1
+  hari_off: 18
+  masih_terbuka_pct: 54.13314229031192
+  beza_maks_jangkaan_lawan_kad_skor: 0.004957979320786232
+  pulangan_min: -52.52
+  pulangan_maks: 235.93445378151262
+  lulus: True
+  posisi_pulangan_luar_biasa: 32
+  saham_luar_biasa: {'APP': {'posisi': 3, 'posisi_N': 1, 'purata': 61.08865157794069, 'nilai_dagangan_median_usd': 963133951.5, 'cair': True}, 'AXGN': {'posisi': 1, 'posisi_N': 0, 'purata': 60.51820175438598, 'nilai_dagangan_median_usd': 47759174.0, 'cair': True}, 'TANH': {'posisi': 25, 'posisi_N': 22, 'purata': 135.05868155012172, 'nilai_dagangan_median_usd': 698957.0, 'cair': False}, 'XERS': {'posisi': 3, 'posisi_N': 0, 'purata': 64.34183266932271, 'nilai_dagangan_median_usd': 22870536.5, 'cair': True}}
+  posisi_tidak_cair_pct: 15.615011572798412
+
+====================================================================================================
+LANGKAH 2: KAD SETIAP KAEDAH (satu per satu)
+====================================================================================================
+keluarga         M   N
+kelas                 
+CAMPUR          63   0
+LEMAH           22   0
+PANTAU           4   0
+STRUKTUR GAGAL  10   0
+TERLALU AWAL    30  94
+Kaedah >= 30 posisi dan >= 5 hari beli: 184; jangkaan > 0: 79; had bawah 95% buku harian > 0: 0; tanpa5 > 0: 22
+Median jangkaan: Mxx -0.35%, Nxx -0.01%
+
+====================================================================================================
+LANGKAH 3: MASUK — adakah kaedah memilih saham lebih baik daripada saham lain pada hari sama?
+====================================================================================================
+Mxx dengan >= 30 saham-hari (5 sesi): 101; lift 5 sesi > 0: 70; median +0.40 mata; positif pada kedua-dua separuh: 40
+10 teratas ikut lift 5 sesi (Mxx, >= 30 saham-hari):
+                                    nama     n5   hb5  lift3  lift5  lift10  lift5_A  lift5_B
+id                                                                                           
+M01                 Bollinger Band + RSI  69.00 15.00   0.93   2.95   -1.80     1.52     3.92
+M32                       Momentum Burst  51.00 11.00   1.33   2.78   -0.40     4.72    -3.53
+M158      Doubly Adaptive Profit Targets 300.00 15.00   1.64   2.27    1.69     0.57     3.54
+M41                FW Penyatuan Mingguan  33.00  3.00  -0.14   2.24    2.24     2.50     1.97
+M146              3-Bar Momentum Pattern  72.00 15.00   1.84   2.12    2.41     3.09     0.40
+M117      Landry Pullback (high 2 bulan)  81.00 14.00   1.07   2.09    2.26     1.75     2.54
+M134  First Kiss After Daylight (Landry)  38.00 13.00   0.66   2.04   -1.19     2.25     1.72
+M15           Break & Retest + Henti ATR 249.00 15.00   0.32   1.95    3.17     1.41     2.69
+M106                          DMI Wilder  89.00 13.00   0.86   1.84    0.17     2.00     1.62
+M161       EMA 10/21 + Supertrend (10,3) 392.00 15.00   0.82   1.79    0.54     2.19     1.25
+
+Nxx ikut isyarat MASUK (10 teratas ikut jangkaan langsung; 6 hari beli):
+                                     nama  kombinasi  posisi  langsung_jangkaan  langsung_lift3  langsung_r3  backtest_tahan  backtest_lift
+masuk_n                                                                                                                                    
+N19               Bawah jalur BB + RSI<30          1     101               4.61           -0.97         1.59           11.29           6.94
+N124             Episodic pivot gap 8-10%          2      78               2.86            1.78         2.66           11.02           8.72
+N40              OBV tinggi baharu + MA50          2     108               2.42            1.05        -1.18            1.70           0.90
+N75              RSI14 < 40 tanpa penapis          4     703               2.05           -0.80         0.36            4.81           2.08
+N64                        Episodic pivot          4     184               1.98            1.84         1.83            3.81           2.70
+N73      Tutup bawah jalur bawah BB(20,2)          1     136               1.95           -1.07        -0.09            6.89           2.54
+N42                     Lonjakan volum 2x          5     825               1.52            1.17         0.99            3.28           1.65
+N48                      Inside day pecah          1     256               1.04           -0.19        -1.93            1.28           0.38
+N113                80-20 bar (sisi beli)          2     500               0.71           -1.09        -1.95            0.90           0.09
+N55                     BB + RSI + ADX>20          1      57               0.67           -1.26        -0.17            4.45           0.10
+Spearman peringkat MASUK Nxx (45 isyarat): backtest tahan lawan jangkaan langsung +0.52 (p 0.0003); lift backtest lawan lift langsung 3 sesi +0.26 (p 0.08)
+
+====================================================================================================
+LANGKAH 4: PEGANG — pulangan selepas beberapa hari, tanpa mengira peraturan keluar
+====================================================================================================
  ufuk kolam  hari_beli  saham_hari  r_purata  r_median  menang  spus_tingkap_sama
     1 semua         19        9958     -0.31     -0.22   45.14              -0.13
     1     M         19        9026     -0.30     -0.23   44.81              -0.18
@@ -16,130 +99,93 @@ Posisi langsung dimuat: 36292 (223 kaedah)
    10     M         10        5151     -0.78     -0.06   49.85              -2.63
    15 semua          5        2641     -1.15     -0.67   47.86              -4.21
    15     M          5        2641     -1.15     -0.67   47.86              -4.21
+Kohort SEJAJAR (hari beli yang sama pada setiap ufuk):
+ ufuk  hari_beli  saham_hari  r_purata  r_median  menang
+    1         10        5151     -0.08     -0.13   47.00
+    3         10        5151     -0.05      0.03   50.22
+    5         10        5151      0.06      0.48   53.72
+   10         10        5151     -0.78     -0.06   49.85
+Kolam 5 sesi ikut HARI BELI: min -3.43, maks +1.73, SD 1.82 mata; SD lift 5 sesi merentas KAEDAH: 1.36 mata
+Mxx dengan ufuk 10 sesi (99): untung pada 3, 5 DAN 10 sesi = 23
+Backtest Mxx (129 kaedah), median pulangan purata selepas 5/10/20/60 hari: +0.30 / +0.80 / +1.80 / +5.60 %; 60 hari > 20 hari bagi 129 kaedah
+Ufuk terbaik atas kohort sejajar (95 Mxx dengan >= 20 saham-hari): {'5': 59, '10': 14, '1': 13, '3': 9}
 
-== Kelas (label mekanikal, maklumat) ==
-keluarga         M   N
-kelas                 
-CAMPUR          63   0
-LEMAH           22   0
-PANTAU           4   0
-STRUKTUR GAGAL  10   0
-TERLALU AWAL    30  94
+====================================================================================================
+LANGKAH 5: KELUAR — bagaimana posisi ditutup, dan cara keluar mana lebih baik atas belian yang sama
+====================================================================================================
+kel                sebab  posisi  purata  menang  bahagian_pct
+  M        masih terbuka   11965    4.37   69.80         46.42
+  M                henti    5863   -8.64    0.00         22.75
+  M       isyarat keluar    4907   -2.17   29.98         19.04
+  M henti pada hari beli    1661   -3.29    0.00          6.44
+  M                 masa     850    5.80   83.88          3.30
+  M              sasaran     509    6.46   91.55          1.97
+  M               delist      21    0.23   23.81          0.08
+  N        masih terbuka    7681    1.16   50.53         73.04
+  N       isyarat keluar    2835   -1.94   38.06         26.96
 
-Kaedah dengan >= 30 posisi dan >= 5 hari beli: 184; jangkaan > 0: 79; had bawah selang 95% buku harian > 0: 0; tanpa5 > 0: 22
-Spearman backtest lawan langsung (Mxx, >= 20 ditutup, n 90): jangkaan -0.05 (p 0.67); lift 5 sesi +0.12 (p 0.26)
-Spearman backtest tahan lawan langsung (Nxx, n 94): +0.53 (p 0.00)
+Nxx ikut cara KELUAR (langsung 6 hari beli; backtest tahan 2020-25):
+keluar                           peraturan  kombinasi  posisi  tutup_pct  langsung_jangkaan  langsung_tanpa5  langsung_menang  beza_berpasangan  backtest_tahan  backtest_lift  backtest_tanpa5  backtest_menang  backtest_rugi_min  backtest_rugi_maks
+   X15          ekori Chandelier 4 x ATR14          5     460       0.00               1.69             0.59            55.87              0.44            7.09           3.39            -1.69            41.89             -21.92              -13.65
+   X13              keluar bila rsi14 > 70          6     675       5.63               1.66             0.87            58.96              0.43            6.84           2.49             1.97            63.86             -23.96              -21.29
+   X17              keluar bila adx14 < 20         10    1051      20.08               0.53            -0.69            48.72             -0.41            3.85           1.99            -2.50            43.79             -12.72               -8.83
+   X14    keluar bila rsi14 silang naik 50         10     974       8.21               0.83            -0.49            50.10              0.05            2.21           1.22            -1.88            46.87             -13.46               -7.65
+   X36 keluar selepas DUA tutup bawah ma50         37    3841      31.61               0.21            -1.27            44.89              0.27            2.11           1.22            -2.78            33.57             -14.73               -5.74
+   X16     keluar bila supertrend berbalik         26    3515      36.76              -0.20            -1.23            44.98             -0.28            1.50           0.78            -2.54            35.63             -11.93               -6.11
 
-== Tapis senarai pantau: 89 Mxx cukup data dan bukan STRUKTUR GAGAL ==
-  jangkaan > 0: 34
-  tanpa5 > 0: 6
-  lift 5 sesi > 0: 63
-  lift 10 sesi > 0: 46
-  lift 5 sesi > 0 pada kedua-dua separuh: 37
-  backtest > 0: 89
+Mxx: keluar kaedah (L1) lawan Chandelier 4xATR tanpa henti (L2), posisi sama:
+{"kaedah": 104, "l1_purata_kaedah": -0.39, "l2_purata_kaedah": -0.71, "l2_lebih_baik_pct": 32.69, "posisi": 25776, "l1_semua_posisi": -0.25, "l2_semua_posisi": -0.55, "l1_rugi_lebih_15_pct": 3.12, "l2_rugi_lebih_15_pct": 9.67}
 
-== Lengkung pegang: 166 kaedah dengan >= 30 saham-hari 5 sesi; r3, r5 dan r10 semua > 0: 23 ==
-                                                                      nama         kelas     n5   hb5    r1   r3   r5   r10   r15  lift3  lift5  lift10  jangkaan  tanpa5
-id                                                                                                                                                                       
-M146                                                3-Bar Momentum Pattern        PANTAU  72.00 15.00  0.09 1.77 2.09  1.69  8.07   1.84   2.12    2.41      1.70    0.68
-M01                                                   Bollinger Band + RSI        CAMPUR  69.00 15.00 -0.71 1.96 1.96 -3.40 -4.92   0.93   2.95   -1.80      3.05    1.85
-M158                                        Doubly Adaptive Profit Targets        CAMPUR 300.00 15.00  0.07 1.74 1.94  2.03  1.67   1.64   2.27    1.69      1.24   -0.22
-N53X36  Supertrend + ADX>25 → keluar selepas DUA tutup di bawah MA rujukan  TERLALU AWAL  44.00  2.00 -0.12 2.70 1.69   NaN   NaN   3.12   3.55     NaN      1.82   -1.21
-M15                                             Break & Retest + Henti ATR        CAMPUR 249.00 15.00 -0.40 0.35 1.65  2.92  1.89   0.32   1.95    3.17      1.04   -0.25
-M32                                                         Momentum Burst        CAMPUR  51.00 11.00 -2.02 0.07 1.59 -0.70 -0.36   1.33   2.78   -0.40      0.20   -2.30
-M117                                        Landry Pullback (high 2 bulan)        CAMPUR  81.00 14.00 -0.30 0.70 1.57  1.84 -0.71   1.07   2.09    2.26      1.49   -0.05
-M133                                                    Bull Hook (Crabel)        PANTAU  38.00 11.00  0.39 2.29 1.46  5.94  1.76   2.11   1.78    5.73      1.80    0.49
-M134                                    First Kiss After Daylight (Landry)        CAMPUR  38.00 13.00 -0.65 0.12 1.45 -1.06 -1.69   0.66   2.04   -1.19     -0.09   -1.37
-M106                                                            DMI Wilder        CAMPUR  89.00 13.00 -0.10 0.64 1.35  0.15 -1.68   0.86   1.84    0.17      0.18   -0.92
-M150                                            Trend Bar Failure (Brooks)        CAMPUR  76.00 14.00 -0.02 0.57 1.34  2.07 -1.65   0.46   1.33    1.52      0.56   -0.40
-M161                                         EMA 10/21 + Supertrend (10,3)        CAMPUR 392.00 15.00 -0.41 0.42 1.31  0.41 -4.03   0.82   1.79    0.54     -0.12   -1.57
-M18                                                       EMA9/21 Pullback        CAMPUR 269.00 15.00  0.01 0.49 1.28  1.73 -4.83   0.82   1.74    2.04      0.30   -0.79
-M78                                         Alvarez Pecahan Mingguan DTAYS  TERLALU AWAL  73.00  2.00  0.55 0.82 1.20 -2.20 -4.18  -0.32   0.64    0.25     -1.71   -3.04
-M33                                                     Supertrend + SMA10        CAMPUR 186.00 15.00 -0.48 0.18 1.19  3.31  3.61   0.52   1.68    3.02      1.88    0.56
+====================================================================================================
+LANGKAH 6: RISIKO — berapa teruk rugi boleh jadi
+====================================================================================================
+  M: {"posisi": 25776, "rugi8_pct": 14.39, "rugi15_pct": 3.12, "rugi25_pct": 0.55, "terburuk": -52.52, "kaedah": 104, "kaedah_terburuk_bawah_25": 59, "median_cvar10": -13.52, "kaedah_ada_henti_hari_beli": 84, "t4_mdd_median": -6.92, "t4_mdd_terburuk": -23.06, "t4_mdd_lebih_10": 26}
+  N: {"posisi": 10516, "rugi8_pct": 6.57, "rugi15_pct": 1.4, "rugi25_pct": 0.2, "terburuk": -36.46, "kaedah": 85, "kaedah_terburuk_bawah_25": 19, "median_cvar10": -10.19, "kaedah_ada_henti_hari_beli": 0, "t4_mdd_median": -4.4, "t4_mdd_terburuk": -11.69, "t4_mdd_lebih_10": 3}
+  backtest_M: {"kaedah": 129, "mdd_median": -34.61, "mdd_terbaik": -17.37, "mdd_dalam_10": 0}
+  kecairan_M: {"posisi_tidak_cair_pct": 15.33, "jangkaan_semua": -0.25, "jangkaan_cair": -0.15, "jangkaan_tidak_cair": -0.78, "kaedah_jangkaan_positif": 38, "kaedah_jangkaan_cair_positif": 47, "kaedah_tanpa5_positif": 6, "kaedah_tanpa5_cair_positif": 10}
+  kecairan_N: {"posisi_tidak_cair_pct": 16.31, "jangkaan_semua": 0.32, "jangkaan_cair": 0.04, "jangkaan_tidak_cair": 1.75, "kaedah_jangkaan_positif": 41, "kaedah_jangkaan_cair_positif": 36, "kaedah_tanpa5_positif": 16, "kaedah_tanpa5_cair_positif": 15}
 
-Pulangan 5 sesi kolam ikut HARI BELI: min -3.43, maks +1.73, SD 1.82 mata; SD lift 5 sesi merentas KAEDAH (>= 30 saham-hari): 1.36 mata
+====================================================================================================
+LANGKAH 7: PASARAN LAWAN KAEDAH — skill residual-edge-analyzer (penerokaan: sampel di bawah minimum 60 sesi)
+====================================================================================================
+{"kaedah": 118, "sesi_maks": 19, "status": {"INSUFFICIENT_EVIDENCE": 118}, "layak": {"REVIEW_REQUIRED": 118}, "r2_kolam_median": 0.74, "beta_kolam_median": 1.03, "r2_spus_median": 0.33, "alpha_t_lebih_2": 1, "alpha_t_kurang_neg2": 3, "alpha_t_lebih_2_kedua_asas": 1, "sauh_t_berganda": 3.52}
+10 teratas ikut t alpha lawan kolam (penerokaan sahaja):
+                                         nama           kelas  sesi                 status  r2_kolam  beta_kolam  alpha_harian_pct  alpha_t  alpha_t_spus
+id                                                                                                                                                       
+M146                   3-Bar Momentum Pattern          PANTAU    19  INSUFFICIENT_EVIDENCE      0.72        0.86              0.31     2.04          2.19
+M153                             Range Leader          CAMPUR    19  INSUFFICIENT_EVIDENCE      0.95        1.08              0.12     1.95          1.60
+M10                         EMA3 + CCI + MACD          CAMPUR    19  INSUFFICIENT_EVIDENCE      0.92        1.16              0.13     1.77          1.66
+M117           Landry Pullback (high 2 bulan)          CAMPUR    19  INSUFFICIENT_EVIDENCE      0.75        0.80              0.19     1.56          1.77
+M118                 Expansion Pivot (Cooper)          CAMPUR    19  INSUFFICIENT_EVIDENCE      0.85        1.08              0.18     1.45          1.70
+M133                       Bull Hook (Crabel)          PANTAU    19  INSUFFICIENT_EVIDENCE      0.06        0.51              0.93     1.41          1.45
+M23     Breitstein Kapitulasi + Kesinambungan  STRUKTUR GAGAL    19  INSUFFICIENT_EVIDENCE      0.79        1.12              0.22     1.38          1.30
+M160                         Measured Move Up          CAMPUR    19  INSUFFICIENT_EVIDENCE      0.45        1.37              0.49     1.37          1.43
+M100  Bulkowski Segi Empat & Segi Tiga Menaik          CAMPUR    19  INSUFFICIENT_EVIDENCE      0.81        0.95              0.14     1.33          1.14
+M158           Doubly Adaptive Profit Targets          CAMPUR    19  INSUFFICIENT_EVIDENCE      0.72        0.84              0.24     1.33          1.40
 
-== Kestabilan: pecahan rawak hari beli kepada dua separuh ==
-           label  hari  kaedah  pecahan  spearman_median  spearman_p5  spearman_p95  top10_lebih_median  top10_lebih_p5  top10_lebih_p95  top10_lebih_positif_pct
- Mxx lift 3 sesi    17     102   500.00            -0.08        -0.23          0.07               -0.17           -0.82             0.33                    30.60
- Nxx lift 3 sesi     4      79   500.00            -0.03        -0.14          0.18                0.17           -1.29             0.21                    68.20
- Mxx lift 5 sesi    15      99   500.00             0.07        -0.12          0.24                0.02           -0.75             0.77                    52.80
- Nxx lift 5 sesi     2       0      NaN              NaN          NaN           NaN                 NaN             NaN              NaN                      NaN
-Mxx lift 10 sesi    10      86   500.00             0.15         0.01          0.29                0.32           -0.84             1.34                    73.80
-Nxx lift 10 sesi     0       0      NaN              NaN          NaN           NaN                 NaN             NaN              NaN                      NaN
-                           label  hari  kaedah  pecahan  spearman_median  spearman_p5  spearman_p95  top10_lebih_median  top10_lebih_p5  top10_lebih_p95  top10_lebih_positif_pct
-Mxx lift 5 sesi tanpa 2026-10-16    14      97      500             0.05        -0.15          0.21                0.43           -0.38             1.17                    78.80
-Mxx lift 3 sesi tanpa 2026-10-16    16      99      500            -0.10        -0.26          0.05               -0.25           -0.77             0.21                    23.40
+====================================================================================================
+LANGKAH 8: KUALITI BACKTEST — skill backtest-expert atas registry set 431 (Mxx sahaja)
+====================================================================================================
+{"kaedah": 129, "keputusan": {"VALIDATION_REQUIRED": 126, "REJECT": 3}, "sebab": {"no_slippage_test": 129, "excessive_drawdown": 3}, "keputusan_had_mdd10": {"RISK_LIMIT_EXCEEDED": 126, "REJECT": 3}, "tahun_diuji": 6.91854891492073, "h1_dan_h2_positif": 115}
 
-== Plasebo tapis ufuk tetap (Mxx, >= 30 saham-hari 5 sesi): lift5 > 0, kedua-dua separuh > 0, lift10 > 0 ==
-  semua hari beli: {"kaedah": 101, "lulus_sebenar": 32, "bebas_purata": 15.29, "bebas_p5": 10.0, "bebas_p95": 22.0, "p_bebas": 0.0, "tindih_purata": 15.62, "tindih_p5": 9.0, "tindih_p95": 24.0, "p_tindih": 0.0}
-  tanpa hari beli pertama 2026-10-16: {"kaedah": 101, "lulus_sebenar": 24, "bebas_purata": 15.43, "bebas_p5": 9.0, "bebas_p95": 22.0, "p_bebas": 0.02, "tindih_purata": 15.08, "tindih_p5": 9.0, "tindih_p95": 23.0, "p_tindih": 0.03}
+====================================================================================================
+LANGKAH 9: KOMBINASI — masuk x keluar, kaedah sepakat, pasangan kaedah
+====================================================================================================
+Nxx: 10 kombinasi berpangkat backtest tertinggi -> jangkaan langsung purata +1.96% (9/10 positif) lawan semua 94: +0.25%; Spearman +0.53
+                                                                            nama    n  tutup  jangkaan  tanpa5  btn_pangkat  btn_tahan  btn_tanpa5  btn_rugi
+id                                                                                                                                                          
+N124X15                    Episodic pivot gap 8-10% → ekori Chandelier 4 x ATR14   39      0      3.79    2.77         1.00      16.13        0.40    -21.92
+N19X13                          Bawah jalur BB + RSI<30 → keluar bila rsi14 > 70  101      0      4.61    3.49         2.00      11.29        4.26    -22.57
+N75X13                         RSI14 < 40 tanpa penapis → keluar bila rsi14 > 70  124      1      2.24    1.36         3.00       7.47        1.75    -23.96
+N73X13                 Tutup bawah jalur bawah BB(20,2) → keluar bila rsi14 > 70  136      1      1.95    1.05         4.00       6.89        2.31    -21.75
+N124X36  Episodic pivot gap 8-10% → keluar selepas DUA tutup di bawah MA rujukan   39     10      1.93    0.81         5.00       5.91       -4.02    -14.73
+N16X13                            RSI2<10 tanpa penapis → keluar bila rsi14 > 70  113      3      0.48   -0.30         6.00       5.86        1.22    -22.64
+N75X15                     RSI14 < 40 tanpa penapis → ekori Chandelier 4 x ATR14  124      0      2.32    1.36         7.00       5.61       -2.43    -15.68
+N42X15                            Lonjakan volum 2x → ekori Chandelier 4 x ATR14  148      0      2.33    0.56         8.00       5.46       -1.91    -15.35
+N119X13                          3 tutup turun berturut → keluar bila rsi14 > 70  144     33      0.14   -0.44         9.00       5.09        1.18    -21.74
+N37X17                                       Gap and go → keluar bila adx14 < 20   76     24     -0.15   -1.20        10.00       4.87       -2.90    -11.54
 
-== Nxx ikut cara KELUAR (langsung 6 hari beli; backtest tahan 2020-25) ==
-keluar                           peraturan  kombinasi  posisi  tutup_pct  langsung_jangkaan  langsung_tanpa5  langsung_menang  beza_berpasangan  backtest_tahan  backtest_lift  backtest_tanpa5  backtest_menang
-   X15          ekori Chandelier 4 x ATR14          5     460       0.00               1.69             0.59            55.87              0.44            7.09           3.39            -1.69            41.89
-   X13              keluar bila rsi14 > 70          6     675       5.63               1.66             0.87            58.96              0.43            6.84           2.49             1.97            63.86
-   X17              keluar bila adx14 < 20         10    1051      20.08               0.53            -0.69            48.72             -0.41            3.85           1.99            -2.50            43.79
-   X14    keluar bila rsi14 silang naik 50         10     974       8.21               0.83            -0.49            50.10              0.05            2.21           1.22            -1.88            46.87
-   X36 keluar selepas DUA tutup bawah ma50         37    3841      31.61               0.21            -1.27            44.89              0.27            2.11           1.22            -2.78            33.57
-   X16     keluar bila supertrend berbalik         26    3515      36.76              -0.20            -1.23            44.98             -0.28            1.50           0.78            -2.54            35.63
-
-== Nxx ikut isyarat MASUK ==
-                                                 nama  kombinasi  posisi  langsung_jangkaan  langsung_lift5  langsung_r3  backtest_tahan  backtest_lift
-masuk_n                                                                                                                                                
-N19                           Bawah jalur BB + RSI<30          1     101               4.61            1.23         1.59           11.29           6.94
-N124                         Episodic pivot gap 8-10%          2      78               2.86           -0.17         2.66           11.02           8.72
-N40                          OBV tinggi baharu + MA50          2     108               2.42            1.54        -1.18            1.70           0.90
-N75                          RSI14 < 40 tanpa penapis          4     703               2.05            1.07         0.36            4.81           2.08
-N64                                    Episodic pivot          4     184               1.98           -0.05         1.83            3.81           2.70
-N73                  Tutup bawah jalur bawah BB(20,2)          1     136               1.95            0.24        -0.09            6.89           2.54
-N42                                 Lonjakan volum 2x          5     825               1.52            1.02         0.99            3.28           1.65
-N48                                  Inside day pecah          1     256               1.04           -1.31        -1.93            1.28           0.38
-N113                            80-20 bar (sisi beli)          2     500               0.71            1.42        -1.95            0.90           0.09
-N55                                 BB + RSI + ADX>20          1      57               0.67           -0.91        -0.17            4.45           0.10
-N65                       Gap 4% + volum + hampir 52w          2      56               0.61           -0.37         0.34            3.48           2.54
-N53                               Supertrend + ADX>25          3     287               0.59            1.63         1.00            2.80           1.64
-N16                             RSI2<10 tanpa penapis          2     222               0.33           -1.25        -1.56            5.10           1.08
-N43                         Undur EMA8 + penapis MA50          1     136               0.26           -2.10        -1.76            1.66           0.77
-N28                                ADX>25 + DI+ > DI-          4     672               0.25            0.31         0.42            2.31           1.20
-N80                             Tinggi sepanjang masa          1      32               0.20            1.06        -0.03            0.99           0.09
-N66                        52w tinggi + pengesahan 1%          1      33               0.15            0.02         0.47            1.84           0.95
-N25                         Supertrend + EMA + ADX>23          3     302               0.07            1.70        -0.95            2.28           1.13
-N76              Tutup > MA50 (penapis trend tunggal)          2     360               0.06            0.30        -0.90            1.45           0.65
-N50                         Mampat + pecah volum 1.5x          2      24               0.03           -1.61        -3.16            3.09           1.67
-N37                                        Gap and go          4     303               0.03           -1.98         0.66            3.96           2.85
-N45                         Undur EMA21 cerun positif          2     214               0.02            1.20        -0.48            1.62           0.82
-N36                                      Pocket pivot          3     407               0.02            0.04        -0.66            1.70           0.83
-N24                         Supertrend(10,3) + ADX>20          3     318               0.00            0.33        -0.23            2.32           1.16
-N09                       Undur EMA10 + penapis EMA50          1     146              -0.01           -1.74        -1.16            1.54           0.65
-N56                                   RSI>50 + ADX>20          3     412              -0.11            0.79        -0.94            2.01           0.85
-N54                               Supertrend + RSI>50          2     247              -0.16            0.60        -1.20            1.74           0.94
-N07                                  Tiga MA tersusun          2     228              -0.21            0.22        -0.53            1.68           0.88
-N74      MACD atas garis isyarat (keadaan, bukan sila          1     320              -0.21            0.55        -0.00            1.15           0.44
-N119                           3 tutup turun berturut          2     184              -0.22           -3.40        -0.90            4.51           0.48
-N22                               BB pecah atas + RSI          3     327              -0.34           -0.20        -0.28            1.65           0.78
-N68                         Bullish engulfing + EMA21          2     100              -0.40            7.20        -0.60            1.36           0.55
-N08                    tutup>EMA20 tidak terlalu jauh          2     573              -0.42            0.56        -1.02            1.29           0.49
-N33                        Donchian20 + penapis MA200          3     254              -0.42           -0.20        -0.46            1.52           0.65
-N35                            Pecah 52 minggu tinggi          1      42              -0.48            0.15        -0.95            1.34           0.44
-N41                             CMF20>0 + tutup>EMA20          2     389              -0.61            1.27        -0.80            1.31           0.50
-N47                                  NR7 + EMA9>EMA21          2     210              -0.71           -2.28        -2.60            1.53           0.73
-N38                                         VCP pecah          1      22              -0.79            0.98        -1.20            2.29           1.40
-N27                                Ichimoku atas awan          2     212              -0.90           -1.91        -1.11            1.47           0.66
-N06                           Golden cross MA50/MA200          1      14              -0.95           -3.31        -3.04            2.90           2.01
-N31                                   Turtle sistem 2          1      91              -1.01           -1.67        -1.39            1.79           0.89
-N29                            PSAR naik + tutup>MA50          2     283              -1.03           -0.42        -1.55            1.51           0.70
-N57                          ADX bangkit daripada <20          2     118              -1.68           -2.32        -1.98            1.58           0.77
-N51                           BB squeeze + Supertrend          2      12              -2.29           -5.21        -2.77            0.90           0.09
-N39                                NR7 kemudian pecah          1      18              -3.09           -2.21        -2.83            1.50           0.61
-Spearman peringkat MASUK (45 isyarat): backtest tahan lawan jangkaan langsung +0.52 (p 0.0003); lift backtest lawan lift langsung 3 sesi +0.26 (p 0.08)
-  dalam keluar X36 sahaja (37 kombinasi): +0.34 (p 0.039)
-  dalam keluar X16 sahaja (26 kombinasi): +0.53 (p 0.005)
-
-== Mxx: keluar kaedah (L1) lawan Chandelier 4xATR (L2), posisi sama ==
-{"kaedah": 104, "l1_purata_kaedah": -0.3949038461538462, "l2_purata_kaedah": -0.7137335179773561, "l2_lebih_baik_pct": 32.69230769230769, "posisi": 25776, "l1_semua_posisi": -0.24543866352630675, "l2_semua_posisi": -0.554255757438765, "l1_rugi_lebih_15_pct": 3.1230602110490375, "l2_rugi_lebih_15_pct": 9.671787709497206}
-
-== Bilangan kaedah sepakat atas saham-hari yang sama ==
+Bilangan kaedah sepakat atas saham-hari sama (5 sesi):
  ufuk                                set              jenis baldi  saham_hari  saham  hari_beli     r  menang  lift     t
     5                         semua hari kaedah Mxx sepakat     0         279    250          2 -0.74   41.22  0.53   NaN
     5                         semua hari kaedah Mxx sepakat     1        2900    859         15 -0.85   47.93 -0.28 -1.07
@@ -165,26 +211,54 @@ Spearman peringkat MASUK (45 isyarat): backtest tahan lawan jangkaan langsung +0
     5 tanpa hari beli pertama 2026-10-16  masuk Nxx sepakat   3-4         157    144          2 -2.25   28.03 -0.64   NaN
     5 tanpa hari beli pertama 2026-10-16  masuk Nxx sepakat   5-9         119    114          2 -0.61   32.77  1.09   NaN
     5 tanpa hari beli pertama 2026-10-16  masuk Nxx sepakat   10+          23     23          2 -0.91   47.83  0.63   NaN
-   10                         semua hari kaedah Mxx sepakat     1        2036    819         10 -1.20   47.00 -0.16 -0.32
-   10                         semua hari kaedah Mxx sepakat     2        1080    645         10 -0.81   48.80  0.16  0.36
-   10                         semua hari kaedah Mxx sepakat   3-4        1054    629         10 -0.36   52.18  0.28  0.62
-   10                         semua hari kaedah Mxx sepakat   5-9         784    481         10 -0.91   52.42 -0.54 -0.77
-   10                         semua hari kaedah Mxx sepakat   10+         197    184         10  2.05   62.44  1.44  2.11
-   10                         semua hari  masuk Nxx sepakat     0        5151    887         10 -0.78   49.85 -0.00 -0.00
-   10 tanpa hari beli pertama 2026-10-16 kaedah Mxx sepakat     1        1873    798          9 -1.27   46.45 -0.04 -0.08
-   10 tanpa hari beli pertama 2026-10-16 kaedah Mxx sepakat     2         981    613          9 -1.03   47.91  0.16  0.35
-   10 tanpa hari beli pertama 2026-10-16 kaedah Mxx sepakat   3-4         882    566          9 -0.77   50.79  0.24  0.49
-   10 tanpa hari beli pertama 2026-10-16 kaedah Mxx sepakat   5-9         579    403          9 -1.80   48.70 -0.78 -0.88
-   10 tanpa hari beli pertama 2026-10-16 kaedah Mxx sepakat   10+         103    102          9  1.36   60.19  1.53  1.18
-   10 tanpa hari beli pertama 2026-10-16  masuk Nxx sepakat     0        4418    883          9 -1.13   48.26  0.00  0.00
 
-== Semua pasangan Mxx (saham-hari bersama, lift 5 sesi) ==
-{"pasangan_mungkin": 8128, "pasangan_cukup": 395, "lift_purata": 0.9056548018833704, "lift_p5": -1.0345219086216726, "lift_p95": 2.861817442027887, "positif_pct": 78.9873417721519, "pasangan_dua_separuh": 229, "spearman_A_B": -0.07432774074925307, "top20_A_pada_A": 3.794550126398972, "top20_A_pada_B": 0.41745549740705157, "semua_pada_B": 0.11176135565400758, "top20_B_pada_A": 1.1685234080430376, "semua_pada_A": 1.3511785961415466}
+Semua pasangan Mxx: {"pasangan_mungkin": 8128, "pasangan_cukup": 395, "lift_purata": 0.91, "lift_p5": -1.03, "lift_p95": 2.86, "positif_pct": 78.99, "pasangan_dua_separuh": 229, "spearman_A_B": -0.07, "top20_A_pada_A": 3.79, "top20_A_pada_B": 0.42, "semua_pada_B": 0.11, "top20_B_pada_A": 1.17, "semua_pada_A": 1.35}
 
-== Senarai pantau: 4 kaedah ==
-                                     nama    n  tutup  hari_beli  jangkaan  tanpa5  menang  payoff   r3   r5  r10  lift5  lift10  lift5_A  lift5_B  l2_jangkaan  hari0_pct  buku_ci_bawah  t4_pul  t4_persentil  bt_purata  bt_menang
-id                                                                                                                                                                                                                                   
-M142      Pecahan volum dari dasar (底部放量)   45      5         14      3.31    1.88   82.22    0.83 1.94 1.57 0.52   4.10    2.54     4.86     3.54         3.29       0.00          -0.25    5.31         80.00       6.85       0.41
-M133                   Bull Hook (Crabel)   49     23         13      1.80    0.49   55.10    1.71 2.29 1.46 5.94   1.78    5.73     1.33     2.88         2.67       2.04          -0.43    7.95         95.00       0.68       0.41
-M146               3-Bar Momentum Pattern   77     30         17      1.70    0.68   54.55    1.42 1.77 2.09 1.69   2.12    2.41     3.09     0.40         2.60       5.19          -0.01    6.71         95.00       2.66       0.27
-M80   Radge Saluran Purata Bergerak (MAC)  273     56         19      1.34    0.07   55.31    1.17 0.28 0.47 3.21   1.00    3.11     1.10     0.83         1.30       0.00          -0.13   -1.46         20.00       8.91       0.36
+====================================================================================================
+LANGKAH 10: KEBOLEHPERCAYAAN — adakah "terbaik" kekal terbaik?
+====================================================================================================
+                           label  hari  kaedah  pecahan  spearman_median  spearman_p5  spearman_p95  top10_lebih_median  top10_lebih_p5  top10_lebih_p95  top10_lebih_positif_pct
+                 Mxx lift 3 sesi    17     102   500.00            -0.08        -0.23          0.07               -0.17           -0.82             0.33                    30.60
+                 Nxx lift 3 sesi     4      79   500.00            -0.03        -0.14          0.18                0.17           -1.29             0.21                    68.20
+                 Mxx lift 5 sesi    15      99   500.00             0.07        -0.12          0.24                0.02           -0.75             0.77                    52.80
+                 Nxx lift 5 sesi     2       0      NaN              NaN          NaN           NaN                 NaN             NaN              NaN                      NaN
+                Mxx lift 10 sesi    10      86   500.00             0.15         0.01          0.29                0.32           -0.84             1.34                    73.80
+                Nxx lift 10 sesi     0       0      NaN              NaN          NaN           NaN                 NaN             NaN              NaN                      NaN
+Mxx lift 5 sesi tanpa 2026-10-16    14      97   500.00             0.05        -0.15          0.21                0.43           -0.38             1.17                    78.80
+Mxx lift 3 sesi tanpa 2026-10-16    16      99   500.00            -0.10        -0.26          0.05               -0.25           -0.77             0.21                    23.40
+Plasebo (semua hari beli): {"kaedah": 101, "lulus_sebenar": 32, "bebas_purata": 15.29, "bebas_p5": 10.0, "bebas_p95": 22.0, "p_bebas": 0.0, "tindih_purata": 15.62, "tindih_p5": 9.0, "tindih_p95": 24.0, "p_tindih": 0.0}
+Plasebo (tanpa hari beli pertama 2026-10-16): {"kaedah": 101, "lulus_sebenar": 24, "bebas_purata": 15.43, "bebas_p5": 9.0, "bebas_p95": 22.0, "p_bebas": 0.02, "tindih_purata": 15.08, "tindih_p5": 9.0, "tindih_p95": 23.0, "p_tindih": 0.03}
+Spearman backtest lawan langsung (Mxx, >= 20 ditutup, n 90): jangkaan -0.05 (p 0.67); lift 5 sesi +0.12 (p 0.26)
+
+====================================================================================================
+LANGKAH 11: CORONG DAN SENARAI AKHIR
+====================================================================================================
+ tahap                                                          tapis  Mxx  Nxx                            baki
+     0                                    Semua kaedah dalam kad skor  129   94                                
+     1                   Cukup data: >= 30 posisi dan >= 10 hari beli   99    0                                
+     2             Bukan struktur gagal: henti hari beli < 20% posisi   89    0                                
+     3                  Jangkaan > 0 (semua posisi, termasuk terbuka)   34    0                                
+     4            tanpa5 > 0 (untung selepas buang 5% posisi terbaik)    6    0 M01, M133, M142, M146, M33, M80
+     5 Lift 5 dan 10 sesi > 0 (pilih saham lebih baik daripada kolam)    5    0      M133, M142, M146, M33, M80
+     6               Lift 5 sesi > 0 pada kedua-dua separuh hari beli    4    0           M133, M142, M146, M80
+     7                                         Backtest sedia ada > 0    4    0           M133, M142, M146, M80
+     8        Maklumat: sifar henti pada hari beli (gate G4 kad skor)    2    0                       M142, M80
+
+Senarai pantau (4): ['M142', 'M133', 'M146', 'M80']
+                                     nama    n  tutup  hari_beli  jangkaan  tanpa5  n_cair  jangkaan_cair  tanpa5_cair  lift5  lift10  hari0  re_alpha_t  re_r2_kolam        bte_keputusan  bte_keputusan_mdd10  bt_mdd
+id                                                                                                                                                                                                                     
+M142      Pecahan volum dari dasar (底部放量)   45      5         14      3.31    1.88      37           3.31         1.91   4.10    2.54      0        0.36         0.54  VALIDATION_REQUIRED  RISK_LIMIT_EXCEEDED  -27.58
+M133                   Bull Hook (Crabel)   49     23         13      1.80    0.49      43           2.37         0.90   1.78    5.73      1        1.41         0.06  VALIDATION_REQUIRED  RISK_LIMIT_EXCEEDED  -26.37
+M146               3-Bar Momentum Pattern   77     30         17      1.70    0.68      65           1.42         0.18   2.12    2.41      4        2.04         0.72  VALIDATION_REQUIRED  RISK_LIMIT_EXCEEDED  -40.55
+M80   Radge Saluran Purata Bergerak (MAC)  273     56         19      1.34    0.07     242           1.53         0.26   1.00    3.11      0        0.83         0.66  VALIDATION_REQUIRED  RISK_LIMIT_EXCEEDED  -38.58
+
+Nxx awal (pangkat backtest <= 10, jangkaan dan tanpa5 langsung > 0; TERLALU AWAL): ['N124X15', 'N19X13', 'N75X13', 'N73X13', 'N124X36', 'N75X15', 'N42X15']
+                                                                            nama    n  tutup  jangkaan  tanpa5  n_cair  jangkaan_cair  tanpa5_cair  lift3  btn_pangkat  btn_tahan  btn_rugi
+id                                                                                                                                                                                         
+N124X15                    Episodic pivot gap 8-10% → ekori Chandelier 4 x ATR14   39      0      3.79    2.77      33           3.77         2.55   1.78         1.00      16.13    -21.92
+N19X13                          Bawah jalur BB + RSI<30 → keluar bila rsi14 > 70  101      0      4.61    3.49      77           5.80         4.74  -0.97         2.00      11.29    -22.57
+N75X13                         RSI14 < 40 tanpa penapis → keluar bila rsi14 > 70  124      1      2.24    1.36     107           2.04         1.16  -0.74         3.00       7.47    -23.96
+N73X13                 Tutup bawah jalur bawah BB(20,2) → keluar bila rsi14 > 70  136      1      1.95    1.05     115           2.21         1.29  -1.07         4.00       6.89    -21.75
+N124X36  Episodic pivot gap 8-10% → keluar selepas DUA tutup di bawah MA rujukan   39     10      1.93    0.81      33           2.24         0.93   1.78         5.00       5.91    -14.73
+N75X15                     RSI14 < 40 tanpa penapis → ekori Chandelier 4 x ATR14  124      0      2.32    1.36     107           2.04         1.16  -0.74         7.00       5.61    -15.68
+N42X15                            Lonjakan volum 2x → ekori Chandelier 4 x ATR14  148      0      2.33    0.56     128           1.54         0.40   1.06         8.00       5.46    -15.35
