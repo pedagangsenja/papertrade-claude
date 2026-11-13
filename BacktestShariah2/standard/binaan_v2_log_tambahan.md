@@ -615,3 +615,8 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - Watchlist 548 (baharu 262, dibuang 242, ke senarai beli 59). Isyarat direkod: 12687 (data/isyarat/2026-11-12_malam.csv.gz).
 - Ralat kaedah: tiada. Nota: C KVUE M93: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M74: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M99: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M124: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M80: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M141: tiada bar 2026-11-12 (harga terkini 2026-10-30); C KVUE M148: tiada bar 2026-11-12 (harga terkini 2026-10-30); C ACA M100: tiada bar 2026-11-12 (harga terkini 2026-10-22).
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-13 22:40 MYT — GitHub Actions: beli maya 2026-11-13 (isyarat 2026-11-12)
+- Direkod 1027 (338 saham; belian semula 130; fail claude_218.csv); dilangkau 9. Harga: buka sementara yfinance 09:40 NY.
+- Dilangkau: TSM M02: buka 394.62 <= henti 397.36; DAC M13: buka 151.10 <= henti 163.66; TCOM M14: buka 42.76 <= henti 43.10; IR M102: buka 84.42 <= henti 84.42; SSL M153: isyarat batal pada buka (peraturan kaedah); TDC M153: isyarat batal pada buka (peraturan kaedah); TS M153: isyarat batal pada buka (peraturan kaedah); PSX M153: isyarat batal pada buka (peraturan kaedah); COP M153: isyarat batal pada buka (peraturan kaedah).
+- Tiada order. Tiada wang sebenar.
