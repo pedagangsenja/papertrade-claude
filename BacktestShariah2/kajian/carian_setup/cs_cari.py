@@ -36,7 +36,7 @@ import cs_teras as teras  # noqa: E402
 LAJUR = ['open', 'high', 'low', 'close', 'volume', 'turnover']
 PEKERJA = int(os.environ.get('CS_PEKERJA', '4'))
 N_MIN = 100
-PUSINGAN = {'CS01': ('431', 'kunci'), 'CS02': ('A', 'B')}      # pusingan -> (set cari, set Kunci)
+PUSINGAN = {'CS01': ('431', 'kunci'), 'CS02': ('A', 'B'), 'CS03': ('A', 'B')}      # pusingan -> (set cari, set Kunci)
 N_ATAS = 8
 N_TEPAT = 2000
 N_SENARAI = 200

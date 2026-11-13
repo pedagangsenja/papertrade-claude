@@ -195,6 +195,35 @@ class TestMekanik(unittest.TestCase):
         self.assertAlmostEqual(float(np.prod(1 + bk) - 1), R[0], delta=5e-4)   # kos dibahagi dua hari, dikompaun
 
 
+class TestLabelTangkap(unittest.TestCase):
+    """SPEC pindaan (d): label kadar tangkap."""
+
+    def setUp(self):
+        import cs_tangkap
+        self.label = cs_tangkap.label
+        self.o = np.full(40, 100.0)
+        self.l = np.full(40, 99.0)
+        self.c = np.full(40, 100.0)
+
+    def jalan(self):
+        return self.label(np.array([5]), self.o, self.l, self.c)[0].tolist()
+
+    def test_lari_naik_minggu_pertama_capai_10_dan_kekal(self):
+        self.c[6:26] = np.linspace(102, 125, 20)          # sesi 5 = 106.8, sesi 20 = 125
+        self.assertEqual(self.jalan(), [1, 1, 1, 0, 1])
+
+    def test_henti_dahulu_bermakna_gagal_walaupun_naik_kemudian(self):
+        self.l[8] = 91.0                                  # henti -8 % pada sesi 3
+        self.c[12:26] = 130.0
+        m5, t10, t20, gagal, lari = self.jalan()
+        self.assertEqual((t10, t20, gagal, lari), (0, 0, 1, 0))
+
+    def test_capai_10_tetapi_jatuh_semula_bukan_lari(self):
+        self.c[6:12] = [103, 106, 108, 110, 112, 111]     # m5 dan t10 benar
+        self.c[25] = 104.0                                # tutup sesi 20 di bawah +10 %
+        self.assertEqual(self.jalan(), [1, 1, 0, 0, 0])
+
+
 class TestKumpul(unittest.TestCase):
     def test_skor_menyamai_kiraan_terus(self):
         rng = np.random.default_rng(3)

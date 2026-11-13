@@ -167,6 +167,37 @@ Tiada keputusan semakan ini dilihat sebelum pindaan ditulis; pangkat CS02 tidak 
   purata setiap dagangannya positif. Keluaran: `carian_setup/hasil/CS02/PORTFOLIO.md` dan `portfolio.csv`
   (`cs_portfolio.py`). Maklumat sahaja; kad skor kekal satu-satunya keputusan wang sebenar.
 
+### Pindaan 13 Nov 2026 (d) — pusingan CS03: pangkat ikut KADAR TANGKAP (sebelum dijalankan)
+
+**Pembetulan arah.** Requirement yang disahkan pengguna (§1) ialah setup yang **paling kerap menangkap saham yang mula
+naik kuat** (≥ 5 % minggu pertama, ≥ 10 %, kemudian naik lagi 2–4 minggu). CS01/CS02 memangkatkan ikut purata `R` setiap
+dagangan, lalu memilih "beli ketika pasaran jatuh"; pindaan (c) pula mengukur lawan indeks, yang bukan soalan pengguna.
+CS03 memangkatkan ikut apa yang dicari. Tiada keputusan CS03 dilihat sebelum pindaan ini. Data, tempoh, ruang masuk
+(§5) dan mekanik (§4) sama seperti CS02 (cari kumpulan A: E1, E2; Kunci kumpulan B: K1, K2, K3).
+
+Label setiap isyarat (beli pada buka esok, harga `P`; tetingkap 20 sesi; bebas daripada peraturan keluar):
+
+| Label | Takrif |
+|---|---|
+| `m5` | tutup sesi 5 ≥ `P` + 5 % |
+| `t10` | tutup mencapai ≥ `P` + 10 % **sebelum** henti −8 % kena (henti ikut mekanik §4 `H1`) |
+| `t20` | sama, ≥ `P` + 20 % |
+| `gagal` | henti −8 % kena sebelum `t10` |
+| **`lari`** | `m5` DAN `t10` DAN tutup sesi 20 ≥ `P` + 10 % (naik minggu pertama, capai 10 %, dan masih di atas pada minggu ke-4) |
+
+- **Asas rawak** setiap label = kadar label itu antara semua bar layak pada **hari yang sama dan tercile ATR % yang
+  sama** (reka bentuk `standard/lift_kaedah.py`): menolak kesan hari pasaran dan kesan saham meruap. **Kelebihan** =
+  kadar setup − asas.
+- Peringkat besar: setiap peraturan masuk (pencetus × 0–2 penapis), `n` ≥ 100 dalam E1 DAN E2.
+  `skor` = min merentas E1, E2 bagi [kelebihan `lari` − 2 × √(p(1−p)/n)].
+- Peringkat tepat: 2,000 teratas dinilai semula dengan satu posisi setiap saham (pegang 20 sesi); papan 10 teratas
+  (satu setiap keluarga), 200 teratas dan 200 peraturan rawak (benih 20261113) dinilai pada K1, K2, K3.
+- Pegang/keluar bagi setiap masuk papan: (henti × keluar) dengan min(`LB` E1, `LB` E2) purata `R` tertinggi (§6.1),
+  dilaporkan pada Kunci. Ini tidak mengubah pangkat masuk.
+- Lajur ✓/✗: `T1` kelebihan `t10` > 0 dalam K1, K2 dan K3 · `T2` kelebihan `lari` > 0 dalam K1, K2 dan K3 · `T3`
+  kelebihan `lari` Kunci (gabungan) > persentil ke-95 peraturan rawak. K3 ialah ujian sebenar.
+- Keluaran `carian_setup/hasil/CS03/` (`cs_tangkap.py`); setup papan didaftarkan dalam keluarga F.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
