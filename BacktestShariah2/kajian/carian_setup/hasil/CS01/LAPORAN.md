@@ -191,7 +191,9 @@ Gabungan semua tempoh Kunci (ukuran pradaftar T3): Spearman +0.41; median terata
 ### Apa yang carian pilih
 
 - 186 daripada 200 setup teratas memakai henti paling longgar (`H4`), dan 155 memakai penapis saham meruap (`F23` ATR % ≥ 4).
+- 62 daripada 200 memakai penapis `F27` (rejim QQQ OFF) dan 25 memakai `F20` (saham ≥ 30 % di bawah puncak 52 minggu).
 - Purata pegang 10 teratas pada Kunci ialah 17.7 sesi daripada had 20.
+- Lebihan 10 teratas atas "beli mana-mana saham layak pada hari yang sama" (henti dan keluar sama): K1 -0.47 % · K2 +0.53 %. Jika lebihan ini kecil berbanding purata dagangan, sebahagian besar untung datang daripada BILA membeli (keadaan pasaran pada hari itu), bukan saham MANA yang dipilih.
 - MDD buku = semua posisi sama berat dan sentiasa melabur penuh, bukan portfolio berslot; bandingkan dengan toleransi MDD akaun −10 %.
 
 ## 5. Kaveat

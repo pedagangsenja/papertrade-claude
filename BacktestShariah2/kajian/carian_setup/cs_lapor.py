@@ -43,6 +43,12 @@ KONFIG = {
                       'K1 dan K2 berkongsi tahun dengan carian, jadi ia hanya menunjukkan setup itu berfungsi pada '
                       'saham lain dalam pasaran yang sama.',
         'kaveat': ['Tiada saham delist dalam set 2000: semua angka condong ke atas. Set ini bukan tapisan Shariah.',
+                   'Setup yang membeli saham yang sudah jatuh jauh (`F20`) paling terdedah kepada ketiadaan saham '
+                   'delist: saham yang jatuh lalu dinyahsenarai tiada dalam data, jadi setiap saham jatuh dalam data '
+                   'ini "terselamat".',
+                   'Data bermula 2010: tiada pasaran menurun panjang seperti 2000–2002 atau 2008. Membeli semasa '
+                   'rejim QQQ OFF untung dalam tempoh ini kerana setiap kejatuhan pulih; itu belum diuji dalam '
+                   'pasaran menurun yang berpanjangan.',
                    'Reka bentuk dua era dipilih selepas melihat CS01. Kumpulan A dan B merangkumi saham set 431 dan '
                    'saham Kunci CS01, dan K3 bertindih dengan tempoh Sah CS01; K3 bersih bagi pemilihan CS02 sahaja.'],
     },
@@ -191,13 +197,30 @@ def main(kerja, pus, arkib=False):
     h4 = int(atas.lajur.map(lambda x: int(x) // cari.NR == 3).sum())
     atr4 = int(atas.apply(lambda r: 22 in (r.f1, r.f2), axis=1).sum())
     pegang = float(np.mean([v[t]['pegang'] for _, _, _, v, *_ in ringkas for t in T_kunci if v[t]['n']]))
-    tahan = all(float(E[t]['atas'].median()) > max(E[t]['p95'], 0) for t in K['bebas'])
+    off = int(atas.apply(lambda r: 26 in (r.f1, r.f2), axis=1).sum())
+    jatuh = int(atas.apply(lambda r: 19 in (r.f1, r.f2), axis=1).sum())
+    lebihan = {t: float(np.average([v[t]['lebihan'] for _, _, _, v, *_ in ringkas if v[t]['n']],
+                                   weights=[v[t]['n'] for _, _, _, v, *_ in ringkas if v[t]['n']])) for t in T_kunci}
+
+    def tahap(t):
+        # jelas: median teratas melebihi persentil ke-95 rawak; lemah: median positif, melebihi median rawak dan
+        # sekurang-kurangnya 25 % setup teratas melebihi persentil ke-95 rawak (5 % dijangka tanpa kelebihan)
+        e = E[t]
+        ma, mr = float(e['atas'].median()), float(e['rawak'].median())
+        if ma > max(e['p95'], 0):
+            return 'jelas'
+        return 'lemah' if ma > max(mr, 0) and float((e['atas'] > e['p95']).mean()) >= 0.25 else 'tiada'
+
+    bacaan = {t: tahap(t) for t in K['bebas']}
+    tahan = 'jelas' if all(x == 'jelas' for x in bacaan.values()) else (
+        'tiada' if any(x == 'tiada' for x in bacaan.values()) else 'lemah')
     ringkas_meta = {k: meta[k] for k in ('pencetus', 'pencetus_cukup', 'masuk_dicuba', 'masuk_diskor', 'K',
                                          'kombinasi_dicuba', 'kombinasi_diskor', 'saat')}
     ringkas_meta.update(pusingan=pus, bahagian_skor_positif=positif, spearman_skor_lawan_kunci=rho,
                         p95_rawak_kunci=p95, median_rawak_kunci=float(rawak.pur_kunci.median()),
                         median_atas_kunci=float(atas.pur_kunci.median()), atas_henti_H4=h4, atas_penapis_ATR4=atr4,
-                        tahan_tempoh_bebas=tahan,
+                        bacaan_tempoh_bebas=tahan, atas_penapis_QQQ_OFF=off, atas_penapis_jatuh30=jatuh,
+                        **{f'lebihan_papan_{t}': lebihan[t] for t in T_kunci},
                         **{f'median_atas_{t}': float(E[t]['atas'].median()) for t in T_kunci},
                         **{f'median_rawak_{t}': float(E[t]['rawak'].median()) for t in T_kunci},
                         **{f'spearman_{t}': E[t]['rho'] for t in T_kunci},
@@ -270,12 +293,20 @@ def main(kerja, pus, arkib=False):
           baris('Setup teratas melebihi persentil ke-95 rawak',
                 lambda e: f"{int((e['atas'] > e['p95']).sum())} daripada {len(e['atas'])}"),
           baris('Spearman `skor tepat` lawan purata', lambda e: f"{e['rho']:+.2f}"), '',
-          ('Bacaan: pada tempoh yang tahunnya tidak dipakai carian (' + ', '.join(K['bebas']) + '), setup teratas '
-           '**mengatasi** setup rawak. Ini masih backtest tanpa saham delist; hakim sebenar ialah papertrade.'
-           if tahan else
-           'Bacaan: **kelebihan hanya muncul pada tahun yang sama dengan carian.** Pada tempoh yang tahunnya tidak '
-           'dipakai carian (' + ', '.join(K['bebas']) + ') setup teratas tidak mengatasi setup rawak. Papan ini '
-           'menggambarkan pasaran tempoh carian, bukan kaedah yang terbukti tahan merentas era.'), '',
+          {'jelas': 'Bacaan: pada tempoh yang tahunnya tidak dipakai carian (' + ', '.join(K['bebas']) + '), setup '
+                    'teratas **mengatasi** setup rawak dengan jelas. Ini masih backtest tanpa saham delist; hakim '
+                    'sebenar ialah papertrade.',
+           'lemah': 'Bacaan: pada tempoh yang tahunnya tidak dipakai carian (' + ', '.join(K['bebas']) + '), setup '
+                    'teratas **masih mengatasi setup rawak, tetapi lebih lemah** daripada pada tahun carian: '
+                    + '; '.join(f"{t} median {p(E[t]['atas'].median(), 2, True)} % lawan "
+                                f"{p(E[t]['rawak'].median(), 2, True)} %, dan {int((E[t]['atas'] > E[t]['p95']).sum())} "
+                                f"daripada {len(E[t]['atas'])} melebihi persentil ke-95 rawak (kira-kira "
+                                f"{round(0.05 * len(E[t]['atas']))} dijangka jika tiada kelebihan)" for t in K['bebas'])
+                    + '. Ini masih backtest tanpa saham delist; hakim sebenar ialah papertrade.',
+           'tiada': 'Bacaan: **kelebihan hanya muncul pada tahun yang sama dengan carian.** Pada tempoh yang '
+                    'tahunnya tidak dipakai carian (' + ', '.join(K['bebas']) + ') setup teratas tidak mengatasi '
+                    'setup rawak. Papan ini menggambarkan pasaran tempoh carian, bukan kaedah yang terbukti tahan '
+                    'merentas era.'}[tahan], '',
           f'Gabungan semua tempoh Kunci (ukuran pradaftar T3): Spearman {rho:+.2f}; median teratas '
           f'{p(atas.pur_kunci.median(), 2, True)} % lawan rawak {p(rawak.pur_kunci.median(), 2, True)} %; '
           f'{int((atas.pur_kunci > p95).sum())} daripada {len(atas)} melebihi persentil ke-95 rawak '
@@ -283,7 +314,13 @@ def main(kerja, pus, arkib=False):
           '### Apa yang carian pilih', '',
           f'- {h4} daripada {len(atas)} setup teratas memakai henti paling longgar (`H4`), dan {atr4} memakai '
           'penapis saham meruap (`F23` ATR % ≥ 4).',
+          f'- {off} daripada {len(atas)} memakai penapis `F27` (rejim QQQ OFF) dan {jatuh} memakai `F20` (saham '
+          '≥ 30 % di bawah puncak 52 minggu).',
           f'- Purata pegang 10 teratas pada Kunci ialah {pegang:.1f} sesi daripada had 20.',
+          '- Lebihan 10 teratas atas "beli mana-mana saham layak pada hari yang sama" (henti dan keluar sama): '
+          + ' · '.join(f'{t} {p(lebihan[t], 2, True)} %' for t in T_kunci)
+          + '. Jika lebihan ini kecil berbanding purata dagangan, sebahagian besar untung datang daripada BILA '
+          'membeli (keadaan pasaran pada hari itu), bukan saham MANA yang dipilih.',
           '- MDD buku = semua posisi sama berat dan sentiasa melabur penuh, bukan portfolio berslot; bandingkan '
           'dengan toleransi MDD akaun −10 %.', '',
           '## 5. Kaveat', '',
@@ -308,7 +345,7 @@ def main(kerja, pus, arkib=False):
     open(os.path.join(keluar_dir, 'LAPORAN.md'), 'w', encoding='utf-8').write(teks)
     if not arkib:
         open(os.path.join(BS2, 'kajian', 'CARIAN_SETUP.md'), 'w', encoding='utf-8').write(teks)
-    print(f'laporan {pus}:', len(papan), 'setup papan; rho', round(rho, 3), '; tahan tempoh bebas:', tahan)
+    print(f'laporan {pus}:', len(papan), 'setup papan; rho', round(rho, 3), '; bacaan tempoh bebas:', tahan)
 
 
 if __name__ == '__main__':
