@@ -1,6 +1,6 @@
 # Paparan awal dashboard selepas tutup AS (sesi Claude BAHARU; sejak 13 Nov 2026)
 
-Masa: **6:47 pagi MYT, Selasa–Sabtu** (= 22:47 UTC Isn–Jum), ~1¾ jam selepas tutup AS dan selepas `harga_harian.yml`
+Masa: **6:47 pagi MYT, Selasa–Sabtu** (= 22:47 UTC Isn–Jum; trig_014q7xdrErWubfa2ff43Ka66), ~1¾ jam selepas tutup AS dan selepas `harga_harian.yml`
 (21:37 UTC; penjaga mencetusnya jika lewat). Model `claude-sonnet-5-5`. Automatik; jangan tanya soalan.
 Tiada order Moomoo, tiada wang sebenar. **Tiada commit** (sesi ini tidak mengubah repo).
 
