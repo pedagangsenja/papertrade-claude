@@ -17,6 +17,8 @@ import pickle
 import sys
 import time
 import warnings
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures.process import BrokenProcessPool
 
 import numpy as np
 import pandas as pd
@@ -30,6 +32,7 @@ import cs_atom as atom  # noqa: E402
 import cs_teras as teras  # noqa: E402
 
 LAJUR = ['open', 'high', 'low', 'close', 'volume', 'turnover']
+PEKERJA = int(os.environ.get('CS_PEKERJA', '4'))
 N_MIN = 100
 N_ATAS = 8
 N_TEPAT = 2000
@@ -107,14 +110,19 @@ def _jalan_modul(tugas):
     nama, modul, P = tugas
     warnings.filterwarnings('ignore')
     try:
-        f2 = {t: _FR[t][LAJUR].copy() for t in _TICK}
         m = importlib.import_module(modul)
-        if modul.startswith('kaedah.'):
-            m.sedia(f2, _IDX)
-        else:
-            m.sedia(f2, _IDX, P)
-        sig = np.concatenate([np.asarray(pd.Series(f2[t]['sig']).fillna(False), dtype=bool) for t in _TICK])
-        return nama, np.packbits(sig), None
+        # Modul yang tidak bergantung pada saham lain dijalankan 100 saham sekali (hasil sama, memori terkawal).
+        kump = [_TICK] if getattr(m, 'SILANG', False) else [_TICK[i:i + 100] for i in range(0, len(_TICK), 100)]
+        bah = []
+        for kt in kump:
+            f2 = {t: _FR[t][LAJUR].copy() for t in kt}
+            if modul.startswith('kaedah.'):
+                m.sedia(f2, _IDX)
+            else:
+                m.sedia(f2, _IDX, P)
+            bah += [np.asarray(pd.Series(f2[t]['sig']).fillna(False), dtype=bool) for t in kt]
+            del f2
+        return nama, np.packbits(np.concatenate(bah)), None
     except Exception as e:                                  # varian yang gagal dicatat dan ditinggalkan
         return nama, None, f'{type(e).__name__}: {str(e)[:120]}'
 
@@ -151,16 +159,23 @@ def benih(kerja, set_, hanya=None):
     _FR, _IDX, _ = muat_set(set_)
     _TICK = sorted(_FR)
     log(f'benih {set_}: {len(tugas)} modul')
-    with mp.get_context('fork').Pool(4) as pool:
-        for k, (nama, bit, ralat) in enumerate(pool.imap_unordered(_jalan_modul, tugas, chunksize=1)):
-            if ralat:
-                sedia['ralat'][nama] = ralat
-            else:
-                sedia['sig'][nama] = bit
-            if (k + 1) % 20 == 0:                            # simpan berperingkat: larian boleh disambung
-                log(f'  {k + 1}/{len(tugas)}')
-                pickle.dump(sedia, open(f + '.tmp', 'wb'), protocol=4)
-                os.replace(f + '.tmp', f)
+    simpan = lambda: (pickle.dump(sedia, open(f + '.tmp', 'wb'), protocol=4), os.replace(f + '.tmp', f))
+    with ProcessPoolExecutor(max_workers=PEKERJA, mp_context=mp.get_context('fork')) as ex:
+        fut = [ex.submit(_jalan_modul, t) for t in tugas]
+        try:
+            for k, ft in enumerate(as_completed(fut)):
+                nama, bit, ralat = ft.result()
+                if ralat:
+                    sedia['ralat'][nama] = ralat
+                else:
+                    sedia['sig'][nama] = bit
+                if (k + 1) % 20 == 0:                        # simpan berperingkat: larian boleh disambung
+                    log(f'  {k + 1}/{len(tugas)}')
+                    simpan()
+        except BrokenProcessPool:                            # pekerja dimatikan (memori): jangan tersangkut
+            simpan()
+            log('pekerja terbunuh; kemajuan disimpan. Jalankan semula (CS_PEKERJA lebih kecil) untuk menyambung.')
+            raise SystemExit(1)
     for nama, _, P in tugas:
         sedia['param'][nama] = P
     pickle.dump(sedia, open(f, 'wb'), protocol=4)
