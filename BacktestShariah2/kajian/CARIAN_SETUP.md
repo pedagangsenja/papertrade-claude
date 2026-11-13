@@ -1,6 +1,6 @@
 # Carian Setup CS02 — papan 10 teratas (backtest, BUKAN bukti)
 
-> **Status keputusan (kad skor, harga 2026-11-11):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
+> **Status keputusan (kad skor, harga 2026-11-12):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
 Dijana `kajian/carian_setup/cs_lapor.py`. Pradaftar: `kajian/SPEC_CARIAN_SETUP.md` (13 Nov 2026, dikomit sebelum keputusan pusingan ini dilihat). **Jangan sunting secara manual.** Arkib setiap pusingan: `kajian/carian_setup/hasil/<pusingan>/LAPORAN.md`.
 
@@ -205,6 +205,8 @@ Gabungan semua tempoh Kunci (ukuran pradaftar T3): Spearman +0.46; median terata
 - Purata pegang 10 teratas pada Kunci ialah 18.5 sesi daripada had 20.
 - Lebihan 10 teratas atas "beli mana-mana saham layak pada hari yang sama" (henti dan keluar sama): K1 +0.49 % · K2 +0.27 % · K3 +0.29 %. Jika lebihan ini kecil berbanding purata dagangan, sebahagian besar untung datang daripada BILA membeli (keadaan pasaran pada hari itu), bukan saham MANA yang dipilih.
 - MDD buku = semua posisi sama berat dan sentiasa melabur penuh, bukan portfolio berslot; bandingkan dengan toleransi MDD akaun −10 %.
+
+**Semakan matlamat (portfolio 10 slot pada had MDD −10 %):** `carian_setup/hasil/CS02/PORTFOLIO.md`. Purata setiap dagangan di atas BUKAN hasil akaun: isyarat berkelompok pada hari pasaran jatuh, dan portfolio berslot hanya dapat mengambil sebahagian kecil daripadanya.
 
 ## 5. Kaveat
 

@@ -163,6 +163,26 @@ class TestMekanik(unittest.TestCase):
         tid[40:] = 1
         self.assertEqual(teras.satu_posisi(ev, sk, tid).tolist(), [True, False, True, False, True])
 
+    def test_pilih_slot_had_slot_dan_saham_sedang_dipegang(self):
+        # dua saham (tid 0: bar 0-59, tid 1: bar 60-119), hari = indeks bar dalam saham
+        tid = np.repeat([0, 1], 60).astype(np.int32)
+        hari = np.tile(np.arange(60), 2)
+        ev = np.array([5, 8, 65, 30, 95])          # saham0 hari5, saham0 hari8, saham1 hari5, saham0 hari30, saham1 hari35
+        sk = np.array([10, 3, 10, 3, 3])
+        susun = np.lexsort((np.arange(5), hari[ev + 1]))
+        satu = teras.pilih_slot(ev, sk, tid, hari, susun, 1)
+        self.assertEqual(satu.tolist(), [True, False, False, True, True])    # 1 slot: isyarat serentak ditolak
+        dua = teras.pilih_slot(ev, sk, tid, hari, susun, 2)
+        self.assertEqual(dua.tolist(), [True, False, True, True, True])      # saham sedang dipegang tidak dibeli lagi
+
+    def test_jumlah_harian_dibahagi_slot(self):
+        self.c[6:9] = [102, 104, 106]
+        ev = np.array([5])
+        R, hp, sk = teras.hasil_satu(ev, self.o, self.h, self.l, self.c, self.atr, self.X, JENIS, PAR, A1, A2, OP, 0, 0)
+        jum, bil = teras.jumlah_harian(ev, R, sk, self.o, self.c, np.arange(40), 40)
+        self.assertEqual(int(bil.sum()), 20)
+        self.assertAlmostEqual(float(jum.sum()), float(np.log1p(R[0])), delta=0.01)
+
     def test_buku_harian_menyamai_pulangan_dagangan(self):
         self.c[6:9] = [102, 104, 106]
         self.X[0, 8] = 1

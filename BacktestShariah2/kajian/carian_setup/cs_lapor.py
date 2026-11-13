@@ -323,6 +323,10 @@ def main(kerja, pus, arkib=False):
           'membeli (keadaan pasaran pada hari itu), bukan saham MANA yang dipilih.',
           '- MDD buku = semua posisi sama berat dan sentiasa melabur penuh, bukan portfolio berslot; bandingkan '
           'dengan toleransi MDD akaun −10 %.', '',
+          *([f'**Semakan matlamat (portfolio 10 slot pada had MDD −10 %):** `carian_setup/hasil/{pus}/PORTFOLIO.md`. '
+             'Purata setiap dagangan di atas BUKAN hasil akaun: isyarat berkelompok pada hari pasaran jatuh, dan '
+             'portfolio berslot hanya dapat mengambil sebahagian kecil daripadanya.', '']
+            if os.path.exists(os.path.join(keluar_dir, 'PORTFOLIO.md')) else []),
           '## 5. Kaveat', '',
           '- Backtest sahaja. Tiada setup di sini masuk papertrade tanpa keputusan pengguna yang berasingan; kad '
           'skor kekal satu-satunya keputusan wang sebenar.',

@@ -108,8 +108,9 @@ def main(kerja, pus):
          'K3 sahaja: CAGR % / MDD % |', '|---|---|---|---|---|---|---|---|']
     for x in out:
         A.append(f"| `{x['setup']}` | {'ya' if x['lulus_3_tapis'] is True else ('' if x['lulus_3_tapis'] == '' else 'tidak')} "
-                 f"| {x['dagangan']:,} | {x['pendedahan'] * 100:.0f} | {p(x['cagr'])} | {p(x['mdd'])} | "
-                 f"**{p(x['cagr_had'], 2)}** | {p(x['cagr_K3'])} / {p(x['mdd_K3'])} |".replace("| :,", "|"))
+                 f"| {x['dagangan'] if x['dagangan'] == '' else format(x['dagangan'], ',')} | "
+                 f"{x['pendedahan'] * 100:.0f} | {p(x['cagr'])} | {p(x['mdd'])} | "
+                 f"**{p(x['cagr_had'], 2)}** | {p(x['cagr_K3'])} / {p(x['mdd_K3'])} |")
     atas = [x for x in out[:-1] if x['cagr_had'] > spy_had]
     A += ['', f"Kayu ukur: SPY pada MDD −10 % = {p(spy_had, 2)} % setahun. Setup yang melebihinya: "
           + (', '.join(x['setup'] for x in atas) if atas else '**tiada**') + '.', '',
