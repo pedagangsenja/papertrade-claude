@@ -154,7 +154,6 @@ def main(kerja):
                         median_rawak_kunci=float(rawak.pur_kunci.median()),
                         median_atas200_kunci=float(atas.pur_kunci.median()),
                         ralat_benih_431=meta.get('ralat_benih', {}), ralat_benih_kunci=ralat_kunci)
-    json.dump(ringkas_meta, open(os.path.join(SINI, 'hasil', 'meta.json'), 'w'), indent=1)
 
     try:
         import status_kad
@@ -208,20 +207,52 @@ def main(kerja):
                      f"{x.get('pegang', float('nan')):.1f} | {p(x.get('seminggu'), 2, True)} | "
                      f"{p(x.get('lebihan'), 2, True)} | {p(x.get('mdd'), 1)} |")
         A += ['', 'Skor pada empat pilihan henti (H1–H4): ' + ' · '.join(p(x, 2, True) for x in t1), '']
+    def era(t):
+        ka, kr = atas[atas[f'n_{t}'] >= 30][f'pur_{t}'], rawak[rawak[f'n_{t}'] >= 30][f'pur_{t}']
+        q = float(kr.quantile(0.95))
+        rh = float(atas[atas[f'n_{t}'] >= 30][['skor_tepat', f'pur_{t}']].corr(method='spearman').iloc[0, 1])
+        return ka, kr, q, rh
+
+    (a1, r1, q1, rho1), (a2, r2, q2, rho2) = era('K1'), era('K2')
+    h4 = int(atas.lajur.map(lambda x: int(x) // cari.NR == 3).sum())
+    atr4 = int(atas.apply(lambda r: 22 in (r.f1, r.f2), axis=1).sum())
+    pegang = float(np.mean([v[t].get('pegang', np.nan) for _, _, _, v, *_ in ringkas for t in ('K1', 'K2')
+                            if v[t]['n']]))
+    ringkas_meta.update(median_atas_K1=float(a1.median()), median_rawak_K1=float(r1.median()),
+                        median_atas_K2=float(a2.median()), median_rawak_K2=float(r2.median()),
+                        spearman_K1=rho1, spearman_K2=rho2, atas_henti_H4=h4, atas_penapis_ATR4=atr4)
+    json.dump(ringkas_meta, open(os.path.join(SINI, 'hasil', 'meta.json'), 'w'), indent=1)
+    tahan_era = float(a1.median()) > max(q1, 0)
     A += ['## 4. Semakan kejujuran', '',
-          '| Ukuran | Nilai |', '|---|---|',
-          f'| Spearman `skor tepat` lawan purata Kunci, {len(atas)} setup teratas | {rho:+.2f} |',
-          f'| Median purata Kunci, setup teratas | {p(atas.pur_kunci.median(), 2, True)} % |',
-          f'| Median purata Kunci, {len(rawak)} setup rawak | {p(rawak.pur_kunci.median(), 2, True)} % |',
-          f'| Persentil ke-95 purata Kunci, setup rawak | {p(p95, 2, True)} % |',
-          f"| Setup teratas yang purata Kunci-nya melebihi persentil ke-95 rawak | "
-          f"{int((atas.pur_kunci > p95).sum())} daripada {len(atas)} |",
-          f"| Setup teratas dengan purata Kunci positif | {int((atas.pur_kunci > 0).sum())} daripada {len(atas)} |",
-          f"| Setup rawak dengan purata Kunci positif | {int((rawak.pur_kunci > 0).sum())} daripada {len(rawak)} |",
-          '',
-          'Bacaan: Spearman positif dan median teratas melebihi median rawak bermakna pangkat carian membawa '
-          'maklumat ke saham yang tidak dilihat. Spearman sekitar sifar atau median yang sama bermakna papan ini '
-          'tidak dapat dibezakan daripada pilihan rawak.', '',
+          '**K1 ialah ujian sebenar** (saham lain DAN tahun lain). K2 berkongsi tahun 2020–2026 dengan carian, jadi '
+          'ia hanya menunjukkan setup itu berfungsi pada saham lain dalam pasaran yang sama.', '',
+          '| Ukuran | K1 (2010–2019) | K2 (2020 – Ogo 2026) |', '|---|---|---|',
+          f'| Median purata setiap dagangan, {len(atas)} setup teratas | {p(a1.median(), 2, True)} % | '
+          f'{p(a2.median(), 2, True)} % |',
+          f'| Median purata setiap dagangan, {len(rawak)} setup rawak | {p(r1.median(), 2, True)} % | '
+          f'{p(r2.median(), 2, True)} % |',
+          f'| Setup teratas dengan purata positif | {int((a1 > 0).sum())} daripada {len(a1)} | '
+          f'{int((a2 > 0).sum())} daripada {len(a2)} |',
+          f'| Setup rawak dengan purata positif | {int((r1 > 0).sum())} daripada {len(r1)} | '
+          f'{int((r2 > 0).sum())} daripada {len(r2)} |',
+          f'| Setup teratas melebihi persentil ke-95 rawak | {int((a1 > q1).sum())} daripada {len(a1)} | '
+          f'{int((a2 > q2).sum())} daripada {len(a2)} |',
+          f'| Spearman `skor tepat` lawan purata | {rho1:+.2f} | {rho2:+.2f} |', '',
+          ('Bacaan: setup teratas mengatasi rawak pada KEDUA-DUA era.' if tahan_era else
+           'Bacaan: **kelebihan hanya muncul pada tahun yang sama dengan carian (K2).** Pada tahun yang berbeza '
+           '(K1) setup teratas tidak mengatasi setup rawak, dan pangkat carian tidak meramal hasil. Papan ini '
+           'menggambarkan pasaran 2020–2026, bukan kaedah yang terbukti tahan merentas era.'), '',
+          f'Gabungan K1+K2 (ukuran pradaftar T3): Spearman {rho:+.2f}; median teratas '
+          f'{p(atas.pur_kunci.median(), 2, True)} % lawan rawak {p(rawak.pur_kunci.median(), 2, True)} %; '
+          f'{int((atas.pur_kunci > p95).sum())} daripada {len(atas)} melebihi persentil ke-95 rawak '
+          f'({p(p95, 2, True)} %). Angka gabungan ini didominasi K2.', '',
+          '### Apa yang carian pilih', '',
+          f'- {h4} daripada {len(atas)} setup teratas memakai henti paling longgar (`H4`), dan {atr4} memakai '
+          'penapis saham meruap (`F23` ATR % ≥ 4).',
+          f'- Purata pegang 10 teratas pada Kunci ialah {pegang:.1f} sesi daripada had 20: indikator keluar yang '
+          'dipilih jarang menyala, jadi kebanyakan dagangan dipegang hampir penuh 4 minggu.',
+          '- MDD buku sangat dalam kerana buku ini sentiasa melabur penuh dalam saham meruap dengan henti jauh; '
+          'ia jauh daripada toleransi MDD akaun −10 %.', '',
           '## 5. Kaveat', '',
           '- Backtest sahaja. Tiada setup di sini masuk papertrade tanpa keputusan pengguna yang berasingan; kad '
           'skor kekal satu-satunya keputusan wang sebenar.',
