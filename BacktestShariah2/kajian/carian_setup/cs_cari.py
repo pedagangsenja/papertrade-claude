@@ -36,7 +36,7 @@ import cs_teras as teras  # noqa: E402
 LAJUR = ['open', 'high', 'low', 'close', 'volume', 'turnover']
 PEKERJA = int(os.environ.get('CS_PEKERJA', '4'))
 N_MIN = 100
-PUSINGAN = {'CS01': ('431', 'kunci'), 'CS02': ('A', 'B')}      # pusingan -> (set cari, set Kunci)
+PUSINGAN = {'CS01': ('431', 'kunci'), 'CS02': ('A', 'B'), 'CS03': ('A', 'B'), 'CS04': ('A', 'B')}      # pusingan -> (set cari, set Kunci)
 N_ATAS = 8
 N_TEPAT = 2000
 N_SENARAI = 200
@@ -153,12 +153,13 @@ def senarai_benih():
     return tugas
 
 
-def benih(kerja, set_, hanya=None):
-    """Jalankan modul benih pada set; simpan/kemas kini benih_<set>.pkl = {nama: packbits sig}, ralat = {...}."""
+def benih(kerja, set_, hanya=None, tugas=None, fail=None):
+    """Jalankan modul benih pada set; simpan/kemas kini benih_<set>.pkl = {nama: packbits sig}, ralat = {...}.
+    tugas: senarai (nama, modul, P) khas (lalai: senarai_benih()); fail: nama fail keluaran khas."""
     global _FR, _IDX, _TICK
-    f = os.path.join(kerja, f'benih_{set_}.pkl')
+    f = os.path.join(kerja, fail or f'benih_{set_}.pkl')
     sedia = pickle.load(open(f, 'rb')) if os.path.exists(f) else {'sig': {}, 'ralat': {}, 'param': {}}
-    tugas = [t for t in senarai_benih() if (hanya is None or t[0] in hanya)
+    tugas = [t for t in (senarai_benih() if tugas is None else tugas) if (hanya is None or t[0] in hanya)
              and t[0] not in sedia['sig'] and t[0] not in sedia['ralat']]
     if not tugas:
         return sedia

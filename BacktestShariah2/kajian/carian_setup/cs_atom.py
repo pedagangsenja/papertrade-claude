@@ -58,6 +58,8 @@ TEMPOH = {
     # CS02 (pindaan 13 Nov 2026 (b)): kumpulan A = cari, kumpulan B = Kunci; K3 = tempoh yang tidak dipakai carian
     'A': (('E1', 20100104, 20191231), ('E2', 20200102, 20241231)),
     'B': (('K1', 20100104, 20191231), ('K2', 20200102, 20241231), ('K3', 20250102, 20260828)),
+    # jejak hadapan kohort F (pindaan 13 Nov 2026 (f)): hanya isyarat pada atau selepas 2026-11-13
+    'hadapan': (('H', 20261113, 20991231),),
 }
 
 
@@ -242,7 +244,7 @@ def bina(fr, idx, set_, layak_tambahan=None):
         p, f, x, atr = indikator(g, rs, on.reindex(g.index).ffill(), spy_atas.reindex(g.index).ffill())
         tarikh = (g.index.year * 10000 + g.index.month * 100 + g.index.day).to_numpy().astype(np.int32)
         ly = np.arange(T) >= 252
-        if set_ == '431':
+        if set_ in ('431', 'hadapan'):
             dv = (g.close * g.volume).rolling(20).mean().to_numpy(float)
             ly &= (g.close.to_numpy(float) >= 10) & (dv >= 1e6)
         if layak_tambahan is not None:

@@ -1,0 +1,200 @@
+{
+ "mula": 20261113,
+ "spec": "kajian/SPEC_CARIAN_SETUP.md pindaan 13 Nov 2026 (f)",
+ "ahli": [
+  {
+   "id": "F21",
+   "induk": "F21",
+   "takrif": "N40|F03+F20|H2|X09 ATAU X10",
+   "param": null,
+   "masuk": "N40 OBV tinggi baharu + MA50 (benih N)",
+   "penapis": "F03 tutup > MA200 DAN F20 >= 30% di bawah puncak 52 minggu",
+   "henti": "H2 -10%",
+   "keluar": "X09 MACD < isyarat ATAU X10 histogram MACD turun 3 hari",
+   "pencetus": "N40",
+   "fs": [
+    2,
+    19
+   ],
+   "amb": [
+    null,
+    null
+   ],
+   "lajur": 758
+  },
+  {
+   "id": "F22",
+   "induk": "F22",
+   "takrif": "M84.1|F23+F26|H2|X11 ATAU X21",
+   "param": {
+    "close_ambang_5": 2,
+    "rma_atr_14": 19,
+    "rma_atr_kali_3": 2.187672,
+    "rolling_200": 350,
+    "rolling_21": 19,
+    "rolling_50": 85
+   },
+   "masuk": "M84 Jarak purata bergerak MAD 21/200 (benih M, varian 1: close_ambang_5=2, rma_atr_14=19, rma_atr_kali_3=2.188, rolling_200=350, rolling_21=19, rolling_50=85)",
+   "penapis": "F23 ATR% >= 4 DAN F26 rejim QQQ ON",
+   "henti": "H2 -10%",
+   "keluar": "X11 RSI14 < 50 ATAU X21 Stochastic silang turun di atas 80",
+   "pencetus": "M84.1",
+   "fs": [
+    22,
+    25
+   ],
+   "amb": [
+    null,
+    null
+   ],
+   "lajur": 796
+  },
+  {
+   "id": "F34",
+   "induk": "F24",
+   "takrif": "M49.t7|F17@95+F23@4|H4|X21 ATAU X22",
+   "param": {
+    "rolling_26": 32,
+    "rolling_52": 104,
+    "rolling_9": 8,
+    "shift_26": 48
+   },
+   "masuk": "M49 Ichimoku (Tutup Atas Awan + Tenkan Silang Kijun) (benih M, varian t7: rolling_26=32, rolling_52=104, rolling_9=8, shift_26=48) [tala daripada F24]",
+   "penapis": "RS >= 95 DAN ATR% >= 4",
+   "henti": "H4 4xATR14",
+   "keluar": "X21 Stochastic silang turun di atas 80 ATAU X22 hari turun dengan volum >= 1.5x",
+   "pencetus": "M49.t7",
+   "fs": [
+    16,
+    22
+   ],
+   "amb": [
+    95.0,
+    4.0
+   ],
+   "lajur": 2026
+  },
+  {
+   "id": "F27",
+   "induk": "F27",
+   "takrif": "N73|F16+F23|H4|X07 DAN X21",
+   "param": null,
+   "masuk": "N73 Tutup bawah jalur bawah BB(20,2) (benih N)",
+   "penapis": "F16 RS >= 70 DAN F23 ATR% >= 4",
+   "henti": "H4 4xATR14",
+   "keluar": "X07 dua tutup berturut < MA20 DAN X21 Stochastic silang turun di atas 80",
+   "pencetus": "N73",
+   "fs": [
+    15,
+    22
+   ],
+   "amb": [
+    null,
+    null
+   ],
+   "lajur": 2168
+  },
+  {
+   "id": "F28",
+   "induk": "F28",
+   "takrif": "M92.2|F20+F27|H4|X20 DAN X21",
+   "param": {
+    "cci_50": 91,
+    "rma_atr_14": 15,
+    "rma_atr_kali_2": 2.496373
+   },
+   "masuk": "M92 CCI-50 (benih M, varian 2: cci_50=91, rma_atr_14=15, rma_atr_kali_2=2.496)",
+   "penapis": "F20 >= 30% di bawah puncak 52 minggu DAN F27 rejim QQQ OFF",
+   "henti": "H4 4xATR14",
+   "keluar": "X20 tutup < 92% tutup tertinggi sejak beli DAN X21 Stochastic silang turun di atas 80",
+   "pencetus": "M92.2",
+   "fs": [
+    19,
+    26
+   ],
+   "amb": [
+    null,
+    null
+   ],
+   "lajur": 2298
+  },
+  {
+   "id": "F38",
+   "induk": "F29",
+   "takrif": "P13|F17@95+F23@4|H2|X14 ATAU X18",
+   "param": null,
+   "masuk": "P13 RSI14 silang atas 60 [tala daripada F29]",
+   "penapis": "RS >= 95 DAN ATR% >= 4",
+   "henti": "H2 -10%",
+   "keluar": "X14 Supertrend turun ATAU X18 Chandelier 3xATR14 (dari tutup tertinggi sejak beli)",
+   "pencetus": "P13",
+   "fs": [
+    16,
+    22
+   ],
+   "amb": [
+    95.0,
+    4.0
+   ],
+   "lajur": 826
+  },
+  {
+   "id": "F30",
+   "induk": "F30",
+   "takrif": "N43|F15+F23|H4|X21 DAN X22",
+   "param": null,
+   "masuk": "N43 Undur EMA8 + penapis MA50 (benih N)",
+   "penapis": "F15 Supertrend naik DAN F23 ATR% >= 4",
+   "henti": "H4 4xATR14",
+   "keluar": "X21 Stochastic silang turun di atas 80 DAN X22 hari turun dengan volum >= 1.5x",
+   "pencetus": "N43",
+   "fs": [
+    14,
+    22
+   ],
+   "amb": [
+    null,
+    null
+   ],
+   "lajur": 2302
+  },
+  {
+   "id": "F24",
+   "induk": "F24",
+   "takrif": "M49.2|F17+F23|H4|X11 DAN X22",
+   "param": {
+    "rolling_26": 33,
+    "rolling_52": 93,
+    "rolling_9": 8,
+    "shift_26": 40
+   },
+   "masuk": "M49 Ichimoku (Tutup Atas Awan + Tenkan Silang Kijun) (benih M, varian 2: rolling_26=33, rolling_52=93, rolling_9=8, shift_26=40)",
+   "penapis": "F17 RS >= 90 DAN F23 ATR% >= 4",
+   "henti": "H4 4xATR14",
+   "keluar": "X11 RSI14 < 50 DAN X22 hari turun dengan volum >= 1.5x",
+   "pencetus": "M49.2",
+   "fs": [
+    16,
+    22
+   ],
+   "amb": [
+    null,
+    null
+   ],
+   "lajur": 2227
+  }
+ ],
+ "log": [
+  "F21: calon F21 (induk); T1 True T2 True -> MASUK",
+  "F22: calon F22 (induk); T1 True T2 True -> MASUK",
+  "F23: calon F33 (anak mengatasi induk); T1 False T2 True -> tidak",
+  "F24: calon F34 (anak mengatasi induk); T1 True T2 True -> MASUK",
+  "F25: calon F35 (anak mengatasi induk); T1 False T2 True -> tidak",
+  "F26: calon F26 (induk); T1 True T2 False -> tidak",
+  "F27: calon F27 (induk); T1 True T2 True -> MASUK",
+  "F28: calon F28 (induk); T1 True T2 True -> MASUK",
+  "F29: calon F38 (anak mengatasi induk); T1 True T2 True -> MASUK",
+  "F30: calon F30 (induk); T1 True T2 True -> MASUK",
+  "F24: TAMBAHAN pindaan (g), post-hoc"
+ ]
+}

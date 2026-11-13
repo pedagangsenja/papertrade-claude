@@ -1,0 +1,11 @@
+{
+ "pusingan": "CS04",
+ "induk": 10,
+ "ditala": 8,
+ "anak_lebih_baik": 6,
+ "anak_lebih_baik_K3": 4,
+ "varian_dijalankan": 144,
+ "varian_gagal": {},
+ "median_lebih_induk": 0.024049930802427545,
+ "median_lebih_anak": 0.027772548497199526
+}

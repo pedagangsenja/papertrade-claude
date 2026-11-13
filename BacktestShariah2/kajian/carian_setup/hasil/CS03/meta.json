@@ -1,0 +1,17 @@
+{
+ "pencetus": 500,
+ "masuk_dicuba": 233000,
+ "masuk_diskor": 182903,
+ "bahagian_skor_positif": 0.04218629546808964,
+ "pusingan": "CS03",
+ "p95_rawak": 0.013890153636714565,
+ "median_atas_K1": 0.021495699882507324,
+ "median_atas_K2": 0.021183542907238007,
+ "median_atas_K3": 0.01381109282374382,
+ "median_rawak_K1": -0.00025632791221141815,
+ "median_rawak_K2": 0.001287907361984253,
+ "median_rawak_K3": 0.004149928689002991,
+ "spearman_K1": 0.2819675082129517,
+ "spearman_K2": 0.36480028082769317,
+ "spearman_K3": -0.03722185428355022
+}

@@ -149,6 +149,104 @@ keluar, benih M asal + varian 1 dan 2 yang sama, benih N) dan pemilihan (§6) **
 - Keluaran setiap pusingan diarkib dalam `carian_setup/hasil/<pusingan>/`; `kajian/CARIAN_SETUP.md` memaparkan pusingan
   terkini. ID keluarga F bersambung (takrif yang sama mengekalkan ID; ukurannya dikemas kini ke pusingan terkini).
 
+### Pindaan 13 Nov 2026 (c) — semakan portfolio pada had MDD −10 % (sebelum dijalankan)
+
+Keputusan pengguna 13 Nov 2026: Claude menentukan langkah seterusnya ke arah matlamat (untung bersih dengan MDD akaun
+−10 %) dengan token sesedikit mungkin. Purata setiap dagangan bukan matlamat itu; semakan ini mengukurnya terus.
+Tiada keputusan semakan ini dilihat sebelum pindaan ditulis; pangkat CS02 tidak berubah.
+
+- Setup: 10 papan CS02 (`F11`–`F20`) satu demi satu, dan gabungan tujuh yang lulus tiga tapis.
+- Data: kumpulan B (saham yang carian tidak lihat), isyarat 2010-01-04 … 2026-08-28, mekanik §4.
+- Portfolio: 10 slot × 10 % ekuiti; isyarat dibeli pada buka esok jika ada slot kosong dan saham itu tidak sedang
+  dipegang; slot kosong semula sehari selepas hari jual; lebih isyarat daripada slot → dipilih rawak (benih 20261113);
+  pulangan harian = jumlah pulangan harian posisi terbuka ÷ 10; tunai 0 %.
+- Ukuran: CAGR, MDD, purata pendedahan; kemudian **pada MDD −10 %**: pendedahan didarab `w` = min(1, 10 % ÷ |MDD|)
+  (baki tunai) dan CAGR dikira semula. Juga dilaporkan untuk K3 sahaja (2025 – Ogo 2026).
+- Kayu ukur tempoh sama: SPY beli-dan-pegang dengan skala yang sama (SPUS tiada sejarah sebelum Dis 2019).
+- Bacaan: setup yang CAGR-nya pada MDD −10 % tidak melebihi SPY pada MDD −10 % tidak mendekatkan matlamat, walaupun
+  purata setiap dagangannya positif. Keluaran: `carian_setup/hasil/CS02/PORTFOLIO.md` dan `portfolio.csv`
+  (`cs_portfolio.py`). Maklumat sahaja; kad skor kekal satu-satunya keputusan wang sebenar.
+
+### Pindaan 13 Nov 2026 (d) — pusingan CS03: pangkat ikut KADAR TANGKAP (sebelum dijalankan)
+
+**Pembetulan arah.** Requirement yang disahkan pengguna (§1) ialah setup yang **paling kerap menangkap saham yang mula
+naik kuat** (≥ 5 % minggu pertama, ≥ 10 %, kemudian naik lagi 2–4 minggu). CS01/CS02 memangkatkan ikut purata `R` setiap
+dagangan, lalu memilih "beli ketika pasaran jatuh"; pindaan (c) pula mengukur lawan indeks, yang bukan soalan pengguna.
+CS03 memangkatkan ikut apa yang dicari. Tiada keputusan CS03 dilihat sebelum pindaan ini. Data, tempoh, ruang masuk
+(§5) dan mekanik (§4) sama seperti CS02 (cari kumpulan A: E1, E2; Kunci kumpulan B: K1, K2, K3).
+
+Label setiap isyarat (beli pada buka esok, harga `P`; tetingkap 20 sesi; bebas daripada peraturan keluar):
+
+| Label | Takrif |
+|---|---|
+| `m5` | tutup sesi 5 ≥ `P` + 5 % |
+| `t10` | tutup mencapai ≥ `P` + 10 % **sebelum** henti −8 % kena (henti ikut mekanik §4 `H1`) |
+| `t20` | sama, ≥ `P` + 20 % |
+| `gagal` | henti −8 % kena sebelum `t10` |
+| **`lari`** | `m5` DAN `t10` DAN tutup sesi 20 ≥ `P` + 10 % (naik minggu pertama, capai 10 %, dan masih di atas pada minggu ke-4) |
+
+- **Asas rawak** setiap label = kadar label itu antara semua bar layak pada **hari yang sama dan tercile ATR % yang
+  sama** (reka bentuk `standard/lift_kaedah.py`): menolak kesan hari pasaran dan kesan saham meruap. **Kelebihan** =
+  kadar setup − asas.
+- Peringkat besar: setiap peraturan masuk (pencetus × 0–2 penapis), `n` ≥ 100 dalam E1 DAN E2.
+  `skor` = min merentas E1, E2 bagi [kelebihan `lari` − 2 × √(p(1−p)/n)].
+- Peringkat tepat: 2,000 teratas dinilai semula dengan satu posisi setiap saham (pegang 20 sesi); papan 10 teratas
+  (satu setiap keluarga), 200 teratas dan 200 peraturan rawak (benih 20261113) dinilai pada K1, K2, K3.
+- Pegang/keluar bagi setiap masuk papan: (henti × keluar) dengan min(`LB` E1, `LB` E2) purata `R` tertinggi (§6.1),
+  dilaporkan pada Kunci. Ini tidak mengubah pangkat masuk.
+- Lajur ✓/✗: `T1` kelebihan `t10` > 0 dalam K1, K2 dan K3 · `T2` kelebihan `lari` > 0 dalam K1, K2 dan K3 · `T3`
+  kelebihan `lari` Kunci (gabungan) > persentil ke-95 peraturan rawak. K3 ialah ujian sebenar.
+- Keluaran `carian_setup/hasil/CS03/` (`cs_tangkap.py`); setup papan didaftarkan dalam keluarga F.
+
+### Pindaan 13 Nov 2026 (e) — pusingan CS04: tala parameter di sekitar pemenang CS03 (sebelum dijalankan)
+
+Matlamat tidak berubah: setup yang paling kerap menangkap saham "lari" (pindaan (d)). CS03 memilih 10 masuk terbaik
+dengan tetapan tetap; CS04 **menala parameternya** ("tala dari benih"). Data, label, asas rawak dan `skor` sama seperti
+CS03. Tiada keputusan CS04 dilihat sebelum pindaan ini.
+
+- **Induk:** 10 setup papan CS03 (`F21`–`F30`).
+- **Pencetus:** induk berasaskan kaedah M → 24 varian baharu; setiap parameter `tala = Y` diambil seragam dalam ±25 %
+  nilai induk (dipotong pada [`bawah`, `atas`] `param_julat.csv`; integer dibundarkan; benih 20261113). Induk N dan
+  indikator P tidak mempunyai parameter boleh tala dalam modulnya: pencetus kekal.
+- **Penapis:** jenis penapis induk kekal; ambang penapis berambang ditala pada grid: RS ≥ {50, 60, 70, 80, 90, 95};
+  ATR % ≥ {2, 3, 4, 5, 6, 8}; ≥ {20, 30, 40, 50, 60} % di bawah puncak 52 minggu. Penapis lain (rejim QQQ, Supertrend,
+  SPY > SMA200, tutup > MA200) kekal.
+- **Dataran, bukan puncak:** markah satu sel (varian × ambang) = **median** `skor` sel itu dan jiran ambangnya (grid
+  3 × 3, sekurang-kurangnya 4 sel cukup isyarat; bila hanya satu ambang ditala: 3 sel sebaris, sekurang-kurangnya 2).
+  Anak = sel bermarkah dataran tertinggi bagi setiap induk; jika sel induk sendiri yang tertinggi, induk kekal.
+  Penilaian dengan satu posisi setiap saham; `n` ≥ 100 dalam E1 dan E2.
+- **Ujian:** anak dan induk dinilai pada kumpulan B (K1, K2, K3). Laporan menyatakan berapa anak yang kelebihan
+  `lari`-nya melebihi induk pada saham yang tidak dilihat, dan pada K3. Jika penalaan tidak menambah baik pada
+  kumpulan B, itu dilaporkan sebagaimana adanya.
+- Pegang/keluar anak: seperti pindaan (d). Anak didaftarkan dalam keluarga F (ID baharu, dengan catatan induknya).
+  Keluaran `carian_setup/hasil/CS04/` (`cs_tala.py`).
+
+### Pindaan 13 Nov 2026 (f) — kohort jejak hadapan F (ditulis sebelum keputusan CS04 dilihat)
+
+Keputusan pengguna 13 Nov 2026: siapkan semuanya malam ini, termasuk papertrade bagi setup yang lulus; penentuan
+diserahkan kepada Claude. Peraturan pemilihan dikunci di sini **sebelum** keputusan CS04 dibaca:
+
+1. Bagi setiap induk CS03 (`F21`–`F30`): calon = **anak** CS04 jika induk itu ditala DAN kelebihan `lari` anak melebihi
+   induk pada kumpulan B (gabungan K1+K2+K3) DAN pada K3; selainnya calon = **induk**.
+2. Calon masuk kohort hanya jika `T1` dan `T2` benar baginya (kelebihan `t10` dan `lari` positif dalam K1, K2 dan K3).
+3. Setiap ahli kohort dijejak dengan cara pegang dan keluar terbaiknya (pindaan (d)), mekanik §4 tanpa perubahan.
+
+Jejak hadapan ialah **penjejak berasingan** (`carian_setup/cs_hadapan.py`, folder `BacktestShariah2/jejak_f/`), bukan
+Lejar: mekanik §4 (henti ikut harga beli, tiada jual hari beli, keluar bergantung laluan) tidak sama dengan enjin v1.2,
+dan ukuran yang dijejak ialah kadar tangkap. Ia tidak menyentuh Lejar, Papertrade C, kad skor atau dashboard. Alam =
+stor harga (senarai Shariah semasa); layak seperti set 431. Hanya isyarat pada atau selepas **2026-11-13** dikira
+(tiada isian ke belakang). Kad skor kekal satu-satunya keputusan wang sebenar: setup F yang terbukti dalam jejak ini
+masih perlu keputusan pengguna dan integrasi Lejar sebelum boleh dinilai kad skor.
+
+### Pindaan 13 Nov 2026 (g) — tambahan kohort selepas hasil dilihat (POST-HOC, dilabel begitu)
+
+Semakan semula lawan matlamat pengguna (menangkap saham yang naik kuat **dan untung**): peraturan (f) memilih anak `F34`
+menggantikan induk `F24` kerana kadar tangkapnya lebih tinggi, tetapi dengan cara pegang terbaik masing-masing induk
+`F24` positif setiap dagangan dalam K1, K2 dan K3 (+0.79 / +1.19 / +0.50 %) manakala `F34` tidak (+0.07 / −0.77 / −0.83 %).
+`F24` juga lulus `T1`, `T2` dan `T3`. Maka **`F24` ditambah ke kohort** supaya kedua-dua versi dijejak ke hadapan.
+Ini keputusan selepas melihat hasil, bukan pradaftar; ia hanya MENAMBAH satu ahli dan tidak membuang mana-mana ahli
+peraturan (f). Tiada tambahan lain.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

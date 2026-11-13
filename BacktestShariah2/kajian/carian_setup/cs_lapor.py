@@ -84,6 +84,8 @@ def terang(r, param):
 
 def takrif(r):
     """Takrif kanonik satu setup (boleh dibaca mesin): pencetus|penapis|henti|keluar."""
+    if getattr(r, 'takrif_khas', None):                     # setup ditala (CS04): ambang penapis dalam takrif
+        return r.takrif_khas
     s, x = divmod(int(r.lajur), cari.NR)
     pen = '+'.join(atom.PENAPIS[f][:3] for f in (r.f1, r.f2) if f >= 0) or '-'
     a, b, op = cari.A1[x], cari.A2[x], cari.OP[x]
@@ -323,6 +325,10 @@ def main(kerja, pus, arkib=False):
           'membeli (keadaan pasaran pada hari itu), bukan saham MANA yang dipilih.',
           '- MDD buku = semua posisi sama berat dan sentiasa melabur penuh, bukan portfolio berslot; bandingkan '
           'dengan toleransi MDD akaun −10 %.', '',
+          *([f'**Semakan matlamat (portfolio 10 slot pada had MDD −10 %):** `carian_setup/hasil/{pus}/PORTFOLIO.md`. '
+             'Purata setiap dagangan di atas BUKAN hasil akaun: isyarat berkelompok pada hari pasaran jatuh, dan '
+             'portfolio berslot hanya dapat mengambil sebahagian kecil daripadanya.', '']
+            if os.path.exists(os.path.join(keluar_dir, 'PORTFOLIO.md')) else []),
           '## 5. Kaveat', '',
           '- Backtest sahaja. Tiada setup di sini masuk papertrade tanpa keputusan pengguna yang berasingan; kad '
           'skor kekal satu-satunya keputusan wang sebenar.',
