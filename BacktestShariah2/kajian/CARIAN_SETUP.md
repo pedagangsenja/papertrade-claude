@@ -2,39 +2,41 @@
 
 > **Status keputusan (kad skor, harga 2026-11-11):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
-Dijana `kajian/carian_setup/cs_lapor.py`. Pradaftar: `kajian/SPEC_CARIAN_SETUP.md` (13 Nov 2026, dikomit sebelum keputusan dilihat). **Jangan sunting secara manual.**
+Dijana `kajian/carian_setup/cs_lapor.py`. Pradaftar: `kajian/SPEC_CARIAN_SETUP.md` (13 Nov 2026, dikomit sebelum keputusan pusingan ini dilihat). **Jangan sunting secara manual.** Arkib setiap pusingan: `kajian/carian_setup/hasil/<pusingan>/LAPORAN.md`.
 
 ## 1. Apa yang dicari
 
 Setup lengkap (masuk, pegang, keluar) yang menangkap saham ketika ia mula naik kuat dan memegangnya selagi naik. Syarat wajib: swing paling lama 20 sesi, tiada jual pada hari beli, henti rugi longgar, tiada sasaran untung tetap, keluar ikut indikator. Kos 0.5 % pusingan sudah ditolak.
 
+Carian: set 431. Kunci: 1,000 saham lain yang carian tidak pernah lihat.
+
 ## 2. Saiz carian
 
 - Pencetus masuk: 500 (49 indikator + benih M asal dan dua varian parameter + benih N); 455 cukup isyarat.
-- Peraturan masuk (pencetus × 0–2 penapis): 233,000 dicuba, 159,203 cukup dagangan (≥ 100 dalam Latih dan Sah).
+- Peraturan masuk (pencetus × 0–2 penapis): 233,000 dicuba, 159,203 cukup dagangan (≥ 100 dalam kedua-dua tempoh carian).
 - Setiap satu × 2,308 gabungan henti × keluar: **367,440,524 kombinasi diskor** (daripada 537,764,000 dicuba) dalam 10 minit.
-- 4.4 % kombinasi diskor mempunyai had bawah positif dalam Latih DAN Sah.
+- 4.4 % kombinasi diskor mempunyai had bawah positif dalam kedua-dua tempoh carian.
 
 ## 3. Papan 10 teratas
 
-Pangkat ikut `skor tepat` (had bawah purata untung, yang lebih rendah antara Latih dan Sah). **Kunci** ialah 1,000 saham lain yang carian tidak pernah lihat; ia dilaporkan sahaja dan tidak mengubah pangkat.
+Pangkat ikut `skor tepat` (had bawah purata untung, yang lebih rendah antara Latih dan Sah). **Kunci** dilaporkan sahaja dan tidak mengubah pangkat.
 
 Setiap setup papan didaftarkan dalam keluarga **F** (`data/registry_F.csv`, ID kekal; status BACKTEST = belum papertrade).
 
-| # | ID | Masuk | Penapis | Henti | Keluar | Skor | Kunci: dagangan | Kunci: purata % | Lawan rawak | T1 | T2 | T3 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | `F01` | N203 (benih N) | F15 Supertrend naik DAN F23 ATR% >= 4 | H4 4xATR14 | X03 tutup < MA50 DAN X22 hari turun dengan volum >= 1.5x | +3.09 | 1,127 | +2.54 | persentil 100 | ✗ | ✗ | ✓ |
-| 2 | `F02` | M111 Sistem Volatiliti Wilder (benih M, varian 2: close_kali_0_88=0.631, m=3.248, n=9, rolling_50=44, sistem_mula_199=259) | F20 >= 30% di bawah puncak 52 minggu DAN F27 rejim QQQ OFF | H4 4xATR14 | X08 MA10 < MA20 DAN X22 hari turun dengan volum >= 1.5x | +3.09 | 1,184 | +1.74 | persentil 100 | ✓ | ✓ | ✓ |
-| 3 | `F03` | M01 Bollinger Band + RSI (benih M, varian 2: r13_ambang_25=38, rolling_30=58, rsi_13=10, sd_kali_2=1.436) | F16 RS >= 70 DAN F20 >= 30% di bawah puncak 52 minggu | H4 4xATR14 | X20 tutup < 92% tutup tertinggi sejak beli DAN X21 Stochastic silang turun di atas 80 | +3.09 | 759 | +2.49 | persentil 100 | ✓ | ✗ | ✓ |
-| 4 | `F04` | M79 Radge: 20% Flipper (benih M, varian 1: a=0.18) | F21 volum hari isyarat >= 1.5x purata 50 DAN F27 rejim QQQ OFF | H4 4xATR14 | X12 RSI14 silang turun bawah 70 DAN X20 tutup < 92% tutup tertinggi sejak beli | +2.72 | 1,540 | +2.13 | persentil 100 | ✗ | ✓ | ✓ |
-| 5 | `F05` | P07 MA20 silang atas MA50 | F15 Supertrend naik DAN F23 ATR% >= 4 | H4 4xATR14 | X14 Supertrend turun DAN X22 hari turun dengan volum >= 1.5x | +2.67 | 3,098 | +1.40 | persentil 100 | ✓ | ✗ | ✓ |
-| 6 | `F06` | N07 Tiga MA tersusun (benih N) | F14 ADX < 20 DAN F23 ATR% >= 4 | H4 4xATR14 | X18 Chandelier 3xATR14 (dari tutup tertinggi sejak beli) DAN X22 hari turun dengan volum >= 1.5x | +2.40 | 2,941 | +1.58 | persentil 100 | ✓ | ✓ | ✓ |
-| 7 | `F07` | M30 BB Free Bar + Himpitan 50/2.5 (benih M, parameter asal) | F23 ATR% >= 4 DAN F27 rejim QQQ OFF | H4 4xATR14 | X13 RSI14 > 80 | +2.34 | 578 | +1.03 | persentil 100 | ✗ | ✗ | ✓ |
-| 8 | `F08` | N201 (benih N) | F15 Supertrend naik DAN F23 ATR% >= 4 | H4 4xATR14 | X18 Chandelier 3xATR14 (dari tutup tertinggi sejak beli) DAN X22 hari turun dengan volum >= 1.5x | +2.32 | 2,765 | +1.21 | persentil 100 | ✓ | ✗ | ✓ |
-| 9 | `F09` | M140 猎豹出击 (Serangan Cheetah) (benih M, varian 1: float_ambang_40=20, had_henti=0.581, henti_atr=3.237, keluar_sma=99, rolling_60=61, sma_60=71) | F23 ATR% >= 4 DAN F30 hari naik (tutup > buka) | H4 4xATR14 | X14 Supertrend turun DAN X22 hari turun dengan volum >= 1.5x | +2.32 | 1,764 | +1.46 | persentil 100 | ✗ | ✗ | ✓ |
-| 10 | `F10` | P16 RSI2<5 atas MA200 | F21 volum hari isyarat >= 1.5x purata 50 DAN F23 ATR% >= 4 | H3 3xATR14 | X12 RSI14 silang turun bawah 70 ATAU X19 Chandelier 2xATR14 | +2.32 | 1,303 | +0.38 | persentil 98 | ✓ | ✗ | ✓ |
+| # | ID | Masuk | Penapis | Henti | Keluar | Skor | K1: purata % | K2: purata % | Lawan rawak | T1 | T2 | T3 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | `F01` | N203 (benih N) | F15 Supertrend naik DAN F23 ATR% >= 4 | H4 4xATR14 | X03 tutup < MA50 DAN X22 hari turun dengan volum >= 1.5x | +3.09 | -0.29 | +3.23 | persentil 100 | ✗ | ✗ | ✓ |
+| 2 | `F02` | M111 Sistem Volatiliti Wilder (benih M, varian 2: close_kali_0_88=0.631, m=3.248, n=9, rolling_50=44, sistem_mula_199=259) | F20 >= 30% di bawah puncak 52 minggu DAN F27 rejim QQQ OFF | H4 4xATR14 | X08 MA10 < MA20 DAN X22 hari turun dengan volum >= 1.5x | +3.09 | +1.51 | +1.86 | persentil 100 | ✓ | ✓ | ✓ |
+| 3 | `F03` | M01 Bollinger Band + RSI (benih M, varian 2: r13_ambang_25=38, rolling_30=58, rsi_13=10, sd_kali_2=1.436) | F16 RS >= 70 DAN F20 >= 30% di bawah puncak 52 minggu | H4 4xATR14 | X20 tutup < 92% tutup tertinggi sejak beli DAN X21 Stochastic silang turun di atas 80 | +3.09 | -0.18 | +3.28 | persentil 100 | ✓ | ✗ | ✓ |
+| 4 | `F04` | M79 Radge: 20% Flipper (benih M, varian 1: a=0.18) | F21 volum hari isyarat >= 1.5x purata 50 DAN F27 rejim QQQ OFF | H4 4xATR14 | X12 RSI14 silang turun bawah 70 DAN X20 tutup < 92% tutup tertinggi sejak beli | +2.72 | +0.76 | +2.73 | persentil 100 | ✗ | ✓ | ✓ |
+| 5 | `F05` | P07 MA20 silang atas MA50 | F15 Supertrend naik DAN F23 ATR% >= 4 | H4 4xATR14 | X14 Supertrend turun DAN X22 hari turun dengan volum >= 1.5x | +2.67 | -0.44 | +2.05 | persentil 100 | ✓ | ✗ | ✓ |
+| 6 | `F06` | N07 Tiga MA tersusun (benih N) | F14 ADX < 20 DAN F23 ATR% >= 4 | H4 4xATR14 | X18 Chandelier 3xATR14 (dari tutup tertinggi sejak beli) DAN X22 hari turun dengan volum >= 1.5x | +2.40 | +0.04 | +2.11 | persentil 100 | ✓ | ✓ | ✓ |
+| 7 | `F07` | M30 BB Free Bar + Himpitan 50/2.5 (benih M, parameter asal) | F23 ATR% >= 4 DAN F27 rejim QQQ OFF | H4 4xATR14 | X13 RSI14 > 80 | +2.34 | -1.87 | +1.99 | persentil 100 | ✗ | ✗ | ✓ |
+| 8 | `F08` | N201 (benih N) | F15 Supertrend naik DAN F23 ATR% >= 4 | H4 4xATR14 | X18 Chandelier 3xATR14 (dari tutup tertinggi sejak beli) DAN X22 hari turun dengan volum >= 1.5x | +2.32 | -0.77 | +1.90 | persentil 100 | ✓ | ✗ | ✓ |
+| 9 | `F09` | M140 猎豹出击 (Serangan Cheetah) (benih M, varian 1: float_ambang_40=20, had_henti=0.581, henti_atr=3.237, keluar_sma=99, rolling_60=61, sma_60=71) | F23 ATR% >= 4 DAN F30 hari naik (tutup > buka) | H4 4xATR14 | X14 Supertrend turun DAN X22 hari turun dengan volum >= 1.5x | +2.32 | -0.19 | +2.07 | persentil 100 | ✗ | ✗ | ✓ |
+| 10 | `F10` | P16 RSI2<5 atas MA200 | F21 volum hari isyarat >= 1.5x purata 50 DAN F23 ATR% >= 4 | H3 3xATR14 | X12 RSI14 silang turun bawah 70 ATAU X19 Chandelier 2xATR14 | +2.32 | -0.47 | +0.89 | persentil 98 | ✓ | ✗ | ✓ |
 
-- **T1 tahan:** skor positif pada keempat-empat pilihan henti. **T2 tidak dilihat:** purata positif dalam K1 dan K2. **T3 kalahkan rawak:** purata Kunci melebihi persentil ke-95 setup rawak (+0.24 %).
+- **T1 tahan:** skor positif pada keempat-empat pilihan henti. **T2 tidak dilihat:** purata positif dalam setiap tempoh Kunci. **T3 kalahkan rawak:** purata Kunci (semua tempoh) melebihi persentil ke-95 setup rawak (+0.24 %).
 - "Lawan rawak" = peratus daripada 200 setup yang dipilih rawak daripada ruang yang sama yang puratanya pada Kunci lebih rendah.
 
 ### Butiran setiap setup
@@ -173,7 +175,7 @@ Skor pada empat pilihan henti (H1–H4): +1.68 · +2.34 · +2.32 · +2.24
 
 **K1 ialah ujian sebenar** (saham lain DAN tahun lain). K2 berkongsi tahun 2020–2026 dengan carian, jadi ia hanya menunjukkan setup itu berfungsi pada saham lain dalam pasaran yang sama.
 
-| Ukuran | K1 (2010–2019) | K2 (2020 – Ogo 2026) |
+| Ukuran | Kunci K1 (saham lain, 2010–2019) | Kunci K2 (saham lain, 2020 – Ogo 2026) |
 |---|---|---|
 | Median purata setiap dagangan, 200 setup teratas | -0.26 % | +2.05 % |
 | Median purata setiap dagangan, 200 setup rawak | -0.23 % | -0.30 % |
@@ -182,31 +184,32 @@ Skor pada empat pilihan henti (H1–H4): +1.68 · +2.34 · +2.32 · +2.24
 | Setup teratas melebihi persentil ke-95 rawak | 63 daripada 200 | 195 daripada 200 |
 | Spearman `skor tepat` lawan purata | -0.25 | +0.43 |
 
-Bacaan: **kelebihan hanya muncul pada tahun yang sama dengan carian (K2).** Pada tahun yang berbeza (K1) setup teratas tidak mengatasi setup rawak, dan pangkat carian tidak meramal hasil. Papan ini menggambarkan pasaran 2020–2026, bukan kaedah yang terbukti tahan merentas era.
+Bacaan: **kelebihan hanya muncul pada tahun yang sama dengan carian.** Pada tempoh yang tahunnya tidak dipakai carian (K1) setup teratas tidak mengatasi setup rawak. Papan ini menggambarkan pasaran tempoh carian, bukan kaedah yang terbukti tahan merentas era.
 
-Gabungan K1+K2 (ukuran pradaftar T3): Spearman +0.41; median teratas +1.41 % lawan rawak -0.25 %; 195 daripada 200 melebihi persentil ke-95 rawak (+0.24 %). Angka gabungan ini didominasi K2.
+Gabungan semua tempoh Kunci (ukuran pradaftar T3): Spearman +0.41; median teratas +1.41 % lawan rawak -0.25 %; 195 daripada 200 melebihi persentil ke-95 rawak (+0.24 %).
 
 ### Apa yang carian pilih
 
 - 186 daripada 200 setup teratas memakai henti paling longgar (`H4`), dan 155 memakai penapis saham meruap (`F23` ATR % ≥ 4).
-- Purata pegang 10 teratas pada Kunci ialah 17.7 sesi daripada had 20: indikator keluar yang dipilih jarang menyala, jadi kebanyakan dagangan dipegang hampir penuh 4 minggu.
-- MDD buku sangat dalam kerana buku ini sentiasa melabur penuh dalam saham meruap dengan henti jauh; ia jauh daripada toleransi MDD akaun −10 %.
+- Purata pegang 10 teratas pada Kunci ialah 17.7 sesi daripada had 20.
+- MDD buku = semua posisi sama berat dan sentiasa melabur penuh, bukan portfolio berslot; bandingkan dengan toleransi MDD akaun −10 %.
 
 ## 5. Kaveat
 
 - Backtest sahaja. Tiada setup di sini masuk papertrade tanpa keputusan pengguna yang berasingan; kad skor kekal satu-satunya keputusan wang sebenar.
 - Tiada saham delist dalam kedua-dua set: semua angka condong ke atas. K2 berkongsi tahun dengan Latih/Sah (saham berbeza, pasaran sama); K1 berbeza saham dan tahun.
-- Peringkat besar membenarkan isyarat bertindih; angka papan dikira semula dengan satu posisi setiap saham. MDD buku = semua posisi sama berat, bukan portfolio berslot.
+- Peringkat besar membenarkan isyarat bertindih; angka papan dikira semula dengan satu posisi setiap saham.
 - Benih M yang bergantung pada saham lain (persentil RS) dikira dalam alam masing-masing.
 - `N201` (MA20 silang atas MA50 DAN tutup > MA50) dan `P07` (MA20 silang atas MA50) hampir sama; pradaftar mengira keluarga ikut ID, jadi kedua-duanya boleh muncul dalam papan.
-- Benih gagal dijalankan: set 431 0, Kunci 0 (senarai dalam `carian_setup/hasil/meta.json`).
+- Benih gagal dijalankan: set carian 0, Kunci 0 (senarai dalam `carian_setup/hasil/CS01/meta.json`).
 
 ## 6. Jana semula
 
 ```
-W=<folder kerja di luar repo>
+W=<folder kerja di luar repo, satu setiap pusingan>
 cd BacktestShariah2/kajian/carian_setup
-python3 cs_cari.py panel $W 431 && python3 cs_cari.py benih $W 431 && python3 cs_cari.py besar $W
-python3 cs_cari.py tepat $W && python3 cs_cari.py panel $W kunci && python3 cs_cari.py kunci $W
-python3 cs_lapor.py $W
+C=431; K=kunci; P=CS01
+python3 cs_cari.py panel $W $C && python3 cs_cari.py benih $W $C && python3 cs_cari.py besar $W $P
+python3 cs_cari.py tepat $W $P && python3 cs_cari.py panel $W $K && python3 cs_cari.py kunci $W $P
+python3 cs_lapor.py $W $P
 ```

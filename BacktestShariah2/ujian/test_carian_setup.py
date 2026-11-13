@@ -51,6 +51,13 @@ class TestKunci(unittest.TestCase):
         self.assertEqual(atom.TEMPOH['431'], (('Latih', 20200102, 20230630), ('Sah', 20230703, 20260828)))
         self.assertEqual(atom.TEMPOH['kunci'], (('K1', 20100104, 20191231), ('K2', 20200102, 20260828)))
 
+    def test_tempoh_cs02_dikunci(self):
+        # Pindaan 13 Nov 2026 (b): pemenang mesti untung dalam dua era; K3 tidak dipakai carian.
+        self.assertEqual(atom.TEMPOH['A'], (('E1', 20100104, 20191231), ('E2', 20200102, 20241231)))
+        self.assertEqual(atom.TEMPOH['B'], (('K1', 20100104, 20191231), ('K2', 20200102, 20241231),
+                                            ('K3', 20250102, 20260828)))
+        self.assertLess(atom.TEMPOH['A'][1][2], atom.TEMPOH['B'][2][1])
+
 
 class TestTiadaPandangHadapan(unittest.TestCase):
     def test_bar_lama_tidak_berubah_bila_data_masa_depan_ditambah(self):

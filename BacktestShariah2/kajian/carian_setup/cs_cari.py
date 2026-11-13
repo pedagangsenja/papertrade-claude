@@ -1,11 +1,13 @@
 """Carian setup CS01 — pemacu (pradaftar `kajian/SPEC_CARIAN_SETUP.md`).
 
 Guna (folder kerja di luar repo; fail perantaraan besar tidak dikomit):
-  python3 cs_cari.py panel  <kerja> 431|kunci     bina panel indikator
-  python3 cs_cari.py benih  <kerja> 431           isyarat benih M (asal + 2 varian) dan N pada set 431
-  python3 cs_cari.py besar  <kerja>               peringkat besar: semua masuk x henti x keluar (SPEC §6.1)
-  python3 cs_cari.py tepat  <kerja>               peringkat tepat + papan 10 teratas + kolam rawak (SPEC §6.2-6.3)
-  python3 cs_cari.py kunci  <kerja>               nilai pada Kunci K1/K2 (SPEC §6.4)
+  python3 cs_cari.py panel  <kerja> <set>         bina panel indikator (set: 431 | kunci | A | B)
+  python3 cs_cari.py benih  <kerja> <set>         isyarat benih M (asal + 2 varian) dan N pada set cari
+  python3 cs_cari.py besar  <kerja> <pusingan>    peringkat besar: semua masuk x henti x keluar (SPEC §6.1)
+  python3 cs_cari.py tepat  <kerja> <pusingan>    peringkat tepat + papan 10 teratas + kolam rawak (SPEC §6.2-6.3)
+  python3 cs_cari.py kunci  <kerja> <pusingan>    nilai pada Kunci (SPEC §6.4)
+Pusingan: CS01 = (set 431, Kunci 1,000 saham); CS02 = (kumpulan A, kumpulan B) Release A02. Satu folder kerja
+setiap pusingan.
 Laporan: cs_lapor.py.
 """
 import glob
@@ -34,6 +36,7 @@ import cs_teras as teras  # noqa: E402
 LAJUR = ['open', 'high', 'low', 'close', 'volume', 'turnover']
 PEKERJA = int(os.environ.get('CS_PEKERJA', '4'))
 N_MIN = 100
+PUSINGAN = {'CS01': ('431', 'kunci'), 'CS02': ('A', 'B')}      # pusingan -> (set cari, set Kunci)
 N_ATAS = 8
 N_TEPAT = 2000
 N_SENARAI = 200
@@ -61,6 +64,9 @@ def muat_set(set_):
     if set_ == '431':
         fr, idx = D.muat_431()
         return fr, idx, None
+    if set_ in ('A', 'B'):                                   # CS02: kumpulan A (cari) / B (Kunci) Release A02
+        fr, idx, univ = D.muat('2009-01-01', '2026-12-31', kumpulan=set_, tag='autotune-data-a02')
+        return fr, idx, {t: D.topeng(fr[t], t, univ, kumpulan=set_).to_numpy() for t in fr}
     fr_semua, idx, univ = D.muat('2009-01-01', '2026-12-31', tag='autotune-data-a02')
     s431 = set(pd.concat([pd.read_csv(os.path.join(AKAR, 'data_mentah', f'dataset_{s}.csv'), usecols=['ticker'])
                           for s in ('S1', 'S2', 'S3', 'S4')]).ticker)
@@ -199,46 +205,59 @@ def keluarga(nama):
 
 
 # ---------- peringkat besar ----------
-def besar(kerja):
-    pan = panel(kerja, '431')
-    bn = pickle.load(open(os.path.join(kerja, 'benih_431.pkl'), 'rb'))
+def besar(kerja, pus='CS01'):
+    cari_set = PUSINGAN[pus][0]
+    pan = panel(kerja, cari_set)
+    bn = pickle.load(open(os.path.join(kerja, f'benih_{cari_set}.pkl'), 'rb'))
     ev_semua = pencetus(pan, bn)
     rng = np.random.default_rng(atom.BENIH)
     o, h, l, c, atr, X = pan['o'], pan['h'], pan['l'], pan['c'], pan['atr'], pan['X']
-    atas, rawak, hist = [], [], np.zeros(len(TEPI) + 1, np.int64)
-    meta = {'pencetus': len(ev_semua), 'pencetus_cukup': 0, 'masuk_dicuba': 0, 'masuk_diskor': 0, 'K': K}
+    fs = os.path.join(kerja, 'besar_semak.pkl')              # titik semak: larian panjang boleh disambung
+    if os.path.exists(fs):
+        atas, rawak, hist, meta, siap, saat0 = pickle.load(open(fs, 'rb'))
+        log(f'sambung dari titik semak: {len(siap)} pencetus siap')
+    else:
+        atas, rawak, hist, siap, saat0 = [], [], np.zeros(len(TEPI) + 1, np.int64), set(), 0.0
+        meta = {'pencetus': len(ev_semua), 'pencetus_cukup': 0, 'masuk_dicuba': 0, 'masuk_diskor': 0, 'K': K}
     t0 = time.time()
     for ti, (nama, ev) in enumerate(ev_semua.items()):
         tp = pan['tempoh'][ev].astype(np.int64)
-        meta['masuk_dicuba'] += len(F1)
-        if (tp == 0).sum() < N_MIN or (tp == 1).sum() < N_MIN:
+        cukup = (tp == 0).sum() >= N_MIN and (tp == 1).sum() >= N_MIN
+        rw = rng.integers(0, K, len(F1)) if cukup else None  # dicabut walaupun pencetus sudah siap (turutan rng sama)
+        if nama in siap:
             continue
-        meta['pencetus_cukup'] += 1
-        Fm = np.ascontiguousarray(pan['F'][:, ev].T)
-        rw = rng.integers(0, K, len(F1))
-        S = np.zeros((len(F1), 2, K))
-        Q = np.zeros((len(F1), 2, K))
-        N2 = np.zeros((len(F1), 2), np.int64)
-        for a in range(0, len(ev), 40000):
-            Rm = teras.hasil_semua(ev[a:a + 40000], o, h, l, c, atr, X, JENIS, PAR, A1, A2, OP)
-            teras.kumpul_tambah(Rm, tp[a:a + 40000], Fm[a:a + 40000], F1, F2, S, Q, N2)
-        idx, st, stw, hs = teras.kumpul_skor(S, Q, N2, rw, N_MIN, N_ATAS, TEPI)
-        ok = np.flatnonzero((N2[:, 0] >= N_MIN) & (N2[:, 1] >= N_MIN))
-        meta['masuk_diskor'] += len(ok)
-        hist += hs.sum(axis=0)
-        for ci in ok:
-            for t in range(N_ATAS):
-                atas.append((nama, F1[ci], F2[ci], idx[ci, t], *st[ci, t], N2[ci, 0], N2[ci, 1]))
-            rawak.append((nama, F1[ci], F2[ci], rw[ci], *stw[ci], N2[ci, 0], N2[ci, 1]))
+        siap.add(nama)
+        meta['masuk_dicuba'] += len(F1)
+        if cukup:
+            meta['pencetus_cukup'] += 1
+            Fm = np.ascontiguousarray(pan['F'][:, ev].T)
+            S = np.zeros((len(F1), 2, K))
+            Q = np.zeros((len(F1), 2, K))
+            N2 = np.zeros((len(F1), 2), np.int64)
+            for a in range(0, len(ev), 40000):
+                Rm = teras.hasil_semua(ev[a:a + 40000], o, h, l, c, atr, X, JENIS, PAR, A1, A2, OP)
+                teras.kumpul_tambah(Rm, tp[a:a + 40000], Fm[a:a + 40000], F1, F2, S, Q, N2)
+            idx, st, stw, hs = teras.kumpul_skor(S, Q, N2, rw, N_MIN, N_ATAS, TEPI)
+            ok = np.flatnonzero((N2[:, 0] >= N_MIN) & (N2[:, 1] >= N_MIN))
+            meta['masuk_diskor'] += len(ok)
+            hist += hs.sum(axis=0)
+            for ci in ok:
+                for t in range(N_ATAS):
+                    atas.append((nama, F1[ci], F2[ci], idx[ci, t], *st[ci, t], N2[ci, 0], N2[ci, 1]))
+                rawak.append((nama, F1[ci], F2[ci], rw[ci], *stw[ci], N2[ci, 0], N2[ci, 1]))
         if (ti + 1) % 25 == 0:
-            log(f'  pencetus {ti + 1}/{len(ev_semua)} · masuk diskor {meta["masuk_diskor"]:,} · {time.time() - t0:.0f}s')
+            log(f'  pencetus {ti + 1}/{len(ev_semua)} · masuk diskor {meta["masuk_diskor"]:,} · '
+                f'{saat0 + time.time() - t0:.0f}s')
+            pickle.dump((atas, rawak, hist, meta, siap, saat0 + time.time() - t0), open(fs + '.tmp', 'wb'), protocol=4)
+            os.replace(fs + '.tmp', fs)
     lajur = ['pencetus', 'f1', 'f2', 'lajur', 'skor', 'pur_L', 'sd_L', 'pur_S', 'sd_S', 'n_L', 'n_S']
     pd.DataFrame(atas, columns=lajur).to_pickle(os.path.join(kerja, 'besar_atas.pkl'))
     pd.DataFrame(rawak, columns=lajur).to_pickle(os.path.join(kerja, 'besar_rawak.pkl'))
     meta['kombinasi_diskor'] = int(meta['masuk_diskor']) * K
     meta['kombinasi_dicuba'] = int(meta['masuk_dicuba']) * K
     meta['hist'] = hist.tolist()
-    meta['saat'] = round(time.time() - t0)
+    meta['saat'] = round(saat0 + time.time() - t0)
+    meta['pusingan'] = pus
     meta['ralat_benih'] = bn['ralat']
     json.dump(meta, open(os.path.join(kerja, 'besar_meta.json'), 'w'))
     log(f"besar siap: {meta['kombinasi_diskor']:,} kombinasi diskor daripada {meta['kombinasi_dicuba']:,} dicuba")
@@ -267,7 +286,7 @@ def nilai(pan, ev, f1, f2, lajur, penuh=False, asas=None):
     e, R, hp, sk = e[amb], R[amb], hp[amb], sk[amb]
     tp = pan['tempoh'][e]
     out = {}
-    for p in (0, 1):
+    for p in range(int(pan['tempoh'].max()) + 1):
         q = tp == p
         n, mu, sd, lb = _stat(R[q])
         d = {'n': n, 'purata': mu, 'sd': sd, 'lb': lb}
@@ -304,9 +323,10 @@ def skor_tepat(v):
     return min(v[0]['lb'], v[1]['lb'])
 
 
-def tepat(kerja):
-    pan = panel(kerja, '431')
-    bn = pickle.load(open(os.path.join(kerja, 'benih_431.pkl'), 'rb'))
+def tepat(kerja, pus='CS01'):
+    cari_set = PUSINGAN[pus][0]
+    pan = panel(kerja, cari_set)
+    bn = pickle.load(open(os.path.join(kerja, f'benih_{cari_set}.pkl'), 'rb'))
     ev_semua = pencetus(pan, bn)
     A = pd.read_pickle(os.path.join(kerja, 'besar_atas.pkl')).sort_values('skor', ascending=False)
     A = A[A.groupby(['pencetus', 'f1', 'f2']).cumcount() < 3].head(N_TEPAT).reset_index(drop=True)
@@ -336,14 +356,16 @@ def tepat(kerja):
     log(f'tepat siap: {len(A)} setup sah; papan {len(papan)}; rawak {len(W)}')
 
 
-def kunci(kerja):
+def kunci(kerja, pus='CS01'):
+    cari_set, kunci_set = PUSINGAN[pus]
     P = pd.read_pickle(os.path.join(kerja, 'pilihan.pkl'))
     out = {}
-    for set_, nama in (('431', ['Latih', 'Sah']), ('kunci', ['K1', 'K2'])):
+    for set_ in (cari_set, kunci_set):
+        nama = [t[0] for t in atom.TEMPOH[set_]]
         pan = panel(kerja, set_)
         perlu = {n for n in P.pencetus.unique() if not n.startswith('P')}
-        bn = benih(kerja, set_, hanya=perlu) if set_ == 'kunci' else pickle.load(
-            open(os.path.join(kerja, 'benih_431.pkl'), 'rb'))
+        bn = benih(kerja, set_, hanya=perlu) if set_ == kunci_set else pickle.load(
+            open(os.path.join(kerja, f'benih_{cari_set}.pkl'), 'rb'))
         ev_semua = pencetus(pan, bn)
         log(f'nilai {set_}: {len(P)} setup')
         for k, r in enumerate(P.itertuples()):
@@ -352,14 +374,13 @@ def kunci(kerja):
             penuh = r.peranan == 'papan'
             v = nilai(pan, ev_semua[r.pencetus], r.f1, r.f2, r.lajur, penuh=penuh,
                       asas=asas_rawak(pan, r.lajur) if penuh else None)
-            for p in (0, 1):
-                out.setdefault(k, {})[nama[p]] = v[p]
-            if penuh:                                        # T1: keempat-empat henti, masuk dan keluar sama
-                if set_ == '431':
-                    rr = int(r.lajur) % NR
-                    out[k]['t1'] = [skor_tepat(nilai(pan, ev_semua[r.pencetus], r.f1, r.f2, s * NR + rr))
-                                    for s in range(teras.NH)]
-        if set_ == 'kunci':
+            for p, n in enumerate(nama):
+                out.setdefault(k, {})[n] = v[p]
+            if penuh and set_ == cari_set:                   # T1: keempat-empat henti, masuk dan keluar sama
+                rr = int(r.lajur) % NR
+                out[k]['t1'] = [skor_tepat(nilai(pan, ev_semua[r.pencetus], r.f1, r.f2, s * NR + rr))
+                                for s in range(teras.NH)]
+        if set_ == kunci_set:
             out['_ralat_benih_kunci'] = bn['ralat']
     pickle.dump(out, open(os.path.join(kerja, 'kunci.pkl'), 'wb'))
     log('kunci siap')
@@ -374,4 +395,4 @@ if __name__ == '__main__':
     elif arahan == 'benih':
         benih(kerja, sys.argv[3])
     else:
-        {'besar': besar, 'tepat': tepat, 'kunci': kunci}[arahan](kerja)
+        {'besar': besar, 'tepat': tepat, 'kunci': kunci}[arahan](kerja, sys.argv[3] if len(sys.argv) > 3 else 'CS01')

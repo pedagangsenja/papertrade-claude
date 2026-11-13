@@ -116,6 +116,39 @@ ID-nya pada pusingan berikutnya; takrif baharu mendapat nombor seterusnya. Lajur
 papertrade: tiada modul `kod/kaedah/Fxx.py`, tiada dalam Lejar atau kad skor. Pendaftaran tidak mengubah pemilihan
 atau pangkat (§6).
 
+### Pindaan 13 Nov 2026 (b) — pusingan CS02: dua era pada set 2000 (sebelum CS02 dijalankan)
+
+**Apa yang sudah dilihat:** keputusan CS01 (`carian_setup/hasil/CS01/LAPORAN.md`). Setup teratas CS01 mengatasi setup
+rawak pada saham lain dalam tahun yang sama (K2 2020–2026: median +2.05 % lawan −0.30 %) tetapi **tidak** pada tahun
+lain (K1 2010–2019: −0.26 % lawan −0.23 %; Spearman −0.25). Keputusan pengguna 13 Nov 2026: jalankan pusingan kedua
+pada set 2000 dengan syarat pemenang mesti untung dalam **dua era**. Tiada keputusan CS02 dilihat sebelum pindaan ini.
+
+Yang berubah berbanding CS01 hanyalah data dan tempoh; mekanik (§4), ruang carian (§5: pencetus, penapis, henti,
+keluar, benih M asal + varian 1 dan 2 yang sama, benih N) dan pemilihan (§6) **tidak berubah**.
+
+| Peranan | Saham (Release `autotune-data-a02`, universe bulanan titik-masa) | Tarikh isyarat |
+|---|---|---|
+| **Cari E1** | kumpulan A | 2010-01-04 … 2019-12-31 |
+| **Cari E2** | kumpulan A | 2020-01-02 … 2024-12-31 |
+| **Kunci K1** | kumpulan B (saham yang carian tidak lihat) | 2010-01-04 … 2019-12-31 |
+| **Kunci K2** | kumpulan B | 2020-01-02 … 2024-12-31 |
+| **Kunci K3** | kumpulan B | 2025-01-02 … 2026-08-28 (**tahun yang tidak dipakai carian**) |
+
+- Kumpulan A/B ialah pembahagian md5 sedia ada dalam `universe.parquet` (`SPEC_A02.md`); semua saham setiap kumpulan
+  dipakai (tiada subsampel).
+- `skor` = min(`LB` E1, `LB` E2), `n` ≥ 100 dalam E1 DAN E2: pemenang mesti mempunyai had bawah positif dalam **kedua-dua
+  era**. Peringkat tepat, papan 10 teratas (satu setiap keluarga), 200 teratas dan 200 rawak seperti §6.
+- Keputusan pengguna menyebut era 2020–2026; E2 dipendekkan ke 2024 supaya 2025 – Ogo 2026 kekal sebagai tempoh yang
+  tidak pernah dilihat pemilihan (K3). Ini mengetatkan ujian, bukan melonggarkannya.
+- Tapis: T1 seperti §6 (pada set cari). **T2** = purata `R` > 0 dalam K1, K2 **dan** K3. **T3** = purata `R` Kunci
+  (K1+K2+K3) > persentil ke-95 purata Kunci 200 setup rawak. Laporan memecahkan semakan kejujuran mengikut setiap
+  tempoh Kunci; **K3 ialah ujian sebenar**, kerana K1 dan K2 berkongsi tahun dengan carian.
+- Kaveat tambahan: set 2000 bukan tapisan Shariah dan tiada saham delist. Kumpulan A dan B merangkumi saham set 431
+  dan saham Kunci CS01, dan K3 bertindih dengan tempoh Sah CS01; maka K3 bersih bagi pemilihan CS02 sahaja, dan reka
+  bentuk dua era ini sendiri dipilih selepas melihat CS01.
+- Keluaran setiap pusingan diarkib dalam `carian_setup/hasil/<pusingan>/`; `kajian/CARIAN_SETUP.md` memaparkan pusingan
+  terkini. ID keluarga F bersambung (takrif yang sama mengekalkan ID; ukurannya dikemas kini ke pusingan terkini).
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
