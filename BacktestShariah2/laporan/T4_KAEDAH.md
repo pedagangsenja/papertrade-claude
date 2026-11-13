@@ -1,35 +1,35 @@
 # Lorong T4 satu-kaedah (jejak hadapan; rekod sahaja)
 
-Dijana 2026-11-12 18:22 UTC oleh `standard/portfolio_t4.py` (Actions `analisis.yml`). Tiada order, tiada wang sebenar. Jangan ubah secara manual.
+Dijana 2026-11-13 07:11 UTC oleh `standard/portfolio_t4.py` (Actions `analisis.yml`). Tiada order, tiada wang sebenar. Jangan ubah secara manual.
 
 > **Status keputusan (kad skor, harga 2026-11-11):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
-Sesi terakhir 2026-11-11. **223 kaedah**, setiap satu dua lorong (L1 = keluar kaedah, L2 = Chandelier 4xATR14). Kawalan: 20 cabutan rawak 10 slot atas seluruh kolam Lejar, diasas semula pada tarikh mula setiap lorong. Penanda aras: SPUS, asas buka sesi pertama.
+Sesi terakhir 2026-11-12. **223 kaedah**, setiap satu dua lorong (L1 = keluar kaedah, L2 = Chandelier 4xATR14). Kawalan: 20 cabutan rawak 10 slot atas seluruh kolam Lejar, diasas semula pada tarikh mula setiap lorong. Penanda aras: SPUS, asas buka sesi pertama.
 
 ## Gate G6 (dikunci dalam `standard/kad_skor.py`)
 
 Lorong L1 mesti (pindaan 7 Nov 2026): sesi >= 126; pulangan > 0; pulangan pada MDD -10% > SPUS pada MDD sama; nisbah pulangan/|MDD| > maksimum jalur rawak. 
-**0 lulus.** Lorong paling lama ada 19 sesi; G6 tidak boleh lulus sebelum 126 sesi (anggaran 2027-04-09).
+**0 lulus.** Lorong paling lama ada 20 sesi; G6 tidak boleh lulus sebelum 126 sesi (anggaran 2027-04-09).
 
 ## 15 lorong L1 teratas ikut pulangan (BUKAN pangkat: semuanya BELUM CUKUP sehingga G6 dinilai)
 
 | Kaedah | Mula | Sesi | Pul % | MDD % | Berat utk MDD -10% | Pul pada MDD -10% | SPUS pada MDD -10% | Nisbah pul/MDD | Maks jalur | T4 70/30 % |
 |---|---|---|---|---|---|---|---|---|---|---|
-| `M02` | 2026-10-16 | 19 | +11.76 | -4.42 | 1.00 | +11.76 | -3.75 | 2.66 | 5.21 | +0.78 |
-| `M48` | 2026-10-16 | 19 | +10.99 | -5.45 | 1.00 | +10.99 | -3.75 | 2.02 | 5.21 | +0.57 |
-| `M118` | 2026-10-16 | 19 | +10.30 | -2.71 | 1.00 | +10.30 | -3.75 | 3.81 | 5.21 | +0.37 |
-| `M10` | 2026-10-16 | 19 | +10.29 | -5.26 | 1.00 | +10.29 | -3.75 | 1.96 | 5.21 | +0.36 |
-| `M13` | 2026-10-16 | 19 | +9.99 | -3.56 | 1.00 | +9.99 | -3.75 | 2.80 | 5.21 | +0.28 |
-| `M91` | 2026-10-16 | 19 | +9.30 | -7.84 | 1.00 | +9.30 | -3.75 | 1.19 | 5.21 | +0.18 |
-| `M33` | 2026-10-16 | 19 | +8.89 | -2.67 | 1.00 | +8.89 | -3.75 | 3.33 | 5.21 | -0.01 |
-| `M133` | 2026-10-16 | 19 | +7.95 | -4.15 | 1.00 | +7.95 | -3.75 | 1.92 | 5.21 | -0.31 |
-| `M39` | 2026-10-16 | 19 | +7.60 | -2.40 | 1.00 | +7.60 | -3.75 | 3.17 | 5.21 | -0.41 |
-| `M151` | 2026-10-16 | 19 | +7.47 | -1.22 | 1.00 | +7.47 | -3.75 | 6.14 | 5.21 | -0.45 |
-| `M159` | 2026-10-16 | 19 | +7.29 | -6.13 | 1.00 | +7.29 | -3.75 | 1.19 | 5.21 | -0.50 |
-| `M146` | 2026-10-16 | 19 | +6.71 | -6.15 | 1.00 | +6.71 | -3.75 | 1.09 | 5.21 | -0.62 |
-| `M137` | 2026-10-16 | 19 | +6.51 | -5.91 | 1.00 | +6.51 | -3.75 | 1.10 | 5.21 | -0.72 |
-| `N45X16` | 2026-11-04 | 6 | +6.48 | -0.78 | 1.00 | +6.48 | -1.63 | 8.25 | 2.23 | +0.80 |
-| `M129` | 2026-10-16 | 19 | +5.91 | -2.82 | 1.00 | +5.91 | -3.75 | 2.10 | 5.21 | -0.89 |
+| `M02` | 2026-10-16 | 20 | +10.84 | -4.42 | 1.00 | +10.84 | -3.40 | 2.45 | 4.31 | +0.77 |
+| `M10` | 2026-10-16 | 20 | +9.59 | -5.26 | 1.00 | +9.59 | -3.40 | 1.82 | 4.31 | +0.42 |
+| `M118` | 2026-10-16 | 20 | +8.99 | -2.71 | 1.00 | +8.99 | -3.40 | 3.32 | 4.31 | +0.25 |
+| `M33` | 2026-10-16 | 20 | +8.71 | -2.67 | 1.00 | +8.71 | -3.40 | 3.26 | 4.31 | +0.19 |
+| `M48` | 2026-10-16 | 20 | +8.56 | -5.45 | 1.00 | +8.56 | -3.40 | 1.57 | 4.31 | +0.12 |
+| `M13` | 2026-10-16 | 20 | +8.34 | -3.56 | 1.00 | +8.34 | -3.40 | 2.34 | 4.31 | +0.07 |
+| `M133` | 2026-10-16 | 20 | +6.83 | -4.15 | 1.00 | +6.83 | -3.40 | 1.65 | 4.31 | -0.38 |
+| `M91` | 2026-10-16 | 20 | +6.75 | -7.84 | 1.00 | +6.75 | -3.40 | 0.86 | 4.31 | -0.27 |
+| `M151` | 2026-10-16 | 20 | +6.65 | -1.61 | 1.00 | +6.65 | -3.40 | 4.13 | 4.31 | -0.43 |
+| `M39` | 2026-10-16 | 20 | +6.46 | -2.40 | 1.00 | +6.46 | -3.40 | 2.70 | 4.31 | -0.48 |
+| `N45X16` | 2026-11-04 | 7 | +5.61 | -1.43 | 1.00 | +5.61 | -1.27 | 3.93 | 1.14 | +0.79 |
+| `M146` | 2026-10-16 | 20 | +5.51 | -6.15 | 1.00 | +5.51 | -3.40 | 0.90 | 4.31 | -0.70 |
+| `M25` | 2026-10-16 | 20 | +5.47 | -5.78 | 1.00 | +5.47 | -3.40 | 0.95 | 4.31 | -0.75 |
+| `M159` | 2026-10-16 | 20 | +5.07 | -6.13 | 1.00 | +5.07 | -3.40 | 0.83 | 4.31 | -0.89 |
+| `M129` | 2026-10-16 | 20 | +4.84 | -2.82 | 1.00 | +4.84 | -3.40 | 1.72 | 4.31 | -0.95 |
 
 ## Cara membaca
 

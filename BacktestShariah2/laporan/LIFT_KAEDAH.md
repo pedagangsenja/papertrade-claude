@@ -1,6 +1,6 @@
 # Lift MASUK setiap kaedah (gate G3)
 
-Dijana 2026-11-12 18:21 UTC oleh `standard/lift_kaedah.py` (Actions `analisis.yml`). Pradaftar: `standard/SPEC_KAD_SKOR.md` pindaan 7 Nov 2026. Rekod analisis sahaja: tiada order, tiada wang sebenar.
+Dijana 2026-11-13 07:11 UTC oleh `standard/lift_kaedah.py` (Actions `analisis.yml`). Pradaftar: `standard/SPEC_KAD_SKOR.md` pindaan 7 Nov 2026. Rekod analisis sahaja: tiada order, tiada wang sebenar.
 
 ## Apa yang diukur
 
@@ -10,7 +10,7 @@ Versi lama (padanan baldi hari pegang, SE ikut hari beli) dibuang kerana ia melu
 
 ## Data
 
-Hari beli LANGSUNG sahaja (Mxx sejak isyarat 2026-10-15, Nxx/GB sejak 2026-11-03). **15,130 saham-hari** dengan ufuk 10 sesi lengkap, 10 hari beli, 123 kaedah. Rejim (QQQ > SMA50 dan SMA10 > SMA20) pada hari beli ini: ON 1 · OFF 9.
+Hari beli LANGSUNG sahaja (Mxx sejak isyarat 2026-10-15, Nxx/GB sejak 2026-11-03). **16,624 saham-hari** dengan ufuk 10 sesi lengkap, 11 hari beli, 124 kaedah. Rejim (QQQ > SMA50 dan SMA10 > SMA20) pada hari beli ini: ON 1 · OFF 10.
 
 ## Keputusan
 
@@ -20,7 +20,7 @@ Diuji (≥ 30 saham-hari, ≥ 5 minggu): **0** kaedah. Lift positif lulus BH-FDR
 
 ## Bila jadual ini boleh dipercayai
 
-Hari beli diperlukan untuk melihat lift 2 mata merentas kaedah diuji: **–** (dikira semula setiap larian). Ada 10. Kad skor juga mewajibkan ≥ 10 hari beli dalam setiap rejim (G1), supaya keputusan tidak datang daripada satu fasa pasaran.
+Hari beli diperlukan untuk melihat lift 2 mata merentas kaedah diuji: **–** (dikira semula setiap larian). Ada 11. Kad skor juga mewajibkan ≥ 10 hari beli dalam setiap rejim (G1), supaya keputusan tidak datang daripada satu fasa pasaran.
 
 ## Had
 
