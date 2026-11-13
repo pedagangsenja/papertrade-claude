@@ -19,7 +19,7 @@ Moomoo/SST boleh beri dikumpul seminggu sekali; (4) dashboard dikemas kini oleh 
 | Harga | skrin Moomoo + yfinance | yfinance muktamad (tarikan ≥ 05:00 UTC sama dengan Moomoo; lihat log 17 Okt) |
 | Lejar Penuh | `lejar.yml` | `lejar.yml` 06:17 UTC (tidak berubah; pengawal data muktamad) |
 | Pengawas (6 semakan sehari) | sesi Sonnet | dibuang; sandaran jadual + `jana_db.py` pengawas + e-mel kegagalan GitHub |
-| Tolak db dashboard | dalam setiap rutin | `jadual/tolak_db.md` (sesi Claude baharu, Sel–Sab 16:41 MYT + Isn–Sab 10:20 NY) |
+| Tolak db dashboard | dalam setiap rutin | `jadual/tolak_db.md` (sesi Claude baharu, Sel–Sab 16:41 MYT + Isn–Sab 10:20 NY); paparan awal `jadual/paparan_awal.md` (Sel–Sab 6:47 MYT) |
 | Jejak kertas M166 V1 (`uji_kertas/jejak_M166.csv`) | imbas 7:47 langkah 4b | `harian.yml` (mod rasmi sahaja) |
 | Universe Shariah, sektor seluruh pasaran, SST, akaun Moomoo | setiap hari | `jadual/mingguan.md` (Ahad; MANUAL sebulan sekali dan tanpa akaun Moomoo sejak 10 Nov 2026) |
 | Kewangan Moomoo (gred kewangan v7), peristiwa korporat (rehab Moomoo) | imbas 7:47 langkah 5c; 6:02 langkah 2d | `jadual/mingguan.md` 7b, 7c |

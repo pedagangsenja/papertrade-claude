@@ -62,7 +62,7 @@ Medan baris `papertrade/ringkas_c|m` dan `papertrade/watchlist` (sejak 23 Okt 20
 ## Cara kemas kini harian (sejak 27 Okt 2026: GitHub Actions + tolak db)
 Halaman membaca db secara langsung — **tidak perlu terbit semula halaman** untuk data harian. Rutin Claude 8:02 / 9:35 / 6:02 yang dahulu diterangkan di sini **dimatikan 27 Okt 2026**.
 1. **Actions** (`harian.yml`, `beli.yml`, `petang.yml`, `lejar.yml`, `analisis.yml`) menjana semua fail; `analisis.yml` selepas Lejar menjana `papan.json`, `lift.json`, `KAEDAH_TERBAIK.md`, lorong T4 (`portfolio_t4.py`) dan `kad_skor.json` (`kad_skor.py`).
-2. **Tolak db** (`jadual/tolak_db.md`, 16:41 MYT Sel–Sab + 10:20 NY Isn–Sab): `jana_db.py` → batch `ArtifactData` dengan `if_version`.
+2. **Tolak db** (`jadual/tolak_db.md`, 16:41 MYT Sel–Sab + 10:20 NY Isn–Sab; paparan awal 6:47 MYT Sel–Sab melalui `jadual/paparan_awal.md` + `standard/paparan_awal.py`, harga belum muktamad, tidak dikomit): `jana_db.py` → batch `ArtifactData` dengan `if_version`.
 3. Jika halaman perlu diubah: lihat bahagian di bawah; selepas terbit WAJIB `semak_terbit.py --kemas` dan komit manifes bersama HTML ke `main`.
 4. Kaedah baharu dalam `kod/kaedah/`: tambah baris dalam `standard/katalog_kaedah.json` (ujian `test_katalog_kaedah.py` gagal jika tertinggal), kemudian `set kaedah/katalog` dengan fail itu (if_version).
 5. Backtest baharu: `python3 standard/dashboard_kemaskini.py registry_<ID>.csv` → `set registry/<ID>`.

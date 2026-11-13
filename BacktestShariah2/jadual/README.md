@@ -3,7 +3,7 @@
 Prompt tugasan berjadual (Routine) hanya perlu: clone repo, kemudian "ikut `BacktestShariah2/jadual/<fail>.md`". Prosedur dan peraturan disimpan di sini supaya berversi dalam git. Peraturan umum: `standard/tugasan_v3.md`.
 
 **Sejak 27 Okt 2026 kerja harian = GitHub Actions** (`harian.yml`, `beli.yml`, `petang.yml`); tiga rutin di bawah DIMATIKAN
-(rujukan/sandaran sahaja). Tugasan Claude aktif: `tolak_db.md` (Sel–Sab 16:41 MYT selepas data tutup + Isn–Sab 10:20 NY selepas belian). `mingguan.md` = MANUAL sebulan sekali sejak 10 Nov 2026.
+(rujukan/sandaran sahaja). Tugasan Claude aktif: `paparan_awal.md` (Sel–Sab 6:47 pagi MYT, harga tutup belum muktamad, tidak dikomit) dan `tolak_db.md` (Sel–Sab 16:41 MYT selepas data tutup + Isn–Sab 10:20 NY selepas belian). `mingguan.md` = MANUAL sebulan sekali sejak 10 Nov 2026.
 
 | Fail | Routine | Masa |
 |---|---|---|
@@ -32,6 +32,6 @@ Keputusan pengguna 17 Okt 2026 (jimat token): kerja harian dipindah ke GitHub Ac
 `analisis.yml` dicetus sebaik `lejar.yml` siap (`standard/penganalisis.py`). Dokumen `analisis/papan` ditolak ke db oleh sesi `tolak_db.md` (16:41 MYT Sel–Sab + 10:20 NY Isn–Sab) — **bukan** rutin 6:02, yang dimatikan 27 Okt 2026. Sejak 2 Nov 2026 ia dipecah (`jana_db.PECAH`) kerana 228 kaedah memberi 274,573 bait > had 262,144, dan dibaca dengan `subBhg`.
 Mod dalam `BacktestShariah2/MOD_ACTIONS`: `rasmi` sejak 27 Okt 2026 (dahulu `bayang`) = Actions menulis ke `BacktestShariah2/bayang/` dan membanding setiap
 hari dengan rutin Claude (`bayang/BANDING_<tarikh>.md`, 16–23 Okt; kekal sebagai bukti).
-Selepas peralihan (27 Okt 2026, `PERALIHAN.md`): rutin di atas dan pengawas dimatikan; sesi Claude hanya `tolak_db.md` (Sel–Sab 16:41 MYT + Isn–Sab 10:20 NY)
+Selepas peralihan (27 Okt 2026, `PERALIHAN.md`): rutin di atas dan pengawas dimatikan; sesi Claude hanya `paparan_awal.md` (Sel–Sab 6:47 MYT) dan `tolak_db.md` (Sel–Sab 16:41 MYT + Isn–Sab 10:20 NY)
 dan `mingguan.md` (Ahad; MANUAL sebulan sekali sejak 10 Nov 2026). Notifikasi = ntfy daripada Actions (`harian.yml`, `beli.yml`, `amaran_ntfy.yml`); sesi Claude tidak
 boleh capai ntfy.sh (proksi 403), jadi mesej sesi Claude dihantar dengan `workflow_dispatch` `amaran_ntfy.yml` (input tajuk, mesej).

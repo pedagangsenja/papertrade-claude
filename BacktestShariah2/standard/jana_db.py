@@ -1368,6 +1368,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('--keluar', required=True); ap.add_argument('--folder', default=PT); ap.add_argument('--stor', default=STOR)
     ap.add_argument('--versi', help='JSON {"koleksi/doc": versi} bagi if_version'); ap.add_argument('--masa')
+    ap.add_argument('--awal', action='store_true', help='paparan awal (paparan_awal.py): harga tutup belum muktamad, '
+                    'folder salinan; label harian/status dan tiada tembakan pengawas')
     a = ap.parse_args(argv)
     masa = (pd.Timestamp(a.masa).tz_localize('Asia/Kuala_Lumpur') if a.masa else pd.Timestamp.now(tz='Asia/Kuala_Lumpur'))
     dibina = masa.strftime('%Y-%m-%d %H:%M') + ' MYT'
@@ -1377,6 +1379,11 @@ def main(argv=None):
     nota_pos = (f"Dikemas kini oleh GitHub Actions (standard/harian_c.py) {malam.get('masa', '')}: harga tutup {S}; keluar dinilai dengan "
                 'enjin rasmi; harga beli sementara dibetulkan kepada buka rasmi bar harian; baris keluar dibekukan; "menunggu" = '
                 'isyarat keluar pada tutup terakhir, harga keluar = buka sesi seterusnya.')
+    if a.awal:   # paparan_awal.py (13 Nov 2026): salinan, tiada apa dikomit; harian.yml menggantinya dengan data muktamad
+        harga_pada = f"{S} tutup (PAPARAN AWAL: tarikan yfinance sejurus selepas tutup, belum muktamad)"
+        nota_pos = (f"PAPARAN AWAL {dibina}: harga tutup {S} daripada tarikan yfinance sejurus selepas tutup (belum muktamad); "
+                    'posisi dinilai dengan enjin rasmi dalam salinan dan TIDAK dikomit. Keputusan rasmi = harian.yml selepas data '
+                    'muktamad (>= 00:20 UTC); senarai beli/watchlist masih sesi sebelumnya. ' + nota_pos)
     docs = {}
     M = baca_csv(os.path.join(a.folder, 'moomoo.csv'))
     docs['papertrade/moomoo'] = dict(akaun='4135388', dibina=dibina, harga_pada=harga_pada, nota=nota_pos, rows=[baris_db(r) for r in M])
@@ -1589,7 +1596,9 @@ def main(argv=None):
     # harian/status: kesegaran data (halaman: kemaskini_pagi, harga_tutup_pada, tarikh_data_pagi; header "Kemas kini terakhir")
     rk = malam
     docs['harian/status'] = dict(
-        dikemaskini=dibina, sumber='GitHub Actions (standard/harian_c.py) + sesi Claude tolak db', harga_tutup_pada=S, tarikh_data_pagi=S,
+        dikemaskini=dibina, harga_tutup_pada=S, tarikh_data_pagi=S, paparan_awal=bool(a.awal),
+        sumber=('PAPARAN AWAL (standard/paparan_awal.py): harga tutup belum muktamad, tidak dikomit; rasmi selepas harian.yml'
+                if a.awal else 'GitHub Actions (standard/harian_c.py) + sesi Claude tolak db'),
         kemaskini_pagi=rk.get('masa', ''), tarikh_data=S, scan_malam=rk.get('masa', ''),
         kemaskini_pagi_ringkas=dict(C_keluar_baru=(rk.get('keluar_baru_jumlah') or {}).get('C', 0),
                                     M_keluar_baru=(rk.get('keluar_baru_jumlah') or {}).get('M', 0), menunggu_buka=rk.get('menunggu', 0),
@@ -1654,7 +1663,7 @@ def main(argv=None):
     for i, bt in enumerate(batches):
         p = os.path.join(a.keluar, f'batch_{i}.json'); json.dump(bt, open(p, 'w'), indent=1); fail.append(p)
     ring = dict(dibina=dibina, sesi=S, dokumen=len(tulis), batch=fail, kumpulan_terpecah=terpecah, hampir_had=hampir, tanpa_versi=[f"{w['collection']}/{w['doc_id']}" for w, _, _ in tulis if 'if_version' not in w],
-                pengawas=pengawas(st, masa))
+                pengawas=dict(tembak=[], nota='paparan awal: tiada tembakan') if a.awal else pengawas(st, masa))
     json.dump(ring, open(os.path.join(a.keluar, 'ringkas.json'), 'w'), ensure_ascii=False, indent=1)
     # DAFTAR VERSI (6 Nov 2026). ArtifactData kini enggan menyimpan dokumen db ke fail (`out_dir`)
     # kerana dokumen itu "mungkin ditulis orang lain", jadi sesi berjadual tidak lagi boleh MEMBACA
