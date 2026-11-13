@@ -190,14 +190,13 @@ def benih(kerja, set_, hanya=None):
 
 
 def pencetus(pan, bn):
-    """dict nama -> indeks bar isyarat (hari pertama isyarat, layak, tetingkap lengkap)."""
+    """dict nama -> indeks bar isyarat (hari pertama isyarat, layak, tetingkap lengkap). Satu demi satu: jimat memori."""
     N = len(pan['c'])
-    out = {}
-    for n in atom.PENCETUS:
-        out[n[:3]] = pan['P'][n[:3]]
+    mula = lambda s: np.flatnonzero(atom.mula_isyarat(s, pan['mula']) & pan['sah'])
+    out = {n[:3]: mula(pan['P'][n[:3]]) for n in atom.PENCETUS}
     for n, bit in (bn or {}).get('sig', {}).items():
-        out[n] = np.unpackbits(bit)[:N].astype(bool)
-    return {n: np.flatnonzero(atom.mula_isyarat(s, pan['mula']) & pan['sah']) for n, s in out.items()}
+        out[n] = mula(np.unpackbits(bit)[:N].astype(bool))
+    return out
 
 
 def keluarga(nama):
