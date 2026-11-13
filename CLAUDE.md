@@ -32,7 +32,7 @@ Peraturan tetap: laporan lain (PENGANALISIS, KAEDAH_TERBAIK, RINGKASAN portfolio
 ## Struktur
 - `BacktestShariah2/standard/` — skrip harian, penjana laporan, `sahkan.py`, sumber dashboard `dashboard_v2.html` (`dashboard.md`).
 - `BacktestShariah2/kod/` — kod teras (enjin, `kaedah/Mxx.py`, `Nxx*.py`, `GB*.py`); sumber kebenaran kod kaedah.
-- `BacktestShariah2/jadual/` — prosedur tugasan berjadual Claude: aktif `tolak_db.md` (Isn–Sab 10:20 NY); `mingguan.md` = data Moomoo/SST MANUAL sebulan sekali (tugasan Ahad dimatikan 10 Nov 2026: tiada connector, gagal senyap; senarai Shariah > 35 hari → tripwire `koordinator.py --semak`); rutin lama 6:02 / 7:47 / 9:35 dimatikan (rujukan).
+- `BacktestShariah2/jadual/` — prosedur tugasan berjadual Claude: aktif `tolak_db.md` (Sel–Sab 16:41 MYT selepas data tutup + Isn–Sab 10:20 NY selepas belian; dashboard = tutup harian, bukan harga intrahari); `mingguan.md` = data Moomoo/SST MANUAL sebulan sekali (tugasan Ahad dimatikan 10 Nov 2026: tiada connector, gagal senyap; senarai Shariah > 35 hari → tripwire `koordinator.py --semak`); rutin lama 6:02 / 7:47 / 9:35 dimatikan (rujukan).
 - `BacktestShariah2/ujian/` — `python3 -m unittest discover -s BacktestShariah2/ujian`.
 - `BacktestShariah2/papertrade/` — Papertrade C (`claude*.csv`, `senarai_beli.csv`, `watchlist.csv`); skema `papertrade/SKEMA.md`.
 - `BacktestShariah2/lejar/` — Lejar Penuh: setiap isyarat setiap kaedah, `lejar.yml` (`standard/lejar.py`). Jangan ubah manual. Bina semula memadam fail di bawah lejar/.

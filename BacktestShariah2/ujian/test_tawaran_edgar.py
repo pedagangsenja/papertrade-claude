@@ -90,7 +90,7 @@ class TestEdgar(unittest.TestCase):
 
 class TestBelumTerbit(unittest.TestCase):
     """27 Okt 2026: indeks hari terakhir belum terbit (HTTP 403/404) bukan kegagalan dan tidak ditanda diproses."""
-    def jalan(self, respon):
+    def jalan(self, respon, hingga='2026-10-27', mula='2026-10-23'):
         import json, types
         d = tempfile.mkdtemp()
         asal = (E.EDGAR, E.ambil, E.muat_peta, E.universe, E.kemas_ambil, os.environ.get('SEC_USER_AGENT'))
@@ -98,7 +98,7 @@ class TestBelumTerbit(unittest.TestCase):
         E.ambil = respon
         os.environ['SEC_USER_AGENT'] = 'ujian ujian@contoh.com'
         try:
-            kod = E.jalan(types.SimpleNamespace(hingga='2026-10-27', mula='2026-10-23', maks_hari=10))
+            kod = E.jalan(types.SimpleNamespace(hingga=hingga, mula=mula, maks_hari=10))
             with open(os.path.join(d, 'status.json')) as f:
                 return kod, json.load(f)
         finally:
@@ -121,6 +121,26 @@ class TestBelumTerbit(unittest.TestCase):
     def test_404_hari_terakhir(self):
         kod, st = self.jalan(lambda url: None)
         self.assertEqual((kod, st['hari_terakhir']), (0, '2026-10-26'))
+
+
+class TestCutiPersekutuan(unittest.TestCase):
+    """13 Nov 2026: Hari Veteran (11 Nov) tiada indeks; SEC memberi 403 dan edgar.yml gagal setiap larian."""
+    def test_hari_veteran_dilangkau(self):
+        from datetime import date
+        hari = list(E.hari_kerja(date(2026, 11, 10), date(2026, 11, 13)))
+        self.assertEqual(hari, [date(2026, 11, 10), date(2026, 11, 12), date(2026, 11, 13)])
+
+    def test_jalan_tidak_menyentuh_cuti(self):
+        dicuba = []
+
+        def ambil(url):
+            dicuba.append(url)
+            if '20261111' in url:
+                raise RuntimeError(f'{url}: HTTP 403')
+            return INDEKS.split('\n')[0] + '\n'
+        kod, st = TestBelumTerbit.jalan(self, ambil, hingga='2026-11-12', mula='2026-11-11')
+        self.assertEqual((kod, st['gagal'], st['hari_terakhir']), (0, [], '2026-11-12'))
+        self.assertFalse(any('20261111' in u for u in dicuba))
 
 
 if __name__ == '__main__':

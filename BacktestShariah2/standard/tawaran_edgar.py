@@ -156,10 +156,18 @@ def muat_peta():
     return peta_ticker(json.load(open(p)))
 
 
+def cuti_persekutuan(mula, hingga):
+    """Cuti persekutuan AS: EDGAR tutup, tiada indeks harian, dan SEC memberi HTTP 403 (bukan 404) bagi fail yang tiada.
+    11–13 Nov 2026: Hari Veteran 11 Nov menyekat edgar.yml (gagal setiap larian; hari_terakhir tersangkut 10 Nov)."""
+    from pandas.tseries.holiday import USFederalHolidayCalendar
+    return {d.date() for d in USFederalHolidayCalendar().holidays(str(mula), str(hingga))}
+
+
 def hari_kerja(mula, hingga):
+    cuti = cuti_persekutuan(mula, hingga)
     d = mula
     while d <= hingga:
-        if d.weekday() < 5:
+        if d.weekday() < 5 and d not in cuti:
             yield d
         d += timedelta(days=1)
 
