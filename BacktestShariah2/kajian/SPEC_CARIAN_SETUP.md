@@ -107,6 +107,15 @@ rawak.
 `kajian/CARIAN_SETUP.md` (dijana `carian_setup/lapor.py`), `kajian/carian_setup/hasil/*.csv`. Fail perantaraan besar
 ditulis ke folder kerja di luar repo. Jangan sunting keluaran secara manual.
 
+### Pindaan 13 Nov 2026 (a) — keluarga F (sebelum carian dijalankan; tiada keputusan dilihat)
+
+Keputusan pengguna 13 Nov 2026: kaedah baharu daripada carian ini didaftarkan dengan nombor bermula **`Fxx`**.
+Setiap setup papan mendapat ID `F01`, `F02`, … mengikut kedudukan papan, dalam `data/registry_F.csv` (dijana
+`carian_setup/lapor.py`). ID **kekal**: takrif (`pencetus|penapis|henti|keluar`) yang sudah berdaftar mengekalkan
+ID-nya pada pusingan berikutnya; takrif baharu mendapat nombor seterusnya. Lajur `status` = `BACKTEST` bermaksud belum
+papertrade: tiada modul `kod/kaedah/Fxx.py`, tiada dalam Lejar atau kad skor. Pendaftaran tidak mengubah pemilihan
+atau pangkat (§6).
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

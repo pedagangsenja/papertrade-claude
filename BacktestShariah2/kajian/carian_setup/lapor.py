@@ -43,6 +43,55 @@ def terang(r, kerja):
             'henti': atom.HENTI[s], 'keluar': teras.nama_keluar(x, cari.A1, cari.A2, cari.OP, atom.KELUAR)}
 
 
+REG_F = os.path.join(BS2, 'data', 'registry_F.csv')
+LAJUR_F = ['id', 'keluarga', 'pusingan', 'tarikh_daftar', 'takrif', 'param', 'masuk', 'penapis', 'henti', 'keluar',
+           'skor_tepat', 'n_Latih', 'purata_Latih', 'n_Sah', 'purata_Sah', 'n_K1', 'purata_K1', 'n_K2', 'purata_K2',
+           'k10_K1', 'k10_K2', 'T1', 'T2', 'T3', 'status']
+
+
+def takrif(r):
+    """Takrif kanonik satu setup (boleh dibaca mesin): pencetus|penapis|henti|keluar."""
+    s, x = divmod(int(r.lajur), cari.NR)
+    pen = '+'.join(atom.PENAPIS[f][:3] for f in (r.f1, r.f2) if f >= 0) or '-'
+    a, b, op = cari.A1[x], cari.A2[x], cari.OP[x]
+    kel = 'X00' if op == 0 else atom.KELUAR[a][:3] if op == 1 else (
+        f"{atom.KELUAR[a][:3]} {'ATAU' if op == 2 else 'DAN'} {atom.KELUAR[b][:3]}")
+    return f'{r.pencetus}|{pen}|{atom.HENTI[s][:2]}|{kel}'
+
+
+def daftar_f(ringkas, kerja, pusingan='CS01'):
+    """Keluarga F (keputusan pengguna 13 Nov 2026): setiap setup papan mendapat ID Fxx yang KEKAL.
+    Takrif yang sudah berdaftar mengekalkan ID-nya; takrif baharu mendapat nombor seterusnya ikut kedudukan papan.
+    Status BACKTEST = belum papertrade (tiada modul `kod/kaedah/`, tiada dalam Lejar)."""
+    reg = pd.read_csv(REG_F, dtype=str).fillna('') if os.path.exists(REG_F) else pd.DataFrame(columns=LAJUR_F)
+    param = pickle.load(open(os.path.join(kerja, 'benih_431.pkl'), 'rb'))['param']
+    idf = {}
+    for kd, d, r, v, T1, T2, T3, pct, t1 in ringkas:
+        tk = takrif(r)
+        lama = reg[reg.takrif == tk]
+        if len(lama):
+            fid = lama.id.iloc[0]
+            reg = reg[reg.takrif != tk]
+            tarikh = lama.tarikh_daftar.iloc[0]
+        else:
+            n = max([int(x[1:]) for x in list(reg.id) + list(idf.values())] or [0]) + 1
+            fid, tarikh = f'F{n:02d}', pd.Timestamp.now().strftime('%Y-%m-%d')
+        idf[kd] = fid
+        P = param.get(r.pencetus)
+        b = {'id': fid, 'keluarga': 'F', 'pusingan': pusingan, 'tarikh_daftar': tarikh, 'takrif': tk,
+             'param': json.dumps({k: round(x, 6) for k, x in P.items()}, sort_keys=True) if P else '',
+             **d, 'skor_tepat': f'{r.skor_tepat:.5f}', 'T1': T1, 'T2': T2, 'T3': T3, 'status': 'BACKTEST'}
+        for t in TEMPOH:
+            b[f'n_{t}'] = v[t]['n']
+            b[f'purata_{t}'] = '' if not v[t]['n'] else f"{v[t]['purata']:.5f}"
+        for t in ('K1', 'K2'):
+            b[f'k10_{t}'] = '' if not v[t]['n'] else f"{v[t].get('k10', float('nan')):.4f}"
+        reg = pd.concat([reg, pd.DataFrame([b])[LAJUR_F].astype(str)], ignore_index=True)
+    reg['_n'] = reg.id.str[1:].astype(int)
+    reg.sort_values('_n').drop(columns='_n').to_csv(REG_F, index=False)
+    return idf
+
+
 def gabung_kunci(v):
     n = v['K1']['n'] + v['K2']['n']  # K1 dan K2 sentiasa hadir bersama
     if n == 0:
@@ -87,6 +136,9 @@ def main(kerja):
         for t in TEMPOH:
             baris_csv.append({'kedudukan': kedudukan, **d, 'skor_tepat': r.skor_tepat, 'tempoh': t, **v[t],
                               'T1': T1, 'T2': T2, 'T3': T3, 'persentil_lawan_rawak': pct})
+    idf = daftar_f(ringkas, kerja)
+    for x in baris_csv:
+        x['id'] = idf[x['kedudukan']]
     pd.DataFrame(baris_csv).to_csv(os.path.join(SINI, 'hasil', 'papan.csv'), index=False, float_format='%.5f')
     S = P.copy()
     for kol in ('masuk', 'penapis', 'henti', 'keluar'):
@@ -127,11 +179,13 @@ def main(kerja):
          '## 3. Papan 10 teratas', '',
          'Pangkat ikut `skor tepat` (had bawah purata untung, yang lebih rendah antara Latih dan Sah). **Kunci** ialah '
          '1,000 saham lain yang carian tidak pernah lihat; ia dilaporkan sahaja dan tidak mengubah pangkat.', '',
-         '| # | Masuk | Penapis | Henti | Keluar | Skor | Kunci: dagangan | Kunci: purata % | Lawan rawak | T1 | T2 | T3 |',
-         '|---|---|---|---|---|---|---|---|---|---|---|---|']
+         'Setiap setup papan didaftarkan dalam keluarga **F** (`data/registry_F.csv`, ID kekal; status BACKTEST = '
+         'belum papertrade).', '',
+         '| # | ID | Masuk | Penapis | Henti | Keluar | Skor | Kunci: dagangan | Kunci: purata % | Lawan rawak | T1 | T2 | T3 |',
+         '|---|---|---|---|---|---|---|---|---|---|---|---|---|']
     ya = lambda b: '✓' if b else '✗'
     for kd, d, r, v, T1, T2, T3, pct, t1 in ringkas:
-        A.append(f"| {kd} | {d['masuk']} | {d['penapis']} | {d['henti']} | {d['keluar']} | {p(r.skor_tepat, 2, True)} "
+        A.append(f"| {kd} | `{idf[kd]}` | {d['masuk']} | {d['penapis']} | {d['henti']} | {d['keluar']} | {p(r.skor_tepat, 2, True)} "
                  f"| {r.n_kunci:,} | {p(r.pur_kunci, 2, True)} | persentil {p(pct, 0)} | {ya(T1)} | {ya(T2)} | {ya(T3)} |")
     A += ['', '- **T1 tahan:** skor positif pada keempat-empat pilihan henti. **T2 tidak dilihat:** purata positif '
           'dalam K1 dan K2. **T3 kalahkan rawak:** purata Kunci melebihi persentil ke-95 setup rawak '
@@ -139,7 +193,7 @@ def main(kerja):
           '- "Lawan rawak" = peratus daripada 200 setup yang dipilih rawak daripada ruang yang sama yang puratanya '
           'pada Kunci lebih rendah.', '', '### Butiran setiap setup', '']
     for kd, d, r, v, T1, T2, T3, pct, t1 in ringkas:
-        A += [f"**#{kd}. {d['masuk']}**", '',
+        A += [f"**#{kd}. `{idf[kd]}` — {d['masuk']}**", '',
               f"Penapis: {d['penapis']} · Henti: {d['henti']} · Keluar: {d['keluar']}", '',
               '| Tempoh | Dagangan | Purata % | Menang % | ≥ +10 % | ≥ +20 % | Rugi ≤ −8 % | Naik 5 % minggu 1 | '
               'Pegang (sesi) | Purata seminggu % | Lebihan atas rawak hari sama | MDD buku % |',
