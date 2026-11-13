@@ -149,6 +149,24 @@ keluar, benih M asal + varian 1 dan 2 yang sama, benih N) dan pemilihan (§6) **
 - Keluaran setiap pusingan diarkib dalam `carian_setup/hasil/<pusingan>/`; `kajian/CARIAN_SETUP.md` memaparkan pusingan
   terkini. ID keluarga F bersambung (takrif yang sama mengekalkan ID; ukurannya dikemas kini ke pusingan terkini).
 
+### Pindaan 13 Nov 2026 (c) — semakan portfolio pada had MDD −10 % (sebelum dijalankan)
+
+Keputusan pengguna 13 Nov 2026: Claude menentukan langkah seterusnya ke arah matlamat (untung bersih dengan MDD akaun
+−10 %) dengan token sesedikit mungkin. Purata setiap dagangan bukan matlamat itu; semakan ini mengukurnya terus.
+Tiada keputusan semakan ini dilihat sebelum pindaan ditulis; pangkat CS02 tidak berubah.
+
+- Setup: 10 papan CS02 (`F11`–`F20`) satu demi satu, dan gabungan tujuh yang lulus tiga tapis.
+- Data: kumpulan B (saham yang carian tidak lihat), isyarat 2010-01-04 … 2026-08-28, mekanik §4.
+- Portfolio: 10 slot × 10 % ekuiti; isyarat dibeli pada buka esok jika ada slot kosong dan saham itu tidak sedang
+  dipegang; slot kosong semula sehari selepas hari jual; lebih isyarat daripada slot → dipilih rawak (benih 20261113);
+  pulangan harian = jumlah pulangan harian posisi terbuka ÷ 10; tunai 0 %.
+- Ukuran: CAGR, MDD, purata pendedahan; kemudian **pada MDD −10 %**: pendedahan didarab `w` = min(1, 10 % ÷ |MDD|)
+  (baki tunai) dan CAGR dikira semula. Juga dilaporkan untuk K3 sahaja (2025 – Ogo 2026).
+- Kayu ukur tempoh sama: SPY beli-dan-pegang dengan skala yang sama (SPUS tiada sejarah sebelum Dis 2019).
+- Bacaan: setup yang CAGR-nya pada MDD −10 % tidak melebihi SPY pada MDD −10 % tidak mendekatkan matlamat, walaupun
+  purata setiap dagangannya positif. Keluaran: `carian_setup/hasil/CS02/PORTFOLIO.md` dan `portfolio.csv`
+  (`cs_portfolio.py`). Maklumat sahaja; kad skor kekal satu-satunya keputusan wang sebenar.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

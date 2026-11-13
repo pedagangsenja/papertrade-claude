@@ -256,3 +256,54 @@ def buku_harian(ev, R, sk, hp, o, c, hari, n_hari):
         if bil[i] > 0:
             out[i] = jum[i] / bil[i]
     return out
+
+
+@njit(cache=True)
+def jumlah_harian(ev, R, sk, o, c, hari, n_hari):
+    """Jumlah pulangan harian semua posisi (dan bilangan posisi terbuka) setiap hari; kos dibahagi dua seperti
+    buku_harian. Untuk portfolio berslot: pulangan portfolio = jumlah ÷ bilangan slot."""
+    jum = np.zeros(n_hari)
+    bil = np.zeros(n_hari)
+    for k in range(ev.shape[0]):
+        e = ev[k] + 1
+        P = o[e]
+        jual = (R[k] + KOS + 1.0) * P
+        dulu = P
+        for d in range(sk[k] + 1):
+            b = e + d
+            if d == sk[k]:
+                r = jual / dulu - 1.0 - KOS / 2
+            else:
+                r = c[b] / dulu - 1.0
+                dulu = c[b]
+            if d == 0:
+                r -= KOS / 2
+            jum[hari[b]] += r
+            bil[hari[b]] += 1
+    return jum, bil
+
+
+@njit(cache=True)
+def pilih_slot(ev, sk, tid, hari, susun, n_slot):
+    """Pilih dagangan untuk portfolio n_slot. susun = susunan isyarat ikut (hari beli, kunci rawak).
+    Slot kosong semula sehari selepas hari jual; saham yang sedang dipegang tidak dibeli lagi."""
+    ambil = np.zeros(ev.shape[0], np.bool_)
+    keluar_slot = np.full(n_slot, -1, np.int64)          # hari jual posisi dalam setiap slot
+    saham_slot = np.full(n_slot, -1, np.int64)
+    for i in range(susun.shape[0]):
+        k = susun[i]
+        d = hari[ev[k] + 1]
+        t = tid[ev[k]]
+        kosong = -1
+        pegang = False
+        for s in range(n_slot):
+            if keluar_slot[s] < d:
+                if kosong < 0:
+                    kosong = s
+            elif saham_slot[s] == t:
+                pegang = True
+        if kosong >= 0 and not pegang:
+            ambil[k] = True
+            keluar_slot[kosong] = hari[ev[k] + 1 + sk[k]]
+            saham_slot[kosong] = t
+    return ambil
