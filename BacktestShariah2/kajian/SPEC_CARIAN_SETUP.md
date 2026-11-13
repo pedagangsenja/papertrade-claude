@@ -221,6 +221,23 @@ CS03. Tiada keputusan CS04 dilihat sebelum pindaan ini.
 - Pegang/keluar anak: seperti pindaan (d). Anak didaftarkan dalam keluarga F (ID baharu, dengan catatan induknya).
   Keluaran `carian_setup/hasil/CS04/` (`cs_tala.py`).
 
+### Pindaan 13 Nov 2026 (f) — kohort jejak hadapan F (ditulis sebelum keputusan CS04 dilihat)
+
+Keputusan pengguna 13 Nov 2026: siapkan semuanya malam ini, termasuk papertrade bagi setup yang lulus; penentuan
+diserahkan kepada Claude. Peraturan pemilihan dikunci di sini **sebelum** keputusan CS04 dibaca:
+
+1. Bagi setiap induk CS03 (`F21`–`F30`): calon = **anak** CS04 jika induk itu ditala DAN kelebihan `lari` anak melebihi
+   induk pada kumpulan B (gabungan K1+K2+K3) DAN pada K3; selainnya calon = **induk**.
+2. Calon masuk kohort hanya jika `T1` dan `T2` benar baginya (kelebihan `t10` dan `lari` positif dalam K1, K2 dan K3).
+3. Setiap ahli kohort dijejak dengan cara pegang dan keluar terbaiknya (pindaan (d)), mekanik §4 tanpa perubahan.
+
+Jejak hadapan ialah **penjejak berasingan** (`carian_setup/cs_hadapan.py`, folder `BacktestShariah2/jejak_f/`), bukan
+Lejar: mekanik §4 (henti ikut harga beli, tiada jual hari beli, keluar bergantung laluan) tidak sama dengan enjin v1.2,
+dan ukuran yang dijejak ialah kadar tangkap. Ia tidak menyentuh Lejar, Papertrade C, kad skor atau dashboard. Alam =
+stor harga (senarai Shariah semasa); layak seperti set 431. Hanya isyarat pada atau selepas **2026-11-13** dikira
+(tiada isian ke belakang). Kad skor kekal satu-satunya keputusan wang sebenar: setup F yang terbukti dalam jejak ini
+masih perlu keputusan pengguna dan integrasi Lejar sebelum boleh dinilai kad skor.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
