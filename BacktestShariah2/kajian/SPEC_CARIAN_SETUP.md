@@ -198,6 +198,29 @@ Label setiap isyarat (beli pada buka esok, harga `P`; tetingkap 20 sesi; bebas d
   kelebihan `lari` Kunci (gabungan) > persentil ke-95 peraturan rawak. K3 ialah ujian sebenar.
 - Keluaran `carian_setup/hasil/CS03/` (`cs_tangkap.py`); setup papan didaftarkan dalam keluarga F.
 
+### Pindaan 13 Nov 2026 (e) — pusingan CS04: tala parameter di sekitar pemenang CS03 (sebelum dijalankan)
+
+Matlamat tidak berubah: setup yang paling kerap menangkap saham "lari" (pindaan (d)). CS03 memilih 10 masuk terbaik
+dengan tetapan tetap; CS04 **menala parameternya** ("tala dari benih"). Data, label, asas rawak dan `skor` sama seperti
+CS03. Tiada keputusan CS04 dilihat sebelum pindaan ini.
+
+- **Induk:** 10 setup papan CS03 (`F21`–`F30`).
+- **Pencetus:** induk berasaskan kaedah M → 24 varian baharu; setiap parameter `tala = Y` diambil seragam dalam ±25 %
+  nilai induk (dipotong pada [`bawah`, `atas`] `param_julat.csv`; integer dibundarkan; benih 20261113). Induk N dan
+  indikator P tidak mempunyai parameter boleh tala dalam modulnya: pencetus kekal.
+- **Penapis:** jenis penapis induk kekal; ambang penapis berambang ditala pada grid: RS ≥ {50, 60, 70, 80, 90, 95};
+  ATR % ≥ {2, 3, 4, 5, 6, 8}; ≥ {20, 30, 40, 50, 60} % di bawah puncak 52 minggu. Penapis lain (rejim QQQ, Supertrend,
+  SPY > SMA200, tutup > MA200) kekal.
+- **Dataran, bukan puncak:** markah satu sel (varian × ambang) = **median** `skor` sel itu dan jiran ambangnya (grid
+  3 × 3, sekurang-kurangnya 4 sel cukup isyarat; bila hanya satu ambang ditala: 3 sel sebaris, sekurang-kurangnya 2).
+  Anak = sel bermarkah dataran tertinggi bagi setiap induk; jika sel induk sendiri yang tertinggi, induk kekal.
+  Penilaian dengan satu posisi setiap saham; `n` ≥ 100 dalam E1 dan E2.
+- **Ujian:** anak dan induk dinilai pada kumpulan B (K1, K2, K3). Laporan menyatakan berapa anak yang kelebihan
+  `lari`-nya melebihi induk pada saham yang tidak dilihat, dan pada K3. Jika penalaan tidak menambah baik pada
+  kumpulan B, itu dilaporkan sebagaimana adanya.
+- Pegang/keluar anak: seperti pindaan (d). Anak didaftarkan dalam keluarga F (ID baharu, dengan catatan induknya).
+  Keluaran `carian_setup/hasil/CS04/` (`cs_tala.py`).
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

@@ -84,6 +84,8 @@ def terang(r, param):
 
 def takrif(r):
     """Takrif kanonik satu setup (boleh dibaca mesin): pencetus|penapis|henti|keluar."""
+    if getattr(r, 'takrif_khas', None):                     # setup ditala (CS04): ambang penapis dalam takrif
+        return r.takrif_khas
     s, x = divmod(int(r.lajur), cari.NR)
     pen = '+'.join(atom.PENAPIS[f][:3] for f in (r.f1, r.f2) if f >= 0) or '-'
     a, b, op = cari.A1[x], cari.A2[x], cari.OP[x]
