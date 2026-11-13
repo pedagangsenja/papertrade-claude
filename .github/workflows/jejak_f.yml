@@ -1,0 +1,49 @@
+# Jejak hadapan kohort F (BacktestShariah2/kajian/carian_setup/cs_hadapan.py): papertrade maya bagi setup carian CS yang
+# lulus (kajian/SPEC_CARIAN_SETUP.md pindaan 13 Nov 2026 (f)). Penjejak BERASINGAN: tidak menyentuh Lejar, Papertrade C,
+# kad skor atau dashboard. Tanpa LLM, tiada order. Dikira semula sepenuhnya daripada stor harga setiap larian.
+# Tiada cron: dicetus sebaik "Lejar penuh" siap (stor harga sudah dikemas malam itu), seperti analisis.yml.
+name: Jejak hadapan F
+
+on:
+  workflow_run:
+    workflows: ['Lejar penuh']
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: jejak-f
+  cancel-in-progress: false
+
+jobs:
+  jejak:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pasang pakej
+        run: pip install -q -c kekangan.txt -r requirements.txt
+      - name: Jejak kohort F
+        run: python3 BacktestShariah2/kajian/carian_setup/cs_hadapan.py jejak
+      - name: Commit dan push
+        run: |
+          git config user.name "jejak-f[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add BacktestShariah2/jejak_f/lejar.csv BacktestShariah2/jejak_f/RINGKASAN.md
+          if git diff --cached --quiet; then echo "tiada perubahan"; exit 0; fi
+          git commit -q -m "Jejak hadapan F: harga $(tail -n +2 BacktestShariah2/data/harga/stor/harga_idx.csv | cut -d, -f2 | sort | tail -1)"
+          for n in 1 2 3; do
+            if git pull -q --rebase origin main && git push -q origin HEAD:main; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((n * 15))
+          done
+          echo "Push gagal; larian seterusnya menjana semula." >&2
+          exit 1

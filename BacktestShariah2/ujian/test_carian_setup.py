@@ -224,6 +224,55 @@ class TestLabelTangkap(unittest.TestCase):
         self.assertEqual(self.jalan(), [1, 1, 0, 0, 0])
 
 
+class TestHadapan(unittest.TestCase):
+    """SPEC pindaan (f): penjejak hadapan mesti memakai mekanik yang sama dengan backtest."""
+
+    def setUp(self):
+        import cs_hadapan
+        self.H = cs_hadapan
+        rng = np.random.default_rng(7)
+        n = 400
+        c = 50 * np.exp(np.cumsum(rng.normal(0, 0.03, n)))
+        o = c * (1 + rng.normal(0, 0.01, n))
+        self.pan = {'o': o, 'h': np.maximum(o, c) * 1.01, 'l': np.minimum(o, c) * (1 - np.abs(rng.normal(0, 0.02, n))),
+                    'c': c, 'atr': 0.03 * c, 'X': (rng.random((len(atom.KELUAR), n)) < 0.15).astype(np.uint8),
+                    'mula': np.array([0, n]), 'tid': np.zeros(n, np.int32)}
+
+    def test_simulasi_menyamai_teras_bagi_tetingkap_lengkap(self):
+        p = self.pan
+        ev = np.arange(30, 360)
+        for s, r in [(0, 0), (1, 5), (2, 18), (3, 19), (0, 20), (1, 300), (2, 400), (3, NR - 1)]:
+            R, hp, sk = teras.hasil_satu(ev, p['o'], p['h'], p['l'], p['c'], p['atr'], p['X'], JENIS, PAR, A1, A2, OP, s, r)
+            for k, i in enumerate(ev):
+                x = self.H.simulasi(p, int(i), s, r)
+                self.assertEqual(x['status'], 'TUTUP')
+                self.assertAlmostEqual(x['R'], R[k], places=10, msg=(s, r, i))
+                self.assertEqual((x['sesi'], x['bar_keluar']), (hp[k], i + 1 + sk[k]), (s, r, i))
+
+    def test_status_tetingkap_belum_lengkap(self):
+        p = dict(self.pan)
+        p['X'] = np.zeros_like(p['X'])
+        p['l'] = p['c'] * 0.999                                        # tiada henti
+        p['o'] = p['c'].copy()
+        n = len(p['c'])
+        self.assertEqual(self.H.simulasi(p, n - 1, 0, 0)['status'], 'TUNGGU_BELI')
+        p['c'] = np.linspace(50, 60, n)                                # naik perlahan: tiada henti tutup hari beli
+        p['o'] = p['c'].copy()
+        p['l'] = p['c'] * 0.999
+        x = self.H.simulasi(p, n - 4, 0, 0)
+        self.assertEqual((x['status'], x['sesi']), ('TERBUKA', 3))
+        p['X'][0, n - 1] = 1                                           # isyarat keluar pada bar terakhir
+        self.assertEqual(self.H.simulasi(p, n - 4, 0, _peraturan(0))['status'], 'JUAL_ESOK')
+
+    def test_takrif_boleh_dibaca_semula(self):
+        import cs_cari
+        self.assertEqual(self.H.dari_takrif('M84.t7|F23@5+F26|H2|X11 ATAU X21'),
+                         {'pencetus': 'M84.t7', 'fs': [22, 25], 'amb': [5.0, None],
+                          'lajur': 1 * cs_cari.NR + _peraturan(10, 20, 2)})
+        self.assertEqual(self.H.dari_takrif('N73|F16+F23|H4|X07 DAN X21')['lajur'], 3 * cs_cari.NR + _peraturan(6, 20, 3))
+        self.assertEqual(self.H.dari_takrif('P13|-|H1|X00'), {'pencetus': 'P13', 'fs': [-1, -1], 'amb': [None, None], 'lajur': 0})
+
+
 class TestKumpul(unittest.TestCase):
     def test_skor_menyamai_kiraan_terus(self):
         rng = np.random.default_rng(3)
