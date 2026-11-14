@@ -1,0 +1,6 @@
+16:22:54 label kumpulan cari siap; asas keseluruhan: m5 12.0% · t10 19.8% · t20 4.8% · gagal 30.8% · lari 5.2%
+16:23:26 besar: 182,903 peraturan masuk diskor; 4.2% skor > 0
+16:24:12 benih B: 33 modul
+16:25:28   20/33
+16:28:50 benih B: ok 200 ralat 0
+16:29:11 CS03 siap: {"pencetus": 500, "masuk_dicuba": 233000, "masuk_diskor": 182903, "bahagian_skor_positif": 0.0422, "pusingan": "CS03", "p95_rawak": 0.0139, "median_atas_K1": 0.0215, "median_atas_K2": 0.0212, "median_atas_K3": 0.0138, "median_rawak_K1": -0.0003, "median_rawak_K2": 0.0013, "median_rawak_K3": 0.0041, "spearman_K1": 0.282, "spearman_K2": 0.3648, "spearman_K3": -0.0372}

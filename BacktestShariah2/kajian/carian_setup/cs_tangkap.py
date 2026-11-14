@@ -1,9 +1,11 @@
 """Carian setup CS03 — pangkat ikut KADAR TANGKAP (SPEC pindaan 13 Nov 2026 (d)).
 Guna: python3 cs_tangkap.py <kerja>   (folder kerja CS02: panel_A/B dan benih_A/B sudah ada).
+      python3 cs_tangkap.py <kerja> semua   rekod SEMUA peraturan masuk kumpulan cari (tiada pemilihan baharu).
 Keluaran: hasil/CS03/LAPORAN.md, papan.csv, senarai_kunci.csv, meta.json; kajian/CARIAN_SETUP.md; registry F."""
 import json
 import os
 import pickle
+import re
 import sys
 
 import numpy as np
@@ -293,5 +295,103 @@ def main(kerja):
     cari.log('CS03 siap: ' + json.dumps({k: (round(v, 4) if isinstance(v, float) else v) for k, v in meta.items()}))
 
 
+def semua(kerja):
+    """Rekod SEMUA peraturan masuk yang diskor pada kumpulan cari, bukan papan sahaja (asas "syarat sahaja" untuk
+    dibandingkan dengan larian berprasyarat). Pengiraan sama seperti main(); tiada pemilihan baharu, tiada Kunci.
+    Keluaran: hasil/CS03/semua_masuk.csv.gz (satu baris setiap peraturan masuk), SEMUA_PENCETUS.csv dan .md."""
+    import cs_ringkas
+    cari_set, _ = cari.PUSINGAN[PUS]
+    T_cari, _ = lapor.tempoh(PUS)
+    pan = cari.panel(kerja, cari_set)
+    bn = pickle.load(open(os.path.join(kerja, f'benih_{cari_set}.pkl'), 'rb'))
+    ev_semua = cari.pencetus(pan, bn)
+    X = label_asas(pan)
+    pasar = np.isin(cari.F1, (25, 26, 27)) | np.isin(cari.F2, (25, 26, 27))     # guna penapis peringkat pasaran
+    J = {'lari': 4, 't10': 1, 'gagal': 3}
+    bhg, satu = [], []
+    for nama, ev in ev_semua.items():
+        tp = pan['tempoh'][ev].astype(np.int64)
+        S = np.zeros((len(cari.F1), 2, 2 * NL))
+        N2 = np.zeros((len(cari.F1), 2), np.int64)
+        if len(ev):
+            teras.kumpul_tambah(np.ascontiguousarray(X[ev]), tp, np.ascontiguousarray(pan['F'][:, ev].T), cari.F1,
+                                cari.F2, S, np.zeros_like(S), N2)
+        cukup = (tp == 0).sum() >= cari.N_MIN and (tp == 1).sum() >= cari.N_MIN
+        ok = np.flatnonzero((N2[:, 0] >= cari.N_MIN) & (N2[:, 1] >= cari.N_MIN)) if cukup else np.zeros(0, np.int64)
+        n = np.maximum(N2.astype(float), 1)
+        d = pd.DataFrame({'pencetus': nama, 'f1': cari.F1[ok], 'f2': cari.F2[ok], 'prasyarat_pasaran': pasar[ok].astype(int),
+                          'n_' + T_cari[0]: N2[ok, 0], 'n_' + T_cari[1]: N2[ok, 1]})
+        for lab, j in J.items():
+            for pi, t in enumerate(T_cari):
+                d[f'{lab}_{t}'] = np.round(S[ok, pi, j] / n[ok, pi] * 100, 2)
+                d[f'asas_{lab}_{t}'] = np.round(S[ok, pi, NL + j] / n[ok, pi] * 100, 2)
+        d['skor'] = np.round(np.minimum(*[lb_lari(n[ok, pi], S[ok, pi, 4] / n[ok, pi], S[ok, pi, NL + 4] / n[ok, pi])
+                                          for pi in (0, 1)]) * 100, 3)
+        bhg.append(d)
+        r = {'pencetus': nama, 'nama': lapor.nama_pencetus(nama, bn['param']), 'keluarga': cari.keluarga(nama),
+             'n_' + T_cari[0]: int(N2[0, 0]), 'n_' + T_cari[1]: int(N2[0, 1]), 'cukup_isyarat': int(bool(cukup)),
+             'gabungan_diskor': len(ok)}
+        if len(ok) and ok[0] == 0:                       # baris tanpa penapis
+            for lab in J:
+                for t in T_cari:
+                    r[f'lebih_{lab}_{t}'] = round(float(d[f'{lab}_{t}'][0] - d[f'asas_{lab}_{t}'][0]), 2)
+            r['skor_tanpa_penapis'] = float(d.skor[0])
+        for kunci_, m in (('syarat', d.prasyarat_pasaran == 0), ('prasyarat', d.prasyarat_pasaran == 1)):
+            if m.any():
+                b_ = d[m].sort_values('skor', ascending=False).iloc[0]
+                r[f'skor_terbaik_{kunci_}'] = float(b_.skor)
+                r[f'penapis_terbaik_{kunci_}'] = ' DAN '.join(atom.PENAPIS[int(f)] for f in (b_.f1, b_.f2) if f >= 0) or 'tiada'
+        satu.append(r)
+    B = pd.concat(bhg, ignore_index=True)
+    P = pd.DataFrame(satu).sort_values('skor_terbaik_syarat', ascending=False, na_position='last').reset_index(drop=True)
+    d = os.path.join(SINI, 'hasil', PUS)
+    B.to_csv(os.path.join(d, 'semua_masuk.csv.gz'), index=False, compression={'method': 'gzip', 'mtime': 0})
+    P.to_csv(os.path.join(d, 'SEMUA_PENCETUS.csv'), index=False)
+    e1, e2 = T_cari
+    f = lambda x, k=2: '–' if x != x else f'{x:+.{k}f}'
+    pen = lambda x: '–' if x != x else ' + '.join(re.sub(r'^F\d+ ', '', b) for b in str(x).split(' DAN '))
+    try:
+        sys.path.insert(0, os.path.join(lapor.BS2, 'standard'))
+        import status_kad
+        status = status_kad.baris()
+    except Exception:
+        status = '> **Status keputusan:** lihat `laporan/KAD_SKOR.md`; laporan ini BUKAN keputusan.'
+    A = ['# CS03: SEMUA pencetus (kaedah M, N dan indikator) ikut kadar tangkap — asas "syarat sahaja" (backtest, BUKAN bukti)',
+         '', status, '',
+         'Dijana `kajian/carian_setup/cs_tangkap.py <kerja> semua`. **Jangan sunting secara manual.**', '',
+         f'Setiap baris = satu pencetus (benih M asal `.0` dan dua varian parameter `.1`/`.2`, benih N, indikator `Pxx`). '
+         f'{len(P)} pencetus; {int(P.cukup_isyarat.sum())} cukup isyarat (≥ {cari.N_MIN} dalam setiap era); '
+         f'{len(B):,} peraturan masuk (pencetus × 0–2 penapis) diskor, semuanya dalam `semua_masuk.csv.gz`.', '',
+         f'**Angka di sini daripada KUMPULAN A (separuh yang DICARI; {e1} = 2010–2019, {e2} = 2020–2024), jadi condong ke atas.** '
+         'Hanya 200 teratas + 200 rawak disahkan pada kumpulan B (`senarai_kunci.csv`, `TOP50.md`). Guna jadual ini sebagai '
+         'ASAS: apa yang setiap kaedah capai dengan syarat saham sahaja, untuk dibandingkan dengan larian berprasyarat.', '',
+         '"Lebih lari" = kadar lari isyarat tolak kadar saham rawak hari sama × tercile ATR% sama, dalam mata peratus, tanpa '
+         'sebarang penapis. "Skor" = min dua era bagi (lebihan lari − 2 ralat piawai), mata peratus; > 0 bermakna lebihan itu '
+         'melepasi ralat dalam KEDUA-DUA era. "Syarat sahaja" = penapis saham; "dengan prasyarat" = sekurang-kurangnya satu '
+         'daripada QQQ ON / QQQ OFF / SPY > SMA200.', '',
+         f'| # | Pencetus | Isyarat {e1} / {e2} | Lebih lari tanpa penapis {e1} / {e2} | Skor terbaik: syarat sahaja | Penapis | '
+         'Skor terbaik: dengan prasyarat | Penapis |', '|---' * 8 + '|']
+    for i, r in enumerate(P.itertuples(), 1):
+        if not r.cukup_isyarat:
+            continue
+        A.append(f'| {i} | {cs_ringkas.nama_pendek(r.nama)} | {getattr(r, "n_" + e1):,} / {getattr(r, "n_" + e2):,} | '
+                 f'{f(getattr(r, "lebih_lari_" + e1, np.nan))} / {f(getattr(r, "lebih_lari_" + e2, np.nan))} | '
+                 f'{f(r.skor_terbaik_syarat)} | {pen(r.penapis_terbaik_syarat)} | '
+                 f'{f(getattr(r, "skor_terbaik_prasyarat", np.nan))} | {pen(getattr(r, "penapis_terbaik_prasyarat", np.nan))} |')
+    tak = P[P.cukup_isyarat == 0]
+    A += ['', f'**Tidak cukup isyarat ({len(tak)}):** ' + ', '.join(tak.pencetus) + '.', '',
+          '## Bacaan', '',
+          f'- Skor terbaik syarat sahaja > 0: {int((P.skor_terbaik_syarat > 0).sum())} daripada '
+          f'{int(P.cukup_isyarat.sum())} pencetus. Dengan prasyarat pasaran > 0: '
+          f'{int((P.get("skor_terbaik_prasyarat", pd.Series(dtype=float)) > 0).sum())}.',
+          f'- Daripada {len(B):,} peraturan masuk, {(B.skor > 0).mean() * 100:.1f}% berskor > 0 '
+          f'(syarat sahaja {(B.skor[B.prasyarat_pasaran == 0] > 0).mean() * 100:.1f}%; dengan prasyarat pasaran '
+          f'{(B.skor[B.prasyarat_pasaran == 1] > 0).mean() * 100:.1f}%).',
+          '- "Skor terbaik" ialah yang terbaik daripada sehingga 466 gabungan penapis bagi setiap pencetus, jadi ia terpilih '
+          'dan condong ke atas; lajur "tanpa penapis" tidak terpilih.', '']
+    open(os.path.join(d, 'SEMUA_PENCETUS.md'), 'w', encoding='utf-8').write('\n'.join(A))
+    cari.log(f'semua: {len(P)} pencetus, {len(B):,} peraturan masuk direkod')
+
+
 if __name__ == '__main__':
-    main(sys.argv[1])
+    semua(sys.argv[1]) if len(sys.argv) > 2 and sys.argv[2] == 'semua' else main(sys.argv[1])

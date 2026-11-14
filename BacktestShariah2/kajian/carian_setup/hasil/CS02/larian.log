@@ -1,0 +1,65 @@
+12:28:51 panel A: 1673 saham, 5,653,345 bar, 3,032,354 bar sah
+12:29:07 benih A: 451 modul
+12:33:22   20/451
+12:38:50   40/451
+12:40:47   60/451
+12:42:43   80/451
+12:47:36   100/451
+12:53:00   120/451
+12:55:10   140/451
+12:57:19   160/451
+13:00:25   180/451
+13:02:36   200/451
+13:04:56   220/451
+13:12:15   240/451
+13:14:16   260/451
+13:16:21   280/451
+13:18:17   300/451
+13:20:24   320/451
+13:22:04   340/451
+13:23:49   360/451
+13:26:19   380/451
+13:28:29   400/451
+13:32:31   420/451
+13:33:35   440/451
+13:34:10 benih A: ok 451 ralat 0
+13:37:59   pencetus 25/500 · masuk diskor 10,189 · 223s
+13:39:52   pencetus 50/500 · masuk diskor 19,600 · 335s
+13:40:41   pencetus 75/500 · masuk diskor 27,920 · 385s
+13:42:36   pencetus 100/500 · masuk diskor 36,819 · 500s
+13:45:26   pencetus 125/500 · masuk diskor 46,699 · 670s
+13:49:05   pencetus 150/500 · masuk diskor 56,789 · 889s
+13:50:41   pencetus 175/500 · masuk diskor 66,819 · 985s
+13:55:04   pencetus 200/500 · masuk diskor 75,467 · 1248s
+13:56:48   pencetus 225/500 · masuk diskor 84,498 · 1352s
+14:00:53   pencetus 250/500 · masuk diskor 94,317 · 1597s
+14:06:23   pencetus 275/500 · masuk diskor 103,323 · 1927s
+14:08:42   pencetus 300/500 · masuk diskor 111,417 · 2066s
+14:11:03   pencetus 325/500 · masuk diskor 119,976 · 2206s
+14:12:34   pencetus 350/500 · masuk diskor 127,421 · 2298s
+14:15:10   pencetus 375/500 · masuk diskor 135,379 · 2454s
+14:18:35   pencetus 400/500 · masuk diskor 144,087 · 2658s
+14:20:11   pencetus 425/500 · masuk diskor 152,935 · 2755s
+14:22:27   pencetus 450/500 · masuk diskor 162,447 · 2891s
+--- sambung 14:27:12
+14:27:22 sambung dari titik semak: 450 pencetus siap
+14:32:23   pencetus 475/500 · masuk diskor 172,672 · 3192s
+14:37:01   pencetus 500/500 · masuk diskor 182,903 · 3470s
+14:37:45 besar siap: 422,140,124 kombinasi diskor daripada 537,764,000 dicuba
+14:38:15 tepat siap: 1992 setup sah; papan 10; rawak 200
+14:40:00 panel B: 1587 saham, 5,475,857 bar, 3,324,189 bar sah
+14:40:05 nilai A: 400 setup
+14:40:34 benih B: 167 modul
+14:44:15   20/167
+14:50:13   40/167
+14:52:12   60/167
+14:54:12   80/167
+14:57:51   100/167
+14:59:30   120/167
+15:01:27   140/167
+15:05:08   160/167
+15:05:29 benih B: ok 167 ralat 0
+15:05:30 nilai B: 400 setup
+15:05:45 kunci siap
+laporan CS02: 10 setup papan; rho 0.46 ; tahan tempoh bebas: False
+LARIAN_CS02_SIAP

@@ -247,6 +247,32 @@ menggantikan induk `F24` kerana kadar tangkapnya lebih tinggi, tetapi dengan car
 Ini keputusan selepas melihat hasil, bukan pradaftar; ia hanya MENAMBAH satu ahli dan tidak membuang mana-mana ahli
 peraturan (f). Tiada tambahan lain.
 
+### Pindaan 14 Nov 2026 (h) — tinjauan PRASYARAT (isyarat bukan daripada harga saham itu sendiri; sebelum dijalankan)
+
+Permintaan pengguna 14 Nov 2026: prasyarat setup F setakat ini hanya rejim QQQ dan SPY > SMA200; selidik prasyarat lain
+(earnings, sektor, industri, keadaan pasaran) "secara kreatif". Ini **tinjauan pengukuran**, bukan pemilihan setup: ia
+mengukur sama ada setiap prasyarat mengubah kadar saham "lari" (pindaan (d)). Tiada hasil dilihat sebelum senarai ini
+ditulis. Senarai dan takrif tepat: `carian_setup/cs_prasyarat.py` (`PRASYARAT`).
+
+| Kumpulan | Prasyarat |
+|---|---|
+| A. Arah pasaran | QQQ ON / OFF · SPY atas / bawah SMA200 · QQQ dalam 3 % dari puncak 52 minggu · QQQ ≥ 10 % / ≥ 20 % di bawah puncak · rejim ON baharu (≤ 10 sesi) · rejim OFF baharu (≤ 10 sesi) · QQQ RSI14 < 35 · QQQ naik ≥ 3 % dalam 5 sesi |
+| B. Turun-naik pasaran | turun-naik SPY 21 hari ≥ 25 % setahun · ≤ 10 % · sedang menurun (21 hari < 63 hari) |
+| C. Keluasan pasaran (semua saham set 2000 yang layak) | ≥ 60 % saham di atas MA50 · ≤ 30 % · keluasan naik ≥ 10 mata dalam 10 sesi · ≥ 60 % di atas MA200 · ≥ 15 % saham dalam 5 % dari puncak 52 minggu |
+| D. Sektor saham itu (11 sektor) | sektor 3 teratas ikut pulangan 63 sesi · 3 terbawah · ≥ 60 % saham sektor di atas MA50 |
+| E. Industri saham itu (≥ 5 saham layak) | industri 20 % teratas ikut pulangan 63 sesi · 20 % teratas ikut 21 sesi · 20 % terbawah (63 sesi) · ≥ 60 % saham industri di atas MA50 · ada saham LAIN dalam industri sama yang naik ≥ 20 % dalam 20 sesi |
+| F. Earnings syarikat (8-K item 2.02; `data/sec/`) | earnings dalam 1–5 sesi akan datang · 0–4 sesi selepas earnings · 5–19 sesi selepas · tiada earnings dalam 20 sesi akan datang · kejutan untung terkini positif (SUE > 0) · hasil suku terkini tumbuh ≥ 20 % · harga melompat ≥ 5 % pada hari earnings (dalam 20 sesi lalu) |
+| G. Kalendar | Nov–Apr · Mei–Okt · 7 hari pertama bulan · Januari |
+
+- Ukuran: kadar `lari`, `t10`, `gagal` antara bar layak bila prasyarat BENAR lawan PALSU, dalam lima kepingan: kumpulan A
+  (E1, E2) dan kumpulan B (K1, K2, K3). Prasyarat "konsisten" jika kadar `lari` BENAR > PALSU dalam kelima-lima kepingan.
+  Ukuran yang sama bagi isyarat lapan setup kohort (gabungan), satu posisi setiap saham.
+- Kaveat dikunci: prasyarat pasaran berubah ikut HARI, jadi bilangan pemerhatian bebasnya kecil walaupun bar banyak;
+  "earnings akan datang" memakai tarikh sebenar (syarikat biasanya mengumumkan tarikh lebih awal, tetapi ini pandang ke
+  hadapan yang ringan); peta sektor/industri ialah peta semasa; tiada saham delist.
+- Hasil hanya maklumat. Prasyarat yang konsisten boleh dimasukkan sebagai penapis baharu dalam pusingan carian seterusnya
+  (pindaan berasingan). Keluaran: `carian_setup/hasil/PRASYARAT/`.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

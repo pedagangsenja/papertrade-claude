@@ -1,5 +1,6 @@
 """Ujian carian setup CS01 (`kajian/carian_setup/`, pradaftar `kajian/SPEC_CARIAN_SETUP.md`):
 ruang carian dikunci, tiada pandang ke hadapan, mekanik dagangan SPEC §4 dan pengumpulan skor SPEC §6."""
+import json
 import os
 import sys
 import unittest
@@ -311,6 +312,49 @@ class TestKumpul(unittest.TestCase):
         idx, _, _, hist = teras.kumpul_skor(S, Q, N2, np.array([0]), 100, 2, np.array([0.0]))
         self.assertEqual(idx[0].tolist(), [-1, -1])
         self.assertEqual(int(hist.sum()), 0)
+
+
+class TestRingkas(unittest.TestCase):
+    """cs_ringkas: pecahan prasyarat/syarat dan nama pendek (tiada pengiraan baharu)."""
+
+    def test_bahagi(self):
+        import cs_ringkas
+        self.assertEqual(cs_ringkas.bahagi('F20 >= 30% di bawah puncak 52 minggu DAN F27 rejim QQQ OFF'),
+                         ('QQQ OFF', '>= 30% di bawah puncak 52 minggu'))
+        self.assertEqual(cs_ringkas.bahagi('F17 RS >= 90 DAN F28 SPY > SMA200'), ('SPY > SMA200', 'RS >= 90'))
+        self.assertEqual(cs_ringkas.bahagi('RS >= 95 DAN ATR% >= 4'), ('–', 'RS >= 95 + ATR% >= 4'))
+        self.assertEqual(cs_ringkas.bahagi(float('nan')), ('–', '–'))
+
+    def test_pasaran_sepadan_ruang_carian(self):
+        import cs_ringkas
+        # Tiga penapis peringkat pasaran dalam ruang carian (cs_atom.PENAPIS indeks 25-27).
+        for kod, nama in cs_ringkas.PASARAN.items():
+            i = int(kod[1:]) - 1
+            self.assertIn(i, (25, 26, 27))
+            self.assertTrue(str(atom.PENAPIS[i]).startswith(kod + ' '))
+            self.assertIn(nama, str(atom.PENAPIS[i]))
+
+    def test_nama_pendek(self):
+        import cs_ringkas
+        self.assertEqual(cs_ringkas.nama_pendek('M92 CCI-50 (benih M, varian 2: cci_50=91, rma_atr_14=15)'), 'M92 CCI-50 (ditala 2)')
+        self.assertEqual(cs_ringkas.nama_pendek('N40 OBV tinggi baharu + MA50 (benih N)'), 'N40 OBV tinggi baharu + MA50')
+
+    def test_registry_semua_dipecah(self):
+        import cs_ringkas
+        t = cs_ringkas.pembahagian()
+        self.assertEqual(t.id.tolist()[:3], ['F01', 'F02', 'F03'])
+        self.assertTrue(set(t.prasyarat_pasaran) <= {'–', 'QQQ ON', 'QQQ OFF', 'SPY > SMA200'})
+        self.assertEqual(int((t.jejak_hadapan == 'ya').sum()), 8)
+
+    def test_rekod_semua_masuk_sepadan_cs03(self):
+        """semua_masuk.csv.gz ialah rekod penuh larian CS03 yang sama: bilangan dan skor sepadan dengan meta dan senarai."""
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS03')
+        b = pd.read_csv(os.path.join(d, 'semua_masuk.csv.gz'))
+        with open(os.path.join(d, 'meta.json')) as f:
+            self.assertEqual(len(b), json.load(f)['masuk_diskor'])
+        k = pd.read_csv(os.path.join(d, 'senarai_kunci.csv'))
+        self.assertAlmostEqual(b.skor.max() / 100, k.skor.max(), places=4)
+        self.assertEqual(len(pd.read_csv(os.path.join(d, 'SEMUA_PENCETUS.csv'))), 500)
 
 
 if __name__ == '__main__':
