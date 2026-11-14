@@ -7,6 +7,7 @@ Guna (folder kerja: panel_A/B, benih_A/B (SEMUA modul), lapis_A/B sudah ada):
   python3 cs_cs05.py plasebo <kerja>    sama, prasyarat dianjak masa (plasebo)
   python3 cs_cs05.py tepat   <kerja>    peringkat tepat, papan, pilihan setiap pencetus (kumpulan A)
   python3 cs_cs05.py kunci   <kerja>    nilai semuanya pada kumpulan B + padanan kelas x prasyarat
+  python3 cs_lengkap.py asas <kerja> ; python3 cs_lengkap.py pilih <kerja>    pegang + keluar + henti (pindaan (j))
   python3 cs_cs05.py lapor   <kerja>    hasil/CS05/, kajian/CARIAN_SETUP.md, data/registry_F.csv
 Jangan sunting keluaran secara manual."""
 import json
@@ -438,8 +439,23 @@ def gab(v, T, nama):
     return n, (sum(v[t]['n'] * v[t][nama] for t in T if v.get(t, {}).get('n')) / n if n else np.nan)
 
 
+def tangkap_penuh(v, T):
+    """Bahagian belian yang sahamnya `lari` DAN dagangannya dijual dengan R >= +10 % (v = ukuran cs_lengkap.nilai_l)."""
+    n = sum(v.get(t, {}).get('n', 0) for t in T)
+    return sum(v[t]['n_lari'] * v[t]['k10_lari'] for t in T if v.get(t, {}).get('n_lari')) / n if n else np.nan
+
+
 def lebih(v, T, aw, nama='lari'):
     return gab(v, T, nama)[1] - gab(v, T, aw + nama)[1]
+
+
+def kod_keluar(c):
+    """'H4 · X10 DAN X12' bagi lajur (henti x keluar) c."""
+    s, x = divmod(int(c), cari.NR)
+    a, b, op = cari.A1[x], cari.A2[x], cari.OP[x]
+    kel = 'X00' if op == 0 else atom.KELUAR[a][:3] if op == 1 else (
+        f"{atom.KELUAR[a][:3]} {'ATAU' if op == 2 else 'DAN'} {atom.KELUAR[b][:3]}")
+    return f'{atom.HENTI[s][:2]} · {kel}'
 
 
 def isi_prasyarat(reg):
@@ -458,20 +474,28 @@ def daftar(baris, param):
     reg = isi_prasyarat(reg)
     tujuan = os.path.join(KELUAR_UJI, 'registry_F.csv') if KELUAR_UJI else lapor.REG_F
     idf = {}
+    masuk_ = lambda t: (t.split('|')[0], t.split('|')[1], '|'.join(t.split('|')[4:]))      # pencetus, penapis, prasyarat
     for k, b in baris.items():
         lama = reg[reg.takrif == b['takrif']]
         if len(lama):
             idf[k] = lama.id.iloc[0]
             continue
-        fid = f"F{max(int(x[1:]) for x in reg.id) + 1:02d}"
+        kunci_ = masuk_(b['takrif'])
+        sama = reg[(reg.pusingan == PUS) & reg.takrif.map(lambda t: masuk_(t) == kunci_)]
+        if len(sama):                              # pindaan (j): ID kekal pada peraturan MASUK; henti x keluar diganti
+            fid, tarikh = sama.id.iloc[0], sama.tarikh_daftar.iloc[0]
+            reg = reg[reg.id != fid]
+        else:
+            fid, tarikh = f"F{max(int(x[1:]) for x in reg.id) + 1:02d}", pd.Timestamp.now().strftime('%Y-%m-%d')
         P = param.get(b.pop('_pencetus'))
         baru = dict.fromkeys(lapor.LAJUR_F, '')
-        baru.update(id=fid, keluarga='F', pusingan=PUS, tarikh_daftar=pd.Timestamp.now().strftime('%Y-%m-%d'),
+        baru.update(id=fid, keluarga='F', pusingan=PUS, tarikh_daftar=tarikh,
                     param=json.dumps({a: round(x, 6) for a, x in P.items()}, sort_keys=True) if P else '',
                     status='BACKTEST', **b)
         reg = pd.concat([reg, pd.DataFrame([baru])[lapor.LAJUR_F].astype(str)], ignore_index=True)
         idf[k] = fid
-    reg.to_csv(tujuan, index=False)
+    reg['_n'] = reg.id.str[1:].astype(int)
+    reg.sort_values('_n').drop(columns='_n').to_csv(tujuan, index=False)
     return idf
 
 
@@ -502,6 +526,12 @@ def lapor_(kerja):
     P['masuk'] = [lapor.nama_pencetus(n, param) for n in P.pencetus]
     tanpa = {(r.pencetus, r.f1, r.f2): k for k, r in zip(P.index, P.itertuples()) if r.peranan == 'tanpa'}
     rawak = P[(P.peranan == 'rawak') & (P.n_kunci >= 100)]
+    # pindaan (j): (henti x keluar) dipilih ikut kadar `jadi` (dagangan dijual dengan R >= +10 %), bukan purata R
+    LG = pickle.load(open(os.path.join(kerja, 'cs05_lengkap.pkl'), 'rb'))
+    for k in P.index[P.peranan.str.startswith('papan_')]:
+        if LG['lajur'].get(k, -1) >= 0:
+            P.loc[k, 'lajur'] = LG['lajur'][k]
+            R[k] = LG['L'][k]['pilih']
 
     # ----- papan -----
     papan, daftar_b = {}, {}
@@ -526,6 +556,10 @@ def lapor_(kerja):
             T = dict(T1=ada('t10'), T2=ada('lari'), T3=bool(r.n_kunci >= 100 and r[f'kl_{aw}'] > p95), T4=T4)
             papan[k] = dict(kod=kod, kd=kd, henti=atom.HENTI[s],
                             keluar=teras.nama_keluar(x, cari.A1, cari.A2, cari.OP, atom.KELUAR), takrif=takrif, **T)
+            lg = LG['L'][k]
+            papan[k]['L1'] = bool(all(lg['pilih'].get(t, {}).get('n') and lg['pilih'][t]['k10'] > lg['pilih'][t][aw + 'k10']
+                                      for t in TK))
+            papan[k]['L2'] = bool(gab(lg['pilih'], TK, 'k10')[1] >= gab(lg['x00'], TK, 'k10')[1])
             rr = {t: {**{'n': 0, 'purata': np.nan}, **R[k].get(t, {})} for t in TC + TK}
             ringkas_ = lambda x: 'tiada' if x == 'tiada' else buang_kod(x).replace(' DAN ', ' + ')
             b_ = dict(_pencetus=r.pencetus, takrif=takrif, masuk=r.masuk, penapis=r.penapis, henti=atom.HENTI[s],
@@ -560,6 +594,16 @@ def lapor_(kerja):
                           a + 'n': int(x.n_kunci), a + 'hari': int(x.hari_kunci), a + 'lari': x.lari_kunci,
                           a + 'asas': gab(V[x.name], TK, aw + 'lari')[1], a + 'lebih': x[f'kl_{aw}'],
                           a + 'gagal': x.gagal_kunci, a + 'n_K3': int(x.n_K3), a + 'lebih_K3': x[f'kl3_{aw}']})
+                c = LG['lajur'].get(x.name, -1)
+                if kl != 'PL' and c >= 0:
+                    lg = LG['L'][x.name]
+                    r.update({a + 'keluar_l': kod_keluar(c), a + 'n_l': gab(lg['pilih'], TK, 'k10')[0],
+                              a + 'jadi': gab(lg['pilih'], TK, 'k10')[1], a + 'asas_jadi': gab(lg['pilih'], TK, aw + 'k10')[1],
+                              a + 'rugi8': gab(lg['pilih'], TK, 'rugi8')[1], a + 'pegang': gab(lg['pilih'], TK, 'pegang')[1],
+                              a + 'purata': gab(lg['pilih'], TK, 'purata')[1], a + 'jadi_x00': gab(lg['x00'], TK, 'k10')[1],
+                              a + 'tp': tangkap_penuh(lg['pilih'], TK), a + 'tp_K3': tangkap_penuh(lg['pilih'], ['K3']),
+                              a + 'jadi_K3': lg['pilih'].get('K3', {}).get('k10', np.nan),
+                              a + 'n_l_K3': lg['pilih'].get('K3', {}).get('n', 0)})
         M.append(r)
     M = pd.DataFrame(M)
     M.to_csv(os.path.join(d, 'SEMUA_PENCETUS.csv'), index=False, float_format='%.5f')
@@ -580,6 +624,29 @@ def lapor_(kerja):
             med_lebih_S=med(g('S', 'lebih')[ok]), med_lebih_P=med(g('P', 'lebih')[ok]), med_lebih_PL=med(g('PL', 'lebih')[ok]))
         bacaan[kod]['menolong'] = bool(bacaan[kod]['med_P'] > 0 and bacaan[kod]['med_P'] > bacaan[kod]['med_PL'])
         bacaan[kod]['menolong_K3'] = bool(bacaan[kod]['med_P3'] > 0 and bacaan[kod]['med_P3'] > bacaan[kod]['med_PL3'])
+        okl = (g('S', 'n_l') >= 100) & (g('P', 'n_l') >= 100)
+        okl3 = okl & (g('S', 'n_l_K3') >= 50) & (g('P', 'n_l_K3') >= 50)
+        lengkap = {'n': int(okl.sum()), 'n3': int(okl3.sum()), 'P_atas_S': int((g('P', 'jadi') > g('S', 'jadi'))[okl].sum()),
+                   'P_atas_S3': int((g('P', 'jadi_K3') > g('S', 'jadi_K3'))[okl3].sum()),
+                   'med_beza': med((g('P', 'jadi') - g('S', 'jadi'))[okl]),
+                   'tp_P_atas_S': int((g('P', 'tp') > g('S', 'tp'))[okl].sum()),
+                   'tp_P_atas_S3': int((g('P', 'tp_K3') > g('S', 'tp_K3'))[okl3].sum()),
+                   'tp_med_beza': med((g('P', 'tp') - g('S', 'tp'))[okl]),
+                   'tp_med_beza3': med((g('P', 'tp_K3') - g('S', 'tp_K3'))[okl3]),
+                   'med_beza3': med((g('P', 'jadi_K3') - g('S', 'jadi_K3'))[okl3])}
+        for kl in ('S', 'P'):
+            m_ = okl & g(kl, 'jadi').notna()
+            kel = M.get(f'{kod}_{kl}_keluar_l', pd.Series('', index=M.index)).fillna('')[m_]
+            lengkap[kl] = dict(
+                jadi=med(g(kl, 'jadi')[m_]), asas=med(g(kl, 'asas_jadi')[m_]), rugi8=med(g(kl, 'rugi8')[m_]),
+                tp=med(g(kl, 'tp')[m_]), tp15=int((g(kl, 'tp') >= 0.15)[m_].sum()),
+                pegang=med(g(kl, 'pegang')[m_]), purata=med(g(kl, 'purata')[m_]), x00=med(g(kl, 'jadi_x00')[m_]),
+                atas_asas=int((g(kl, 'jadi') > g(kl, 'asas_jadi'))[m_].sum()),
+                keluar_x00=int(kel.str.endswith('X00').sum()), keluar_dan=int(kel.str.contains(' DAN ').sum()),
+                lebih_x00=int((g(kl, 'jadi') > g(kl, 'jadi_x00') + 1e-9)[m_].sum()),
+                jadi30=int((g(kl, 'jadi') >= 0.30)[m_].sum()), jadi25=int((g(kl, 'jadi') >= 0.25)[m_].sum()),
+                henti={h[:2]: int(kel.str.startswith(h[:2]).sum()) for h in atom.HENTI})
+        bacaan[kod]['lengkap'] = lengkap
 
     # ----- padanan kelas x prasyarat -----
     pad, ruj = KV['padanan'], KV['rujukan'].set_index(KV['rujukan'].prasyarat.str[:4])
@@ -623,7 +690,8 @@ def lapor_(kerja):
                          'prasyarat': P.at[k, 'prasyarat'], 'penapis': P.at[k, 'penapis'], 'henti': b['henti'],
                          'keluar': b['keluar'], 'takrif': b['takrif'], 'skor_tepat': P.at[k, f"skor_{b['kod']}"],
                          'tempoh': t, **V[k].get(t, {}), **{'R_' + a: x for a, x in R[k].get(t, {}).items()},
-                         **{x: b[x] for x in ('T1', 'T2', 'T3', 'T4')}})
+                         **{x: b[x] for x in ('T1', 'T2', 'T3', 'T4', 'L1', 'L2')},
+                         **{f'L_{nm}_{a}': x for nm, vv in LG['L'][k].items() for a, x in vv.get(t, {}).items()}})
     pd.DataFrame(csvb).to_csv(os.path.join(d, 'papan.csv'), index=False, float_format='%.5f')
 
     # ----- semakan kejujuran -----
@@ -737,19 +805,32 @@ def lapor_(kerja):
               f"\"lari\" positif dalam ketiga-tiganya. **T3:** kelebihan lari melebihi persentil ke-95 peraturan rawak "
               f"({p(meta[f'p95_rawak_{kod}'], 2, True)} mata). **T4:** kelebihan lari (kumpulan B DAN K3) melebihi setup yang sama "
               'TANPA prasyarat.', '',
-              'Cara pegang dan keluar terbaik bagi setiap setup (dipilih pada kumpulan A; angka kumpulan B, kos 0.5 % ditolak, '
-              'jurang melepasi henti dijual pada harga buka):', '',
-              '| ID | Henti | Keluar | ' + ' | '.join(f'{t}: purata % / menang % / pegang' for t in TK)
-              + ' | Dagangan ≥ +10 % / rugi ≤ −8 % (kumpulan B) |', '|---' * (4 + len(TK)) + '|']
+              '**Setup lengkap: henti, pegang dan keluar dipilih ikut kadar tangkap yang direalisasi** (pindaan (j); dipilih pada '
+              'kumpulan A, angka kumpulan B). **Jadi** = dagangan DIJUAL dengan untung bersih ≥ 10 % (kos 0.5 % ditolak; jurang '
+              'melepasi henti dijual pada harga buka). "Rawak" = saham rawak (asas papan ini) dengan henti dan keluar yang sama. '
+              '**Tangkap penuh** = saham itu lari (≥ 5 % minggu pertama, capai 10 %, kekal ≥ 10 % minggu ke-4) DAN dagangannya '
+              'dijual dengan untung ≥ 10 %. "Pelari dipegang" = daripada saham yang lari, berapa % dijual dengan untung ≥ 10 %.', '',
+              '| ID | Henti | Keluar | Pegang (sesi) | **Tangkap penuh %** | **Jadi %** (rawak) | Kelebihan jadi K1 / K2 / K3 | '
+              'Rugi ≥ 8 % % (rawak) | Pelari dipegang % | Jadi % tanpa keluar indikator | Jadi % dengan keluar lama (ikut purata) | '
+              'Purata setiap dagangan % K1 / K2 / K3 (maklumat) | L1 | L2 |', '|---' * 14 + '|']
         for k, b in papan.items():
             if b['kod'] != kod:
                 continue
-            rr = {t: {**{'n': 0, 'purata': np.nan}, **R[k].get(t, {})} for t in TK}
-            nR = sum(rr[t]['n'] for t in TK)
-            wR = lambda kol: sum(rr[t]['n'] * rr[t][kol] for t in TK if rr[t]['n']) / nR if nR else np.nan
-            A.append(f"| `{idf[k]}` | {b['henti']} | {b['keluar']} | " + ' | '.join(
-                f"{p(rr[t]['purata'], 2, True)} / {p(rr[t].get('menang', np.nan))} / {rr[t].get('pegang', np.nan):.1f}"
-                if rr[t]['n'] else '–' for t in TK) + f" | {p(wR('k10'))} / {p(wR('rugi8'))} |")
+            lg = LG['L'][k]
+            w = lambda nama, kol: gab(lg.get(nama, {}), TK, kol)[1]
+            nl = sum(lg['pilih'].get(t, {}).get('n_lari', 0) for t in TK)
+            pel = sum(lg['pilih'][t]['n_lari'] * lg['pilih'][t]['k10_lari'] for t in TK
+                      if lg['pilih'].get(t, {}).get('n_lari')) / nl if nl else np.nan
+            A.append(f"| `{idf[k]}` | {b['henti']} | {b['keluar']} | {w('pilih', 'pegang'):.1f} | "
+                     f"**{p(tangkap_penuh(lg['pilih'], TK))}** | **{p(w('pilih', 'k10'))} ({p(w('pilih', aw + 'k10'))})** | "
+                     + ' / '.join(p(lg['pilih'][t]['k10'] - lg['pilih'][t][aw + 'k10'], 1, True)
+                                  if lg['pilih'].get(t, {}).get('n') else '–' for t in TK)
+                     + f" | {p(w('pilih', 'rugi8'))} ({p(w('pilih', aw + 'rugi8'))}) | {p(pel)} | {p(w('x00', 'k10'))} | "
+                     f"{p(w('lama', 'k10')) if 'lama' in lg else '–'} | "
+                     + ' / '.join(p(lg['pilih'][t]['purata'], 2, True) if lg['pilih'].get(t, {}).get('n') else '–' for t in TK)
+                     + f" | {ya(b['L1'])} | {ya(b['L2'])} |")
+        A += ['', '- **L1:** kelebihan "jadi" atas rawak positif dalam K1, K2 dan K3. **L2:** "jadi" dengan keluar terpilih tidak '
+              'kurang daripada tanpa keluar indikator (henti sama, pegang 20 sesi).']
         A += ['', 'Dari mana datangnya kadar tangkap? Setiap sel: lari % (rawak %) · kena henti %, kumpulan B. "Tanpa pencetus" = '
               'semua saham layak yang memenuhi prasyarat dan penapis yang sama (maklumat tambahan, tidak dipradaftar):', '',
               '| ID | Setup penuh | Syarat sahaja (buang prasyarat) | Prasyarat + penapis sahaja (buang pencetus) |', '|---' * 4 + '|']
@@ -773,7 +854,37 @@ def lapor_(kerja):
                 f"{p(j[t][f'med_{a}'], 2, True)} ({j[t][f'pos_{a}']} / {j[t][f'n_{a}']} positif)" for t in TK) + ' |')
         A += ['| Spearman skor lawan kelebihan (teratas) | ' + ' | '.join(f"{j[t]['rho']:+.2f}" for t in TK) + ' |', '']
     # padanan
-    A += ['## 5. Padanan jenis setup × prasyarat (kumpulan B, tanpa penapis)', '',
+    A += ['## 5. Setup lengkap bagi SETIAP kaedah: pegang dan keluar ikut kadar tangkap (kumpulan B)', '',
+          'Bagi setiap kaedah, peraturan masuk terbaik (syarat sahaja **S**, dan dengan prasyarat **P**) dipasangkan dengan henti × '
+          'keluar yang paling kerap menghasilkan dagangan **jadi** (dijual dengan untung bersih ≥ 10 %), dipilih pada kumpulan A '
+          '(pindaan (j)). Angka = median merentas kaedah, kumpulan B. Jadual setiap kaedah: '
+          '`carian_setup/hasil/CS05/SEMUA_PENCETUS_LENGKAP.md`.', '',
+          '**Tangkap penuh** = saham itu lari (corak yang dicari: ≥ 5 % minggu pertama, capai 10 %, kekal ≥ 10 % minggu ke-4) DAN '
+          'dijual dengan untung ≥ 10 %. **Jadi** lebih luas: apa-apa dagangan yang dijual dengan untung ≥ 10 %, termasuk yang naik '
+          'perlahan.', '',
+          '| Kayu ukur masuk | Kaedah | Tangkap penuh %: S / P | Beza (P − S) · P > S | K3: beza · P > S | Jadi % (rawak): S / P | '
+          'P > S (jadi) | Rugi ≥ 8 %: S / P | Pegang (sesi): S / P | Keluar terpilih tanpa indikator (X00): S / P | '
+          'Keluar terpilih mengatasi X00: S / P |', '|---' * 11 + '|']
+    for kod in SKOR:
+        lk = bacaan[kod]['lengkap']
+        A.append(f"| {kod.capitalize()} | {lk['n']} | {p(lk['S']['tp'])} / {p(lk['P']['tp'])} | "
+                 f"{p(lk['tp_med_beza'], 1, True)} · {lk['tp_P_atas_S']} / {lk['n']} | "
+                 f"{p(lk['tp_med_beza3'], 1, True)} · {lk['tp_P_atas_S3']} / {lk['n3']} | "
+                 f"{p(lk['S']['jadi'])} ({p(lk['S']['asas'])}) / {p(lk['P']['jadi'])} ({p(lk['P']['asas'])}) | "
+                 f"{lk['P_atas_S']} / {lk['n']} | {p(lk['S']['rugi8'])} / {p(lk['P']['rugi8'])} | "
+                 f"{lk['S']['pegang']:.1f} / {lk['P']['pegang']:.1f} | {lk['S']['keluar_x00']} / {lk['P']['keluar_x00']} | "
+                 f"{lk['S']['lebih_x00']} / {lk['P']['lebih_x00']} |")
+    A += ['', '- Henti terpilih (dengan prasyarat): ' + '; '.join(
+              f"{kod}: " + ', '.join(f'{h} {n}' for h, n in bacaan[kod]['lengkap']['P']['henti'].items()) for kod in SKOR) + '.',
+          '- Peraturan keluar terpilih berbentuk "DAN" (dua indikator mesti menyala serentak, jadi jarang menjual): '
+          + '; '.join(f"{kod}: S {bacaan[kod]['lengkap']['S']['keluar_dan']}, P {bacaan[kod]['lengkap']['P']['keluar_dan']} "
+                      f"daripada {bacaan[kod]['lengkap']['n']}" for kod in SKOR) + '.',
+          '- Median "jadi" tanpa keluar indikator (X00, henti sama): '
+          + '; '.join(f"{kod}: S {p(bacaan[kod]['lengkap']['S']['x00'])} %, P {p(bacaan[kod]['lengkap']['P']['x00'])} %"
+                      for kod in SKOR) + '. Purata setiap dagangan (maklumat): '
+          + '; '.join(f"{kod}: S {p(bacaan[kod]['lengkap']['S']['purata'], 2, True)} %, "
+                      f"P {p(bacaan[kod]['lengkap']['P']['purata'], 2, True)} %" for kod in SKOR) + '.', '']
+    A += ['## 6. Padanan jenis setup × prasyarat (kumpulan B, tanpa penapis)', '',
           f"Kelas dikunci secara mekanikal: **IKUT TREND** ({meta['ikut_trend']} pencetus) jika ≥ 50 % isyaratnya mempunyai "
           f"RSI14 > 50; selainnya **PANTULAN** ({meta['pantulan']}). Setiap sel = median merentas pencetus bagi perubahan bila "
           'prasyarat benar berbanding semua isyarat pencetus itu: **Δ lari** (kadar lari mutlak) / **Δ kelebihan** (lawan rawak '
@@ -797,7 +908,7 @@ def lapor_(kerja):
             a, b = sel_pad(q[:4], 'IKUT TREND'), sel_pad(q[:4], 'PANTULAN')
             A.append(f"| {q[5:]} | {p(x.bahagian, 0)} | {p(x.lari_b)} / {p(x.lari_p)} | {p(x.gagal_b)} / {p(x.gagal_p)} | "
                      f'{a[0]} | {a[1]} | {b[0]} | {b[1]} |')
-    A += ['', '## 6. Kaveat', '',
+    A += ['', '## 7. Kaveat', '',
           '- Backtest sahaja; papan ialah pangkat, BUKAN bukti. Kohort jejak hadapan (`jejak_f/`) TIDAK berubah; menukar kohort '
           'ialah keputusan pengguna yang berasingan. Kad skor kekal satu-satunya keputusan wang sebenar.',
           '- Lebih 100 juta peraturan dicuba: yang teratas pada kumpulan A sebahagiannya nasib. Sebab itu setiap angka di atas '
@@ -844,6 +955,54 @@ def lapor_(kerja):
     Bm += [f'Kelas: T = IKUT TREND, P = PANTULAN. "–" = kurang 100 belian pada kumpulan B. **Tidak cukup isyarat ({len(tak)}):** '
            + ', '.join(tak.pencetus) + '.', '']
     open(os.path.join(d, 'SEMUA_PENCETUS.md'), 'w', encoding='utf-8').write('\n'.join(Bm))
+    Lm = ['# CS05: SETIAP pencetus — setup LENGKAP (masuk + henti + pegang + keluar), kumpulan B (backtest, BUKAN bukti)', '',
+          status, '', 'Dijana `kajian/carian_setup/cs_cs05.py` (pindaan (j)). **Jangan sunting secara manual.** Lajur penuh: '
+          '`SEMUA_PENCETUS.csv`.', '',
+          'Peraturan masuk setiap kaedah sama seperti `SEMUA_PENCETUS.md`. Henti × keluar dipilih pada kumpulan A supaya paling '
+          'kerap menghasilkan dagangan **jadi** = DIJUAL dengan untung bersih ≥ 10 %. Setiap sel: **tangkap penuh %** (saham itu '
+          'lari DAN dijual dengan untung ≥ 10 %) · jadi % (saham rawak dengan henti dan keluar yang sama) · rugi ≥ 8 % · purata '
+          'sesi pegang. Semua angka kumpulan B (saham yang tidak dilihat).', '',
+          'Henti: ' + '; '.join(atom.HENTI) + '. Keluar: X00 = tiada keluar indikator (henti + 20 sesi); '
+          + '; '.join(atom.KELUAR) + '.', '']
+    for kod in SKOR:
+        lk = bacaan[kod]['lengkap']
+        Lm += [f'## Peraturan masuk dipilih ikut kayu ukur {nama_skor[kod]}', '',
+               f"Median tangkap penuh: syarat sahaja {p(lk['S']['tp'])} %, dengan prasyarat {p(lk['P']['tp'])} %; dengan prasyarat "
+               f"lebih tinggi bagi {lk['tp_P_atas_S']} daripada {lk['n']} kaedah (K3: {lk['tp_P_atas_S3']} daripada {lk['n3']}). "
+               f"Median jadi: {p(lk['S']['jadi'])} % lawan {p(lk['P']['jadi'])} % (lebih tinggi bagi {lk['P_atas_S']} kaedah).", '',
+               '| Pencetus | Syarat sahaja: penapis | henti · keluar | tangkap penuh % · jadi % (rawak) · rugi % · pegang | '
+               'Dengan prasyarat: prasyarat | penapis | henti · keluar | tangkap penuh % · jadi % (rawak) · rugi % · pegang | '
+               'Beza tangkap penuh |', '|---' * 9 + '|']
+        for r in M.itertuples():
+            if not r.cukup_isyarat or g(r, f'{kod}_S_n') != g(r, f'{kod}_S_n'):
+                continue
+            ada = lambda kl: g(r, f'{kod}_{kl}_n_l') == g(r, f'{kod}_{kl}_n_l') and g(r, f'{kod}_{kl}_n_l') >= 100
+            sel = lambda kl: (f"**{p(g(r, f'{kod}_{kl}_tp'))}** · {p(g(r, f'{kod}_{kl}_jadi'))} "
+                              f"({p(g(r, f'{kod}_{kl}_asas_jadi'))}) · {p(g(r, f'{kod}_{kl}_rugi8'))} · "
+                              f"{g(r, f'{kod}_{kl}_pegang'):.1f}" if ada(kl) else '–')
+            kel = lambda kl: g(r, f'{kod}_{kl}_keluar_l') if ada(kl) else '–'
+            Lm.append(f"| {pendek(r.nama)} | {txt(g(r, f'{kod}_S_penapis'))} | {kel('S')} | {sel('S')} | "
+                      f"{txt(g(r, f'{kod}_P_prasyarat'))} | {txt(g(r, f'{kod}_P_penapis'))} | {kel('P')} | {sel('P')} | "
+                      + (p(g(r, f'{kod}_P_tp') - g(r, f'{kod}_S_tp'), 1, True) if ada('S') and ada('P') else '–') + ' |')
+        Lm.append('')
+    open(os.path.join(d, 'SEMUA_PENCETUS_LENGKAP.md'), 'w', encoding='utf-8').write('\n'.join(Lm))
+    Tm = ['# CS05: 50 peraturan masuk teratas setiap kayu ukur, TANPA had kepelbagaian papan (backtest, BUKAN bukti)', '', status,
+          '', 'Dijana `kajian/carian_setup/cs_cs05.py` daripada 200 teratas (`senarai_kunci.csv`). **Jangan sunting secara manual.** '
+          'Pangkat ditentukan pada kumpulan A; angka daripada kumpulan B. Papan 10 teratas menghadkan setiap prasyarat kepada 3 '
+          'baris; senarai ini tidak, jadi ia menunjukkan pangkat sebenar.', '']
+    for kod in SKOR:
+        aw = ASAS[kod]
+        t5 = P[P.atas200 & P.peranan.isin([f'atas_{kod}', f'papan_{kod}'])].sort_values(f'skor_{kod}', ascending=False).head(50)
+        Tm += [f'## Kayu ukur {nama_skor[kod]}', '',
+               '| # | Prasyarat | Pencetus | Penapis saham | Belian (hari isyarat) | Lari % (rawak) | Kena henti % | '
+               'Kelebihan lari K1 / K2 / K3 |', '|---' * 8 + '|']
+        for i, (k, r) in enumerate(t5.iterrows(), 1):
+            Tm.append(f"| {i} | {txt(r.prasyarat)} | {pendek(r.masuk)} | {txt(r.penapis)} | {int(r.n_kunci):,} "
+                      f"({int(r.hari_kunci):,}) | {p(r.lari_kunci)} ({p(gab(V[k], TK, aw + 'lari')[1])}) | {p(r.gagal_kunci)} | "
+                      + ' / '.join(p(r[f'kl_{aw}{t}'], 1, True) for t in TK) + ' |')
+        Tm += ['', f"Pencetus berbeza: {t5.pencetus.map(cari.keluarga).nunique()}; memakai \"earnings dalam 1-5 sesi akan datang\": "
+               f"{int((t5.q2 == 8).sum())} daripada {len(t5)}.", '']
+    open(os.path.join(d, 'TOP50.md'), 'w', encoding='utf-8').write('\n'.join(Tm))
     cari.log('CS05 lapor siap: ' + json.dumps({k: bacaan[k] for k in SKOR}, default=float)[:600])
 
 

@@ -540,6 +540,83 @@ class TestCS05(unittest.TestCase):
         with open(os.path.join(bs2, 'jejak_f', 'kohort.json')) as f:      # pindaan (i): kohort jejak hadapan tidak berubah
             self.assertEqual([a['id'] for a in json.load(f)['ahli']], ['F21', 'F22', 'F34', 'F27', 'F28', 'F38', 'F30', 'F24'])
 
+class TestLengkap(unittest.TestCase):
+    """SPEC pindaan 14 Nov 2026 (j): pegang + keluar + henti ikut kadar tangkap yang direalisasi."""
+
+    def test_ambang_dikunci(self):
+        import cs_lengkap as lg
+        self.assertEqual((lg.JADI, lg.RUGI, lg.K), (0.10, -0.08, 2308))
+
+    def test_tambah_asas_menyamai_kiraan_terus(self):
+        import cs_lengkap as lg
+        rng = np.random.default_rng(11)
+        Rm = rng.normal(0, 0.12, (500, 37)).astype(np.float32)
+        g = rng.integers(0, 9, 500)
+        TJ, TR = np.zeros((9, 37), np.uint16), np.zeros((9, 37), np.uint16)
+        lg.tambah_asas(Rm, g, TJ, TR)
+        R64 = Rm.astype(np.float64)
+        for x in range(9):
+            np.testing.assert_array_equal(TJ[x], (R64[g == x] >= 0.10).sum(axis=0))
+            np.testing.assert_array_equal(TR[x], (R64[g == x] <= -0.08).sum(axis=0))
+
+    def _pan(self, naik):
+        N = 400
+        c = 100 * (1 + naik) ** np.arange(N)
+        return {'o': c.copy(), 'h': c * 1.001, 'l': c * 0.999, 'c': c, 'atr': np.full(N, 1.0),
+                'X': np.zeros((len(atom.KELUAR), N), np.uint8), 'tid': np.zeros(N, np.int32),
+                'tempoh': (np.arange(N) >= 200).astype(np.int8), 'hari': np.arange(N)}
+
+    def test_nilai_l_jadi_rugi_dan_asas(self):
+        import cs_lengkap as lg
+        N, e = 400, np.array([10, 20, 40, 70, 210, 240])           # 20 jatuh dalam pegangan 10 (X00: 20 sesi)
+        X = np.zeros((N, 15), np.float32)
+        X[40, 4] = 1                                                # satu saham berlabel lari
+        Tb = {'g': np.zeros(N, np.int32), 'ge': np.zeros(N, np.int32), 'n': np.array([50]),
+              'TJ': np.full((1, lg.K), 10, np.uint16), 'TR': np.full((1, lg.K), 5, np.uint16),
+              'TJe': np.full((1, lg.K), 0.3, np.float32), 'TRe': np.full((1, lg.K), 0.1, np.float32)}
+        v = lg.nilai_l(self._pan(0.01), X, e, 0, Tb)                # naik 1 % sehari: tutup sesi 20 = +20.8 % - kos
+        self.assertEqual((v[0]['n'], v[1]['n']), (3, 2))
+        self.assertEqual((v[0]['k10'], v[0]['rugi8'], v[0]['pegang']), (1.0, 0.0, 20.0))
+        self.assertAlmostEqual(v[0]['purata'], 1.01 ** 19 - 1 - 0.005, places=9)
+        self.assertEqual((v[0]['n_lari'], v[0]['k10_lari']), (1, 1.0))
+        self.assertAlmostEqual(v[0]['a_k10'], 0.2)
+        self.assertAlmostEqual(v[0]['a_rugi8'], 0.1)
+        self.assertAlmostEqual(v[0]['e_k10'], 0.3, places=6)
+        v = lg.nilai_l(self._pan(0.0), X, e, 0, Tb)                 # harga rata: R = -kos; tidak jadi, tidak rugi8
+        self.assertEqual((v[0]['k10'], v[0]['rugi8']), (0.0, 0.0))
+        v = lg.nilai_l(self._pan(-0.01), X, e, 0, Tb)               # turun 1 % sehari: henti -8 % kena
+        self.assertEqual((v[0]['k10'], v[0]['rugi8']), (0.0, 1.0))
+        self.assertLess(v[0]['pegang'], 20)
+
+    def test_pilih_lajur_memilih_yang_paling_kerap_jadi(self):
+        import cs_lengkap as lg
+        pan = self._pan(0.01)                                       # naik terus: memegang 20 sesi paling kerap jadi
+        pan['X'][0, :] = 1                                          # X01 sentiasa menyala: jual pada buka sesi 2
+        e = np.arange(5, 370, 1)
+        c = lg.pilih_lajur(pan, e)
+        self.assertGreaterEqual(c, 0)
+        s, r = divmod(c, NR)
+        self.assertFalse(OP[r] == 1 and A1[r] == 0)                 # bukan X01 tunggal (jual awal)
+        self.assertFalse(OP[r] == 2 and 0 in (A1[r], A2[r]))        # bukan pasangan ATAU yang mengandungi X01
+        self.assertEqual(lg.pilih_lajur(pan, e[:150]), -1)          # era kedua tiada isyarat: tiada pilihan
+
+    def test_rekod_lengkap(self):
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS05')
+        m = pd.read_csv(os.path.join(d, 'SEMUA_PENCETUS.csv'))
+        for kol in ('pilih_S_jadi', 'pilih_P_jadi', 'jumlah_P_jadi', 'pilih_P_keluar_l', 'pilih_P_asas_jadi'):
+            self.assertIn(kol, m.columns)
+        self.assertTrue(m.pilih_P_keluar_l.dropna().str.match(r'^H[1-4] · X\d\d').all())
+        p = pd.read_csv(os.path.join(d, 'papan.csv'))
+        self.assertTrue({'L1', 'L2', 'L_pilih_k10', 'L_x00_k10'} <= set(p.columns))
+        for nama in ('SEMUA_PENCETUS_LENGKAP.md', 'TOP50.md'):
+            self.assertTrue(os.path.exists(os.path.join(d, nama)))
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str).fillna('')
+        cs5 = reg[reg.pusingan == 'CS05']
+        self.assertEqual(cs5.id.tolist(), [f'F{i}' for i in range(39, 58)])      # ID kekal pada peraturan masuk
+        x = p.drop_duplicates('id').set_index('id')
+        for r in cs5.itertuples():                                              # registry = setup lengkap pindaan (j)
+            self.assertEqual(r.takrif, x.takrif[r.id])
+
 
 if __name__ == '__main__':
     unittest.main()

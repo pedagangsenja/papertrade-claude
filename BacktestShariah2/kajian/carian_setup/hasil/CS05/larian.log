@@ -19,3 +19,7 @@
 04:35:50 kunci: 4027 peraturan dinilai pada kumpulan B
 04:37:02 kunci siap: padanan 46,948 baris
 04:37:47 CS05 lapor siap: {"pilih": {"n": 463, "n3": 305, "med_P": 0.04653078806027321, "med_PL": 0.006211112263708934, "med_P3": 0.05607295036315918, "med_PL3": 0.005109697580337524, "P_atas_S": 430,
+# pindaan (j): peringkat lengkap
+04:58:31 asas A siap: 3,032,354 bar; jadi X00/H1 semua bar = 11.7%
+05:00:13 asas B siap: 3,324,189 bar; jadi X00/H1 semua bar = 12.1%
+05:03:28 lengkap siap: 1873 peraturan masuk; X00 dipilih 455; henti H1=161 H2=190 H3=278 H4=1244
