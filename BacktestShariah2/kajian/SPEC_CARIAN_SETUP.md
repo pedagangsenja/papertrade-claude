@@ -571,6 +571,66 @@ setup baharu. Kod `carian_setup/cs_akhir.py`; keluaran `carian_setup/hasil/KEDUD
 - Kaveat (i)–(l) kekal. Yang TIDAK ditutup oleh pindaan ini: data saham delist; carian automatik berkala ("mesin sentiasa
   mencari"); peringkat papertrade (ditangguh atas arahan pengguna).
 
+### Pindaan 14 Nov 2026 (n) — pusingan CS07: tala parameter SEMUA kaedah, cari + tala KELUAR, dan mesin berkala (sebelum dijalankan)
+
+Sebab: semakan 12 item matlamat (`SERAHAN_CARIAN_SETUP.md` §1a) menunjukkan item 2 (parameter), item 4 (indikator keluar yang
+mengesan kenaikan tamat) dan item 7 (mesin sentiasa mencari dan menala) belum capai. Keputusan pengguna 14 Nov 2026: "ya, mula
+sekarang", ikut susunan (a) tala parameter semua kaedah M, N dan indikator; (b) cari dan tala indikator keluar; (c) mesin
+berkala. Tiada jejak hadapan, tiada order.
+
+**Kayu ukur (tidak berubah keluarga):** kadar tangkap. Label masuk = `terus` (pindaan (m): tutup sesi 5 ≥ P + 5 % DAN tutup
+sesi 20 > tutup sesi 5 DAN henti −8 % tidak kena dalam 20 sesi), lawan saham rawak hari sama × tercile ATR % ("pilih").
+`lari` dan `tp` turut dilaporkan. Skor peraturan masuk = min dua era carian (E1, E2) bagi [kelebihan − 2 ralat piawai],
+n ≥ 100 setiap era (sama seperti (i)). Carian pada kumpulan A sahaja; kumpulan B (K1, K2, K3) hanya untuk laporan.
+
+**(a) Tala parameter masuk** (`carian_setup/cs_tala7.py`, `cs_param.py`):
+- Kaedah M (134): varian lalai (v0) dan dua varian sedia ada (v1, v2), ditambah 8 varian rawak julat penuh `param_julat.csv`
+  (v3–v10, `cari.param_varian`); kemudian bagi 50 kaedah M dengan skor A terbaik, 8 varian setempat ±25 % di sekitar varian
+  terbaiknya (benih `[20261113, 7, id, v]`).
+- Indikator dan kaedah N: 25 keluarga berparameter `K01`–`K25` dengan grid penuh (≈ 630 varian): RSI(n) < x; RSI silang naik;
+  bawah/masuk semula/atas jalur Bollinger(n, k); k tutup turun berturut; tutup silang MA/EMA(n); MA(f) silang MA(s);
+  MACD(f, s, g); pecah tinggi n hari (± volum); Supertrend(n, m); ADX(n) silang x; Stochastic(n); lonjakan (r, volum);
+  gap; gap-and-go; undur ke MA(n) yang naik; jatuh y % dalam x hari; Keltner; squeeze lepas; NR-k; Holy Grail; RS silang x;
+  bar pembalikan; pecah julat sempit. Ahli yang parameternya sama dengan takrif `P`/`N` asal ditanda `asal` (= induk).
+  Corak kompleks berbilang syarat (cth. VCP, Qullamaggie, Ichimoku, pocket pivot, Stage 1→2) TIDAK ditala dalam pusingan ini;
+  ia kekal pada takrif asal dan disenaraikan dalam laporan sebagai baki bagi mesin.
+- Setiap varian diskor dengan enjin (i): terbaik atas [0–1 prasyarat pasaran] × [0–1 prasyarat syarikat] × [0–2 penapis saham].
+- Pilihan: bagi setiap induk (kaedah M / keluarga K), anak = varian dengan skor A tertinggi. Induk = v0 (M) atau ahli `asal`.
+- Bacaan dikunci: "tala menolong" jika pada kumpulan B kelebihan `terus` anak > induk bagi lebih separuh pasangan DAN median
+  beza > 0 dalam K3. Turut dilaporkan: 20 setup teratas ikut skor A dengan dan tanpa varian baharu, dinilai pada B.
+
+**(b) Keluar** (`carian_setup/cs_keluar7.py`; kernel sendiri, enjin lama tidak disentuh supaya pariti jejak F kekal):
+- Atom keluar berparameter (≈ 97): tutup < SMA/EMA(n); dua tutup < SMA(n); SMA(f) < SMA(s); MACD(f, s, g) < isyarat;
+  histogram MACD turun k hari; RSI(n) < x; RSI(n) silang turun x; RSI(n) > x; Supertrend(n, m) turun; tutup < rendah k hari;
+  Stochastic silang turun; hari turun bervolum; bar pembalikan; k tutup turun; +DI < −DI; Chandelier k × ATR14
+  (k 1.5–5); ekor p × tutup tertinggi (p 0.85–0.97); "tiada kemajuan" (selepas d sesi, tutup < harga beli).
+- Peraturan: `X00`, tunggal, pasangan ATAU/DAN; setiap satu dengan **syarat aktif** {sentiasa, selepas tutup tertinggi ≥ +5 %,
+  selepas ≥ +10 %} ("pegang selagi naik; indikator keluar hanya bekerja selepas saham sudah naik"). Henti: −8 %, −10 %, −12 %,
+  −15 %, 3×, 4×, 5× ATR14 dan min(−10 %, 4×ATR14). Had 20 sesi kekal.
+- Ukuran dikunci: `tp` = naik ≥ 5 % minggu pertama DAN dijual dengan untung ≥ +10 % (pindaan (k)), dengan SYARAT "tidak jual
+  awal": purata untung terealisasi pada belian berlabel `terus` ≥ 90 % daripada "pegang sahaja" (henti yang sama, `X00`).
+  Turut dilaporkan: kekurangan dari puncak (puncak tutup 20 sesi − untung terealisasi), menang, rugi ≥ 8 %, purata.
+- Pilihan dua peringkat pada kumpulan A (elak padanan lampau atas ratusan ribu calon): (1) **keluar sejagat**: purata merentas
+  setup bagi [min dua era (tp − tp `X00` henti sama)], 30 teratas yang lulus syarat; (2) setiap setup memilih antara `X00`
+  (semua henti) dan 30 keluar sejagat itu. Setup = 61 setup kedudukan akhir (m) + setup papan baharu (a).
+- Bacaan dikunci: "keluar menolong" jika pada kumpulan B, tp keluar terpilih > tp `X00` (henti sama) DAN > tp keluar lama
+  bagi lebih separuh setup, syarat "tidak jual awal" kekal pada B, dan median rugi ≥ 8 % tidak naik lebih 1 mata.
+
+**(c) Mesin berkala** (`carian_setup/cs_mesin.py`, workflow `mesin_carian.yml`): setiap larian menarik kelompok varian BAHARU
+(benih = nombor larian: varian rawak kaedah M, parameter rawak keluarga K, termasuk di luar grid), menskor pada A dengan
+peraturan (a), menilai yang terbaik pada B, dan MENAMBAH ke papan terkumpul (`hasil/MESIN/papan.csv`, tambah-sahaja) serta
+laporan `hasil/MESIN/LAPORAN.md`. Peraturan mesin dikunci di sini; larian mesin tidak memerlukan pindaan baharu selagi ruang,
+skor dan bacaan tidak berubah. Papan disusun ikut skor A; lajur B ialah semakan, bukan kunci susunan. Mesin TIDAK mendaftar
+setup ke papertrade dan tidak menyentuh Lejar, kad skor atau kohort jejak F.
+
+**Pendaftaran:** setup lengkap terbaik CS07 (masuk (a) + henti/keluar (b)) didaftarkan `F88` dan seterusnya (pusingan `CS07`,
+status `BACKTEST`). Kedudukan akhir dijana semula dengan takrif "dipercayai" (m) yang sama.
+
+**Kaveat dikunci:** kumpulan B sudah dilihat dalam CS02–CS06 dan (m) (bukan lagi tahanan bersih, hanya tidak dipakai untuk
+memilih); lebih banyak varian dicuba = skor A terbaik lebih melambung, jadi angka B dan K3 yang dibaca; tiada saham delist;
+tiga pusingan tala terdahulu (CS04, (j), CS06) tidak menunjukkan faedah luar sampel — pusingan ini mengukur semula dengan
+ruang yang jauh lebih luas, bukan menjanjikan hasil.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
