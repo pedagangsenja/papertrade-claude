@@ -759,6 +759,38 @@ class TestKadarMenang(unittest.TestCase):
         self.assertIn(f"| **{r.menang * 100:.0f}** | {round(r.menang * 10)} / {10 - round(r.menang * 10)} |", teks)
         self.assertEqual(int((t.jejak_hadapan == 'ya').sum()), 8)
 
+class TestPortfolio6(unittest.TestCase):
+    """SPEC pindaan 14 Nov 2026 (l): portfolio 10 slot bagi setup berprasyarat."""
+
+    def test_dikunci_dan_takrif(self):
+        import cs_lapis as lapis
+        import cs_portfolio6 as p6
+        self.assertEqual((p6.SETUP, p6.N_SLOT, p6.HAD_MDD, p6.N_ULANG), (['F39', 'F40', 'F58', 'F49'], 10, 0.10, 200))
+        self.assertEqual(p6.GABUNGAN, {'PILIH3': ['F39', 'F40', 'F58'], 'SEMUA4': ['F39', 'F40', 'F58', 'F49']})
+        d = p6.dari_takrif5('M73.2|F02+F20|H3|X09 DAN X21|QA08+QF01')
+        self.assertEqual((d['pencetus'], d['f1'], d['f2']), ('M73.2', 1, 19))
+        self.assertEqual(lapis.PASARAN[d['q1']][:4], 'QA08')
+        self.assertEqual(lapis.KUMPULAN[d['q2']][:4], 'QF01')
+        self.assertEqual(d['lajur'] // NR, 2)                                   # H3
+        d = p6.dari_takrif5('N73|F16+F23|H4|X07 DAN X21')                        # tanpa prasyarat
+        self.assertEqual((d['q1'], d['q2']), (-1, -1))
+
+    def test_ukur(self):
+        import cs_portfolio6 as p6
+        r = np.r_[np.full(126, 0.001), [-0.10], np.full(125, 0.001)]
+        c, m = p6.ukur(r)
+        self.assertAlmostEqual(m, -0.10)
+        self.assertAlmostEqual(c, float(np.prod(1 + r) - 1))                    # 252 sesi = setahun
+
+    def test_rekod_portfolio(self):
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS06')
+        t = pd.read_csv(os.path.join(d, 'portfolio.csv'))
+        self.assertEqual(t.setup.tolist(), ['F39', 'F40', 'F58', 'F49', 'PILIH3', 'SEMUA4'])
+        self.assertTrue((t.diambil <= t.isyarat).all())
+        for r in t.itertuples():                                                # bacaan dikunci pindaan (l)
+            self.assertEqual(bool(r.menambah), bool(r.cagr_had > 0 and r.cagr_had > r.rawak95_cagr_had))
+        self.assertTrue(os.path.exists(os.path.join(d, 'PORTFOLIO.md')))
+
 
 if __name__ == '__main__':
     unittest.main()

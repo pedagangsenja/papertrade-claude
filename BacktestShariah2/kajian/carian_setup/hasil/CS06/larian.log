@@ -39,3 +39,15 @@
 05:56:54 benih B: 11 modul
 05:57:51 benih B: ok 11 ralat 0
 05:57:51 tala siap: 20 induk; 18 anak berbeza daripada induk
+# pindaan (l): portfolio 10 slot
+08:56:46 F39: M73.2|F02+F20|H3|X09 DAN X21|QA08+QF01 -> 547 isyarat
+08:56:46 F40: M14.2|F15+F20|H3|X14 DAN X21|QA08+QF01 -> 731 isyarat
+08:56:46 F58: N16|F15+F20|H3|X12|QC01+QF01 -> 386 isyarat
+08:56:46 F49: N119|F11+F23|H4|X12|QA06+QF01 -> 1,130 isyarat
+08:56:47 F39: diambil 332/547; CAGR pada MDD -10% +0.27 (rawak +0.65, p95 +2.54); tp 18.4
+08:56:48 F40: diambil 373/731; CAGR pada MDD -10% +1.41 (rawak +0.17, p95 +1.32); tp 19.6
+08:56:49 F58: diambil 334/386; CAGR pada MDD -10% +0.15 (rawak -0.04, p95 +0.75); tp 21.9
+08:56:50 F49: diambil 258/1130; CAGR pada MDD -10% +3.74 (rawak +1.17, p95 +2.41); tp 29.5
+08:56:51 PILIH3: diambil 645/1664; CAGR pada MDD -10% +0.48 (rawak -0.01, p95 +0.94); tp 19.6
+08:56:52 SEMUA4: diambil 820/2794; CAGR pada MDD -10% +2.01 (rawak +0.51, p95 +1.49); tp 21.7
+08:56:53 portfolio siap: menambah = F40, F49, SEMUA4
