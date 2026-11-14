@@ -373,6 +373,50 @@ yang sama. "200 teratas" kekal 200 teratas daripada 2,000 sejagat. Tiada perubah
 benar kira-kira dua pertiga masa kerana takrif di sini tiada peraturan luput IBD (kenaikan 5 %); ia kekal seperti
 dipradaftar.
 
+### Pindaan 14 Nov 2026 (j) — CS05 peringkat LENGKAP: pegang + keluar + henti ikut kadar tangkap (sebelum dijalankan)
+
+Pengguna 14 Nov 2026 (selepas hasil (i)): "jangan mula jejak hadapan lagi; sudah selesai ke, prasyarat dan syarat? Check
+betul-betul matlamat backtest ini; tak boleh tersasar". Semakan lawan §1 menemui tiga kecacatan pada bahagian
+pegang/keluar pindaan (d) dan (i); bahagian masuk (prasyarat → syarat) tidak terjejas:
+
+1. (henti × keluar) dipilih ikut had bawah PURATA `R`, sedangkan kayu ukur pengguna ialah kadar tangkap.
+2. Label `lari` memakai henti −8 % tetap, sedangkan henti setup itu sendiri boleh `H2`–`H4`.
+3. Pegang/keluar hanya dikira bagi setup papan, bukan bagi setiap kaedah.
+
+**Apa yang sudah dilihat:** semua hasil (i), termasuk purata `R`, tempoh pegang dan peratus dagangan ≥ +10 % bagi 19
+setup papan dengan (henti × keluar) yang dipilih ikut purata (cth. `F48`: pegang 5.4 sesi, 12 % dagangan ≥ +10 %).
+Tiada hasil peringkat ini dilihat sebelum pindaan ditulis. Peraturan masuk, papan dan pangkat (i) TIDAK berubah.
+
+**Ukuran setup lengkap** (setiap dagangan, dengan henti dan peraturan keluar setup itu sendiri; mekanik §4; kos ditolak):
+
+| Ukuran | Takrif |
+|---|---|
+| **`jadi`** | dagangan DIJUAL dengan `R` ≥ +10 % ("menangkap dan memegang": kadar tangkap yang direalisasi) |
+| `rugi8` | dagangan dijual dengan `R` ≤ −8 % |
+| `pelari dipegang` | antara belian yang sahamnya `lari` (label (d)), bahagian yang `jadi` |
+| pegang | purata sesi dipegang |
+
+- **Pemilihan (kumpulan A):** bagi setiap peraturan masuk, (henti × keluar) daripada 4 × 577 dengan
+  min merentas E1, E2 bagi [kadar `jadi` − 2 ralat piawai] tertinggi (`n` ≥ 100 setiap era; isyarat bertindih dibenarkan
+  pada langkah ini, seperti §6.1). Kemudian dinilai dengan satu posisi setiap saham.
+- **Diliputi:** 19 setup papan (i), dan bagi SETIAP pencetus peraturan masuk terbaik kelas `S` (syarat sahaja) dan `P`
+  (dengan prasyarat) bagi kedua-dua kayu ukur (butir 5a pindaan (i)). Semuanya dilaporkan pada kumpulan B.
+- **Asas rawak:** kadar `jadi` dan `rugi8` semua bar layak pada hari sama × tercile ATR % sama (papan pilih) atau era
+  sama × tercile (papan jumlah), dengan henti dan keluar YANG SAMA.
+- **Banding wajib:** (a) `jadi` dengan keluar terpilih lawan **tanpa keluar indikator** (`X00`, henti sama): adakah
+  indikator keluar menambah; (b) lawan (henti × keluar) lama yang dipilih ikut purata; (c) `rugi8` dan purata `R` di
+  sebelah `jadi` (maklumat, bukan kayu ukur).
+- Lajur ✓/✗ setup papan: `L1` kelebihan `jadi` atas rawak positif dalam K1, K2 dan K3 · `L2` `jadi` (kumpulan B) dengan
+  keluar terpilih ≥ `X00`.
+- **Keluarga F:** `F39`–`F57` didaftarkan beberapa jam sebelum ini pada branch kerja yang sama, belum digabung ke `main`
+  dan tidak dipakai mana-mana penjejak. ID-nya kekal pada peraturan MASUK yang sama; `henti`, `keluar`, `takrif` dan
+  ukurannya diganti dengan pilihan pindaan ini (pusingan kekal `CS05`). Ini satu-satunya kali takrif F diganti; selepas
+  digabung ke `main`, ID kekal seperti pindaan (a).
+- Tambahan laporan (tiada pemilihan baharu): senarai 50 peraturan masuk teratas setiap kayu ukur TANPA had kepelbagaian
+  papan (`hasil/CS05/TOP50.md`), kerana had itu memaksa setup yang lebih lemah naik ke papan.
+- **Jejak hadapan:** tiada setup CS05 masuk jejak hadapan (keputusan pengguna 14 Nov 2026). Kohort 13 Nov tidak berubah.
+- Kod `carian_setup/cs_lengkap.py`; keluaran `hasil/CS05/` (`LENGKAP` dalam `LAPORAN.md`, `SEMUA_PENCETUS_LENGKAP.md`).
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
