@@ -363,6 +363,16 @@ pasaran berubah ikut HARI (pemerhatian bebas sedikit); `QH07` ialah proksi; lebi
 teratas pada kumpulan A sebahagiannya nasib (sebab itu angka dilaporkan pada kumpulan B, bersebelahan rawak dan plasebo).
 Keluaran: `carian_setup/hasil/CS05/`; `kajian/CARIAN_SETUP.md` memaparkan pusingan terkini.
 
+**Tambahan (i), 14 Nov 2026 — ditulis sebelum larian penuh.** Apa yang dilihat: ujian kod hujung-ke-hujung pada 49
+pencetus indikator sahaja (tanpa benih M/N), ditulis ke folder ujian di luar repo. Ujian itu mendedahkan kecacatan
+prosedur butir 3: 2,000 teratas sejagat hampir semuanya berkongsi satu prasyarat, jadi had kepelbagaian (setiap prasyarat
+paling banyak 3 kali) tidak dapat mengisi 10 baris papan. Pembetulan, dikunci sebelum larian penuh: **kolam calon papan**
+= 2,000 teratas sejagat DAN, bagi setiap satu daripada 544 pasangan prasyarat, 20 peraturan teratas ikut skor merentas
+pencetus (terbaik setiap pencetus); semuanya dinilai tepat dan papan dipilih daripada gabungan itu dengan peraturan butir 3
+yang sama. "200 teratas" kekal 200 teratas daripada 2,000 sejagat. Tiada perubahan lain. Dicatat tanpa perubahan: `QH03`
+benar kira-kira dua pertiga masa kerana takrif di sini tiada peraturan luput IBD (kenaikan 5 %); ia kekal seperti
+dipradaftar.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
