@@ -1180,5 +1180,81 @@ class TestCS08(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(d, 'LAPORAN.md')))
 
 
+class TestAudit(unittest.TestCase):
+    """Audit proses menjana F (pindaan (u)): ramalan earnings tanpa masa hadapan, matriks pematuhan, kekonsistenan keluaran."""
+
+    @classmethod
+    def setUpClass(cls):
+        import cs_audit
+        cls.au = cs_audit
+        cls.d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil')
+
+    def test_ramalan_hanya_masa_lalu(self):
+        au = self.au
+        ev = np.array([10, 73, 136, 199, 262, 330])
+        r = au.ramalan(ev)
+        self.assertEqual(len(r), len(ev) + 1)
+        self.assertTrue(np.isnan(r[:au.MIN_SEJARAH]).all())
+        self.assertEqual(r[3], 136 + 63)
+        ev2 = ev.copy()
+        ev2[4:] += 17                                                   # mengubah peristiwa ke-4 dan seterusnya
+        np.testing.assert_array_equal(r[:5], au.ramalan(ev2)[:5])       # ... tidak mengubah ramalan peristiwa <= 4
+
+    def test_kelas_berjadual_luar_jadual(self):
+        k = self.au.kelas(np.array([10, 73, 136, 199, 262, 290, 353]))
+        self.assertEqual(list(k), [2, 2, 2, 0, 0, 1, 0])                # 290 = pra-umum 28 sesi selepas laporan
+
+    def test_topeng_varian(self):
+        au = self.au
+        ev, T = np.array([10, 73, 136, 199, 262, 290, 353]), 420
+        m = au.topeng_satu(ev, T)
+        a = np.zeros(T, bool)
+        for e in ev:
+            a[max(e - 5, 0):e] = True
+        np.testing.assert_array_equal(m['QF01_A'], a)                   # takrif asal: 1-5 sesi sebelum peristiwa sebenar
+        np.testing.assert_array_equal(m['QF01_J'] | m['QF01_L'], m['QF01_A'])
+        self.assertFalse((m['QF01_J'] & m['QF01_L']).any())
+        self.assertTrue(m['QF01_L'][285:290].all() and m['QF01_J'][194:199].all())
+        for potong in (3, 4, 5):                                        # varian P pada bar i hanya memakai peristiwa <= i
+            m2 = au.topeng_satu(ev[:potong], T)
+            for kod in ('QF01_P', 'QF04_P'):
+                np.testing.assert_array_equal(m[kod][:ev[potong]], m2[kod][:ev[potong]])
+        self.assertFalse(m['QF01_P'][:ev[2]].any())                     # kurang 3 peristiwa terdahulu: tiada ramalan
+
+    def test_matriks(self):
+        au = self.au
+        M = au.matriks()
+        reg = pd.read_csv(au.REG_F, dtype=str).fillna('')
+        self.assertEqual(list(M.id), list(reg.id))
+        x00 = reg.takrif.str.split('|').str[3] == 'X00'
+        self.assertTrue((M.A4 == ~x00.to_numpy()).all())
+        self.assertFalse(M[M.menepati_semua].struktur_lengkap.eq(False).any())
+        self.assertTrue(M[M.menepati_semua].A7.eq(True).all())
+        self.assertTrue(M[M.A6 == False].menepati_semua.eq(False).all())   # noqa: E712
+        qf = reg.takrif.str.contains('QF01|QF04')
+        self.assertTrue((M.earnings_hadapan == qf.to_numpy()).all())
+        self.assertEqual(int(M.kohort.sum()), 8)
+
+    def test_keluaran_konsisten(self):
+        au = self.au
+        M = pd.read_csv(os.path.join(self.d, 'AUDIT_F.csv'))
+        E = pd.read_csv(os.path.join(self.d, 'AUDIT_earnings.csv'))
+        K = pd.read_csv(os.path.join(self.d, 'KEDUDUKAN_AKHIR.csv')).set_index('id')
+        M0 = au.matriks()
+        self.assertEqual(list(M.id), list(M0.id))
+        self.assertEqual(list(M.menepati_semua), list(M0.menepati_semua))
+        A = E[(E.varian == 'A') & (E.id != 'SEMUA')].set_index('id')
+        self.assertTrue((A.belian == K.loc[A.index, 'belian']).all())    # varian A mengulang kedudukan akhir
+        self.assertTrue(np.allclose(A.terus, K.loc[A.index, 'terus'], atol=1e-4))
+        for v in ('J', 'L'):
+            x = E[(E.varian == v) & (E.id != 'SEMUA')].set_index('id')
+            self.assertTrue((x.belian <= A.loc[x.index, 'belian']).all())
+        d = M[M.A6 == True]                                             # noqa: E712
+        self.assertTrue(((d.jual_indikator >= 0) & (d.jual_indikator <= 1)).all())
+        self.assertTrue((d[~d.A4.astype(bool)].jual_indikator == 0).all())   # X00: indikator tidak pernah menjual
+        self.assertTrue((d.pegang <= 20).all() and (d.pegang >= 1).all())
+        self.assertTrue(os.path.exists(os.path.join(self.d, 'AUDIT_F.md')))
+
+
 if __name__ == '__main__':
     unittest.main()

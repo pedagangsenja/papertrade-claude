@@ -387,6 +387,40 @@ Pradaftar dikomit sebelum dijalankan. Kod `cs_akaun9.py`; sumber angka `hasil/AK
 - **Subset Shariah lorong trend:** semua 12 setup `T` cukup belian Shariah (56–134); kadar pelari besar pada saham Shariah mengatasi rawak bagi 12 daripada 12 (cth. `T01` 35.9 % lawan 20.2 %).
 - **Mesin (pindaan (t)):** `cs_mesin.py` kini menskor kelompok yang sama pada lorong trend juga → `hasil/MESIN/papan_trend.csv`; keluar dan corak kompleks belum diliputi. Larian mesin pertama di Actions (larian 2) berjaya dalam 19 minit pada 14 Nov 2026.
 
+## 9h. Audit proses menjana F lawan standard dan matlamat (pindaan (u), 14 Nov 2026)
+
+Pengguna menjawab "belum lagi" kepada gabung ke `main` dan papertrade, dan meminta: "cuba recheck sekali lagi proses generate F method kita, menepati semua standard ke? dan matlamat saya?" Jawapan jujur: **proses ya; setup kebanyakannya tidak; matlamat belum.** Laporan: `hasil/AUDIT_F.md` (`cs_audit.py`; setiap setup satu baris dalam `AUDIT_F.csv`).
+
+**Proses (lulus):** 21 pindaan (a)–(u) dikomit sebelum hasil masing-masing ((g) dan (p) dilabel post-hoc dalam spec); tiada jual hari beli, had 20 sesi dan pegang minimum 3 sesi dikuatkuasakan dalam kernel serta penjejak dan diuji; dagangan rugi paling teruk disemak pada harga (kejatuhan sebenar, bukan ralat data); `KADAR_MENANG.md` konsisten dengan kedudukan akhir (beza ≤ 2.1 mata).
+
+**Setup (95 berdaftar):**
+
+| Semakan | Lulus | Gagal | Tidak dinilai |
+|---|---|---|---|
+| ada prasyarat | 75 | 20 (generasi CS01–CS04) | – |
+| keluar ialah indikator (bukan `X00`) | 76 | 19 | – |
+| dinilai di bawah kayu ukur akhir + pegang minimum | 69 | – | 26 (anak tala `F31`–`F38`, `F70`–`F87`) |
+| "dipercayai" | 42 | 27 | 26 |
+| purata setiap dagangan > 0 | 65 | 4 (`F21`, `F23`, `F41`, `F94`) | 26 |
+| dijual sebelum sesi ke-4 ≤ 10 % dagangan | 63 | 6 (`F21`, `F22`, `F23`, `F29`, `F59`, `F67`) | 26 |
+| indikator keluar tidak memotong pelari | 58 | 11 | 26 |
+| **lulus SEMUA** | **11** (`F02`, `F11`, `F28`, `F39`, `F40`, `F45`, `F48`, `F51`, `F60`, `F61`, `F65`) | | |
+| lulus semua DAN indikator keluar benar-benar menjual (≥ 10 % dagangan; semakan post-hoc (u)-2) | **1** (`F51`) | | |
+
+**Dapatan baharu:**
+
+1. **Keluar ikut indikator pada hakikatnya TIADA.** Daripada 69 setup yang dinilai, 16 ialah `X00` dan 33 lagi mempunyai indikator keluar yang menjual < 10 % dagangan (cth. `F40` 0.2 %, `F11` 0.06 %); jadi **49 daripada 69 ialah "pegang 20 sesi + henti rugi"** (purata pegang median 18 sesi). 6 daripada 10 teratas `X00`. Ini selari dengan CS07 (tiada indikator keluar yang menolong), tetapi bermakna item 4 matlamat (indikator memberitahu kenaikan tamat) dan frasa "selagi naik" item 3 BELUM dipenuhi oleh mana-mana setup teratas kecuali `F51` (13 % dagangan dijual oleh indikator).
+2. **Tarikh earnings masa hadapan (`QF01`): ringan, kini diukur.** Semua bar layak: kelebihan `terus` +5.2 mata dengan tarikh sebenar; +5.3 pada peristiwa berjadual sahaja; +4.9 pada peristiwa luar jadual; +2.4 dengan tarikh RAMALAN daripada masa lalu sahaja. Setup: 17 daripada 20 bertahan (asal), 14 daripada 17 (berjadual), 13 daripada 20 (ramalan). Kelebihan BUKAN artifak peristiwa yang tidak boleh diketahui; papertrade tetap perlukan kalendar earnings. `F43` (kedudukan 1, `QF04`) gagal K3 di bawah ramalan.
+3. **Pangkat boleh dipercayai sederhana.** Spearman kelebihan `terus` antara tahun genap dan ganjil +0.47 (antara dua belahan saham +0.72); 10 teratas satu separuh susut +7.4 → +4.8 dan +8.1 → +3.2 mata pada separuh lain (median semua +1.8). Angka kumpulan B bagi setup teratas condong ke atas; kumpulan B sudah dipakai untuk memilih ("dipercayai", susunan, `F88`–`F95`), jadi ujian bersih yang tinggal hanyalah jejak hadapan.
+4. **Henti rugi wujud tetapi tidak mengehadkan rugi jurang:** dagangan terburuk setiap setup median −53 % (julat −29 % hingga −91 %); median 13 % dagangan rugi ≥ 15 %.
+5. **Kohort jejak hadapan:** `F21` tidak dipercayai dan purata negatif; `F34`, `F38` tidak pernah dinilai di bawah kayu ukur akhir. Kohort tidak diubah (pradaftar (f)); jejak hadapan sendiri yang akan menilai.
+
+**Padanan matlamat (mengemas kini §1a):** item 3 pegang = separa (pegang masa tetap 20 sesi, bukan "selagi naik"); item 4 keluar = BELUM (substantif); item 5 henti = ada, tetapi lihat dapatan 4; item 8 pangkat = ada, kebolehpercayaan sederhana; item 1 = setup terbaik menangkap corak penuh 1 daripada 4 belian (rawak hari sama 1 daripada 5–6), dan 42 setup dipercayai bersama hanya membeli 10 % episod pelari; item lain kekal seperti §1a.
+
+**Keputusan terbuka (pengguna):** syarat "keluar ikut indikator" — (a) kekalkan: hanya `F51` layak sekarang, mesin perlu diluaskan untuk mencari keluar; atau (b) terima "pegang hingga 20 sesi + henti rugi" sebagai keluar yang sah bagi lorong swing (data: tiada indikator keluar mengatasinya), dengan indikator keluar sebagai tambahan pilihan. Belum diputuskan.
+
+**Belum dibuat:** menilai 26 anak tala di bawah kayu ukur akhir (benih CS04 tidak disimpan; nilai rendah kerana anak tidak mengatasi induk); meluaskan mesin kepada carian keluar.
+
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 
 Folder kerja (panel indikator, isyarat benih, jadual besar; ~3.4 GB pickle) berada di luar repo dan hilang bersama sesi. Semuanya boleh dijana semula secara deterministik (`cs_atom.BENIH = 20261113`); data mentah set 2000 dimuat turun dari Release `autotune-data-a02` (perlukan `pyarrow`: `pip install pyarrow`; ia tiada dalam fail requirements repo).

@@ -819,6 +819,16 @@ setup: kelebihan `terus` pada setiap separuh (min 30 belian). Dilaporkan: Spearm
 pada separuh kedua bagi 10 teratas separuh pertama lawan median semua setup. **Bacaan dikunci:** jika Spearman belahan
 tahun ≤ 0.2, SUSUNAN dalam jadual tidak bermakna (hanya "dipercayai" lawan "tidak" yang boleh dibaca).
 
+**Penjelasan (u)-1 (14 Nov 2026, sebelum mana-mana hasil belahan saham wujud):** kumpulan A/B sendiri ialah belahan
+md5(ticker), jadi semua saham kumpulan B jatuh pada separuh yang sama dan belahan (i) kosong. Belahan saham memakai
+md5("audit:" + ticker) genap/ganjil. Tiada perubahan lain.
+
+**Penjelasan (u)-2 (14 Nov 2026, POST-HOC dan dilabel begitu):** selepas matriks pertama dilihat, nisbah A10 = 1.00 bagi
+beberapa setup menunjukkan indikator keluarnya hampir tidak pernah menyala (setara `X00` walaupun lulus A4). Semakan
+tambahan **A4b**: indikator keluar benar-benar menjual, iaitu ≥ 10 % dagangan dijual LEBIH AWAL daripada "pegang sahaja"
+dengan henti yang sama (sesi jual < sesi jual `X00`). A4b dilaporkan berasingan; takrif "menepati semua" (A1–A10) tidak
+berubah, dan bilangan "menepati semua DAN A4b" dilaporkan di sebelahnya.
+
 **Bahagian D — semakan proses** (tanpa data baharu): urutan pradaftar → hasil setiap pindaan daripada sejarah komit;
 keputusan pemilihan yang dibuat pada kumpulan B; kekonsistenan laporan lain dengan pindaan (p) (lajur `menang`
 `registry_F.csv`/`KADAR_MENANG.md` lawan `KEDUDUKAN_AKHIR.csv`); keadaan kohort jejak hadapan dan mesin.
