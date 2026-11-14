@@ -553,6 +553,7 @@ M153,TCOM,2026-10-23,2026-10-26,isyarat batal pada buka (peraturan kaedah),39.83
 M155,TIMB,2026-10-23,2026-10-26,buka <= henti,17.0,17.5114
 N07X16,RRC,2026-10-23,2026-10-26,saham ambil alih,,
 N07X36,RRC,2026-10-23,2026-10-26,saham ambil alih,,
+N201X36,RRC,2026-10-23,2026-10-26,saham ambil alih,,
 M06,TENB,2026-10-26,2026-10-27,isyarat batal pada buka (peraturan kaedah),48.19,36.1251
 M06,XNCR,2026-10-26,2026-10-27,isyarat batal pada buka (peraturan kaedah),29.74,21.7503
 M08,EXE,2026-10-26,2026-10-27,isyarat batal pada buka (peraturan kaedah),94.24,89.3277

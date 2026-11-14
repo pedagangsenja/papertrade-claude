@@ -1,1 +1,13 @@
 id,saham,tarikh_isyarat,tarikh_beli,harga_beli,henti,status,tarikh_keluar,harga_keluar,sebab,sesi,untung_pct,harga_terkini,m5,t10,t20,gagal,lari
+F34,RHI,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F38,AZTA,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F38,INTA,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F30,ARHS,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F30,BBW,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F30,FRPT,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F30,M,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F30,PODD,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F30,SBH,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F30,TTAN,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F30,WRBY,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
+F24,WAY,20261113,,,,TUNGGU_BELI,,,,,,,,,,,
