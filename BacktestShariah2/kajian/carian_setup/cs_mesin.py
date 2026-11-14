@@ -4,7 +4,8 @@ Setiap larian menarik kelompok varian BAHARU (benih = nombor larian): satu varia
 12 set parameter rawak (termasuk di luar grid) bagi setiap keluarga K; menskor pada kumpulan A dengan peraturan pindaan (n)(a)
 (sasaran `terus`, enjin prasyarat x penapis); menilai yang terbaik pada kumpulan B; dan MENAMBAH ke papan terkumpul
 `hasil/MESIN/papan.csv` (tambah-sahaja) serta menjana `hasil/MESIN/LAPORAN.md`. Papan disusun ikut skor A; lajur B ialah
-semakan, bukan kunci susunan. Mesin TIDAK mendaftar setup ke papertrade dan tidak menyentuh Lejar, kad skor atau kohort F.
+semakan, bukan kunci susunan. Pindaan (t): kelompok yang sama turut diskor pada lorong trend (label `besar`, 126 sesi) ->
+`hasil/MESIN/papan_trend.csv`. Mesin TIDAK mendaftar setup ke papertrade dan tidak menyentuh Lejar, kad skor atau kohort F.
 Guna: python3 cs_mesin.py <kerja> [n_m]     (n_m = had bilangan kaedah M setiap larian; lalai semua)
       python3 cs_mesin.py lapor             (jana semula laporan daripada papan)"""
 import json
@@ -23,6 +24,8 @@ import cs_cs05 as c5  # noqa: E402
 import cs_lapis as lapis  # noqa: E402
 import cs_param as kp  # noqa: E402
 import cs_tala7 as t7  # noqa: E402
+import cs_teras as teras  # noqa: E402
+import cs_trend8 as t8  # noqa: E402
 
 N_K, N_NILAI_B, V_ASAS = 12, 15, 1000            # dikunci pindaan (n): 12 varian setiap keluarga K; 15 terbaik dinilai pada B
 D_MESIN = os.path.join(SINI, 'hasil', 'MESIN')
@@ -30,10 +33,13 @@ PAPAN = os.path.join(D_MESIN, 'papan.csv')
 LAJUR = ['larian', 'tarikh', 'nama', 'induk', 'pencetus', 'param', 'prasyarat', 'penapis', 'skor_A', 'n_E1', 'n_E2',
          'n_B', 'terus_B', 'asas_B', 'kl_K1', 'kl_K2', 'kl_K3']
 KUNCI = ('K1', 'K2', 'K3')
+PAPAN_T = os.path.join(D_MESIN, 'papan_trend.csv')           # pindaan (t): lorong trend (label `besar`), papan berasingan
+LAJUR_T = [x.replace('terus_B', 'besar_B') for x in LAJUR]
 
 
-def baca_papan():
-    return pd.read_csv(PAPAN) if os.path.exists(PAPAN) else pd.DataFrame(columns=LAJUR)
+def baca_papan(trend=False):
+    f, lajur = (PAPAN_T, LAJUR_T) if trend else (PAPAN, LAJUR)
+    return pd.read_csv(f) if os.path.exists(f) else pd.DataFrame(columns=lajur)
 
 
 def kelompok(n, n_m=None):
@@ -70,32 +76,40 @@ def larian(kerja, n_m=None):
     ev = t7.keluarga_grid(kerja, 'A', G)
     cari.benih(kerja, 'A', tugas=tugas, fail=f'benih_A_mesin{n}.pkl')
     ev.update(_ev_m(kerja, 'A', f'benih_A_mesin{n}.pkl'))
-    S = t7.skor_ev(kerja, ev)
     teks = {nama: kp.teks(fam, p) for nama, fam, p in G}
     param = {nama: p for nama, _, p in G}
     param.update({nama: P for nama, _, P in tugas})
-    baris = []
-    for nama, r in S.items():
-        if not r.get('cukup') or not len(r['atas'][0]) or not np.isfinite(r['atas'][1][0]):
-            continue
-        q1, q2, f1, f2 = (int(x[0]) for x in c5.nyah(r['atas'][0][:1]))
-        baris.append(dict(larian=n, tarikh=pd.Timestamp.now('UTC').strftime('%Y-%m-%d'), nama=nama, induk=t7.induk(nama),
-                          pencetus=teks.get(nama, f'kaedah {t7.induk(nama)} (varian rawak)'),
-                          param=json.dumps({k: (round(v, 6) if isinstance(v, float) else v) for k, v in param[nama].items()},
-                                           sort_keys=True),
-                          prasyarat=c5.tk_pra(q1, q2, kod=True), penapis=c5.tk_pen(f1, f2), skor_A=round(float(r['atas'][1][0]), 5),
-                          n_E1=r['n_ev'][0], n_E2=r['n_ev'][1], _q=(q1, q2, f1, f2)))
-    T = pd.DataFrame(baris).sort_values(['skor_A', 'nama'], ascending=[False, True], kind='stable').reset_index(drop=True)
-    atas = T[T.skor_A > 0].head(N_NILAI_B)
-    if len(atas):
+    tarikh = pd.Timestamp.now('UTC').strftime('%Y-%m-%d')
+
+    def jadual(S):
+        baris = []
+        for nama, r in S.items():
+            if not r.get('cukup') or not len(r['atas'][0]) or not np.isfinite(r['atas'][1][0]):
+                continue
+            q1, q2, f1, f2 = (int(x[0]) for x in c5.nyah(r['atas'][0][:1]))
+            baris.append(dict(larian=n, tarikh=tarikh, nama=nama, induk=t7.induk(nama),
+                              pencetus=teks.get(nama, f'kaedah {t7.induk(nama)} (varian rawak)'),
+                              param=json.dumps({k: (round(v, 6) if isinstance(v, float) else v) for k, v in param[nama].items()},
+                                               sort_keys=True),
+                              prasyarat=c5.tk_pra(q1, q2, kod=True), penapis=c5.tk_pen(f1, f2),
+                              skor_A=round(float(r['atas'][1][0]), 5), n_E1=r['n_ev'][0], n_E2=r['n_ev'][1], _q=(q1, q2, f1, f2)))
+        T = pd.DataFrame(baris, columns=LAJUR[:11] + ['_q'])
+        return T.sort_values(['skor_A', 'nama'], ascending=[False, True], kind='stable').reset_index(drop=True)
+    T = jadual(t7.skor_ev(kerja, ev))                                   # lorong swing (label `terus`)
+    S8A, V8A, _, _ = t8.label_v(cari.panel(kerja, 'A'))
+    Tt = jadual(t7.skor_ev(kerja, {k: e[S8A[e]] for k, e in ev.items()}, V=V8A))      # lorong trend (label `besar`), pindaan (t)
+    atas, atas_t = T[T.skor_A > 0].head(N_NILAI_B), Tt[Tt.skor_A > 0].head(N_NILAI_B)
+    mahu = set(atas.nama) | set(atas_t.nama)
+    if mahu:
         panB = cari.panel(kerja, 'B')
         L = lapis.muat(kerja, 'B')
         Lr, V = (L['L1'], L['L2']), t7.label_terus(panB)
+        S8B, V8B, _, _ = t8.label_v(panB)
         evB = {}
-        gk = [g for g in G if g[0] in set(atas.nama)]
+        gk = [g for g in G if g[0] in mahu]
         if gk:
             evB.update(t7.keluarga_grid(kerja, 'B', gk))
-        tm = [t for t in tugas if t[0] in set(atas.nama)]
+        tm = [t for t in tugas if t[0] in mahu]
         if tm:
             cari.benih(kerja, 'B', tugas=tm, fail=f'benih_B_mesin{n}.pkl')
             evB.update(_ev_m(kerja, 'B', f'benih_B_mesin{n}.pkl'))
@@ -105,9 +119,20 @@ def larian(kerja, n_m=None):
             T.loc[i, ['n_B', 'terus_B', 'asas_B']] = [k[-1][0], round(k[-1][1], 5), round(k[-1][2], 5)]
             for j, t in enumerate(KUNCI):
                 T.loc[i, f'kl_{t}'] = round(k[j][1] - k[j][2], 5) if k[j][0] else np.nan
-    T = T.drop(columns='_q').reindex(columns=LAJUR)
-    pd.concat([papan, T], ignore_index=True).to_csv(PAPAN, index=False)
-    cari.log(f"mesin larian {n}: {len(T)} varian berskor ditambah; skor A terbaik {T.skor_A.max() * 100:+.2f} mata ({T.nama.iloc[0]})")
+        for i, r in atas_t.iterrows():
+            e = evB[r.nama]
+            e = e[S8B[e]]
+            e = e[c5.topeng(panB, Lr, e, *r._q)]
+            e = e[teras.satu_posisi(e, np.full(len(e), t8.H_MAX - 1), panB['tid'])]
+            tp = panB['tempoh'][e]
+            Tt.loc[i, ['n_B', 'besar_B', 'asas_B']] = [len(e), round(float(V8B[e, 0].mean()), 5) if len(e) else np.nan,
+                                                       round(float(V8B[e, 1].mean()), 5) if len(e) else np.nan]
+            for j, t in enumerate(KUNCI):
+                Tt.loc[i, f'kl_{t}'] = round(float((V8B[e[tp == j], 0] - V8B[e[tp == j], 1]).mean()), 5) if (tp == j).any() else np.nan
+    pd.concat([papan, T.drop(columns='_q').reindex(columns=LAJUR)], ignore_index=True).to_csv(PAPAN, index=False)
+    pd.concat([baca_papan(True), Tt.drop(columns='_q').reindex(columns=LAJUR_T)], ignore_index=True).to_csv(PAPAN_T, index=False)
+    cari.log(f"mesin larian {n}: swing {len(T)} varian berskor (terbaik {T.skor_A.max() * 100:+.2f} mata, {T.nama.iloc[0]}); "
+             f"trend {len(Tt)} (terbaik {Tt.skor_A.max() * 100:+.2f} mata, {Tt.nama.iloc[0]})")
     lapor()
 
 
@@ -149,6 +174,23 @@ def lapor():
         d = g[g.n_B.notna()]
         A.append(f"| {n} | {g.tarikh.iloc[0]} | {len(g)} | {int((g.skor_A > 0).sum())} | {p(g.skor_A.max())} | {len(d)} | "
                  f"{int(((d[['kl_K1', 'kl_K2', 'kl_K3']] > 0).all(axis=1) & (d.n_B >= 300)).sum())} |")
+    Pt = baca_papan(True)
+    if len(Pt):
+        St = Pt.sort_values(['skor_A', 'nama'], ascending=[False, True], kind='stable')
+        St = St[St.groupby('induk').cumcount() < 2].head(30)
+        dt = Pt[Pt.n_B.notna()]
+        tahan_t = dt[(dt[['kl_K1', 'kl_K2', 'kl_K3']] > 0).all(axis=1) & (dt.n_B >= t8.MIN_BELIAN)]
+        A += ['', '## Lorong trend (pindaan (t)): pelari besar = naik ≥ 50 % sebelum jatuh 15 % dalam 6 bulan', '',
+              f"- Varian berskor terkumpul: **{len(Pt):,}** (larian {int(Pt.larian.min())}–{int(Pt.larian.max())}); skor A > 0: "
+              f"{int((Pt.skor_A > 0).sum()):,}. Dinilai pada saham tidak dilihat: {len(dt)}; bertahan K1, K2 DAN K3 dengan belian ≥ "
+              f"{t8.MIN_BELIAN}: **{len(tahan_t)}**.", '',
+              '| # | Larian | Pencetus | Prasyarat | Penapis saham | Skor A (mata) | Belian B | Pelari besar B % (rawak) | Kelebihan K1 / K2 / K3 |',
+              '|---|---|---|---|---|---|---|---|---|']
+        for i, r in enumerate(St.itertuples(), 1):
+            b = ('–', '–', '–') if r.n_B != r.n_B else (f'{int(r.n_B):,}', f'{p(r.besar_B, False)} ({p(r.asas_B, False)})',
+                                                        f'{p(r.kl_K1)} / {p(r.kl_K2)} / {p(r.kl_K3)}')
+            A.append(f"| {i} | {r.larian} | `{r.nama}` {r.pencetus} | {r.prasyarat if isinstance(r.prasyarat, str) else '–'} | "
+                     f"{r.penapis if isinstance(r.penapis, str) else '–'} | {p(r.skor_A)} | {b[0]} | {b[1]} | {b[2]} |")
     A += ['', 'Kaveat: kumpulan B sudah dilihat berkali-kali (bukan tahanan bersih); tiada saham delist; setup di sini BUKAN '
           'calon papertrade tanpa keputusan pengguna berasingan.', '']
     open(os.path.join(D_MESIN, 'LAPORAN.md'), 'w', encoding='utf-8').write('\n'.join(A))

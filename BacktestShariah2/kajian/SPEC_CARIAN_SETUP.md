@@ -752,6 +752,21 @@ hadapan.
   semasa, bukan titik-masa): kadar `besar` lawan rawak hari sama, dijual ≥ +30 %, menang, rugi ≥ 15 % (jika ≥ 30 belian).
 - Kaveat: tiada saham delist (bias lebih besar bagi pegang 6 bulan); kumpulan B sudah dilihat; K3 lorong trend pendek.
 
+### Pindaan 14 Nov 2026 (t) — mesin berkala diluaskan ke LORONG TREND (sebelum dijalankan)
+
+Sebab: mesin (n)(c) hanya menskor lorong swing; lorong trend (q) kini sebahagian daripada matlamat pengguna (item 14) dan item
+7 menuntut mesin sentiasa mencari. Perubahan pada `cs_mesin.py` sahaja; peraturan lorong swing TIDAK berubah.
+
+- Setiap larian, kelompok varian yang SAMA (300 varian keluarga K + satu varian setiap kaedah M) turut diskor pada label
+  `besar` pindaan (q) (tutup capai ≥ +50 % sebelum tutup ≤ −15 % dalam 126 sesi; isyarat dengan tetingkap lengkap sahaja),
+  dengan enjin prasyarat × penapis dan skor yang sama, pada kumpulan A.
+- 15 varian terbaik lorong trend setiap larian (skor A > 0) dinilai pada kumpulan B: belian (satu posisi, 126 sesi), kadar
+  `besar`, asas rawak hari sama, kelebihan K1 / K2 / K3.
+- Ditambah ke papan berasingan `hasil/MESIN/papan_trend.csv` (tambah-sahaja); `papan.csv` lorong swing tidak diubah.
+  `LAPORAN.md` mendapat bahagian lorong trend. "Bertahan" lorong trend = belian B ≥ 200 dan kelebihan > 0 dalam K1, K2, K3.
+- Belum diliputi mesin: keluar (empat pusingan tidak menemui indikator yang menolong) dan corak kompleks tanpa keluarga.
+- Kaveat (n) dan (q) kekal: skor A melambung dengan lebih banyak varian; B sudah dilihat; tiada saham delist.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
