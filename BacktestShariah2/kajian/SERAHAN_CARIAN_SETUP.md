@@ -1,12 +1,18 @@
-# Serahan: Carian Setup (CS) dan keluarga F — keadaan pada 14 Nov 2026 (selepas CS05)
+# Serahan: Carian Setup (CS) dan keluarga F — keadaan pada 14 Nov 2026 (selepas CS06 dan kedudukan akhir)
 
-Ditulis pada akhir sesi kerja 13–14 Nov 2026 dan dikemas kini pada 14 Nov 2026 selepas pusingan CS05, supaya chat baharu boleh menyambung tanpa membaca chat lama. Fail ini ialah nota serahan (ditulis tangan, bertarikh); nombor di sini dipetik daripada fail hasil yang dinamakan, dan fail hasil itulah sumber kebenaran.
+Ditulis pada akhir sesi kerja 13–14 Nov 2026 dan dikemas kini pada 14 Nov 2026 selepas pusingan CS05 dan CS06, supaya chat baharu boleh menyambung tanpa membaca chat lama. Fail ini ialah nota serahan (ditulis tangan, bertarikh); nombor di sini dipetik daripada fail hasil yang dinamakan, dan fail hasil itulah sumber kebenaran.
 
-**Baca mengikut susunan ini:** fail ini → `kajian/SPEC_CARIAN_SETUP.md` (pradaftar + pindaan (a)–(i)) → `kajian/CARIAN_SETUP.md` (papan semasa = CS05) → `kajian/carian_setup/hasil/CS05/SEMUA_PENCETUS.md` (setiap kaedah) → `kajian/KAJIAN_PRASYARAT_PAKAR.md` → `jejak_f/RINGKASAN.md`.
+**Baca mengikut susunan ini:** fail ini → `kajian/SPEC_CARIAN_SETUP.md` (pradaftar + pindaan (a)–(m)) → **`kajian/carian_setup/hasil/KEDUDUKAN_AKHIR.md` (SATU jadual semua setup lawan matlamat, §9c)** → `kajian/CARIAN_SETUP.md` (papan semasa = CS06) → `kajian/carian_setup/hasil/CS06/SEMUA_PENCETUS_LENGKAP.md` (setiap kaedah) dan `hasil/CS06/TALA.md` → `kajian/KAJIAN_PRASYARAT_PAKAR.md` → `jejak_f/RINGKASAN.md`.
 
 **Ringkasan CS05 dalam lima baris (butiran §9):** (1) prasyarat MENOLONG kadar tangkap bagi hampir semua kaedah, jauh melebihi plasebo; (2) hampir semuanya datang daripada SATU prasyarat: earnings dalam 1–5 sesi akan datang; (3) prasyarat pasaran panik menaikkan kadar lari SEMUA saham (bila membeli), bukan kemahiran memilih, dan kena henti naik bersama; prasyarat aliran ikut trend dan sektor/industri kuat tidak menolong; (4) pencetus (kaedah M/N/indikator) menambah sedikit sahaja di atas prasyarat + penapis; (5) pegang/keluar (pindaan (j)): pegang hampir 20 sesi dengan henti longgar; indikator keluar jarang mengatasi "tiada keluar indikator".
 
-**Status (keputusan pengguna 14 Nov 2026): backtest dahulu. JANGAN mula jejak hadapan bagi setup CS05.**
+**Ringkasan CS06 (butiran §9a):** (6) memangkatkan masuk terus ikut TANGKAP PENUH (naik ≥ 5 % minggu pertama DAN dijual dengan untung ≥ 10 %) tidak mengubah kesimpulan: prasyarat menolong 432 daripada 461 kaedah, masih kerana earnings 1–5 sesi; tetapi separuh daripada 200 teratas dan papan bertukar; (7) setup "terbaik" papan jumlah (`F62`, 37 %) bergantung pada kira-kira 10 hari dasar pasaran (Dis 2018, Mac 2020); setup papan pilih (`F39`, `F40`, `F58`, ~20–22 % lawan rawak 8–11 %) berdagang setiap tahun; (8) **tala bersama prasyarat TIDAK menolong**: hanya 6 daripada 18 anak mengatasi induk pada saham tidak dilihat, 4 daripada 17 pada 2025–26.
+
+**Portfolio 10 slot (pindaan (l), butiran §9b):** (9) kadar tangkap KEKAL pada belian yang sempat diambil akaun (18–30 % lawan rawak 7–18 %), tetapi hasil akaun kecil: pada MDD −10 %, `F49` +3.7 % setahun, `F40` +1.4 %, `F39` dan `F58` ≈ +0.2 % (SPY pada skala sama +4.4 %, maklumat). Sebab: 35–38 % dagangan setup earnings rugi ≥ 8 %, dan belian jarang. **Kadar tangkap tinggi belum bermakna untung akaun.**
+
+**Kedudukan akhir (pindaan (m), butiran §9c):** (10) selepas pengguna bertanya kali kedua "anda pasti sudah lengkap?", enam perkara yang belum diukur lawan matlamat ditutup: peringkat ketiga corak ("naik lagi hingga minggu ke-4"), kekerapan dan liputan, sumbangan setiap komponen, mutu pegang, saham Shariah, dan SATU kedudukan semua setup. 34 daripada 61 setup "dipercayai"; yang terbaik menangkap corak penuh 15–25 daripada 100 belian (rawak hari sama 8–20; rawak mana-mana hari 6); **semua 34 bersama hanya membeli 10 % daripada semua episod pelari**; indikator keluar tidak menambah untung pada pelari.
+
+**Status (keputusan pengguna 14 Nov 2026): backtest dahulu. JANGAN mula jejak hadapan bagi setup CS05/CS06.**
 
 ## 1. Apa yang pengguna cari (disahkan pengguna 13 Nov 2026)
 
@@ -30,6 +36,7 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 ## 2. Cara bekerja dengan pengguna (pelajaran sesi ini)
 
 - Jawapan pendek, Bahasa Melayu mudah; jadual tiga lajur di jawapan penutup; notifikasi telefon setiap giliran (CLAUDE.md).
+- (14 Nov) Pengguna mahu **kadar menang** ("daripada 10 dagangan berapa untung, berapa rugi") dipaparkan bagi setiap setup F. Paparkan bersama purata setiap dagangan; kadar menang sahaja bukan ukuran. Sumber: `hasil/KADAR_MENANG.md`.
 - Pengguna menyerahkan keputusan teknikal kepada Claude ("apa sahaja keputusan di tangan anda, tetapi sentiasa berbalik kepada matlamat saya"). Kurangkan soalan; putuskan, laksana, lapor.
 - Jangan menolak sasaran pengguna sebelum mengukurnya. Jangan reka had sendiri (cth. "maks 4 calon") atau membekukan carian.
 - Jangan tukar kayu ukur. Kesilapan saya dalam sesi ini: memangkatkan ikut purata setiap dagangan (CS01/CS02), kemudian mengesyorkan berhenti kerana kalah SPY pada MDD −10 %. Pengguna membetulkan: "baca balik chat kita, apa yang saya cari". Jawapannya §1.
@@ -54,9 +61,14 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 | 14 Nov | Rekod SEMUA kaedah dengan syarat sahaja (asas untuk larian berprasyarat): 500 pencetus, 182,903 peraturan masuk | `hasil/CS03/SEMUA_PENCETUS.md` + `.csv`, `hasil/CS03/semua_masuk.csv.gz` (`cs_tangkap.py <kerja> semua`) |
 | 14 Nov | **CS05**: prasyarat + syarat bagi SEMUA kaedah (pindaan (i) + tambahan, dikomit sebelum dijalankan); 103,088,000 peraturan masuk + larian plasebo | `hasil/CS05/` (`LAPORAN.md`, `SEMUA_PENCETUS.md`, `papan.csv`, `PADANAN.csv`, `senarai_kunci.csv`, `terbaik_prasyarat.csv.gz`), `kajian/CARIAN_SETUP.md` → `F39`–`F57` (`cs_lapis.py`, `cs_cs05.py`) |
 | 14 Nov | `data/registry_F.csv` mendapat lajur `prasyarat` dan `syarat` (semua 57 baris) | `cs_lapor.LAJUR_F`, `cs_cs05.daftar`, `hasil/PRASYARAT/PEMBAHAGIAN_F.md` |
+| 14 Nov | **CS06 bahagian A** (pindaan (k)): carian 103,088,000 peraturan diulang dengan sasaran tangkap penuh (pegang piawai H4 + X00) + plasebo; papan, setiap kaedah, setup lengkap ikut tangkap penuh sendiri; jadual taburan belian mengikut tahun | `CS_PUS=CS06 cs_cs05.py`, `cs_lengkap.py`; `hasil/CS06/` (`LAPORAN.md`, `SEMUA_PENCETUS*.md`, `TOP50.md`, `papan.csv`), `kajian/CARIAN_SETUP.md` → `F58`–`F69` |
+| 14 Nov | **CS06 bahagian B: tala bersama prasyarat** (pindaan (k)): 240 varian pencetus + ambang penapis + ambang prasyarat (36 prasyarat berambang, `cs_lapis.GRID_PRA`/`Mentah`), ikut dataran; induk lawan anak pada kumpulan B | `cs_tala6.py`; `hasil/CS06/TALA.md`, `tala.csv` → `F70`–`F87` |
+| 14 Nov | **Portfolio 10 slot bagi setup berprasyarat** (pindaan (l)): `F39`, `F40`, `F58`, `F49` + dua gabungan; 200 ulangan; lawan jalur rawak | `cs_portfolio6.py`; `hasil/CS06/PORTFOLIO.md`, `portfolio.csv` |
+| 14 Nov | **Kadar menang setiap setup F** (permintaan pengguna): lajur `menang_K1`–`K3` dan `menang` dalam registry F; jadual semua 87 setup; lajur "Menang %" dalam jadual setup lengkap | `hasil/KADAR_MENANG.md|csv` (`cs_ringkas.py`), `data/registry_F.csv`, `kajian/CARIAN_SETUP.md` |
+| 14 Nov | PR #48 digabung ke `main` (CS05 + pindaan (k)); `lejar.yml` mencetus `jejak_f.yml` terus selepas Lejar dispatch penjaga | `.github/workflows/lejar.yml` |
 | 14 Nov | **CS05 peringkat lengkap** (pindaan (j), selepas semakan lawan matlamat): henti × keluar dipilih ikut kadar dagangan "jadi" (dijual dengan untung ≥ 10 %), bagi 19 setup papan dan bagi setiap kaedah (S dan P); `F39`–`F57` kekal ID, henti/keluar diganti | `cs_lengkap.py`; `hasil/CS05/LAPORAN.md` §3–§5, `SEMUA_PENCETUS_LENGKAP.md`, `TOP50.md` |
 
-Semua laluan `hasil/…` di bawah `BacktestShariah2/kajian/carian_setup/`. PR #45, #46 dan #47 sudah digabung ke `main`; kerja CS05 berada di branch `claude/dreamy-lovelace-38z7wm` (lihat §7).
+Semua laluan `hasil/…` di bawah `BacktestShariah2/kajian/carian_setup/`. PR #45–#48 sudah digabung ke `main` (CS05 termasuk); kerja CS06 berada di branch `claude/dreamy-lovelace-38z7wm` (lihat §7).
 
 ## 4. Hasil utama
 
@@ -119,9 +131,9 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 
 ## 7. Keadaan repo
 
-- Kerja 13–14 Nov (pagi) di `main` (PR #45, #46, #47). Kerja CS05 (pindaan (i), `cs_lapis.py`, `cs_cs05.py`, `hasil/CS05/`, `F39`–`F57`, fail ini) berada di branch `claude/dreamy-lovelace-38z7wm`; ia sampai ke `main` hanya selepas pengguna meminta PR. Jika fail ini dibaca di `main`, gabungan itu sudah berlaku.
+- Kerja 13–14 Nov hingga CS05 di `main` (PR #45–#48; #48 = CS05, pindaan (i), (j), (k) dan baris `lejar.yml`). Kerja CS06 (`cs_tala6.py`, `hasil/CS06/`, `F58`–`F87`, fail ini) berada di branch `claude/dreamy-lovelace-38z7wm`; ia sampai ke `main` hanya selepas pengguna meminta PR. Jika fail ini dibaca di `main`, gabungan itu sudah berlaku.
 - `jejak_f.yml` berjalan selepas workflow "Lejar penuh" berjaya (06:17 dan 10:17 UTC, Sel–Sab). Stor harga yang dibaca penjejak dikemas kini oleh Lejar, BUKAN `harga_harian.yml`. Disemak 14 Nov 03:10 UTC: `jejak_f.yml` TERBUKTI tercetus melalui `workflow_run` selepas Lejar berjadual 13 Nov 17:45 UTC (larian #2, berjaya); `jejak_f/lejar.csv` masih kosong hanya kerana Lejar bagi sesi 2026-11-13 belum berjalan pada waktu itu (harga hingga 20261112).
-- **Perkara untuk disemak oleh chat baharu:** adakah `jejak_f/RINGKASAN.md` menunjukkan harga ≥ 20261113 dan isyarat pertama? `workflow_run` TIDAK tercetus jika Lejar didispatch oleh penjaga dengan `GITHUB_TOKEN`; jika itu berlaku, dispatch `jejak_f.yml` secara manual dan cadangkan langkah cetus terus dalam `lejar.yml` (seperti `analisis.yml`). Jangan ubah `lejar.yml` tanpa keputusan pengguna.
+- **Perkara untuk disemak oleh chat baharu:** adakah `jejak_f/RINGKASAN.md` menunjukkan harga ≥ 20261113 dan isyarat pertama? Sejak 14 Nov 2026 (PR #48, keputusan pengguna) langkah akhir `lejar.yml` mencetus `jejak_f.yml` terus selepas larian Lejar yang didispatch penjaga, jadi ia tidak lagi menunggu larian berjadual.
 - Ujian: `python3 -m unittest discover -s BacktestShariah2/ujian`; `python3 BacktestShariah2/standard/sahkan.py --betulkan` mesti keluar 0.
 
 ## 8. Keputusan: sudah dibuat dan yang tinggal
@@ -130,11 +142,17 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 
 **Diputuskan pengguna 14 Nov 2026 (selepas CS05):** JANGAN mula jejak hadapan bagi setup CS05; backtest mesti lengkap dan menepati matlamat §1 dahulu. Kohort 13 Nov (8 setup) tidak disentuh.
 
-**Diputuskan pengguna 14 Nov 2026 ("ya untuk tiga-tiga"):** (1) sambung backtest dengan pusingan **CS06**: tala parameter bersama prasyarat, dan pangkat masuk terus ikut tangkap penuh (pindaan (k), §9a); (2) gabung kerja CS05 ke `main` melalui PR; (3) `lejar.yml` mencetus `jejak_f.yml` terus selepas larian Lejar yang didispatch penjaga (langkah akhir `lejar.yml`).
+**Diputuskan pengguna 14 Nov 2026 ("ya untuk tiga-tiga") dan SUDAH dilaksanakan:** (1) pusingan **CS06**: pangkat masuk ikut tangkap penuh + tala bersama prasyarat (pindaan (k), §9a); (2) kerja CS05 digabung ke `main` (PR #48); (3) `lejar.yml` mencetus `jejak_f.yml` terus.
+
+**Pelajaran (14 Nov 2026, kali kedua):** selepas portfolio, Claude menulis "backtest sudah lengkap"; pengguna menjawab "anda pasti ke sudah lengkap semua proses kita? cuba baca balik matlamat saya". Semakan baris demi baris menemui enam perkara belum diukur (§9c). **Jangan isytihar lengkap sebelum setiap frasa matlamat §1 dipadankan dengan satu lajur yang benar-benar diukur.**
+
+**Menunggu keputusan pengguna:**
+1. Gabung hasil CS06, kadar menang, portfolio (pindaan (l)) dan kedudukan akhir (pindaan (m)) ke `main` melalui PR? (Kelulusan PR pengguna setakat ini meliputi CS05.)
+2. Langkah backtest yang tinggal ialah data saham delist (§9c "belum dibuat"); selepas itu barulah peringkat papertrade. Pilihan lama selepas portfolio (§9b): (a) mula jejak hadapan maya bagi kohort kecil (`F40`, `F58`, `F49`) untuk menguji kadar tangkap pada data langsung, selepas kalendar earnings dibina dalam penjejak; atau (b) berhenti di sini dan tunggu kohort 13 Nov matang. Pengguna melarang jejak hadapan sehingga membenarkannya.
 
 **Tiada yang berkaitan wang sebenar berubah:** kad skor kekal satu-satunya keputusan.
 
-Tertangguh lebih lama (belum dimulakan): keluarga indikator berparameter penuh; data saham delist; simulasi portfolio berasaskan slot untuk setup kadar tangkap (penting bagi setup berprasyarat: hari isyaratnya berkelompok); carian suku tahunan automatik di GitHub Actions; VIX sebenar bagi `QH07`.
+Tertangguh lebih lama (belum dimulakan): keluarga indikator berparameter penuh; data saham delist; simulasi portfolio berasaskan slot untuk setup kadar tangkap (penting bagi setup berprasyarat: hari isyaratnya berkelompok); carian suku tahunan automatik di GitHub Actions; VIX sebenar bagi `QH07`; kalendar earnings harian (hanya jika jejak hadapan setup berprasyarat dibenarkan kelak).
 
 ## 9. CS05: apa yang dibuat dan apa yang didapati (14 Nov 2026)
 
@@ -176,6 +194,77 @@ Pradaftar: pindaan (i) + tambahan (i), kedua-duanya dikomit sebelum larian penuh
 
 **Apa yang masih BELUM dibuat dalam backtest (lawan §1):** (a) penalaan parameter kaedah dengan prasyarat (item 7: "mesin sentiasa mencari dan menala"; CS04 menala syarat sahaja); (b) peraturan masuk dipangkatkan ikut label "lari", bukan terus ikut "tangkap penuh"/"jadi" setup lengkap; (c) simulasi portfolio berslot (hari isyarat berkelompok); (d) data saham delist. Jejak hadapan setup CS05 TIDAK dimulakan (keputusan pengguna, §8); jika kelak dibenarkan ia memerlukan kalendar earnings harian dan prasyarat pasaran dalam penjejak.
 
+## 9a. CS06: pangkat ikut tangkap penuh, dan tala bersama prasyarat (14 Nov 2026)
+
+Pradaftar: pindaan (k), dikomit sebelum dijalankan. Sumber angka: `hasil/CS06/LAPORAN.md` (= `kajian/CARIAN_SETUP.md`), `SEMUA_PENCETUS_LENGKAP.md`, `TALA.md`, `meta.json`, `tala_meta.json`. Semua angka kumpulan B.
+
+**A. Pangkat masuk ikut tangkap penuh.** Sasaran `tp` = tutup sesi 5 ≥ harga beli + 5 % DAN dagangan dijual dengan untung bersih ≥ 10 % dengan pegang piawai (henti 4×ATR14, tiada keluar indikator, 20 sesi). Ruang carian, dua kayu ukur, plasebo dan papan sama seperti CS05.
+
+| Soalan | Jawapan | Angka |
+|---|---|---|
+| Adakah kesimpulan CS05 berubah? | Tidak | Pilih: median tangkap penuh 9.3 % (syarat sahaja) → 11.1 % (dengan prasyarat); beza kelebihan +4.50 mata lawan plasebo +0.57; 432 daripada 461 kaedah; K3 +5.54 lawan +0.49. Jumlah: +4.83 lawan +2.12; K3 +5.30 lawan +0.40 |
+| Adakah pangkat berubah? | Ya, di hujung atas | 115 (pilih) dan 118 (jumlah) daripada 200 teratas CS06 juga dalam 200 teratas CS05; papan: 6 daripada 10 (pilih) dan 2 daripada 10 (jumlah) peraturan masuk sama. Walaupun 95 % bar "lari" juga tangkap penuh, hujung atas ialah beza kecil antara setup yang hampir seri |
+| Setup lengkap setiap kaedah (tangkap penuh dengan henti dan keluar sendiri) | Prasyarat menambah sedikit | Median 9.3 % → 10.7 % (pilih; 342 daripada 462 kaedah; K3 268 daripada 341); 11.8 % → 12.2 % (jumlah; 320 daripada 460) |
+| Indikator keluar | Masih tidak menambah | Median tangkap penuh dengan keluar terpilih lawan tanpa keluar indikator: 10.7 % lawan 10.9 % (pilih, dengan prasyarat) |
+
+**Papan pilih (berdagang SETIAP tahun; 17 daripada 17 tahun):** `F40` rejim ON baharu + earnings 1–5 sesi + M14 + Supertrend naik + ≥ 30 % di bawah puncak: 21.9 % lawan rawak 10.6 %; setup lengkap (`H3`, keluar RSI14 > 80) 22.9 % lawan 10.7 %, kelebihan K1 / K2 / K3 +12.4 / +11.2 / +14.3; rugi ≥ 8 % 32 %. `F39` serupa (21.2 %). `F58` (baharu) N16 RSI2 < 10 + ≥ 60 % saham di atas MA50 + earnings 1–5 sesi + Supertrend naik + ≥ 30 % di bawah puncak: 19.8 % lawan 7.6 %; setup lengkap 22.1 % lawan 7.4 %, +15.1 / +13.2 / +18.6.
+
+**Papan jumlah (pasaran jatuh; belian tertumpu):** `F62` (baharu) QQQ ≥ 20 % di bawah puncak + M73 + RSI14 < 40 + ≥ 30 % di bawah puncak: 37.1 % lawan 8.4 %, TETAPI 1,314 belian pada 144 hari dalam 5 tahun sahaja; 650 belian pada 10 hari (Dis 2018, Mac 2020) dengan kadar 60 %, manakala 603 belian sepanjang 2022 hanya 15 %. `F49` 29.4 % lawan 9.2 % (setup lengkap 30.1 % lawan 9.0 %; +24.7 / +20.5 / +21.8), 68 % belian dalam 2020 dan 2022. `F64`, `F67`, `F69` (turun-naik SPY ≥ 25 %) 22–27 %. Jadual "taburan belian mengikut tahun" dalam laporan menunjukkan kepekatan setiap setup.
+
+**B. Tala bersama prasyarat.** 20 induk (papan CS06); tiga paksi serentak: 240 varian pencetus (10 induk kaedah M × 24), ambang penapis saham, ambang 36 prasyarat berambang (`cs_lapis.GRID_PRA`; ciri mentah `cs_lapis.Mentah` disahkan menghasilkan lapisan (i) tepat pada ambang asal: 0 bar berbeza). Anak dipilih ikut dataran pada kumpulan A.
+
+- 2 induk kekal; 18 mendapat anak. **Anak mengatasi induk pada kumpulan B: 6 daripada 18; pada K3: 4 daripada 17; kedua-duanya: 3 daripada 18. Bacaan dikunci: tala TIDAK menolong.**
+- Ini pusingan ketiga dengan dapatan yang sama arah (CS04: 6/8 pada kumpulan B, 4/8 pada K3; (j): indikator keluar tidak mengatasi pegang sahaja). Menala lebih halus pada data yang sama tidak menambah kadar tangkap pada saham yang tidak dilihat.
+- Anak didaftarkan `F70`–`F87` (status BACKTEST) sebagai rekod; ia BUKAN cadangan.
+
+## 9b. Portfolio 10 slot bagi setup berprasyarat (pindaan (l), 14 Nov 2026)
+
+Pradaftar dikomit sebelum dijalankan. Sumber angka: `hasil/CS06/PORTFOLIO.md`, `portfolio.csv`. Kumpulan B, 2010 – Ogo 2026; 10 slot × 10 %; isyarat berlebihan dipilih rawak (200 ulangan, median); jalur rawak = saham rawak hari sama × tercile ATR % sama dengan henti dan keluar yang sama.
+
+| Setup | Isyarat diambil | Dagangan setahun | Bulan tanpa belian | Tangkap penuh % (rawak) | Rugi ≥ 8 % (rawak) | CAGR / MDD | **CAGR pada MDD −10 %** (rawak p95) | Menambah? |
+|---|---|---|---|---|---|---|---|---|
+| `F39` | 61 % | 20 | 64 % | 18.4 (7.7) | 37.8 (26.1) | +0.5 / −29.6 | +0.27 (+2.54) | tidak |
+| `F40` | 51 % | 22 | 62 % | 19.6 (7.1) | 34.8 (26.8) | +3.1 / −24.3 | +1.41 (+1.32) | ya |
+| `F58` | 87 % | 20 | 56 % | 21.9 (7.5) | 37.9 (27.8) | +0.1 / −33.4 | +0.15 (+0.75) | tidak |
+| `F49` | 23 % | 16 | 78 % | 29.5 (18.0) | 22.1 (25.2) | +8.9 / −24.7 | +3.74 (+2.41) | ya |
+| `PILIH3` | 39 % | 39 | 39 % | 19.6 (6.9) | 37.9 (27.4) | +1.0 / −36.3 | +0.48 (+0.94) | tidak |
+| `SEMUA4` | 29 % | 49 | 29 % | 21.7 (9.5) | 34.4 (27.0) | +7.2 / −40.3 | +2.01 (+1.49) | ya |
+
+- **Kadar tangkap kekal** pada belian yang sempat diambil: 18–30 % lawan jalur rawak 7–18 %. Had slot tidak memusnahkannya.
+- **Hasil akaun kecil.** Pada toleransi MDD −10 %: terbaik `F49` +3.74 % setahun; setup earnings `F39`/`F58` ≈ +0.2 %. SPY beli-dan-pegang pada skala sama +4.37 % (maklumat sahaja, bukan kayu ukur pengguna).
+- **Sebabnya:** setup earnings menangkap lebih kerap TETAPI 35–38 % dagangannya rugi ≥ 8 % (rawak 26–28 %), kadar menang 45–49 %, purata setiap dagangan +0.2 hingga +1.4 %; akaun hanya 10–14 % terdedah dan 56–64 % bulan tiada belian. `F49` mengambil hanya 23 % isyaratnya (berkelompok semasa pasaran jatuh) dan 78 % bulan tiada belian.
+- K3 (2025 – Ogo 2026): `F39` −13.8 % setahun, `PILIH3` −7.1 %; `F49` +15.0 %, `F58` +4.8 %.
+- Selari dengan pelajaran CS02: purata setiap dagangan dan kadar tangkap bukan hasil akaun.
+
+## 9c. Kedudukan akhir semua setup lawan matlamat (pindaan (m), 14 Nov 2026)
+
+Pradaftar dikomit sebelum dijalankan (takrif "dipercayai" dan susunan dikunci di situ). Kod `carian_setup/cs_akhir.py`; sumber angka `hasil/KEDUDUKAN_AKHIR.md|csv`. Tiada carian baharu: 61 setup (`F01`–`F30`, `F39`–`F69`) dinilai seragam pada kumpulan B dengan henti dan keluar sendiri, satu posisi setiap saham.
+
+**Apa yang belum diukur sebelum ini, dan kini diukur:**
+
+| Frasa matlamat | Sebelum (m) | Kini |
+|---|---|---|
+| "5 % minggu pertama, 10 %, kemudian terus naik 2–4 minggu" | label `lari`/`tp` tidak menuntut harga NAIK LAGI selepas minggu pertama | corong: `m5` → `m10` → **`terus`** (tutup sesi 5 ≥ +5 % DAN tutup sesi 20 > tutup sesi 5 DAN henti −8 % tidak kena) |
+| "paling kerap menangkap" | kadar setiap belian sahaja | + belian setahun, tangkapan setahun, tahun/bulan aktif, **liputan** (berapa % daripada semua 67,638 episod pelari dibeli) |
+| "prasyarat, kemudian syarat, pegang, keluar, henti rugi" | sumbangan diukur secara purata merentas kaedah | bagi SETIAP setup: kelebihan `terus` penuh lawan tanpa setiap komponen; mutu pegang pada pelari (keluar setup / pegang 20 sesi / puncak) |
+| Saham Shariah | tidak disemak | subset 404 saham kumpulan B dalam senarai Shariah semasa |
+| Satu jawapan | papan berasingan CS01–CS06 dengan kayu ukur berlainan | SATU kedudukan |
+
+**Dapatan (kumpulan B, 2010 – Ogo 2026):**
+
+- Saham rawak mana-mana hari: `m5` 12.5 %, `m10` 3.3 %, `terus` 6.3 %.
+- **34 daripada 61 setup dipercayai** (belian ≥ 300, ≥ 10 tahun aktif, mengatasi rawak hari sama dalam K1, K2 DAN K3): CS05 11 daripada 19, CS01 9 daripada 10, CS03 7 daripada 10, CS06 5 daripada 12, CS02 2 daripada 10. 21 daripada 34 berprasyarat.
+- Teratas ikut kadar `terus`: `F43` 25.2 % (rawak hari sama 19.8 %; prasyarat Januari + tiada earnings 20 sesi), `F63` 21.8 % (15.9), `F65` 21.7 % (16.0), `F51` 20.7 % (15.5), `F50` 20.7 % (18.1), `F56` 19.0 % (16.7), `F39` 18.2 % (11.0), `F40` 17.9 % (10.9), `F58` 15.5 % (7.8). Kelebihan PEMILIHAN terbesar (lawan rawak hari sama): `F58` +7.7 mata, `F39` +7.2, `F40` +7.0 — ketiga-tiganya earnings 1–5 sesi; rugi ≥ 8 % pada 32–36 % belian.
+- Median setup dipercayai: `terus` 12.9 % (rawak hari sama 10.6 %), menang 51 %, rugi ≥ 8 % 29 %.
+- **Liputan rendah:** setiap setup membeli 0.06–2.1 % daripada semua episod pelari; **semua 34 setup dipercayai bersama 10.0 %**. Sembilan daripada sepuluh saham yang lari tidak dibeli oleh mana-mana setup.
+- **Komponen** (berapa setup dipercayai yang komponennya menyumbang): prasyarat pasaran 13 daripada 16, prasyarat syarikat 13 daripada 15, penapis pertama 25 daripada 34, penapis kedua 28 daripada 33, pencetus 28 daripada 34. Bagi setup earnings, hampir semua kelebihan datang daripada prasyarat syarikat (cth. `F39` +7.2 → +0.5 tanpanya).
+- **Mutu pegang** (median, belian yang naik lagi): keluar setup +23.3 %, pegang sahaja 20 sesi +24.6 %, puncak tutup +30.2 %. Tiada satu pun daripada 34 setup yang indikator keluarnya mengatasi "pegang 20 sesi" pada pelari. Selari dengan §9 (5).
+- **Saham Shariah:** kadar `terus` mengatasi rawak bagi 34 daripada 34 setup dipercayai (median 13.7 % lawan 10.6 %).
+- **Kohort jejak hadapan 13 Nov:** `F27` #12, `F24` #17, `F22` #19, `F28` #31, `F30` #33 (dipercayai); **`F21` #57, TIDAK dipercayai** (`terus` 9.7 % lawan rawak 9.8 %); `F34`, `F38` tidak dinilai (anak tala). Kohort tidak diubah.
+- Tidak dipercayai kerana bergantung pada beberapa tahun: `F62` (5 tahun aktif), `F57` (6), `F64`/`F67` (7), `F55`/`F69` (8); `F49` gagal dalam satu tempoh (−0.5 mata).
+
+**Belum dibuat (jujur):** (1) data saham delist — semua kadar condong ke atas; (2) peringkat papertrade bagi setup baharu (pengguna melarang sehingga membenarkannya; memerlukan kalendar earnings harian dalam penjejak); (3) carian automatik berkala; (4) senarai Shariah titik-masa; (5) anak tala (`F31`–`F38`, `F70`–`F87`) tidak dinilai dalam kedudukan ini.
+
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 
 Folder kerja (panel indikator, isyarat benih, jadual besar; ~3.4 GB pickle) berada di luar repo dan hilang bersama sesi. Semuanya boleh dijana semula secara deterministik (`cs_atom.BENIH = 20261113`); data mentah set 2000 dimuat turun dari Release `autotune-data-a02` (perlukan `pyarrow`: `pip install pyarrow`; ia tiada dalam fail requirements repo).
@@ -201,7 +290,18 @@ python3 cs_cs05.py besar $K && python3 cs_cs05.py plasebo $K        # ~6 min set
 python3 cs_cs05.py tepat $K && python3 cs_cs05.py kunci $K          # ~3 min + ~2 min
 python3 cs_lengkap.py asas $K && python3 cs_lengkap.py pilih $K     # pindaan (j): ~3 min + ~4 min
 python3 cs_cs05.py lapor $K                                         # hasil/CS05/, kajian/CARIAN_SETUP.md, registry F
+# CS06 (pindaan (k)): enjin yang sama dengan CS_PUS=CS06 (fail kerja berawalan cs06_; sasaran tangkap penuh)
+export CS_PUS=CS06
+python3 cs_cs05.py besar $K && python3 cs_cs05.py plasebo $K && python3 cs_cs05.py tepat $K && python3 cs_cs05.py kunci $K
+python3 cs_lengkap.py asas $K && python3 cs_lengkap.py pilih $K     # asas dibina semula (kini termasuk tangkap penuh)
+python3 cs_tala6.py benih $K && python3 cs_tala6.py tala $K         # 240 varian (~25 min) + tala (~2 min)
+python3 cs_cs05.py lapor $K && python3 cs_tala6.py lapor $K         # hasil/CS06/, kajian/CARIAN_SETUP.md, registry F
+unset CS_PUS
+python3 cs_portfolio6.py $K                                         # pindaan (l): portfolio 10 slot, < 1 min
+python3 cs_akhir.py $K                                              # pindaan (m): hasil/KEDUDUKAN_AKHIR.md|csv, < 1 min
 ```
+
+Susunan `lapor`: CS05 dahulu, kemudian CS06 (yang terakhir menulis `kajian/CARIAN_SETUP.md`), kemudian `cs_tala6.py lapor`, kemudian `cs_ringkas.py`.
 
 `CS05_KELUAR=<folder> python3 cs_cs05.py lapor $K` menulis semua keluaran CS05 ke folder lain (uji kering: tiada tulisan ke repo).
 

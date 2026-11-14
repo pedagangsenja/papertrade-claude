@@ -22,7 +22,8 @@ REG_F = os.path.join(BS2, 'data', 'registry_F.csv')
 LAJUR_F = ['id', 'keluarga', 'pusingan', 'tarikh_daftar', 'takrif', 'param', 'masuk', 'penapis', 'henti', 'keluar',
            'skor_tepat', 'n_cari1', 'purata_cari1', 'n_cari2', 'purata_cari2', 'n_K1', 'purata_K1', 'n_K2',
            'purata_K2', 'n_K3', 'purata_K3', 'k10_K1', 'k10_K2', 'k10_K3', 'T1', 'T2', 'T3', 'status',
-           'prasyarat', 'syarat']          # dua lajur akhir: pindaan 14 Nov 2026 (i)
+           'prasyarat', 'syarat',          # pindaan 14 Nov 2026 (i)
+           'menang_K1', 'menang_K2', 'menang_K3', 'menang']      # kadar menang (R > 0) pada Kunci; `menang` = gabungan
 # Setiap pusingan: penerangan tempoh, tempoh Kunci yang TAHUNNYA tidak dipakai carian (`bebas`), dan kaveat khusus.
 KONFIG = {
     'CS01': {
@@ -128,6 +129,7 @@ def daftar_f(ringkas, param, pus, T_cari, T_kunci):
             b[f'n_{t}'] = v[t]['n']
             b[f'purata_{t}'] = '' if not v[t]['n'] else f"{v[t]['purata']:.5f}"
             b[f'k10_{t}'] = '' if not v[t]['n'] else f"{v[t].get('k10', float('nan')):.4f}"
+            b[f'menang_{t}'] = '' if not v[t]['n'] else f"{v[t].get('menang', float('nan')):.4f}"
         reg = pd.concat([reg, pd.DataFrame([b])[LAJUR_F].astype(str)], ignore_index=True)
     reg['_n'] = reg.id.str[1:].astype(int)
     reg.sort_values('_n').drop(columns='_n').to_csv(REG_F, index=False)

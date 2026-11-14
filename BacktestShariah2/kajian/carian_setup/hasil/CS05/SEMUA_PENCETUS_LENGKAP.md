@@ -4,7 +4,7 @@
 
 Dijana `kajian/carian_setup/cs_cs05.py` (pindaan (j)). **Jangan sunting secara manual.** Lajur penuh: `SEMUA_PENCETUS.csv`.
 
-Peraturan masuk setiap kaedah sama seperti `SEMUA_PENCETUS.md`. Henti × keluar dipilih pada kumpulan A supaya paling kerap menghasilkan dagangan **jadi** = DIJUAL dengan untung bersih ≥ 10 %. Setiap sel: **tangkap penuh %** (saham itu lari DAN dijual dengan untung ≥ 10 %) · jadi % (saham rawak dengan henti dan keluar yang sama) · rugi ≥ 8 % · purata sesi pegang. Semua angka kumpulan B (saham yang tidak dilihat).
+Peraturan masuk setiap kaedah sama seperti `SEMUA_PENCETUS.md`. Henti × keluar dipilih pada kumpulan A supaya paling kerap menghasilkan dagangan **jadi** = DIJUAL dengan untung bersih ≥ 10 %. Setiap sel: **tangkap penuh %** (saham itu "lari" DAN dijual dengan untung ≥ 10 %) · jadi % (saham rawak dengan henti dan keluar yang sama) · rugi ≥ 8 % · purata sesi pegang. Semua angka kumpulan B (saham yang tidak dilihat).
 
 Henti: H1 -8%; H2 -10%; H3 3xATR14; H4 4xATR14. Keluar: X00 = tiada keluar indikator (henti + 20 sesi); X01 tutup < MA10; X02 tutup < MA20; X03 tutup < MA50; X04 tutup < EMA10; X05 tutup < EMA20; X06 dua tutup berturut < MA10; X07 dua tutup berturut < MA20; X08 MA10 < MA20; X09 MACD < isyarat; X10 histogram MACD turun 3 hari; X11 RSI14 < 50; X12 RSI14 silang turun bawah 70; X13 RSI14 > 80; X14 Supertrend turun; X15 tutup < rendah 3 hari; X16 tutup < rendah 5 hari; X17 tutup < rendah 10 hari; X18 Chandelier 3xATR14 (dari tutup tertinggi sejak beli); X19 Chandelier 2xATR14; X20 tutup < 92% tutup tertinggi sejak beli; X21 Stochastic silang turun di atas 80; X22 hari turun dengan volum >= 1.5x; X23 tutup < buka dan < rendah semalam; X24 +DI < -DI.
 
