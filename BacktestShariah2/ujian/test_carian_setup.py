@@ -855,5 +855,111 @@ class TestAkhir(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(d, 'KEDUDUKAN_AKHIR.md')))
 
 
+class TestCS07(unittest.TestCase):
+    """SPEC pindaan 14 Nov 2026 (n): keluarga pencetus berparameter, enjin keluar baharu, mesin berkala."""
+
+    def test_grid_keluarga_dan_asal(self):
+        import cs_param as kp
+        G = kp.grid()
+        self.assertEqual((len(G), len({x[0] for x in G}), len({x[1] for x in G})), (656, 656, 25))
+        self.assertEqual(tuple(sorted({x[1] for x in G})), kp.KELUARGA)
+        asal = kp.asal()
+        self.assertEqual(len(asal), 41)
+        g = _saham(700, 3)
+        rs = pd.Series(np.random.default_rng(1).uniform(0, 100, len(g)), index=g.index).rolling(5).mean()
+        on = pd.Series(1.0, index=g.index)
+        M = kp.kira(g, rs, G)
+        P = atom.indikator(g, rs, on, on)[0]
+        nama = [x[0] for x in G]
+        for k, a in asal.items():                                               # ahli asal = pencetus P asal, tepat
+            if a.startswith('P'):
+                self.assertTrue((M[nama.index(k)] == P[a]).all(), (k, a))
+
+    def test_keluarga_tiada_pandang_hadapan(self):
+        import cs_param as kp
+        g = _saham(600, 5)
+        rs = pd.Series(np.random.default_rng(2).uniform(0, 100, len(g)), index=g.index)
+        G = kp.grid()
+        penuh, potong = kp.kira(g, rs, G), kp.kira(g.iloc[:520], rs.iloc[:520], G)
+        self.assertTrue((penuh[:, :520] == potong).all())
+        rng = np.random.default_rng(9)
+        Gr = [(f'{f}.r', f, kp.rawak(f, rng)) for f in kp.KELUARGA for _ in range(3)]
+        self.assertTrue((kp.kira(g, rs, Gr)[:, :520] == kp.kira(g.iloc[:520], rs.iloc[:520], Gr)).all())
+        self.assertTrue(all(isinstance(kp.teks(f, p), str) for _, f, p in Gr))
+
+    def test_atom_keluar_dan_peraturan(self):
+        import cs_keluar7 as k7
+        self.assertEqual((k7.NA, int((k7.JENIS == 0).sum()), k7.NR, k7.NG, k7.NH), (97, 78, 9410, 3, 8))
+        self.assertEqual((k7.N_SEJAGAT, k7.SIMPAN_MIN), (30, 0.90))
+        self.assertEqual(len({a[0] for a in k7.ATOM}), 97)
+        self.assertEqual(k7.kod_peraturan(0), 'X00')
+        g = _saham(500, 7)
+        self.assertEqual(k7.siri(g).shape, (78, 500))
+        self.assertTrue((k7.siri(g)[:, :430] == k7.siri(g.iloc[:430])).all())      # tiada pandang hadapan
+        teks = [a[3] for a in k7.ATOM]                                          # setiap atom lama ada dalam ruang baharu
+        for t in ('tutup < MA10', 'MA10 < MA20', 'RSI14 silang turun bawah 70', 'Supertrend(10, 3.0) turun',
+                  'Chandelier 3.0xATR14 dari tutup tertinggi', 'tutup < 92% tutup tertinggi sejak beli', '+DI14 < -DI14'):
+            self.assertIn(t, teks)
+
+    def _pan7(self):
+        import cs_keluar7 as k7
+        g = _saham(420, 11)
+        rs = pd.Series(50.0, index=g.index)
+        on = pd.Series(1.0, index=g.index)
+        P, F, X, atr = atom.indikator(g, rs, on, on)
+        pan = {k: g[n].to_numpy(float) for k, n in (('o', 'open'), ('h', 'high'), ('l', 'low'), ('c', 'close'))}
+        pan['atr'] = atr
+        pan['X'] = np.stack([X[n[:3]] for n in atom.KELUAR]).astype(np.uint8)
+        return pan, k7.siri(g).astype(np.uint8), np.arange(260, 380)
+
+    def test_kernel_keluar_pariti_enjin_lama(self):
+        import cs_keluar7 as k7
+        pan, XA, ev = self._pan7()
+        S = k7.sedia_pan(pan, XA, ev)
+        teks = [a[3] for a in k7.ATOM]
+        for lama, baharu in ((0, 'tutup < MA10'), (8, 'MACD(12,26,9) < isyarat'), (13, 'Supertrend(10, 3.0) turun'),
+                             (17, 'Chandelier 3.0xATR14 dari tutup tertinggi'), (19, 'tutup < 92% tutup tertinggi sejak beli'),
+                             (21, 'hari turun dengan volum >= 1.5x')):
+            for s_lama, s_baharu in ((0, 0), (1, 1), (2, 4), (3, 5)):
+                Ro = teras.hasil_satu(ev, pan['o'], pan['h'], pan['l'], pan['c'], pan['atr'], pan['X'], JENIS, PAR,
+                                      A1, A2, OP, s_lama, _peraturan(lama))[0]
+                Rn = k7.hasil(*S[:7], k7.A1, k7.A2, k7.OP, s_baharu, (1 + teks.index(baharu)) * k7.NG)[0]
+                self.assertTrue(np.allclose(Ro, Rn), (baharu, s_lama))
+        Ro = teras.hasil_satu(ev, pan['o'], pan['h'], pan['l'], pan['c'], pan['atr'], pan['X'], JENIS, PAR, A1, A2, OP, 3, 0)[0]
+        self.assertTrue(np.allclose(Ro, k7.hasil(*S[:7], k7.A1, k7.A2, k7.OP, 5, 0)[0]))          # X00, 4xATR14
+
+    def test_syarat_aktif_dan_kumpul(self):
+        import cs_keluar7 as k7
+        pan, XA, ev = self._pan7()
+        S = k7.sedia_pan(pan, XA, ev)
+        M, ARM = S[0], S[1]
+        self.assertTrue(((ARM[:, 1] & ~ARM[:, 0]) == 0).all())                  # aktif +10 % sebahagian daripada aktif +5 %
+        r = 1 + [a[3] for a in k7.ATOM].index('tutup < MA10')
+        R0, s0 = k7.hasil(*S[:7], k7.A1, k7.A2, k7.OP, 5, r * k7.NG)
+        R2, s2 = k7.hasil(*S[:7], k7.A1, k7.A2, k7.OP, 5, r * k7.NG + 2)
+        self.assertTrue((s2 >= s0).all())                                       # syarat aktif hanya melewatkan keluar
+        tiada = ARM[:, 1] == 0                                                  # tidak pernah +10 %: sama seperti X00
+        self.assertTrue(np.allclose(R2[tiada], k7.hasil(*S[:7], k7.A1, k7.A2, k7.OP, 5, 0)[0][tiada]))
+        Acc = k7.kumpul(*S, np.zeros(len(ev), np.int64), 1, k7.A1, k7.A2, k7.OP)
+        self.assertEqual(Acc.shape, (k7.NH, k7.NKOL, 1, k7.NST))
+        self.assertTrue((Acc[..., 0] == len(ev)).all())
+        self.assertAlmostEqual(float(Acc[5, r * k7.NG, 0, 5]), float(R0.sum()), places=3)
+        self.assertAlmostEqual(float(Acc[5, r * k7.NG, 0, 2]), float((R0 >= 0.10).sum()))
+        lab = S[7]
+        self.assertTrue((lab[:, 1] <= lab[:, 0]).all())                         # terus sebahagian daripada m5
+
+    def test_mesin_kelompok_tetap(self):
+        import cs_mesin as ms
+        import cs_tala7 as t7
+        G1, T1 = ms.kelompok(3, n_m=5)
+        G2, T2 = ms.kelompok(3, n_m=5)
+        self.assertEqual((G1, T1), (G2, T2))                                    # benih = nombor larian
+        self.assertEqual((len(G1), ms.N_K, ms.N_NILAI_B), (25 * 12, 12, 15))
+        self.assertNotEqual(ms.kelompok(4, n_m=5)[0], G1)
+        self.assertTrue(all(t[0].endswith(f'.{ms.V_ASAS + 3}') and t[2] for t in T1))
+        self.assertEqual((t7.induk('K07.012'), t7.induk('M73.5s3'), t7.induk('N16')), ('K07', 'M73', 'N16'))
+        self.assertEqual((len(t7.varian_m1()), t7.V_RAWAK, t7.N_M_SETEMPAT, t7.N_SETEMPAT), (1072, tuple(range(3, 11)), 50, 8))
+
+
 if __name__ == '__main__':
     unittest.main()

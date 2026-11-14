@@ -512,6 +512,104 @@ def kunci(kerja):
     return out
 
 
+def lapor_(kerja):
+    """hasil/CS07/KELUAR.md dan keluar.csv daripada cs07_keluar_pilih.pkl + cs07_keluar_kunci.pkl."""
+    import cs_cs05 as c5
+    import cs_lapor as lapor
+    S0 = pickle.load(open(os.path.join(kerja, 'cs07_keluar_pilih.pkl'), 'rb'))
+    K = pickle.load(open(os.path.join(kerja, 'cs07_keluar_kunci.pkl'), 'rb'))
+    d_ = os.path.join(SINI, 'hasil', 'CS07')
+    os.makedirs(d_, exist_ok=True)
+    p = lambda x, k=1, t=False: '–' if x is None or x != x else (f'{x * 100:+.{k}f}' if t else f'{x * 100:.{k}f}')
+    baris = []
+    for i, r in K.items():
+        s, kol = S0['setup'][i]['pilih']
+        a, x, b1 = r['pilih'], r['x00'], r['pilih'][('satu', -1)]
+        la = r.get('lama')
+        g = lambda m, k: m[('semua', -1)][k]
+        baris.append(dict(
+            id=i, henti=HENTI[s], keluar=kod_peraturan(kol), keluar_teks=nama_peraturan(kol), sejagat=bool(kol >= NG),
+            n=g(a, 'n'), tp_pilih=g(a, 'tp'), tp_x00=g(x, 'tp'), tp_lama=g(la, 'tp') if la else np.nan,
+            simpan=g(a, 'R_terus') / g(x, 'R_terus') if g(x, 'R_terus') > 0 else np.nan,
+            rugi8_pilih=g(a, 'rugi8'), rugi8_x00=g(x, 'rugi8'), rugi8_lama=g(la, 'rugi8') if la else np.nan,
+            menang_pilih=g(a, 'menang'), menang_lama=g(la, 'menang') if la else np.nan,
+            purata_pilih=g(a, 'purata'), purata_x00=g(x, 'purata'), purata_lama=g(la, 'purata') if la else np.nan,
+            kurang_pilih=g(a, 'kurang'), kurang_x00=g(x, 'kurang'), kurang_lama=g(la, 'kurang') if la else np.nan,
+            pegang_pilih=g(a, 'pegang'), pegang_lama=g(la, 'pegang') if la else np.nan,
+            tp_K3_pilih=a[('semua', 2)]['tp'], tp_K3_x00=x[('semua', 2)]['tp'],
+            tp_K3_lama=la[('semua', 2)]['tp'] if la else np.nan,
+            satu_n=b1['n'], satu_tp=b1['tp'], satu_menang=b1['menang'], satu_rugi8=b1['rugi8'], satu_purata=b1['purata'],
+            satu_tp_lama=la[('satu', -1)]['tp'] if la else np.nan, tp_A=S0['setup'][i]['tp_A'],
+            tp_X00_A=S0['setup'][i]['tp_X00_A']))
+    T = pd.DataFrame(baris)
+    T.to_csv(os.path.join(d_, 'keluar.csv'), index=False, float_format='%.5f')
+    L = T[T.tp_lama.notna()]
+    menolong = L[(L.tp_pilih > L.tp_x00) & (L.tp_pilih > L.tp_lama)]
+    atas_x00, atas_lama = int((T.tp_pilih > T.tp_x00).sum()), int((L.tp_pilih > L.tp_lama).sum())
+    simpan_ok = int((T.simpan >= SIMPAN_MIN).sum())
+    d_rugi = float((L.rugi8_pilih - L.rugi8_lama).median())
+    ya = (len(menolong) > len(L) / 2) and (T.simpan.median() >= SIMPAN_MIN) and (d_rugi <= 0.01)
+    # keluar sejagat pada B: purata merentas setup bagi (tp - tp X00 henti sama), semua isyarat
+    sj = []
+    for j, (s, kol) in enumerate(S0['sejagat']):
+        dl = [r['sejagat'][j][0]['tp'] - r['sejagat'][j][1]['tp'] for r in K.values()]
+        rt = sum(r['sejagat'][j][0]['R_terus'] * r['sejagat'][j][0]['n_terus'] for r in K.values() if r['sejagat'][j][0]['n_terus'])
+        rx = sum(r['sejagat'][j][1]['R_terus'] * r['sejagat'][j][1]['n_terus'] for r in K.values() if r['sejagat'][j][1]['n_terus'])
+        sj.append((s, kol, S0['D'][j], S0['simpan'][j], float(np.mean(dl)), float(np.mean(np.asarray(dl) > 0)), rt / rx))
+    try:
+        sys.path.insert(0, os.path.join(lapor.BS2, 'standard'))
+        import status_kad
+        status = status_kad.baris()
+    except Exception:
+        status = '> **Status keputusan:** lihat `laporan/KAD_SKOR.md`; laporan ini BUKAN keputusan.'
+    reg = pd.read_csv(lapor.REG_F, dtype=str).fillna('').set_index('id')
+    lama_kod = lambda i: (f"{reg.loc[i, 'henti'].split()[0]} · {c5.kod_keluar(__import__('cs_portfolio6').dari_takrif5(reg.loc[i, 'takrif'])['lajur']).split('· ')[-1]}"
+                          if i in reg.index else '–')
+    A = ['# CS07 (b): cari dan tala KELUAR — "indikator yang memberitahu kenaikan sudah tamat" (backtest; BUKAN bukti)', '',
+         status, '', 'Dijana `kajian/carian_setup/cs_keluar7.py`. Pradaftar: `kajian/SPEC_CARIAN_SETUP.md` pindaan 14 Nov 2026 (n)(b) '
+         'dan penjelasan (n)-1, dikomit sebelum dijalankan. **Jangan sunting secara manual.**', '',
+         '## 1. Apa yang dicari', '',
+         f'- {NA} atom keluar berparameter (MA, EMA, MACD, RSI, Supertrend, rendah k hari, Stochastic, volum, Chandelier, ekor, '
+         f'"tiada kemajuan") → {NR:,} peraturan (tunggal, ATAU, DAN) × 3 syarat aktif (sentiasa / selepas +5 % / selepas +10 %) × '
+         f'{NH} henti = **{NH * NKOL:,} cara keluar setiap setup**, bagi {S0["n_setup"]} setup, pada kumpulan A sahaja.',
+         '- Ukuran: **tangkap penuh** = naik ≥ 5 % minggu pertama DAN dijual dengan untung ≥ 10 %. Syarat "tidak jual awal": untung '
+         f'pada saham yang terus naik mesti ≥ {SIMPAN_MIN:.0%} daripada "pegang sahaja 20 sesi".',
+         f'- {S0["n_lulus"]:,} daripada {NH * NKOL:,} cara keluar lulus syarat itu pada kumpulan A. Tanpa syarat, keluar terbaik '
+         f'menaikkan tangkap penuh +{S0["D_tanpa_syarat"] * 100:.1f} mata tetapi dengan menjual saham yang masih naik.', '',
+         '## 2. Bacaan dikunci (kumpulan B, saham yang carian tidak lihat)', '',
+         f"- Keluar terpilih mengatasi `X00` (pegang sahaja, henti sama): **{atas_x00} daripada {len(T)}** setup; mengatasi keluar "
+         f"lama: **{atas_lama} daripada {len(L)}**; mengatasi kedua-duanya: **{len(menolong)} daripada {len(L)}**.",
+         f"- Syarat \"tidak jual awal\" kekal pada B: {simpan_ok} daripada {len(T)} setup (median nisbah {T.simpan.median():.2f}).",
+         f"- Rugi ≥ 8 %: median beza lawan keluar lama {d_rugi * 100:+.1f} mata.",
+         f"- Median tangkap penuh (semua isyarat): keluar lama {p(L.tp_lama.median())} % → pegang sahaja {p(T.tp_x00.median())} % → "
+         f"keluar terpilih **{p(T.tp_pilih.median())} %**. Median kekurangan dari puncak: lama {p(L.kurang_lama.median())} → "
+         f"terpilih {p(T.kurang_pilih.median())} mata.",
+         f"- **Keputusan: keluar {'MENOLONG' if ya else 'TIDAK menolong'}** mengikut bacaan yang dikunci.", '',
+         '## 3. Keluar sejagat (10 teratas daripada 30; dipilih pada A, disemak pada B)', '',
+         '| # | Henti | Peraturan keluar | A: tambahan tangkap penuh (mata) | A: nisbah simpan | B: tambahan (mata) | B: % setup lebih baik | B: nisbah simpan |',
+         '|---|---|---|---|---|---|---|---|']
+    for j, (s, kol, dA, sA, dB, fB, sB) in enumerate(sj[:10], 1):
+        A.append(f'| {j} | {HENTI[s]} | {nama_peraturan(kol)} | {dA * 100:+.2f} | {sA:.2f} | {dB * 100:+.2f} | {fB:.0%} | {sB:.2f} |')
+    A += ['', '## 4. Setiap setup (kumpulan B; semua isyarat, perbandingan berpasangan)', '',
+          '| ID | Keluar lama | Keluar terpilih | Tangkap penuh %: lama / pegang sahaja / **terpilih** | 2025–26: lama / pegang / terpilih | '
+          'Nisbah simpan | Rugi ≥ 8 %: lama → terpilih | Menang %: lama → terpilih | Kurang dari puncak: lama → terpilih | Pegang (sesi) |',
+          '|---' * 10 + '|']
+    for r in T.itertuples():
+        A.append(f"| `{r.id}` | {lama_kod(r.id)} | {r.henti} · {r.keluar_teks} | {p(r.tp_lama)} / {p(r.tp_x00)} / **{p(r.tp_pilih)}** | "
+                 f"{p(r.tp_K3_lama)} / {p(r.tp_K3_x00)} / {p(r.tp_K3_pilih)} | {r.simpan:.2f} | {p(r.rugi8_lama, 0)} → {p(r.rugi8_pilih, 0)} | "
+                 f"{p(r.menang_lama, 0)} → {p(r.menang_pilih, 0)} | {p(r.kurang_lama)} → {p(r.kurang_pilih)} | "
+                 f"{r.pegang_lama:.0f} → {r.pegang_pilih:.0f} |")
+    A += ['', '## 5. Kaveat', '',
+          '- Keluar dipilih pada kumpulan A daripada ratusan ribu calon; angka A melambung, angka B yang dibaca. Kumpulan B sudah '
+          'dilihat dalam pusingan terdahulu.',
+          '- Henti yang lebih longgar menaikkan tangkap penuh kerana lebih sedikit dagangan terhenti sebelum sampai +10 %, tetapi '
+          'rugi besar setiap dagangan yang gagal turut lebih besar.',
+          '- Tiada saham delist. Backtest sahaja; kad skor kekal satu-satunya keputusan wang sebenar.', '']
+    open(os.path.join(d_, 'KELUAR.md'), 'w', encoding='utf-8').write('\n'.join(A))
+    cari.log(f"lapor keluar: {len(T)} setup; menolong {len(menolong)}/{len(L)}; keputusan {'MENOLONG' if ya else 'TIDAK'}")
+    return T, ya
+
+
 if __name__ == '__main__':
     cmd, kerja = sys.argv[1], sys.argv[2]
     if cmd == 'atom':
@@ -523,5 +621,7 @@ if __name__ == '__main__':
         pilih(kerja)
     elif cmd == 'kunci':
         kunci(kerja)
+    elif cmd == 'lapor':
+        lapor_(kerja)
     else:
         raise SystemExit(f'arahan tidak dikenali: {cmd}')

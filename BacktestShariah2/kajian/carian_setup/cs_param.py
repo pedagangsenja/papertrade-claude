@@ -113,8 +113,8 @@ NAMA = {
     'K06': '{k} tutup menurun berturut', 'K07': 'tutup silang atas {j}{n}', 'K08': '{j}{f} silang atas {j}{s}',
     'K09': 'MACD({f},{s},{g}) silang naik', 'K10': 'pecah tinggi {n} hari', 'K11': 'Supertrend({n}, {m}) bertukar naik',
     'K12': 'ADX({n}) silang atas {x} & +DI > -DI', 'K13': 'Stochastic({n}) silang naik dari bawah {x}',
-    'K14': 'lonjakan >= {r:.0%} + volum {v}x', 'K15': 'gap >= {g:.0%}', 'K16': 'gap-and-go (buka > tinggi semalam + {g:.0%})',
-    'K17': 'undur ke {j}{n} yang naik (tol {tol:.0%})', 'K18': 'jatuh >= {y:.0%} dalam {x} hari',
+    'K14': 'lonjakan >= {r:.1%} + volum {v}x', 'K15': 'gap >= {g:.1%}', 'K16': 'gap-and-go (buka > tinggi semalam + {g:.1%})',
+    'K17': 'undur ke {j}{n} yang naik (tol {tol:.1%})', 'K18': 'jatuh >= {y:.0%} dalam {x} hari',
     'K19': 'pecah atas Keltner({n}, {k})', 'K20': 'squeeze lepas ke atas (BB {kb}, KC {kk})', 'K21': 'NR{k}',
     'K22': 'Holy Grail (ADX > {x}, undur EMA{n})', 'K23': 'RS silang atas {x}',
     'K24': 'bar pembalikan (buka <= {a:.0%}, tutup >= {b:.0%} julat)', 'K25': 'pecah julat sempit {n} hari (<= {w:.0%})',
@@ -137,6 +137,70 @@ ASAL = [
     ('K20', dict(kb=2.0, kk=1.5), 'P20'), ('K21', dict(k=7, d=1), 'N49'), ('K22', dict(x=30, n=20), 'P29'),
     ('K23', dict(x=90), 'P44'), ('K24', dict(a=0.2, b=0.8), 'N113'), ('K25', dict(n=60, w=0.35, v=1.5), 'P34'),
 ]
+
+
+KELUARGA = tuple(f'K{i:02d}' for i in range(1, 26))
+
+
+def rawak(fam, rng):
+    """Satu set parameter rawak bagi keluarga (julat berterusan, termasuk nilai di luar grid) — untuk mesin berkala."""
+    ri = lambda a, b: int(rng.integers(a, b + 1))
+    ru = lambda a, b, d=2: round(float(rng.uniform(a, b)), d)
+    pl = lambda *x: x[int(rng.integers(0, len(x)))]
+    if fam == 'K01':
+        n = ri(2, 21)
+        return dict(n=n, x=ri(3, 30) if n <= 5 else ri(12, 45), tren=pl(0, 1))
+    if fam == 'K02':
+        return dict(n=ri(3, 30), x=ri(15, 65))
+    if fam == 'K03':
+        return dict(n=ri(8, 60), k=ru(1.0, 3.5), r=pl(0, 0, 25, 30, 35, 40))
+    if fam == 'K04':
+        return dict(n=ri(8, 40), k=ru(1.0, 3.0))
+    if fam == 'K05':
+        return dict(n=ri(8, 60), k=ru(1.0, 3.5))
+    if fam == 'K06':
+        return dict(k=ri(2, 8), tren=pl(0, 1))
+    if fam == 'K07':
+        return dict(n=ri(3, 250), j=pl('sma', 'ema'))
+    if fam == 'K08':
+        f_ = ri(3, 60)
+        return dict(f=f_, s=min(250, max(f_ + 2, int(round(f_ * rng.uniform(1.5, 5.0))))), j=pl('sma', 'ema'))
+    if fam == 'K09':
+        f_ = ri(3, 24)
+        return dict(f=f_, s=max(f_ + 2, int(round(f_ * rng.uniform(1.8, 3.0)))), g=ri(3, 18), z=pl(0, -1, 1))
+    if fam == 'K10':
+        return dict(n=ri(5, 260), v=pl(0, 0, 1.2, 1.5, 2.0, 2.5, 3.0))
+    if fam == 'K11':
+        return dict(n=ri(5, 25), m=ru(1.0, 5.0, 1))
+    if fam == 'K12':
+        return dict(n=ri(5, 25), x=ri(12, 40))
+    if fam == 'K13':
+        return dict(n=ri(5, 25), x=ri(10, 45))
+    if fam == 'K14':
+        return dict(r=ru(0.0, 0.12, 3), v=ru(1.2, 4.0, 1), p=pl(0.0, 0.5, 0.75))
+    if fam == 'K15':
+        return dict(g=ru(0.01, 0.20, 3), v=pl(0, 1.5, 2.0, 3.0))
+    if fam == 'K16':
+        return dict(g=ru(0.0, 0.06, 3), v=pl(0, 1.5, 2.0, 3.0))
+    if fam == 'K17':
+        return dict(n=ri(8, 120), tol=ru(0.0, 0.03, 3), j=pl('sma', 'ema'), tren=pl(0, 1))
+    if fam == 'K18':
+        return dict(x=ri(2, 25), y=ru(0.04, 0.35))
+    if fam == 'K19':
+        return dict(n=ri(8, 40), k=ru(0.8, 3.5, 1))
+    if fam == 'K20':
+        return dict(kb=ru(1.2, 2.8, 1), kk=ru(0.8, 2.2, 1))
+    if fam == 'K21':
+        return dict(k=ri(3, 15), d=pl(0, 1))
+    if fam == 'K22':
+        return dict(x=ri(18, 45), n=ri(8, 35))
+    if fam == 'K23':
+        return dict(x=ri(60, 97))
+    if fam == 'K24':
+        return dict(a=ru(0.05, 0.35), b=ru(0.65, 0.95))
+    if fam == 'K25':
+        return dict(n=ri(8, 80), w=ru(0.05, 0.40), v=pl(0, 1.5, 2.0))
+    raise ValueError(fam)
 
 
 def asal():
