@@ -767,6 +767,62 @@ Sebab: mesin (n)(c) hanya menskor lorong swing; lorong trend (q) kini sebahagian
 - Belum diliputi mesin: keluar (empat pusingan tidak menemui indikator yang menolong) dan corak kompleks tanpa keluarga.
 - Kaveat (n) dan (q) kekal: skor A melambung dengan lebih banyak varian; B sudah dilihat; tiada saham delist.
 
+### Pindaan 14 Nov 2026 (u) — AUDIT proses menjana F lawan standard dan matlamat (diminta pengguna; sebelum dijalankan)
+
+Pengguna 14 Nov 2026, selepas menolak ("belum lagi") gabung ke `main` dan papertrade: "cuba recheck sekali lagi proses
+generate F method kita, menepati semua standard ke? dan matlamat saya?" **Apa yang sudah dilihat:** semua hasil hingga
+pindaan (t). Audit ini BUKAN pusingan carian: tiada setup baharu, tiada kod F baharu, tiada perubahan pada pangkat,
+`registry_F.csv` atau `jejak_f/kohort.json`. Kod `carian_setup/cs_audit.py` → `hasil/AUDIT_F.md`, `AUDIT_F.csv`,
+`AUDIT_earnings.csv`.
+
+**Bahagian A — matriks pematuhan setiap baris `registry_F.csv`** (senarai semak dikunci di sini):
+
+| Kod | Semakan | Sumber |
+|---|---|---|
+| A1 | ada prasyarat (≥ 1 kod `Q`; pasaran dan kumpulan/syarikat dilaporkan berasingan) | takrif |
+| A2 | ada syarat saham (pencetus; bilangan penapis dilaporkan) | takrif |
+| A3 | ada henti rugi; jenisnya dilaporkan | takrif |
+| A4 | keluar ialah INDIKATOR (bukan `X00` "henti + 20 sesi sahaja") | takrif |
+| A5 | tiada sasaran untung tetap (keluar "aktif selepas +x %" ditanda, bukan dikira langgar) | takrif |
+| A6 | dinilai di bawah kayu ukur akhir (m) + pegang minimum (p) | `KEDUDUKAN_AKHIR.csv` |
+| A7 | "dipercayai" (takrif (m)) | sama |
+| A8 | purata setiap dagangan > 0 | sama |
+| A9 | dijual sebelum sesi ke-4 (oleh henti) ≤ 10 % dagangan | sama (`jual_awal`) |
+| A10 | indikator keluar tidak memotong pelari: `R_pelari` ≥ 90 % `R_pelari_x00` (hanya bagi yang lulus A4) | sama |
+| A11 | tidak bergantung pada tarikh earnings masa hadapan (`QF01`, `QF04`) | takrif |
+
+"Struktur lengkap ikut matlamat" = A1 DAN A2 DAN A3 DAN A4. "Menepati semua" = struktur lengkap DAN A5–A10.
+A11 dilaporkan berasingan dan dinilai oleh Bahagian B. Maklumat tambahan: % dagangan rugi ≥ 15 % (kedalaman henti).
+
+**Bahagian B — ukuran pandang ke hadapan tarikh earnings (BAHARU).** `QF01`/`QF04` memakai tarikh 8-K item 2.02 SEBENAR
+selepas bar isyarat (kaveat (i) butiran 7: "ringan", tidak pernah diukur). Bagi setiap saham, peristiwa disusun seperti
+`cs_prasyarat.earnings`. **Ramalan (masa lalu sahaja)** bagi peristiwa ke-*j* = peristiwa ke-(*j*−1) + median hingga 4 jarak
+terakhir sebelum *j* (perlu ≥ 3 peristiwa terdahulu). Peristiwa **berjadual** = |sebenar − ramalan| ≤ 10 sesi; selainnya
+**luar jadual** (pra-umum, keputusan awal, 8-K tambahan: tiada kalendar boleh tahu lebih awal); < 3 peristiwa terdahulu =
+**tiada sejarah**. Varian prasyarat:
+
+- `A` asal (tarikh sebenar, semua peristiwa) — mesti mengulang angka `KEDUDUKAN_AKHIR.csv` dengan tepat (semakan pariti);
+- `J` tarikh sebenar, peristiwa berjadual sahaja (setara kalendar earnings yang betul);
+- `L` tarikh sebenar, peristiwa luar jadual atau tiada sejarah sahaja (tidak boleh didagang);
+- `P` tarikh RAMALAN daripada peristiwa ≤ bar isyarat sahaja (tiada maklumat masa hadapan langsung): `QF01` = ramalan
+  dalam 1–5 sesi akan datang; `QF04` = ramalan > 20 sesi akan datang.
+
+Setiap setup kedudukan akhir yang memakai `QF01` atau `QF04` dinilai semula pada kumpulan B di bawah setiap varian (masuk,
+henti, keluar, pegang minimum dan satu posisi setiap saham tidak berubah): belian, `terus`, kelebihan `terus` atas rawak
+hari sama (keseluruhan dan K1, K2, K3), tangkap penuh, purata, rugi ≥ 8 %. **Bacaan dikunci:** setup "bertahan" di bawah
+satu varian jika belian ≥ 100 dan kelebihan `terus` > 0 dalam K1, K2 dan K3. Kebenaran dagangan sebenar terletak antara
+`P` (pesimis) dan `J`; jika kelebihan hanya wujud pada `L`, setup itu artifak.
+
+**Bahagian C — kebolehpercayaan pangkat (BAHARU).** Pangkat `KEDUDUKAN_AKHIR` disusun ikut angka kumpulan B sendiri.
+(i) Saham kumpulan B dibahagi dua ikut md5(ticker) genap/ganjil; (ii) tahun kalendar dibahagi genap/ganjil. Bagi setiap
+setup: kelebihan `terus` pada setiap separuh (min 30 belian). Dilaporkan: Spearman antara dua separuh; median kelebihan
+pada separuh kedua bagi 10 teratas separuh pertama lawan median semua setup. **Bacaan dikunci:** jika Spearman belahan
+tahun ≤ 0.2, SUSUNAN dalam jadual tidak bermakna (hanya "dipercayai" lawan "tidak" yang boleh dibaca).
+
+**Bahagian D — semakan proses** (tanpa data baharu): urutan pradaftar → hasil setiap pindaan daripada sejarah komit;
+keputusan pemilihan yang dibuat pada kumpulan B; kekonsistenan laporan lain dengan pindaan (p) (lajur `menang`
+`registry_F.csv`/`KADAR_MENANG.md` lawan `KEDUDUKAN_AKHIR.csv`); keadaan kohort jejak hadapan dan mesin.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
