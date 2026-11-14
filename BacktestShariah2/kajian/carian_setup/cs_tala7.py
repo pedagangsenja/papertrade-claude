@@ -169,15 +169,17 @@ def _skor_satu(nama):
     return nama, out
 
 
-def skor_ev(kerja, ev, siap=None, simpan=None):
-    """Skor setiap pencetus dalam ev (nama -> indeks bar) pada kumpulan A, sasaran `terus`. Pulangkan dict nama -> hasil."""
+def skor_ev(kerja, ev, siap=None, simpan=None, V=None):
+    """Skor setiap pencetus dalam ev (nama -> indeks bar) pada kumpulan A. Sasaran lalai `terus`; V = (label, asas hari sama,
+    asas era) setiap bar bagi sasaran lain (cth. `besar`, CS08). Pulangkan dict nama -> hasil."""
     siap = {} if siap is None else siap
     tugas = sorted([n for n in ev if n not in siap], key=lambda n: -len(ev[n]))
     if not tugas:
         return siap
     pan = cari.panel(kerja, 'A')
     L = lapis.muat(kerja, 'A')
-    c5._G.update(pan=pan, ev=ev, V=label_terus(pan), FS=np.ascontiguousarray(pan['F'][c5.SAHAM]), L1=L['L1'], L2=L['L2'])
+    c5._G.update(pan=pan, ev=ev, V=label_terus(pan) if V is None else V, FS=np.ascontiguousarray(pan['F'][c5.SAHAM]),
+                 L1=L['L1'], L2=L['L2'])
     c5.kumpul5(np.zeros(1, np.int64), np.zeros((1, 3)), np.zeros((1, c5.NS), np.uint8), np.zeros((1, lapis.N1), np.uint8),
                np.zeros((1, lapis.N2), np.uint8), c5.PASANG, np.zeros((c5.NQ, c5.NC, 2, 4)))       # kompil sebelum fork
     t0 = time.time()
@@ -213,11 +215,11 @@ def induk(nama):
     return nama[:3] if nama[0] == 'K' else nama.split('.')[0] if nama[0] == 'M' else nama
 
 
-def jadual(kerja):
-    """Satu baris setiap pencetus yang cukup isyarat: skor A terbaik (sasaran `terus`) dan peraturan masuknya."""
+def jadual(kerja, awalan='cs07'):
+    """Satu baris setiap pencetus yang cukup isyarat: skor A terbaik dan peraturan masuknya (awalan fail: cs07 / cs08)."""
     R = []
     for bhg in BAHAGIAN:
-        f = os.path.join(kerja, f'cs07_skor_{bhg}.pkl')
+        f = os.path.join(kerja, f'{awalan}_skor_{bhg}.pkl')
         if not os.path.exists(f):
             continue
         for nama, r in pickle.load(open(f, 'rb')).items():

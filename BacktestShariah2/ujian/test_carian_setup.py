@@ -1024,5 +1024,77 @@ class TestCS07(unittest.TestCase):
         self.assertEqual((len(t7.varian_m1()), t7.V_RAWAK, t7.N_M_SETEMPAT, t7.N_SETEMPAT), (1072, tuple(range(3, 11)), 50, 8))
 
 
+class TestCS08(unittest.TestCase):
+    """SPEC pindaan 14 Nov 2026 (q): lorong kedua (beli selepas pengesahan uptrend, pegang sampai trend tamat)."""
+
+    def test_dikunci(self):
+        import cs_trend8 as t8
+        self.assertEqual((t8.H_MAX, t8.NAIK, t8.NAIK2, t8.JATUH, t8.TB), (126, 0.50, 1.00, 0.15, 0.30))
+        self.assertEqual((t8.NA, t8.NH, t8.NG, t8.NKOL), (38, 6, 3, 115))
+        self.assertEqual((t8.N_PAPAN, t8.MAKS_INDUK, t8.MAKS_PRA, t8.N_SEJAGAT, t8.MIN_BELIAN, t8.MIN_TAHUN), (12, 2, 3, 10, 200, 8))
+        self.assertEqual(t8.PEGANG_MIN, 3)
+        self.assertEqual(len({a[0] for a in t8.ATOM}), 38)
+
+    def test_label_besar(self):
+        import cs_trend8 as t8
+        n = t8.H_MAX + 3
+        c = np.full(n, 100.0)
+        o = c.copy()
+        ev = np.array([0])
+        c1 = c.copy(); c1[60:] = 155.0                                          # +55 % tanpa jatuh dahulu
+        c2 = c.copy(); c2[10] = 84.0; c2[60:] = 160.0                           # jatuh -16 % dahulu: bukan pelari besar
+        c3 = c.copy(); c3[40:] = 210.0                                          # +110 %
+        for cc, (b50, b100) in ((c1, (1, 0)), (c2, (0, 0)), (c3, (1, 1))):
+            r = t8.label8(ev, o, cc)[0]
+            self.assertEqual((int(r[0]), int(r[1])), (b50, b100))
+        self.assertAlmostEqual(float(t8.label8(ev, o, c3)[0, 2]), 1.10, places=5)
+
+    def test_kernel_keluar_lawan_kiraan_kasar(self):
+        import cs_trend8 as t8
+        rng = np.random.default_rng(5)
+        n = 520
+        c = 50 * np.exp(np.cumsum(rng.normal(0.001, 0.03, n)))
+        o = c * (1 + rng.normal(0, 0.006, n))
+        g = pd.DataFrame({'open': o, 'high': np.maximum(o, c) * 1.006, 'low': np.minimum(o, c) * 0.994, 'close': c,
+                          'volume': rng.integers(2e5, 3e6, n).astype(float)}, index=pd.bdate_range('2019-01-02', periods=n))
+        k1 = pd.Series(1.0, index=g.index)
+        atr = atom.indikator(g, k1 * 50, k1, k1)[3]
+        lo = g.low.to_numpy()
+        XT = t8.siri(g).astype(np.uint8)
+        self.assertTrue((t8.siri(g)[:, :450] == t8.siri(g.iloc[:450])).all())      # tiada pandang hadapan
+        ev = np.arange(260, 380)
+        R, SK = t8._hasil({'o': o, 'l': lo, 'c': c, 'atr': atr}, XT, ev)
+
+        def kasar(i, s, kol):
+            e = i + 1
+            P = o[e]
+            L = [P * .9, P * .85, P * .8, P - 4 * atr[i], P - 6 * atr[i], min(P * .85, P - 5 * atr[i])][s]
+            if c[e] <= L:
+                return o[e + 1] / P - 1 - t8.KOS, 1
+            hc = c[e]
+            a, gk = divmod(kol - 1, t8.NG) if kol else (None, None)
+            for d in range(t8.H_MAX):
+                b = e + d
+                if d >= 1 and o[b] <= L:
+                    return o[b] / P - 1 - t8.KOS, d
+                if d >= 1 and lo[b] <= L:
+                    return L / P - 1 - t8.KOS, d
+                hc = max(hc, c[b])
+                if kol and 2 <= d <= t8.H_MAX - 2:
+                    j = t8.JENIS[a]
+                    ya = (XT[t8.BARIS[a], b] != 0 if j == 0 else c[b] < hc - t8.PAR[a] * atr[b] if j == 1
+                          else c[b] < t8.PAR[a] * hc if j == 2 else (d + 1 >= t8.PAR[a] and c[b] < P))
+                    if ya and (gk == 0 or hc >= P * (1.10 if gk == 1 else 1.20)):
+                        return o[b + 1] / P - 1 - t8.KOS, d + 1
+            return c[e + t8.H_MAX - 1] / P - 1 - t8.KOS, t8.H_MAX - 1
+        for s, kol in [(0, 0), (1, 1), (2, 5), (3, 40), (4, 77), (5, 100), (1, 114), (0, 60)]:
+            for k in range(0, len(ev), 9):
+                r, sk = kasar(int(ev[k]), s, kol)
+                self.assertAlmostEqual(r, float(R[k, s, kol]), places=5, msg=(s, kol, k))
+                self.assertEqual(sk, int(SK[k, s, kol]), (s, kol, k))
+        self.assertTrue((SK >= 1).all())                                        # tiada jualan pada hari beli
+        self.assertTrue(((SK[:, :, 1:] < 3) == (SK[:, :, :1] < 3)).all())       # sebelum sesi ke-4 hanya henti rugi
+
+
 if __name__ == '__main__':
     unittest.main()
