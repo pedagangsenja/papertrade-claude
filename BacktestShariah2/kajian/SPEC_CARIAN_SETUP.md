@@ -642,6 +642,23 @@ memilih); lebih banyak varian dicuba = skor A terbaik lebih melambung, jadi angk
 tiga pusingan tala terdahulu (CS04, (j), CS06) tidak menunjukkan faedah luar sampel — pusingan ini mengukur semula dengan
 ruang yang jauh lebih luas, bukan menjanjikan hasil.
 
+### Pindaan 14 Nov 2026 (o) — analisis PEGANG MINIMUM (diminta pengguna; sebelum dijalankan)
+
+Pengguna 14 Nov 2026: "saya tak mahu saham itu dibeli hari tu dan dijual hari tu juga ... at least hold 3 hari ... analisa
+dahulu". Ini analisis, bukan carian: tiada setup dipilih daripadanya. Kod `carian_setup/cs_pegang.py`, keluaran
+`hasil/PEGANG_MIN.md|csv`.
+
+- (1) Papertrade langsung (Lejar `lejar/tutup/*.csv`, Papertrade C): berapa dagangan dijual pada hari beli, esoknya dan hari
+  ke-3, ikut sebab dan kaedah.
+- (2) 61 setup kedudukan akhir (m), kumpulan B, henti dan keluar sendiri, satu posisi setiap saham: taburan sesi jual dan
+  sebabnya (henti / indikator / had masa). Mekanik sedia ada: beli pada buka sesi 1; tiada jualan pada sesi 1.
+- (3) Tiga mekanik dibandingkan pada setup yang sama: **V0** sedia ada; **V1** indikator keluar hanya boleh menjual mulai
+  buka sesi ke-4 (pegang penuh 3 sesi), henti rugi kekal aktif sejak sesi 2; **V2** indikator DAN henti rugi hanya aktif
+  mulai sesi ke-4 (pelanggaran henti sebelum itu diabaikan). Ukuran: tangkap penuh, menang, rugi ≥ 8 %, rugi ≥ 15 %,
+  purata, sesi pegang.
+- Tiada bacaan lulus/gagal: pegang minimum ialah SYARAT pengguna, bukan pengoptimuman. Analisis ini mengukur kosnya dan
+  memilih cara melaksanakannya (V1 atau V2); keputusan dicatat sebagai pindaan sebelum enjin diubah.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
