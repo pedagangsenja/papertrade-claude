@@ -1,0 +1,41 @@
+# CS06 (pindaan (k)); masa UTC 14 Nov 2026
+05:21:15 besar: 500 pencetus (siap 0); 25,244,177 isyarat
+05:24:36 besar siap: 465 pencetus cukup isyarat; 43,784,217 peraturan masuk diskor daripada 103,088,000; pilih: S>0 6,910, P>0 1,821,324 · jumlah: S>0 8,695, P>0 1,805,973
+05:24:45 plasebo: 500 pencetus (siap 0); 25,244,177 isyarat
+05:27:27 plasebo siap: 465 pencetus cukup isyarat; 43,485,086 peraturan masuk diskor daripada 103,088,000; pilih: S>0 6,910, P>0 373,913 · jumlah: S>0 8,695, P>0 879,167
+05:28:16 tepat pilih: 11714 sah; papan 10
+05:28:59 tepat jumlah: 11526 sah; papan 10
+05:29:19 kelas pilih: siap
+05:29:30 kelas jumlah: siap
+05:29:45 tepat siap: 3986 baris; kelas 2770, tanpa 207, plasebo_pilih 200, plasebo_jumlah 200, rawak 200, atas_pilih 197, atas_jumlah 192, papan_pilih 10, papan_jumlah 10
+05:30:19 kunci: 3986 peraturan dinilai pada kumpulan B
+05:31:32 kunci siap: padanan 46,948 baris
+05:34:36 asas A siap: 3,032,354 bar; jadi X00/H1 semua bar = 11.7%
+05:37:56 asas B siap: 3,324,189 bar; jadi X00/H1 semua bar = 12.1%
+05:44:25 lengkap siap: 1870 peraturan masuk; X00 dipilih 374; henti H1=546 H2=391 H3=566 H4=367
+# bahagian B: tala
+05:55:37 benih A: ok 240 ralat 0
+05:56:16 semak ciri mentah lawan lapisan (i): 0 bar berbeza
+05:56:28 M73.2 [pilih]: 25 calon, 1307 sel; induk dataran +3.52 -> anak +4.84 (M73.2u4, ambang (30, 3, None, 20))
+05:56:29 M14.2 [pilih]: 25 calon, 1467 sel; induk dataran +3.35 -> anak +4.05 (M14.2u5, ambang (30, 5, None, 40))
+05:56:29 N16 [pilih]: 1 calon, 26 sel; induk dataran +4.00 -> anak +4.84 (N16, ambang (50, 5, None, 20))
+05:56:31 M159.1 [pilih]: 25 calon, 3020 sel; induk dataran +nan -> anak +4.77 (M159.1u4, ambang (3, 50, 80, 5))
+05:56:31 M94.1 [pilih]: 25 calon, 283 sel; induk dataran +2.13 -> anak +2.42 (M94.1u10, ambang (None, 20, None, 4))
+05:56:31 P09 [pilih]: 1 calon, 36 sel; induk dataran +3.01 -> anak +3.80 (P09, ambang (3, None, 70, 5))
+05:56:31 M79.2 [pilih]: 25 calon, 72 sel; induk dataran +2.35 -> anak +2.38 (M79.2u20, ambang (None, None, None, 4))
+05:56:31 N119 [pilih]: 1 calon, 94 sel; induk dataran +3.19 -> anak +3.43 (N119, ambang (None, 70, 95, 5))
+05:56:31 N29 [pilih]: 1 calon, 3 sel; induk dataran +1.79 -> anak +1.79 (N29, ambang (None, None, None, 4)) [induk kekal]
+05:56:32 M124.2 [pilih]: 25 calon, 63 sel; induk dataran +2.34 -> anak +2.54 (M124.2u13, ambang (None, 10, None, None))
+05:56:32 M73.1 [jumlah]: 25 calon, 439 sel; induk dataran +17.47 -> anak +17.49 (M73.1u15, ambang (20, None, None, 20))
+05:56:32 N119 [jumlah]: 1 calon, 48 sel; induk dataran +nan -> anak +13.65 (N119, ambang (7.5, 7, None, 5))
+05:56:32 N16 [jumlah]: 1 calon, 9 sel; induk dataran +13.93 -> anak +13.93 (N16, ambang (None, 5, None, 20))
+05:56:33 M105.2 [jumlah]: 25 calon, 171 sel; induk dataran +13.56 -> anak +16.87 (M105.2u22, ambang (None, 20, None, 40))
+05:56:33 M01.2 [jumlah]: 25 calon, 116 sel; induk dataran +6.67 -> anak +8.96 (M01.2u11, ambang (20, None, None, 40))
+05:56:33 P14 [jumlah]: 1 calon, 3 sel; induk dataran +13.10 -> anak +13.10 (P14, ambang (None, 5, None, None)) [induk kekal]
+05:56:33 M79.2 [jumlah]: 25 calon, 150 sel; induk dataran +9.22 -> anak +12.02 (M79.2u14, ambang (40, None, 40, None))
+05:56:33 N75 [jumlah]: 1 calon, 5 sel; induk dataran +7.79 -> anak +7.79 (N75, ambang (20, None, None, 30))
+05:56:33 N73 [jumlah]: 1 calon, 6 sel; induk dataran +6.15 -> anak +6.82 (N73, ambang (20, None, None, 20))
+05:56:34 M28.2 [jumlah]: 25 calon, 248 sel; induk dataran +10.95 -> anak +13.22 (M28.2u12, ambang (20, None, 50, None))
+05:56:54 benih B: 11 modul
+05:57:51 benih B: ok 11 ralat 0
+05:57:51 tala siap: 20 induk; 18 anak berbeza daripada induk

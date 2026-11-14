@@ -155,7 +155,7 @@ Bagi setiap kaedah, peraturan masuk terbaik (syarat sahaja **S**, dan dengan pra
 
 - Henti terpilih (dengan prasyarat): pilih: H1 56, H2 70, H3 87, H4 250; jumlah: H1 69, H2 66, H3 110, H4 217.
 - Peraturan keluar terpilih berbentuk "DAN" (dua indikator mesti menyala serentak, jadi jarang menjual): pilih: S 197, P 292 daripada 463; jumlah: S 228, P 239 daripada 462.
-- Median "jadi" tanpa keluar indikator (X00, henti sama): pilih: S 18.4 %, P 16.3 %; jumlah: S 24.4 %, P 17.6 %. Purata setiap dagangan (maklumat): pilih: S +0.26 %, P +0.11 %; jumlah: S +0.58 %, P +0.57 %.
+- Median jadi tanpa keluar indikator (X00, henti sama): pilih: S 18.4 %, P 16.3 %; jumlah: S 24.4 %, P 17.6 %. Purata setiap dagangan (maklumat): pilih: S +0.26 %, P +0.11 %; jumlah: S +0.58 %, P +0.57 %.
 
 ## 6. Padanan jenis setup × prasyarat (kumpulan B, tanpa penapis)
 

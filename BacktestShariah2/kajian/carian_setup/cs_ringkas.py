@@ -69,7 +69,7 @@ def tulis_pembahagian():
     d = os.path.join(HASIL, 'PRASYARAT')
     os.makedirs(d, exist_ok=True)
     t.to_csv(os.path.join(d, 'PEMBAHAGIAN_F.csv'), index=False)
-    kira = t[t.pusingan != 'CS05'].prasyarat_pasaran.value_counts()
+    kira = t[~t.pusingan.isin(['CS05', 'CS06'])].prasyarat_pasaran.value_counts()
     A = ['# Setup F: prasyarat (pasaran) lawan syarat (saham itu sendiri)', '', _status(), '',
          'Dijana `kajian/carian_setup/cs_ringkas.py` daripada `data/registry_F.csv` dan `jejak_f/kohort.json`. '
          '**Jangan sunting secara manual.**', '',
@@ -78,7 +78,8 @@ def tulis_pembahagian():
          'CS05 (pindaan (i)) menambah 33 prasyarat pasaran dan 15 prasyarat kumpulan/syarikat (`cs_lapis.py`). '
          'RS diletak di bawah syarat saham (dikira daripada harga saham itu, dipangkatkan lawan saham lain).', '',
          'Bilangan (CS01–CS04): ' + ' · '.join(f'{k} = {v}' for k, v in kira.items())
-         + f' (jumlah {int(kira.sum())}); CS05: {int((t.pusingan == "CS05").sum())} setup.', '',
+         + f' (jumlah {int(kira.sum())}); CS05: {int((t.pusingan == "CS05").sum())} setup; '
+         f'CS06: {int((t.pusingan == "CS06").sum())} setup.', '',
          '| ID | Pusingan | Prasyarat (pasaran) | Syarat saham: pencetus | Syarat saham: penapis | Henti | Keluar | Jejak hadapan |',
          '|---' * 8 + '|']
     for r in t.itertuples():

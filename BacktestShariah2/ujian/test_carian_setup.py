@@ -343,7 +343,7 @@ class TestRingkas(unittest.TestCase):
         import cs_ringkas
         t = cs_ringkas.pembahagian()
         self.assertEqual(t.id.tolist()[:3], ['F01', 'F02', 'F03'])
-        lama = t[t.pusingan != 'CS05']
+        lama = t[~t.pusingan.isin(['CS05', 'CS06'])]
         self.assertEqual(len(lama), 38)
         self.assertTrue(set(lama.prasyarat_pasaran) <= {'–', 'QQQ ON', 'QQQ OFF', 'SPY > SMA200'})
         self.assertEqual(int((t.jejak_hadapan == 'ya').sum()), 8)
@@ -530,7 +530,7 @@ class TestCS05(unittest.TestCase):
         self.assertEqual(list(reg.columns)[-2:], ['prasyarat', 'syarat'])
         self.assertTrue((reg.prasyarat != '').all() and (reg.syarat != '').all())
         self.assertEqual(reg.id.tolist(), [f'F{i:02d}' for i in range(1, len(reg) + 1)])
-        lama = reg[reg.pusingan != 'CS05']
+        lama = reg[~reg.pusingan.isin(['CS05', 'CS06'])]
         self.assertEqual(len(lama), 38)
         self.assertTrue(set(lama.prasyarat) <= {'tiada', 'QQQ ON', 'QQQ OFF', 'SPY > SMA200'})
         for t in reg[reg.pusingan == 'CS05'].itertuples():
@@ -552,12 +552,14 @@ class TestLengkap(unittest.TestCase):
         rng = np.random.default_rng(11)
         Rm = rng.normal(0, 0.12, (500, 37)).astype(np.float32)
         g = rng.integers(0, 9, 500)
-        TJ, TR = np.zeros((9, 37), np.uint16), np.zeros((9, 37), np.uint16)
-        lg.tambah_asas(Rm, g, TJ, TR)
+        m5 = rng.random(500) < 0.4
+        TJ, TR, TT = (np.zeros((9, 37), np.uint16) for _ in range(3))
+        lg.tambah_asas(Rm, g, m5, TJ, TR, TT)
         R64 = Rm.astype(np.float64)
         for x in range(9):
             np.testing.assert_array_equal(TJ[x], (R64[g == x] >= 0.10).sum(axis=0))
             np.testing.assert_array_equal(TR[x], (R64[g == x] <= -0.08).sum(axis=0))
+            np.testing.assert_array_equal(TT[x], (R64[(g == x) & m5] >= 0.10).sum(axis=0))      # pindaan (k): tangkap penuh
 
     def _pan(self, naik):
         N = 400
@@ -571,8 +573,10 @@ class TestLengkap(unittest.TestCase):
         N, e = 400, np.array([10, 20, 40, 70, 210, 240])           # 20 jatuh dalam pegangan 10 (X00: 20 sesi)
         X = np.zeros((N, 15), np.float32)
         X[40, 4] = 1                                                # satu saham berlabel lari
+        X[[10, 40], 0] = 1                                          # dua saham naik >= 5 % minggu pertama
         Tb = {'g': np.zeros(N, np.int32), 'ge': np.zeros(N, np.int32), 'n': np.array([50]),
               'TJ': np.full((1, lg.K), 10, np.uint16), 'TR': np.full((1, lg.K), 5, np.uint16),
+              'TT': np.full((1, lg.K), 4, np.uint16), 'TTe': np.full((1, lg.K), 0.05, np.float32),
               'TJe': np.full((1, lg.K), 0.3, np.float32), 'TRe': np.full((1, lg.K), 0.1, np.float32)}
         v = lg.nilai_l(self._pan(0.01), X, e, 0, Tb)                # naik 1 % sehari: tutup sesi 20 = +20.8 % - kos
         self.assertEqual((v[0]['n'], v[1]['n']), (3, 2))
@@ -582,6 +586,9 @@ class TestLengkap(unittest.TestCase):
         self.assertAlmostEqual(v[0]['a_k10'], 0.2)
         self.assertAlmostEqual(v[0]['a_rugi8'], 0.1)
         self.assertAlmostEqual(v[0]['e_k10'], 0.3, places=6)
+        self.assertAlmostEqual(v[0]['tp'], 2 / 3)                   # jadi DAN naik >= 5 % minggu pertama (bar 10 dan 40)
+        self.assertAlmostEqual(v[0]['a_tp'], 0.08)
+        self.assertAlmostEqual(v[0]['e_tp'], 0.05, places=6)
         v = lg.nilai_l(self._pan(0.0), X, e, 0, Tb)                 # harga rata: R = -kos; tidak jadi, tidak rugi8
         self.assertEqual((v[0]['k10'], v[0]['rugi8']), (0.0, 0.0))
         v = lg.nilai_l(self._pan(-0.01), X, e, 0, Tb)               # turun 1 % sehari: henti -8 % kena
@@ -599,6 +606,9 @@ class TestLengkap(unittest.TestCase):
         self.assertFalse(OP[r] == 1 and A1[r] == 0)                 # bukan X01 tunggal (jual awal)
         self.assertFalse(OP[r] == 2 and 0 in (A1[r], A2[r]))        # bukan pasangan ATAU yang mengandungi X01
         self.assertEqual(lg.pilih_lajur(pan, e[:150]), -1)          # era kedua tiada isyarat: tiada pilihan
+        m5 = np.ones(len(e), bool)
+        self.assertEqual(lg.pilih_lajur(pan, e, m5), c)             # semua naik minggu pertama: pilihan sama
+        self.assertGreaterEqual(lg.pilih_lajur(pan, e, ~m5), 0)     # tiada tangkap penuh langsung: masih pulang lajur sah
 
     def test_rekod_lengkap(self):
         d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS05')
@@ -616,6 +626,101 @@ class TestLengkap(unittest.TestCase):
         x = p.drop_duplicates('id').set_index('id')
         for r in cs5.itertuples():                                              # registry = setup lengkap pindaan (j)
             self.assertEqual(r.takrif, x.takrif[r.id])
+
+class TestCS06(unittest.TestCase):
+    """SPEC pindaan 14 Nov 2026 (k): sasaran tangkap penuh dan tala bersama prasyarat."""
+
+    def test_grid_prasyarat_dikunci(self):
+        import cs_lapis as lapis
+        kod = {x[:4]: x[5:] for x in lapis.PASARAN + lapis.KUMPULAN}
+        tetap = {'QA01', 'QA02', 'QA03', 'QA04', 'QB03', 'QG01', 'QG02', 'QG04', 'QH07', 'QH08', 'QH09', 'QF05'}
+        self.assertEqual(set(lapis.GRID_PRA), set(kod) - tetap)                 # 36 berambang + 12 tetap = 48
+        for k, (grid, asal, templat) in lapis.GRID_PRA.items():
+            self.assertIn(asal, grid, k)
+            self.assertEqual(grid, sorted(grid), k)
+            self.assertEqual(templat.format(f'{asal:g}'), kod[k], k)            # nilai pradaftar (i) menghasilkan teks asal
+        self.assertEqual(lapis.GRID_PRA['QF01'][0], [2, 3, 5, 7, 10])
+        self.assertEqual(lapis.GRID_PRA['QA06'][0], [5, 7.5, 10, 15, 20, 25])
+
+    def test_ftd_tempoh_aktif_boleh_tala(self):
+        import cs_lapis as lapis
+        lo = np.r_[np.full(300, 100.0), np.linspace(100, 85, 30), [85.5, 86, 86.5, 87, 89.5, 90, 91],
+                   92 + 0.01 * np.arange(40)]                                   # naik perlahan: tiada rendah 20 sesi baharu
+        cl, vol = lo + 0.5, np.ones(len(lo))
+        vol[334] = 2.0
+        for n in (10, 20, 30):
+            self.assertEqual(np.flatnonzero(lapis.ftd(lo, cl, vol, n)).tolist(), list(range(334, 334 + n)))
+
+    def test_dataran_n(self):
+        import cs_tala6 as t6
+        G = np.full((1, 1, 1, 1), 0.03)
+        self.assertEqual(t6.dataran_n(G)[0, 0, 0, 0], 0.03)                     # tiada paksi ditala: skor sel itu sendiri
+        G = np.array([0.01, 0.09, 0.02, np.nan, 0.05]).reshape(5, 1, 1, 1)
+        D = t6.dataran_n(G).ravel()
+        self.assertAlmostEqual(D[0], 0.05)                                      # median (0.01, 0.09)
+        self.assertAlmostEqual(D[1], 0.02)                                      # puncak 0.09 diratakan oleh jirannya
+        self.assertAlmostEqual(D[2], 0.055)                                     # jiran: 0.09, 0.02, nan -> median dua yang ada
+        self.assertTrue(np.isnan(D[3]))                                         # sel tanpa skor tidak mendapat markah
+        self.assertTrue(np.isnan(D[4]))                                         # hanya 1 daripada 2 sel kotak: kurang 2
+        G = np.full((3, 3, 1, 1), np.nan)
+        G[1, 1] = 0.2
+        G[0, 0] = 0.1
+        D = t6.dataran_n(G)[:, :, 0, 0]
+        self.assertTrue(np.isnan(D[1, 1]))                                      # tengah: 2 daripada 9 sel, kurang separuh kotak
+        self.assertAlmostEqual(D[0, 0], 0.15)                                   # penjuru: 2 daripada 4 sel kotaknya
+
+    def test_paksi_grid_dan_teks(self):
+        import collections
+
+        import cs_lapis as lapis
+        import cs_tala6 as t6
+        R = collections.namedtuple('R', 'q1 q2 f1 f2')
+        q1 = [x[:4] for x in lapis.PASARAN].index('QA08')
+        q2 = [x[:4] for x in lapis.KUMPULAN].index('QF01')
+        pk = t6.Paksi(R(q1, q2, 1, 19))                                         # F02 tutup > MA50 (tetap), F20 jatuh (berambang)
+        self.assertEqual(pk.bentuk, (5, 5, 1, 5))
+        self.assertEqual(tuple(g[i] for g, i in zip(pk.grid, pk.ii)), (10, 5, None, 30))
+        t = pk.teks((10, 5, None, 30))
+        self.assertEqual(t['prasyarat'], 'rejim ON baharu (<= 10 sesi) + earnings dalam 1-5 sesi akan datang')
+        self.assertEqual(t['syarat'], 'tutup > MA50 + >= 30% di bawah puncak 52 minggu')
+        t = pk.teks((20, 3, None, 40))
+        self.assertEqual((t['kod_pra'], t['kod_pen']), ('QA08@20+QF01@3', 'F02+F20@40'))
+        self.assertEqual(t['prasyarat'], 'rejim ON baharu (<= 20 sesi) + earnings dalam 1-3 sesi akan datang')
+        pk = t6.Paksi(R(-1, [x[:4] for x in lapis.KUMPULAN].index('QF05'), -1, -1))      # SUE > 0: tiada ambang
+        self.assertEqual(pk.bentuk, (1, 1, 1, 1))
+        self.assertEqual(pk.teks((None, None, None, None))['kod_pra'], 'QF05')
+
+    def test_istilah_dan_sasaran(self):
+        import cs_cs05 as c5
+        self.assertEqual((c5.S_PIAWAI, c5.R_PIAWAI), (3, 0))                    # pegang piawai: H4 + X00
+        self.assertIn(c5.SASARAN, ('lari', 'tp'))
+        self.assertEqual(c5.istilah('label «lari»'), 'label "lari"')
+
+    def test_rekod_cs06(self):
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS06')
+        with open(os.path.join(d, 'meta.json')) as f:
+            meta = json.load(f)
+        self.assertEqual((meta['pusingan'], meta['sasaran'], meta['masuk_dicuba']), ('CS06', 'tp', 103_088_000))
+        m = pd.read_csv(os.path.join(d, 'SEMUA_PENCETUS.csv'))
+        self.assertEqual(len(m), 500)
+        self.assertIn('pilih_P_tpp', m.columns)                                 # lajur sasaran dinamakan tpp, bukan lari
+        self.assertFalse([c for c in m.columns if 'lari' in c])
+        p = pd.read_csv(os.path.join(d, 'papan.csv'))
+        self.assertEqual(sorted(p.papan.unique()), ['jumlah', 'pilih'])
+        t = pd.read_csv(os.path.join(d, 'tala.csv'))
+        self.assertEqual(len(t), 20)
+        with open(os.path.join(d, 'tala_meta.json')) as f:
+            tm = json.load(f)
+        self.assertEqual(tm['induk'], 20)
+        self.assertEqual(tm['tala_menolong'], bool(tm['anak'] and tm['anak_menang_kedua'] > tm['anak'] / 2))
+        teks = open(os.path.join(d, 'LAPORAN.md'), encoding='utf-8').read()
+        self.assertNotRegex(teks, r'(?<!")\blari\b(?!")')                       # istilah ditukar; hanya label "lari" CS05 kekal
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str).fillna('')
+        self.assertEqual(reg[reg.pusingan == 'CS05'].id.tolist(), [f'F{i}' for i in range(39, 58)])
+        c6 = reg[reg.pusingan == 'CS06']
+        self.assertTrue((c6.status == 'BACKTEST').all())
+        self.assertTrue(c6.takrif.map(lambda x: len(x.split('|')) in (4, 5)).all())
+        self.assertTrue((c6.prasyarat != '').all() and (c6.syarat != '').all())
 
 
 if __name__ == '__main__':
