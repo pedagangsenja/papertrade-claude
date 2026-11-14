@@ -496,6 +496,36 @@ tangkap penuh dan 97 % sebaliknya. Maka pangkat (A) DIJANGKA hampir sama dengan 
 
 Keluaran `carian_setup/hasil/CS06/`; `kajian/CARIAN_SETUP.md` memaparkan pusingan terkini. Kaveat (i) dan (j) kekal.
 
+### Pindaan 14 Nov 2026 (l) — simulasi portfolio 10 slot bagi setup berprasyarat (sebelum dijalankan)
+
+Langkah backtest seterusnya yang dicadangkan kepada pengguna pada akhir CS06 (pengguna 14 Nov 2026: "boleh continue?").
+Soalan: hari isyarat setup berprasyarat berkelompok; **adakah satu akaun 10 slot sempat mengambil belian itu, dan adakah
+kadar tangkapnya kekal pada belian yang benar-benar diambil?** Tiada jejak hadapan. Kod `carian_setup/cs_portfolio6.py`.
+
+**Apa yang sudah dilihat:** semua hasil (i), (j), (k), termasuk taburan belian mengikut tahun dan kadar menang. Empat setup
+di bawah dinamakan kepada pengguna SEBELUM simulasi ini ditulis atau dijalankan; tiada hasil portfolio dilihat.
+
+- **Setup** (takrif `data/registry_F.csv`, dengan henti dan keluar masing-masing): `F39`, `F40`, `F58` (papan pilih; berdagang
+  setiap tahun) dan `F49` (papan jumlah). Gabungan: `PILIH3` = `F39` + `F40` + `F58`; `SEMUA4` = keempat-empatnya.
+- **Data:** kumpulan B, isyarat 2010-01-04 … 2026-08-28; mekanik §4 (kos 0.5 % pusingan).
+- **Portfolio** (seperti pindaan (c)): 10 slot × 10 % ekuiti; isyarat dibeli pada buka esok jika ada slot kosong dan saham
+  itu tidak sedang dipegang; slot kosong semula sehari selepas hari jual; lebih isyarat daripada slot → dipilih rawak;
+  pulangan harian = jumlah pulangan harian posisi ÷ 10; tunai 0 %. Pilihan rawak diulang **200 kali** (benih 20261113 + i);
+  dilaporkan median.
+- **Ukuran:** (1) bahagian isyarat yang sempat diambil, dagangan setahun, bahagian bulan tanpa belian; (2) pada dagangan
+  yang DIAMBIL: tangkap penuh (tutup sesi 5 ≥ `P` + 5 % DAN `R` ≥ +10 %), `jadi`, menang, `rugi8`, purata `R`; (3) akaun:
+  CAGR, MDD, pendedahan purata, **CAGR pada MDD −10 %** (pendedahan × min(1, 10 % ÷ |MDD|)), bilangan tahun kalendar
+  positif dan tahun terburuk; (4) K3 sahaja.
+- **Jalur rawak (kawalan):** setiap isyarat diganti dengan saham rawak yang layak pada hari yang sama dan tercile ATR %
+  yang sama, dengan henti dan keluar yang sama; portfolio yang sama; 200 cabutan. Dilaporkan median dan persentil ke-5/95
+  jalur, dan persentil kedudukan setup dalam jalur.
+- **Bacaan dikunci:** setup "menambah di peringkat akaun" hanya jika CAGR pada MDD −10 % positif DAN melebihi persentil
+  ke-95 jalur rawaknya. SPY beli-dan-pegang pada skala yang sama dipaparkan sebagai MAKLUMAT sahaja (kayu ukur pengguna
+  ialah kadar tangkap, bukan indeks; SPUS tiada sejarah sebelum Dis 2019).
+- Kaveat dikunci: tiada saham delist; set 2000 bukan tapisan Shariah; `QF01` memakai tarikh earnings sebenar; kumpulan B
+  sudah dilihat dalam (i)–(k); satu akaun 10 slot ialah satu cara membina portfolio, bukan satu-satunya.
+- Keluaran: `carian_setup/hasil/CS06/PORTFOLIO.md` dan `portfolio.csv`.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
