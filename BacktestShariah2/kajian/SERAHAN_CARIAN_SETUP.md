@@ -130,10 +130,7 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 
 **Diputuskan pengguna 14 Nov 2026 (selepas CS05):** JANGAN mula jejak hadapan bagi setup CS05; backtest mesti lengkap dan menepati matlamat §1 dahulu. Kohort 13 Nov (8 setup) tidak disentuh.
 
-**Menunggu keputusan pengguna:**
-1. Gabung branch CS05 ke `main` melalui PR?
-2. Tambah satu baris dalam `lejar.yml` supaya `jejak_f.yml` dicetus terus selepas Lejar yang didispatch penjaga (seperti `analisis.yml`)? Tanpanya jejak kohort 13 Nov boleh lewat beberapa jam.
-3. Langkah backtest seterusnya (pilihan Claude jika diserahkan): (a) tala parameter kaedah DENGAN prasyarat (CS04 hanya menala syarat sahaja); (b) carian masuk yang dipangkatkan terus ikut "tangkap penuh"/"jadi" dan bukan label lari; (c) simulasi portfolio berslot bagi setup berprasyarat. Setiap satu perlukan pindaan bertarikh dahulu.
+**Diputuskan pengguna 14 Nov 2026 ("ya untuk tiga-tiga"):** (1) sambung backtest dengan pusingan **CS06**: tala parameter bersama prasyarat, dan pangkat masuk terus ikut tangkap penuh (pindaan (k), §9a); (2) gabung kerja CS05 ke `main` melalui PR; (3) `lejar.yml` mencetus `jejak_f.yml` terus selepas larian Lejar yang didispatch penjaga (langkah akhir `lejar.yml`).
 
 **Tiada yang berkaitan wang sebenar berubah:** kad skor kekal satu-satunya keputusan.
 
