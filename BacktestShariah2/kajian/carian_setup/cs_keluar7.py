@@ -491,6 +491,8 @@ def kunci(kerja):
     XA = siri_set(kerja, 'B')
     out, t0 = {}, time.time()
     sj = S0['sejagat']
+    if os.environ.get('CS07_UJI'):                                  # uji kering laluan kod sahaja
+        S = S[:int(os.environ['CS07_UJI'])] + S[-2:]
     for s_ in S:
         i, ev = s_['id'], s_['ev']
         if i not in S0['setup'] or len(ev) < 30:

@@ -101,16 +101,32 @@ def main(kerja):
 
     baris, tangkap, langkau = [], {}, []
     for r in reg.itertuples():
-        if '@' in r.takrif or r.pusingan == 'CS04':
+        cs07 = r.pusingan == 'CS07'                                 # pindaan (n): pencetus dan keluar baharu, penilai sendiri
+        if not cs07 and ('@' in r.takrif or r.pusingan == 'CS04'):
             langkau.append(r.id)
             continue
-        d = p6.dari_takrif5(r.takrif)
-        if d['pencetus'] not in EV:
-            langkau.append(r.id)
-            continue
-        ev = EV[d['pencetus']]
-        e0 = ev[c5.topeng(pan, Lr, ev, d['q1'], d['q2'], d['f1'], d['f2'])]
-        R, sk = p6.hasil(pan, e0, d['lajur'])
+        if cs07:
+            import cs_cs07 as c7
+            import cs_keluar7 as k7
+            import cs_tala7 as t7
+            d = c7.dari_takrif7(r.takrif)
+            try:
+                ev = t7.ev_satu(kerja, 'B', d['pencetus'])
+            except (KeyError, FileNotFoundError):
+                langkau.append(r.id)
+                continue
+            e0 = ev[c5.topeng(pan, Lr, ev, d['q1'], d['q2'], d['f1'], d['f2'])]
+            St = k7.sedia_pan(pan, k7.siri_set(kerja, 'B'), e0)
+            R, sk = k7.hasil(*St[:7], k7.A1, k7.A2, k7.OP, d['s'], d['kol'])
+            R00 = k7.hasil(*St[:7], k7.A1, k7.A2, k7.OP, d['s'], 0)[0]
+        else:
+            d = p6.dari_takrif5(r.takrif)
+            if d['pencetus'] not in EV:
+                langkau.append(r.id)
+                continue
+            ev = EV[d['pencetus']]
+            e0 = ev[c5.topeng(pan, Lr, ev, d['q1'], d['q2'], d['f1'], d['f2'])]
+            R, sk = p6.hasil(pan, e0, d['lajur'])
         amb = teras.satu_posisi(e0, sk, pan['tid'])
         e, R = e0[amb], R[amb]
         if len(e) < 30:
@@ -118,12 +134,13 @@ def main(kerja):
             continue
         m5, trs = X[e, 0] > 0, Y[e, 1] > 0
         tp, tpd, ms = pan['tempoh'][e], pan['tarikh'][e], shariah[e]
-        pen, keluar = cs_ringkas.bahagi(r.penapis)[1], c5.kod_keluar(d['lajur'])
+        pen = cs_ringkas.bahagi(r.penapis)[1]
+        keluar = f"{c7.HENTI_KOD[d['s']]} · {k7.kod_peraturan(d['kol'])}" if cs07 else c5.kod_keluar(d['lajur'])
         b = {'id': r.id, 'pusingan': r.pusingan, 'prasyarat': r.prasyarat, 'pencetus': cs_ringkas.nama_pendek(r.masuk),
              'penapis': r.syarat if r.syarat else pen, 'keluar': keluar, 'jejak_hadapan': 'ya' if r.id in kohort else '',
              'belian': len(e), 'hari': int(len(np.unique(tpd))), 'm5': m5.mean(), 'a_m5': X[e, 5].mean(), 'm10': Y[e, 0].mean(),
              'a_m10': Y[e, 3].mean(), 'terus': trs.mean(), 'a_terus': Y[e, 4].mean(), 'tp': (m5 & (R >= lg.JADI)).mean(),
-             'a_tp': (Tb['TT'][g[e], d['lajur']] / ng[g[e]]).mean(), 'menang': (R > 0).mean(), 'rugi8': (R <= lg.RUGI).mean(),
+             'a_tp': np.nan if cs07 else (Tb['TT'][g[e], d['lajur']] / ng[g[e]]).mean(), 'menang': (R > 0).mean(), 'rugi8': (R <= lg.RUGI).mean(),
              'purata': R.mean(), 'belian_setahun': len(e) / n_tahun, 'tangkap_setahun': trs.sum() / n_tahun,
              'tahun_aktif': int(len(np.unique(tpd // 10000))), 'bulan_beli': len(np.unique(tpd // 100)) / n_bulan,
              'liputan': len(np.unique(ep[e[trs]])) / n_ep}
@@ -141,7 +158,8 @@ def main(kerja):
         # mutu pegang: antara belian yang naik lagi
         k = e[trs]
         b.update(R_pelari=float(R[trs].mean()) if len(k) else np.nan, puncak_pelari=float(Y[k, 2].mean()) if len(k) else np.nan,
-                 R_pelari_x00=float(p6.hasil(pan, k, (d['lajur'] // cari.NR) * cari.NR)[0].mean()) if len(k) else np.nan)
+                 R_pelari_x00=(float(R00[amb][trs].mean()) if cs07 else
+                               float(p6.hasil(pan, k, (d['lajur'] // cari.NR) * cari.NR)[0].mean())) if len(k) else np.nan)
         # saham Shariah (senarai semasa)
         b.update(n_shariah=int(ms.sum()), terus_shariah=float(trs[ms].mean()) if ms.sum() >= 30 else np.nan,
                  a_terus_shariah=float(Y[e[ms], 4].mean()) if ms.sum() >= 30 else np.nan,
