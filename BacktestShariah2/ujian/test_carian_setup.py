@@ -792,5 +792,68 @@ class TestPortfolio6(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(d, 'PORTFOLIO.md')))
 
 
+class TestAkhir(unittest.TestCase):
+    """SPEC pindaan 14 Nov 2026 (m): kedudukan akhir semua setup F lawan matlamat."""
+
+    def test_dikunci(self):
+        import cs_akhir as ak
+        self.assertEqual((ak.MIN_BELIAN, ak.MIN_TAHUN, ak.JARAK_EPISOD, ak.KUNCI), (300, 10, 5, ('K1', 'K2', 'K3')))
+
+    def test_label2(self):
+        import cs_akhir as ak
+        n = teras.TMAX + 2
+
+        def siri(c5, c20, rendah=None):
+            c = np.full(n, 100.0)
+            c[5:] = c5                                                          # bar beli = 1; sesi 5 = bar 5
+            c[teras.TMAX] = c20                                                 # sesi 20 = bar TMAX
+            o, lo = c.copy(), c.copy()
+            o[1] = 100.0
+            if rendah is not None:
+                lo[10] = rendah
+            return o, lo, c
+        ev = np.array([0])
+        for (c5, c20, rendah), (m10, terus) in {(106.0, 108.0, None): (0, 1),    # +6 % minggu 1, naik lagi
+                                                (111.0, 120.0, None): (1, 1),    # +11 % minggu 1, naik lagi
+                                                (106.0, 105.0, None): (0, 0),    # tidak naik lagi selepas minggu 1
+                                                (104.0, 130.0, None): (0, 0),    # minggu 1 < 5 %
+                                                (106.0, 108.0, 91.0): (0, 0)}.items():   # henti -8 % kena
+            o, lo, c = siri(c5, c20, rendah)
+            r = ak.label2(ev, o, lo, c)[0]
+            self.assertEqual((int(r[0]), int(r[1])), (m10, terus), (c5, c20, rendah))
+            self.assertAlmostEqual(float(r[2]), max(c5, c20) / 100.0 - 1, places=5)
+
+    def test_episod(self):
+        import cs_akhir as ak
+        lab = np.zeros(40, bool)
+        lab[[2, 3, 4, 8, 20, 38]] = True                                        # saham 1: bar 0-29; saham 2: bar 30-39
+        ep, k = ak.episod(lab, np.array([0, 30, 40]))
+        self.assertEqual(k, 3)                                                  # 2-8 digabung (jarak < 5), 20, 38
+        self.assertEqual(ep[[2, 3, 4, 8]].tolist(), [0, 0, 0, 0])
+        self.assertEqual((int(ep[20]), int(ep[38]), int(ep[5])), (1, 2, -1))
+        lab[:] = False
+        lab[[29, 30]] = True                                                    # bersebelahan tetapi saham berlainan
+        self.assertEqual(ak.episod(lab, np.array([0, 30, 40]))[1], 2)
+
+    def test_rekod_kedudukan(self):
+        import cs_akhir as ak
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil')
+        t = pd.read_csv(os.path.join(d, 'KEDUDUKAN_AKHIR.csv'))
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str)
+        mahu = [i for i, p in zip(reg.id, reg.pusingan) if p != 'CS04' and int(i[1:]) <= 69]
+        self.assertEqual(sorted(t.id), sorted(mahu))                            # F01-F30 dan F39-F69
+        self.assertEqual(t.kedudukan.tolist(), list(range(1, len(t) + 1)))
+        for r in t.itertuples():                                                # takrif "dipercayai" dikunci pindaan (m)
+            self.assertEqual(bool(r.dipercayai), bool(r.belian >= ak.MIN_BELIAN and r.tahun_aktif >= ak.MIN_TAHUN
+                                                      and min(r.kl_K1, r.kl_K2, r.kl_K3) > 0), r.id)
+            self.assertLessEqual(r.terus, r.m5 + 1e-9)                          # naik lagi sebahagian daripada naik >= 5 %
+            self.assertLessEqual(r.m10, r.m5 + 1e-9)
+        n = int(t.dipercayai.sum())
+        self.assertTrue(t.dipercayai[:n].all())                                 # dipercayai dahulu
+        for blok in (t[:n], t[n:]):                                             # kemudian ikut kadar naik lagi
+            self.assertTrue((np.diff(blok.terus) <= 1e-9).all())
+        self.assertTrue(os.path.exists(os.path.join(d, 'KEDUDUKAN_AKHIR.md')))
+
+
 if __name__ == '__main__':
     unittest.main()
