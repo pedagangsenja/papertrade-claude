@@ -620,3 +620,11 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - Direkod 1027 (338 saham; belian semula 130; fail claude_218.csv); dilangkau 9. Harga: buka sementara yfinance 09:40 NY.
 - Dilangkau: TSM M02: buka 394.62 <= henti 397.36; DAC M13: buka 151.10 <= henti 163.66; TCOM M14: buka 42.76 <= henti 43.10; IR M102: buka 84.42 <= henti 84.42; SSL M153: isyarat batal pada buka (peraturan kaedah); TDC M153: isyarat batal pada buka (peraturan kaedah); TS M153: isyarat batal pada buka (peraturan kaedah); PSX M153: isyarat batal pada buka (peraturan kaedah); COP M153: isyarat batal pada buka (peraturan kaedah).
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-14 14:23 MYT — GitHub Actions: kemas kini + imbas (sesi AS 2026-11-13)
+- Keluar baharu 529 (C {'isyarat': 382, 'henti': 111, 'masa': 25, 'sasaran': 9}, M {'isyarat': 2}); menunggu buka sesi seterusnya: 380.
+- Harga beli sementara dibetulkan kepada buka rasmi bar harian: 750 (beza > 0.5%: 505). Tidak dibeli baharu: WWW M08, SPB M35, COR M153, ACM M153.
+- Senarai beli 1076 baris (324 saham, 171 kaedah; 67 daripada watchlist; belian semula 146). Ditolak: {'dipegang': 2554, 'had': 9016, 'tidak_cair': 193, 'kelas_berganda': 52, 'ambil_alih': 261}.
+- Watchlist 547 (baharu 243, dibuang 177, ke senarai beli 67). Isyarat direkod: 13152 (data/isyarat/2026-11-13_malam.csv.gz).
+- Ralat kaedah: tiada. Nota: C KVUE M93: tiada bar 2026-11-13 (harga terkini 2026-10-30); C KVUE M74: tiada bar 2026-11-13 (harga terkini 2026-10-30); C KVUE M99: tiada bar 2026-11-13 (harga terkini 2026-10-30); C KVUE M124: tiada bar 2026-11-13 (harga terkini 2026-10-30); C KVUE M80: tiada bar 2026-11-13 (harga terkini 2026-10-30); C KVUE M141: tiada bar 2026-11-13 (harga terkini 2026-10-30); C KVUE M148: tiada bar 2026-11-13 (harga terkini 2026-10-30); C WFRD M33: tiada bar 2026-11-13 (harga terkini 2026-11-12).
+- Tiada order. Tiada wang sebenar.
