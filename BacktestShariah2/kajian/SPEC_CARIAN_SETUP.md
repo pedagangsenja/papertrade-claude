@@ -631,6 +631,12 @@ varian. Statistik keluar pada peringkat cari dan BACAAN "keluar menolong" dikira
 isyarat yang sama bagi keluar terpilih, `X00` dan keluar lama: perbandingan berpasangan); angka "satu posisi setiap saham"
 dilaporkan bersama sebagai angka praktikal. Syarat "tidak jual awal" pada peringkat sejagat dikira atas jumlah merentas setup.
 
+**Penjelasan (n)-2 (14 Nov 2026, sebelum hasil B larian penuh dilihat; diputuskan Claude di bawah serahan pengguna: "anda sendiri
+tahu kan matlamat kita?"):** kod F baharu didaftarkan HANYA bagi setup papan CS07 yang lulus takrif "dipercayai" pindaan (m)
+(belian ≥ 300, ≥ 10 tahun aktif, kelebihan `terus` > 0 dalam K1, K2 dan K3, dengan henti dan keluar terpilihnya). Setup papan
+yang tidak lulus direkod dalam laporan CS07 sahaja, tanpa kod F. Setup F lama (`F01`–`F87`) tidak diubah dan tidak dibuang.
+Sebab: pengguna bimbang senarai F bertambah dengan kod yang tidak berguna.
+
 **Kaveat dikunci:** kumpulan B sudah dilihat dalam CS02–CS06 dan (m) (bukan lagi tahanan bersih, hanya tidak dipakai untuk
 memilih); lebih banyak varian dicuba = skor A terbaik lebih melambung, jadi angka B dan K3 yang dibaca; tiada saham delist;
 tiga pusingan tala terdahulu (CS04, (j), CS06) tidak menunjukkan faedah luar sampel — pusingan ini mengukur semula dengan
