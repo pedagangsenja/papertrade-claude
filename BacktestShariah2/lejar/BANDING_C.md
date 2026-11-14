@@ -1,11 +1,11 @@
 # Banding Papertrade C dengan Lejar Penuh (fasa 1)
 
-Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-12. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
+Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-13. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
 
-- Posisi C (isyarat >= 2026-10-15): 20943; ada dalam lejar: 14364; tiada: 6579 {'isyarat ada, dipegang lejar': 6005, 'tiada isyarat dalam lejar': 19, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 545, 'saham tidak cair': 4}
-- Posisi lejar: 74596 (C hanya 20943; lejar 3.6×)
-- Harga beli berbeza > 0.5%: 52 daripada 14364
-- Status keluar sama: 14362 daripada 14364; berbeza: 2
+- Posisi C (isyarat >= 2026-10-15): 20939; ada dalam lejar: 14887; tiada: 6052 {'isyarat ada, dipegang lejar': 6005, 'tiada isyarat dalam lejar': 26, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 11, 'saham tidak cair': 4}
+- Posisi lejar: 76507 (C hanya 20939; lejar 3.7×)
+- Harga beli berbeza > 0.5%: 79 daripada 14887
+- Status keluar sama: 14884 daripada 14887; berbeza: 3
 
 ## Harga beli berbeza > 0.5%
 
@@ -58,11 +58,20 @@ Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir
 - N24X36 LFST 2026-10-30: C 13.6 / lejar 13.5 (+0.74%)
 - N75X17 AUGO 2026-10-30: C 67.62 / lejar 68.005 (-0.57%)
 - N07X36 LFST 2026-10-30: C 13.6 / lejar 13.5 (+0.74%)
-- M70 BSM 2026-10-15: C 14.75 / lejar 14.3902 (+2.50%)
-- M31 ARLP 2026-10-26: C 25.7769 / lejar 26.42 (-2.43%)
-- M34 BSM 2026-10-15: C 14.75 / lejar 14.3902 (+2.50%)
+- M32 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
+- M34 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
+- M49 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
+- M66 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
+- M90 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
+- M100 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
+- M105 WLKP 2026-11-02: C 21.2677 / lejar 21.74 (-2.17%)
+- N68X16 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
+- N68X36 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
+- N35X36 MKTW 2026-11-03: C 20.4881 / lejar 20.91 (-2.02%)
+- N80X36 MKTW 2026-11-03: C 20.4881 / lejar 20.91 (-2.02%)
 
 ## Status keluar berbeza
 
+- M81 KVUE 2026-10-29: C terbuka / lejar keluar 2026-10-30 delist
 - M100 ACA 2026-10-21: C terbuka / lejar keluar 2026-10-22 delist
 - M13 SBH 2026-10-15: C keluar 2026-10-19 / lejar keluar 2026-10-20 henti
