@@ -1095,6 +1095,20 @@ class TestCS08(unittest.TestCase):
         self.assertTrue((SK >= 1).all())                                        # tiada jualan pada hari beli
         self.assertTrue(((SK[:, :, 1:] < 3) == (SK[:, :, :1] < 3)).all())       # sebelum sesi ke-4 hanya henti rugi
 
+    def test_rekod_cs08(self):
+        import cs_trend8 as t8
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS08')
+        D = pd.read_csv(os.path.join(d, 'papan.csv'))
+        self.assertEqual(D.id.tolist(), [f'T{i:02d}' for i in range(1, 13)])
+        for r in D.itertuples():                                                # takrif Dipercayai-T dikunci pindaan (q)
+            self.assertEqual(bool(r.dipercayai), bool(r.n >= t8.MIN_BELIAN and r.tahun >= t8.MIN_TAHUN
+                                                      and min(r.kl_K1, r.kl_K2, r.kl_K3) > 0), r.id)
+            self.assertLessEqual(r.besar100, r.besar + 1e-9)
+            self.assertIn(r.henti, t8.HENTI)
+        self.assertGreaterEqual(int(D.dipercayai.sum()), len(D) / 2)            # bacaan dikunci: lorong trend ada kelebihan
+        self.assertLessEqual(int((D.tb_semua > D.tb_semua_x00).sum()), len(D) / 2)   # keluar TIDAK menolong
+        self.assertTrue(os.path.exists(os.path.join(d, 'LAPORAN.md')))
+
 
 if __name__ == '__main__':
     unittest.main()

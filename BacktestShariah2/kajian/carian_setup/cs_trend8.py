@@ -71,6 +71,12 @@ JENIS = np.asarray([a[1] for a in ATOM], np.int64)
 PAR = np.asarray([float(a[2].get('k', 0)) if a[1] else 0.0 for a in ATOM])
 BARIS = np.cumsum(JENIS == 0) - 1
 NKOL = 1 + NA * NG                                      # lajur 0 = X00; lajur 1 + atom * NG + aktif
+_T = [a[3] for a in ATOM]
+# keluar rujukan untuk laporan (maklumat, bukan pilihan): lajur X00 dan beberapa indikator "trend tamat" yang biasa
+RUJUKAN = [0] + [1 + _T.index(t) * NG for t in (
+    'tutup < MA50', 'dua tutup berturut < MA50', 'MA20 < MA50', 'tutup < rendah 20 hari', 'Supertrend(14, 4.0) turun',
+    'Chandelier 5.0xATR14 dari tutup tertinggi', 'Chandelier 8.0xATR14 dari tutup tertinggi',
+    'tutup < 80% tutup tertinggi sejak beli', 'tiada kemajuan (selepas 40 sesi, tutup < harga beli)')]
 
 
 def nama_keluar(kol):
@@ -391,10 +397,23 @@ def kunci(kerja):
                      kl=[float((L8[e[tp == j], 0] - V[e[tp == j], 1]).mean()) if (tp == j).any() else np.nan for j in range(3)],
                      nk=[int((tp == j).sum()) for j in range(3)],
                      tb_semua=float((R[:, ss, kk] >= TB).mean()))
-            if nama == 'pilih' and mxl >= 0:
-                m = e0[(pan['tid'][e0] == mxl) & (pan['tarikh'][e0] >= 20260301) & (pan['tarikh'][e0] <= 20260630)]
-                d['mxl'] = [(int(pan['tarikh'][x]), round(float(pan['o'][x + 1]), 2)) for x in m]
+            if nama == 'pilih' and mxl >= 0:                            # kes rujukan (maklumat): termasuk isyarat yang
+                ea = t7.ev_satu(kerja, 'B', b['pencetus'])                # tetingkap 126 sesinya belum lengkap
+                ea = ea[(pan['tid'][ea] == mxl) & (pan['tarikh'][ea] >= 20260301) & (pan['tarikh'][ea] <= 20260630)]
+                ea = ea[c5.topeng(pan, Lr, ea, b['q1'], b['q2'], b['f1'], b['f2'])]
+                d['mxl'] = [(int(pan['tarikh'][x]), round(float(pan['o'][x + 1]), 2)) for x in ea]
             r[nama] = d
+        ruj = {}                                                       # keluar rujukan (maklumat sahaja), henti 6xATR14
+        for kol in RUJUKAN:
+            Rr, sk = R[:, 4, kol].astype(np.float64), SK[:, 4, kol].astype(np.int64)
+            amb = teras.satu_posisi(e0, sk, pan['tid'])
+            e, Rr, sk = e0[amb], Rr[amb], sk[amb]
+            bs = L8[e, 0] > 0
+            ruj[kol] = dict(n=len(e), tb=float((Rr >= TB).mean()), menang=float((Rr > 0).mean()),
+                            rugi15=float((Rr <= -0.15).mean()), purata=float(Rr.mean()), median=float(np.median(Rr)),
+                            pegang=float(np.median(sk) + 1), R_besar=float(Rr[bs].mean()) if bs.any() else np.nan,
+                            puncak_besar=float(L8[e[bs], 2].mean()) if bs.any() else np.nan)
+        r['rujukan'] = ruj
         p_ = r['pilih']
         r['dipercayai'] = bool(p_['n'] >= MIN_BELIAN and p_['tahun'] >= MIN_TAHUN and all(x > 0 for x in p_['kl']))
         out['setup'][b['id']] = r
@@ -471,11 +490,19 @@ def lapor_(kerja):
           '| # | Henti | Keluar | A: tambahan "dijual ≥ +30 %" atas pegang sahaja (mata) |', '|---|---|---|---|']
     for j, ((s, kol), d) in enumerate(zip(KL['sejagat'], KL['D']), 1):
         A.append(f'| {j} | {HENTI[s]} | {nama_keluar(kol)} | {d * 100:+.2f} |')
-    ada = D[D.mxl != '']
+    A += ['', '## 4a. "Pegang sampai trend tamat": keluar rujukan (maklumat; purata 12 setup papan, kumpulan B, henti 6xATR14)', '',
+          '| Keluar | Dijual ≥ +30 % % | Menang % | Rugi ≥ 15 % % | Purata % | Median % | Pegang median (sesi) | Pada pelari besar: untung dapat / '
+          'puncak % |', '|---' * 8 + '|']
+    for kol in RUJUKAN:
+        v = pd.DataFrame([K['setup'][b['id']]['rujukan'][kol] for b in papan]).mean()
+        A.append(f"| {nama_keluar(kol)} | {p(v.tb)} | {p(v.menang, 0)} | {p(v.rugi15, 0)} | {p(v.purata, 1, True)} | "
+                 f"{p(v['median'], 1, True)} | {v.pegang:.0f} | {p(v.R_besar, 0, True)} / {p(v.puncak_besar, 0, True)} |")
+    ada = D[D.mxl.fillna('') != '']
     A += ['', '## 5. Kes rujukan pengguna: MXL (Mac–Jun 2026)', '',
           ('MXL berada dalam kumpulan B. Isyarat setup papan pada MXL (tarikh isyarat @ harga beli): ' + '; '.join(
               f"`{r.id}`: {r.mxl}" for r in ada.itertuples()) + '.') if len(ada) else
           'Tiada setup papan memberi isyarat pada MXL antara Mac dan Jun 2026 (atau MXL tiada dalam kumpulan B).',
+          'Isyarat selepas pertengahan April 2026 tidak masuk statistik (tetingkap 126 sesi belum lengkap) tetapi ditunjukkan di sini.',
           'Satu kes bukan bukti; ia hanya menunjukkan sama ada setup terbaik akan menangkap contoh yang pengguna ingat.', '',
           '## 6. Kaveat', '',
           '- Tiada saham delist: bagi pegang 6 bulan, bias ini LEBIH besar daripada lorong swing (saham yang gagal hilang).',
