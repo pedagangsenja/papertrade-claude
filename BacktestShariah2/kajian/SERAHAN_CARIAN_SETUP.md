@@ -146,9 +146,11 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 
 **Pelajaran (14 Nov 2026, kali kedua):** selepas portfolio, Claude menulis "backtest sudah lengkap"; pengguna menjawab "anda pasti ke sudah lengkap semua proses kita? cuba baca balik matlamat saya". Semakan baris demi baris menemui enam perkara belum diukur (§9c). **Jangan isytihar lengkap sebelum setiap frasa matlamat §1 dipadankan dengan satu lajur yang benar-benar diukur.**
 
+**Diputuskan pengguna 14 Nov 2026 ("ya") dan SUDAH dilaksanakan:** CS06, kadar menang, portfolio dan kedudukan akhir digabung ke `main` (PR #49). Pengguna juga bersetuju mencuba data saham delist sebelum papertrade; sumber percuma sedia ada tidak mencukupi (§9d).
+
 **Menunggu keputusan pengguna:**
-1. Gabung hasil CS06, kadar menang, portfolio (pindaan (l)) dan kedudukan akhir (pindaan (m)) ke `main` melalui PR? (Kelulusan PR pengguna setakat ini meliputi CS05.)
-2. Langkah backtest yang tinggal ialah data saham delist (§9c "belum dibuat"); selepas itu barulah peringkat papertrade. Pilihan lama selepas portfolio (§9b): (a) mula jejak hadapan maya bagi kohort kecil (`F40`, `F58`, `F49`) untuk menguji kadar tangkap pada data langsung, selepas kalendar earnings dibina dalam penjejak; atau (b) berhenti di sini dan tunggu kohort 13 Nov matang. Pengguna melarang jejak hadapan sehingga membenarkannya.
+1. Sumber data saham delist (§9d): Tiingo percuma (sampel), data berbayar sebulan (lengkap), atau terima kaveat.
+2. Selepas itu barulah peringkat papertrade. Pilihan lama selepas portfolio (§9b): (a) mula jejak hadapan maya bagi kohort kecil (`F40`, `F58`, `F49`) untuk menguji kadar tangkap pada data langsung, selepas kalendar earnings dibina dalam penjejak; atau (b) berhenti di sini dan tunggu kohort 13 Nov matang. Pengguna melarang jejak hadapan sehingga membenarkannya.
 
 **Tiada yang berkaitan wang sebenar berubah:** kad skor kekal satu-satunya keputusan.
 
@@ -264,6 +266,22 @@ Pradaftar dikomit sebelum dijalankan (takrif "dipercayai" dan susunan dikunci di
 - Tidak dipercayai kerana bergantung pada beberapa tahun: `F62` (5 tahun aktif), `F57` (6), `F64`/`F67` (7), `F55`/`F69` (8); `F49` gagal dalam satu tempoh (−0.5 mata).
 
 **Belum dibuat (jujur):** (1) data saham delist — semua kadar condong ke atas; (2) peringkat papertrade bagi setup baharu (pengguna melarang sehingga membenarkannya; memerlukan kalendar earnings harian dalam penjejak); (3) carian automatik berkala; (4) senarai Shariah titik-masa; (5) anak tala (`F31`–`F38`, `F70`–`F87`) tidak dinilai dalam kedudukan ini.
+
+## 9d. Data saham delist: semakan sumber (14 Nov 2026) — BELUM ada data, belum ada ujian
+
+Pengguna bersetuju ("ya") mencuba data saham delist dan menguji semula setup dipercayai. Semakan sumber dari sesi awan (jangan ulang):
+
+| Sumber | Dapatan |
+|---|---|
+| Yahoo (`yfinance`, sumber A02) | Tiada sejarah saham delist (24 ticker diuji: "Not Found"; `BBBY`, `EMC` ialah ticker diguna semula). |
+| Connector FMP | Ada senarai delist dan harga, tetapi pelan pengguna ialah pelan asas: hanya simbol tertentu (`TWTR` lulus; `LNKD`, `SIVB` ditolak "requires a higher plan"); harga dilaras dividen, tidak dilaras split dan kalendar earnings turut ditolak. |
+| Connector Alpha Vantage | `LISTING_STATUS state=delisted` memberi 9,638 simbol (7,594 saham); `TIME_SERIES_DAILY` memberi harga MENTAH saham delist (`LNKD` diuji; bar akhir volum 0 perlu dibuang). Tetapi kunci percuma = 25 panggilan sehari dan `TIME_SERIES_DAILY_ADJUSTED` (split/dividen) ialah premium. |
+| Rangkaian sesi | Senarai hos terhad (Yahoo, SEC, OpenFIGI); hos baharu perlu kelulusan pengguna. |
+
+- **Populasi dibekukan:** `hasil/DELIST/populasi_av_20261114.csv` = 3,294 saham biasa (NYSE/NASDAQ/AMEX, simbol 1–4 huruf) yang delist sejak 2010 dengan hayat ≥ 2 tahun dalam tetingkap. Liputan senarai nipis bagi 2010–2012.
+- **Teknik berguna:** hasil connector yang besar disimpan terus ke fail (`tool-results/`), tidak masuk konteks; Alpha Vantage menerima `return_full_data=true`. Hasil kecil masuk konteks sepenuhnya (mahal).
+- **Pilihan yang dikemukakan kepada pengguna:** (A) Tiingo percuma: token melalui borang selamat (pengepala `Authorization: Token`), had 500 simbol sebulan dan 50 panggilan sejam → sampel ~450 saham, harga sahaja (setup earnings TIDAK boleh diuji); belum disahkan sehingga token ada. (B) Data berbayar sebulan (cth. FMP pelan bersejarah 15+ tahun; kunci melalui pengepala `apikey`): semua saham + tarikh earnings. (C) Terima kaveat.
+- **Rangka reka bentuk (BELUM dipradaftar; tulis pindaan (n) SEBELUM memuat turun harga):** sampel rawak berbenih berstrata ikut tahun delist; syarat layak seperti universe A02 (tutup mentah > $10, median nilai dagangan 60 hari ≥ $1 juta, ≥ 252 bar); isyarat dalam 20 bar terakhir DIKEKALKAN dengan posisi ditutup pada tutup akhir, serta kepekaan "paling teruk" (−100 % bagi delist jenis gagal); RS dipangkatkan lawan rentas kumpulan B hari yang sama; ukur `terus`, tangkap penuh, rugi ≥ 8 % pada saham delist lawan kumpulan B, dan anggaran universe gabungan berwajaran; bacaan dikunci = setup "bertahan" jika kelebihan `terus` gabungan > 0 dalam K1, K2 dan K3.
 
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 
