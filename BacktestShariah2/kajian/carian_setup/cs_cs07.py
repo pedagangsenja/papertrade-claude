@@ -113,8 +113,8 @@ def daftar(kerja):
                     param=json.dumps({a: (round(x, 6) if isinstance(x, float) else x) for a, x in P.items()}, sort_keys=True)
                     if P else '', masuk=t7.nama7(b['pencetus'], param), penapis=c5.tk_pen(b['f1'], b['f2']),
                     henti=f'{HENTI_KOD[s]} {k7.HENTI[s]}', keluar=k7.nama_peraturan(kol), skor_tepat=f"{b['skor']:.5f}",
-                    status='BACKTEST', prasyarat=c5.tk_pra(b['q1'], b['q2']),
-                    syarat=c5.tk_pen(b['f1'], b['f2']).replace(' DAN ', ' + '))
+                    status='BACKTEST', prasyarat=c5.buang_kod(c5.tk_pra(b['q1'], b['q2'])).replace(' DAN ', ' + '),
+                    syarat=c5.buang_kod(c5.tk_pen(b['f1'], b['f2'])).replace(' DAN ', ' + '))
         for j, t in enumerate(('K1', 'K2', 'K3')):
             v = m[('satu', j)]
             baru[f'n_{t}'] = str(v['n'])

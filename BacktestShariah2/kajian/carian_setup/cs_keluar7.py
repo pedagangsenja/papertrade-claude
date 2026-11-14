@@ -487,7 +487,7 @@ def _ukur(pan, ev, R, sk, LAB):
 
 def kunci(kerja):
     """Peringkat semak pada kumpulan B: keluar terpilih, X00 henti sama, keluar lama, sejagat #1. -> cs07_keluar_kunci.pkl"""
-    import cs_portfolio6 as p6
+    import cs_pegang as pg
     S0 = pickle.load(open(os.path.join(kerja, 'cs07_keluar_pilih.pkl'), 'rb'))
     pan, S = senarai_setup(kerja, 'B')
     XA = siri_set(kerja, 'B')
@@ -505,9 +505,8 @@ def kunci(kerja):
         s, kol = S0['setup'][i]['pilih']
         r = {'pilih': _ukur(pan, ev, *h(s, kol), LAB), 'x00': _ukur(pan, ev, *h(s, 0), LAB),
              'sejagat1': _ukur(pan, ev, *h(*sj[0]), LAB), 'x00_sejagat1': _ukur(pan, ev, *h(sj[0][0], 0), LAB)}
-        if s_['lajur_lama'] is not None:
-            Rl, skl = p6.hasil(pan, ev, s_['lajur_lama'])
-            r['lama'] = _ukur(pan, ev, Rl, skl.astype(np.int64), LAB)
+        if s_['lajur_lama'] is not None:                              # keluar lama di bawah pegang minimum yang sama (pindaan (p))
+            r['lama'] = _ukur(pan, ev, *h(*pg.lama_ke_baharu(s_['lajur_lama'])), LAB)
         r['sejagat'] = [(_ukur(pan, ev, *h(a, b), LAB)[('semua', -1)], _ukur(pan, ev, *h(a, 0), LAB)[('semua', -1)])
                         for a, b in sj]
         out[i] = r

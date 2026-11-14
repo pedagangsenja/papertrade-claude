@@ -361,7 +361,7 @@ class TestRingkas(unittest.TestCase):
         import cs_ringkas
         t = cs_ringkas.pembahagian()
         self.assertEqual(t.id.tolist()[:3], ['F01', 'F02', 'F03'])
-        lama = t[~t.pusingan.isin(['CS05', 'CS06'])]
+        lama = t[~t.pusingan.isin(['CS05', 'CS06', 'CS07'])]
         self.assertEqual(len(lama), 38)
         self.assertTrue(set(lama.prasyarat_pasaran) <= {'–', 'QQQ ON', 'QQQ OFF', 'SPY > SMA200'})
         self.assertEqual(int((t.jejak_hadapan == 'ya').sum()), 8)
@@ -548,7 +548,7 @@ class TestCS05(unittest.TestCase):
         self.assertEqual(list(reg.columns)[-6:], ['prasyarat', 'syarat', 'menang_K1', 'menang_K2', 'menang_K3', 'menang'])
         self.assertTrue((reg.prasyarat != '').all() and (reg.syarat != '').all())
         self.assertEqual(reg.id.tolist(), [f'F{i:02d}' for i in range(1, len(reg) + 1)])
-        lama = reg[~reg.pusingan.isin(['CS05', 'CS06'])]
+        lama = reg[~reg.pusingan.isin(['CS05', 'CS06', 'CS07'])]
         self.assertEqual(len(lama), 38)
         self.assertTrue(set(lama.prasyarat) <= {'tiada', 'QQQ ON', 'QQQ OFF', 'SPY > SMA200'})
         for t in reg[reg.pusingan == 'CS05'].itertuples():
@@ -858,8 +858,11 @@ class TestAkhir(unittest.TestCase):
         d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil')
         t = pd.read_csv(os.path.join(d, 'KEDUDUKAN_AKHIR.csv'))
         reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str)
-        mahu = [i for i, p in zip(reg.id, reg.pusingan) if p != 'CS04' and int(i[1:]) <= 69]
-        self.assertEqual(sorted(t.id), sorted(mahu))                            # F01-F30 dan F39-F69
+        mahu = [i for i, p in zip(reg.id, reg.pusingan) if p == 'CS07' or (p != 'CS04' and int(i[1:]) <= 69)]
+        self.assertEqual(sorted(t.id), sorted(mahu))                            # F01-F30, F39-F69 dan setup CS07
+        self.assertTrue(t[t.pusingan == 'CS07'].dipercayai.all())               # penjelasan (n)-2: hanya yang dipercayai didaftarkan
+        self.assertTrue(t.jual_awal.between(0, 0.5).all())                      # pindaan (p): lajur jualan sebelum sesi ke-4 (henti rugi)
+        self.assertLess(float(t[t.dipercayai].jual_awal.median()), 0.05)
         self.assertEqual(t.kedudukan.tolist(), list(range(1, len(t) + 1)))
         for r in t.itertuples():                                                # takrif "dipercayai" dikunci pindaan (m)
             self.assertEqual(bool(r.dipercayai), bool(r.belian >= ak.MIN_BELIAN and r.tahun_aktif >= ak.MIN_TAHUN
@@ -982,6 +985,31 @@ class TestCS07(unittest.TestCase):
             self.assertTrue(((henti[awal] == sk[awal]) | S[4][awal, 5]).all())  # jualan awal hanya kerana henti rugi
             self.assertTrue((sk >= np.minimum(sk1, 3)).all())                   # tidak pernah lebih awal daripada enjin lama
             self.assertTrue((sk[~awal] >= 3).all())
+
+    def test_rekod_cs07(self):
+        import cs_cs07 as c7
+        import cs_keluar7 as k7
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS07')
+        P = pd.read_csv(os.path.join(d, 'tala_masuk.csv'))
+        pas = P[P.ibu.notna() & ~P.sama & P.kl_anak.notna() & P.kl_ibu.notna()]
+        self.assertGreater(len(pas), 100)
+        self.assertGreater(int((pas.kl_anak > pas.kl_ibu).sum()), len(pas) / 2)  # bacaan dikunci (n)(a): tala menolong
+        self.assertGreater(float((pas.kl3_anak - pas.kl3_ibu).median()), 0)
+        K = pd.read_csv(os.path.join(d, 'keluar.csv'))
+        L = K[K.tp_lama.notna()]
+        menolong = int(((L.tp_pilih > L.tp_x00) & (L.tp_pilih > L.tp_lama)).sum())
+        self.assertLessEqual(menolong, len(L) / 2)                              # bacaan dikunci (n)(b): keluar TIDAK menolong
+        self.assertTrue(set(K.henti) <= set(k7.HENTI))
+        pb = pd.read_csv(os.path.join(d, 'papan_masuk.csv'))
+        self.assertLessEqual(len(pb), 12)
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str).fillna('')
+        r7 = reg[reg.pusingan == 'CS07']
+        self.assertEqual(len(r7), 8)
+        self.assertEqual(r7.id.tolist(), [f'F{n}' for n in range(88, 96)])
+        for tk in r7.takrif:                                                    # takrif CS07 boleh dihurai dan dijana semula
+            x = c7.dari_takrif7(tk)
+            self.assertEqual(c7.takrif7(x['pencetus'], x['q1'], x['q2'], x['f1'], x['f2'], x['s'], x['kol']), tk)
+        self.assertEqual(reg.id.tolist()[:87], [f'F{n:02d}' for n in range(1, 88)])   # F lama kekal
 
     def test_mesin_kelompok_tetap(self):
         import cs_mesin as ms
