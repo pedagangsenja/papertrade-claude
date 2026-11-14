@@ -626,6 +626,11 @@ setup ke papertrade dan tidak menyentuh Lejar, kad skor atau kohort jejak F.
 **Pendaftaran:** setup lengkap terbaik CS07 (masuk (a) + henti/keluar (b)) didaftarkan `F88` dan seterusnya (pusingan `CS07`,
 status `BACKTEST`). Kedudukan akhir dijana semula dengan takrif "dipercayai" (m) yang sama.
 
+**Penjelasan (n)-1 (14 Nov 2026, ditulis sebelum mana-mana hasil B bagi CS07 dilihat):** grid keluarga K menghasilkan 656
+varian. Statistik keluar pada peringkat cari dan BACAAN "keluar menolong" dikira atas SEMUA isyarat masuk setup itu (set
+isyarat yang sama bagi keluar terpilih, `X00` dan keluar lama: perbandingan berpasangan); angka "satu posisi setiap saham"
+dilaporkan bersama sebagai angka praktikal. Syarat "tidak jual awal" pada peringkat sejagat dikira atas jumlah merentas setup.
+
 **Kaveat dikunci:** kumpulan B sudah dilihat dalam CS02–CS06 dan (m) (bukan lagi tahanan bersih, hanya tidak dipakai untuk
 memilih); lebih banyak varian dicuba = skor A terbaik lebih melambung, jadi angka B dan K3 yang dibaca; tiada saham delist;
 tiga pusingan tala terdahulu (CS04, (j), CS06) tidak menunjukkan faedah luar sampel — pusingan ini mengukur semula dengan
