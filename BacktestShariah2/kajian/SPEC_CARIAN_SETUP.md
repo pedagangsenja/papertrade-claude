@@ -674,6 +674,38 @@ setup dipercayai), hampir semuanya henti rugi; tiga mekanik memberi angka yang h
   penjejak hadapan kohort F (`cs_hadapan.py`) memakai peraturan yang sama (belum ada posisi ditutup; kohort tidak berubah).
 - Mesin (c) tidak terkesan: ia menskor masuk sahaja.
 
+### Pindaan 14 Nov 2026 (q) — pusingan CS08: LORONG KEDUA "beli selepas pengesahan uptrend, pegang sampai trend tamat" (sebelum dijalankan)
+
+Permintaan pengguna 14 Nov 2026 (kes MXL): "beli di tengah atau lewat sedikit dari start uptrend ... tunggu confirmation untuk
+big uptrend, then baru beli, then continue hold sampai habis trend". Ini lorong BERASINGAN daripada swing ≤ 20 sesi: syarat
+wajib "swing ≤ 20 sesi" TIDAK terpakai di sini; semua syarat lain kekal (henti rugi wajib, tiada jual hari beli, pegang
+minimum 3 sesi (p), tiada sasaran untung tetap, keluar ikut indikator, backtest dahulu). Kod `carian_setup/cs_trend8.py`;
+keluaran `hasil/CS08/`. Tiada jejak hadapan, tiada order.
+
+- **Had pegang:** 126 sesi (≈ 6 bulan). Isyarat hanya dikira jika tetingkap 126 sesi lengkap dalam data.
+- **Label masuk (bebas daripada keluar):** `besar` = tutup mencapai ≥ P + 50 % dalam 126 sesi SEBELUM mana-mana tutup
+  ≤ P − 15 % (P = harga beli pada buka esok). Dilaporkan bersama: `besar100` (≥ +100 % sebelum −15 %) dan puncak tutup.
+- **Kayu ukur:** kadar tangkap `besar` lawan saham rawak hari sama × tercile ATR % ("pilih"); skor = min dua era carian
+  bagi [kelebihan − 2 ralat piawai], n ≥ 100 setiap era; carian pada kumpulan A, laporan pada kumpulan B (K1, K2, K3).
+- **Ruang masuk:** SEMUA pencetus sedia ada (500 asal + 656 varian keluarga K + varian kaedah M CS07) × [0–1 prasyarat
+  pasaran] × [0–1 prasyarat syarikat] × [0–2 penapis saham] — enjin (i). Pengesahan uptrend (pecah puncak 52 minggu, pecah
+  tinggi + volum, gap, templat Minervini, Supertrend, ADX, RS) sudah berada dalam ruang ini; carian yang menentukan mana yang
+  benar-benar mendahului pelari besar.
+- **Papan:** 12 setup teratas ikut skor A (maks 2 setiap induk, 3 setiap pasangan prasyarat), ID `T01`–`T12` (lorong trend;
+  BUKAN kod F). "Dipercayai-T" = belian B ≥ 200, ≥ 8 tahun aktif, kelebihan `besar` > 0 dalam K1, K2 DAN K3.
+- **Keluar (trend tamat):** 38 atom (tutup < MA20/50/100; dua tutup < MA20/50; MA20 < MA50; MA50 menurun; EMA20/50;
+  Supertrend; tutup < rendah 10/20/50 hari; MACD perlahan; RSI14 < 40/45/50; Chandelier 3–8 × ATR14; ekor 70–90 % tutup
+  tertinggi; tiada kemajuan selepas 20/40 sesi) × syarat aktif {sentiasa, selepas +10 %, selepas +20 %} × henti {−10 %,
+  −15 %, −20 %, 4×ATR14, 6×ATR14, min(−15 %, 5×ATR14)}, serta `X00` (henti + 126 sesi). Ukuran `tb` = dijual dengan untung
+  ≥ +30 %. Pilihan dua peringkat pada A seperti (n)(b): 10 keluar sejagat teratas (purata merentas setup papan bagi min dua
+  era [tb − tb `X00` henti sama]), kemudian setiap setup memilih antara `X00` dan 10 itu ikut min dua era tb.
+- **Bacaan dikunci:** lorong trend "ada kelebihan" jika sekurang-kurangnya separuh setup papan Dipercayai-T; keluar
+  "menolong" jika pada B tb keluar terpilih > tb `X00` (henti sama) bagi lebih separuh setup papan.
+- Dilaporkan bagi setiap setup: belian setahun; daripada 100 belian berapa `besar` / `besar100` (rawak); dijual ≥ +30 %;
+  menang; rugi ≥ 15 %; purata; sesi pegang; dan sama ada isyarat April 2026 MXL termasuk (kes rujukan pengguna, maklumat).
+- **Kaveat dikunci:** tiada saham delist — bagi pegang 6 bulan biasnya LEBIH besar daripada lorong swing; K3 pendek
+  (tetingkap 126 sesi berakhir ~April 2026); kumpulan B sudah dilihat untuk label lain; satu kes (MXL) bukan bukti.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
