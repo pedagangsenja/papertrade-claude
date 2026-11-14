@@ -8,3 +8,7 @@ masa,ticker,nisbah,bar,serak,keputusan,sumber
 2026-11-07 10:28 UTC,BSM,0.97561,391,0.0,faktor,dividen_khas 2026-11-06 (yfinance dividen)
 2026-11-10 10:04 UTC,HCC,0.976233,392,0.0,faktor,dividen_khas 2026-11-09 (yfinance dividen)
 2026-11-14 06:22 UTC,WFRD,1.0,0,0.0,kuarantin,mula 2026-11-02: direktori Nasdaq tukar_nama 2026-11-13 dalam tetingkap bar baharu 20261102..20261113; bar stor tidak ditimpa
+2026-11-14 09:53 UTC,MKTW,0.979821,396,0.0,faktor,dividen_khas 2026-11-13 (yfinance dividen)
+2026-11-14 09:53 UTC,TXO,0.968594,396,0.0,faktor,dividen_khas 2026-11-13 (yfinance dividen)
+2026-11-14 09:53 UTC,WLKP,0.978275,396,0.0,faktor,dividen_khas 2026-11-13 (yfinance dividen)
+2026-11-14 09:53 UTC,WFRD,1.0,40,0.0,lepas,"kuarantin 2026-11-02: sejarah segar konsisten dengan bar stor dipercayai (< 2026-11-02): nisbah 1, serak 0.0000, 40 bar; bar >= 2026-11-02 diganti"

@@ -1,11 +1,11 @@
 {
  "terkini": {
-  "dijana": "2026-11-14 06:22 UTC",
+  "dijana": "2026-11-14 09:53 UTC",
   "sesi": 20261113,
   "bil_ticker": 929,
   "bil_universe": 932,
   "tiada_data": [
-   "AGCO",
+   "ADBE",
    "BLFS",
    "QRVO"
   ],
@@ -17,17 +17,19 @@
    "RAMP"
   ],
   "bil_tiada_bar_sesi": 5,
-  "dividen_baharu": 6
+  "dividen_baharu": 0
  },
  "sejarah": {
-  "dijana": "2026-11-13 22:22 UTC",
-  "bil_ticker": 1,
+  "dijana": "2026-11-14 09:53 UTC",
+  "bil_ticker": 2,
   "diminta": [
-   "SUPN"
+   "SUPN",
+   "WFRD"
   ],
   "tiada_data": [],
   "kuarantin": [
-   "SUPN"
+   "SUPN",
+   "WFRD"
   ]
  }
 }

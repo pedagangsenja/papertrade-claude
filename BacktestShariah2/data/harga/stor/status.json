@@ -1,16 +1,16 @@
 {
- "dikemaskini": "2026-11-14 06:22 UTC",
+ "dikemaskini": "2026-11-14 09:53 UTC",
  "bar_terakhir": 20261113,
  "laras": {
-  "HCC": 1.024345,
-  "SUPN": 0.86843
+  "HCC": 1.012173,
+  "SUPN": 0.86843,
+  "WFRD": 1.008446
  },
  "perlu_sejarah": [
-  "SUPN",
-  "WFRD"
+  "SUPN"
  ],
  "harga_A.csv": {
-  "ticker_dikemaskini": 429,
+  "ticker_dikemaskini": 428,
   "bar_terakhir": 20261113
  },
  "harga_B.csv": {
@@ -22,25 +22,20 @@
   "bar_terakhir": 20261113
  },
  "kuarantin": {
-  "baru": [
+  "baru": [],
+  "dilepaskan": [
    [
     "WFRD",
-    "2026-11-02",
-    "direktori Nasdaq tukar_nama 2026-11-13 dalam tetingkap bar baharu 20261102..20261113; bar stor tidak ditimpa"
+    "2026-11-02"
    ]
   ],
-  "dilepaskan": [],
   "kekal_beku": {
    "INDV": "sejarah segar bertindih 1 bar < 20 sebelum 2026-11-03",
    "SUPN": "tidak konsisten: nisbah segar/stor 1.0706, serak 8.42% > 2%"
   }
  },
- "log_laras": 1,
- "faktor_dividen": [
-  "MKTW 2026-11-13 D=0.45 P=22.3 (2.0%)",
-  "TXO 2026-11-13 D=0.44 P=14.01 (3.1%)",
-  "WLKP 2026-11-13 D=0.471 P=21.68 (2.2%)"
- ],
+ "log_laras": 4,
+ "faktor_dividen": [],
  "faktor_calon": [],
- "moomoo": 1
+ "moomoo": 15
 }
