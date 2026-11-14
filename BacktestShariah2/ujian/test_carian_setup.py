@@ -245,10 +245,28 @@ class TestHadapan(unittest.TestCase):
         for s, r in [(0, 0), (1, 5), (2, 18), (3, 19), (0, 20), (1, 300), (2, 400), (3, NR - 1)]:
             R, hp, sk = teras.hasil_satu(ev, p['o'], p['h'], p['l'], p['c'], p['atr'], p['X'], JENIS, PAR, A1, A2, OP, s, r)
             for k, i in enumerate(ev):
-                x = self.H.simulasi(p, int(i), s, r)
+                x = self.H.simulasi(p, int(i), s, r, pegang_min=1)              # tanpa pegang minimum = enjin lama
                 self.assertEqual(x['status'], 'TUTUP')
                 self.assertAlmostEqual(x['R'], R[k], places=10, msg=(s, r, i))
                 self.assertEqual((x['sesi'], x['bar_keluar']), (hp[k], i + 1 + sk[k]), (s, r, i))
+
+    def test_pegang_minimum_penjejak(self):
+        """Pindaan (p): indikator keluar hanya menjual mulai buka sesi ke-4; henti rugi tidak berubah."""
+        self.assertEqual(atom.PEGANG_MIN, 3)
+        p = self.pan
+        awal = 0
+        for s, r in [(1, 5), (2, 18), (0, 20), (1, 300), (3, NR - 1)]:
+            for i in range(30, 360):
+                x1, x3 = self.H.simulasi(p, i, s, r, pegang_min=1), self.H.simulasi(p, i, s, r)
+                if x3['sebab'] == 'keluar indikator':
+                    self.assertGreaterEqual(x3['sesi'], 3, (s, r, i))           # dipegang penuh 3 sesi
+                self.assertGreaterEqual(x3['bar_keluar'], i + 2)                # tiada jualan pada hari beli
+                if x1['sebab'] == 'keluar indikator' and x1['sesi'] < 3:
+                    awal += 1
+                    self.assertGreaterEqual(x3['bar_keluar'], x1['bar_keluar'])
+                else:                                                           # henti, had masa atau indikator lewat: sama
+                    self.assertEqual((x3['sebab'], x3['sesi'], x3['R']), (x1['sebab'], x1['sesi'], x1['R']), (s, r, i))
+        self.assertGreater(awal, 0)                                             # ujian benar-benar menyentuh kes jualan awal
 
     def test_status_tetingkap_belum_lengkap(self):
         p = dict(self.pan)
