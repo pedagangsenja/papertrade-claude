@@ -526,6 +526,51 @@ di bawah dinamakan kepada pengguna SEBELUM simulasi ini ditulis atau dijalankan;
   sudah dilihat dalam (i)–(k); satu akaun 10 slot ialah satu cara membina portfolio, bukan satu-satunya.
 - Keluaran: `carian_setup/hasil/CS06/PORTFOLIO.md` dan `portfolio.csv`.
 
+### Pindaan 14 Nov 2026 (m) — semakan lawan matlamat kali kedua: ukuran yang belum dibuat, dan satu kedudukan akhir (sebelum dijalankan)
+
+Pengguna 14 Nov 2026 (selepas Claude melaporkan "backtest sudah lengkap"): "anda pasti ke sudah lengkap semua proses kita?
+cuba baca balik matlamat saya; rasanya masih ada yang belum complete". Bacaan semula §1 baris demi baris mendapati
+bahagian masuk, henti, kadar menang dan portfolio sudah diukur, tetapi ENAM perkara belum:
+
+1. **Peringkat ketiga corak** ("kemudian naik lagi 2–4 minggu") hanya diukur sebagai "masih ≥ 10 % pada minggu ke-4",
+   bukan "naik lagi selepas minggu pertama"; dan "lebih baik 10 % minggu pertama" tidak dipaparkan.
+2. **Kekerapan dan liputan.** Semua pangkat setakat ini ialah KETEPATAN (daripada belian, berapa yang jadi). "Paling kerap
+   menangkap" juga bermaksud berapa banyak pelari ditangkap: belian dan tangkapan setahun, dan bahagian semua pelari
+   pasaran yang ditangkap. Belum dilaporkan.
+3. **Sumbangan setiap komponen** setup (prasyarat pasaran, prasyarat syarikat, setiap penapis, pencetus) belum diuji satu
+   demi satu; hanya "buang semua prasyarat" dan "buang pencetus".
+4. **Mutu pegang** ("selagi naik; 10 % bukan paras jual"): keluar dipilih ikut ukuran ya/tidak (≥ +10 %), yang tidak
+   membezakan menjual pada +10 % daripada memegang hingga +40 %.
+5. **Saham Shariah.** Semua angka CS daripada set 2000 yang bukan tapisan Shariah; belum disemak pada saham yang pengguna
+   boleh beli.
+6. **Satu kedudukan akhir.** Peratus bertaburan dalam beberapa laporan dan dua papan; tiada satu jadual semua setup.
+
+**Apa yang sudah dilihat:** semua hasil (i)–(l). Pindaan ini MENGUKUR dan MENYUSUN sahaja: tiada carian, penalaan atau
+setup baharu. Kod `carian_setup/cs_akhir.py`; keluaran `carian_setup/hasil/KEDUDUKAN_AKHIR.md|csv`.
+
+- **Setup:** setiap setup F yang takrifnya boleh dinilai seragam pada kumpulan B: `F01`–`F30` dan `F39`–`F69` (61). Tidak
+  termasuk anak tala `F31`–`F38` dan `F70`–`F87` (memerlukan varian tala; tala terbukti tidak menolong). `F01`–`F10` dicari
+  pada set 431 yang bertindih dengan kumpulan B (dicatat). Data: kumpulan B, 2010-01-04 … 2026-08-28; mekanik §4; setiap
+  setup dengan henti dan keluarnya sendiri; satu posisi setiap saham.
+- **Corong ikut ayat matlamat** (laluan harga selepas beli pada `P`; henti −8 % seperti label (d)): `m5` tutup sesi 5 ≥
+  `P` + 5 % · `m10` tutup sesi 5 ≥ `P` + 10 % · **`terus`** = `m5` DAN tutup sesi 20 > tutup sesi 5 DAN henti −8 % tidak
+  kena dalam 20 sesi ("naik ≥ 5 % minggu pertama, kemudian naik lagi hingga minggu ke-4") · `tp` tangkap penuh dengan henti
+  dan keluar setup sendiri (pindaan (k)). Asas rawak: hari sama × tercile ATR % sama.
+- **Kekerapan:** belian setahun, tangkapan `terus` setahun, tahun dengan belian, bahagian bulan dengan belian.
+  **Liputan:** episod pelari = blok bar berturutan berlabel `terus` bagi satu saham (blok yang dipisahkan kurang 5 bar
+  digabung); liputan = episod yang dibeli setup ÷ semua episod kumpulan B. Juga bagi gabungan semua setup yang dipercayai.
+- **Komponen:** kelebihan `terus` (lawan rawak hari sama) setup penuh lawan setup tanpa SATU komponen (prasyarat pasaran;
+  prasyarat syarikat; penapis 1; penapis 2; pencetus). Komponen "menyumbang" jika membuangnya menurunkan kelebihan.
+- **Mutu pegang:** antara belian berlabel `terus`: purata `R` direalisasi (keluar sendiri), purata `R` jika dipegang 20
+  sesi dengan henti yang sama (`X00`), dan purata puncak tutup dalam 20 sesi.
+- **Shariah:** ukuran yang sama pada saham kumpulan B yang ada dalam `data/harga/univ.txt` (senarai Shariah semasa; bukan
+  titik-masa).
+- **Kedudukan akhir (dikunci):** "dipercayai" = belian ≥ 300 DAN tahun dengan belian ≥ 10 DAN kelebihan `terus` positif
+  dalam K1, K2 dan K3. Susunan: setup dipercayai dahulu, kemudian kadar `terus` menurun. Lajur: corong, rawak, tangkap
+  penuh, menang, rugi ≥ 8 %, kekerapan, liputan, komponen, Shariah.
+- Kaveat (i)–(l) kekal. Yang TIDAK ditutup oleh pindaan ini: data saham delist; carian automatik berkala ("mesin sentiasa
+  mencari"); peringkat papertrade (ditangguh atas arahan pengguna).
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
