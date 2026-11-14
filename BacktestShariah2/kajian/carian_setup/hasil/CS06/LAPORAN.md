@@ -47,19 +47,20 @@ Unit kelebihan dan beza: mata peratus. Jadual setiap pencetus: `carian_setup/has
 
 **Setup lengkap: henti, pegang dan keluar dipilih ikut kadar tangkap penuh setup itu sendiri** (pindaan (k); dipilih pada kumpulan A, angka kumpulan B). **Tangkap penuh** = naik ≥ 5 % minggu pertama DAN dagangan DIJUAL dengan untung bersih ≥ 10 % mengikut henti dan keluar setup ini (kos 0.5 % ditolak; jurang melepasi henti dijual pada harga buka). **Jadi** = apa-apa dagangan yang dijual dengan untung ≥ 10 %. "Rawak" = saham rawak (asas papan ini) dengan henti dan keluar yang sama.
 
-| ID | Henti | Keluar | Pegang (sesi) | **Tangkap penuh %** (rawak) | Kelebihan K1 / K2 / K3 | Jadi % (rawak) | Rugi ≥ 8 % % (rawak) | Tangkap penuh % tanpa keluar indikator | Purata setiap dagangan % K1 / K2 / K3 (maklumat) | L1 | L2 |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| `F39` | H3 3xATR14 | X09 MACD < isyarat DAN X21 Stochastic silang turun di atas 80 | 15.8 | **21.4 (10.4)** | +11.5 / +9.8 / +12.2 | 27.3 (20.3) | 32.9 (23.6) | 21.2 | +1.13 / +2.49 / +1.71 | ✓ | ✓ |
-| `F40` | H3 3xATR14 | X13 RSI14 > 80 | 15.2 | **22.9 (10.7)** | +12.4 / +11.2 / +14.3 | 29.0 (20.6) | 32.0 (26.0) | 21.9 | +2.06 / +2.68 / +1.42 | ✓ | ✓ |
-| `F58` | H3 3xATR14 | X12 RSI14 silang turun bawah 70 | 14.4 | **22.1 (7.4)** | +15.1 / +13.2 / +18.6 | 29.7 (16.5) | 36.1 (29.1) | 19.8 | +1.77 / -0.90 / +2.53 | ✓ | ✓ |
-| `F42` | H1 -8% | X00 tiada keluar indikator (henti + 20 sesi) | 13.4 | **13.7 (7.6)** | +6.0 / +6.9 / +1.6 | 23.2 (16.9) | 52.4 (42.1) | 13.7 | -0.02 / +6.37 / +1.64 | ✓ | ✓ |
-| `F45` | H2 -10% | X12 RSI14 silang turun bawah 70 | 10.9 | **14.3 (12.3)** | +0.7 / +2.6 / +2.0 | 22.4 (20.5) | 37.9 (37.1) | 16.1 | -1.00 / +2.45 / +2.43 | ✓ | ✗ |
-| `F59` | H2 -10% | X01 tutup < MA10 DAN X12 RSI14 silang turun bawah 70 | 15.0 | **13.6 (8.7)** | +5.4 / +5.5 / -6.5 | 25.9 (18.1) | 44.6 (33.5) | 13.6 | +0.44 / +3.58 / +1.05 | ✗ | ✓ |
-| `F44` | H1 -8% | X09 MACD < isyarat DAN X21 Stochastic silang turun di atas 80 | 11.6 | **12.4 (9.3)** | +3.7 / +3.5 / +1.8 | 20.4 (18.0) | 58.0 (49.3) | 12.6 | +0.96 / +0.81 / -1.61 | ✓ | ✗ |
-| `F60` | H3 3xATR14 | X12 RSI14 silang turun bawah 70 DAN X22 hari turun dengan volum >= 1.5x | 16.9 | **13.7 (9.0)** | +4.8 / +4.5 / +5.1 | 26.7 (19.7) | 33.5 (32.5) | 13.6 | +0.25 / +1.80 / +2.14 | ✓ | ✓ |
-| `F61` | H3 3xATR14 | X13 RSI14 > 80 | 16.4 | **12.3 (9.6)** | +5.1 / +2.1 / +2.1 | 24.4 (21.1) | 34.7 (31.7) | 12.2 | +0.85 / +0.81 / -0.20 | ✓ | ✓ |
-| `F47` | H3 3xATR14 | X04 tutup < EMA10 DAN X12 RSI14 silang turun bawah 70 | 17.3 | **9.7 (8.0)** | +2.1 / +1.8 / -0.1 | 20.1 (17.6) | 26.0 (25.1) | 9.9 | +0.30 / +1.32 / -0.26 | ✗ | ✗ |
+| ID | Henti | Keluar | Pegang (sesi) | **Tangkap penuh %** (rawak) | Kelebihan K1 / K2 / K3 | Jadi % (rawak) | Rugi ≥ 8 % % (rawak) | Tangkap penuh % tanpa keluar indikator | **Menang %** (K1 / K2 / K3) | Purata setiap dagangan % K1 / K2 / K3 (maklumat) | L1 | L2 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `F39` | H3 3xATR14 | X09 MACD < isyarat DAN X21 Stochastic silang turun di atas 80 | 15.8 | **21.4 (10.4)** | +11.5 / +9.8 / +12.2 | 27.3 (20.3) | 32.9 (23.6) | 21.2 | **51** (53 / 52 / 48) | +1.13 / +2.49 / +1.71 | ✓ | ✓ |
+| `F40` | H3 3xATR14 | X13 RSI14 > 80 | 15.2 | **22.9 (10.7)** | +12.4 / +11.2 / +14.3 | 29.0 (20.6) | 32.0 (26.0) | 21.9 | **51** (52 / 52 / 49) | +2.06 / +2.68 / +1.42 | ✓ | ✓ |
+| `F58` | H3 3xATR14 | X12 RSI14 silang turun bawah 70 | 14.4 | **22.1 (7.4)** | +15.1 / +13.2 / +18.6 | 29.7 (16.5) | 36.1 (29.1) | 19.8 | **47** (51 / 41 / 51) | +1.77 / -0.90 / +2.53 | ✓ | ✓ |
+| `F42` | H1 -8% | X00 tiada keluar indikator (henti + 20 sesi) | 13.4 | **13.7 (7.6)** | +6.0 / +6.9 / +1.6 | 23.2 (16.9) | 52.4 (42.1) | 13.7 | **41** (38 / 46 / 39) | -0.02 / +6.37 / +1.64 | ✓ | ✓ |
+| `F45` | H2 -10% | X12 RSI14 silang turun bawah 70 | 10.9 | **14.3 (12.3)** | +0.7 / +2.6 / +2.0 | 22.4 (20.5) | 37.9 (37.1) | 16.1 | **47** (41 / 51 / 47) | -1.00 / +2.45 / +2.43 | ✓ | ✗ |
+| `F59` | H2 -10% | X01 tutup < MA10 DAN X12 RSI14 silang turun bawah 70 | 15.0 | **13.6 (8.7)** | +5.4 / +5.5 / -6.5 | 25.9 (18.1) | 44.6 (33.5) | 13.6 | **45** (44 / 46 / 44) | +0.44 / +3.58 / +1.05 | ✗ | ✓ |
+| `F44` | H1 -8% | X09 MACD < isyarat DAN X21 Stochastic silang turun di atas 80 | 11.6 | **12.4 (9.3)** | +3.7 / +3.5 / +1.8 | 20.4 (18.0) | 58.0 (49.3) | 12.6 | **34** (41 / 35 / 27) | +0.96 / +0.81 / -1.61 | ✓ | ✗ |
+| `F60` | H3 3xATR14 | X12 RSI14 silang turun bawah 70 DAN X22 hari turun dengan volum >= 1.5x | 16.9 | **13.7 (9.0)** | +4.8 / +4.5 / +5.1 | 26.7 (19.7) | 33.5 (32.5) | 13.6 | **49** (47 / 48 / 52) | +0.25 / +1.80 / +2.14 | ✓ | ✓ |
+| `F61` | H3 3xATR14 | X13 RSI14 > 80 | 16.4 | **12.3 (9.6)** | +5.1 / +2.1 / +2.1 | 24.4 (21.1) | 34.7 (31.7) | 12.2 | **49** (50 / 50 / 46) | +0.85 / +0.81 / -0.20 | ✓ | ✓ |
+| `F47` | H3 3xATR14 | X04 tutup < EMA10 DAN X12 RSI14 silang turun bawah 70 | 17.3 | **9.7 (8.0)** | +2.1 / +1.8 / -0.1 | 20.1 (17.6) | 26.0 (25.1) | 9.9 | **53** (51 / 56 / 50) | +0.30 / +1.32 / -0.26 | ✗ | ✗ |
 
+- **Menang %** = daripada 100 dagangan, berapa yang dijual dengan untung selepas kos (selebihnya rugi); baca bersama purata setiap dagangan, kerana kadar menang sahaja tidak menunjukkan saiz untung dan rugi.
 - **L1:** kelebihan tangkap penuh atas rawak positif dalam K1, K2 dan K3. **L2:** tangkap penuh dengan keluar terpilih tidak kurang daripada tanpa keluar indikator (henti sama, pegang 20 sesi).
 
 Dari mana datangnya kadar tangkap? Setiap sel: tangkap penuh % (rawak %) · kena henti %, kumpulan B. "Tanpa pencetus" = semua saham layak yang memenuhi prasyarat dan penapis yang sama (maklumat tambahan, tidak dipradaftar):
@@ -120,19 +121,20 @@ Taburan belian mengikut tahun (kumpulan B, 2010 – Ogo 2026; maklumat tambahan)
 
 **Setup lengkap: henti, pegang dan keluar dipilih ikut kadar tangkap penuh setup itu sendiri** (pindaan (k); dipilih pada kumpulan A, angka kumpulan B). **Tangkap penuh** = naik ≥ 5 % minggu pertama DAN dagangan DIJUAL dengan untung bersih ≥ 10 % mengikut henti dan keluar setup ini (kos 0.5 % ditolak; jurang melepasi henti dijual pada harga buka). **Jadi** = apa-apa dagangan yang dijual dengan untung ≥ 10 %. "Rawak" = saham rawak (asas papan ini) dengan henti dan keluar yang sama.
 
-| ID | Henti | Keluar | Pegang (sesi) | **Tangkap penuh %** (rawak) | Kelebihan K1 / K2 / K3 | Jadi % (rawak) | Rugi ≥ 8 % % (rawak) | Tangkap penuh % tanpa keluar indikator | Purata setiap dagangan % K1 / K2 / K3 (maklumat) | L1 | L2 |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| `F62` | H3 3xATR14 | X21 Stochastic silang turun di atas 80 | 15.9 | **35.5 (7.0)** | +56.1 / +25.9 / +32.7 | 48.2 (12.8) | 16.1 (21.1) | 36.5 | +15.42 / +9.28 / +17.73 | ✓ | ✗ |
-| `F49` | H4 4xATR14 | X12 RSI14 silang turun bawah 70 | 17.1 | **30.1 (9.0)** | +24.7 / +20.5 / +21.8 | 38.7 (19.4) | 21.0 (25.3) | 29.4 | +7.71 / +4.46 / +6.51 | ✓ | ✓ |
-| `F63` | H4 4xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 17.9 | **25.5 (8.6)** | +21.6 / +16.1 / +10.2 | 34.3 (19.5) | 26.5 (26.4) | 25.5 | +6.01 / +4.21 / +2.39 | ✓ | ✓ |
-| `F43` | H3 3xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 18.6 | **22.7 (8.4)** | +19.9 / +14.0 / +0.8 | 36.4 (18.9) | 18.2 (29.4) | 22.7 | +7.73 / +7.90 / -3.70 | ✓ | ✓ |
-| `F64` | H3 3xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 18.3 | **27.3 (8.3)** | +16.3 / +19.1 / +21.6 | 46.3 (18.6) | 19.4 (28.6) | 27.3 | +6.54 / +8.76 / +13.17 | ✓ | ✓ |
-| `F65` | H3 3xATR14 | X12 RSI14 silang turun bawah 70 | 16.9 | **21.7 (5.7)** | +18.7 / +12.7 / +12.2 | 29.2 (13.0) | 25.0 (19.5) | 21.7 | +3.14 / +2.23 / +3.29 | ✓ | ✓ |
-| `F66` | H3 3xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 18.7 | **22.6 (8.8)** | +16.4 / +16.6 / -2.2 | 42.3 (19.6) | 22.2 (30.2) | 22.6 | +2.51 / +6.56 / +9.13 | ✗ | ✓ |
-| `F67` | H2 -10% | X20 tutup < 92% tutup tertinggi sejak beli DAN X21 Stochastic silang turun di atas 80 | 14.8 | **23.6 (8.3)** | +14.7 / +13.2 / +26.2 | 35.7 (17.4) | 34.4 (37.4) | 24.4 | +1.95 / +4.66 / +10.71 | ✓ | ✗ |
-| `F68` | H3 3xATR14 | X20 tutup < 92% tutup tertinggi sejak beli DAN X21 Stochastic silang turun di atas 80 | 17.5 | **18.5 (8.0)** | +10.5 / +11.6 / +2.9 | 34.5 (18.1) | 28.4 (28.6) | 18.5 | +2.67 / +8.82 / +3.77 | ✓ | ✓ |
-| `F69` | H3 3xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 17.5 | **23.7 (8.6)** | +14.4 / +15.2 / +15.3 | 38.9 (19.1) | 24.0 (29.4) | 23.7 | +2.32 / +4.20 / +12.17 | ✓ | ✓ |
+| ID | Henti | Keluar | Pegang (sesi) | **Tangkap penuh %** (rawak) | Kelebihan K1 / K2 / K3 | Jadi % (rawak) | Rugi ≥ 8 % % (rawak) | Tangkap penuh % tanpa keluar indikator | **Menang %** (K1 / K2 / K3) | Purata setiap dagangan % K1 / K2 / K3 (maklumat) | L1 | L2 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `F62` | H3 3xATR14 | X21 Stochastic silang turun di atas 80 | 15.9 | **35.5 (7.0)** | +56.1 / +25.9 / +32.7 | 48.2 (12.8) | 16.1 (21.1) | 36.5 | **73** (98 / 70 / 92) | +15.42 / +9.28 / +17.73 | ✓ | ✗ |
+| `F49` | H4 4xATR14 | X12 RSI14 silang turun bawah 70 | 17.1 | **30.1 (9.0)** | +24.7 / +20.5 / +21.8 | 38.7 (19.4) | 21.0 (25.3) | 29.4 | **65** (69 / 63 / 70) | +7.71 / +4.46 / +6.51 | ✓ | ✓ |
+| `F63` | H4 4xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 17.9 | **25.5 (8.6)** | +21.6 / +16.1 / +10.2 | 34.3 (19.5) | 26.5 (26.4) | 25.5 | **61** (67 / 59 / 55) | +6.01 / +4.21 / +2.39 | ✓ | ✓ |
+| `F43` | H3 3xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 18.6 | **22.7 (8.4)** | +19.9 / +14.0 / +0.8 | 36.4 (18.9) | 18.2 (29.4) | 22.7 | **69** (79 / 77 / 31) | +7.73 / +7.90 / -3.70 | ✓ | ✓ |
+| `F64` | H3 3xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 18.3 | **27.3 (8.3)** | +16.3 / +19.1 / +21.6 | 46.3 (18.6) | 19.4 (28.6) | 27.3 | **69** (64 / 66 / 85) | +6.54 / +8.76 / +13.17 | ✓ | ✓ |
+| `F65` | H3 3xATR14 | X12 RSI14 silang turun bawah 70 | 16.9 | **21.7 (5.7)** | +18.7 / +12.7 / +12.2 | 29.2 (13.0) | 25.0 (19.5) | 21.7 | **63** (64 / 60 / 71) | +3.14 / +2.23 / +3.29 | ✓ | ✓ |
+| `F66` | H3 3xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 18.7 | **22.6 (8.8)** | +16.4 / +16.6 / -2.2 | 42.3 (19.6) | 22.2 (30.2) | 22.6 | **66** (57 / 66 / 79) | +2.51 / +6.56 / +9.13 | ✗ | ✓ |
+| `F67` | H2 -10% | X20 tutup < 92% tutup tertinggi sejak beli DAN X21 Stochastic silang turun di atas 80 | 14.8 | **23.6 (8.3)** | +14.7 / +13.2 / +26.2 | 35.7 (17.4) | 34.4 (37.4) | 24.4 | **56** (48 / 55 / 70) | +1.95 / +4.66 / +10.71 | ✓ | ✗ |
+| `F68` | H3 3xATR14 | X20 tutup < 92% tutup tertinggi sejak beli DAN X21 Stochastic silang turun di atas 80 | 17.5 | **18.5 (8.0)** | +10.5 / +11.6 / +2.9 | 34.5 (18.1) | 28.4 (28.6) | 18.5 | **57** (54 / 59 / 60) | +2.67 / +8.82 / +3.77 | ✓ | ✓ |
+| `F69` | H3 3xATR14 | X00 tiada keluar indikator (henti + 20 sesi) | 17.5 | **23.7 (8.6)** | +14.4 / +15.2 / +15.3 | 38.9 (19.1) | 24.0 (29.4) | 23.7 | **62** (55 / 59 / 83) | +2.32 / +4.20 / +12.17 | ✓ | ✓ |
 
+- **Menang %** = daripada 100 dagangan, berapa yang dijual dengan untung selepas kos (selebihnya rugi); baca bersama purata setiap dagangan, kerana kadar menang sahaja tidak menunjukkan saiz untung dan rugi.
 - **L1:** kelebihan tangkap penuh atas rawak positif dalam K1, K2 dan K3. **L2:** tangkap penuh dengan keluar terpilih tidak kurang daripada tanpa keluar indikator (henti sama, pegang 20 sesi).
 
 Dari mana datangnya kadar tangkap? Setiap sel: tangkap penuh % (rawak %) · kena henti %, kumpulan B. "Tanpa pencetus" = semua saham layak yang memenuhi prasyarat dan penapis yang sama (maklumat tambahan, tidak dipradaftar):

@@ -127,8 +127,116 @@ def tulis_top50():
     return t
 
 
+KUNCI = ('K1', 'K2', 'K3')
+LAJUR_MENANG = ['menang_K1', 'menang_K2', 'menang_K3', 'menang']
+
+
+def kadar_menang():
+    """(pusingan, id) -> {tempoh Kunci: kadar menang}, dibaca daripada fail hasil setiap pusingan (tiada pengiraan baharu)."""
+    out = {}
+    for pus, kol in (('CS01', 'menang'), ('CS02', 'menang'), ('CS03', 'R_menang'), ('CS05', 'R_menang'), ('CS06', 'R_menang')):
+        f = os.path.join(HASIL, pus, 'papan.csv')
+        if os.path.exists(f):
+            d = pd.read_csv(f)
+            for r in d[d.tempoh.isin(KUNCI)].itertuples():
+                out.setdefault((pus, r.id), {})[r.tempoh] = getattr(r, kol)
+    d = pd.read_csv(os.path.join(HASIL, 'CS04', 'papan.csv'))
+    for r in d[~d.kekal].itertuples():
+        out[('CS04', r.anak)] = {t: getattr(r, f'menang_{t}') for t in KUNCI}
+    f = os.path.join(HASIL, 'CS06', 'tala.csv')
+    if os.path.exists(f):
+        d = pd.read_csv(f)
+        if 'menang_anak_K1' in d:
+            for r in d[(~d.kekal) & d.menang_anak_K1.notna()].itertuples():
+                out[('CS06', r.anak)] = {t: getattr(r, f'menang_anak_{t}') for t in KUNCI}
+    return out
+
+
+def isi_menang():
+    """Isi lajur menang_K1..K3 dan menang (gabungan ikut bilangan belian) dalam data/registry_F.csv. Kadar menang = bahagian
+    dagangan dengan R > 0 selepas kos, pada saham Kunci (yang carian tidak lihat), dengan henti dan keluar setup itu."""
+    f = os.path.join(BS2, 'data', 'registry_F.csv')
+    reg = pd.read_csv(f, dtype=str).fillna('')
+    for c in LAJUR_MENANG:
+        if c not in reg:
+            reg[c] = ''
+    M = kadar_menang()
+    for i in reg.index:
+        m = M.get((reg.at[i, 'pusingan'], reg.at[i, 'id']), {})
+        jum = bil = 0.0
+        for t in KUNCI:
+            x, n = m.get(t), float(reg.at[i, f'n_{t}'] or 0)
+            if x is not None and x == x and n > 0:
+                reg.at[i, f'menang_{t}'] = f'{x:.4f}'
+                jum, bil = jum + n * x, bil + n
+        if bil:
+            reg.at[i, 'menang'] = f'{jum / bil:.4f}'
+    reg.to_csv(f, index=False)
+    return reg
+
+
+def jadual_menang():
+    reg = isi_menang()
+    with open(os.path.join(BS2, 'jejak_f', 'kohort.json')) as f:
+        kohort = {a['id'] for a in json.load(f)['ahli']}
+    nom = lambda x: float(x) if str(x).strip() not in ('', 'nan') else float('nan')
+    baris = []
+    for r in reg.itertuples():
+        n = {t: nom(getattr(r, f'n_{t}')) for t in KUNCI}
+        n = {t: (0.0 if v != v else v) for t, v in n.items()}
+        N = sum(n.values())
+        gab_ = lambda kol: (sum(n[t] * nom(getattr(r, f'{kol}_{t}')) for t in KUNCI if n[t] and nom(getattr(r, f'{kol}_{t}')) == nom(
+            getattr(r, f'{kol}_{t}'))) / N) if N else float('nan')
+        pas, sah = bahagi(r.penapis)
+        baris.append({'id': r.id, 'pusingan': r.pusingan, 'prasyarat': r.prasyarat if str(r.prasyarat).strip() else pas,
+                      'pencetus': nama_pendek(r.masuk), 'penapis_saham': r.syarat if str(r.syarat).strip() else sah,
+                      'henti': r.henti, 'keluar': r.keluar, 'belian': int(N), 'menang': nom(r.menang), 'purata': gab_('purata'),
+                      'k10': gab_('k10'), **{f'menang_{t}': nom(getattr(r, f'menang_{t}')) for t in KUNCI},
+                      'jejak_hadapan': 'ya' if r.id in kohort else ''})
+    return pd.DataFrame(baris)
+
+
+def tulis_menang():
+    t = jadual_menang()
+    t.to_csv(os.path.join(HASIL, 'KADAR_MENANG.csv'), index=False, float_format='%.4f')
+    p = lambda x, k=0, tanda=False: '–' if x != x else (f'{x * 100:+.{k}f}' if tanda else f'{x * 100:.{k}f}')
+    ada = t[t.menang.notna()]
+    cukup = ada[ada.belian >= 300]
+    A = ['# Kadar menang setiap setup F (backtest pada saham yang tidak dilihat; BUKAN bukti)', '', _status(), '',
+         'Dijana `kajian/carian_setup/cs_ringkas.py` daripada `data/registry_F.csv` dan fail hasil setiap pusingan. '
+         '**Jangan sunting secara manual.**', '',
+         '**Kadar menang** = daripada semua dagangan setup itu (dengan henti dan cara keluarnya sendiri), berapa peratus dijual '
+         'dengan UNTUNG selepas kos 0.5 %; selebihnya rugi. Lajur "daripada 10 dagangan" ialah angka yang sama dibundarkan. Angka '
+         'daripada saham Kunci (yang carian tidak lihat): CS01 = 1,000 saham lain; CS02–CS06 = kumpulan B; 2010 – Ogo 2026.', '',
+         '**Baca bersama purata setiap dagangan.** Kadar menang sahaja tidak menunjukkan saiz untung dan rugi: setup yang menang '
+         '4 daripada 10 masih boleh untung jika untungnya besar, dan setup yang menang 6 daripada 10 boleh rugi jika ruginya besar '
+         '(`CLAUDE.md`: kadar menang sahaja bukan ukuran).', '',
+         f'Ringkasan: {len(ada)} setup; median kadar menang {p(ada.menang.median())} %; {int((ada.menang >= 0.5).sum())} setup menang '
+         f'≥ 50 %; {int(((ada.menang >= 0.5) & (ada.purata > 0)).sum())} setup menang ≥ 50 % DAN purata positif; '
+         f'{int(((ada.menang < 0.5) & (ada.purata > 0)).sum())} setup menang < 50 % tetapi purata positif.', '']
+    if len(cukup):
+        atas = cukup.sort_values('menang', ascending=False).head(5)
+        A += ['Kadar menang tertinggi (≥ 300 belian): ' + '; '.join(
+            f'`{r.id}` {p(r.menang)} % (purata {p(r.purata, 1, True)} %, {r.belian:,} belian)' for r in atas.itertuples()) + '.', '']
+    A += ['| ID | Pusingan | Prasyarat | Pencetus | Penapis saham | Belian | **Menang %** | Daripada 10 dagangan: untung / rugi | '
+          'Purata setiap dagangan % | Dijual ≥ +10 % % | Menang % K1 / K2 / K3 | Jejak hadapan |', '|---' * 12 + '|']
+    for r in t.itertuples():
+        u = '–' if r.menang != r.menang else f'{round(r.menang * 10)} / {10 - round(r.menang * 10)}'
+        A.append(f"| `{r.id}` | {r.pusingan} | {r.prasyarat if r.prasyarat not in ('tiada', '') else '–'} | {r.pencetus} | "
+                 f"{r.penapis_saham if r.penapis_saham not in ('tiada', '') else '–'} | {r.belian:,} | **{p(r.menang)}** | {u} | "
+                 f"{p(r.purata, 2, True)} | {p(r.k10)} | {p(r.menang_K1)} / {p(r.menang_K2)} / {p(r.menang_K3)} | {r.jejak_hadapan} |")
+    A += ['', '- K1 = 2010–2019, K2 = 2020–2024 (CS01: 2020 – Ogo 2026), K3 = 2025 – Ogo 2026 (tiada bagi CS01).',
+          '- Cara pegang dan keluar setiap setup: lajur `henti` dan `keluar` dalam `KADAR_MENANG.csv` dan `data/registry_F.csv`.',
+          '- Tiada saham delist dalam data (condong ke atas); backtest sahaja. Kad skor kekal satu-satunya keputusan wang sebenar.', '']
+    with open(os.path.join(HASIL, 'KADAR_MENANG.md'), 'w', encoding='utf-8') as f:
+        f.write('\n'.join(A))
+    return t
+
+
 if __name__ == '__main__':
     p = tulis_pembahagian()
     t = tulis_top50()
+    m = tulis_menang()
     print(f'pembahagian: {len(p)} setup F · {p.prasyarat_pasaran.value_counts().to_dict()}')
     print(f'top50: {len(t)} baris')
+    print(f'kadar menang: {int(m.menang.notna().sum())} daripada {len(m)} setup F; median {m.menang.median() * 100:.0f}%')

@@ -527,7 +527,7 @@ class TestCS05(unittest.TestCase):
     def test_registry_lajur_prasyarat_dan_kohort_kekal(self):
         bs2 = os.path.join(SINI, '..')
         reg = pd.read_csv(os.path.join(bs2, 'data', 'registry_F.csv'), dtype=str).fillna('')
-        self.assertEqual(list(reg.columns)[-2:], ['prasyarat', 'syarat'])
+        self.assertEqual(list(reg.columns)[-6:], ['prasyarat', 'syarat', 'menang_K1', 'menang_K2', 'menang_K3', 'menang'])
         self.assertTrue((reg.prasyarat != '').all() and (reg.syarat != '').all())
         self.assertEqual(reg.id.tolist(), [f'F{i:02d}' for i in range(1, len(reg) + 1)])
         lama = reg[~reg.pusingan.isin(['CS05', 'CS06'])]
@@ -721,6 +721,43 @@ class TestCS06(unittest.TestCase):
         self.assertTrue((c6.status == 'BACKTEST').all())
         self.assertTrue(c6.takrif.map(lambda x: len(x.split('|')) in (4, 5)).all())
         self.assertTrue((c6.prasyarat != '').all() and (c6.syarat != '').all())
+
+class TestKadarMenang(unittest.TestCase):
+    """Permintaan pengguna 14 Nov 2026: setiap setup F dipaparkan bersama kadar menang (cs_ringkas, registry F)."""
+
+    def setUp(self):
+        self.bs2 = os.path.join(SINI, '..')
+        self.reg = pd.read_csv(os.path.join(self.bs2, 'data', 'registry_F.csv'), dtype=str).fillna('')
+        self.hasil = os.path.join(self.bs2, 'kajian', 'carian_setup', 'hasil')
+
+    def test_setiap_setup_ada_kadar_menang(self):
+        m = self.reg.menang.astype(float)
+        self.assertTrue(((m > 0) & (m < 1)).all())
+        for r in self.reg.itertuples():                                         # gabungan = purata berwajaran bilangan belian
+            n = {t: float(getattr(r, f'n_{t}') or 0) for t in ('K1', 'K2', 'K3')}
+            x = {t: getattr(r, f'menang_{t}') for t in n}
+            jum = sum(n[t] * float(x[t]) for t in n if n[t] and x[t] != '')
+            bil = sum(n[t] for t in n if n[t] and x[t] != '')
+            self.assertAlmostEqual(float(r.menang), jum / bil, places=3, msg=r.id)
+
+    def test_sepadan_dengan_fail_hasil(self):
+        import cs_ringkas
+        M = cs_ringkas.kadar_menang()
+        d = pd.read_csv(os.path.join(self.hasil, 'CS03', 'papan.csv'))
+        x = d[(d.id == 'F27') & (d.tempoh == 'K1')].R_menang.iloc[0]
+        self.assertAlmostEqual(M[('CS03', 'F27')]['K1'], x)
+        self.assertAlmostEqual(float(self.reg.set_index('id').menang_K1['F27']), x, places=4)
+        self.assertEqual({k[0] for k in M}, {'CS01', 'CS02', 'CS03', 'CS04', 'CS05', 'CS06'})
+
+    def test_jadual_kadar_menang(self):
+        t = pd.read_csv(os.path.join(self.hasil, 'KADAR_MENANG.csv'))
+        self.assertEqual(t.id.tolist(), self.reg.id.tolist())
+        self.assertTrue(t.menang.notna().all())
+        teks = open(os.path.join(self.hasil, 'KADAR_MENANG.md'), encoding='utf-8').read()
+        self.assertEqual(teks.count('\n| `F'), len(self.reg))
+        r = t.set_index('id').loc['F27']
+        self.assertIn(f"| **{r.menang * 100:.0f}** | {round(r.menang * 10)} / {10 - round(r.menang * 10)} |", teks)
+        self.assertEqual(int((t.jejak_hadapan == 'ya').sum()), 8)
 
 
 if __name__ == '__main__':

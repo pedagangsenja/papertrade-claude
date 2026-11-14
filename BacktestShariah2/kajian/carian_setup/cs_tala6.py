@@ -248,7 +248,9 @@ def lapor_(kerja):
         if not d['kekal'] and d['lajur'] >= 0 and va:
             LA = d['LA']['pilih']
             b.update(keluar_anak=c5.kod_keluar(d['lajur']), tp_anak=c5.gab(LA, TK, 'tp')[1], asas_tp_anak=c5.gab(LA, TK, aw + 'tp')[1],
-                     rugi8_anak=c5.gab(LA, TK, 'rugi8')[1], pegang_anak=c5.gab(LA, TK, 'pegang')[1])
+                     rugi8_anak=c5.gab(LA, TK, 'rugi8')[1], pegang_anak=c5.gab(LA, TK, 'pegang')[1],
+                     menang_anak=c5.gab(LA, TK, 'menang')[1], purata_anak=c5.gab(LA, TK, 'purata')[1],
+                     **{f'menang_anak_{t}': LA.get(t, {}).get('menang', np.nan) for t in TK})
             s, x = divmod(int(d['lajur']), cari.NR)
             takrif = f"{d['pencetus']}|{tx['kod_pen']}|{atom.HENTI[s][:2]}|{c5.kod_keluar(d['lajur']).split(' · ')[1]}"
             takrif += ('|' + tx['kod_pra']) if tx['kod_pra'] else ''
@@ -264,6 +266,8 @@ def lapor_(kerja):
                 db[f'n_{t}'] = v0[t]['n']
                 db[f'purata_{t}'] = '' if not v0[t]['n'] else f"{v0[t]['purata']:.5f}"
                 db[f'k10_{t}'] = '' if not v0[t]['n'] else f"{v0[t]['k10']:.4f}"
+                db[f'menang_{t}'] = '' if not v0[t]['n'] else f"{v0[t]['menang']:.4f}"
+            db['menang'] = f"{b['menang_anak']:.4f}" if b['menang_anak'] == b['menang_anak'] else ''
             daftar_b[i] = db
         baris.append(b)
     idf = c5.daftar(daftar_b, param) if daftar_b else {}
@@ -316,9 +320,11 @@ def lapor_(kerja):
     ada = Tt[~Tt.kekal & Tt.get('tp_anak', pd.Series(np.nan, index=Tt.index)).notna()]
     if len(ada):
         A += ['', 'Setup lengkap anak (henti × keluar dipilih ikut tangkap penuh sendiri, pindaan (k); kumpulan B):', '',
-              '| Anak | Henti · keluar | Tangkap penuh % (rawak) | Rugi ≥ 8 % % | Pegang (sesi) |', '|---' * 5 + '|']
+              '| Anak | Henti · keluar | Tangkap penuh % (rawak) | Rugi ≥ 8 % % | Pegang (sesi) | Menang % | Purata setiap dagangan % |',
+              '|---' * 7 + '|']
         for b in ada.itertuples():
-            A.append(f'| `{b.anak}` | {b.keluar_anak} | {p(b.tp_anak)} ({p(b.asas_tp_anak)}) | {p(b.rugi8_anak)} | {b.pegang_anak:.1f} |')
+            A.append(f'| `{b.anak}` | {b.keluar_anak} | {p(b.tp_anak)} ({p(b.asas_tp_anak)}) | {p(b.rugi8_anak)} | {b.pegang_anak:.1f} | '
+                     f'{p(b.menang_anak, 0)} | {p(b.purata_anak, 2, True)} |')
     A += ['', '## Kaveat', '',
           '- Tala dijalankan pada kumpulan A sahaja; kumpulan B hanya mengukur. Tetapi reka bentuk CS06 dipilih selepas hasil CS05 '
           'pada kumpulan B dilihat, jadi kumpulan B bukan lagi "tidak dilihat" bagi keluarga setup ini.',

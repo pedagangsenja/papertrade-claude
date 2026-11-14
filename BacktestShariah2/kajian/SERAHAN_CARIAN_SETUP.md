@@ -32,6 +32,7 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 ## 2. Cara bekerja dengan pengguna (pelajaran sesi ini)
 
 - Jawapan pendek, Bahasa Melayu mudah; jadual tiga lajur di jawapan penutup; notifikasi telefon setiap giliran (CLAUDE.md).
+- (14 Nov) Pengguna mahu **kadar menang** ("daripada 10 dagangan berapa untung, berapa rugi") dipaparkan bagi setiap setup F. Paparkan bersama purata setiap dagangan; kadar menang sahaja bukan ukuran. Sumber: `hasil/KADAR_MENANG.md`.
 - Pengguna menyerahkan keputusan teknikal kepada Claude ("apa sahaja keputusan di tangan anda, tetapi sentiasa berbalik kepada matlamat saya"). Kurangkan soalan; putuskan, laksana, lapor.
 - Jangan menolak sasaran pengguna sebelum mengukurnya. Jangan reka had sendiri (cth. "maks 4 calon") atau membekukan carian.
 - Jangan tukar kayu ukur. Kesilapan saya dalam sesi ini: memangkatkan ikut purata setiap dagangan (CS01/CS02), kemudian mengesyorkan berhenti kerana kalah SPY pada MDD −10 %. Pengguna membetulkan: "baca balik chat kita, apa yang saya cari". Jawapannya §1.
@@ -58,6 +59,7 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 | 14 Nov | `data/registry_F.csv` mendapat lajur `prasyarat` dan `syarat` (semua 57 baris) | `cs_lapor.LAJUR_F`, `cs_cs05.daftar`, `hasil/PRASYARAT/PEMBAHAGIAN_F.md` |
 | 14 Nov | **CS06 bahagian A** (pindaan (k)): carian 103,088,000 peraturan diulang dengan sasaran tangkap penuh (pegang piawai H4 + X00) + plasebo; papan, setiap kaedah, setup lengkap ikut tangkap penuh sendiri; jadual taburan belian mengikut tahun | `CS_PUS=CS06 cs_cs05.py`, `cs_lengkap.py`; `hasil/CS06/` (`LAPORAN.md`, `SEMUA_PENCETUS*.md`, `TOP50.md`, `papan.csv`), `kajian/CARIAN_SETUP.md` → `F58`–`F69` |
 | 14 Nov | **CS06 bahagian B: tala bersama prasyarat** (pindaan (k)): 240 varian pencetus + ambang penapis + ambang prasyarat (36 prasyarat berambang, `cs_lapis.GRID_PRA`/`Mentah`), ikut dataran; induk lawan anak pada kumpulan B | `cs_tala6.py`; `hasil/CS06/TALA.md`, `tala.csv` → `F70`–`F87` |
+| 14 Nov | **Kadar menang setiap setup F** (permintaan pengguna): lajur `menang_K1`–`K3` dan `menang` dalam registry F; jadual semua 87 setup; lajur "Menang %" dalam jadual setup lengkap | `hasil/KADAR_MENANG.md|csv` (`cs_ringkas.py`), `data/registry_F.csv`, `kajian/CARIAN_SETUP.md` |
 | 14 Nov | PR #48 digabung ke `main` (CS05 + pindaan (k)); `lejar.yml` mencetus `jejak_f.yml` terus selepas Lejar dispatch penjaga | `.github/workflows/lejar.yml` |
 | 14 Nov | **CS05 peringkat lengkap** (pindaan (j), selepas semakan lawan matlamat): henti × keluar dipilih ikut kadar dagangan "jadi" (dijual dengan untung ≥ 10 %), bagi 19 setup papan dan bagi setiap kaedah (S dan P); `F39`–`F57` kekal ID, henti/keluar diganti | `cs_lengkap.py`; `hasil/CS05/LAPORAN.md` §3–§5, `SEMUA_PENCETUS_LENGKAP.md`, `TOP50.md` |
 

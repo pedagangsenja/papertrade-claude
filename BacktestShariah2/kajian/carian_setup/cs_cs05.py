@@ -620,6 +620,9 @@ def lapor_(kerja):
                 b_[f'n_{t}'] = rr[t]['n']
                 b_[f'purata_{t}'] = '' if not rr[t]['n'] else f"{rr[t]['purata']:.5f}"
                 b_[f'k10_{t}'] = '' if not rr[t]['n'] else f"{rr[t].get('k10', float('nan')):.4f}"
+                b_[f'menang_{t}'] = '' if not rr[t]['n'] else f"{rr[t].get('menang', float('nan')):.4f}"
+            nk = sum(rr[t]['n'] for t in TK)
+            b_['menang'] = '' if not nk else f"{sum(rr[t]['n'] * rr[t].get('menang', 0) for t in TK if rr[t]['n']) / nk:.4f}"
             daftar_b[k] = b_
     idf = daftar(daftar_b, param)
 
@@ -903,7 +906,7 @@ def lapor_(kerja):
               'dijual dengan untung ≥ 10 %. "Pelari dipegang" = daripada saham yang lari, berapa % dijual dengan untung ≥ 10 %.', '',
               '| ID | Henti | Keluar | Pegang (sesi) | **Tangkap penuh %** | **Jadi %** (rawak) | Kelebihan jadi K1 / K2 / K3 | '
               'Rugi ≥ 8 % % (rawak) | Pelari dipegang % | Jadi % tanpa keluar indikator | Jadi % dengan keluar lama (ikut purata) | '
-              'Purata setiap dagangan % K1 / K2 / K3 (maklumat) | L1 | L2 |', '|---' * 14 + '|']
+              '**Menang %** (K1 / K2 / K3) | Purata setiap dagangan % K1 / K2 / K3 (maklumat) | L1 | L2 |', '|---' * 15 + '|']
         if SASARAN == 'tp':                                   # pindaan (k): jadual setup lengkap ikut tangkap penuh sendiri
             del A[-4:]                                         # buang pengenalan + kepala jadual (j) di atas
             A += ['**Setup lengkap: henti, pegang dan keluar dipilih ikut kadar tangkap penuh setup itu sendiri** (pindaan (k); '
@@ -912,8 +915,8 @@ def lapor_(kerja):
                   'pada harga buka). **Jadi** = apa-apa dagangan yang dijual dengan untung ≥ 10 %. "Rawak" = saham rawak (asas '
                   'papan ini) dengan henti dan keluar yang sama.', '',
                   '| ID | Henti | Keluar | Pegang (sesi) | **Tangkap penuh %** (rawak) | Kelebihan K1 / K2 / K3 | Jadi % (rawak) | '
-                  'Rugi ≥ 8 % % (rawak) | Tangkap penuh % tanpa keluar indikator | Purata setiap dagangan % K1 / K2 / K3 (maklumat) | '
-                  'L1 | L2 |', '|---' * 12 + '|']
+                  'Rugi ≥ 8 % % (rawak) | Tangkap penuh % tanpa keluar indikator | **Menang %** (K1 / K2 / K3) | '
+                  'Purata setiap dagangan % K1 / K2 / K3 (maklumat) | L1 | L2 |', '|---' * 13 + '|']
             for k, b in papan.items():
                 if b['kod'] != kod:
                     continue
@@ -925,9 +928,12 @@ def lapor_(kerja):
                                       if lg['pilih'].get(t, {}).get('n') else '–' for t in TK)
                          + f" | {p(w('pilih', 'k10'))} ({p(w('pilih', aw + 'k10'))}) | "
                          f"{p(w('pilih', 'rugi8'))} ({p(w('pilih', aw + 'rugi8'))}) | {p(w('x00', 'tp'))} | "
+                         + f"**{p(w('pilih', 'menang'), 0)}** (" + ' / '.join(p(lg['pilih'][t]['menang'], 0) if lg['pilih'].get(t, {}).get('n') else '–' for t in TK) + ') | '
                          + ' / '.join(p(lg['pilih'][t]['purata'], 2, True) if lg['pilih'].get(t, {}).get('n') else '–' for t in TK)
                          + f" | {ya(b['L1'])} | {ya(b['L2'])} |")
-            A += ['', '- **L1:** kelebihan tangkap penuh atas rawak positif dalam K1, K2 dan K3. **L2:** tangkap penuh dengan keluar '
+            A += ['', '- **Menang %** = daripada 100 dagangan, berapa yang dijual dengan untung selepas kos (selebihnya rugi); baca '
+                  'bersama purata setiap dagangan, kerana kadar menang sahaja tidak menunjukkan saiz untung dan rugi.',
+                  '- **L1:** kelebihan tangkap penuh atas rawak positif dalam K1, K2 dan K3. **L2:** tangkap penuh dengan keluar '
                   'terpilih tidak kurang daripada tanpa keluar indikator (henti sama, pegang 20 sesi).']
         else:
             for k, b in papan.items():
@@ -944,9 +950,12 @@ def lapor_(kerja):
                                       if lg['pilih'].get(t, {}).get('n') else '–' for t in TK)
                          + f" | {p(w('pilih', 'rugi8'))} ({p(w('pilih', aw + 'rugi8'))}) | {p(pel)} | {p(w('x00', 'k10'))} | "
                          f"{p(w('lama', 'k10')) if 'lama' in lg else '–'} | "
+                         + f"**{p(w('pilih', 'menang'), 0)}** (" + ' / '.join(p(lg['pilih'][t]['menang'], 0) if lg['pilih'].get(t, {}).get('n') else '–' for t in TK) + ') | '
                          + ' / '.join(p(lg['pilih'][t]['purata'], 2, True) if lg['pilih'].get(t, {}).get('n') else '–' for t in TK)
                          + f" | {ya(b['L1'])} | {ya(b['L2'])} |")
-            A += ['', '- **L1:** kelebihan "jadi" atas rawak positif dalam K1, K2 dan K3. **L2:** "jadi" dengan keluar terpilih tidak '
+            A += ['', '- **Menang %** = daripada 100 dagangan, berapa yang dijual dengan untung selepas kos (selebihnya rugi); baca '
+                  'bersama purata setiap dagangan, kerana kadar menang sahaja tidak menunjukkan saiz untung dan rugi.',
+                  '- **L1:** kelebihan "jadi" atas rawak positif dalam K1, K2 dan K3. **L2:** "jadi" dengan keluar terpilih tidak '
                   'kurang daripada tanpa keluar indikator (henti sama, pegang 20 sesi).']
         A += ['', 'Dari mana datangnya kadar tangkap? Setiap sel: lari % (rawak %) · kena henti %, kumpulan B. "Tanpa pencetus" = '
               'semua saham layak yang memenuhi prasyarat dan penapis yang sama (maklumat tambahan, tidak dipradaftar):', '',
