@@ -1,5 +1,6 @@
 """Ujian carian setup CS01 (`kajian/carian_setup/`, pradaftar `kajian/SPEC_CARIAN_SETUP.md`):
 ruang carian dikunci, tiada pandang ke hadapan, mekanik dagangan SPEC §4 dan pengumpulan skor SPEC §6."""
+import json
 import os
 import sys
 import unittest
@@ -344,6 +345,16 @@ class TestRingkas(unittest.TestCase):
         self.assertEqual(t.id.tolist()[:3], ['F01', 'F02', 'F03'])
         self.assertTrue(set(t.prasyarat_pasaran) <= {'–', 'QQQ ON', 'QQQ OFF', 'SPY > SMA200'})
         self.assertEqual(int((t.jejak_hadapan == 'ya').sum()), 8)
+
+    def test_rekod_semua_masuk_sepadan_cs03(self):
+        """semua_masuk.csv.gz ialah rekod penuh larian CS03 yang sama: bilangan dan skor sepadan dengan meta dan senarai."""
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS03')
+        b = pd.read_csv(os.path.join(d, 'semua_masuk.csv.gz'))
+        with open(os.path.join(d, 'meta.json')) as f:
+            self.assertEqual(len(b), json.load(f)['masuk_diskor'])
+        k = pd.read_csv(os.path.join(d, 'senarai_kunci.csv'))
+        self.assertAlmostEqual(b.skor.max() / 100, k.skor.max(), places=4)
+        self.assertEqual(len(pd.read_csv(os.path.join(d, 'SEMUA_PENCETUS.csv'))), 500)
 
 
 if __name__ == '__main__':

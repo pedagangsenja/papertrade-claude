@@ -74,11 +74,13 @@ Angka = kadar saham "lari" bila prasyarat benar / tidak benar, kumpulan B, darip
 
 **(c) Pendedahan berperingkat (Minervini).** Ini peraturan saiz/portfolio, bukan penapis isyarat; di luar ruang carian sekarang.
 
-## 6. Cadangan (belum diputuskan pengguna; lihat `kajian/SERAHAN_CARIAN_SETUP.md` §8)
+## 6. Apa yang diputuskan selepas kajian ini
 
-1. Tulis pindaan (i) dalam `kajian/SPEC_CARIAN_SETUP.md` SEBELUM mengukur: senarai prasyarat (a) dengan ambang dikunci, kelas setup (b), dan peraturan lulus (cth. konsisten 5/5 kepingan DAN tidak menaikkan kena henti lebih daripada kenaikan lari).
-2. Ukur dengan `cs_prasyarat.py` (tambah prasyarat) pada folder kerja CS02.
-3. Hanya prasyarat yang lulus dimasukkan sebagai penapis baharu ke pusingan carian berikutnya (CS05), dipangkat ikut kadar tangkap, kemudian jejak hadapan.
+**Keputusan pengguna 14 Nov 2026:** CS01–CS04 ialah pusingan "syarat sahaja". Pusingan seterusnya (**CS05**) menjalankan carian sekali lagi untuk SEMUA kaedah dengan prasyarat + syarat, di chat baharu.
+
+1. Tulis pindaan (i) dalam `kajian/SPEC_CARIAN_SETUP.md` SEBELUM menjalankan: senarai prasyarat (tinjauan (h) + takrif pakar §5a) dengan ambang dikunci, kelas setup (§5b), dan peraturan lulus.
+2. Reka bentuk yang dicadangkan: `kajian/SERAHAN_CARIAN_SETUP.md` §9 (prasyarat × pencetus × penapis saham, pangkat ikut kadar tangkap, sah pada kumpulan B, plasebo anjak masa).
+3. Asas "syarat sahaja" bagi setiap kaedah, untuk dibandingkan: `kajian/carian_setup/hasil/CS03/SEMUA_PENCETUS.md`.
 
 Kaveat tinjauan (h) kekal terpakai: 38 prasyarat diukur, beberapa akan kelihatan baik secara kebetulan; prasyarat peringkat hari mempunyai sedikit pemerhatian bebas; tiada saham delist; set 2000 bukan tapisan Shariah.
 

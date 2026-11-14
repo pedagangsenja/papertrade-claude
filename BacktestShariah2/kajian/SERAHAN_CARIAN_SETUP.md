@@ -19,6 +19,7 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 9. Susunan: **backtest dahulu, papertrade kemudian.**
 10. Kos: jimat token.
 11. (14 Nov) Struktur dua lapis: **prasyarat** (isyarat BUKAN daripada saham itu sendiri: pasaran, keluasan, sektor, industri, earnings) dahulu, kemudian **syarat** (saham itu sendiri). Pengguna menilai kita terlalu fokus pada saham tanpa prasyarat.
+12. **Keputusan pengguna 14 Nov 2026:** CS01–CS04 ialah pusingan "syarat sahaja". Pusingan seterusnya (di chat baharu) ialah **larian semula untuk SEMUA kaedah (bukan 50 teratas sahaja) dengan prasyarat DAN syarat**: "kita akan run sekali lagi dengan prasyarat semuanya".
 
 **Ukuran yang betul = KADAR TANGKAP** ("lari": naik ≥ 5 % minggu pertama, capai ≥ 10 % sebelum henti −8 %, masih ≥ 10 % pada minggu ke-4), lawan saham rawak pada hari dan tercile ATR% yang sama. BUKAN purata setiap dagangan, BUKAN banding indeks.
 
@@ -45,6 +46,7 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 | 14 Nov | Pecahan prasyarat lawan syarat bagi 38 setup F | `hasil/PRASYARAT/PEMBAHAGIAN_F.md` (`cs_ringkas.py`) |
 | 14 Nov | Tinjauan 38 prasyarat (pindaan (h)) | `hasil/PRASYARAT/LAPORAN.md`, `prasyarat.csv` (`cs_prasyarat.py`) |
 | 14 Nov | Kajian pakar prasyarat/syarat (carian web) | `kajian/KAJIAN_PRASYARAT_PAKAR.md` |
+| 14 Nov | Rekod SEMUA kaedah dengan syarat sahaja (asas untuk larian berprasyarat): 500 pencetus, 182,903 peraturan masuk | `hasil/CS03/SEMUA_PENCETUS.md` + `.csv`, `hasil/CS03/semua_masuk.csv.gz` (`cs_tangkap.py <kerja> semua`) |
 
 Semua laluan `hasil/…` di bawah `BacktestShariah2/kajian/carian_setup/`. PR #45 dan #46 sudah digabung ke `main`; kerja 14 Nov digabung melalui PR berikutnya (lihat §7).
 
@@ -114,21 +116,27 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 - **Perkara untuk disemak oleh chat baharu:** adakah `jejak_f.yml` berjalan selepas Lejar 14 Nov dan `jejak_f/RINGKASAN.md` menunjukkan harga ≥ 20261113? `workflow_run` TIDAK tercetus jika Lejar didispatch oleh penjaga dengan `GITHUB_TOKEN`; jika itu berlaku, dispatch `jejak_f.yml` secara manual dan cadangkan langkah cetus terus dalam `lejar.yml` (seperti `analisis.yml`). Jangan ubah `lejar.yml` tanpa keputusan pengguna.
 - Ujian: `python3 -m unittest discover -s BacktestShariah2/ujian`; `python3 BacktestShariah2/standard/sahkan.py --betulkan` mesti keluar 0.
 
-## 8. Keputusan terbuka (juga dalam `koordinator/keputusan.csv`)
+## 8. Keputusan: sudah dibuat dan yang tinggal
 
-| # | Soalan | Cadangan Claude |
-|---|---|---|
-| 1 | Ukur prasyarat ikut takrif pakar (follow-through day, kiraan distribution day, breadth thrust, nisbah 4 %, regangan turun-naik, peringkat Weinstein) DAN padanan prasyarat × jenis setup (pecah keluar lawan pantulan), dengan pindaan (i) ditulis dahulu? | **Ya** |
-| 2 | Selepas itu, masukkan prasyarat yang lulus sebagai penapis baharu dan jalankan pusingan CS05 (pangkat ikut kadar tangkap), kemudian kemas kini kohort jejak hadapan dengan pindaan bertarikh? | **Ya**, hanya prasyarat yang lulus peraturan pindaan (i) |
-| 3 | Tambah lajur prasyarat/syarat terus ke `data/registry_F.csv` dan `jejak_f/RINGKASAN.md` (sekarang ia fail berasingan `PEMBAHAGIAN_F`)? | **Ya**, bersama CS05 (ubah penjana + ujian sekali) |
+**Sudah diputuskan pengguna (14 Nov 2026):** jalankan carian sekali lagi untuk SEMUA kaedah dengan prasyarat + syarat (pusingan **CS05**), di chat baharu. Butiran teknikal diserahkan kepada Claude, sentiasa berbalik kepada matlamat §1.
+
+**Tinggal untuk Claude putuskan dalam pindaan (i) (bukan soalan kepada pengguna):** senarai dan ambang prasyarat, bilangan prasyarat setiap peraturan, peraturan lulus, dan sama ada lajur prasyarat/syarat dimasukkan terus ke `data/registry_F.csv` dan `jejak_f/RINGKASAN.md` (cadangan: ya, bersama CS05).
+
+**Hanya ini yang perlu keputusan pengguna kemudian:** menukar kohort jejak hadapan (papertrade) selepas CS05, dan apa-apa berkaitan wang sebenar.
 
 Tertangguh lebih lama (belum dimulakan): keluarga indikator berparameter penuh; data saham delist; simulasi portfolio berasaskan slot untuk setup kadar tangkap; carian suku tahunan automatik di GitHub Actions.
 
-## 9. Langkah seterusnya yang dicadangkan (jika keputusan 1 = ya)
+## 9. Reka bentuk CS05 yang dicadangkan (prasyarat × syarat, semua kaedah)
 
-1. Tulis pindaan (i) dalam `SPEC_CARIAN_SETUP.md` dan komit SEBELUM mengukur: takrif + ambang setiap prasyarat pakar (`KAJIAN_PRASYARAT_PAKAR.md` §5a), kelas setup (pecah keluar/momentum lawan pantulan/undur, ditentukan daripada pencetus dan penapis SEBELUM hasil dilihat), peraturan lulus.
-2. Tambah prasyarat ke `cs_prasyarat.py`; ukur kadar lari DAN kena henti setiap kelas setup di bawah setiap prasyarat, lima kepingan.
-3. Lapor dalam Bahasa Melayu mudah; kemudian CS05 jika ada yang lulus.
+Cadangan, BELUM dipradaftar. Tulis pindaan (i) dalam `SPEC_CARIAN_SETUP.md` dan komit SEBELUM menjalankan apa-apa.
+
+1. **Ruang carian.** Peraturan masuk = **prasyarat** (tiada, atau satu daripada senarai) × **pencetus** (kesemua 500: setiap benih M asal + 2 varian, setiap benih N, setiap indikator) × **penapis saham** (0–2 daripada 27 penapis peringkat saham; tiga penapis pasaran lama `F26`–`F28` berpindah ke lapisan prasyarat). Dengan ~45 prasyarat: kira-kira 46 × 500 × 379 ≈ 8.7 juta peraturan masuk. Pangkat ikut kadar tangkap seperti CS03 (laju: CS03 menskor 233,000 peraturan dalam ~40 saat).
+2. **Senarai prasyarat.** 38 daripada tinjauan (h) (`cs_prasyarat.PRASYARAT`; buang pasangan pelengkap yang serupa) + takrif pakar yang belum diukur (`KAJIAN_PRASYARAT_PAKAR.md` §5a: follow-through day, kiraan distribution day, breadth thrust, nisbah 4 %, regangan turun-naik, peringkat Weinstein, hari 90 %). Ambang dikunci dalam pindaan.
+3. **Cari dan sahkan.** Cari pada kumpulan A (E1 2010–2019, E2 2020–2024); sahkan 200 teratas + 200 rawak pada kumpulan B (K1, K2, K3 = 2025–Ogo 2026). Isyarat benih kumpulan B perlu dibina untuk semua pencetus yang terpilih (~1 jam).
+4. **Banding wajib dalam laporan.** (a) Bagi SETIAP pencetus: skor syarat sahaja (`hasil/CS03/SEMUA_PENCETUS.csv`) lawan skor terbaik dengan prasyarat, supaya nampak kaedah mana yang ditolong prasyarat. (b) Padanan jenis setup (pecah keluar/momentum lawan pantulan/undur, dikelaskan sebelum hasil dilihat) × prasyarat. (c) Plasebo: prasyarat peringkat hari mempunyai sedikit pemerhatian bebas, jadi bandingkan dengan siri prasyarat yang sama dianjak masa (atau prasyarat rawak dengan % masa benar yang sama); lebih banyak gabungan dicuba = lebih banyak nasib. (d) Kadar kena henti di sebelah kadar lari.
+5. **Selepas itu.** Pilih henti × keluar untuk papan (seperti CS03), daftar `Fxx` baharu dengan lajur prasyarat dan syarat berasingan, kemudian cadangkan kemas kini kohort jejak hadapan dengan pindaan bertarikh.
+
+Kaveat untuk dibawa: "earnings akan datang" memakai tarikh sebenar (pandang ke hadapan ringan; dalam papertrade perlukan kalendar earnings); peta sektor/industri ialah peta semasa; tiada saham delist; set 2000 bukan tapisan Shariah; papan ialah pangkat backtest, BUKAN bukti.
 
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 
@@ -143,6 +151,7 @@ python3 cs_cari.py tepat $K CS02
 python3 cs_cari.py panel $K B && python3 cs_cari.py kunci $K CS02   # ~30 min
 python3 cs_lapor.py $K CS02 arkib                                   # 'arkib' = jangan tulis ganti kajian/CARIAN_SETUP.md
 python3 cs_tangkap.py $K                                            # CS03, ~7 min
+python3 cs_tangkap.py $K semua                                      # rekod SEMUA peraturan masuk kumpulan A, ~1 min
 python3 cs_tala.py $K                                               # CS04, ~16 min
 python3 cs_prasyarat.py $K                                          # tinjauan prasyarat, ~2 min selepas panel/benih ada
 python3 cs_ringkas.py                                               # TOP50 + PEMBAHAGIAN_F (tiada folder kerja)
@@ -151,7 +160,7 @@ python3 cs_hadapan.py jejak                                         # penjejak h
 
 CS01 sama dengan set `431` dan `kunci` (pusingan `CS01`). **Awas:** `cs_lapor.py` (walaupun dengan `arkib`), `cs_tangkap.py` dan `cs_tala.py` menulis `data/registry_F.csv`; tanpa `arkib`, `cs_lapor.py` juga menulis ganti `kajian/CARIAN_SETUP.md`, begitu juga `cs_tangkap.py` dan `cs_tala.py`; jangan jalankan semula pusingan lama kecuali untuk mengesahkan, dan semak `git diff` selepasnya.
 
-Disimpan sebagai rekod (kecil): `hasil/CS01|CS02/tepat_semua.csv` (~1,960–1,990 setup dengan skor tepat), `senarai_kunci.csv` (200 teratas + 200 rawak pada Kunci), `papan.csv`, `meta.json`, `besar_meta.json` (taburan skor), dan log larian (`*.log`, masa UTC).
+Disimpan sebagai rekod: `hasil/CS03/semua_masuk.csv.gz` (SEMUA 182,903 peraturan masuk yang diskor pada kumpulan A: bilangan, kadar lari / capai +10 % / kena henti dan asas rawak setiap era, skor) dan `hasil/CS03/SEMUA_PENCETUS.csv|md` (satu baris setiap kaedah); `hasil/CS01|CS02/tepat_semua.csv` (~1,960–1,990 setup dengan skor tepat), `senarai_kunci.csv` (200 teratas + 200 rawak pada Kunci), `papan.csv`, `meta.json`, `besar_meta.json` (taburan skor), dan log larian (`*.log`, masa UTC).
 
 ## 11. Perangkap teknikal yang sudah ditemui
 
