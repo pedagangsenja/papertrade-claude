@@ -429,3 +429,6 @@
 
 ## Analisis mingguan 2026-11-07 (Sabtu)
 - `WFO/kod/analisis_sebenar.py`: 224 kaedah; AMARAN 2, SELARI 15, data belum cukup 207. Kaedah AMARAN: M28 (matang 26, purata -2.29%, t -1.84), M76 (matang 17, purata -2.03%, t -2.11). db `analisis/sebenar` dikemas kini. Tiada order. Tiada wang sebenar.
+
+## Analisis mingguan 2026-11-14 (Sabtu)
+- `WFO/kod/analisis_sebenar.py`: 228 kaedah; AMARAN 5, SELARI 24, data belum cukup 199. Kaedah AMARAN (terburuk dahulu, ikut t): M08 (matang 42, purata -2.99%, t -6.82), M123 (47, -1.43%, t -5.52), M76 (26, -1.78%, t -2.81), M128 (10, -5.78%, t -2.43), M28 (47, -2.25%, t -2.36). db `analisis/sebenar` dikemas kini. Tiada order. Tiada wang sebenar.
