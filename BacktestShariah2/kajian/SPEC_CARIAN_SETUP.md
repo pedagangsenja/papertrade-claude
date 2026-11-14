@@ -417,6 +417,85 @@ Tiada hasil peringkat ini dilihat sebelum pindaan ditulis. Peraturan masuk, papa
 - **Jejak hadapan:** tiada setup CS05 masuk jejak hadapan (keputusan pengguna 14 Nov 2026). Kohort 13 Nov tidak berubah.
 - Kod `carian_setup/cs_lengkap.py`; keluaran `hasil/CS05/` (`LENGKAP` dalam `LAPORAN.md`, `SEMUA_PENCETUS_LENGKAP.md`).
 
+### Pindaan 14 Nov 2026 (k) — pusingan CS06: pangkat masuk ikut TANGKAP PENUH, dan tala bersama prasyarat (sebelum dijalankan)
+
+Keputusan pengguna 14 Nov 2026 ("ya untuk tiga-tiga"): sambung backtest dengan (A) memangkatkan peraturan masuk terus
+ikut tangkap penuh setup lengkap, bukan label `lari`; (B) menala parameter BERSAMA prasyarat. Tiada setup CS05/CS06
+masuk jejak hadapan. Kod: `carian_setup/cs_cs05.py` (pusingan `CS06`), `cs_lengkap.py`, `cs_tala6.py`.
+
+**Apa yang sudah dilihat:** semua hasil (i) dan (j) pada kumpulan A dan B; reka bentuk ini dipilih selepasnya, jadi
+kumpulan B bukan lagi "tidak dilihat" bagi keluarga setup ini (K3 kekal ujian paling ketat, dengan kaveat itu). Kadar
+asas semua bar layak kumpulan A (bukan hasil carian): `lari` 5.22 %, tangkap penuh piawai 5.12 %; 95 % bar `lari` juga
+tangkap penuh dan 97 % sebaliknya. Maka pangkat (A) DIJANGKA hampir sama dengan CS05; ini diukur, bukan diandaikan.
+
+**A. Pangkat masuk ikut tangkap penuh.**
+
+- Label sasaran **`tp`** = tutup sesi 5 ≥ `P` + 5 % DAN dagangan dengan **pegang piawai** dijual dengan `R` ≥ +10 %.
+  Pegang piawai = henti `H4` (4×ATR14), tiada keluar indikator (`X00`), jual pada tutup sesi 20: cara pegang yang paling
+  kerap terpilih dalam (j). `tp` menggantikan `lari` (yang memakai henti −8 % tetap) sebagai sasaran pangkat; label lain
+  kekal untuk laporan.
+- Ruang carian (103,088,000 peraturan masuk), dua kayu ukur (pilih = lawan rawak hari sama × tercile ATR %; jumlah =
+  lawan rawak era sama × tercile; asasnya kadar `tp`), `n` ≥ 100 setiap era, peringkat tepat, kolam calon papan, papan 10
+  teratas dengan had kepelbagaian, Kunci, larian plasebo, banding setiap pencetus (`S`/`P`/`PL`) dan padanan: semuanya
+  seperti (i) + tambahan (i), dengan `tp` di tempat `lari`.
+- Setup lengkap papan: (henti × keluar) dipilih seperti (j), tetapi ikut kadar tangkap penuh DENGAN henti dan keluar
+  setup itu sendiri (tutup sesi 5 ≥ `P` + 5 % DAN `R` ≥ +10 %); asas rawak dengan henti dan keluar yang sama.
+- Banding wajib dengan CS05: Spearman antara skor CS05 (`lari`) dan skor CS06 (`tp`) bagi peraturan yang dinilai tepat
+  dalam kedua-duanya, dan bilangan setup papan yang peraturan masuknya sama.
+- Keluarga F: peraturan masuk papan CS06 yang sudah berdaftar (`F39`–`F57`) mengekalkan ID dan barisnya; hanya peraturan
+  masuk baharu mendapat ID baharu (pusingan `CS06`).
+
+**B. Tala bersama prasyarat.** Induk = setup papan CS06 (kedua-dua papan). Tiga paksi ditala serentak:
+
+- Pencetus: induk berasaskan kaedah M → 24 varian baharu, setiap parameter `tala = Y` seragam dalam ±25 % nilai induk
+  (dipotong pada [`bawah`, `atas`] `param_julat.csv`; benih 20261113), seperti (e). Induk N dan indikator P kekal.
+- Penapis saham berambang (grid (e)): RS ≥ {50, 60, 70, 80, 90, 95}; ATR % ≥ {2, 3, 4, 5, 6, 8}; ≥ {20, 30, 40, 50, 60} %
+  di bawah puncak 52 minggu. Penapis lain kekal.
+- Prasyarat berambang (jadual di bawah). Prasyarat tanpa ambang (`QA01`–`QA04`, `QB03`, `QG01`, `QG02`, `QG04`, `QH07`,
+  `QH08`, `QH09`, `QF05`) kekal.
+
+| Prasyarat | Grid ambang (nilai induk dalam kurungan) |
+|---|---|
+| `QA05` QQQ dalam x % dari puncak | 1, 2, (3), 5, 7 |
+| `QA06` / `QA07` QQQ ≥ x % di bawah puncak | 5, 7.5, (10), 15, (20), 25 |
+| `QA08` / `QA09` rejim baharu ≤ n sesi | 5, (10), 15, 20, 30 |
+| `QA10` QQQ RSI14 < x | 30, (35), 40, 45 |
+| `QA11` QQQ naik ≥ x % dalam 5 sesi | 2, (3), 4, 5 |
+| `QB01` turun-naik SPY 21 hari ≥ x % | 20, (25), 30, 35, 40 |
+| `QB02` turun-naik SPY 21 hari ≤ x % | 8, (10), 12, 15 |
+| `QC01` ≥ x % saham di atas MA50 | 50, (60), 70, 80 |
+| `QC02` ≤ x % saham di atas MA50 | 15, 20, (30), 40 |
+| `QC03` keluasan naik ≥ x mata dalam 10 sesi | 5, (10), 15, 20 |
+| `QC04` ≥ x % saham di atas MA200 | 50, (60), 70 |
+| `QC05` ≥ x % saham dalam 5 % dari puncak | 10, (15), 20, 30 |
+| `QG03` x hari pertama bulan | 5, (7), 10 |
+| `QH01`, `QH04`, `QH10` tempoh aktif n sesi | 10, (20), 30 |
+| `QH02` distribution day ≤ n | 1, (2), 3 |
+| `QH03` distribution day ≥ n | 4, (5), 6, 7 |
+| `QH05` nisbah 4 % > x | 1.5, (2), 3 |
+| `QH06` nisbah 4 % < x | 0.33, (0.5), 0.67 |
+| `QD01` / `QD02` sektor n teratas / terbawah | 2, (3), 4 |
+| `QD03`, `QE04` ≥ x % saham sektor / industri di atas MA50 | 50, (60), 70 |
+| `QE01`, `QE02`, `QE03` industri x % teratas / terbawah | 10, (20), 30 |
+| `QE05` saham lain industri sama naik ≥ x % dalam 20 sesi | 15, (20), 30 |
+| `QF01` earnings dalam 1–k sesi akan datang | 2, 3, (5), 7, 10 |
+| `QF02` 0–k sesi selepas earnings | 2, (4), 7 |
+| `QF03` 5–k sesi selepas earnings | 14, (19), 29 |
+| `QF04` tiada earnings dalam k sesi akan datang | 10, (20), 30 |
+| `QF06` hasil suku terkini tumbuh ≥ x % | 10, (20), 30, 50 |
+| `QF07` harga melompat ≥ x % pada hari earnings | 3, (5), 8 |
+
+- Skor sel = skor tepat CS06 mengikut kayu ukur papan induk (satu posisi setiap saham; `n` ≥ 100 dalam E1 dan E2).
+- **Dataran, bukan puncak:** markah sel = median skor sel itu dan jirannya ±1 langkah pada setiap ambang yang ditala
+  (kotak 3^k); perlu sekurang-kurangnya separuh sel kotak (paling kurang 2) cukup isyarat. Varian pencetus tidak
+  berjiran. Anak = sel bermarkah dataran tertinggi; jika sel induk sendiri tertinggi, induk kekal.
+- **Ujian:** anak dan induk dinilai pada kumpulan B. **Bacaan dikunci:** "tala menolong" hanya jika lebih separuh anak
+  (tidak termasuk induk kekal) mengatasi induknya dalam kelebihan `tp` pada kumpulan B gabungan DAN pada K3. Jika tidak,
+  itu dilaporkan sebagaimana adanya.
+- Cara pegang anak dipilih seperti A; anak didaftarkan dalam keluarga F (ID baharu, catatan induk dalam laporan).
+
+Keluaran `carian_setup/hasil/CS06/`; `kajian/CARIAN_SETUP.md` memaparkan pusingan terkini. Kaveat (i) dan (j) kekal.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
