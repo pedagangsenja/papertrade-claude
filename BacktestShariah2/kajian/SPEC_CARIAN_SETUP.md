@@ -729,6 +729,29 @@ dalam `kajian/KAJIAN_PENGESAHAN.md`.
 - Jika menolong: dicadangkan sebagai lapisan pilihan keluarga F melalui pindaan berasingan; jika tidak: direkod sebagai dapatan.
 - Kaveat: S2 mengandaikan tiada gelinciran; prasyarat dinilai pada hari isyarat; kumpulan B sudah dilihat; tiada saham delist.
 
+### Pindaan 14 Nov 2026 (s) — semakan peringkat AKAUN bagi dua lorong, dan subset Shariah lorong trend (sebelum dijalankan)
+
+Sebab: kadar tangkap bukan hasil akaun (pindaan (l)); lorong trend (q) mempunyai 33–50 % dagangan rugi ≥ 15 % dan pegangan
+6 bulan; matlamat pengguna menetapkan toleransi MDD akaun −10 %. Belum pernah diukur bagi lorong trend atau bagi setup swing
+teratas kedudukan akhir. Kod `carian_setup/cs_akaun9.py`; keluaran `hasil/AKAUN.md|csv`. Analisis, bukan carian; tiada jejak
+hadapan.
+
+- **Buku (kumpulan B, 10 slot × 10 %, kos 0.5 %, tunai 0 %; isyarat berlebihan dipilih rawak, 200 ulangan, median):**
+  lorong swing = 8 setup dipercayai teratas kedudukan akhir pada tarikh ini (`F43`, `F63`, `F65`, `F51`, `F50`, `F56`, `F39`,
+  `F91`), setiap satu dan buku gabungan `SWING8`, dengan henti/keluar berdaftar di bawah pegang minimum (p); lorong trend =
+  11 setup Dipercayai-T (`T01`–`T08`, `T10`–`T12`), setiap satu dan buku gabungan `TREND11`, dengan henti/keluar terpilih
+  (q). Maklumat tambahan: `TREND11` dengan keluar rujukan "tiada kemajuan selepas 40 sesi" (henti 6×ATR14).
+- **Jalur rawak** seperti (l): setiap isyarat diganti saham rawak pada hari dan tercile ATR % yang sama, dengan henti dan
+  keluar yang sama (lorong trend: saham dengan tetingkap 126 sesi lengkap).
+- **Ukuran:** isyarat diambil, dagangan setahun, bulan tanpa belian, pendedahan, CAGR, MDD, **CAGR pada MDD −10 %**
+  (pendedahan dikecilkan sehingga MDD ≈ −10 %), jalur rawak (median, p5–p95), tahun positif, tahun terburuk, K3; kadar
+  tangkap pada dagangan yang DIAMBIL. SPY skala sama dipaparkan sebagai maklumat sahaja (bukan kayu ukur).
+- **Bacaan dikunci (sama seperti (l)):** sebuah buku "menambah di peringkat akaun" hanya jika CAGR pada MDD −10 % positif DAN
+  melebihi persentil ke-95 jalur rawak.
+- **Subset Shariah lorong trend (maklumat):** bagi setiap setup `T`, belian pada saham dalam `data/harga/univ.txt` (senarai
+  semasa, bukan titik-masa): kadar `besar` lawan rawak hari sama, dijual ≥ +30 %, menang, rugi ≥ 15 % (jika ≥ 30 belian).
+- Kaveat: tiada saham delist (bias lebih besar bagi pegang 6 bulan); kumpulan B sudah dilihat; K3 lorong trend pendek.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
