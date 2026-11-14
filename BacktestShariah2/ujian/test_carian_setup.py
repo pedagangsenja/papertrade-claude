@@ -1035,6 +1035,19 @@ class TestCS07(unittest.TestCase):
         self.assertTrue(np.allclose((1 + R2[tiada_henti] + k7.KOS) * 1.02, 1 + R0[tiada_henti] + k7.KOS))
         self.assertTrue((S2[7][:, 0] <= S0[7][:, 0]).all())                     # naik >= 5 % lebih sukar dari harga lebih tinggi
 
+    def test_rekod_pengesahan(self):
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil')
+        T = pd.read_csv(os.path.join(d, 'PENGESAHAN.csv'))
+        Y = T[T.dipercayai]
+        self.assertGreaterEqual(len(Y), 40)
+        self.assertTrue((T.sah1 <= T.sah2 + 1e-9).all())                        # tutup di atas tinggi => harga melepasi tinggi
+        self.assertTrue((T.premium2.dropna() >= -1e-9).all())                   # buy-stop tidak pernah lebih murah daripada buka esok
+        for v in ('s1', 's2'):                                                  # bacaan dikunci (r): pengesahan TIDAK menolong
+            lulus = int(((Y[f'terus_{v}'] > Y.terus_v0) & (Y[f'tp_{v}'] > Y.tp_v0)).sum())
+            self.assertLessEqual(lulus, len(Y) / 2)
+        G = pd.read_csv(os.path.join(d, 'PENGESAHAN_keluarga.csv'))
+        self.assertEqual(len(G), 656)
+
     def test_mesin_kelompok_tetap(self):
         import cs_mesin as ms
         import cs_tala7 as t7

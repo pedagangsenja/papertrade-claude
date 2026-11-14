@@ -36,6 +36,8 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 13. **(14 Nov, syarat wajib baharu) Pegang minimum:** tiada beli dan jual pada hari yang sama; pegang sekurang-kurangnya 3 hari ("kalau beli hari ini jual hari ini tak jadi swing trade"). Dilaksanakan sebagai pindaan (p): indikator keluar hanya menjual mulai buka sesi ke-4; henti rugi kekal aktif sejak sesi ke-2. Analisis: `hasil/PEGANG_MIN.md` (setup F tidak pernah menjual pada hari beli; `F21`/`F22` menjual ~50 % dagangan pada hari ke-2/3 di bawah peraturan lama).
 14. **(14 Nov, lorong KEDUA diminta pengguna) Beli selepas PENGESAHAN uptrend besar, pegang sampai trend tamat:** "beli di tengah atau lewat sedikit dari start uptrend ... tunggu sekejap then datang confirmation untuk big uptrend, then baru beli, then continue hold sampai habis trend". Kes contoh pengguna: `MXL` 2026 (asas ~$17 hingga Mac; pecah puncak 52 minggu 13 Apr → beli $21.5; 20 Apr lonjakan + volum → beli $33.5, ke puncak $128 pada 30 Jun = +282 %; 24 Apr gap +76 % → beli $60.9, +110 %; kemudian jatuh ke $57 pada Julai). Ini BUKAN swing ≤ 4 minggu: perlu lorong berasingan (pegang hingga indikator trend tamat, tanpa had 20 sesi) dengan kedudukan sendiri. Belum diukur: enjin CS menjual selewat-lewatnya pada sesi 20. Dalam bingkai 4 minggu, syarat ikut trend (templat Minervini, puncak 52 minggu, RS tinggi) TIDAK menaikkan kadar tangkap (CS05). Rancangan: pusingan `CS08` selepas CS07, dengan pindaan bertarikh dahulu.
 
+15. **(14 Nov, soalan pengguna) "Tunggu confirmation, contohnya higher high, baru entry"** (kata seorang pakar): dikaji dalam `kajian/KAJIAN_PENGESAHAN.md` + `hasil/PENGESAHAN.md` (pindaan (r)). Amalan standard aliran ikut trend sahaja, bukan semua pakar. Pada setup F: TIDAK menolong (2 dan 5 daripada 42; harga beli 1.6–4.1 % lebih mahal, tangkapan mutlak −28 hingga −57 %), walaupun isyarat yang kemudian memecah tinggi memang jauh lebih baik (17.5 % lawan 4.0 %). Tempat pengesahan yang betul = lorong trend `T`. Tidak diintegrasikan ke dalam F.
+
 **Ukuran yang betul = KADAR TANGKAP** ("lari": naik ≥ 5 % minggu pertama, capai ≥ 10 % sebelum henti −8 %, masih ≥ 10 % pada minggu ke-4), lawan saham rawak pada hari dan tercile ATR% yang sama. BUKAN purata setiap dagangan, BUKAN banding indeks.
 
 ## 1a. Semakan 12 item lawan apa yang benar-benar dibuat (14 Nov 2026, teguran ketiga pengguna)
@@ -181,8 +183,10 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 
 **Diputuskan Claude di bawah serahan pengguna ("anda sendiri tahu kan matlamat kita?"):** kod F baharu hanya bagi setup yang lulus "dipercayai" (penjelasan (n)-2); pegang minimum = V1 (henti rugi kekal aktif sejak sesi ke-2); pengguna boleh menukar kepada V2.
 
+**Diputuskan pengguna 14 Nov 2026 ("ya, gabung ke main") dan SUDAH dilaksanakan:** PR #50 (CS07, pegang minimum, mesin, CS08) digabung; `mesin_carian.yml` dicetus sekali secara manual untuk mengesahkan ia berjalan di Actions.
+
 **Menunggu keputusan pengguna:**
-1. Gabung CS07 + pegang minimum + mesin ke `main` (PR): tanpanya mesin mingguan tidak berjalan dan penjejak F di `main` masih memakai peraturan keluar lama.
+1. Kajian pengesahan (pindaan (r)) dan apa-apa selepas PR #50 berada di cabang kerja sahaja sehingga digabung.
 2. Data saham delist (§9d): pengguna mempersoalkan keperluannya ("saya tak faham kenapa perlu fokus dekat saham delist ini"); Claude mencadangkan langkau dan catat sebagai kaveat. Ia BUKAN item matlamat. Pilihan lama selepas portfolio (§9b): (a) mula jejak hadapan maya bagi kohort kecil (`F40`, `F58`, `F49`) untuk menguji kadar tangkap pada data langsung, selepas kalendar earnings dibina dalam penjejak; atau (b) berhenti di sini dan tunggu kohort 13 Nov matang. Pengguna melarang jejak hadapan sehingga membenarkannya.
 
 **Tiada yang berkaitan wang sebenar berubah:** kad skor kekal satu-satunya keputusan.
