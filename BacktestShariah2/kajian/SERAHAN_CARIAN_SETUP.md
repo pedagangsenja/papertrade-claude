@@ -2,7 +2,7 @@
 
 Ditulis pada akhir sesi kerja 13–14 Nov 2026 dan dikemas kini pada 14 Nov 2026 selepas pusingan CS05 dan CS06, supaya chat baharu boleh menyambung tanpa membaca chat lama. Fail ini ialah nota serahan (ditulis tangan, bertarikh); nombor di sini dipetik daripada fail hasil yang dinamakan, dan fail hasil itulah sumber kebenaran.
 
-**Baca mengikut susunan ini:** fail ini → `kajian/SPEC_CARIAN_SETUP.md` (pradaftar + pindaan (a)–(q)) → **`kajian/carian_setup/hasil/KEDUDUKAN_AKHIR.md` (SATU jadual semua setup lawan matlamat, §9c)** → `kajian/CARIAN_SETUP.md` (papan semasa = CS06) → `kajian/carian_setup/hasil/CS06/SEMUA_PENCETUS_LENGKAP.md` (setiap kaedah) dan `hasil/CS06/TALA.md` → `kajian/KAJIAN_PRASYARAT_PAKAR.md` → `jejak_f/RINGKASAN.md`.
+**Baca mengikut susunan ini:** fail ini → `kajian/SPEC_CARIAN_SETUP.md` (pradaftar + pindaan (a)–(t)) → **`kajian/carian_setup/hasil/KEDUDUKAN_AKHIR.md` (SATU jadual semua setup lawan matlamat, §9c)** → `kajian/CARIAN_SETUP.md` (papan semasa = CS06) → `kajian/carian_setup/hasil/CS06/SEMUA_PENCETUS_LENGKAP.md` (setiap kaedah) dan `hasil/CS06/TALA.md` → `kajian/KAJIAN_PRASYARAT_PAKAR.md` → `jejak_f/RINGKASAN.md`.
 
 **Ringkasan CS05 dalam lima baris (butiran §9):** (1) prasyarat MENOLONG kadar tangkap bagi hampir semua kaedah, jauh melebihi plasebo; (2) hampir semuanya datang daripada SATU prasyarat: earnings dalam 1–5 sesi akan datang; (3) prasyarat pasaran panik menaikkan kadar lari SEMUA saham (bila membeli), bukan kemahiran memilih, dan kena henti naik bersama; prasyarat aliran ikut trend dan sektor/industri kuat tidak menolong; (4) pencetus (kaedah M/N/indikator) menambah sedikit sahaja di atas prasyarat + penapis; (5) pegang/keluar (pindaan (j)): pegang hampir 20 sesi dengan henti longgar; indikator keluar jarang mengatasi "tiada keluar indikator".
 
@@ -13,6 +13,8 @@ Ditulis pada akhir sesi kerja 13–14 Nov 2026 dan dikemas kini pada 14 Nov 2026
 **Kedudukan akhir (pindaan (m), butiran §9c):** (10) selepas pengguna bertanya kali kedua "anda pasti sudah lengkap?", enam perkara yang belum diukur lawan matlamat ditutup: peringkat ketiga corak ("naik lagi hingga minggu ke-4"), kekerapan dan liputan, sumbangan setiap komponen, mutu pegang, saham Shariah, dan SATU kedudukan semua setup. 34 daripada 61 setup "dipercayai"; yang terbaik menangkap corak penuh 15–25 daripada 100 belian (rawak hari sama 8–20; rawak mana-mana hari 6); **semua 34 bersama hanya membeli 10 % daripada semua episod pelari**; indikator keluar tidak menambah untung pada pelari.
 
 **CS07 (pindaan (n), (o), (p); butiran §9e):** (11) tala parameter SEMUA kaedah (1,472 varian kaedah M + 656 varian 25 keluarga indikator) menolong sedikit pada saham tidak dilihat (anak > ibu 83 daripada 135; median +0.35 mata; 2025–26 +0.10), tetapi 20 teratas tidak bertambah baik; (12) carian KELUAR (225,840 cara setiap setup): **tiada indikator keluar yang menolong** mengikut bacaan dikunci; terbaik = pegang 20 sesi dengan henti longgar; satu peraturan sejagat (jual bila RSI terlebih beli SELEPAS untung ≥ 10 %) menambah ~+0.9 mata; (13) syarat wajib baharu **pegang minimum 3 sesi**; (14) 8 setup baharu lulus "dipercayai" → `F88`–`F95`; kedudukan akhir 69 setup, 42 dipercayai; (15) mesin berkala `mesin_carian.yml` (aktif selepas di `main`). **CS08, lorong kedua "beli selepas pengesahan uptrend, pegang sampai trend tamat" (kes MXL; pindaan (q); butiran §9f):** (16) 11 daripada 12 setup papan `T01`–`T12` dipercayai: 17–34 % belian jadi pelari besar (+50 % sebelum −15 % dalam 6 bulan) lawan rawak hari sama 11–21 % (mana-mana hari 7.9 %); SEMUA 12 memakai prasyarat **hasil suku terkini tumbuh ≥ 20 %**; (17) indikator "trend tamat" (tutup < MA50 dsb.) memotong pelari terlalu awal — pegang 6 bulan dengan henti longgar lebih baik, tetapi 33–50 % dagangan rugi ≥ 15 %; (18) `T11` akan membeli MXL pada 22 Apr 2026 ($34.0).
+
+**Semakan peringkat akaun (pindaan (s), butiran §9g):** (19) pada toleransi MDD −10 %, buku 10 slot gabungan lorong swing (`SWING8`) memberi +2.3 % setahun (mengatasi jalur rawak) dan lorong trend (`TREND11`) +2.9 % setahun (TIDAK mengatasi jalur rawak); tanpa dikecilkan, MDD kedua-dua buku melebihi −50 %. Kadar tangkap kekal pada belian yang diambil, tetapi **kelebihan memilih saham belum menjadi hasil akaun yang besar**. Lorong trend kekal pada saham Shariah (12 daripada 12). Mesin diluaskan ke lorong trend (pindaan (t)).
 
 **Status (keputusan pengguna 14 Nov 2026): backtest dahulu. JANGAN mula jejak hadapan bagi setup CS05/CS06/CS07.**
 
@@ -61,7 +63,7 @@ Pengguna: "cuba check dan baca betul-betul matlamat saya" (selepas Claude menuli
 | 13 Pegang minimum 3 sesi; tiada jual hari beli | capai (pindaan (p)) | enjin keluar, kedudukan akhir dan penjejak hadapan F; `hasil/PEGANG_MIN.md` |
 | 14 Lorong kedua: pengesahan uptrend → beli → pegang sampai trend tamat | dicari (CS08) | `hasil/CS08/LAPORAN.md`: papan `T01`–`T12` (BUKAN kod F), 11 dipercayai; keluar indikator tidak menolong; belum dijejak ke hadapan |
 
-Kerja seterusnya yang SELARI dengan matlamat: (i) mesin belum meliputi lorong trend (hanya lorong swing); (ii) gabung ke `main` supaya mesin dan peraturan pegang minimum penjejak aktif; (iii) mesin terus mencuba varian dan keluar baharu.
+Kerja seterusnya yang SELARI dengan matlamat: (i) peringkat papertrade (menunggu keputusan pengguna); (ii) gabung ke `main` supaya mesin dan peraturan pegang minimum penjejak aktif; (iii) mesin terus mencuba varian dan keluar baharu.
 
 ## 2. Cara bekerja dengan pengguna (pelajaran sesi ini)
 
@@ -369,6 +371,21 @@ Permintaan pengguna (kes MXL). Pradaftar dikomit sebelum dijalankan. Kod `cs_tre
 - **Kes MXL:** dalam kumpulan B; prasyarat hasil tumbuh ≥ 20 % benar sepanjang April 2026; `T11` (RS silang atas 95 + MA20 > MA50 + ADX > 25) memberi isyarat 21 Apr 2026 → beli $34.0 (puncak $128 = +276 %). Isyarat itu di luar statistik (tetingkap 126 sesi belum lengkap).
 - **Kaveat:** tiada saham delist (bias lebih besar bagi pegang 6 bulan); K3 pendek; B sudah dilihat; satu kes bukan bukti. Belum dijejak ke hadapan; mesin belum meliputi lorong ini.
 - Jana semula: `python3 cs_trend8.py skor $K && python3 cs_trend8.py pilih $K && python3 cs_trend8.py benihB $K && python3 cs_trend8.py keluar $K && python3 cs_trend8.py kunci $K && python3 cs_trend8.py lapor $K` (~30 min; perlukan fail CS07).
+
+## 9g. Semakan peringkat akaun dua lorong, subset Shariah lorong trend, mesin lorong trend (pindaan (s), (t); 14 Nov 2026)
+
+Pradaftar dikomit sebelum dijalankan. Kod `cs_akaun9.py`; sumber angka `hasil/AKAUN.md`, `AKAUN.csv`, `AKAUN_shariah.csv`. Kumpulan B, 10 slot × 10 %, 200 ulangan, jalur rawak = saham rawak hari sama × tercile ATR % dengan henti dan keluar yang sama.
+
+| Buku | Isyarat diambil | Pendedahan | CAGR / MDD (penuh) | **CAGR pada MDD −10 %** (rawak median; p95) | Tahun positif | Tahun terburuk | Tangkapan pada belian diambil (rawak) | Menambah? |
+|---|---|---|---|---|---|---|---|---|
+| `SWING8` (8 setup swing teratas) | 1,094 daripada 6,471 | 46 % | +10.2 % / −51.3 % | **+2.32 %** (+0.78; +1.80) | 13 / 17 | −23.9 % | tangkap penuh 18.5 % (10.1 %) | ya |
+| `TREND11` (11 setup trend dipercayai) | 364 daripada 5,948 | 87 % | +13.1 % / −54.8 % | **+2.87 %** (+1.79; +3.47) | 12 / 17 | −35.0 % | pelari besar 21.8 % (13.6 %) | tidak |
+| `TREND11` + keluar "tiada kemajuan 40 sesi" | 526 | 83 % | +8.8 % / −68.8 % | +1.67 % (+1.79; +3.58) | 12 / 17 | −40.4 % | 20.2 % (13.6 %) | tidak |
+
+- Setup tunggal: lorong swing 2 daripada 8 menambah (`F43` +2.0 %, `F56` +2.9 %; `F51` +3.3 % dan `F63` +2.5 % hampir di had p95); lorong trend 0 daripada 11 (+0.3 hingga +2.3 %).
+- **Bacaan jujur:** kadar tangkap KEKAL pada belian yang sempat diambil dalam kedua-dua lorong, tetapi pada toleransi MDD −10 % hasil akaun hanya +2 hingga +3 % setahun. Buku penuh 10 slot mempunyai MDD melebihi −50 % dalam kedua-dua lorong. Lorong trend: buku saham RAWAK dengan pegangan 6 bulan yang sama pun memberi +1.8 % (p95 +3.5 %), jadi kelebihan memilih belum dapat dibezakan daripada nasib di peringkat akaun. Selari dengan pindaan (l): **kadar tangkap tinggi bukan untung akaun**.
+- **Subset Shariah lorong trend:** semua 12 setup `T` cukup belian Shariah (56–134); kadar pelari besar pada saham Shariah mengatasi rawak bagi 12 daripada 12 (cth. `T01` 35.9 % lawan 20.2 %).
+- **Mesin (pindaan (t)):** `cs_mesin.py` kini menskor kelompok yang sama pada lorong trend juga → `hasil/MESIN/papan_trend.csv`; keluar dan corak kompleks belum diliputi. Larian mesin pertama di Actions (larian 2) berjaya dalam 19 minit pada 14 Nov 2026.
 
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 

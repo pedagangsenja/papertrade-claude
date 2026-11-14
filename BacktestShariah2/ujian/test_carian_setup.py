@@ -1048,6 +1048,14 @@ class TestCS07(unittest.TestCase):
         G = pd.read_csv(os.path.join(d, 'PENGESAHAN_keluarga.csv'))
         self.assertEqual(len(G), 656)
 
+    def test_mesin_lorong_trend(self):
+        """Pindaan (t): papan lorong trend berasingan; lajur swing tidak berubah."""
+        import cs_mesin as ms
+        self.assertEqual(ms.LAJUR[-6:], ['n_B', 'terus_B', 'asas_B', 'kl_K1', 'kl_K2', 'kl_K3'])
+        self.assertEqual(ms.LAJUR_T, ms.LAJUR[:12] + ['besar_B'] + ms.LAJUR[13:])
+        self.assertTrue(ms.PAPAN_T.endswith(os.path.join('MESIN', 'papan_trend.csv')))
+        self.assertEqual(list(ms.baca_papan(True).columns)[:11], ms.LAJUR[:11])
+
     def test_mesin_kelompok_tetap(self):
         import cs_mesin as ms
         import cs_tala7 as t7
@@ -1059,6 +1067,31 @@ class TestCS07(unittest.TestCase):
         self.assertTrue(all(t[0].endswith(f'.{ms.V_ASAS + 3}') and t[2] for t in T1))
         self.assertEqual((t7.induk('K07.012'), t7.induk('M73.5s3'), t7.induk('N16')), ('K07', 'M73', 'N16'))
         self.assertEqual((len(t7.varian_m1()), t7.V_RAWAK, t7.N_M_SETEMPAT, t7.N_SETEMPAT), (1072, tuple(range(3, 11)), 50, 8))
+
+
+class TestAkaun(unittest.TestCase):
+    """SPEC pindaan 14 Nov 2026 (s): semakan peringkat akaun dua lorong."""
+
+    def test_dikunci(self):
+        import cs_akaun9 as ak9
+        import cs_trend8 as t8
+        self.assertEqual(ak9.SWING, ['F43', 'F63', 'F65', 'F51', 'F50', 'F56', 'F39', 'F91'])
+        self.assertEqual(ak9.TREND, ['T01', 'T02', 'T03', 'T04', 'T05', 'T06', 'T07', 'T08', 'T10', 'T11', 'T12'])
+        self.assertEqual((ak9.N_SLOT, ak9.HAD_MDD, ak9.N_ULANG), (10, 0.10, 200))
+        self.assertEqual(ak9.TK40[0], 4)
+        self.assertIn('tiada kemajuan (selepas 40 sesi', t8.nama_keluar(ak9.TK40[1]))
+
+    def test_rekod_akaun(self):
+        import cs_akaun9 as ak9
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil')
+        T = pd.read_csv(os.path.join(d, 'AKAUN.csv'))
+        self.assertEqual(T.buku.tolist(), ak9.SWING + ['SWING8'] + ak9.TREND + ['TREND11', 'TREND11_TK40'])
+        self.assertTrue((T.diambil <= T.isyarat).all())
+        self.assertTrue((T.mdd <= 0).all())
+        for r in T.itertuples():                                                # bacaan dikunci pindaan (s)
+            self.assertEqual(bool(r.menambah), bool(r.cagr_had > 0 and r.cagr_had > r.rawak95_cagr_had), r.buku)
+        self.assertEqual(len(pd.read_csv(os.path.join(d, 'AKAUN_shariah.csv'))), 12)
+        self.assertTrue(os.path.exists(os.path.join(d, 'AKAUN.md')))
 
 
 class TestCS08(unittest.TestCase):

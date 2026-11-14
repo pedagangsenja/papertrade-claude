@@ -28,7 +28,7 @@ import cs_teras as teras  # noqa: E402
 import cs_trend8 as t8  # noqa: E402
 
 N_K, N_NILAI_B, V_ASAS = 12, 15, 1000            # dikunci pindaan (n): 12 varian setiap keluarga K; 15 terbaik dinilai pada B
-D_MESIN = os.path.join(SINI, 'hasil', 'MESIN')
+D_MESIN = os.environ.get('CS_MESIN_KELUAR') or os.path.join(SINI, 'hasil', 'MESIN')    # CS_MESIN_KELUAR: uji kering di luar repo
 PAPAN = os.path.join(D_MESIN, 'papan.csv')
 LAJUR = ['larian', 'tarikh', 'nama', 'induk', 'pencetus', 'param', 'prasyarat', 'penapis', 'skor_A', 'n_E1', 'n_E2',
          'n_B', 'terus_B', 'asas_B', 'kl_K1', 'kl_K2', 'kl_K3']
