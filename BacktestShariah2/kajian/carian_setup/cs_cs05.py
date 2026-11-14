@@ -374,6 +374,14 @@ def kunci(kerja):
     cari.log(f'kunci: {len(P)} peraturan dinilai pada kumpulan B')
     # (5e) rujukan: prasyarat sahaja, semua bar layak
     sah = np.flatnonzero(pan['sah'])
+    # maklumat tambahan (tidak dipradaftar): setup papan TANPA pencetus = semua bar layak dengan prasyarat + penapis sama
+    tp_ = {}
+    for k in R:
+        r = P.loc[k]
+        e = sah[topeng(pan, Lr, sah, r.q1, r.q2, r.f1, r.f2)]
+        x = X[e]
+        tp_[k] = {'n': len(e), **{aw + n_: float(x[:, a + j].mean()) if len(e) else np.nan
+                                 for j, n_ in enumerate(LABEL) for aw, a in (('', 0), ('a_', NL), ('e_', 2 * NL))}}
     k3 = pan['tempoh'][sah] == 2
     xl, xg = X[sah, 4], X[sah, 3]
     ruj = []
@@ -403,7 +411,8 @@ def kunci(kerja):
                 for i, q in enumerate(senarai):
                     pad.append((n, q[:4], plasebo, *ukur(ev[LL[lap][i, ev] > 0])))
     pad = pd.DataFrame(pad, columns=['pencetus', 'prasyarat', 'plasebo', 'n', 'lari', 'a_lari', 'gagal', 'a_gagal'])
-    pickle.dump({'V': V, 'R': R, 'rujukan': pd.DataFrame(ruj), 'padanan': pad, 'ralat_benih_B': bn['ralat'],
+    pickle.dump({'V': V, 'R': R, 'tanpa_pencetus': tp_, 'rujukan': pd.DataFrame(ruj), 'padanan': pad,
+                 'ralat_benih_B': bn['ralat'],
                  'param_B': bn['param']}, open(os.path.join(kerja, 'cs05_kunci.pkl'), 'wb'), protocol=4)
     cari.log(f'kunci siap: padanan {len(pad):,} baris')
 
@@ -728,15 +737,31 @@ def lapor_(kerja):
               f"\"lari\" positif dalam ketiga-tiganya. **T3:** kelebihan lari melebihi persentil ke-95 peraturan rawak "
               f"({p(meta[f'p95_rawak_{kod}'], 2, True)} mata). **T4:** kelebihan lari (kumpulan B DAN K3) melebihi setup yang sama "
               'TANPA prasyarat.', '',
-              '| ID | Henti | Keluar | ' + ' | '.join(f'{t}: purata % / menang % / pegang' for t in TK) + ' |',
-              '|---' * (3 + len(TK)) + '|']
+              'Cara pegang dan keluar terbaik bagi setiap setup (dipilih pada kumpulan A; angka kumpulan B, kos 0.5 % ditolak, '
+              'jurang melepasi henti dijual pada harga buka):', '',
+              '| ID | Henti | Keluar | ' + ' | '.join(f'{t}: purata % / menang % / pegang' for t in TK)
+              + ' | Dagangan ≥ +10 % / rugi ≤ −8 % (kumpulan B) |', '|---' * (4 + len(TK)) + '|']
         for k, b in papan.items():
             if b['kod'] != kod:
                 continue
             rr = {t: {**{'n': 0, 'purata': np.nan}, **R[k].get(t, {})} for t in TK}
+            nR = sum(rr[t]['n'] for t in TK)
+            wR = lambda kol: sum(rr[t]['n'] * rr[t][kol] for t in TK if rr[t]['n']) / nR if nR else np.nan
             A.append(f"| `{idf[k]}` | {b['henti']} | {b['keluar']} | " + ' | '.join(
                 f"{p(rr[t]['purata'], 2, True)} / {p(rr[t].get('menang', np.nan))} / {rr[t].get('pegang', np.nan):.1f}"
-                if rr[t]['n'] else '–' for t in TK) + ' |')
+                if rr[t]['n'] else '–' for t in TK) + f" | {p(wR('k10'))} / {p(wR('rugi8'))} |")
+        A += ['', 'Dari mana datangnya kadar tangkap? Setiap sel: lari % (rawak %) · kena henti %, kumpulan B. "Tanpa pencetus" = '
+              'semua saham layak yang memenuhi prasyarat dan penapis yang sama (maklumat tambahan, tidak dipradaftar):', '',
+              '| ID | Setup penuh | Syarat sahaja (buang prasyarat) | Prasyarat + penapis sahaja (buang pencetus) |', '|---' * 4 + '|']
+        for k, b in papan.items():
+            if b['kod'] != kod:
+                continue
+            r, v = P.loc[k], V[k]
+            sel3 = lambda x: f"{p(gab(x, TK, 'lari')[1])} ({p(gab(x, TK, aw + 'lari')[1])}) · {p(gab(x, TK, 'gagal')[1])}"
+            kt = tanpa.get((r.pencetus, r.f1, r.f2))
+            x = KV['tanpa_pencetus'][k]
+            A.append(f"| `{idf[k]}` | {sel3(v)} | {sel3(V[kt]) if kt is not None else 'sama (tiada prasyarat)'} | "
+                     f"{p(x['lari'])} ({p(x[aw + 'lari'])}) · {p(x['gagal'])} |")
         j = jujur[kod]
         A += ['', f"**Semakan kejujuran ({kod}).** {j['berprasyarat']} daripada {j['n_atas']} peraturan teratas memakai "
               'sekurang-kurangnya satu prasyarat; paling kerap: '

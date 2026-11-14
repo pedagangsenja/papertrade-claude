@@ -1,0 +1,21 @@
+# CS05 (pindaan (i)); masa UTC 14 Nov 2026
+03:11:28 panel A: 1673 saham, 5,653,345 bar, 3,032,354 bar sah
+03:47:31 benih A: ok 451 ralat 0
+03:28:22 panel B: 1587 saham, 5,475,857 bar, 3,324,189 bar sah
+04:35:01 benih B: ok 451 ralat 0
+03:28:52 lapis A: % bar sah benar — pasaran QA01=60 QA02=40 QA03=84 QA04=16 QA05=55 QA06=16 QA07=7 QA08=19 QA09=19 QA10=4 QA11=14 QB01=10 QB02=32 QB03=55 QC01=52 QC02=11 QC03=26 QC04=66 QC05=74 QG01=49 QG02=51 QG03=23 QG04=8 QH01=18 QH02=7 QH03=67 QH04=11 QH05=16 QH06=10 QH07=26 QH08=67 QH09=78 QH10=31
+03:28:53 lapis A: kumpulan/syarikat QD01=26 QD02=22 QD03=49 QE01=18 QE02=17 QE03=17 QE04=48 QE05=31 QF01=7 QF02=7 QF03=21 QF04=60 QF05=44 QF06=16 QF07=5
+03:28:59 lapis B: % bar sah benar — pasaran QA01=60 QA02=40 QA03=84 QA04=16 QA05=55 QA06=15 QA07=6 QA08=20 QA09=19 QA10=4 QA11=14 QB01=9 QB02=30 QB03=54 QC01=51 QC02=11 QC03=25 QC04=65 QC05=74 QG01=49 QG02=51 QG03=23 QG04=8 QH01=17 QH02=6 QH03=69 QH04=11 QH05=16 QH06=9 QH07=25 QH08=67 QH09=79 QH10=28
+03:28:59 lapis B: kumpulan/syarikat QD01=26 QD02=22 QD03=48 QE01=18 QE02=18 QE03=17 QE04=49 QE05=34 QF01=7 QF02=7 QF03=21 QF04=60 QF05=46 QF06=16 QF07=5
+03:47:56 besar: 500 pencetus (siap 0); 25,244,177 isyarat
+03:53:27 besar siap: 465 pencetus cukup isyarat; 43,784,217 peraturan masuk diskor daripada 103,088,000; pilih: S>0 6,105, P>0 1,759,572 · jumlah: S>0 8,038, P>0 1,808,242
+03:53:35 plasebo: 500 pencetus (siap 0); 25,244,177 isyarat
+03:59:01 plasebo siap: 465 pencetus cukup isyarat; 43,485,086 peraturan masuk diskor daripada 103,088,000; pilih: S>0 6,105, P>0 368,004 · jumlah: S>0 8,038, P>0 843,234
+03:59:48 tepat pilih: 11842 sah; papan 10
+04:00:31 tepat jumlah: 11555 sah; papan 10
+04:00:52 kelas pilih: siap
+04:01:03 kelas jumlah: siap
+04:01:32 tepat siap: 4027 baris; kelas 2776, tanpa 241, plasebo_pilih 200, plasebo_jumlah 200, rawak 200, atas_pilih 197, atas_jumlah 193, papan_pilih 10, papan_jumlah 10
+04:35:50 kunci: 4027 peraturan dinilai pada kumpulan B
+04:37:02 kunci siap: padanan 46,948 baris
+04:37:47 CS05 lapor siap: {"pilih": {"n": 463, "n3": 305, "med_P": 0.04653078806027321, "med_PL": 0.006211112263708934, "med_P3": 0.05607295036315918, "med_PL3": 0.005109697580337524, "P_atas_S": 430,

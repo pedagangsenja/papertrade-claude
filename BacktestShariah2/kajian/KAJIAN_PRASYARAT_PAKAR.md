@@ -82,6 +82,8 @@ Angka = kadar saham "lari" bila prasyarat benar / tidak benar, kumpulan B, darip
 2. Reka bentuk yang dicadangkan: `kajian/SERAHAN_CARIAN_SETUP.md` §9 (prasyarat × pencetus × penapis saham, pangkat ikut kadar tangkap, sah pada kumpulan B, plasebo anjak masa).
 3. Asas "syarat sahaja" bagi setiap kaedah, untuk dibandingkan: `kajian/carian_setup/hasil/CS03/SEMUA_PENCETUS.md`.
 
+**Kemas kini 14 Nov 2026 (selepas CS05; ukuran, bukan bacaan pakar):** §5a dan §5b sudah diukur (`kajian/CARIAN_SETUP.md` §5, `carian_setup/hasil/CS05/PADANAN.csv`). Pada saham yang tidak dilihat: takrif aliran ikut trend (follow-through day, Peringkat 2 Weinstein, breadth thrust, nisbah 4 %, QQQ SMA10 > SMA20) tidak menaikkan kadar "lari"; padanan jenis setup × keadaan pasaran tidak disokong (pencetus IKUT TREND dan PANTULAN bertindak balas hampir sama); pasaran panik menaikkan kadar lari SEMUA saham bersama kadar kena henti; satu-satunya prasyarat yang menaikkan kelebihan memilih ialah earnings dalam 1–5 sesi akan datang. §5c (pendedahan berperingkat) masih belum diukur.
+
 Kaveat tinjauan (h) kekal terpakai: 38 prasyarat diukur, beberapa akan kelihatan baik secara kebetulan; prasyarat peringkat hari mempunyai sedikit pemerhatian bebas; tiada saham delist; set 2000 bukan tapisan Shariah.
 
 ## 7. Sumber

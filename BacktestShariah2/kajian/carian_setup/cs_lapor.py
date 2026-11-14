@@ -21,7 +21,8 @@ sys.path.insert(0, os.path.join(BS2, 'standard'))
 REG_F = os.path.join(BS2, 'data', 'registry_F.csv')
 LAJUR_F = ['id', 'keluarga', 'pusingan', 'tarikh_daftar', 'takrif', 'param', 'masuk', 'penapis', 'henti', 'keluar',
            'skor_tepat', 'n_cari1', 'purata_cari1', 'n_cari2', 'purata_cari2', 'n_K1', 'purata_K1', 'n_K2',
-           'purata_K2', 'n_K3', 'purata_K3', 'k10_K1', 'k10_K2', 'k10_K3', 'T1', 'T2', 'T3', 'status']
+           'purata_K2', 'n_K3', 'purata_K3', 'k10_K1', 'k10_K2', 'k10_K3', 'T1', 'T2', 'T3', 'status',
+           'prasyarat', 'syarat']          # dua lajur akhir: pindaan 14 Nov 2026 (i)
 # Setiap pusingan: penerangan tempoh, tempoh Kunci yang TAHUNNYA tidak dipakai carian (`bebas`), dan kaveat khusus.
 KONFIG = {
     'CS01': {

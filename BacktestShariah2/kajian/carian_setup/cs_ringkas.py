@@ -56,6 +56,8 @@ def pembahagian():
     baris = []
     for r in reg.itertuples():
         pas, sah = bahagi(r.penapis)
+        if str(getattr(r, 'prasyarat', '')).strip() not in ('', 'nan'):      # lajur registry (pindaan (i)): CS05 dan seterusnya
+            pas = '–' if r.prasyarat == 'tiada' else r.prasyarat
         baris.append({'id': r.id, 'pusingan': r.pusingan, 'prasyarat_pasaran': pas, 'pencetus': nama_pendek(r.masuk),
                       'penapis_saham': sah, 'henti': r.henti, 'keluar': r.keluar,
                       'jejak_hadapan': 'ya' if r.id in kohort else ''})
@@ -67,14 +69,16 @@ def tulis_pembahagian():
     d = os.path.join(HASIL, 'PRASYARAT')
     os.makedirs(d, exist_ok=True)
     t.to_csv(os.path.join(d, 'PEMBAHAGIAN_F.csv'), index=False)
-    kira = t.prasyarat_pasaran.value_counts()
+    kira = t[t.pusingan != 'CS05'].prasyarat_pasaran.value_counts()
     A = ['# Setup F: prasyarat (pasaran) lawan syarat (saham itu sendiri)', '', _status(), '',
          'Dijana `kajian/carian_setup/cs_ringkas.py` daripada `data/registry_F.csv` dan `jejak_f/kohort.json`. '
          '**Jangan sunting secara manual.**', '',
          'Prasyarat = isyarat yang BUKAN daripada saham itu sendiri. Ruang carian CS01–CS04 hanya ada tiga: '
          '**QQQ ON** (QQQ di atas SMA50 dan SMA10 di atas SMA20), **QQQ OFF** (selain itu) dan **SPY > SMA200**. '
+         'CS05 (pindaan (i)) menambah 33 prasyarat pasaran dan 15 prasyarat kumpulan/syarikat (`cs_lapis.py`). '
          'RS diletak di bawah syarat saham (dikira daripada harga saham itu, dipangkatkan lawan saham lain).', '',
-         'Bilangan: ' + ' · '.join(f'{k} = {v}' for k, v in kira.items()) + f' (jumlah {len(t)}).', '',
+         'Bilangan (CS01–CS04): ' + ' · '.join(f'{k} = {v}' for k, v in kira.items())
+         + f' (jumlah {int(kira.sum())}); CS05: {int((t.pusingan == "CS05").sum())} setup.', '',
          '| ID | Pusingan | Prasyarat (pasaran) | Syarat saham: pencetus | Syarat saham: penapis | Henti | Keluar | Jejak hadapan |',
          '|---' * 8 + '|']
     for r in t.itertuples():
@@ -83,8 +87,8 @@ def tulis_pembahagian():
     A += ['', '## Kaveat', '',
           '- `F23`/`F33` (benih M21) memakai harga SPY di dalam peraturan kaedah itu sendiri, selain prasyarat SPY > SMA200. '
           'Kaedah M lain belum diperiksa satu per satu pada tahap ini.',
-          '- Prasyarat lain (keluasan, turun-naik, sektor, industri, earnings, kalendar) BELUM ada dalam ruang carian; '
-          'ukurannya dalam `LAPORAN.md` folder ini (pindaan (h)).', '']
+          '- Prasyarat lain (keluasan, turun-naik, sektor, industri, earnings, kalendar, takrif pakar) masuk ruang carian '
+          'mulai CS05 (`hasil/CS05/LAPORAN.md`); tinjauan asalnya dalam `LAPORAN.md` folder ini (pindaan (h)).', '']
     with open(os.path.join(d, 'PEMBAHAGIAN_F.md'), 'w') as f:
         f.write('\n'.join(A))
     return t

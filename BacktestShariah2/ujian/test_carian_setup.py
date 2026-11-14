@@ -343,7 +343,9 @@ class TestRingkas(unittest.TestCase):
         import cs_ringkas
         t = cs_ringkas.pembahagian()
         self.assertEqual(t.id.tolist()[:3], ['F01', 'F02', 'F03'])
-        self.assertTrue(set(t.prasyarat_pasaran) <= {'–', 'QQQ ON', 'QQQ OFF', 'SPY > SMA200'})
+        lama = t[t.pusingan != 'CS05']
+        self.assertEqual(len(lama), 38)
+        self.assertTrue(set(lama.prasyarat_pasaran) <= {'–', 'QQQ ON', 'QQQ OFF', 'SPY > SMA200'})
         self.assertEqual(int((t.jejak_hadapan == 'ya').sum()), 8)
 
     def test_rekod_semua_masuk_sepadan_cs03(self):
@@ -355,6 +357,188 @@ class TestRingkas(unittest.TestCase):
         k = pd.read_csv(os.path.join(d, 'senarai_kunci.csv'))
         self.assertAlmostEqual(b.skor.max() / 100, k.skor.max(), places=4)
         self.assertEqual(len(pd.read_csv(os.path.join(d, 'SEMUA_PENCETUS.csv'))), 500)
+
+class TestCS05(unittest.TestCase):
+    """SPEC pindaan 14 Nov 2026 (i): lapisan prasyarat, enjin CS05 dan rekodnya."""
+
+    def test_ruang_dikunci(self):
+        import cs_cs05 as c5
+        import cs_lapis as lapis
+        import cs_prasyarat as pr
+        self.assertEqual((lapis.N1, lapis.N2, lapis.ANJAK), (33, 15, 437))
+        self.assertEqual((c5.NS, c5.NC, c5.NQ1, c5.NQ2, c5.NQ), (27, 379, 34, 16, 544))
+        self.assertEqual(500 * c5.NQ * c5.NC, 103_088_000)
+        self.assertFalse({25, 26, 27} & set(c5.SAHAM.tolist()))          # penapis pasaran lama berpindah ke prasyarat
+        self.assertEqual((c5.N_ATAS, c5.N_KELAS, c5.N_SENARAI, c5.MAKS_PRA, c5.MAKS_TANPA), (2000, 5, 200, 3, 3))
+        kod = [x[:4] for x in lapis.PASARAN + lapis.KUMPULAN]
+        self.assertEqual(len(set(kod)), 48)
+        self.assertTrue(all(k[:2] in ('QA', 'QB', 'QC', 'QG', 'QH') for k in kod[:33]))
+        self.assertTrue(all(k[:2] in ('QD', 'QE', 'QF') for k in kod[33:]))
+        lama = {x[:3]: x[4:] for x in pr.PRASYARAT}                      # 38 prasyarat (h) dimasukkan tanpa pemilihan
+        sama = [x for x in lapis.PASARAN + lapis.KUMPULAN if x[1] != 'H']
+        self.assertEqual(len(sama), 38)
+        for x in sama:
+            self.assertEqual(lama[x[1:4]], x[5:])
+
+    def test_kumpul5_menyamai_kiraan_terus(self):
+        import cs_cs05 as c5
+        import cs_lapis as lapis
+        rng = np.random.default_rng(3)
+        n = 400
+        tp = rng.integers(0, 2, n)
+        V = rng.random((n, 3))
+        Fm = (rng.random((n, c5.NS)) < 0.4).astype(np.uint8)
+        L1 = (rng.random((n, lapis.N1)) < 0.3).astype(np.uint8)
+        L2 = (rng.random((n, lapis.N2)) < 0.3).astype(np.uint8)
+        Acc = np.zeros((c5.NQ, c5.NC, 2, 4))
+        c5.kumpul5(tp, V, Fm, L1, L2, c5.PASANG, Acc)
+        for _ in range(200):
+            q1, q2, ci = rng.integers(-1, lapis.N1), rng.integers(-1, lapis.N2), rng.integers(0, c5.NC)
+            m = np.ones(n, bool)
+            if q1 >= 0:
+                m &= L1[:, q1] > 0
+            if q2 >= 0:
+                m &= L2[:, q2] > 0
+            for cc in (c5.C1[ci], c5.C2[ci]):
+                if cc >= 0:
+                    m &= Fm[:, cc] > 0
+            flat = ((q1 + 1) * c5.NQ2 + q2 + 1) * c5.NC + ci
+            for p in (0, 1):
+                mm = m & (tp == p)
+                np.testing.assert_allclose(Acc.reshape(-1, 2, 4)[flat, p], [mm.sum(), *V[mm].sum(axis=0)], atol=1e-9)
+            a, b, f1, f2 = c5.nyah(flat)
+            self.assertEqual((int(a), int(b)), (q1, q2))
+            self.assertEqual(int(f1), -1 if c5.C1[ci] < 0 else int(c5.SAHAM[c5.C1[ci]]))
+            self.assertEqual(int(f2), -1 if c5.C2[ci] < 0 else int(c5.SAHAM[c5.C2[ci]]))
+
+    def test_skor_dua_asas(self):
+        import cs_cs05 as c5
+        import cs_tangkap as tk
+        Acc = np.zeros((2, 1, 2, 4))
+        Acc[0, 0] = [[200, 40, 20, 10], [100, 15, 9, 5]]                 # n, lari, asas hari, asas era
+        Acc[1, 0] = [[99, 40, 1, 1], [500, 100, 1, 1]]                   # kurang 100 dalam era pertama
+        ok, sp, sj = c5.skor_acc(Acc)
+        self.assertEqual(ok[:, 0].tolist(), [True, False])
+        self.assertTrue(np.isnan(sp[1, 0]) and np.isnan(sj[1, 0]))
+        self.assertAlmostEqual(sp[0, 0], min(tk.lb_lari(200, 0.20, 0.10), tk.lb_lari(100, 0.15, 0.09)))
+        self.assertAlmostEqual(sj[0, 0], min(tk.lb_lari(200, 0.20, 0.05), tk.lb_lari(100, 0.15, 0.05)))
+
+    def _qqq(self):
+        lo = np.r_[np.full(300, 100.0), np.linspace(100, 85, 30), [85.5, 86, 86.5, 87, 89.5, 90, 91], np.full(40, 92.0)]
+        return lo, lo + 0.5, np.ones(len(lo))
+
+    def test_ftd_hari_keempat_dengan_volum(self):
+        import cs_lapis as lapis
+        lo, cl, vol = self._qqq()                                        # hari rendah = bar 329; bar 334 naik 2.9 %
+        self.assertEqual(int(lapis.ftd(lo, cl, vol).sum()), 0)           # volum tidak lebih tinggi: bukan FTD
+        vol[334] = 2.0
+        f = lapis.ftd(lo, cl, vol)
+        self.assertEqual(np.flatnonzero(f).tolist(), list(range(334, 354)))     # benar 20 sesi dari hari FTD
+        vol[334], vol[332] = 1.0, 2.0                                    # kenaikan besar pada sesi ke-3: terlalu awal
+        cl[332] = cl[331] * 1.02
+        self.assertEqual(int(lapis.ftd(lo, cl, vol).sum()), 0)
+
+    def test_ftd_terbatal_bila_tutup_bawah_rendah(self):
+        import cs_lapis as lapis
+        lo, cl, vol = self._qqq()
+        vol[334] = 2.0
+        cl[340], lo[340] = 84.0, 83.5                                    # tutup di bawah rendah hari rendah (85)
+        f = lapis.ftd(lo, cl, vol)
+        self.assertTrue(f[334:340].all())
+        self.assertFalse(f[340:].any())
+
+    def test_pakar_tiada_pandang_hadapan(self):
+        import cs_lapis as lapis
+        rng = np.random.default_rng(5)
+        n = 900
+        hu = np.arange(n)
+
+        def bina(m):
+            mk = lambda: pd.DataFrame({'close': 100 * np.exp(np.cumsum(rng2.normal(0, 0.012, n)))[:m]}, index=hu[:m])
+            rng2 = np.random.default_rng(5)
+            q, s = mk(), mk()
+            for d in (q, s):
+                d['low'] = d.close * 0.99
+                d['volume'] = rng2.integers(1e6, 5e6, n)[:m].astype(float)
+            h = pd.DataFrame({k: rng2.integers(50, 900, n)[:m].astype(float) for k in ('naik', 'turun', 'n4n', 'n4t')},
+                             index=hu[:m])
+            return lapis.pakar(q, s, h)
+
+        penuh, pendek = bina(n), bina(700)
+        self.assertEqual(sorted(penuh), [f'QH{i:02d}' for i in range(1, 11)])
+        for k in penuh:
+            np.testing.assert_array_equal(penuh[k].to_numpy()[:700], pendek[k].to_numpy(), err_msg=k)
+        self.assertGreater(sum(int(v.sum()) for v in penuh.values()), 0)
+        del rng
+
+    def test_plasebo_kekal_bilangan_setiap_saham(self):
+        import cs_lapis as lapis
+        rng = np.random.default_rng(7)
+        a = (rng.random((3, 1500)) < 0.2).astype(np.uint8)
+        mula = np.array([0, 600, 1100, 1500])
+        b = lapis.anjak_saham(a, mula)
+        for t in range(3):
+            np.testing.assert_array_equal(a[:, mula[t]:mula[t + 1]].sum(axis=1), b[:, mula[t]:mula[t + 1]].sum(axis=1))
+        np.testing.assert_array_equal(b[:, 600:1100], np.roll(a[:, 600:1100], lapis.ANJAK, axis=1))
+        self.assertFalse(np.array_equal(a, b))
+
+    def test_kadar5_prasyarat_penapis_dan_satu_posisi(self):
+        import cs_cs05 as c5
+        N = 200
+        pan = {'F': np.zeros((30, N), np.uint8), 'tid': np.zeros(N, np.int32), 'tempoh': np.zeros(N, np.int8),
+               'hari': np.arange(N)}
+        pan['tempoh'][100:] = 1
+        pan['F'][15, :] = 1                                              # F16 benar di mana-mana
+        pan['F'][22, 50:] = 1                                            # F23 benar mulai bar 50
+        Lr = (np.zeros((33, N), np.uint8), np.zeros((15, N), np.uint8))
+        Lr[0][9, 40:] = 1                                                # QA10 benar mulai bar 40
+        Lr[1][8, :120] = 1                                               # QF01 benar hingga bar 119
+        X = np.zeros((N, 15), np.float32)
+        X[:, 4], X[:, 9], X[:, 14] = 1.0, 0.25, 0.125
+        ev = np.array([10, 45, 60, 65, 90, 115, 150])
+        v = c5.kadar5(pan, X, Lr, ev, -1, -1, -1, -1)                    # 60 dan 65 jatuh dalam pegangan 45 (20 sesi)
+        self.assertEqual((v[0]['n'], v[1]['n']), (3, 2))
+        v = c5.kadar5(pan, X, Lr, ev, 9, 8, 15, 22)                      # QA10 + QF01 + F16 + F23: bar 60, 90, 115
+        self.assertEqual((v[0]['n'], v[0]['hari'], v[1]['n']), (2, 2, 1))
+        self.assertAlmostEqual(v[0]['lari'] - v[0]['a_lari'], 0.75)
+        self.assertAlmostEqual(v[0]['lari'] - v[0]['e_lari'], 0.875)
+        self.assertTrue(np.isnan(c5.skor_tepat(v, 'a_')))                # kurang 100 isyarat: tiada skor
+
+    def test_rekod_cs05(self):
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS05')
+        with open(os.path.join(d, 'meta.json')) as f:
+            meta = json.load(f)
+        self.assertEqual(meta['masuk_dicuba'], 103_088_000)
+        self.assertEqual(meta['pencetus'], 500)
+        m = pd.read_csv(os.path.join(d, 'SEMUA_PENCETUS.csv'))
+        self.assertEqual(len(m), 500)
+        self.assertTrue(set(m.kelas.dropna()) <= {'IKUT TREND', 'PANTULAN'})
+        p = pd.read_csv(os.path.join(d, 'papan.csv'))
+        self.assertEqual(sorted(p.papan.unique()), ['jumlah', 'pilih'])
+        for kod in ('pilih', 'jumlah'):
+            x = p[p.papan == kod].drop_duplicates('kedudukan')
+            self.assertLessEqual(len(x), 10)
+            self.assertEqual(x.masuk.str.split(' ').str[0].str.split('.').str[0].nunique(), len(x))   # satu setiap keluarga
+            pra = x.prasyarat[x.prasyarat != 'tiada'].str.split(' DAN ').explode()
+            self.assertLessEqual(int((x.prasyarat == 'tiada').sum()), 3)
+            if len(pra):
+                self.assertLessEqual(int(pra.value_counts().max()), 3)
+
+    def test_registry_lajur_prasyarat_dan_kohort_kekal(self):
+        bs2 = os.path.join(SINI, '..')
+        reg = pd.read_csv(os.path.join(bs2, 'data', 'registry_F.csv'), dtype=str).fillna('')
+        self.assertEqual(list(reg.columns)[-2:], ['prasyarat', 'syarat'])
+        self.assertTrue((reg.prasyarat != '').all() and (reg.syarat != '').all())
+        self.assertEqual(reg.id.tolist(), [f'F{i:02d}' for i in range(1, len(reg) + 1)])
+        lama = reg[reg.pusingan != 'CS05']
+        self.assertEqual(len(lama), 38)
+        self.assertTrue(set(lama.prasyarat) <= {'tiada', 'QQQ ON', 'QQQ OFF', 'SPY > SMA200'})
+        for t in reg[reg.pusingan == 'CS05'].itertuples():
+            bhg = t.takrif.split('|')
+            self.assertEqual(len(bhg), 4 if t.prasyarat == 'tiada' else 5)
+            self.assertEqual(t.status, 'BACKTEST')
+        with open(os.path.join(bs2, 'jejak_f', 'kohort.json')) as f:      # pindaan (i): kohort jejak hadapan tidak berubah
+            self.assertEqual([a['id'] for a in json.load(f)['ahli']], ['F21', 'F22', 'F34', 'F27', 'F28', 'F38', 'F30', 'F24'])
 
 
 if __name__ == '__main__':
