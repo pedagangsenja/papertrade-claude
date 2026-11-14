@@ -706,6 +706,29 @@ keluaran `hasil/CS08/`. Tiada jejak hadapan, tiada order.
 - **Kaveat dikunci:** tiada saham delist — bagi pegang 6 bulan biasnya LEBIH besar daripada lorong swing; K3 pendek
   (tetingkap 126 sesi berakhir ~April 2026); kumpulan B sudah dilihat untuk label lain; satu kes (MXL) bukan bukti.
 
+### Pindaan 14 Nov 2026 (r) — analisis PENGESAHAN "higher high baru entry" (diminta pengguna; sebelum dijalankan)
+
+Pengguna 14 Nov 2026: seorang pakar berkata "tunggu confirmation signals baru beli, contohnya higher high baru entry"; "cuba kaji
+dan analisa ... memang standard practice pakar-pakar saham ke? possible untuk integrate dalam F". Ini analisis, bukan carian:
+tiada setup dipilih daripadanya. Kod `carian_setup/cs_sahkan.py`; keluaran `hasil/PENGESAHAN.md|csv`; amalan pakar dan sumber
+dalam `kajian/KAJIAN_PENGESAHAN.md`.
+
+- **(1) Amalan pakar:** ringkasan sumber awam (aliran pecah tinggi/ikut trend lawan aliran beli semasa lemah), dengan pautan.
+- **(2) Gaya masuk dalam ruang carian sedia ada** (656 varian keluarga K, kumpulan B, pencetus SAHAJA tanpa prasyarat atau
+  penapis): kelebihan kadar tangkap atas rawak hari sama bagi `terus` (swing) dan `besar` (trend), dikumpul ikut gaya — beli
+  semasa lemah (`K01`, `K03`, `K06`, `K18`); pengesahan pembalikan (`K02`, `K04`, `K13`, `K24`); undur dalam uptrend (`K17`,
+  `K22`); pengesahan kekuatan / higher high (`K05`, `K07`–`K12`, `K14`–`K16`, `K19`, `K20`, `K23`, `K25`); lain (`K21`).
+- **(3) Lapisan pengesahan atas setup F** (69 setup kedudukan akhir; kumpulan B; isyarat dijarakkan ≥ 24 bar setiap saham
+  supaya ketiga-tiga cara menilai isyarat yang SAMA): **V0** beli pada buka esok; **S1** "tutup sahkan" = tutup pertama di atas
+  tinggi hari isyarat dalam 3 sesi → beli pada buka berikutnya; **S2** "pecah tinggi" = buy-stop pada tinggi hari isyarat,
+  terisi pada max(buka, tinggi hari isyarat) dalam 3 sesi; tiada pengesahan = tiada belian. Semua ukuran dari harga beli
+  SEBENAR (`m5`, `terus`, tangkap penuh, menang, rugi ≥ 8 %, purata), henti dan keluar setup sendiri, pegang minimum (p).
+- **Bacaan dikunci:** satu cara "menolong" jika kadar `terus` DAN tangkap penuh lebih tinggi daripada V0 bagi lebih separuh
+  setup dipercayai. Turut dilaporkan: % isyarat yang dibeli, premium harga beli, bilangan tangkapan mutlak (kadar × belian),
+  dan hasil V0 bagi isyarat yang kemudian disahkan lawan yang tidak.
+- Jika menolong: dicadangkan sebagai lapisan pilihan keluarga F melalui pindaan berasingan; jika tidak: direkod sebagai dapatan.
+- Kaveat: S2 mengandaikan tiada gelinciran; prasyarat dinilai pada hari isyarat; kumpulan B sudah dilihat; tiada saham delist.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

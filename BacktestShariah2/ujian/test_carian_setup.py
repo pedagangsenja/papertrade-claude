@@ -1011,6 +1011,30 @@ class TestCS07(unittest.TestCase):
             self.assertEqual(c7.takrif7(x['pencetus'], x['q1'], x['q2'], x['f1'], x['f2'], x['s'], x['kol']), tk)
         self.assertEqual(reg.id.tolist()[:87], [f'F{n:02d}' for n in range(1, 88)])   # F lama kekal
 
+    def test_pengesahan_dan_harga_beli_khas(self):
+        """Pindaan (r): pengesan pengesahan dan kernel dengan harga beli khas (buy-stop)."""
+        import cs_keluar7 as k7
+        import cs_sahkan as sh
+        self.assertEqual((sh.N_SAH, sh.JARAK), (3, 24))
+        self.assertEqual(sorted(f for fs in sh.GAYA.values() for f in fs), [f'K{i:02d}' for i in range(1, 26)])
+        h = np.array([10.0, 10.5, 9.9, 10.2, 10.8, 10.1, 10.0, 10.0])
+        c = np.array([9.8, 10.2, 9.7, 10.1, 10.7, 10.0, 9.9, 9.9])
+        o = np.array([9.9, 10.1, 9.8, 9.9, 10.3, 10.6, 9.9, 9.9])
+        d1, b2, p2 = sh.sahkan({'h': h, 'c': c, 'o': o}, np.array([0, 1, 4]))
+        self.assertEqual(d1.tolist(), [1, 4, -1])                               # tutup pertama di atas tinggi hari isyarat
+        self.assertEqual(b2.tolist(), [1, 4, -1])                               # hari pertama harga melepasi tinggi itu
+        self.assertEqual(p2.tolist(), [10.1, 10.5, 0.0])                        # max(buka, tinggi isyarat): gap atas -> buka
+        pan, XA, ev = self._pan7()
+        S0, S1 = k7.sedia_pan(pan, XA, ev), k7.sedia_pan(pan, XA, ev, px=pan['o'][ev + 1])
+        for a_, b_ in zip(S0, S1):
+            self.assertTrue(np.array_equal(a_, b_))                             # harga khas = buka -> sama tepat
+        S2 = k7.sedia_pan(pan, XA, ev, px=pan['o'][ev + 1] * 1.02)             # beli 2 % lebih mahal
+        R0 = k7.hasil(*S0[:7], k7.A1, k7.A2, k7.OP, 3, 0)[0]
+        R2 = k7.hasil(*S2[:7], k7.A1, k7.A2, k7.OP, 3, 0)[0]
+        tiada_henti = (S0[2][:, 3] == 99) & (S2[2][:, 3] == 99) & ~S0[4][:, 3] & ~S2[4][:, 3]
+        self.assertTrue(np.allclose((1 + R2[tiada_henti] + k7.KOS) * 1.02, 1 + R0[tiada_henti] + k7.KOS))
+        self.assertTrue((S2[7][:, 0] <= S0[7][:, 0]).all())                     # naik >= 5 % lebih sukar dari harga lebih tinggi
+
     def test_mesin_kelompok_tetap(self):
         import cs_mesin as ms
         import cs_tala7 as t7
