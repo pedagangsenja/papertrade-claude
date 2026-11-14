@@ -33,6 +33,27 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 
 **Ukuran yang betul = KADAR TANGKAP** ("lari": naik ≥ 5 % minggu pertama, capai ≥ 10 % sebelum henti −8 %, masih ≥ 10 % pada minggu ke-4), lawan saham rawak pada hari dan tercile ATR% yang sama. BUKAN purata setiap dagangan, BUKAN banding indeks.
 
+## 1a. Semakan 12 item lawan apa yang benar-benar dibuat (14 Nov 2026, teguran ketiga pengguna)
+
+Pengguna: "cuba check dan baca betul-betul matlamat saya" (selepas Claude menulis "backtest sudah habis diukur" dan mencadangkan kohort papertrade). Semakan jujur:
+
+| Item | Status | Catatan |
+|---|---|---|
+| 1 Saham dicari | capai | diukur (`lari` sejak CS03; `terus` dalam pindaan (m)) |
+| 2 Masuk: indikator + parameter | SEPARUH | kombinasi dicari bagi semua 500 pencetus; PARAMETER hampir tidak ditala: kaedah M 2 varian rawak (`cs_cari.senarai_benih`), kaedah N dan indikator `P` tiada; tala ±25 % hanya 8 + 18 setup papan |
+| 3 Pegang | capai | tiada sasaran jual; pegang hingga 20 sesi |
+| 4 Keluar: indikator kenaikan tamat | BELUM | tiada indikator keluar mengatasi "pegang 20 sesi"; 6 daripada 34 setup dipercayai tiada indikator keluar langsung (`X00`); parameter atom keluar tidak pernah ditala; Claude menulis "jangan cari lagi" (salah: membekukan) |
+| 5 Henti rugi | capai | H1–H4 |
+| 6 Swing | capai | ≤ 20 sesi, tiada jual hari beli |
+| 7 Mesin sentiasa mencari dan menala; tiada dibekukan | BELUM | setiap pusingan dijalankan tangan dalam chat; tiada workflow automatik; nota "jangan ulang/jangan tala" bercanggah dengan item ini (dibetulkan 14 Nov) |
+| 8 Ranking dengan peratus | SEPARUH | `hasil/KEDUDUKAN_AKHIR.md` (61 setup); semua kaedah belum di bawah SATU ukuran yang sama |
+| 9 Backtest dahulu | dilanggar Claude | papertrade dicadang dua kali sedangkan item 2, 4, 7 belum capai |
+| 10 Jimat token | dilanggar Claude | pencarian data saham delist: bukan dalam matlamat |
+| 11 Prasyarat → syarat | capai | CS05/CS06 |
+| 12 Semua kaedah, prasyarat + syarat | capai | `hasil/CS05|CS06/SEMUA_PENCETUS*.md` |
+
+Kerja seterusnya yang SELARI dengan matlamat (belum dipradaftar; perlu pindaan bertarikh): tala parameter masuk bagi semua kaedah M, N dan indikator; cari dan tala keluar dengan ukuran "kenaikan sudah tamat"; mesin automatik berkala.
+
 ## 2. Cara bekerja dengan pengguna (pelajaran sesi ini)
 
 - Jawapan pendek, Bahasa Melayu mudah; jadual tiga lajur di jawapan penutup; notifikasi telefon setiap giliran (CLAUDE.md).
@@ -42,6 +63,7 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 - Jangan tukar kayu ukur. Kesilapan saya dalam sesi ini: memangkatkan ikut purata setiap dagangan (CS01/CS02), kemudian mengesyorkan berhenti kerana kalah SPY pada MDD −10 %. Pengguna membetulkan: "baca balik chat kita, apa yang saya cari". Jawapannya §1.
 - Jika tersilap jangka, cakap terus (cth. isyarat pertama jejak F direkod selepas Lejar, bukan selepas `harga_harian`).
 - (14 Nov, CS05) Sebelum mengisytiharkan sesuatu pusingan "siap", semak SETIAP bahagian setup lawan §1: masuk DAN henti/pegang/keluar. Saya melaporkan CS05 siap dan mencadangkan jejak hadapan sedangkan pegang/keluar masih dipilih ikut purata setiap dagangan (warisan pindaan (d)); pengguna: "check betul-betul matlamat backtest ini; tak boleh tersasar". Pembetulan = pindaan (j). Jangan cadangkan papertrade selagi backtest belum lengkap.
+- (14 Nov, kali ketiga) Sebelum menjawab "sudah lengkap?" atau mencadangkan langkah seterusnya, padankan SEMUA 12 item §1 satu demi satu (§1a), bukan hanya ayat ringkasan. Claude tiga kali menutup carian terlalu awal dan sekali membuka kerja sampingan (data delist) yang tiada dalam matlamat. Dapatan "tidak menolong" BUKAN alasan membekukan carian (item 7).
 - Tetap terpakai tanpa pengecualian: tiada order, tiada wang sebenar sehingga `laporan/KAD_SKOR.md` menanda TERBUKTI; pradaftar bertarikh SEBELUM hasil dilihat; fail dijana tidak disunting tangan.
 
 ## 3. Apa yang sudah dibuat
@@ -149,8 +171,8 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 **Diputuskan pengguna 14 Nov 2026 ("ya") dan SUDAH dilaksanakan:** CS06, kadar menang, portfolio dan kedudukan akhir digabung ke `main` (PR #49). Pengguna juga bersetuju mencuba data saham delist sebelum papertrade; sumber percuma sedia ada tidak mencukupi (§9d).
 
 **Menunggu keputusan pengguna:**
-1. Sumber data saham delist (§9d): Tiingo percuma (sampel), data berbayar sebulan (lengkap), atau terima kaveat.
-2. Selepas itu barulah peringkat papertrade. Pilihan lama selepas portfolio (§9b): (a) mula jejak hadapan maya bagi kohort kecil (`F40`, `F58`, `F49`) untuk menguji kadar tangkap pada data langsung, selepas kalendar earnings dibina dalam penjejak; atau (b) berhenti di sini dan tunggu kohort 13 Nov matang. Pengguna melarang jejak hadapan sehingga membenarkannya.
+1. Sambung carian (BUKAN papertrade) pada item yang belum capai (§1a): tala parameter semua kaedah, cari + tala keluar, mesin automatik.
+2. Data saham delist (§9d): pengguna mempersoalkan keperluannya ("saya tak faham kenapa perlu fokus dekat saham delist ini"); Claude mencadangkan langkau dan catat sebagai kaveat. Ia BUKAN item matlamat. Pilihan lama selepas portfolio (§9b): (a) mula jejak hadapan maya bagi kohort kecil (`F40`, `F58`, `F49`) untuk menguji kadar tangkap pada data langsung, selepas kalendar earnings dibina dalam penjejak; atau (b) berhenti di sini dan tunggu kohort 13 Nov matang. Pengguna melarang jejak hadapan sehingga membenarkannya.
 
 **Tiada yang berkaitan wang sebenar berubah:** kad skor kekal satu-satunya keputusan.
 
