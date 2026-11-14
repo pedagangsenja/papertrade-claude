@@ -2,6 +2,8 @@
 # lulus (kajian/SPEC_CARIAN_SETUP.md pindaan 13 Nov 2026 (f)). Penjejak BERASINGAN: tidak menyentuh Lejar, Papertrade C,
 # kad skor atau dashboard. Tanpa LLM, tiada order. Dikira semula sepenuhnya daripada stor harga setiap larian.
 # Tiada cron: dicetus sebaik "Lejar penuh" siap (stor harga sudah dikemas malam itu), seperti analisis.yml.
+# Larian Lejar yang didispatch penjaga (GITHUB_TOKEN) tidak menjana workflow_run: lejar.yml mencetus workflow ini terus
+# melalui langkah akhirnya (14 Nov 2026).
 name: Jejak hadapan F
 
 on:

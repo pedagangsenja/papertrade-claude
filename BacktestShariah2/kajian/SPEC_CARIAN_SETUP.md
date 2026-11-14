@@ -273,6 +273,229 @@ ditulis. Senarai dan takrif tepat: `carian_setup/cs_prasyarat.py` (`PRASYARAT`).
 - Hasil hanya maklumat. Prasyarat yang konsisten boleh dimasukkan sebagai penapis baharu dalam pusingan carian seterusnya
   (pindaan berasingan). Keluaran: `carian_setup/hasil/PRASYARAT/`.
 
+### Pindaan 14 Nov 2026 (i) — pusingan CS05: PRASYARAT + SYARAT bagi SEMUA kaedah (sebelum dijalankan)
+
+Keputusan pengguna 14 Nov 2026: CS01–CS04 ialah pusingan "syarat sahaja"; jalankan carian sekali lagi untuk **semua**
+kaedah (M, N dan indikator, bukan 50 teratas) dengan **prasyarat, kemudian syarat**, dan tunjukkan bagi setiap kaedah
+hasil syarat sahaja lawan hasil dengan prasyarat. Butiran teknikal diserahkan kepada Claude. Matlamat tidak berubah (§1,
+pindaan (d)): setup yang paling kerap menangkap saham "lari".
+
+**Apa yang sudah dilihat sebelum pindaan ini:** CS01–CS04 dan tinjauan (h), termasuk kadar lari bila setiap satu daripada
+38 prasyarat (h) benar/palsu pada kumpulan A DAN B (semua bar layak dan isyarat kohort F). Maka kesan utama 38 prasyarat
+itu bukan lagi "tidak dilihat" pada kumpulan B; yang belum dilihat ialah gabungannya dengan setiap pencetus, prasyarat
+takrif pakar (`QH`), dan mana-mana hasil CS05. Supaya tiada pemilihan selepas melihat, **kesemua 38 prasyarat (h)
+dimasukkan** (yang membantu dan yang tidak). Kod: `carian_setup/cs_lapis.py` (prasyarat) dan `cs_cs05.py` (carian, laporan).
+Data, tempoh, mekanik (§4), label dan 500 pencetus sama seperti CS02–CS03 (cari kumpulan A: E1, E2; Kunci kumpulan B: K1,
+K2, K3).
+
+**1. Ruang carian.** Peraturan masuk = [0–1 prasyarat PASARAN] DAN [0–1 prasyarat KUMPULAN/SYARIKAT] DAN satu pencetus
+DAN [0–2 penapis SAHAM].
+
+- Pencetus: kesemua 500 (49 indikator, benih M asal + 2 varian, benih N); tidak berubah.
+- Penapis saham: 27 = `PENAPIS` tanpa `F26`, `F27`, `F28` (ketiga-tiganya berpindah ke lapisan prasyarat); 379 gabungan.
+- Prasyarat PASARAN (33; sama bagi semua saham pada hari itu): `QA01`–`QA11`, `QB01`–`QB03`, `QC01`–`QC05`,
+  `QG01`–`QG04` = prasyarat A, B, C, G pindaan (h) dengan takrif `cs_prasyarat.py` yang sama, dan sepuluh takrif pakar
+  `QH01`–`QH10` di bawah.
+- Prasyarat KUMPULAN/SYARIKAT (15; bukan harga saham itu sendiri tetapi berbeza antara saham): `QD01`–`QD03` (sektor),
+  `QE01`–`QE05` (industri), `QF01`–`QF07` (earnings) = prasyarat D, E, F pindaan (h), takrif sama. Tanpa data → PALSU.
+- Bilangan: 34 × 16 × 500 × 379 = **103,088,000** peraturan masuk. Tiada had bilangan; bilangan sebenar dilaporkan.
+
+| ID | Prasyarat takrif pakar (dikunci; data ≤ hari itu; "saham layak" = bar layak kedua-dua kumpulan) |
+|---|---|
+| `QH01` | **Follow-through day aktif (O'Neil), pada QQQ.** Hari rendah = rendah hari itu ialah rendah terendah 20 sesi (termasuk hari itu) DAN tutup ≤ 0.93 × tutup tertinggi 252 sesi. FTD = sesi ke-4 hingga ke-12 selepas hari rendah terkini, tutup naik ≥ 1.5 % berbanding semalam, volum > volum semalam. BENAR dari hari FTD selama 20 sesi; terbatal sebaik QQQ tutup di bawah rendah hari rendah itu atau hari rendah baharu muncul |
+| `QH02` | Distribution day QQQ (tutup turun ≥ 0.2 % dengan volum > semalam) **≤ 2** dalam 25 sesi terkini |
+| `QH03` | Distribution day QQQ **≥ 5** dalam 25 sesi terkini |
+| `QH04` | **Breadth thrust (Zweig) aktif.** Nisbah = saham naik ÷ (naik + turun); EMA 10 hari nisbah > 0.615 hari ini dan < 0.40 pada sekurang-kurangnya satu daripada 10 sesi sebelumnya. BENAR 20 sesi dari hari itu |
+| `QH05` | **Nisbah 4 % (Stockbee) > 2**: jumlah 10 hari bilangan saham tutup naik ≥ 4 % ÷ jumlah 10 hari turun ≥ 4 % |
+| `QH06` | Nisbah 4 % **< 0.5** |
+| `QH07` | **Regangan turun-naik (Connors; PROKSI, tiada VIX dalam repo).** Sisihan piawai pulangan harian SPY 10 sesi ≥ 1.05 × purata 10 sesinya selama 3 sesi berturut, DAN SPY > SMA200 |
+| `QH08` | QQQ SMA10 > SMA20 (Qullamaggie) |
+| `QH09` | **Peringkat 2 Weinstein, indeks**: SPY > SMA150 DAN SMA150 > SMA150 20 sesi lalu |
+| `QH10` | **Hari 90 % (Lowry; kiraan saham, bukan volum).** Hari ≥ 90 % saham turun, kemudian dalam 10 sesi: satu hari ≥ 90 % naik atau dua hari berturut ≥ 80 % naik. BENAR 20 sesi dari hari naik itu |
+
+**2. Dua skor (kedua-duanya kadar tangkap; `n` ≥ 100 dalam E1 DAN E2; formula pindaan (d)).**
+
+- `skor_pilih` = min merentas E1, E2 bagi [kelebihan `lari` atas saham rawak **hari sama** × tercile ATR % sama − 2 ralat
+  piawai]. Ini kayu ukur pindaan (d) tanpa perubahan: kemahiran MEMILIH saham. Prasyarat pasaran menaikkan saham rawak
+  hari itu juga, jadi ia hanya menambah skor ini jika pencetus memilih lebih baik pada hari begitu.
+- `skor_jumlah` = formula sama, tetapi asas = kadar `lari` semua bar layak dalam **era yang sama** × tercile ATR % sama
+  (tercile dikira dalam hari). Ia memasukkan kesan BILA membeli, iaitu sumbangan prasyarat pasaran. Hari isyarat
+  berkelompok, jadi ralat piawainya terlalu kecil; sebab itu papan skor ini wajib dibaca bersama plasebo (butir 5c) dan
+  bilangan hari isyarat berbeza.
+
+**3. Peringkat tepat, papan dan Kunci (bagi setiap skor secara berasingan).** 2,000 peraturan teratas dinilai semula dengan
+satu posisi setiap saham (pegang 20 sesi). **Papan 10 teratas** ikut skor tepat: satu setiap keluarga pencetus; setiap
+prasyarat muncul paling banyak 3 kali; setup tanpa prasyarat paling banyak 3. Papan, 200 teratas dan 200 peraturan rawak
+(dicabut seragam daripada semua peraturan yang diskor, benih 20261113) dinilai pada K1, K2, K3. Henti × keluar setiap
+setup papan dipilih seperti pindaan (d). Lajur ✓/✗ (kelebihan ikut asas papan itu): `T1` `t10` > 0 dalam K1, K2, K3 · `T2`
+`lari` > 0 dalam K1, K2, K3 · `T3` `lari` Kunci > persentil ke-95 peraturan rawak · **`T4`** (setup berprasyarat sahaja)
+kelebihan `lari` Kunci (gabungan) DAN K3 melebihi versi yang sama TANPA prasyarat (pencetus dan penapis saham sama).
+
+**4. Keluarga F.** Setup kedua-dua papan didaftarkan (`F39` dan seterusnya). `data/registry_F.csv` mendapat lajur
+`prasyarat` dan `syarat` (diisi juga bagi `F01`–`F38`); takrif setup berprasyarat = `pencetus|penapis|henti|keluar|prasyarat`.
+Status kekal `BACKTEST`. **Kohort jejak hadapan TIDAK berubah** dalam pindaan ini; penukaran kohort ialah keputusan
+pengguna yang berasingan.
+
+**5. Banding wajib dalam laporan.**
+
+- (a) **Setiap pencetus (500), syarat sahaja lawan dengan prasyarat.** Pada kumpulan A, bagi setiap skor dan setiap
+  kelas — `S` tiada prasyarat · `P` sekurang-kurangnya satu prasyarat · `PL` sekurang-kurangnya satu prasyarat plasebo
+  (5c) — 5 peraturan teratas dinilai tepat dan yang terbaik dipilih. Ketiga-tiganya kemudian dinilai pada kumpulan B:
+  kadar `lari` (mutlak), asas, kelebihan, kadar kena henti. Laporan: `hasil/CS05/SEMUA_PENCETUS.md|csv`.
+- (b) **Padanan jenis setup × prasyarat.** Kelas pencetus dikunci secara mekanikal sebelum hasil dilihat: **IKUT TREND**
+  jika ≥ 50 % isyaratnya (kumpulan A, bar sah) mempunyai RSI14 > 50 pada bar isyarat; selainnya **PANTULAN**. Bagi
+  setiap prasyarat tunggal (48), tanpa penapis: beza kelebihan `lari` dan beza kadar kena henti antara isyarat pencetus
+  bila prasyarat benar dan semua isyarat pencetus itu, pada kumpulan B; median setiap kelas, dengan plasebo di sebelah.
+- (c) **Plasebo.** Keseluruhan carian diulang dengan prasyarat yang sama **dianjak masa**: siri prasyarat pasaran dianjak
+  437 sesi secara membulat atas senarai hari panel; siri prasyarat kumpulan/syarikat dianjak 437 bar secara membulat dalam
+  setiap saham. Anjakan mengekalkan peratus masa benar dan kelompok hari, dan memutuskan kaitan dengan keadaan sebenar.
+- (d) Kadar kena henti (`gagal`) dipaparkan di sebelah kadar `lari` di mana-mana kadar lari dipaparkan.
+- (e) Rujukan "prasyarat sahaja": kadar `lari` semua bar layak bila setiap prasyarat benar/palsu (kumpulan B).
+
+**6. Bacaan dikunci.** "Prasyarat menolong" hanya jika, pada kumpulan B, median merentas pencetus bagi (kelebihan `P` −
+kelebihan `S`) positif DAN melebihi median (kelebihan `PL` − kelebihan `S`); dilaporkan bagi kumpulan B gabungan dan K3
+sahaja (**K3 ialah ujian sebenar**), bagi setiap skor. Jika prasyarat tidak mengatasi plasebo, itu dilaporkan
+sebagaimana adanya. Papan ialah pangkat backtest, BUKAN bukti; kad skor kekal satu-satunya keputusan wang sebenar.
+
+**7. Kaveat dikunci.** `QF01`/`QF04` memakai tarikh earnings sebenar (pandang ke hadapan ringan; papertrade memerlukan
+kalendar earnings); peta sektor/industri ialah peta semasa; tiada saham delist; set 2000 bukan tapisan Shariah; prasyarat
+pasaran berubah ikut HARI (pemerhatian bebas sedikit); `QH07` ialah proksi; lebih 100 juta peraturan dicuba, jadi yang
+teratas pada kumpulan A sebahagiannya nasib (sebab itu angka dilaporkan pada kumpulan B, bersebelahan rawak dan plasebo).
+Keluaran: `carian_setup/hasil/CS05/`; `kajian/CARIAN_SETUP.md` memaparkan pusingan terkini.
+
+**Tambahan (i), 14 Nov 2026 — ditulis sebelum larian penuh.** Apa yang dilihat: ujian kod hujung-ke-hujung pada 49
+pencetus indikator sahaja (tanpa benih M/N), ditulis ke folder ujian di luar repo. Ujian itu mendedahkan kecacatan
+prosedur butir 3: 2,000 teratas sejagat hampir semuanya berkongsi satu prasyarat, jadi had kepelbagaian (setiap prasyarat
+paling banyak 3 kali) tidak dapat mengisi 10 baris papan. Pembetulan, dikunci sebelum larian penuh: **kolam calon papan**
+= 2,000 teratas sejagat DAN, bagi setiap satu daripada 544 pasangan prasyarat, 20 peraturan teratas ikut skor merentas
+pencetus (terbaik setiap pencetus); semuanya dinilai tepat dan papan dipilih daripada gabungan itu dengan peraturan butir 3
+yang sama. "200 teratas" kekal 200 teratas daripada 2,000 sejagat. Tiada perubahan lain. Dicatat tanpa perubahan: `QH03`
+benar kira-kira dua pertiga masa kerana takrif di sini tiada peraturan luput IBD (kenaikan 5 %); ia kekal seperti
+dipradaftar.
+
+### Pindaan 14 Nov 2026 (j) — CS05 peringkat LENGKAP: pegang + keluar + henti ikut kadar tangkap (sebelum dijalankan)
+
+Pengguna 14 Nov 2026 (selepas hasil (i)): "jangan mula jejak hadapan lagi; sudah selesai ke, prasyarat dan syarat? Check
+betul-betul matlamat backtest ini; tak boleh tersasar". Semakan lawan §1 menemui tiga kecacatan pada bahagian
+pegang/keluar pindaan (d) dan (i); bahagian masuk (prasyarat → syarat) tidak terjejas:
+
+1. (henti × keluar) dipilih ikut had bawah PURATA `R`, sedangkan kayu ukur pengguna ialah kadar tangkap.
+2. Label `lari` memakai henti −8 % tetap, sedangkan henti setup itu sendiri boleh `H2`–`H4`.
+3. Pegang/keluar hanya dikira bagi setup papan, bukan bagi setiap kaedah.
+
+**Apa yang sudah dilihat:** semua hasil (i), termasuk purata `R`, tempoh pegang dan peratus dagangan ≥ +10 % bagi 19
+setup papan dengan (henti × keluar) yang dipilih ikut purata (cth. `F48`: pegang 5.4 sesi, 12 % dagangan ≥ +10 %).
+Tiada hasil peringkat ini dilihat sebelum pindaan ditulis. Peraturan masuk, papan dan pangkat (i) TIDAK berubah.
+
+**Ukuran setup lengkap** (setiap dagangan, dengan henti dan peraturan keluar setup itu sendiri; mekanik §4; kos ditolak):
+
+| Ukuran | Takrif |
+|---|---|
+| **`jadi`** | dagangan DIJUAL dengan `R` ≥ +10 % ("menangkap dan memegang": kadar tangkap yang direalisasi) |
+| `rugi8` | dagangan dijual dengan `R` ≤ −8 % |
+| `pelari dipegang` | antara belian yang sahamnya `lari` (label (d)), bahagian yang `jadi` |
+| pegang | purata sesi dipegang |
+
+- **Pemilihan (kumpulan A):** bagi setiap peraturan masuk, (henti × keluar) daripada 4 × 577 dengan
+  min merentas E1, E2 bagi [kadar `jadi` − 2 ralat piawai] tertinggi (`n` ≥ 100 setiap era; isyarat bertindih dibenarkan
+  pada langkah ini, seperti §6.1). Kemudian dinilai dengan satu posisi setiap saham.
+- **Diliputi:** 19 setup papan (i), dan bagi SETIAP pencetus peraturan masuk terbaik kelas `S` (syarat sahaja) dan `P`
+  (dengan prasyarat) bagi kedua-dua kayu ukur (butir 5a pindaan (i)). Semuanya dilaporkan pada kumpulan B.
+- **Asas rawak:** kadar `jadi` dan `rugi8` semua bar layak pada hari sama × tercile ATR % sama (papan pilih) atau era
+  sama × tercile (papan jumlah), dengan henti dan keluar YANG SAMA.
+- **Banding wajib:** (a) `jadi` dengan keluar terpilih lawan **tanpa keluar indikator** (`X00`, henti sama): adakah
+  indikator keluar menambah; (b) lawan (henti × keluar) lama yang dipilih ikut purata; (c) `rugi8` dan purata `R` di
+  sebelah `jadi` (maklumat, bukan kayu ukur).
+- Lajur ✓/✗ setup papan: `L1` kelebihan `jadi` atas rawak positif dalam K1, K2 dan K3 · `L2` `jadi` (kumpulan B) dengan
+  keluar terpilih ≥ `X00`.
+- **Keluarga F:** `F39`–`F57` didaftarkan beberapa jam sebelum ini pada branch kerja yang sama, belum digabung ke `main`
+  dan tidak dipakai mana-mana penjejak. ID-nya kekal pada peraturan MASUK yang sama; `henti`, `keluar`, `takrif` dan
+  ukurannya diganti dengan pilihan pindaan ini (pusingan kekal `CS05`). Ini satu-satunya kali takrif F diganti; selepas
+  digabung ke `main`, ID kekal seperti pindaan (a).
+- Tambahan laporan (tiada pemilihan baharu): senarai 50 peraturan masuk teratas setiap kayu ukur TANPA had kepelbagaian
+  papan (`hasil/CS05/TOP50.md`), kerana had itu memaksa setup yang lebih lemah naik ke papan.
+- **Jejak hadapan:** tiada setup CS05 masuk jejak hadapan (keputusan pengguna 14 Nov 2026). Kohort 13 Nov tidak berubah.
+- Kod `carian_setup/cs_lengkap.py`; keluaran `hasil/CS05/` (`LENGKAP` dalam `LAPORAN.md`, `SEMUA_PENCETUS_LENGKAP.md`).
+
+### Pindaan 14 Nov 2026 (k) — pusingan CS06: pangkat masuk ikut TANGKAP PENUH, dan tala bersama prasyarat (sebelum dijalankan)
+
+Keputusan pengguna 14 Nov 2026 ("ya untuk tiga-tiga"): sambung backtest dengan (A) memangkatkan peraturan masuk terus
+ikut tangkap penuh setup lengkap, bukan label `lari`; (B) menala parameter BERSAMA prasyarat. Tiada setup CS05/CS06
+masuk jejak hadapan. Kod: `carian_setup/cs_cs05.py` (pusingan `CS06`), `cs_lengkap.py`, `cs_tala6.py`.
+
+**Apa yang sudah dilihat:** semua hasil (i) dan (j) pada kumpulan A dan B; reka bentuk ini dipilih selepasnya, jadi
+kumpulan B bukan lagi "tidak dilihat" bagi keluarga setup ini (K3 kekal ujian paling ketat, dengan kaveat itu). Kadar
+asas semua bar layak kumpulan A (bukan hasil carian): `lari` 5.22 %, tangkap penuh piawai 5.12 %; 95 % bar `lari` juga
+tangkap penuh dan 97 % sebaliknya. Maka pangkat (A) DIJANGKA hampir sama dengan CS05; ini diukur, bukan diandaikan.
+
+**A. Pangkat masuk ikut tangkap penuh.**
+
+- Label sasaran **`tp`** = tutup sesi 5 ≥ `P` + 5 % DAN dagangan dengan **pegang piawai** dijual dengan `R` ≥ +10 %.
+  Pegang piawai = henti `H4` (4×ATR14), tiada keluar indikator (`X00`), jual pada tutup sesi 20: cara pegang yang paling
+  kerap terpilih dalam (j). `tp` menggantikan `lari` (yang memakai henti −8 % tetap) sebagai sasaran pangkat; label lain
+  kekal untuk laporan.
+- Ruang carian (103,088,000 peraturan masuk), dua kayu ukur (pilih = lawan rawak hari sama × tercile ATR %; jumlah =
+  lawan rawak era sama × tercile; asasnya kadar `tp`), `n` ≥ 100 setiap era, peringkat tepat, kolam calon papan, papan 10
+  teratas dengan had kepelbagaian, Kunci, larian plasebo, banding setiap pencetus (`S`/`P`/`PL`) dan padanan: semuanya
+  seperti (i) + tambahan (i), dengan `tp` di tempat `lari`.
+- Setup lengkap papan: (henti × keluar) dipilih seperti (j), tetapi ikut kadar tangkap penuh DENGAN henti dan keluar
+  setup itu sendiri (tutup sesi 5 ≥ `P` + 5 % DAN `R` ≥ +10 %); asas rawak dengan henti dan keluar yang sama.
+- Banding wajib dengan CS05: Spearman antara skor CS05 (`lari`) dan skor CS06 (`tp`) bagi peraturan yang dinilai tepat
+  dalam kedua-duanya, dan bilangan setup papan yang peraturan masuknya sama.
+- Keluarga F: peraturan masuk papan CS06 yang sudah berdaftar (`F39`–`F57`) mengekalkan ID dan barisnya; hanya peraturan
+  masuk baharu mendapat ID baharu (pusingan `CS06`).
+
+**B. Tala bersama prasyarat.** Induk = setup papan CS06 (kedua-dua papan). Tiga paksi ditala serentak:
+
+- Pencetus: induk berasaskan kaedah M → 24 varian baharu, setiap parameter `tala = Y` seragam dalam ±25 % nilai induk
+  (dipotong pada [`bawah`, `atas`] `param_julat.csv`; benih 20261113), seperti (e). Induk N dan indikator P kekal.
+- Penapis saham berambang (grid (e)): RS ≥ {50, 60, 70, 80, 90, 95}; ATR % ≥ {2, 3, 4, 5, 6, 8}; ≥ {20, 30, 40, 50, 60} %
+  di bawah puncak 52 minggu. Penapis lain kekal.
+- Prasyarat berambang (jadual di bawah). Prasyarat tanpa ambang (`QA01`–`QA04`, `QB03`, `QG01`, `QG02`, `QG04`, `QH07`,
+  `QH08`, `QH09`, `QF05`) kekal.
+
+| Prasyarat | Grid ambang (nilai induk dalam kurungan) |
+|---|---|
+| `QA05` QQQ dalam x % dari puncak | 1, 2, (3), 5, 7 |
+| `QA06` / `QA07` QQQ ≥ x % di bawah puncak | 5, 7.5, (10), 15, (20), 25 |
+| `QA08` / `QA09` rejim baharu ≤ n sesi | 5, (10), 15, 20, 30 |
+| `QA10` QQQ RSI14 < x | 30, (35), 40, 45 |
+| `QA11` QQQ naik ≥ x % dalam 5 sesi | 2, (3), 4, 5 |
+| `QB01` turun-naik SPY 21 hari ≥ x % | 20, (25), 30, 35, 40 |
+| `QB02` turun-naik SPY 21 hari ≤ x % | 8, (10), 12, 15 |
+| `QC01` ≥ x % saham di atas MA50 | 50, (60), 70, 80 |
+| `QC02` ≤ x % saham di atas MA50 | 15, 20, (30), 40 |
+| `QC03` keluasan naik ≥ x mata dalam 10 sesi | 5, (10), 15, 20 |
+| `QC04` ≥ x % saham di atas MA200 | 50, (60), 70 |
+| `QC05` ≥ x % saham dalam 5 % dari puncak | 10, (15), 20, 30 |
+| `QG03` x hari pertama bulan | 5, (7), 10 |
+| `QH01`, `QH04`, `QH10` tempoh aktif n sesi | 10, (20), 30 |
+| `QH02` distribution day ≤ n | 1, (2), 3 |
+| `QH03` distribution day ≥ n | 4, (5), 6, 7 |
+| `QH05` nisbah 4 % > x | 1.5, (2), 3 |
+| `QH06` nisbah 4 % < x | 0.33, (0.5), 0.67 |
+| `QD01` / `QD02` sektor n teratas / terbawah | 2, (3), 4 |
+| `QD03`, `QE04` ≥ x % saham sektor / industri di atas MA50 | 50, (60), 70 |
+| `QE01`, `QE02`, `QE03` industri x % teratas / terbawah | 10, (20), 30 |
+| `QE05` saham lain industri sama naik ≥ x % dalam 20 sesi | 15, (20), 30 |
+| `QF01` earnings dalam 1–k sesi akan datang | 2, 3, (5), 7, 10 |
+| `QF02` 0–k sesi selepas earnings | 2, (4), 7 |
+| `QF03` 5–k sesi selepas earnings | 14, (19), 29 |
+| `QF04` tiada earnings dalam k sesi akan datang | 10, (20), 30 |
+| `QF06` hasil suku terkini tumbuh ≥ x % | 10, (20), 30, 50 |
+| `QF07` harga melompat ≥ x % pada hari earnings | 3, (5), 8 |
+
+- Skor sel = skor tepat CS06 mengikut kayu ukur papan induk (satu posisi setiap saham; `n` ≥ 100 dalam E1 dan E2).
+- **Dataran, bukan puncak:** markah sel = median skor sel itu dan jirannya ±1 langkah pada setiap ambang yang ditala
+  (kotak 3^k); perlu sekurang-kurangnya separuh sel kotak (paling kurang 2) cukup isyarat. Varian pencetus tidak
+  berjiran. Anak = sel bermarkah dataran tertinggi; jika sel induk sendiri tertinggi, induk kekal.
+- **Ujian:** anak dan induk dinilai pada kumpulan B. **Bacaan dikunci:** "tala menolong" hanya jika lebih separuh anak
+  (tidak termasuk induk kekal) mengatasi induknya dalam kelebihan `tp` pada kumpulan B gabungan DAN pada K3. Jika tidak,
+  itu dilaporkan sebagaimana adanya.
+- Cara pegang anak dipilih seperti A; anak didaftarkan dalam keluarga F (ID baharu, catatan induk dalam laporan).
+
+Keluaran `carian_setup/hasil/CS06/`; `kajian/CARIAN_SETUP.md` memaparkan pusingan terkini. Kaveat (i) dan (j) kekal.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

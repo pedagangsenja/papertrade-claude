@@ -16,7 +16,7 @@ on:
 
 permissions:
   contents: write
-  actions: write   # cetus analisis.yml selepas larian dispatch penjaga (lihat langkah terakhir)
+  actions: write   # cetus analisis.yml dan jejak_f.yml selepas larian dispatch penjaga (lihat langkah akhir)
 
 concurrency:
   group: lejar
@@ -130,6 +130,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run analisis.yml --ref main --repo "$GITHUB_REPOSITORY"
+      # Atas sebab yang sama jejak_f.yml (workflow_run selepas Lejar) tidak tercetus selepas larian dispatch penjaga, lalu
+      # jejak hadapan kohort F menunggu larian Lejar BERJADUAL yang boleh lewat beberapa jam. Cetus terus di sini
+      # (keputusan pengguna 14 Nov 2026). jejak_f.yml dikira semula sepenuhnya setiap larian, jadi cetusan berganda selamat.
+      - name: Cetus Jejak hadapan F (larian dispatch bot)
+        if: success() && github.event_name == 'workflow_dispatch' && github.actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run jejak_f.yml --ref main --repo "$GITHUB_REPOSITORY"
       # Atas sebab yang sama, kegagalan larian dispatch bot TIDAK mencetus amaran_ntfy.yml (10 Nov 2026: larian #62
       # gagal push selepas 2.7 jam tanpa sebarang amaran). Hantar terus; larian jadual/manusia kekal melalui
       # amaran_ntfy supaya tiada amaran berganda.
