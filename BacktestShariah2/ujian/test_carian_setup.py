@@ -915,7 +915,7 @@ class TestCS07(unittest.TestCase):
     def test_kernel_keluar_pariti_enjin_lama(self):
         import cs_keluar7 as k7
         pan, XA, ev = self._pan7()
-        S = k7.sedia_pan(pan, XA, ev)
+        S = k7.sedia_pan(pan, XA, ev, pegang_min=1)                 # tanpa pegang minimum = enjin lama
         teks = [a[3] for a in k7.ATOM]
         for lama, baharu in ((0, 'tutup < MA10'), (8, 'MACD(12,26,9) < isyarat'), (13, 'Supertrend(10, 3.0) turun'),
                              (17, 'Chandelier 3.0xATR14 dari tutup tertinggi'), (19, 'tutup < 92% tutup tertinggi sejak beli'),
@@ -947,6 +947,23 @@ class TestCS07(unittest.TestCase):
         self.assertAlmostEqual(float(Acc[5, r * k7.NG, 0, 2]), float((R0 >= 0.10).sum()))
         lab = S[7]
         self.assertTrue((lab[:, 1] <= lab[:, 0]).all())                         # terus sebahagian daripada m5
+
+    def test_pegang_minimum(self):
+        import cs_keluar7 as k7
+        self.assertEqual(k7.PEGANG_MIN, 3)                                      # dikunci pindaan (p)
+        pan, XA, ev = self._pan7()
+        S, S1 = k7.sedia_pan(pan, XA, ev), k7.sedia_pan(pan, XA, ev, pegang_min=1)
+        self.assertTrue(((S[0] & 3) == 0).all())                                # tiada bit indikator bagi tutup sesi 1 dan 2
+        self.assertTrue(((S1[0] & ~3) == S[0]).all())
+        for kol in (k7.NG * 5, k7.NG * 40, k7.NG * 90):
+            R, sk = k7.hasil(*S[:7], k7.A1, k7.A2, k7.OP, 5, kol)
+            R1, sk1 = k7.hasil(*S1[:7], k7.A1, k7.A2, k7.OP, 5, kol)
+            henti = S[2][:, 5]                                                  # indeks sesi henti (99 = tiada)
+            awal = sk < 3                                                       # dijual sebelum buka sesi ke-4
+            self.assertTrue((sk >= 1).all())                                    # tiada jualan pada hari beli
+            self.assertTrue(((henti[awal] == sk[awal]) | S[4][awal, 5]).all())  # jualan awal hanya kerana henti rugi
+            self.assertTrue((sk >= np.minimum(sk1, 3)).all())                   # tidak pernah lebih awal daripada enjin lama
+            self.assertTrue((sk[~awal] >= 3).all())
 
     def test_mesin_kelompok_tetap(self):
         import cs_mesin as ms

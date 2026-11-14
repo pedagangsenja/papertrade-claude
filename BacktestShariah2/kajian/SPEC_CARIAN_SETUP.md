@@ -659,6 +659,21 @@ dahulu". Ini analisis, bukan carian: tiada setup dipilih daripadanya. Kod `caria
 - Tiada bacaan lulus/gagal: pegang minimum ialah SYARAT pengguna, bukan pengoptimuman. Analisis ini mengukur kosnya dan
   memilih cara melaksanakannya (V1 atau V2); keputusan dicatat sebagai pindaan sebelum enjin diubah.
 
+### Pindaan 14 Nov 2026 (p) — SYARAT WAJIB baharu: pegang minimum 3 sesi (selepas analisis (o); sebelum hasil keluar CS07 dilihat)
+
+Syarat pengguna 14 Nov 2026: tiada beli dan jual pada hari yang sama; pegang sekurang-kurangnya 3 hari. Analisis (o)
+(`hasil/PEGANG_MIN.md`): setup F tidak pernah menjual pada hari beli; jualan sebelum hari ke-4 hanya ~2.5 % belian (median
+setup dipercayai), hampir semuanya henti rugi; tiga mekanik memberi angka yang hampir sama.
+
+- **Peraturan (V1), berkuat kuasa bagi semua setup F mulai sekarang:** indikator keluar hanya boleh menjual mulai BUKA SESI
+  KE-4 (beli Isnin → jualan indikator paling awal Khamis). Henti rugi kekal aktif sejak sesi ke-2 sebagai perlindungan
+  kecemasan (henti rugi wajib, item 5); tiada apa-apa jualan pada hari beli. Diputuskan Claude di bawah serahan pengguna;
+  pilihan V2 (henti juga ditangguh) direkod dalam analisis dan boleh dipilih pengguna.
+- Pelaksanaan: `cs_keluar7.PEGANG_MIN = 3` (carian dan penilaian keluar CS07 dijalankan SEMULA di bawah peraturan ini; hasil
+  A tanpa peraturan dibuang sebelum hasil B dilihat); kedudukan akhir dijana semula bagi SEMUA setup di bawah peraturan ini;
+  penjejak hadapan kohort F (`cs_hadapan.py`) memakai peraturan yang sama (belum ada posisi ditutup; kohort tidak berubah).
+- Mesin (c) tidak terkesan: ia menskor masuk sahaja.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
