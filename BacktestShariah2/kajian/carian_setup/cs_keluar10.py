@@ -84,7 +84,7 @@ def atom_baharu():
     for k0, k1, a in ((8, 4, 0.50), (6, 3, 0.50), (8, 5, 0.30)):
         add('L', 11, f'Chandelier {k0}xATR14 hingga tutup tertinggi >= +{a:.0%}, kemudian {k1}xATR14', k0, k1, a)
     for k in (4, 5, 6):
-        add('L', 0, f'distribution day saham >= {k} dalam 25 sesi', l='dist', k=k)
+        add('L', 0, f'distribution day saham >= {k} dalam 25 sesi', l='dist', n=k)
     bil, out = {}, []
     for kelas, jenis, par, par2, par3, teks, spek in A:
         bil[kelas] = bil.get(kelas, 0) + 1
@@ -278,12 +278,14 @@ def siri_set(kerja, set_):
                 x = (k9.beza_qqq(pan, qret[sp['k']][hi], sp['k']) <= -sp['x']) if sp['r'] == 'beza' else (
                     pan['F'][15 if sp['x'] == 70 else 16] == 0)       # BUKAN F16 (RS >= 70) / BUKAN F17 (RS >= 90)
                 xp = x
+            elif 'l' in sp:
+                x = xp = dist >= sp['n']
             elif 'k' in sp:
                 x = (c / s50 - 1 >= sp['x']) if sp['k'] == 'sma50' else ((c - s50) / pan['atr'] >= sp['x']) if sp['k'] == 'atr50' \
                     else (c / s200 - 1 >= sp['x'])
                 xp = x
             else:
-                x = xp = dist >= sp['k']
+                raise ValueError(kod)
             X[r], Xp[r] = x, xp
     np.save(f, X), np.save(fp, Xp)
     sah = t8.sah8(pan)
