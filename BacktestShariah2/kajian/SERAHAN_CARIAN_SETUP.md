@@ -1,8 +1,8 @@
-# Serahan: Carian Setup (CS) dan keluarga F — keadaan pada 15 Nov 2026 (selepas CS09 dan CS10: keluar daripada maklumat yang belum dicuba, lorong swing dan lorong trend)
+# Serahan: Carian Setup (CS) dan keluarga F — keadaan pada 15 Nov 2026 (selepas CS11: semakan semula setup F dengan ukuran longgar pengguna)
 
 Ditulis pada akhir sesi kerja 13–14 Nov 2026 dan dikemas kini pada 14 Nov 2026 selepas pusingan CS05 dan CS06, supaya chat baharu boleh menyambung tanpa membaca chat lama. Fail ini ialah nota serahan (ditulis tangan, bertarikh); nombor di sini dipetik daripada fail hasil yang dinamakan, dan fail hasil itulah sumber kebenaran.
 
-**Baca mengikut susunan ini:** fail ini → `kajian/SPEC_CARIAN_SETUP.md` (pradaftar + pindaan (a)–(s)) → **`kajian/carian_setup/hasil/KEDUDUKAN_AKHIR.md` (SATU jadual semua setup lawan matlamat, §9c)** → `kajian/CARIAN_SETUP.md` (papan semasa = CS06) → `kajian/carian_setup/hasil/CS06/SEMUA_PENCETUS_LENGKAP.md` (setiap kaedah) dan `hasil/CS06/TALA.md` → `kajian/KAJIAN_PRASYARAT_PAKAR.md` → `jejak_f/RINGKASAN.md`.
+**Baca mengikut susunan ini:** fail ini → `kajian/SPEC_CARIAN_SETUP.md` (pradaftar + pindaan (a)–(t)) → **`kajian/carian_setup/hasil/KEDUDUKAN_AKHIR.md` (SATU jadual semua setup lawan matlamat, §9c)** → `kajian/CARIAN_SETUP.md` (papan semasa = CS06) → `kajian/carian_setup/hasil/CS06/SEMUA_PENCETUS_LENGKAP.md` (setiap kaedah) dan `hasil/CS06/TALA.md` → `kajian/KAJIAN_PRASYARAT_PAKAR.md` → `jejak_f/RINGKASAN.md`.
 
 **Ringkasan CS05 dalam lima baris (butiran §9):** (1) prasyarat MENOLONG kadar tangkap bagi hampir semua kaedah, jauh melebihi plasebo; (2) hampir semuanya datang daripada SATU prasyarat: earnings dalam 1–5 sesi akan datang; (3) prasyarat pasaran panik menaikkan kadar lari SEMUA saham (bila membeli), bukan kemahiran memilih, dan kena henti naik bersama; prasyarat aliran ikut trend dan sektor/industri kuat tidak menolong; (4) pencetus (kaedah M/N/indikator) menambah sedikit sahaja di atas prasyarat + penapis; (5) pegang/keluar (pindaan (j)): pegang hampir 20 sesi dengan henti longgar; indikator keluar jarang mengatasi "tiada keluar indikator".
 
@@ -22,7 +22,9 @@ Ditulis pada akhir sesi kerja 13–14 Nov 2026 dan dikemas kini pada 14 Nov 2026
 
 **Penilaian semula matlamat (15 Nov 2026, butiran §1b):** (30) Claude menilai kerja ikut untung akaun, MDD dan SPY dan mencadangkan "ukur lorong trend di peringkat akaun"; pengguna: "baca kembali dan nilaikan perbualan kita ... patutnya anda lebih memahami mengapa saya buat backtest ni". Selepas membaca semula semua 61 mesej pengguna dalam dua chat lama, kefahaman DISAHKAN pengguna ("1.ya ... 2.ya 3.ya"): backtest = mencari dan merangking setup terbaik ikut KADAR TANGKAP, kemudian papertrade; cadangan ukuran akaun DITARIK BALIK. (31) **Hasil akhir backtest diserahkan dalam chat: 42 setup F dipercayai + 12 setup T** (pengguna: 30–50 setup sudah cukup bagus).
 
-**Status (keputusan pengguna 14 Nov 2026): backtest dahulu. JANGAN mula jejak hadapan bagi setup CS05/CS06/CS07** (masih berkuat kuasa: tiada jejak hadapan tanpa keputusan pengguna berasingan).
+**CS11, semakan semula dengan ukuran longgar pengguna (pindaan (t), 15 Nov 2026; butiran §9i):** (32) pengguna: "0.1% naik daily pun still ok ... turun sikit still ok as long as trendnya menaik. so just hold je. tak boleh terlalu strict ... asyik nak jual je"; "F sepatutnya far more better than M dan N"; papertrade DITANGGUH ("abaikan dahulu papertrade ... kita masih belum selesai dengan F method"). Keputusan "1.C 2.B 3.B". (33) **F jauh mengatasi M dan N asal pada ukuran KETAT** (median: naik ≥ 5 % minggu pertama 27 lawan 11–12 daripada 100; `terus` 14 lawan 6; purata +2.1 % lawan +0.2–0.3 %), TETAPI **pada ukuran LONGGAR (`naik`: ≥ +2 % selepas 4 minggu, trend masih naik, tiada tutup −10 %) F tidak mengatasi saham rawak hari sama** (median 39 lawan 39; hanya 4 daripada 69 lulus: `F13`, `F19`, `F56`, `F88`) — F dicari untuk saham yang naik LAJU, bukan yang naik perlahan dan stabil. (34) **Pegang selepas 4 minggu:** makin lama dipegang makin tinggi purata (jual hari ke-20 +2.1 % → hingga bawah purata 20 hari +2.7 % → bawah purata 50 hari +3.1 % → Chandelier 4×ATR +4.2 % → 6 bulan +6.7 %) tetapi kadar menang turun 4–12 mata dan rugi besar bertambah; ujian yang ditetapkan dahulu GAGAL (tiada cara lulus ketiga-tiga syarat). Pilihan cara pegang = keputusan pengguna. (35) **Kekerapan:** 20 setup yang menepati semua (ukuran ketat) digabung membeli ~826 kali setahun pada 839 saham Shariah (setiap bulan ada belian); setup earnings sendirian 10–26 setahun. (36) Langkah berikutnya yang diisytihar: CARIAN BAHARU dipangkatkan ikut ukuran longgar (perlu pindaan dan keputusan pengguna).
+
+**Status (keputusan pengguna 14 Nov 2026): backtest dahulu. JANGAN mula jejak hadapan bagi setup CS05/CS06/CS07** (masih berkuat kuasa; 15 Nov: "abaikan dahulu papertrade").
 
 ## 1. Apa yang pengguna cari (disahkan pengguna 13 Nov 2026)
 
@@ -58,6 +60,7 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 - 13 Nov, selepas Claude melaporkan "tiada yang mengalahkan indeks": "anda perlu lebih bijak. baca balik chat kita ni, apa yg saya cari"; "apa sahaja keputusan di tangan anda, tetapi sentiasa berbalik kepada matlamat saya".
 - 14 Nov: "Ukurannya kadar tangkap, bukan purata setiap dagangan dan bukan banding indeks. Backtest dahulu, papertrade kemudian."; "in the end nanti anda akan beri kepada saya result backtest kam? yang terbaik."
 - 15 Nov: "pegang selagi untung dan juga kena ada stop loss. rugi sikit tapi kalau trend naik still ok, boleh continue pegang".
+- 15 Nov (chat "Backtest Fable 5.2 3", selepas semakan 42 setup): "kamu uji macam macam kombinasi tapi cuma ada dpt 95 je? serius lah"; "abaikan dahulu papertrade tu. kita masih belum selesai dengan F method ni ... Method M dah ada masalah beli dan jual hari yang sama. method N mungkin better dari M. method F sepatutnya lagi better and far more better than M dan N ... mungkin ada benda yang anda miss ... saya tak nak beli hari ni jual hari ni. at least saham itu makin naik dan naik. 0.1% naik daily pun still ok lagi bagi saya. atau mungkin 1% daily. turun sikit bagi saya still ok as long as trendnya adalah menaik. so just hold je. tak boleh la terlalu strict sangat sampai nak beli apa pun susah, n asyik nak jual je. mcm takde flexibility."
 
 **Bacaan (disahkan pengguna 15 Nov 2026):** backtest ialah alat untuk MENCARI dan MERANGKING setup terbaik; bukti datang kemudian daripada papertrade. Kerja CS dinilai ikut kadar tangkap dan sama ada ranking terbaik sudah diserahkan — bukan ikut indeks, untung akaun atau MDD.
 
@@ -215,8 +218,12 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 
 **Diputuskan pengguna 15 Nov 2026 ("1.ya tapi kalau boleh 30 - 50 pun sudah cukup bagus 2.ya 3.ya") dan SUDAH dilaksanakan:** (1) kefahaman matlamat §1b betul; (2) hasil akhir backtest diserahkan dalam chat (42 setup F dipercayai ikut kedudukan `hasil/KEDUDUKAN_AKHIR.md` + 12 setup T `hasil/CS08/papan.csv`); (3) kefahaman ditulis di bahagian atas `CLAUDE.md` dan cadangan Claude "ukur lorong trend di peringkat akaun" DIBUANG daripada `CLAUDE.md` dan fail ini.
 
+**Diputuskan pengguna 15 Nov 2026 dan SUDAH dilaksanakan:** kefahaman + perkataan biasa di `main` (PR #53); semakan 42 setup satu demi satu (91,568 dagangan; skrip sementara, tidak disimpan); "1.C 2.B 3.B" → pusingan **CS11** (§9i). Papertrade DITANGGUH oleh pengguna.
+
 **Menunggu keputusan pengguna:**
-1. Papertrade (jejak hadapan maya, tiada wang) bagi setup terbaik dalam senarai yang diserahkan: langkah seterusnya dalam pelan pengguna sendiri ("backtest dahulu, papertrade kemudian"). Perlu pindaan bertarikh bagi kohort, dan penjejak perlu kalendar earnings harian bagi setup berprasyarat earnings (16 daripada 42).
+1. Carian baharu dipangkatkan ikut ukuran longgar `naik` (semua pencetus × prasyarat × penapis; cadangan Claude: ya; perlu pindaan bertarikh).
+1a. Cara pegang selepas 4 minggu: kekal jual hari ke-20, atau salah satu cara "pegang selagi trend naik" (§9i; tiada yang lulus ujian yang ditetapkan dahulu — purata naik, kadar menang turun).
+1b. Daftarkan semua setup yang lulus tanpa had bilangan (pengguna: "cuma dpt 95 je? serius lah"; had 10–12 setiap papan ditetapkan Claude): ditangguh sehingga ukuran dan carian baharu selesai.
 2. Data saham delist (§9d): pengguna mempersoalkan keperluannya ("saya tak faham kenapa perlu fokus dekat saham delist ini"); Claude mencadangkan langkau dan catat sebagai kaveat. Ia BUKAN item matlamat. Pilihan lama selepas portfolio (§9b): (a) mula jejak hadapan maya bagi kohort kecil (`F40`, `F58`, `F49`) untuk menguji kadar tangkap pada data langsung, selepas kalendar earnings dibina dalam penjejak; atau (b) berhenti di sini dan tunggu kohort 13 Nov matang. Pengguna melarang jejak hadapan sehingga membenarkannya.
 
 **Tiada yang berkaitan wang sebenar berubah:** kad skor kekal satu-satunya keputusan.
@@ -437,6 +444,18 @@ python3 cs_keluar10.py benihm $K && python3 cs_keluar10.py atom $K      # ~5 min
 python3 cs_keluar10.py cari $K && python3 cs_keluar10.py pilih $K      # < 1 min
 python3 cs_keluar10.py kunci $K && python3 cs_keluar10.py lapor $K     # < 1 min
 ```
+
+## 9i. CS11: semakan semula setup F dengan ukuran longgar, pegang selepas 4 minggu, kekerapan, banding M / N / F (pindaan (t), 15 Nov 2026)
+
+Peraturan ditulis dan dikomit sebelum dijalankan (komit `6f69258`). Kod `cs_semak11.py` (label diuji lawan kiraan naif; "jual hari ke-20" sepadan tepat dengan `cs_keluar7`; cara pegang diuji lawan simulasi hari demi hari). Sumber angka: `hasil/CS11/SEMAK_F.md`, `semak_f.csv` (69 F + 134 M asal + 49 N asal), `pegang.csv`, `banding.csv`.
+
+- **Tiga perkara yang Claude terlepas pandang (diakui kepada pengguna):** ukuran `terus` lebih ketat daripada kehendak pengguna; setiap setup dipaksa jual pada sesi 20; kekerapan tidak pernah dijadikan syarat. Selain itu had 10–12 setup setiap papan (95 kod F daripada > 640 juta kombinasi; 196 daripada 197 teratas CS05 dan 194 daripada 197 CS06 lulus semakan masuk pada saham tidak dilihat) ialah had Claude, bercanggah dengan "jangan set limit".
+- **Label longgar `naik`:** tutup sesi 20 ≥ P + 2 % DAN > purata tutup sesi 1–20 DAN tiada tutup ≤ P − 10 %. Saham rawak mana-mana hari (B): `terus` 6.3 %, `naik` 38.6 %, `naik10` 13.6 %, `naik20` 3.6 %.
+- **Banding (median, B, pegang 20 hari + stop loss; M/N: isyarat asal tanpa prasyarat/penapis, stop 4×ATR14):** M asal (134): naik ≥ 5 % minggu 1 11 %, `terus` 6 (rawak 6), `naik` 38 (38), menang 50 %, purata +0.2 %; N asal (49): 12 %, 6 (6), 38 (38), 51 %, +0.3 %; F (69): 27 %, 14 (11), 39 (39), naik ≥ 10 % selepas 4 minggu 25 % (rawak 22; M/N 12–13), menang 54 %, purata +2.1 %. Lulus ukuran longgar (≥ 300 belian, ≥ 10 tahun, > rawak dalam K1, K2, K3): M 10 daripada 134, N 3 daripada 49, F 4 daripada 69 (`F13`, `F19`, `F56`, `F88`); lulus ukuran ketat: F 42, M 18, N 12.
+- **Bacaan:** F memilih saham yang lebih kerap naik LAJU dan BESAR (dan lebih kerap gagal) — bukan saham yang naik perlahan dan stabil. Untuk ukuran longgar perlu carian baharu yang dipangkatkan ikut `naik`.
+- **Pegang selepas 4 minggu (B, median 69 setup; berpasangan):** `J20` purata +2.1 %, menang 54 %, rugi ≥ 15 % 13 %; `P-MA20` +2.7 / 51 / 14 (49 daripada 69 lebih tinggi; menang −3.8 mata); `P-MA20x2` +2.8 / 49 / 14; `P-MA50` +3.1 / 43 / 14 (58 daripada 69; −8.9); `P-R10` +3.0 / 47 / 17; `P-CH4` +4.2 / 41 / 20 (63 daripada 69; −12; rugi besar +7.6 mata; median 42 hari); `P-126` +6.7 / 44 / 34 (64 daripada 69). Cara terpilih pada A = `P-126`; ujian dikunci GAGAL (menang −9.8 mata, rugi ≥ 15 % +21.7 mata). Tiada cara lulus ketiga-tiga syarat.
+- **Kekerapan (839 saham Shariah dalam data):** setiap setup earnings 10–26 belian setahun; `F11` 387, `F60` 102, `F56` 74; 20 setup "menepati semua" (ukuran ketat) digabung 826 saham-hari berbeza setahun, belian setiap bulan.
+- **Jana semula:** `python3 cs_semak11.py semak $K && python3 cs_semak11.py lapor $K` (< 2 min; perlukan panel/benih/lapis A dan B, `cs07_K_*`, `benih_*_cs07.pkl`).
 
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 

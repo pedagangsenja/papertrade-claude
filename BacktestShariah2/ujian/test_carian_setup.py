@@ -1511,6 +1511,33 @@ class TestCS11(unittest.TestCase):
             self.assertTrue((SK >= 1).all())                                    # tiada jualan pada hari beli
             self.assertTrue((SK[:, 1:] >= np.minimum(SK[:, :1], 19)).all())     # cara pegang tidak pernah menjual lebih awal daripada J20
 
+    def test_rekod_cs11(self):
+        import cs_semak11 as s11
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS11')
+        T = pd.read_csv(os.path.join(d, 'semak_f.csv'))
+        F, M, N = (T[T.kump == k] for k in ('F', 'M asal', 'N asal'))
+        self.assertEqual((len(F), len(M), len(N)), (69, 134, 49))
+        self.assertTrue(F.swing.all())                                          # tiada jualan hari beli; jualan awal hanya stop loss
+        self.assertGreater(F.terus.median(), 2 * M.terus.median())              # ukuran ketat: F jauh mengatasi M dan N asal
+        self.assertGreater(F.terus.median(), 2 * N.terus.median())
+        self.assertGreater(F.m5.median(), 2 * M.m5.median())
+        self.assertLess(abs(float((F.naik - F.a_naik).median())), 0.01)         # ukuran longgar: F hampir sama dengan rawak hari sama
+        self.assertLessEqual(int(F.lulus_naik.sum()), 5)
+        self.assertEqual(int(F.menepati.sum()), int((F.lulus_naik & (F.prasyarat.fillna('') != '')).sum()))
+        for r in F.itertuples():                                                # takrif "lulus ukuran longgar" dikunci pindaan (t)
+            mahu = bool(r.n >= s11.MIN_BELIAN and r.tahun >= s11.MIN_TAHUN and min(r.kl_naik_K1, r.kl_naik_K2, r.kl_naik_K3) > 0)
+            self.assertEqual(bool(r.lulus_naik), mahu, r.id)
+        P = pd.read_csv(os.path.join(d, 'pegang.csv'))
+        b = P[P.set == 'B'].pivot(index='id', columns='cara')
+        self.assertEqual(sorted(P.cara.unique()), sorted(s11.CARA))
+        for cr in s11.CARA[1:]:                                                 # pegang lebih lama: purata naik, kadar menang turun
+            self.assertGreater(int((b['purata'][cr] > b['purata']['J20']).sum()), len(b) / 2, cr)
+            self.assertLess(float((b['menang'][cr] - b['menang']['J20']).median()), -0.02, cr)
+        md = open(os.path.join(d, 'SEMAK_F.md'), encoding='utf-8').read()
+        self.assertIn('Keputusan: pegang selepas 4 minggu TIDAK menolong', md)
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str).fillna('')
+        self.assertEqual(len(reg), 95)                                          # pusingan ini tidak mendaftar atau mengubah setup F
+
 
 if __name__ == '__main__':
     unittest.main()
