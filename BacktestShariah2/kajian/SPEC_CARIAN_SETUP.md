@@ -988,7 +988,8 @@ keputusan pengguna atau sebab baharu, cth. data baharu). `F01`–`F95` TIDAK diu
   kedudukan akhir dikira sudah diterima. Kembar TIDAK diberi kod baharu; ia direkod dalam `hasil/CS13/calon.csv.gz` dengan
   ID setup yang diwakilinya. Setiap calon lulus yang bukan kembar diberi kod F — tiada had.
 - **Pendaftaran:** kod `F96` dan seterusnya ikut susunan skor A; `pusingan = CS13`; status `BACKTEST`; takrif
-  `pencetus|penapis|G4|PB|prasyarat` (`G4` = stop loss 4 × ATR14, `PB` = cara pegang B). Lajur `n_K*`, `purata_K*`, `k10_K*`
+  `pencetus|penapis|G6|PB|prasyarat` (`G6` = stop loss 4 × ATR14, `PB` = cara pegang B; pembetulan label sebelum
+  dijalankan: kod stop loss 4 × ATR14 dalam `cs_keluar7.HENTI` ialah `G6`, bukan `G4` — peraturan tidak berubah). Lajur `n_K*`, `purata_K*`, `k10_K*`
   dan `menang_K*` = dagangan setup LENGKAP (stop loss 4 × ATR14 + cara pegang B, satu posisi setiap saham, tetingkap 126 sesi
   lengkap) pada kumpulan B.
 - **Senarai utama (keputusan (1)):** `hasil/CS13/SENARAI_UTAMA.md` — 42 setup F lama yang dipercayai (takrif (m)) + semua
