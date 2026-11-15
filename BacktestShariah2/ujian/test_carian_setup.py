@@ -1256,5 +1256,141 @@ class TestAudit(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(self.d, 'AUDIT_F.md')))
 
 
+class TestCS09(unittest.TestCase):
+    """SPEC pindaan 15 Nov 2026 (v), (w): keluar ikut kata pengguna (jual hanya jika rugi DAN trend patah), dua lorong."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS09')
+
+    def test_ruang_dikunci(self):
+        import cs_keluar7 as k7
+        import cs_keluar9 as k9
+        self.assertEqual((len(k9.TREND), k9.D_RUGI, k9.SIMPAN_MIN, k9.MIN_ERA, k9.TOLERANSI_TP), (45, (3, 5, 8, 10), 0.90, 30, 0.005))
+        self.assertEqual(sorted(k9.RUGI), [3, 5, 8, 10])
+        P = k9.peraturan()
+        self.assertEqual(len(P), 180)
+        self.assertEqual(len({p[0] for p in P}), 180)
+        for kol, a, d in P:
+            r, g = divmod(kol, k7.NG)
+            self.assertEqual((int(k7.OP[r]), g), (3, 0))                        # pasangan DAN, aktif "sentiasa"
+            self.assertEqual({int(k7.A1[r]), int(k7.A2[r])}, {a, k9.RUGI[d]})
+            self.assertEqual(int(k7.JENIS[a]), 0)
+            self.assertEqual((int(k7.JENIS[k9.RUGI[d]]), int(k7.PAR[k9.RUGI[d]])), (3, d))
+
+    def _satu(self, c, atom_benar, kol, s=3):
+        """Satu isyarat pada bar 0 (beli buka bar 1) atas siri tutup c; atom trend `atom_benar` benar pada setiap bar."""
+        import cs_keluar7 as k7
+        n = len(c)
+        o = np.r_[c[0], c[:-1]]                                                 # buka = tutup semalam
+        XA = np.zeros((int((k7.JENIS == 0).sum()), n), np.uint8)
+        if atom_benar is not None:
+            XA[k7.BARIS[atom_benar]] = 1
+        S = k7.sedia(np.array([0]), o, np.maximum(o, c), np.minimum(o, c), c, np.full(n, 1.0), XA, k7.JENIS, k7.PAR, k7.BARIS,
+                     k7.PEGANG_MIN, np.zeros(1))
+        R, sk = k7.hasil(*S[:7], k7.A1, k7.A2, k7.OP, s, kol)
+        return float(R[0]), int(sk[0])
+
+    def test_peraturan_hanya_menjual_posisi_rugi_dengan_trend_patah(self):
+        import cs_keluar7 as k7
+        import cs_keluar9 as k9
+        a = k9.TREND[4]
+        kol = k9.kol_dan(a, k9.RUGI[3])
+        n = k7.TMAX + 3
+        naik = 100.0 * (1 + 0.004 * np.arange(n))                               # sentiasa untung
+        turun = np.r_[100.0, 100.0, 99.0, 98.5, np.full(n - 4, 98.0)]           # rugi kecil sejak sesi 2, henti -15 % tidak kena
+        self.assertEqual(self._satu(naik, a, kol), self._satu(naik, a, 0))      # untung + trend patah: tidak dijual
+        self.assertEqual(self._satu(turun, None, kol), self._satu(turun, None, 0))   # rugi + trend masih naik: terus pegang
+        R, sk = self._satu(turun, a, kol)                                       # rugi + trend patah: jual buka sesi ke-4
+        self.assertEqual(sk, 3)
+        self.assertAlmostEqual(R, 98.5 / 100.0 - 1 - k7.KOS, places=6)         # buka sesi ke-4 = tutup sesi ke-3
+        self.assertEqual(self._satu(turun, None, 0)[1], k7.TMAX - 1)            # pegang sahaja: hingga sesi 20
+        lewat = k9.kol_dan(a, k9.RUGI[10])
+        self.assertEqual(self._satu(turun, a, lewat)[1], 10)                    # d = 10: dinilai mulai tutup sesi 10
+
+    def test_skor_a(self):
+        import cs_keluar7 as k7
+        import cs_keluar9 as k9
+        acc = np.zeros((k7.NH, 3, 2, k7.NST), np.float32)
+        acc[2, :, 0, 0], acc[2, :, 1, 0] = 100, 20                              # era 1 kurang MIN_ERA: diabaikan
+        acc[2, :, 0, 5] = (2.0, 3.0, 1.0)                                       # jumlah R
+        acc[2, :, 1, 5] = (0.2, -5.0, 9.0)
+        acc[2, :, 0, 7] = (4.0, 3.8, 2.0)                                       # jumlah R pada pelari
+        d, simpan = k9.skor_a(acc, 2, np.array([1, 2]))
+        np.testing.assert_allclose(d, [0.01, -0.01], atol=1e-6)
+        np.testing.assert_allclose(simpan, [0.95, 0.5], atol=1e-6)
+        self.assertTrue(np.isnan(k9.skor_a(acc, 0, np.array([1]))[0]).all())    # tiada isyarat: NaN
+
+    def test_rekod_swing(self):
+        import cs_keluar9 as k9
+        S = pd.read_csv(os.path.join(self.d, 'setup.csv'))
+        G = pd.read_csv(os.path.join(self.d, 'takrif.csv'))
+        K = pd.read_csv(os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'KEDUDUKAN_AKHIR.csv'))
+        self.assertEqual(sorted(S.id), sorted(K.id))
+        self.assertEqual(len(G), 45)
+        t = (S.sejagat_purata > S.x00_purata) & (S.sejagat_rugi8 < S.x00_rugi8) & (S.sejagat_tp >= S.x00_tp - k9.TOLERANSI_TP)
+        self.assertEqual(list(t), list(S.sejagat_ditolong))
+        x = S[S.sendiri_peraturan.str.startswith('X00')]
+        self.assertTrue(np.allclose(x.sendiri_purata, x.x00_purata))
+        Y = S[S.dipercayai]
+        self.assertLessEqual(int(Y.sejagat_ditolong.sum()), len(Y) / 2)         # bacaan dikunci (v): TIDAK menolong
+        self.assertLessEqual(int((G.d_purata > 0).sum()), len(G) / 2)           # ... dan idea tidak teguh
+        self.assertLess(float((S.rugi_sahaja_purata - S.x00_purata).median()), float((S.sejagat_purata - S.x00_purata).median()))
+        self.assertTrue((S.x00_jual == 0).all())                                # X00: tiada jualan oleh indikator
+        self.assertTrue(os.path.exists(os.path.join(self.d, 'LAPORAN.md')))
+
+    def test_kernel_trend(self):
+        import cs_trend8 as t8
+        import cs_trend9 as t9
+        self.assertEqual((t9.NT, list(t9.D_RUGI), t9.NK), (26, [3, 10, 20, 40], 1 + 27 * 4))
+        rng = np.random.default_rng(9)
+        n = 520
+        c = 50 * np.exp(np.cumsum(rng.normal(0.0005, 0.03, n)))
+        o = c * (1 + rng.normal(0, 0.006, n))
+        l, atr = np.minimum(o, c) * 0.994, np.full(n, 1.5)
+        XT = (rng.random((t9.NT, n)) < 0.3).astype(np.uint8)
+        ev = np.arange(100, 380)
+        R, SK = t9.hasil_rugi(ev, o, l, c, atr, XT, t9.D_RUGI, t8.PEGANG_MIN)
+        R8, SK8 = t8.hasil_semua(ev, o, l, c, atr, XT, t8.JENIS, t8.PAR, t8.BARIS, t8.PEGANG_MIN)
+        np.testing.assert_array_equal(R[:, :, 0], R8[:, :, 0])                  # X00 sama
+        np.testing.assert_array_equal(SK[:, :, 0], SK8[:, :, 0])
+        for j, d in enumerate(t9.D_RUGI):                                       # "rugi sahaja" = atom jenis 3 CS08
+            for a in range(t8.NA):
+                if t8.JENIS[a] == 3 and t8.PAR[a] == d:
+                    np.testing.assert_array_equal(R[:, :, t9.kol(t9.NT, j)], R8[:, :, 1 + a * t8.NG])
+        s = 2
+        for t in (0, 7, 25):                                                    # lawan kiraan kasar
+            for j, d in enumerate(t9.D_RUGI):
+                for k in (0, 57, 190):
+                    e = ev[k] + 1
+                    P = o[e]
+                    x = next((dd + 1 for dd in range(max(int(d), t8.PEGANG_MIN) - 1, t8.H_MAX - 1)
+                              if c[e + dd] < P and XT[t, e + dd]), 999)
+                    sk = int(SK[k, s, t9.kol(t, j)])
+                    self.assertLessEqual(sk, min(x, int(SK[k, s, 0])))
+                    if sk == x and sk < int(SK[k, s, 0]):
+                        self.assertAlmostEqual(float(R[k, s, t9.kol(t, j)]), o[e + x] / P - 1 - t8.KOS, places=5)
+                        self.assertLess(c[e + x - 1], P)                        # hanya posisi rugi yang dijual
+        XT0 = np.zeros_like(XT)                                                 # trend tidak pernah patah: sama seperti X00
+        R0 = t9.hasil_rugi(ev, o, l, c, atr, XT0, t9.D_RUGI, t8.PEGANG_MIN)[0]
+        for q in range(1, t9.kol(t9.NT, 0)):
+            np.testing.assert_array_equal(R0[:, :, q], R0[:, :, 0])
+
+    def test_rekod_trend(self):
+        import cs_trend9 as t9
+        S = pd.read_csv(os.path.join(self.d, 'trend_setup.csv'))
+        G = pd.read_csv(os.path.join(self.d, 'trend_takrif.csv'))
+        self.assertEqual(S.id.tolist(), [f'T{i:02d}' for i in range(1, 13)])
+        self.assertEqual(len(G), 104)
+        t = (S.sejagat_purata > S.x00_purata) & (S.sejagat_rugi15 < S.x00_rugi15) & (S.sejagat_tb >= S.x00_tb - t9.TOLERANSI_TB)
+        self.assertEqual(list(t), list(S.sejagat_ditolong))
+        Y = S[S.dipercayai]
+        self.assertEqual(len(Y), 11)
+        self.assertLessEqual(int(Y.sejagat_ditolong.sum()), len(Y) / 2)         # bacaan dikunci (w): TIDAK menolong
+        self.assertLessEqual(int((G.d_purata > 0).sum()), len(G) / 2)
+        self.assertTrue((G.d_rugi15 < 0).all())                                 # tetapi setiap peraturan mengurangkan rugi besar
+        self.assertTrue(os.path.exists(os.path.join(self.d, 'TREND.md')))
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,0 +1,13 @@
+{
+ "sejagat": {
+  "teks": "rugi (tutup < harga beli, sesi ≥ 40) DAN tutup < rendah 50 hari",
+  "d": 40,
+  "trend_patah": "tutup < rendah 50 hari",
+  "skor_a": -0.021828995708838533,
+  "simpan_a": 0.9474389157762441
+ },
+ "peraturan": 104,
+ "takrif_trend": 26,
+ "setup": 12,
+ "a_peraturan_skor_positif": 0
+}

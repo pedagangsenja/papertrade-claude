@@ -40,6 +40,8 @@ Satu setup lengkap (bila masuk, bagaimana pegang, bila keluar) yang **paling ker
 
 15. **(14 Nov, soalan pengguna) "Tunggu confirmation, contohnya higher high, baru entry"** (kata seorang pakar): dikaji dalam `kajian/KAJIAN_PENGESAHAN.md` + `hasil/PENGESAHAN.md` (pindaan (r)). Amalan standard aliran ikut trend sahaja, bukan semua pakar. Pada setup F: TIDAK menolong (2 dan 5 daripada 42; harga beli 1.6–4.1 % lebih mahal, tangkapan mutlak −28 hingga −57 %), walaupun isyarat yang kemudian memecah tinggi memang jauh lebih baik (17.5 % lawan 4.0 %). Tempat pengesahan yang betul = lorong trend `T`. Tidak diintegrasikan ke dalam F.
 
+16. **(15 Nov, kata pengguna tentang KELUAR, menjawab keputusan terbuka audit §9h)** "pegang selagi untung dan juga kena ada stop loss. rugi sikit tapi kalau trend naik still ok, boleh continue pegang". Ditafsir: jualan hanya oleh henti rugi, had masa, dan (tafsiran Claude, bukan kata pengguna) "rugi DAN trend patah". Diuji dua lorong (CS09, §9i): bahagian "terus pegang walaupun rugi sedikit" DISOKONG data; menjual apabila rugi dan trend patah TIDAK menolong. Maka item 4 kini dibaca: **keluar = henti rugi + had masa (pilihan (b)); menunggu pengesahan pengguna.**
+
 **Ukuran yang betul = KADAR TANGKAP** ("lari": naik ≥ 5 % minggu pertama, capai ≥ 10 % sebelum henti −8 %, masih ≥ 10 % pada minggu ke-4), lawan saham rawak pada hari dan tercile ATR% yang sama. BUKAN purata setiap dagangan, BUKAN banding indeks.
 
 ## 1a. Semakan 12 item lawan apa yang benar-benar dibuat (14 Nov 2026, teguran ketiga pengguna)
@@ -420,6 +422,22 @@ Pengguna menjawab "belum lagi" kepada gabung ke `main` dan papertrade, dan memin
 **Keputusan terbuka (pengguna):** syarat "keluar ikut indikator" — (a) kekalkan: hanya `F51` layak sekarang, mesin perlu diluaskan untuk mencari keluar; atau (b) terima "pegang hingga 20 sesi + henti rugi" sebagai keluar yang sah bagi lorong swing (data: tiada indikator keluar mengatasinya), dengan indikator keluar sebagai tambahan pilihan. Belum diputuskan.
 
 **Belum dibuat:** menilai 26 anak tala di bawah kayu ukur akhir (benih CS04 tidak disimpan; nilai rendah kerana anak tidak mengatasi induk); meluaskan mesin kepada carian keluar.
+
+## 9i. CS09: keluar ikut kata pengguna, dua lorong (pindaan (v), (w); 15 Nov 2026)
+
+Kata pengguna (§1 item 16) diterjemah kepada peraturan U: pada tutup sesi ≥ *d*, **tutup < harga beli DAN trend patah** → jual buka esok; posisi untung tidak pernah dijual oleh indikator; henti rugi dan had masa kekal. Enjin lama hanya ada syarat aktif "selepas untung"; "hanya ketika rugi" belum pernah dibaca. Asas perbandingan = "pegang sahaja" (`X00`) dengan henti yang sama.
+
+**Lorong swing** (`hasil/CS09/LAPORAN.md`, `cs_keluar9.py`; 69 setup, 45 takrif "trend patah" × *d* 3/5/8/10 = 180 peraturan):
+- Kumpulan A (pemilihan): **0 daripada 180** peraturan berskor positif; yang terbaik pun −0.35 mata.
+- Kumpulan B, tanpa pemilihan (*d* = 3): **0 daripada 45** takrif menaikkan purata (median −0.2 hingga −1.5 mata setiap dagangan); kadar menang turun 4 hingga 25 mata; rugi ≥ 15 % berkurang 4 hingga 9 mata.
+- Peraturan sejagat terpilih (rugi mulai sesi 10 DAN tutup < rendah 10 hari), median merentas setup: purata +2.11 → +1.91 %, menang 53.7 → 49.5 %, rugi ≥ 15 % 13.3 → 11.4 %, tangkap penuh 14.7 → 14.3 %; ditolong 4 daripada 42 setup dipercayai.
+- "Rugi → jual" TANPA syarat trend paling teruk (purata −1.5 mata, menang −26 mata): syarat trend pengguna memang mengurangkan kerosakan, tetapi tidak cukup untuk menjadikannya untung.
+
+**Lorong trend** (`hasil/CS09/TREND.md`, `cs_trend9.py`; `T01`–`T12`, 26 takrif × *d* 3/10/20/40 = 104 peraturan; kernel baharu, pariti dengan CS08 diuji):
+- Kumpulan A: 0 daripada 104 berskor positif. Kumpulan B: 0 daripada 11 setup dipercayai-T ditolong; 3 daripada 104 peraturan mempunyai median beza purata > 0 (semuanya "tutup < rendah 50 hari", +0.3 mata).
+- Setiap peraturan mengurangkan rugi ≥ 15 % (10 hingga 42 mata), tetapi turut memotong pelari besar (untung pelari tinggal 39–96 %) dan menurunkan kadar menang: pelari besar selalunya jatuh di bawah harga beli dengan trend jangka pendek patah sebelum ia lari.
+
+**Kesimpulan:** naluri pengguna "rugi sedikit, terus pegang" betul, dan data pergi lebih jauh: selagi henti rugi belum kena, memegang posisi rugi lebih baik daripada menjualnya walaupun trend kelihatan patah. Keluar yang disokong data dalam kedua-dua lorong = **henti rugi + had masa** (pilihan (b) audit). Di bawah takrif itu, **27 setup** lulus (ada prasyarat, dipercayai, purata "pegang sahaja" > 0, kena henti sebelum sesi ke-4 ≤ 10 %): `F43`, `F63`, `F65`, `F51`, `F50`, `F56`, `F39`, `F91`, `F40`, `F89`, `F90`, `F88`, `F92`, `F58`, `F41`, `F45`, `F07`, `F11`, `F95`, `F93`, `F42`, `F02`, `F60`, `F48`, `F44`, `F61`, `F28` (ikut kedudukan). Belum diuji: kesan peraturan itu pada peringkat akaun (MDD −10 %), tempat pengurangan rugi besar mungkin bernilai.
 
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 
