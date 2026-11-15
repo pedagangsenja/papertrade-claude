@@ -96,6 +96,15 @@ def calon(kerja):
 
 
 # ---------- semakan pada kumpulan B ----------
+def teks_pra(q1, q2):
+    """Teks prasyarat tanpa kod; '' jika tiada prasyarat (prasyarat "tiada earnings ..." dikekalkan sepenuhnya)."""
+    return '' if q1 < 0 and q2 < 0 else c5.buang_kod(c5.tk_pra(int(q1), int(q2))).replace(' DAN ', ' + ')
+
+
+def teks_pen(f1, f2):
+    return '' if f1 < 0 and f2 < 0 else c5.buang_kod(c5.tk_pen(int(f1), int(f2))).replace(' DAN ', ' + ')
+
+
 def lengkap(pan, Bt, ev):
     """Dagangan setup LENGKAP (stop loss 4xATR14 + cara pegang B) atas isyarat dengan tetingkap 126 sesi lengkap: statistik
     satu posisi setiap saham (keseluruhan dan setiap tempoh) + statistik semua isyarat bagi "jual hari ke-20" dan cara B."""
@@ -147,9 +156,7 @@ def kunci(kerja):
             ev = EV[r.pencetus]
             o = nilai(r.id, ev[c5.topeng(pan, Lr, ev, r.q1, r.q2, r.f1, r.f2)])
             if set_ == 'B':
-                o.update(nama=t7.nama7(r.pencetus, param),
-                         prasyarat=c5.buang_kod(c5.tk_pra(r.q1, r.q2)).replace(' DAN ', ' + ').replace('tiada', ''),
-                         penapis=c5.buang_kod(c5.tk_pen(r.f1, r.f2)).replace(' DAN ', ' + ').replace('tiada', ''))
+                o.update(nama=t7.nama7(r.pencetus, param), prasyarat=teks_pra(r.q1, r.q2), penapis=teks_pen(r.f1, r.f2))
             if k % 500 == 0:
                 cari.log(f'  CS13 kunci {set_} {k}/{len(semua)} · {time.time() - t0:.0f}s')
         for x in s11.setup_f(kerja, set_, pan, t7.semua_ev(kerja, set_, 'asal'), Lr):
@@ -188,7 +195,8 @@ def jadual(C, K):
     baris = []
     for nm, T in (('calon', C['calon']), ('kawalan', C['kawalan'])):
         for r in T.itertuples():
-            baris.append(_baris(nm, r.id, K[r.id], pencetus=r.pencetus, induk=r.induk, q1=r.q1, q2=r.q2, f1=r.f1, f2=r.f2, skor_A=r.skor))
+            baris.append(_baris(nm, r.id, K[r.id], pencetus=r.pencetus, induk=r.induk, q1=r.q1, q2=r.q2, f1=r.f1, f2=r.f2, skor_A=r.skor,
+                                prasyarat=teks_pra(r.q1, r.q2), penapis=teks_pen(r.f1, r.f2)))
     for i in sorted((i for i in K if i[0] == 'F'), key=lambda x: int(x[1:])):
         baris.append(_baris('F', i, K[i], pencetus='', induk='', q1=np.nan, q2=np.nan, f1=np.nan, f2=np.nan, skor_A=np.nan))
     return pd.DataFrame(baris)
@@ -422,6 +430,25 @@ def lapor_(kerja):
               f"- Kekerapan pada senarai Shariah: 30 setup teratas senarai utama digabung = {g30:.0f} belian setahun (ada belian dalam {b30:.0%} "
               f"bulan); semua {len(U):,} setup senarai utama = {gs:.0f} setahun ({bs:.0%} bulan).",
               f"- Jualan pada hari beli: {int(U.jual_hari_beli.sum())} (mesti 0).", '']
+    if len(daftar_):
+        ern = daftar_.prasyarat.fillna('').str.contains('earnings dalam 1-')
+        A += ['## 6b. Sifat kod baharu (analisis SELEPAS hasil; bukan ditetapkan dahulu)', '',
+              f"- **{int(ern.sum()):,} daripada {len(daftar_):,} kod baharu memakai SATU prasyarat yang sama: laporan kewangan (earnings) dalam 1–5 hari akan "
+              'datang.** Harga bergerak besar selepas laporan kewangan, jadi belian begini lebih kerap menangkap saham naik laju — dan juga '
+              'lebih kerap jatuh.',
+              '- Kadar tangkap kod baharu kira-kira dua kali saham rawak, tetapi **kadar menang dan purata setiap dagangan hampir sama dengan '
+              'peraturan rawak** (jadual di bawah). Setup F lama yang dipercayai mempunyai purata yang jauh lebih tinggi.', '',
+              '| Kumpulan | Bilangan | Tangkap % (rawak) | Cara pegang B: menang % | Purata % | Rugi ≥ 15 % % | Beli setahun (nilai tengah) |',
+              '|---' * 7 + '|']
+        for nm, X in (('Kod baharu: laporan kewangan dalam 1–5 hari', daftar_[ern]), ('Kod baharu: prasyarat lain', daftar_[~ern]),
+                      ('Setup F lama yang dipercayai', U[U.asal == 'lama']), ('Kawalan rawak', kw[kw.layak])):
+            if len(X):
+                g = X.median(numeric_only=True)
+                A.append(f"| {nm} | {len(X):,} | {p(g.terus)} ({p(g.a_terus)}) | {p(g.menang_B)} | {p(g.purata_B, 1, True)} | {p(g.rugi15_B)} | {g.setahun:.0f} |")
+        m50, p2 = U.menang_B >= 0.5, U.purata_B >= 0.02
+        A += ['', f"- Dalam senarai utama ({len(U):,} setup): {int(m50.sum()):,} menang ≥ 50 %; {int(p2.sum()):,} purata ≥ +2 % setiap dagangan; "
+              f"**{int((m50 & p2).sum()):,} kedua-duanya** ({int((m50 & p2 & (U.asal == 'lama')).sum())} lama, "
+              f"{int((m50 & p2 & (U.asal == 'baharu')).sum())} baharu). Ini paparan pada saham yang sudah dilihat, bukan pemilihan.", '']
     A += ['', '## 7. Kaveat', '',
           '- Beribu calon disemak pada saham yang tidak dilihat, jadi sebahagian lulus kerana nasib (anggaran di §3); kumpulan saham itu sudah '
           'digunakan dalam pusingan terdahulu.',

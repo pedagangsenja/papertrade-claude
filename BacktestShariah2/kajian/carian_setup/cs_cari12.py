@@ -154,6 +154,11 @@ def kunci(kerja):
     return out
 
 
+def _teks(fn, a, b):
+    """Teks prasyarat / penapis tanpa kod; '' jika tiada (prasyarat "tiada earnings ..." dikekalkan sepenuhnya)."""
+    return '' if a < 0 and b < 0 else c5.buang_kod(fn(int(a), int(b))).replace(' DAN ', ' + ')
+
+
 def jadual(C, K):
     """Satu baris setiap calon dan setiap kawalan dengan angka kumpulan B."""
     baris = []
@@ -165,7 +170,8 @@ def jadual(C, K):
             lulus = bool(d['n'] >= s11.MIN_BELIAN and d['tahun'] >= s11.MIN_TAHUN and all(x == x and x > 0 for x in kl))
             g = lambda kunci_, m: float(p[kunci_][m]) if p else np.nan
             baris.append(dict(
-                peranan=nm, id=r.id, pencetus=r.pencetus, induk=r.induk, nama=o['nama'], prasyarat=o['prasyarat'], penapis=o['penapis'],
+                peranan=nm, id=r.id, pencetus=r.pencetus, induk=r.induk, nama=o['nama'], prasyarat=_teks(c5.tk_pra, r.q1, r.q2),
+                penapis=_teks(c5.tk_pen, r.f1, r.f2),
                 q1=r.q1, q2=r.q2, f1=r.f1, f2=r.f2, skor_A=r.skor, n=d['n'], tahun=d['tahun'], setahun=d['n'] / s11.TAHUN,
                 shariah_setahun=(len(o['beli_A']) + len(o['beli_B'])) / s11.TAHUN,
                 m5=d['m5'], terus=d['terus'], a_terus=d['a_terus'], naik=d['naik'], a_naik=d['a_naik'], naik10=d['naik10'], naik20=d['naik20'],
