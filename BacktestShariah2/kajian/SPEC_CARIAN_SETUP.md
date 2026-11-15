@@ -921,6 +921,40 @@ di sebelahnya (ukuran ketat, "C: tunjuk kedua-dua").
 dipangkatkan ikut `naik` (semua pencetus × prasyarat × penapis) ialah langkah berikutnya dan perlu pindaan sendiri. Kumpulan B
 sudah dilihat; tiada saham delist; tetingkap 126 sesi mengurangkan isyarat 2026.
 
+### Pindaan 15 Nov 2026 (u) — pusingan CS12: CARIAN BAHARU dipangkatkan ikut ukuran longgar `naik`, dengan cara pegang pilihan pengguna (sebelum dijalankan)
+
+Keputusan pengguna 15 Nov 2026 selepas CS11 ("ya dan B"): (1) buat carian baharu yang mencari setup ikut ukuran longgar
+(semua kaedah, prasyarat dan syarat); (2) **cara pegang B**: pegang sahaja (stop loss aktif) hingga hari ke-20, kemudian jual
+pada buka selepas tutup pertama di bawah purata 20 hari (`P-MA20`), had 126 sesi. Cara B dipilih PENGGUNA selepas melihat
+jadual CS11 pada saham yang tidak dilihat (purata +2.7 % lawan +2.1 %, kadar menang 51 % lawan 54 %); ia TIDAK lulus ujian
+yang ditetapkan dahulu dalam (t) dan direkod begitu. Tiada papertrade, tiada order, tiada perubahan registry atau kohort
+dalam pusingan ini. Kod `carian_setup/cs_cari12.py`; keluaran `hasil/CS12/`.
+
+- **Sasaran:** label `naik` pindaan (t) (tutup sesi 20 ≥ P + 2 %, di atas purata tutup sesi 1–20, tiada tutup ≤ P − 10 %).
+- **Pencetus:** semua 500 pencetus asal (kaedah M lalai + 2 varian, kaedah N, indikator P) + 656 varian keluarga indikator
+  `K01`–`K25` + varian M CS07 yang sudah dijana. (1,472 varian M CS07 yang lain tidak dijana semula dalam pusingan ini.)
+- **Ruang masuk:** enjin (i): [0–1 prasyarat pasaran (33)] × [0–1 prasyarat kumpulan/syarikat (15)] × [0–2 penapis saham
+  (27)] bagi setiap pencetus.
+- **Skor (kumpulan A sahaja):** min dua era bagi [kelebihan `naik` atas saham rawak hari sama × tercile ATR % − 2 ralat
+  piawai], n ≥ 100 setiap era (enjin `cs_tala7.skor_ev`).
+- **Calon:** bagi SETIAP pencetus, sehingga 5 peraturan masuk dengan skor tertinggi; semua yang skornya > 0. Tiada had
+  bilangan dan tiada had kepelbagaian.
+- **Setup lengkap setiap calon:** beli pada buka esok; stop loss 4 × ATR14 dari harga beli (aktif sejak sesi 2; tiada
+  jualan hari beli); cara pegang B di atas.
+- **Semakan pada kumpulan B, "lulus":** belian ≥ 300 (satu posisi setiap saham), ≥ 10 tahun aktif, kelebihan `naik` > 0
+  dalam K1, K2 DAN K3 (takrif (t)). Dilaporkan: `naik` dan `terus` (rawak), naik ≥ 10 % / ≥ 20 % selepas 4 minggu, kadar
+  menang dan purata di bawah cara pegang B dan di bawah "jual hari ke-20", rugi ≥ 15 %, median hari pegang, belian setahun
+  pada senarai Shariah.
+- **Kawalan rawak:** 300 peraturan masuk dipilih rawak daripada ruang yang sama (pencetus rawak × prasyarat × penapis
+  rawak; n ≥ 100 setiap era pada A; benih 20261115) dinilai pada B dengan takrif "lulus" yang sama.
+- **Bacaan dikunci, "carian ikut ukuran longgar BERHASIL"** jika bagi 100 calon dengan skor A tertinggi: lebih separuh lulus
+  pada B, DAN kadar lulusnya ≥ kadar lulus kawalan rawak + 20 mata, DAN median kelebihan `naik` pada B ≥ +2 mata.
+- **Susunan laporan:** ikut skor A (kriteria pilihan), bukan ikut angka B. Calon yang lulus ialah SENARAI untuk keputusan
+  pengguna (pendaftaran kod F tanpa had bilangan = keputusan berasingan).
+- **Kaveat dikunci:** beratus-ratus calon disemak pada B, jadi sebahagian lulus kerana nasib — sebab itu kawalan rawak
+  dilaporkan di sebelahnya; kumpulan B sudah dilihat; tiada saham delist (bias lebih besar bagi pegangan hingga 6 bulan);
+  kelebihan lawan rawak hari sama mengukur PILIHAN saham, manakala kadar mentah turut mengandungi kesan BILA membeli.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
