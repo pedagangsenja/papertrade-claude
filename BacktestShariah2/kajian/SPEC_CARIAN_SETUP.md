@@ -869,6 +869,31 @@ hanya menjual posisi rugi). Tiada angka keluarga ini pernah dibaca berasingan. K
 - Tiada kod F baharu, tiada perubahan `registry_F.csv`, pangkat atau kohort dalam pusingan ini. Jika menolong, penerapan
   sebagai keluar piawai lorong swing (dan ujian setara pada lorong trend `T`) ialah pindaan berasingan.
 
+### Pindaan 15 Nov 2026 (w) — CS09 pada LORONG TREND: peraturan pengguna yang sama pada papan `T01`–`T12` (sebelum dijalankan)
+
+**Apa yang sudah dilihat:** hasil (v) pada lorong swing (`hasil/CS09/LAPORAN.md`): peraturan U tidak menolong (0 daripada 45
+takrif; purata turun, kadar menang turun, rugi ≥ 15 % berkurang). Kata pengguna ("kalau trend naik still ok, boleh continue
+pegang") paling dekat dengan lorong trend (q), dan (v) menangguhkan ujian itu ke pindaan berasingan. Enjin CS08 hanya ada
+syarat aktif "sentiasa / selepas +10 % / selepas +20 %"; "hanya ketika rugi" belum pernah diuji di lorong ini. Kod
+`carian_setup/cs_trend9.py` → `hasil/CS09/TREND.md`, `trend_takrif.csv`, `trend_setup.csv`.
+
+- **Setup:** 12 setup papan CS08 dengan masuk dan henti terpilihnya (`cs08_keluar.pkl`; semuanya `X00`), had 126 sesi,
+  mekanik (q) + pegang minimum (p), satu posisi setiap saham. Asas = `X00` henti yang sama.
+- **Peraturan U_T:** pada tutup sesi ≥ *d*, tutup < harga beli DAN trend patah → jual pada buka sesi berikutnya.
+  "Trend patah" = 26 atom keadaan (jenis 0) `cs_trend8.ATOM` (tutup < MA/EMA, dua tutup < MA, MA20 < MA50, MA50 menurun,
+  Supertrend turun, tutup < rendah *k* hari, MACD < isyarat, RSI14 < ambang). *d* ∈ {3, 10, 20, 40}. Jumlah 104 peraturan.
+- **Peringkat 1 (kumpulan B, tanpa pemilihan):** setiap 104 peraturan: median merentas setup bagi beza lawan `X00`: purata,
+  median dagangan, kadar menang, % rugi ≥ 15 %, % dijual ≥ +30 % (`tb`), untung pada pelari besar, % dijual oleh peraturan.
+- **"Ditolong" (dikunci):** purata naik DAN % rugi ≥ 15 % turun DAN `tb` tidak turun lebih 0.5 mata.
+- **Peringkat 2 (pemilihan pada kumpulan A sahaja):** U_T\* = peraturan dengan purata merentas setup tertinggi bagi [min dua
+  era (purata peraturan − purata `X00`)], dengan syarat purata nisbah simpan pelari besar ≥ 0.90; era dengan < 30 isyarat
+  diabaikan. Dilaporkan pada kumpulan B.
+- **Rujukan (kumpulan B):** "rugi → jual" sahaja pada *d* yang sama (tanpa syarat trend); takrif trend U_T\* sahaja
+  (`cs08` lajur "sentiasa").
+- **Bacaan dikunci:** "menolong" jika U_T\* menolong lebih separuh setup "dipercayai-T" pada kumpulan B DAN median beza
+  purata > 0; idea "teguh" jika lebih separuh daripada 104 peraturan mempunyai median beza purata > 0.
+- Tiada perubahan papan `T`, registry atau kohort.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

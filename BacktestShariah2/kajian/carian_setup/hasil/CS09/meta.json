@@ -1,0 +1,16 @@
+{
+ "sejagat": {
+  "atom": "Y11.6",
+  "d": 10,
+  "teks": "rugi (tutup < harga beli, sesi ≥ 10) DAN tutup < rendah 10 hari",
+  "skor_a": -0.0035424535162746906,
+  "simpan_a": 0.9892337322235107,
+  "positif_a": 3,
+  "n_setup_a": 69
+ },
+ "peraturan": 180,
+ "takrif_trend": 45,
+ "setup": 69,
+ "a_peraturan_skor_positif": 0,
+ "sendiri_x00": 44
+}
