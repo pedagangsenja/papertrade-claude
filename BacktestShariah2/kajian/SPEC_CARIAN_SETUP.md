@@ -855,6 +855,20 @@ ratus isyarat setiap setup = risiko padanan lampau tinggi, sebab itu pilihan dua
 
 **Selepas bacaan:** papan `T01`–`T12` tidak diubah; penukaran keluar memerlukan keputusan pengguna dan pindaan berasingan.
 
+### Keputusan pengguna 15 Nov 2026 (selepas CS09 dan CS10) — prinsip keluar diterima; carian keluar manual dihentikan
+
+Selepas enam pusingan dengan arah yang sama (CS04, (j), CS06, CS07, CS09, CS10) pengguna memutuskan ("1.ya 2.x 3.ya"):
+- **Keluar yang diterima bagi kedua-dua lorong = pegang hingga had masa (20 sesi swing; 126 sesi trend) + henti rugi
+  longgar.** Item 4 matlamat ("indikator yang memberitahu kenaikan sudah tamat") DITUTUP sebagai "dicari, tiada yang
+  menolong" — bukan sebagai "capai".
+- **Keluar `T01`–`T12` TIDAK ditukar** kepada "terlalu panas selepas untung ≥ 20 %": bacaan 1 (s) lulus, tetapi purata
+  dagangan tidak naik dan pelari besar dijual awal.
+- Pusingan CS baharu khusus untuk KELUAR dihentikan. Mesin berkala boleh mencuba keluar jika diperluas (perlu pindaan
+  bertarikh kerana ruang mesin (n)(c) berubah). Pusingan keluar manual baharu hanya dengan sebab baharu (cth. data baharu)
+  dan keputusan pengguna.
+- Tiada perubahan pada registry F, kedudukan akhir, papan T atau kohort jejak: setup sedia ada kekal dengan keluar yang
+  didaftarkan. Tiada jejak hadapan atau papertrade tanpa keputusan pengguna berasingan.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
