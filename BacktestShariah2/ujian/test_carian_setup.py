@@ -1539,5 +1539,51 @@ class TestCS11(unittest.TestCase):
         self.assertEqual(len(reg), 95)                                          # pusingan ini tidak mendaftar atau mengubah setup F
 
 
+class TestCS12(unittest.TestCase):
+    """SPEC pindaan 15 Nov 2026 (u): carian baharu dipangkatkan ikut ukuran longgar `naik`, cara pegang B."""
+
+    def test_dikunci(self):
+        import cs_cari12 as c12
+        import cs_semak11 as s11
+        self.assertEqual((c12.N_ATAS, c12.N_KAWALAN, c12.BENIH_KAWALAN, c12.N_BACA), (5, 300, 20261115, 100))
+        self.assertEqual((c12.k7.HENTI[c12.S_HENTI], s11.CARA[c12.CARA_B]), ('4xATR14', 'P-MA20'))
+
+    def test_bacaan_dikunci(self):
+        import cs_cari12 as c12
+        asas = dict(peranan=['calon'] * 120 + ['kawalan'] * 50, skor_A=list(np.linspace(0.2, 0.01, 120)) + [np.nan] * 50)
+        T = pd.DataFrame({**asas, 'lulus': [True] * 70 + [False] * 50 + [True] * 5 + [False] * 45, 'kl_naik': [0.05] * 120 + [0.0] * 50})
+        B = c12.bacaan(T)
+        self.assertEqual((B['n_calon'], B['atas'], B['kawalan']), (120, 100, 50))
+        self.assertAlmostEqual(B['atas_lulus'], 0.70)
+        self.assertTrue(B['ya'])
+        self.assertFalse(c12.bacaan(T.assign(kl_naik=0.01))['ya'])                      # kelebihan terlalu kecil
+        self.assertFalse(c12.bacaan(T.assign(lulus=[True] * 40 + [False] * 80 + [True] * 5 + [False] * 45))['ya'])   # kurang separuh
+        self.assertFalse(c12.bacaan(T.assign(lulus=[True] * 70 + [False] * 50 + [True] * 30 + [False] * 20))['ya'])  # kawalan terlalu hampir
+
+    def test_rekod_cs12(self):
+        import cs_cari12 as c12
+        import cs_semak11 as s11
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS12')
+        c = pd.read_csv(os.path.join(d, 'calon.csv.gz'))
+        k = pd.read_csv(os.path.join(d, 'kawalan.csv'))
+        self.assertEqual(len(k), c12.N_KAWALAN)
+        self.assertGreater(len(c), 1000)                                        # tiada had bilangan calon
+        self.assertTrue((c.skor_A > 0).all() and c.skor_A.is_monotonic_decreasing)
+        for r in c.head(300).itertuples():                                      # takrif "lulus" dikunci
+            mahu = bool(r.n >= s11.MIN_BELIAN and r.tahun >= s11.MIN_TAHUN and min(r.kl_naik_K1, r.kl_naik_K2, r.kl_naik_K3) > 0)
+            self.assertEqual(bool(r.lulus), mahu, r.id)
+        B = c12.bacaan(pd.concat([c.assign(peranan='calon'), k.assign(peranan='kawalan')], ignore_index=True))
+        self.assertFalse(B['ya'])                                               # bacaan dikunci (u): carian TIDAK berhasil
+        e = c[(c.n >= s11.MIN_BELIAN) & (c.tahun >= s11.MIN_TAHUN)]
+        ek = k[(k.n >= s11.MIN_BELIAN) & (k.tahun >= s11.MIN_TAHUN)]
+        self.assertGreater(float((e.kl_naik_K1 > 0).mean()), 0.7)               # pada tahun carian calon mengatasi rawak ...
+        self.assertLess(float((e.kl_naik_K3 > 0).mean()), 0.5)                  # ... tetapi tidak pada 2025-26
+        self.assertLess(abs(float((e.kl_naik_K3 > 0).mean()) - float((ek.kl_naik_K3 > 0).mean())), 0.10)
+        md = open(os.path.join(d, 'CARIAN.md'), encoding='utf-8').read()
+        self.assertIn('Keputusan: carian ikut ukuran longgar TIDAK berhasil', md)
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str).fillna('')
+        self.assertEqual(len(reg), 95)                                          # tiada calon didaftarkan sebagai kod F
+
+
 if __name__ == '__main__':
     unittest.main()

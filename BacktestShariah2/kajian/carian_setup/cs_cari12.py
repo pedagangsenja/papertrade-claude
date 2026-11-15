@@ -166,7 +166,7 @@ def jadual(C, K):
             g = lambda kunci_, m: float(p[kunci_][m]) if p else np.nan
             baris.append(dict(
                 peranan=nm, id=r.id, pencetus=r.pencetus, induk=r.induk, nama=o['nama'], prasyarat=o['prasyarat'], penapis=o['penapis'],
-                skor_A=r.skor, n=d['n'], tahun=d['tahun'], setahun=d['n'] / s11.TAHUN,
+                q1=r.q1, q2=r.q2, f1=r.f1, f2=r.f2, skor_A=r.skor, n=d['n'], tahun=d['tahun'], setahun=d['n'] / s11.TAHUN,
                 shariah_setahun=(len(o['beli_A']) + len(o['beli_B'])) / s11.TAHUN,
                 m5=d['m5'], terus=d['terus'], a_terus=d['a_terus'], naik=d['naik'], a_naik=d['a_naik'], naik10=d['naik10'], naik20=d['naik20'],
                 kl_naik=d['naik'] - d['a_naik'], kl_naik_K1=kl[0], kl_naik_K2=kl[1], kl_naik_K3=kl[2],
@@ -203,7 +203,7 @@ def lapor_(kerja):
     B = bacaan(T)
     d_ = os.path.join(SINI, 'hasil', PUS)
     os.makedirs(d_, exist_ok=True)
-    T[T.peranan == 'calon'].drop(columns='peranan').to_csv(os.path.join(d_, 'calon.csv'), index=False, float_format='%.5f')
+    T[T.peranan == 'calon'].drop(columns='peranan').to_csv(os.path.join(d_, 'calon.csv.gz'), index=False, float_format='%.5f')
     T[T.peranan == 'kawalan'].drop(columns='peranan').to_csv(os.path.join(d_, 'kawalan.csv'), index=False, float_format='%.5f')
     c = T[T.peranan == 'calon']
     L = c[c.lulus]
@@ -261,8 +261,30 @@ def lapor_(kerja):
         A.append(f"| `{r.id}` | {r.prasyarat or 'Tiada'} | {r.nama} | {r.penapis or '–'} | {r.setahun:.0f} ({r.shariah_setahun:.0f}) | **{p(r.naik)}** ({p(r.a_naik)}) | "
                  f"{p(r.naik10)} / {p(r.naik20)} | {p(r.terus)} ({p(r.a_terus)}) | {p(r.menang_J20)} % · {p(r.purata_J20, 1, True)} % | "
                  f"{p(r.menang_B)} % · {p(r.purata_B, 1, True)} % · {p(r.rugi15_B)} % · {r.hari_B:.0f} |")
-    A += ['', f'Senarai penuh {len(c):,} calon (lulus dan tidak): `hasil/CS12/calon.csv`; kawalan rawak: `kawalan.csv`.', '',
-          '## 6. Kaveat', '',
+    A += ['', f'Senarai penuh {len(c):,} calon (lulus dan tidak): `hasil/CS12/calon.csv.gz`; kawalan rawak: `kawalan.csv`.', '',
+          '## 6. Mengapa ujian gagal: tahun yang carian tidak lihat (analisis SELEPAS hasil; bukan ditetapkan dahulu)', '',
+          'Saham yang tidak dilihat berkongsi TAHUN yang sama dengan saham carian bagi 2010–2024; hanya 2025–26 yang benar-benar tidak dilihat dari '
+          'segi masa. Peraturan dengan belian ≥ 300 dan ≥ 10 tahun aktif:', '',
+          '| Kumpulan | Bilangan | Lebih baik daripada rawak: 2010–19 | 2020–24 | **2025–26** | Median kelebihan 2010–19 / 2020–24 / 2025–26 (mata) |',
+          '|---' * 6 + '|']
+    kw = T[T.peranan == 'kawalan']
+    for nm, X in (('Calon carian', c), ('Kawalan rawak', kw), ('Calon tanpa prasyarat pasaran', c[c.q1 < 0])):
+        e = X[(X.n >= s11.MIN_BELIAN) & (X.tahun >= s11.MIN_TAHUN)]
+        if len(e):
+            A.append(f"| {nm} | {len(e):,} | {(e.kl_naik_K1 > 0).mean():.0%} | {(e.kl_naik_K2 > 0).mean():.0%} | **{(e.kl_naik_K3 > 0).mean():.0%}** | "
+                     f"{p(e.kl_naik_K1.median(), 1, True)} / {p(e.kl_naik_K2.median(), 1, True)} / {p(e.kl_naik_K3.median(), 1, True)} |")
+    if G is not None:
+        Fx = pd.read_csv(f11)
+        Fx = Fx[(Fx.kump == 'F') & (Fx.n >= s11.MIN_BELIAN) & (Fx.tahun >= s11.MIN_TAHUN)]
+        A.append(f"| Setup F sedia ada, ukuran KETAT | {len(Fx)} | {(Fx.kl_terus_K1 > 0).mean():.0%} | {(Fx.kl_terus_K2 > 0).mean():.0%} | **{(Fx.kl_terus_K3 > 0).mean():.0%}** | "
+                 f"{p(Fx.kl_terus_K1.median(), 1, True)} / {p(Fx.kl_terus_K2.median(), 1, True)} / {p(Fx.kl_terus_K3.median(), 1, True)} |")
+    cp = c[(c.n >= s11.MIN_BELIAN) & (c.tahun >= s11.MIN_TAHUN)]
+    A += ['', f"- {int((c.q1 >= 0).sum()):,} daripada {len(c):,} calon memakai prasyarat pasaran: kelebihan ukuran longgar pada 2010–2024 hampir semuanya datang "
+          'daripada BILA membeli (keadaan pasaran dan kalendar), dan ia tidak berulang pada 2025–26.',
+          '- Prasyarat pasaran paling kerap antara calon, dengan median kelebihan 2025–26: '
+          + '; '.join(f"{lapis.PASARAN[int(q)][5:]} ({len(g_)} calon, {p(g_.kl_naik_K3.median(), 1, True)})"
+                      for q, g_ in sorted(cp[cp.q1 >= 0].groupby('q1'), key=lambda x: -len(x[1]))[:8]) + '.', '',
+          '## 7. Kaveat', '',
           '- Beratus-ratus calon disemak pada saham yang tidak dilihat, jadi sebahagian lulus kerana nasib: bandingkan dengan kadar lulus kawalan rawak.',
           '- "Lebih baik daripada rawak hari sama" mengukur PILIHAN saham; angka naik mentah turut mengandungi kesan BILA membeli (keadaan pasaran).',
           '- Saham yang tidak dilihat sudah digunakan dalam pusingan terdahulu; tiada saham delist (lebih penting bagi pegangan hingga 6 bulan). '
