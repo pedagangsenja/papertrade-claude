@@ -833,6 +833,42 @@ berubah, dan bilangan "menepati semua DAN A4b" dilaporkan di sebelahnya.
 keputusan pemilihan yang dibuat pada kumpulan B; kekonsistenan laporan lain dengan pindaan (p) (lajur `menang`
 `registry_F.csv`/`KADAR_MENANG.md` lawan `KEDUDUKAN_AKHIR.csv`); keadaan kohort jejak hadapan dan mesin.
 
+### Pindaan 15 Nov 2026 (v) — pusingan CS09: KELUAR ikut kata pengguna, "pegang selagi untung; jual hanya jika RUGI dan trend PATAH" (sebelum dijalankan)
+
+Pengguna 15 Nov 2026, menjawab keputusan terbuka audit (u) tentang syarat keluar: "pegang selagi untung dan juga kena
+ada stop loss. rugi sikit tapi kalau trend naik still ok, boleh continue pegang". **Tafsiran dikunci:** posisi dijual
+hanya oleh (1) henti rugi (kekal wajib, aktif sejak sesi 2); (2) had 20 sesi; (3) **peraturan U**: pada tutup sesi ≥ *d*
+(jual pada buka sesi berikutnya; pegang minimum (p) kekal), tutup < harga beli **DAN** trend patah. Posisi yang untung
+tidak pernah dijual oleh indikator; posisi rugi dengan trend yang masih naik terus dipegang.
+
+**Apa yang sudah dilihat:** semua hasil hingga (u). Ruang keluar CS07 (n) mengandungi pasangan DAN (atom, `Y19.d` "selepas
+*d* sesi, tutup < harga beli"), tetapi CS07 memilih ikut tangkap penuh, ukuran yang peraturan ini TIDAK boleh naikkan (ia
+hanya menjual posisi rugi). Tiada angka keluarga ini pernah dibaca berasingan. Kod `carian_setup/cs_keluar9.py` →
+`hasil/CS09/LAPORAN.md`, `takrif.csv`, `setup.csv`.
+
+- **"Trend patah"** = 45 atom keadaan `cs_keluar7.ATOM`: `Y01` tutup < MA · `Y02` tutup < EMA · `Y03` dua tutup berturut
+  < MA · `Y04` MA pantas < MA perlahan · `Y05` MACD < isyarat · `Y07` RSI < ambang · `Y10` Supertrend turun · `Y11` tutup <
+  rendah *k* hari · `Y15` +DI < −DI. **"Rugi"** = `Y19.d`: *d* = 3 (peraturan tulen pengguna: seawal yang pegang minimum
+  benarkan), dan 5, 8, 10 (beri masa dahulu). Jumlah 180 peraturan; syarat aktif "sentiasa".
+- **Setup dan henti:** 69 setup `KEDUDUKAN_AKHIR.csv`, masing-masing dengan masuk dan henti berdaftarnya sendiri. Asas
+  perbandingan = "pegang sahaja" (`X00`, henti yang sama). Mekanik §4 + (p), satu posisi setiap saham.
+- **Peringkat 1 — idea, TANPA pemilihan (kumpulan B):** setiap 45 takrif pada *d* = 3, setiap setup: beza lawan `X00` bagi
+  purata setiap dagangan, % rugi ≥ 8 %, % rugi ≥ 15 %, kadar menang, tangkap penuh, untung pada pelari (`terus`), % dagangan
+  dijual oleh peraturan, sesi pegang. Dilaporkan median merentas setup dan bilangan setup "ditolong".
+- **"Ditolong" (dikunci):** purata naik DAN % rugi ≥ 8 % turun DAN tangkap penuh tidak turun lebih 0.5 mata.
+- **Peringkat 2 — pemilihan pada kumpulan A sahaja** (Acc CS07 sedia ada, semua isyarat, dua era): skor satu peraturan
+  bagi satu setup = min dua era (purata peraturan − purata `X00`, henti setup). (a) **Satu peraturan sejagat U\*** = skor
+  purata merentas setup tertinggi, dengan syarat purata nisbah simpan pelari ≥ 0.90 (takrif (n)). (b) **Pilihan setiap
+  setup** antara `X00` dan 180 peraturan (skor tertinggi, simpan ≥ 0.90; `X00` jika tiada skor > 0). Kedua-duanya dilaporkan
+  pada kumpulan B sahaja.
+- **Rujukan (kumpulan B, tanpa pemilihan):** `Y19.3` sahaja ("rugi → jual", tanpa syarat trend); takrif trend U\* sahaja
+  ("trend patah → jual" walaupun untung); keluar berdaftar setup. Menjawab sama ada gabungan DAN itu yang bekerja.
+- **Bacaan dikunci:** peraturan pengguna "menolong" jika U\* menolong lebih separuh setup "dipercayai" pada kumpulan B DAN
+  median beza purata > 0; idea itu "teguh" jika lebih separuh daripada 45 takrif (peringkat 1) mempunyai median beza
+  purata > 0.
+- Tiada kod F baharu, tiada perubahan `registry_F.csv`, pangkat atau kohort dalam pusingan ini. Jika menolong, penerapan
+  sebagai keluar piawai lorong swing (dan ujian setara pada lorong trend `T`) ialah pindaan berasingan.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
