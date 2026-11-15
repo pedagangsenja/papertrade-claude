@@ -1403,6 +1403,29 @@ class TestCS10(unittest.TestCase):
         self.assertFalse(k10.bacaan(T.assign(rugi15_R=0.40))['ya2'])
         self.assertFalse(k10.bacaan(T.assign(K3_R_R=1.0))['ya2'])
 
+    def test_rekod_cs10(self):
+        import cs_keluar10 as k10
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS10')
+        T = pd.read_csv(os.path.join(d, 'keluar.csv'))
+        self.assertEqual(T.id.tolist(), [f'T{i:02d}' for i in range(1, 13)])
+        self.assertLess(float((T.pariti_tb_x00_cs08 - T.tb_cs08).abs().max()), 1e-4)     # pariti dengan hasil/CS08/papan.csv
+        self.assertTrue((T.pariti_n == T.pariti_n_cs08).all())
+        B = k10.bacaan(T)
+        self.assertTrue(B['ya1'])                                               # bacaan dikunci (s) 1: keluar baharu MENOLONG (dijual >= +30 %)
+        self.assertFalse(B['ya2'])                                              # bacaan dikunci (s) 2: potong rugi TIDAK menolong
+        self.assertGreater(B['n1'], len(T) / 2)
+        md = open(os.path.join(d, 'KELUAR.md'), encoding='utf-8').read()
+        self.assertIn(f"**{B['n1']} daripada {B['n']}**", md)
+        self.assertIn('Keputusan bacaan 1: keluar baharu MENOLONG', md)
+        self.assertIn('Keputusan bacaan 2: potong rugi TIDAK menolong', md)
+        S = pd.read_csv(os.path.join(d, 'sejagat.csv'))
+        self.assertEqual(int((S.senarai == 'T').sum()), k10.N_SEJAGAT)
+        self.assertTrue((S[S.senarai == 'T'].kelas == 'K').all())               # semua keluar sejagat T = kelas kemuncak
+        bukan_x00 = T[T.keluar_T != 'X00']                                      # kaveat direkod: purata dagangan tidak naik
+        self.assertLessEqual(float((bukan_x00.pur_T - bukan_x00.pur_x00T).median()), 0.0)
+        p8 = pd.read_csv(os.path.join(d, '..', 'CS08', 'papan.csv'))
+        self.assertTrue(p8.keluar.str.startswith('X00').all())                  # papan T01-T12 tidak diubah oleh CS10
+
 
 if __name__ == '__main__':
     unittest.main()
