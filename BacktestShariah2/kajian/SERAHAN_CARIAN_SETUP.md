@@ -1,8 +1,17 @@
-# Serahan: Carian Setup (CS) dan keluarga F — keadaan pada 14 Nov 2026 (selepas CS07: tala semua kaedah, keluar, mesin, pegang minimum)
+# Serahan: Carian Setup (CS) dan keluarga F — keadaan pada 15 Nov 2026 (selepas audit (u) dan CS09: keluar ikut kata pengguna)
+
+## 0. MULA DI SINI — keadaan 15 Nov 2026 (ditulis untuk chat baharu)
+
+- **Di mana kerja berada:** cabang `claude/dreamy-lovelace-38z7wm`, 10+ komit di hadapan `main` dan BELUM digabung (pengguna 14 Nov: "belum lagi"): kajian pengesahan (r), semakan akaun (s), mesin lorong trend (t), audit (u), CS09 (v) dan (w). Gabungan dengan `main` bersih pada 15 Nov. Chat baharu yang bermula dari `main` TIDAK nampak fail-fail itu (termasuk bahagian ini dan baris baharu `CLAUDE.md`): jalankan `git fetch origin claude/dreamy-lovelace-38z7wm && git merge origin/claude/dreamy-lovelace-38z7wm` ke cabang sesi sendiri dahulu. Mesin mingguan di `main` masih kod lama (swing sahaja).
+- **Kedudukan matlamat:** backtest sudah dicari habis (masuk, prasyarat, parameter, keluar, lorong trend, peringkat akaun, audit). Audit (§9h): proses lulus; 11 daripada 95 setup lulus semua semakan; kebanyakan setup teratas pada hakikatnya "pegang 20 sesi + henti". Kata pengguna tentang keluar (§1 item 16) diuji (§9i): "rugi sedikit, terus pegang" betul; "jual bila rugi DAN trend patah" tidak menolong di mana-mana lorong. Keluar yang disokong data = henti rugi + had masa; 27 setup lulus di bawah takrif itu.
+- **Menunggu pengguna (tanya SEKALI, dalam jadual akhir):** (1) sahkan syarat keluar = henti rugi + pegang hingga 4 minggu (cadangan: ya); (2) gabung cabang ke `main` (cadangan: ya; PR hanya atas permintaan pengguna); (3) HANYA selepas (1): senarai pendek untuk jejak hadapan (papertrade maya). Pengguna melarang papertrade setup baharu sehingga membenarkannya; setup earnings perlukan kalendar earnings dalam penjejak.
+- **Belum dibuat (jangan mula tanpa diminta):** ujian peringkat akaun bagi peraturan "rugi + trend patah" (pengurangan rugi besar mungkin bernilai pada MDD −10 %); menilai 26 anak tala (`F31`–`F38`, `F70`–`F87`); meluaskan mesin kepada carian keluar.
+- **Folder kerja hilang bersama sesi** (~8.5 GB pickle di luar repo). Semua angka sudah ada dalam `hasil/`; jana semula hanya jika pusingan baharu memerlukannya (§10, §9e, §9f, §9h, §9i; penuh ≈ 5–6 jam mesin, kebanyakannya menunggu).
+- **Cara bekerja (§2):** jawapan pendek, Bahasa Melayu mudah; putuskan perkara teknikal sendiri dan lapor; jangan isytihar "lengkap" tanpa memadankan setiap item §1; jangan cadang kerja sampingan; pindaan bertarikh dalam spec SEBELUM mana-mana pusingan; tiada PR tanpa diminta; tiada wang sebenar.
 
 Ditulis pada akhir sesi kerja 13–14 Nov 2026 dan dikemas kini pada 14 Nov 2026 selepas pusingan CS05 dan CS06, supaya chat baharu boleh menyambung tanpa membaca chat lama. Fail ini ialah nota serahan (ditulis tangan, bertarikh); nombor di sini dipetik daripada fail hasil yang dinamakan, dan fail hasil itulah sumber kebenaran.
 
-**Baca mengikut susunan ini:** fail ini → `kajian/SPEC_CARIAN_SETUP.md` (pradaftar + pindaan (a)–(t)) → **`kajian/carian_setup/hasil/KEDUDUKAN_AKHIR.md` (SATU jadual semua setup lawan matlamat, §9c)** → `kajian/CARIAN_SETUP.md` (papan semasa = CS06) → `kajian/carian_setup/hasil/CS06/SEMUA_PENCETUS_LENGKAP.md` (setiap kaedah) dan `hasil/CS06/TALA.md` → `kajian/KAJIAN_PRASYARAT_PAKAR.md` → `jejak_f/RINGKASAN.md`.
+**Baca mengikut susunan ini:** fail ini → `kajian/SPEC_CARIAN_SETUP.md` (pradaftar + pindaan (a)–(w)) → `hasil/AUDIT_F.md` (§9h) dan `hasil/CS09/` (§9i) → **`kajian/carian_setup/hasil/KEDUDUKAN_AKHIR.md` (SATU jadual semua setup lawan matlamat, §9c)** → `kajian/CARIAN_SETUP.md` (papan semasa = CS06) → `kajian/carian_setup/hasil/CS06/SEMUA_PENCETUS_LENGKAP.md` (setiap kaedah) dan `hasil/CS06/TALA.md` → `kajian/KAJIAN_PRASYARAT_PAKAR.md` → `jejak_f/RINGKASAN.md`.
 
 **Ringkasan CS05 dalam lima baris (butiran §9):** (1) prasyarat MENOLONG kadar tangkap bagi hampir semua kaedah, jauh melebihi plasebo; (2) hampir semuanya datang daripada SATU prasyarat: earnings dalam 1–5 sesi akan datang; (3) prasyarat pasaran panik menaikkan kadar lari SEMUA saham (bila membeli), bukan kemahiran memilih, dan kena henti naik bersama; prasyarat aliran ikut trend dan sektor/industri kuat tidak menolong; (4) pencetus (kaedah M/N/indikator) menambah sedikit sahaja di atas prasyarat + penapis; (5) pegang/keluar (pindaan (j)): pegang hampir 20 sesi dengan henti longgar; indikator keluar jarang mengatasi "tiada keluar indikator".
 
@@ -170,6 +179,7 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 - `jejak_f.yml` berjalan selepas workflow "Lejar penuh" berjaya (06:17 dan 10:17 UTC, Sel–Sab). Stor harga yang dibaca penjejak dikemas kini oleh Lejar, BUKAN `harga_harian.yml`. Disemak 14 Nov 03:10 UTC: `jejak_f.yml` TERBUKTI tercetus melalui `workflow_run` selepas Lejar berjadual 13 Nov 17:45 UTC (larian #2, berjaya); `jejak_f/lejar.csv` masih kosong hanya kerana Lejar bagi sesi 2026-11-13 belum berjalan pada waktu itu (harga hingga 20261112).
 - **Perkara untuk disemak oleh chat baharu:** adakah `jejak_f/RINGKASAN.md` menunjukkan harga ≥ 20261113 dan isyarat pertama? Sejak 14 Nov 2026 (PR #48, keputusan pengguna) langkah akhir `lejar.yml` mencetus `jejak_f.yml` terus selepas larian Lejar yang didispatch penjaga, jadi ia tidak lagi menunggu larian berjadual.
 - Ujian: `python3 -m unittest discover -s BacktestShariah2/ujian`; `python3 BacktestShariah2/standard/sahkan.py --betulkan` mesti keluar 0.
+- **Keadaan 15 Nov 2026:** `main` = hingga PR #50 (CS07, pegang minimum, mesin, CS08). Cabang `claude/dreamy-lovelace-38z7wm` menambah pindaan (r)–(w) dan belum digabung; `git merge-tree` menunjukkan gabungan bersih. 965 ujian lulus di cabang. Jejak hadapan kohort 13 Nov: 12 isyarat pertama (`jejak_f/lejar.csv`), belum ada jualan.
 
 ## 8. Keputusan: sudah dibuat dan yang tinggal
 
@@ -189,7 +199,11 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 
 **Diputuskan pengguna 14 Nov 2026 ("ya, gabung ke main") dan SUDAH dilaksanakan:** PR #50 (CS07, pegang minimum, mesin, CS08) digabung; `mesin_carian.yml` dicetus sekali secara manual untuk mengesahkan ia berjalan di Actions.
 
-**Menunggu keputusan pengguna:**
+**Kata pengguna 15 Nov 2026 tentang keluar** (§1 item 16) → diuji dua lorong (CS09, §9i). Ditafsir Claude sebagai pilihan (b) audit: keluar = henti rugi + had masa. BELUM disahkan pengguna.
+
+**Menunggu keputusan pengguna (15 Nov 2026; senarai semasa di §0):** (i) sahkan syarat keluar = henti rugi + pegang hingga 4 minggu; (ii) gabung cabang ke `main`; (iii) selepas (i), senarai pendek jejak hadapan.
+
+**Menunggu keputusan pengguna (senarai lama, 14 Nov):**
 1. Kajian pengesahan (pindaan (r)) dan apa-apa selepas PR #50 berada di cabang kerja sahaja sehingga digabung.
 2. Data saham delist (§9d): pengguna mempersoalkan keperluannya ("saya tak faham kenapa perlu fokus dekat saham delist ini"); Claude mencadangkan langkau dan catat sebagai kaveat. Ia BUKAN item matlamat. Pilihan lama selepas portfolio (§9b): (a) mula jejak hadapan maya bagi kohort kecil (`F40`, `F58`, `F49`) untuk menguji kadar tangkap pada data langsung, selepas kalendar earnings dibina dalam penjejak; atau (b) berhenti di sini dan tunggu kohort 13 Nov matang. Pengguna melarang jejak hadapan sehingga membenarkannya.
 
@@ -423,6 +437,8 @@ Pengguna menjawab "belum lagi" kepada gabung ke `main` dan papertrade, dan memin
 
 **Belum dibuat:** menilai 26 anak tala di bawah kayu ukur akhir (benih CS04 tidak disimpan; nilai rendah kerana anak tidak mengatasi induk); meluaskan mesin kepada carian keluar.
 
+Jana semula: `python3 cs_audit.py $K` (~30 saat; perlukan panel, benih, lapis dan `asasL` kumpulan B, `cs07_XA_B.npy` dan benih CS07 kumpulan B); `python3 cs_audit.py --lapor` menulis semula laporan daripada csv tanpa folder kerja.
+
 ## 9i. CS09: keluar ikut kata pengguna, dua lorong (pindaan (v), (w); 15 Nov 2026)
 
 Kata pengguna (§1 item 16) diterjemah kepada peraturan U: pada tutup sesi ≥ *d*, **tutup < harga beli DAN trend patah** → jual buka esok; posisi untung tidak pernah dijual oleh indikator; henti rugi dan had masa kekal. Enjin lama hanya ada syarat aktif "selepas untung"; "hanya ketika rugi" belum pernah dibaca. Asas perbandingan = "pegang sahaja" (`X00`) dengan henti yang sama.
@@ -438,6 +454,8 @@ Kata pengguna (§1 item 16) diterjemah kepada peraturan U: pada tutup sesi ≥ *
 - Setiap peraturan mengurangkan rugi ≥ 15 % (10 hingga 42 mata), tetapi turut memotong pelari besar (untung pelari tinggal 39–96 %) dan menurunkan kadar menang: pelari besar selalunya jatuh di bawah harga beli dengan trend jangka pendek patah sebelum ia lari.
 
 **Kesimpulan:** naluri pengguna "rugi sedikit, terus pegang" betul, dan data pergi lebih jauh: selagi henti rugi belum kena, memegang posisi rugi lebih baik daripada menjualnya walaupun trend kelihatan patah. Keluar yang disokong data dalam kedua-dua lorong = **henti rugi + had masa** (pilihan (b) audit). Di bawah takrif itu, **27 setup** lulus (ada prasyarat, dipercayai, purata "pegang sahaja" > 0, kena henti sebelum sesi ke-4 ≤ 10 %): `F43`, `F63`, `F65`, `F51`, `F50`, `F56`, `F39`, `F91`, `F40`, `F89`, `F90`, `F88`, `F92`, `F58`, `F41`, `F45`, `F07`, `F11`, `F95`, `F93`, `F42`, `F02`, `F60`, `F48`, `F44`, `F61`, `F28` (ikut kedudukan). Belum diuji: kesan peraturan itu pada peringkat akaun (MDD −10 %), tempat pengurangan rugi besar mungkin bernilai.
+
+Jana semula: `python3 cs_keluar9.py $K` (~1 minit; tambahan `cs07_keluar/*_A.npy` daripada `cs_keluar7.py cari` dan `cs07_idf.pkl`) dan `python3 cs_trend9.py $K` (~1 minit; fail `cs08_*`, panel dan lapis A dan B); `--lapor` bagi kedua-duanya menulis semula laporan tanpa folder kerja.
 
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 
