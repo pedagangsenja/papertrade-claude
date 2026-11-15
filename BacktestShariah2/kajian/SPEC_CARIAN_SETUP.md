@@ -955,6 +955,53 @@ dalam pusingan ini. Kod `carian_setup/cs_cari12.py`; keluaran `hasil/CS12/`.
   dilaporkan di sebelahnya; kumpulan B sudah dilihat; tiada saham delist (bias lebih besar bagi pegangan hingga 6 bulan);
   kelebihan lawan rawak hari sama mengukur PILIHAN saham, manakala kadar mentah turut mengandungi kesan BILA membeli.
 
+### Pindaan 15 Nov 2026 (v) — pusingan CS13: daftar SEMUA setup "naik laju" yang lulus (tanpa had bilangan), dan senarai utama F + cara pegang B (sebelum dijalankan)
+
+Keputusan pengguna 15 Nov 2026 selepas CS12 ("1. ya 2.ya 3.A"): **(1)** senarai utama = setup F (saham naik laju, ukuran
+ketat `terus`) dengan cara pegang B; **(2)** daftarkan SEMUA setup naik laju yang lulus, termasuk semakan 2025–26, tanpa had
+bilangan (teguran pengguna: had 10–12 kod setiap papan ialah had Claude, bukan kehendak pengguna); **(3)** pilihan A: 1,368
+calon ukuran longgar CS12 kekal REKOD sahaja dan carian "naik perlahan" dihentikan di situ (dibuka semula hanya dengan
+keputusan pengguna atau sebab baharu, cth. data baharu). `F01`–`F95` TIDAK diubah (ID dan takrif kekal); kod baharu bermula
+`F96`. Tiada papertrade (ditangguh pengguna), tiada order, kohort jejak hadapan tidak berubah. Kod
+`carian_setup/cs_daftar13.py`; keluaran `hasil/CS13/`.
+
+- **Sasaran:** label `terus` (tutup sesi 5 ≥ P + 5 %, tutup sesi 20 > tutup sesi 5, −8 % tidak disentuh; takrif (m)/(t)).
+- **Pencetus, ruang masuk dan skor:** sama seperti (u) (1,169 pencetus yang sudah dijana; [0–1 prasyarat pasaran (33)] ×
+  [0–1 prasyarat kumpulan/syarikat (15)] × [0–2 penapis saham (27)]; skor pada kumpulan A = min dua era bagi [kelebihan
+  `terus` atas saham rawak hari sama × tercile ATR % − 2 ralat piawai], n ≥ 100 setiap era). Hanya label yang ditukar.
+- **Calon:** bagi SETIAP pencetus, sehingga 5 peraturan masuk dengan skor tertinggi; semua yang skornya > 0. Tiada had
+  bilangan.
+- **Setup lengkap setiap calon:** beli pada buka esok; stop loss 4 × ATR14 (aktif sejak sesi 2; tiada jualan hari beli);
+  cara pegang B (pegang hingga hari ke-20, kemudian jual pada buka selepas tutup pertama di bawah purata 20 hari; had 126
+  sesi).
+- **"Lulus" (kumpulan B):** belian ≥ 300 (satu posisi setiap saham, jual hari ke-20), ≥ 10 tahun aktif, kelebihan `terus` > 0
+  dalam K1 (2010–19), K2 (2020–24) DAN K3 (2025–26). "Layak dinilai" = dua syarat pertama sahaja.
+- **Kawalan rawak:** 300 peraturan masuk dipilih rawak daripada ruang yang sama (n ≥ 100 setiap era pada A; benih
+  20261116), dinilai pada B dengan takrif yang sama.
+- **Bacaan dikunci, "carian naik laju BERHASIL"** jika, antara peraturan yang layak dinilai: **(B1)** kadar lulus calon ≥
+  kadar lulus kawalan + 20 mata, DAN **(B2)** bahagian calon dengan kelebihan `terus` > 0 pada 2025–26 (tahun yang carian
+  tidak lihat) ≥ 60 % dan ≥ bahagian kawalan + 10 mata. **Pendaftaran kod F dibuat HANYA jika bacaan ini lulus**; jika gagal,
+  tiada kod baharu dan hasilnya dilaporkan kepada pengguna.
+- **Kembar (bukan had bilangan):** dua setup yang membeli saham yang sama pada hari yang sama bukan dua setup berlainan.
+  Calon lulus disemak ikut susunan skor A; calon ialah "kembar" jika belian satu posisinya (kumpulan A + B) bertindih dengan
+  satu setup yang sudah diterima pada Jaccard ≥ 0.80 (persilangan ÷ kesatuan). 69 setup F sedia ada yang dinilai dalam
+  kedudukan akhir dikira sudah diterima. Kembar TIDAK diberi kod baharu; ia direkod dalam `hasil/CS13/calon.csv.gz` dengan
+  ID setup yang diwakilinya. Setiap calon lulus yang bukan kembar diberi kod F — tiada had.
+- **Pendaftaran:** kod `F96` dan seterusnya ikut susunan skor A; `pusingan = CS13`; status `BACKTEST`; takrif
+  `pencetus|penapis|G4|PB|prasyarat` (`G4` = stop loss 4 × ATR14, `PB` = cara pegang B). Lajur `n_K*`, `purata_K*`, `k10_K*`
+  dan `menang_K*` = dagangan setup LENGKAP (stop loss 4 × ATR14 + cara pegang B, satu posisi setiap saham, tetingkap 126 sesi
+  lengkap) pada kumpulan B.
+- **Senarai utama (keputusan (1)):** `hasil/CS13/SENARAI_UTAMA.md` — 42 setup F lama yang dipercayai (takrif (m)) + semua
+  kod baharu, SEMUA dinilai seragam dengan peraturan masuk masing-masing + stop loss 4 × ATR14 + cara pegang B. Disusun ikut
+  kadar tangkap `terus` pada kumpulan B (seperti kedudukan akhir), dengan saham rawak hari sama, naik ≥ 5 % minggu pertama,
+  ukuran longgar `naik`, kadar menang, purata setiap dagangan, rugi ≥ 15 %, median hari pegang, belian setahun pada senarai
+  Shariah dan kelebihan 2025–26 di sebelahnya. `KEDUDUKAN_AKHIR.md` (69 setup dengan keluar asal) kekal rekod dan tidak
+  dijana semula; keluar berdaftar `F01`–`F95` tidak diubah.
+- **Kaveat dikunci:** beribu calon disemak pada kumpulan B, jadi sebahagian lulus kerana nasib — anggaran bahagian nasib
+  (kadar lulus kawalan ÷ kadar lulus calon) dilaporkan; kumpulan B sudah dilihat berkali-kali; 2025–26 pendek dan belian di
+  dalamnya sedikit; tiada saham delist; kelebihan lawan rawak hari sama mengukur PILIHAN saham, kadar mentah turut mengandungi
+  kesan BILA membeli. Pangkat backtest, BUKAN bukti; kad skor kekal satu-satunya keputusan wang sebenar.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
