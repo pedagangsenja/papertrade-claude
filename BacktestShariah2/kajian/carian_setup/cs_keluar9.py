@@ -705,7 +705,8 @@ def _beza(m, j):
 
 
 def lapor_(kerja):
-    """hasil/CS09/KELUAR.md dan keluar.csv daripada cs09_pilih.pkl + cs09_kunci.pkl."""
+    """hasil/CS09/KELUAR.md, keluar.csv (setiap setup) dan sejagat.csv (senarai T, R dan penanda aras) daripada cs09_pilih.pkl +
+    cs09_kunci.pkl."""
     import cs_lapor as lapor
     S0 = pickle.load(open(os.path.join(kerja, 'cs09_pilih.pkl'), 'rb'))
     K = pickle.load(open(os.path.join(kerja, 'cs09_kunci.pkl'), 'rb'))
@@ -723,6 +724,18 @@ def lapor_(kerja):
         status = '> **Status keputusan:** lihat `laporan/KAD_SKOR.md`; laporan ini BUKAN keputusan.'
     sT, sR = _sej_b(K, S0['sejT'], 'sejT', 'tp'), _sej_b(K, S0['sejR'], 'sejR', 'purata')
     aras = _beza([(r['aras_sejagat'], r['x00'][S_ARAS]) for r in K.values()], 'tp')
+    rek = [dict(senarai='T', kedudukan=j, henti=HENTI[s], keluar=kod_peraturan(kol), keluar_teks=nama_peraturan(kol),
+                kelas=kelas_peraturan(kol), A_tambah=dA, A_simpan=sA, B_tambah=b[0], B_setup_lebih_baik=b[1], B_simpan=b[2],
+                K3_tambah=b[3], B_beza_rugi8=b[4])
+           for j, ((s, kol), dA, sA, b) in enumerate(zip(S0['sejT'], S0['D_T'], S0['simpan_T'], sT), 1)]
+    rek += [dict(senarai='R', kedudukan=j, henti=HENTI[s], keluar=kod_peraturan(kol), keluar_teks=nama_peraturan(kol),
+                 kelas=kelas_peraturan(kol), A_tambah=dA, A_simpan=sA, B_tambah=b[0], B_setup_lebih_baik=b[1], B_simpan=b[2],
+                 K3_tambah=b[3], B_beza_rugi8=b[4])
+            for j, ((s, kol), dA, sA, b) in enumerate(zip(S0['sejR'], S0['D_R'], S0['simpan_R'], sR), 1)]
+    rek.append(dict(senarai='aras CS07', kedudukan=0, henti=HENTI[S_ARAS], keluar=kod_peraturan(KOL_ARAS),
+                    keluar_teks=nama_peraturan(KOL_ARAS), kelas='lama', A_tambah=S0['D_aras'], A_simpan=S0['simpan_aras'],
+                    B_tambah=aras[0], B_setup_lebih_baik=aras[1], B_simpan=aras[2], K3_tambah=aras[3], B_beza_rugi8=aras[4]))
+    pd.DataFrame(rek).to_csv(os.path.join(d_, 'sejagat.csv'), index=False, float_format='%.5f')
     kom = lambda L_: ', '.join(f'{k} {v}' for k, v in pd.Series([kelas_peraturan(kol) for _, kol in L_]).value_counts().items())
     A = ['# CS09: KELUAR daripada maklumat yang belum dicuba — pasaran, sektor, earnings, relatif, kemuncak, laluan (backtest; BUKAN bukti)',
          '', status, '',

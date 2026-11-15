@@ -1241,6 +1241,28 @@ class TestCS09(unittest.TestCase):
         self.assertFalse(k9.bacaan(T.assign(tp_R=0.09))['ya2'])                         # tangkap penuh dikorbankan
         self.assertFalse(k9.bacaan(T.assign(pur_K3_R=0.02))['ya2'])
 
+    def test_rekod_cs09(self):
+        import cs_keluar9 as k9
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS09')
+        T = pd.read_csv(os.path.join(d, 'keluar.csv'))
+        ids = pd.read_csv(os.path.join(d, '..', 'KEDUDUKAN_AKHIR.csv')).id.tolist()
+        self.assertEqual(sorted(T.id), sorted(ids))                             # semua setup kedudukan akhir dinilai
+        self.assertTrue(set(T.henti_T) | set(T.henti_R) <= set(k9.HENTI))
+        B = k9.bacaan(T)
+        self.assertFalse(B['ya1'])                                              # bacaan dikunci (r) 1: keluar baharu TIDAK menolong
+        self.assertFalse(B['ya2'])                                              # bacaan dikunci (r) 2: potong rugi TIDAK menolong
+        self.assertLessEqual(B['n1'], len(T) / 2)
+        md = open(os.path.join(d, 'KELUAR.md'), encoding='utf-8').read()
+        self.assertIn(f"**{B['n1']} daripada {B['n']}**", md)
+        self.assertIn('Keputusan bacaan 1: keluar baharu TIDAK menolong', md)
+        self.assertIn('Keputusan bacaan 2: potong rugi TIDAK menolong', md)
+        S = pd.read_csv(os.path.join(d, 'sejagat.csv'))
+        self.assertEqual((int((S.senarai == 'T').sum()), int((S.senarai == 'aras CS07').sum())), (k9.N_SEJAGAT, 1))
+        self.assertLessEqual(int((S.senarai == 'R').sum()), k9.N_SEJAGAT)
+        self.assertTrue(S[S.senarai == 'T'].kelas.str.contains('K').all())      # hanya kelas kemuncak masuk senarai sejagat
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str).fillna('')
+        self.assertNotIn('CS09', set(reg.pusingan))                             # pusingan ini tidak mendaftar atau mengubah setup F
+
 
 if __name__ == '__main__':
     unittest.main()
