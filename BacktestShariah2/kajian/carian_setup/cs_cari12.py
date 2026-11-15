@@ -95,7 +95,7 @@ def calon(kerja):
         nama = cukup[int(rng.integers(len(cukup)))]
         q = int(rng.integers(c5.NQ))
         ci = int(rng.integers(c5.NC))
-        q1, q2, f1, f2 = (int(x) for x in c5.nyah(np.asarray([q * c5.NC + ci])))
+        q1, q2, f1, f2 = (int(x[0]) for x in c5.nyah(np.asarray([q * c5.NC + ci])))
         if q == 0 and ci == 0:
             continue
         ev = EV[nama]
