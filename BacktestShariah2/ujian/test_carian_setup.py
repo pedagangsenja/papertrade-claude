@@ -1427,5 +1427,90 @@ class TestCS10(unittest.TestCase):
         self.assertTrue(p8.keluar.str.startswith('X00').all())                  # papan T01-T12 tidak diubah oleh CS10
 
 
+class TestCS11(unittest.TestCase):
+    """SPEC pindaan 15 Nov 2026 (t): ukuran longgar `naik`, pegang selepas 4 minggu, kekerapan, banding M / N / F."""
+
+    def _data(self):
+        rng = np.random.default_rng(7)
+        n = 900
+        c = 50 * np.exp(np.cumsum(rng.normal(0.001, 0.03, n)))
+        o = c * (1 + rng.normal(0, 0.008, n))
+        h = np.maximum(o, c) * (1 + np.abs(rng.normal(0, 0.008, n)))
+        lo = np.minimum(o, c) * (1 - np.abs(rng.normal(0, 0.01, n)))
+        pan = dict(o=o, h=h, l=lo, c=c, atr=c * 0.035, mula=np.asarray([0, n]), tid=np.zeros(n, np.int64))
+        return pan, np.arange(260, 700, 5).astype(np.int64)
+
+    def test_dikunci(self):
+        import cs_semak11 as s11
+        self.assertEqual((s11.T20, s11.H, s11.NAIK_MIN, s11.NAIK_LANTAI), (20, 126, 0.02, 0.10))
+        self.assertEqual((s11.MIN_BELIAN, s11.MIN_TAHUN, s11.MIN_SETAHUN), (300, 10, 24))
+        self.assertEqual(s11.CARA, ['J20', 'P-MA20', 'P-MA20x2', 'P-MA50', 'P-R10', 'P-CH4', 'P-126'])
+        self.assertEqual(s11.HENTI[s11.S_ASAL], '4xATR14')
+
+    def test_label_menyamai_kiraan_naif(self):
+        import cs_semak11 as s11
+        pan, ev = self._data()
+        o, lo, c = pan['o'], pan['l'], pan['c']
+        Lb = s11.label11(ev, o, lo, c)
+        for k, i in enumerate(ev):
+            e = i + 1
+            P, seg = o[e], c[e:e + 20]
+            h8 = c[e] <= .92 * P or any(o[e + d] <= .92 * P or lo[e + d] <= .92 * P for d in range(1, 20))
+            m5 = c[e + 4] >= 1.05 * P
+            naik = c[e + 19] >= 1.02 * P and c[e + 19] > seg.mean() and seg.min() > .90 * P
+            mahu = [m5, m5 and c[e + 19] > c[e + 4] and not h8, naik, naik and c[e + 19] >= 1.10 * P, naik and c[e + 19] >= 1.20 * P]
+            self.assertEqual([bool(x) for x in Lb[k]], [bool(x) for x in mahu], k)
+        self.assertTrue((Lb[:, 3] <= Lb[:, 2]).all() and (Lb[:, 4] <= Lb[:, 3]).all())
+
+    def test_jual20_sama_dengan_cs_keluar7(self):
+        import cs_keluar7 as k7
+        import cs_semak11 as s11
+        pan, ev = self._data()
+        g = pd.DataFrame({'open': pan['o'], 'high': pan['h'], 'low': pan['l'], 'close': pan['c'], 'volume': 1e6},
+                         index=pd.bdate_range('2019-01-02', periods=len(pan['c'])))
+        st = k7.sedia_pan(pan, k7.siri(g).astype(np.uint8), ev)
+        for s in range(8):
+            R7, sk7 = k7.hasil(*st[:7], k7.A1, k7.A2, k7.OP, s, 0)
+            R, sk, kena = s11.jual20(ev, pan['o'], pan['l'], pan['c'], pan['atr'], s)
+            self.assertTrue(np.allclose(R, R7, atol=1e-9) and (sk == sk7).all(), s)
+            self.assertTrue((sk >= 1).all())                                    # tiada jualan pada hari beli
+            self.assertTrue(((sk < 19) <= kena).all())                          # jualan sebelum hari ke-20 hanya kerana stop loss
+
+    def test_pegang_menyamai_simulasi_hari_demi_hari(self):
+        import cs_semak11 as s11
+        pan, ev = self._data()
+        o, lo, c, atr = pan['o'], pan['l'], pan['c'], pan['atr']
+        ev = ev[ev + 127 < len(c)]
+        B = s11.siri_trend(pan)
+        s20 = pd.Series(c).rolling(20).mean().to_numpy()
+        self.assertTrue((B[0] == (c < s20)).all())
+
+        def sim(i, s, m):
+            e = i + 1
+            P = o[e]
+            Ls = [P * .92, P * .90, P * .88, P * .85, P - 3 * atr[i], P - 4 * atr[i], P - 5 * atr[i], min(P * .90, P - 4 * atr[i])][s]
+            jual_esok, hc, akhir = c[e] <= Ls, c[e], 19 if m == 0 else 125
+            for d in range(1, akhir + 1):
+                b = e + d
+                if jual_esok or o[b] <= Ls:
+                    return o[b] / P - 1 - s11.KOS, d
+                if lo[b] <= Ls:
+                    return Ls / P - 1 - s11.KOS, d
+                hc = max(hc, c[b])
+                if d == akhir:
+                    return c[b] / P - 1 - s11.KOS, d
+                if 1 <= m <= 5 and d >= 19 and ((B[m - 1, b] != 0) if m <= 4 else (c[b] < hc - 4 * atr[b])):
+                    jual_esok = True
+        for s in (1, 5, 6):
+            R, SK = s11.pegang(ev, o, lo, c, atr, B, s)
+            for k, i in enumerate(ev):
+                for m in range(s11.NC):
+                    r, sk = sim(int(i), s, m)
+                    self.assertAlmostEqual(r, float(R[k, m]), places=9, msg=(s, k, m))
+                    self.assertEqual(sk, int(SK[k, m]), (s, k, m))
+            self.assertTrue((SK >= 1).all())                                    # tiada jualan pada hari beli
+            self.assertTrue((SK[:, 1:] >= np.minimum(SK[:, :1], 19)).all())     # cara pegang tidak pernah menjual lebih awal daripada J20
+
+
 if __name__ == '__main__':
     unittest.main()
