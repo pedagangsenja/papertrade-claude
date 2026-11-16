@@ -1003,6 +1003,35 @@ keputusan pengguna atau sebab baharu, cth. data baharu). `F01`–`F95` TIDAK diu
   dalamnya sedikit; tiada saham delist; kelebihan lawan rawak hari sama mengukur PILIHAN saham, kadar mentah turut mengandungi
   kesan BILA membeli. Pangkat backtest, BUKAN bukti; kad skor kekal satu-satunya keputusan wang sebenar.
 
+### Pindaan 16 Nov 2026 (w) — tinjauan JENIS dan TEMPOH trend menaik setiap saham (deskriptif; sebelum dijalankan)
+
+Permintaan pengguna 16 Nov 2026: "berapa jenis trend menaik ... utk satu satu saham? dan berapa lama ianya naik, ada table
+tak? boleh research tak". Tinjauan DESKRIPTIF: bukan carian setup dan bukan pemilihan; tiada perubahan registry, senarai
+utama atau kohort. Kod `carian_setup/cs_jenis_trend.py`; keluaran `hasil/TREND/`.
+
+- **Data:** semua 3,260 saham (kumpulan A + B), tempoh panel carian, harga tutup harian.
+- **Takrif "satu trend menaik" (zigzag ATR):** dari satu dasar ke satu puncak. Trend disahkan bermula apabila harga tutup
+  naik ≥ k × ATR14 di atas tutup terendah sejak puncak lalu (dasar = tutup terendah itu), dan disahkan tamat apabila harga
+  tutup jatuh ≥ k × ATR14 di bawah tutup tertinggi sejak dasar (puncak = tutup tertinggi itu). ATR14 pada hari semasa.
+- **Tiga saiz ikut toleransi turun** (sepadan dengan tiga trend Teori Dow: kecil, sederhana, utama): k = 2; k = 4 (sama
+  seperti lorong Chandelier projek); k = 8.
+- **Yang dikira:** hanya trend lengkap dengan dasar pada bar layak (`sah`); ayunan pertama setiap saham (dasarnya terpotong)
+  dan trend yang belum tamat pada hujung data dibuang dan bilangannya dilaporkan. "Lonjakan" = tempoh < 5 sesi (dilaporkan
+  berasingan); "trend" = ≥ 5 sesi.
+- **Ukuran setiap trend:** tempoh (sesi, dasar → puncak); kenaikan (tutup puncak ÷ tutup dasar − 1); kelajuan = kadar harian
+  terkompaun dasar → puncak; turun paling dalam di tengah jalan (dari tutup tertinggi berjalan, tidak termasuk kejatuhan
+  penamat). Bahagian yang boleh dikenal SEMASA berlaku: dari bar pengesahan naik hingga bar pengesahan tamat (tempoh dan
+  perubahan harga tutup, tanpa kos).
+- **Jenis ikut kelajuan** (ambang daripada angka pengguna sendiri: 0.1 % sehari; 1 % sehari ≈ 5 % seminggu): sangat perlahan
+  < 0.25 % sehari; perlahan 0.25–0.5 %; sederhana 0.5–1 %; laju ≥ 1 % sehari.
+- **Jadual:** (1) setiap saiz: bilangan setiap saham setahun, tempoh (median dan 25 %–75 %), kenaikan, taburan tempoh (< 1
+  bulan, 1–3 bulan, 3–6 bulan, > 6 bulan; 21 sesi = 1 bulan); (2) saiz × jenis kelajuan: bahagian, tempoh, kenaikan, turun
+  di tengah jalan; (3) "sudah naik N sesi → berapa peratus sampai 2N, dan median baki"; (4) bahagian yang boleh dikenal
+  semasa berlaku; (5) kestabilan median tempoh ikut tahun.
+- **Kaveat dikunci:** dasar dan puncak hanya diketahui SELEPAS berlaku — ini gambaran, bukan isyarat beli atau jual; kelajuan
+  dasar → puncak melebihi apa yang dagangan sebenar boleh tangkap; tiada saham delist; angka bergantung pada takrif (sebab
+  itu tiga saiz ditunjuk).
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
