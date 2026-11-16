@@ -1,6 +1,6 @@
 # Kadar menang setiap setup F (backtest pada saham yang tidak dilihat; BUKAN bukti)
 
-> **Status keputusan (kad skor, harga 2026-11-12):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
+> **Status keputusan (kad skor, harga 2026-11-13):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 226 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
 Dijana `kajian/carian_setup/cs_ringkas.py` daripada `data/registry_F.csv` dan fail hasil setiap pusingan. **Jangan sunting secara manual.**
 
@@ -8,7 +8,7 @@ Dijana `kajian/carian_setup/cs_ringkas.py` daripada `data/registry_F.csv` dan fa
 
 **Baca bersama purata setiap dagangan.** Kadar menang sahaja tidak menunjukkan saiz untung dan rugi: setup yang menang 4 daripada 10 masih boleh untung jika untungnya besar, dan setup yang menang 6 daripada 10 boleh rugi jika ruginya besar (`CLAUDE.md`: kadar menang sahaja bukan ukuran).
 
-Ringkasan: 95 setup; median kadar menang 52 %; 61 setup menang ≥ 50 %; 61 setup menang ≥ 50 % DAN purata positif; 24 setup menang < 50 % tetapi purata positif.
+Ringkasan: 99 setup; median kadar menang 52 %; 64 setup menang ≥ 50 %; 64 setup menang ≥ 50 % DAN purata positif; 24 setup menang < 50 % tetapi purata positif.
 
 Kadar menang tertinggi (≥ 300 belian): `F55` 74 % (purata +7.7 %, 484 belian); `F62` 73 % (purata +9.9 %, 1,387 belian); `F79` 73 % (purata +10.1 %, 1,205 belian); `F43` 70 % (purata +5.8 %, 515 belian); `F57` 70 % (purata +6.7 %, 542 belian).
 
@@ -109,6 +109,10 @@ Kadar menang tertinggi (≥ 300 belian): `F55` 74 % (purata +7.7 %, 484 belian);
 | `F93` | CS07 | keluasan naik >= 10 mata dalam 10 sesi + earnings dalam 1-5 sesi akan datang | M02 MACD + SMA200 | tutup > MA200 + MA50 naik (lawan 20 bar lalu) | 363 | **49** | 5 / 5 | +0.99 | 16 | 49 / 47 / 57 |  |
 | `F94` | CS07 | QQQ SMA10 > SMA20 + earnings dalam 1-5 sesi akan datang | K11.016 Supertrend(20, 1.5) bertukar naik | RS >= 90 + dalam 15% dari puncak 52 minggu | 380 | **44** | 4 / 6 | -0.44 | 19 | 48 / 40 / 44 |  |
 | `F95` | CS07 | >= 60% saham di atas MA50 + earnings dalam 1-5 sesi akan datang | K19.011 pecah atas Keltner(30, 1.0) | RSI14 > 60 + RS >= 90 | 330 | **52** | 5 / 5 | +1.69 | 24 | 52 / 54 / 45 |  |
+| `F96` | CS09 | SPY Peringkat 2 Weinstein (atas SMA150 yang naik) + earnings dalam 1-5 sesi akan datang | K26.025 lonjak >= 20% dalam 15 hari lalu undur ke zon 38.2%-78.6% kaki | – | 620 | **48** | 5 / 5 | -0.30 | 23 | 46 / 48 / 49 |  |
+| `F97` | CS09 | Mei-Okt + earnings dalam 1-5 sesi akan datang | K26.021 lonjak >= 20% dalam 15 hari lalu undur ke zon 38.2%-50.0% kaki | – | 373 | **57** | 6 / 4 | +2.60 | 27 | 55 / 59 / 59 |  |
+| `F98` | CS09 | SPY atas SMA200 + earnings dalam 1-5 sesi akan datang | K26.081 lonjak >= 20% dalam 40 hari lalu undur ke zon 38.2%-50.0% kaki | hari naik (tutup > buka) | 307 | **51** | 5 / 5 | +0.29 | 19 | 48 / 53 / 52 |  |
+| `F99` | CS09 | SPY atas SMA200 + earnings dalam 1-5 sesi akan datang | K26.085 lonjak >= 20% dalam 40 hari lalu undur ke zon 38.2%-78.6% kaki | hari naik (tutup > buka) | 312 | **51** | 5 / 5 | +0.36 | 19 | 48 / 53 / 52 |  |
 
 - K1 = 2010–2019, K2 = 2020–2024 (CS01: 2020 – Ogo 2026), K3 = 2025 – Ogo 2026 (tiada bagi CS01).
 - Cara pegang dan keluar setiap setup: lajur `henti` dan `keluar` dalam `KADAR_MENANG.csv` dan `data/registry_F.csv`.

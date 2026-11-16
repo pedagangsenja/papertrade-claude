@@ -31,6 +31,7 @@ Cari kaedah swing yang **untung bersih melebihi rugi** (jangkaan positif; kadar 
 | Lorong kedua "ikut trend" (beli selepas pengesahan, pegang hingga 6 bulan; papan `T01`–`T12`; kes MXL) | `BacktestShariah2/kajian/carian_setup/hasil/CS08/LAPORAN.md` (`cs_trend8.py`, pindaan (q)); pangkat backtest, BUKAN bukti |
 | CS07: tala parameter setiap kaedah/keluarga, carian keluar, papan mesin, analisis pegang minimum | `BacktestShariah2/kajian/carian_setup/hasil/CS07/TALA_MASUK.md`, `KELUAR.md`; `hasil/MESIN/LAPORAN.md` (`cs_mesin.py`, workflow `mesin_carian.yml`); `hasil/PEGANG_MIN.md` |
 | Kadar menang setiap setup F (daripada 10 dagangan berapa untung; permintaan pengguna 14 Nov 2026: paparkan bagi setiap Fxx, bersama purata setiap dagangan) | `BacktestShariah2/kajian/carian_setup/hasil/KADAR_MENANG.md` (`cs_ringkas.py`); lajur `menang*` dalam `data/registry_F.csv` |
+| Keluarga K26 "lonjak lalu undur" + zon Fibonacci, `F96`–`F99` (16 Nov 2026; kelebihan datang daripada prasyarat earnings, bukan corak) | `BacktestShariah2/kajian/carian_setup/hasil/CS09/LAPORAN.md` (`cs_cs09.py`, pindaan (r)) |
 | Indikator, kombinasi isyarat (serentak/berturutan) dan cara pegang/jual: apa yang sudah diuji (tinjauan ~1.35 juta gabungan, 12 Nov 2026) | `BacktestShariah2/kajian/KAJIAN_ISYARAT_KOMBINASI.md`; kohort jejak `N201X36`–`N204X36` dipradaftar `kajian/SPEC_JEJAK_KOMBINASI.md` |
 
 Peraturan tetap: laporan lain (PENGANALISIS, KAEDAH_TERBAIK, RINGKASAN portfolio, T4) memaparkan baris status kad skor (`standard/status_kad.py`) dan BUKAN keputusan.

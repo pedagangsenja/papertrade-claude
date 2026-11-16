@@ -302,14 +302,14 @@ def pilih(kerja):
 # ---------- kunci (kumpulan B) ----------
 def ev_satu(kerja, set_, nama):
     """Indeks bar isyarat satu pencetus pada set (asal, keluarga K atau varian M CS07)."""
-    if ('asal', set_) not in _W:
-        _W[('asal', set_)] = semua_ev(kerja, set_, 'asal')
-    if nama in _W[('asal', set_)]:
-        return _W[('asal', set_)][nama]
     if nama[:4] == 'K26.':                                            # pindaan (r): grid K26 berasingan
         if ('K26', set_) not in _W:
             _W[('K26', set_)] = keluarga_k26(kerja, set_)['ev']
         return _W[('K26', set_)][nama]
+    if ('asal', set_) not in _W:
+        _W[('asal', set_)] = semua_ev(kerja, set_, 'asal')
+    if nama in _W[('asal', set_)]:
+        return _W[('asal', set_)][nama]
     if nama[0] == 'K':
         if ('K', set_) not in _W:
             _W[('K', set_)] = keluarga(kerja, set_)['ev']

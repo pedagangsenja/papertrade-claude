@@ -1,12 +1,12 @@
 # Setup F: prasyarat (pasaran) lawan syarat (saham itu sendiri)
 
-> **Status keputusan (kad skor, harga 2026-11-12):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 223 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
+> **Status keputusan (kad skor, harga 2026-11-13):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 226 · GAGAL 0 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
 Dijana `kajian/carian_setup/cs_ringkas.py` daripada `data/registry_F.csv` dan `jejak_f/kohort.json`. **Jangan sunting secara manual.**
 
 Prasyarat = isyarat yang BUKAN daripada saham itu sendiri. Ruang carian CS01–CS04 hanya ada tiga: **QQQ ON** (QQQ di atas SMA50 dan SMA10 di atas SMA20), **QQQ OFF** (selain itu) dan **SPY > SMA200**. CS05 (pindaan (i)) menambah 33 prasyarat pasaran dan 15 prasyarat kumpulan/syarikat (`cs_lapis.py`). RS diletak di bawah syarat saham (dikira daripada harga saham itu, dipangkatkan lawan saham lain).
 
-Bilangan (CS01–CS04): – = 20 · QQQ OFF = 14 · QQQ ON = 2 · SPY > SMA200 = 2 · QQQ naik >= 3% dalam 5 sesi + earnings dalam 1-5 sesi akan datang = 2 · QQQ dalam 3% dari puncak 52 minggu + earnings dalam 1-5 sesi akan datang = 2 · rejim ON baharu (<= 10 sesi) + earnings dalam 1-5 sesi akan datang = 1 · keluasan naik >= 10 mata dalam 10 sesi + earnings dalam 1-5 sesi akan datang = 1 · QQQ SMA10 > SMA20 + earnings dalam 1-5 sesi akan datang = 1 · >= 60% saham di atas MA50 + earnings dalam 1-5 sesi akan datang = 1 (jumlah 46); CS05: 19 setup; CS06: 30 setup.
+Bilangan (CS01–CS04): – = 20 · QQQ OFF = 14 · QQQ ON = 2 · SPY > SMA200 = 2 · QQQ naik >= 3% dalam 5 sesi + earnings dalam 1-5 sesi akan datang = 2 · QQQ dalam 3% dari puncak 52 minggu + earnings dalam 1-5 sesi akan datang = 2 · SPY atas SMA200 + earnings dalam 1-5 sesi akan datang = 2 · rejim ON baharu (<= 10 sesi) + earnings dalam 1-5 sesi akan datang = 1 · keluasan naik >= 10 mata dalam 10 sesi + earnings dalam 1-5 sesi akan datang = 1 · QQQ SMA10 > SMA20 + earnings dalam 1-5 sesi akan datang = 1 · >= 60% saham di atas MA50 + earnings dalam 1-5 sesi akan datang = 1 · SPY Peringkat 2 Weinstein (atas SMA150 yang naik) + earnings dalam 1-5 sesi akan datang = 1 · Mei-Okt + earnings dalam 1-5 sesi akan datang = 1 (jumlah 50); CS05: 19 setup; CS06: 30 setup.
 
 | ID | Pusingan | Prasyarat (pasaran) | Syarat saham: pencetus | Syarat saham: penapis | Henti | Keluar | Jejak hadapan |
 |---|---|---|---|---|---|---|---|
@@ -105,6 +105,10 @@ Bilangan (CS01–CS04): – = 20 · QQQ OFF = 14 · QQQ ON = 2 · SPY > SMA200 =
 | F93 | CS07 | keluasan naik >= 10 mata dalam 10 sesi + earnings dalam 1-5 sesi akan datang | M02 MACD + SMA200 | tutup > MA200 + MA50 naik (lawan 20 bar lalu) | G5 3xATR14 | X00 tiada keluar indikator (henti + 20 sesi) |  |
 | F94 | CS07 | QQQ SMA10 > SMA20 + earnings dalam 1-5 sesi akan datang | K11.016 Supertrend(20, 1.5) bertukar naik | RS >= 90 + dalam 15% dari puncak 52 minggu | G7 5xATR14 | X00 tiada keluar indikator (henti + 20 sesi) |  |
 | F95 | CS07 | >= 60% saham di atas MA50 + earnings dalam 1-5 sesi akan datang | K19.011 pecah atas Keltner(30, 1.0) | RSI14 > 60 + RS >= 90 | G7 5xATR14 | X00 tiada keluar indikator (henti + 20 sesi) |  |
+| F96 | CS09 | SPY Peringkat 2 Weinstein (atas SMA150 yang naik) + earnings dalam 1-5 sesi akan datang | K26.025 lonjak >= 20% dalam 15 hari lalu undur ke zon 38.2%-78.6% kaki | tiada | G7 5xATR14 | X00 tiada keluar indikator (henti + 20 sesi) |  |
+| F97 | CS09 | Mei-Okt + earnings dalam 1-5 sesi akan datang | K26.021 lonjak >= 20% dalam 15 hari lalu undur ke zon 38.2%-50.0% kaki | tiada | G7 5xATR14 | X00 tiada keluar indikator (henti + 20 sesi) |  |
+| F98 | CS09 | SPY atas SMA200 + earnings dalam 1-5 sesi akan datang | K26.081 lonjak >= 20% dalam 40 hari lalu undur ke zon 38.2%-50.0% kaki | hari naik (tutup > buka) | G7 5xATR14 | X00 tiada keluar indikator (henti + 20 sesi) |  |
+| F99 | CS09 | SPY atas SMA200 + earnings dalam 1-5 sesi akan datang | K26.085 lonjak >= 20% dalam 40 hari lalu undur ke zon 38.2%-78.6% kaki | hari naik (tutup > buka) | G7 5xATR14 | X00 tiada keluar indikator (henti + 20 sesi) |  |
 
 ## Kaveat
 

@@ -366,6 +366,17 @@ Permintaan pengguna (kes MXL). Pradaftar dikomit sebelum dijalankan. Kod `cs_tre
 - **Kaveat:** tiada saham delist (bias lebih besar bagi pegang 6 bulan); K3 pendek; B sudah dilihat; satu kes bukan bukti. Belum dijejak ke hadapan; mesin belum meliputi lorong ini.
 - Jana semula: `python3 cs_trend8.py skor $K && python3 cs_trend8.py pilih $K && python3 cs_trend8.py benihB $K && python3 cs_trend8.py keluar $K && python3 cs_trend8.py kunci $K && python3 cs_trend8.py lapor $K` (~30 min; perlukan fail CS07).
 
+## 9g. CS09: keluarga K26 "lonjak lalu undur" dan Fibonacci (pindaan (r), 16 Nov 2026)
+
+Asal: pengguna menghantar tangkapan skrin Triple RSI dan kursus Fibonacci (zon 61.8–78.6 %), kemudian bertanya "ini boleh include dalam method F ke?". Penerokaan pada set 431 (folder sementara, tiada fail repo): Triple RSI tiada kelebihan lawan rawak (dengan atau tanpa pegang lama); Fibonacci cara iklan sama dengan rawak berkurungan sama. Pradaftar (r) dikomit SEBELUM kumpulan A/B dijalankan. Kod `cs_cs09.py`; sumber angka `hasil/CS09/LAPORAN.md`, `papan.csv`, `zon.csv`.
+
+- **Keluarga K26** (`cs_param.grid_k26`, 100 varian; grid K01–K25 tidak berubah); mesin menarik 12 varian rawak K26 setiap larian selepas digabung ke `main`.
+- **Papan:** 6 setup; **4 dipercayai → `F96`–`F99`** (henti/keluar dikunci `X00` + 5×ATR14). Semua empat memakai prasyarat **earnings dalam 1–5 sesi**; `F98` ≈ `F99` (beli hampir sama).
+- **Semakan tambahan (selepas hasil dilihat; tidak mengubah pendaftaran):** dibanding saham LAIN yang lulus prasyarat + penapis yang sama pada hari sama dan tercile ATR % sama, corak K26 menyumbang −0.8 hingga +0.6 mata (semua dalam ralat). **Kelebihan `F96`–`F99` datang daripada prasyarat earnings, bukan daripada corak.** Pencetus K26 sahaja lawan rawak: +0.3 hingga +0.5 mata.
+- **Fibonacci istimewa? Bacaan dikunci: YA** (zon 61.8–78.6 % mengatasi zon jiran dalam 13 daripada 20 pasangan), tetapi saiznya kecil (purata zon iklan +0.8 mata; zon 38.2–50 % dan 50–61.8 % +1.0). Tiada setup F memakai zon iklan sahaja.
+- Belum: kedudukan akhir penuh (`cs_akhir.py`, membaca takrif CS09) memerlukan binaan penuh benih/keluar (~3 jam).
+- Jana semula: `python3 cs_cari.py panel $K A && python3 cs_cari.py panel $K B`, `lapis.bina($K)`, kemudian `python3 cs_cs09.py semua $K` (< 2 min selepas panel) dan `python3 cs_ringkas.py`.
+
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 
 Folder kerja (panel indikator, isyarat benih, jadual besar; ~3.4 GB pickle) berada di luar repo dan hilang bersama sesi. Semuanya boleh dijana semula secara deterministik (`cs_atom.BENIH = 20261113`); data mentah set 2000 dimuat turun dari Release `autotune-data-a02` (perlukan `pyarrow`: `pip install pyarrow`; ia tiada dalam fail requirements repo).

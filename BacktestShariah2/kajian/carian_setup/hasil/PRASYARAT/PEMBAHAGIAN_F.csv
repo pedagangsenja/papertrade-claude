@@ -94,3 +94,7 @@ F92,CS07,QQQ naik >= 3% dalam 5 sesi + earnings dalam 1-5 sesi akan datang,M03 B
 F93,CS07,keluasan naik >= 10 mata dalam 10 sesi + earnings dalam 1-5 sesi akan datang,M02 MACD + SMA200,tutup > MA200 + MA50 naik (lawan 20 bar lalu),G5 3xATR14,X00 tiada keluar indikator (henti + 20 sesi),
 F94,CS07,QQQ SMA10 > SMA20 + earnings dalam 1-5 sesi akan datang,"K11.016 Supertrend(20, 1.5) bertukar naik",RS >= 90 + dalam 15% dari puncak 52 minggu,G7 5xATR14,X00 tiada keluar indikator (henti + 20 sesi),
 F95,CS07,>= 60% saham di atas MA50 + earnings dalam 1-5 sesi akan datang,"K19.011 pecah atas Keltner(30, 1.0)",RSI14 > 60 + RS >= 90,G7 5xATR14,X00 tiada keluar indikator (henti + 20 sesi),
+F96,CS09,SPY Peringkat 2 Weinstein (atas SMA150 yang naik) + earnings dalam 1-5 sesi akan datang,K26.025 lonjak >= 20% dalam 15 hari lalu undur ke zon 38.2%-78.6% kaki,tiada,G7 5xATR14,X00 tiada keluar indikator (henti + 20 sesi),
+F97,CS09,Mei-Okt + earnings dalam 1-5 sesi akan datang,K26.021 lonjak >= 20% dalam 15 hari lalu undur ke zon 38.2%-50.0% kaki,tiada,G7 5xATR14,X00 tiada keluar indikator (henti + 20 sesi),
+F98,CS09,SPY atas SMA200 + earnings dalam 1-5 sesi akan datang,K26.081 lonjak >= 20% dalam 40 hari lalu undur ke zon 38.2%-50.0% kaki,hari naik (tutup > buka),G7 5xATR14,X00 tiada keluar indikator (henti + 20 sesi),
+F99,CS09,SPY atas SMA200 + earnings dalam 1-5 sesi akan datang,K26.085 lonjak >= 20% dalam 40 hari lalu undur ke zon 38.2%-78.6% kaki,hari naik (tutup > buka),G7 5xATR14,X00 tiada keluar indikator (henti + 20 sesi),
