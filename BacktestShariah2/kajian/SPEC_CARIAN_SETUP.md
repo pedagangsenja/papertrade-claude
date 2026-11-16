@@ -1003,6 +1003,20 @@ keputusan pengguna atau sebab baharu, cth. data baharu). `F01`–`F95` TIDAK diu
   dalamnya sedikit; tiada saham delist; kelebihan lawan rawak hari sama mengukur PILIHAN saham, kadar mentah turut mengandungi
   kesan BILA membeli. Pangkat backtest, BUKAN bukti; kad skor kekal satu-satunya keputusan wang sebenar.
 
+### Keputusan pengguna 16 Nov 2026 selepas CS13 ("ya 1,2,3") — susunan senarai utama; kembar; gabung ke `main`
+
+1. CS11, CS12, CS13 dan tinjauan (w) digabung ke `main` melalui PR.
+2. **Senarai utama memaparkan DAHULU setup "pilihan"**: kadar menang ≥ 50 % DAN purata setiap dagangan ≥ +2 % (cara pegang
+   B, satu posisi setiap saham, kumpulan B); dalam setiap kumpulan susunan kekal ikut kadar tangkap `terus`. Tiada setup
+   dibuang dan tiada kod F berubah; ini susunan paparan.
+3. Calon lulus yang kembar (pertindihan ≥ 80 %) kekal TANPA kod F.
+
+**Kaveat dikunci bagi (2):** tapisan "pilihan" dibuat SELEPAS melihat hasil pada kumpulan B, jadi angka menang dan purata
+kumpulan itu condong ke atas. **Semakan ikut masa (ditulis sebelum dikira; dilaporkan sahaja, bukan syarat):** setup yang
+menepati tapisan pada 2010–2024 SAHAJA (K1 + K2, berwajaran bilangan dagangan) dibandingkan dengan setup lain pada 2025–26
+(K3): nilai tengah kadar menang dan purata, serta bahagian yang masih menang ≥ 50 % dan bahagian dengan purata > 0. Setup
+dengan kurang 20 dagangan pada K3 dikecualikan daripada semakan itu.
+
 ### Pindaan 16 Nov 2026 (w) — tinjauan JENIS dan TEMPOH trend menaik setiap saham (deskriptif; sebelum dijalankan)
 
 Permintaan pengguna 16 Nov 2026: "berapa jenis trend menaik ... utk satu satu saham? dan berapa lama ianya naik, ada table
