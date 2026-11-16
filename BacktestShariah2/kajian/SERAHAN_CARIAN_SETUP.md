@@ -237,7 +237,7 @@ Diukur ad hoc daripada stor harga (930–947 saham Shariah, Sep 2024 – Okt 202
 
 **Diputuskan pengguna 16 Nov 2026 ("ya"; "abaikan dahulu saham shariah") dan SUDAH dilaksanakan:** "ujian solid" = pusingan **CS16** (§9o): 290 setup SOLID, 224 berbeza; yang solid pada asasnya ialah prasyarat "laporan kewangan dalam 1–5 sesi". Arahan "abaikan dahulu saham shariah" terpakai pada kerja setup F sehingga pengguna menyatakan sebaliknya.
 
-**Diputuskan pengguna 16 Nov 2026 ("sekarang gabung ke main"; "ya dan B") dan SUDAH dilaksanakan:** (1) hasil CS16 digabung ke `main` (PR #58); (2) versi dashboard hidup dibawa ke `main`: v184 oleh chat reka bentuk (PR #59), tiga komit v185 chat robot (terbitan #220) dipetik ke `main` oleh chat ini tanpa mengubah halaman; (3) **paparan Solid + tiga angka dalam dashboard akan ditambah oleh chat yang mereka bentuk Setup F (pilihan B), BUKAN oleh chat ini** — keperluan data dalam §9o. Chat ini tidak menerbitkan dashboard selepas v182.
+**Diputuskan pengguna 16 Nov 2026 ("sekarang gabung ke main"; "ya dan B") dan SUDAH dilaksanakan:** (1) hasil CS16 digabung ke `main` (PR #58); (2) versi dashboard hidup dibawa ke `main`: v184 oleh chat reka bentuk (PR #59), tiga komit v185 chat robot (terbitan #220) dipetik ke `main` oleh chat ini tanpa mengubah halaman; (3) paparan Solid + tiga angka dalam dashboard ditambah oleh chat yang mereka bentuk Setup F (pilihan B): SUDAH siap, v187 / terbitan #222 / PR #61 (disemak chat ini: angka db sama dengan `hasil/CS16/solid.csv.gz`). Chat ini tidak menerbitkan dashboard selepas v182.
 
 **Menunggu keputusan pengguna:**
 1. Langkah seterusnya dalam pelan pengguna ialah papertrade setup terbaik — DITANGGUH oleh pengguna ("abaikan dahulu papertrade"); hanya dengan keputusan pengguna.
