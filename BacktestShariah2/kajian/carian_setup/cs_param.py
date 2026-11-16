@@ -1,5 +1,5 @@
 """Carian setup — keluarga pencetus BERPARAMETER K01-K25 (SPEC pindaan 14 Nov 2026 (n), bahagian (a)) dan K26
-"lonjak lalu undur" (pindaan 16 Nov 2026 (r); grid berasingan `grid_k26()` supaya grid K01-K25 yang dikunci tidak berubah).
+"lonjak lalu undur" (pindaan 16 Nov 2026 (y); grid berasingan `grid_k26()` supaya grid K01-K25 yang dikunci tidak berubah).
 
 Setiap keluarga ialah satu syarat indikator dengan grid parameter penuh; ahli yang parameternya sama dengan takrif `P`
 (cs_atom) atau `N` (_nxx) asal ditanda `asal`. Takrif memakai fungsi bantu cs_atom supaya ahli `asal` menghasilkan isyarat
@@ -143,13 +143,13 @@ ASAL = [
 
 
 KELUARGA = tuple(f'K{i:02d}' for i in range(1, 26))
-KELUARGA_MESIN = KELUARGA + ('K26',)               # pindaan (r): mesin menarik varian K26 juga (ditambah di HUJUNG)
+KELUARGA_MESIN = KELUARGA + ('K26',)               # pindaan (y): mesin menarik varian K26 juga (ditambah di HUJUNG)
 ARAS_FIB = (0.236, 0.382, 0.5, 0.618, 0.786, 1.0)
 ZON_K26 = ((0.382, 0.5), (0.5, 0.618), (0.618, 0.786), (0.786, 1.0), (0.382, 0.786))   # (0.618, 0.786) = zon iklan Fibonacci
 
 
 def grid_k26():
-    """Grid K26 (pindaan (r), dikunci): 5 tempoh x 4 saiz kaki x 5 zon undur = 100 varian; nama K26.<nnn>."""
+    """Grid K26 (pindaan (y), dikunci): 5 tempoh x 4 saiz kaki x 5 zon undur = 100 varian; nama K26.<nnn>."""
     G = [('K26', dict(n=n, k=k, za=za, zb=zb)) for n in (10, 15, 20, 30, 40) for k in (0.20, 0.30, 0.40, 0.50)
          for za, zb in ZON_K26]
     return [(f'K26.{i:03d}', fam, p) for i, (fam, p) in enumerate(G, 1)]

@@ -522,6 +522,17 @@ Permintaan pengguna 16 Nov 2026 selepas melihat jadual Setup F dalam dashboard (
 - **Tiada yang diubah oleh pusingan ini:** senarai utama, `registry_F.csv` dan kohort. **Selepas keputusan pengguna "B" (16 Nov 2026):** dashboard v182 memaparkan cara `r0.t2.0` ("pegang lebih lama") di sebelah cara sekarang bagi setiap setup (`standard/f_utama_db.py` membaca `hasil/CS14/setup.csv.gz`; lajur `menang2`, `purata2`, `rugi2`, `hari2`). Ia dipapar kerana pilihan pengguna, bukan kerana ia lulus ujian.
 - **Jana semula:** `python3 cs_pegang14.py kira $K && python3 cs_pegang14.py kawalan $K && python3 cs_pegang14.py lapor $K` (~2 minit; perlukan panel, lapis, benih dan `hasil/CS13/`).
 
+## 9n. CS15: keluarga pencetus K26 "lonjak lalu undur" + zon Fibonacci (pindaan (y), 16 Nov 2026)
+
+Asal: pengguna menghantar tangkapan skrin Triple RSI ("90 % menang") dan kursus Fibonacci (zon masuk 61.8–78.6 %), bertanya "ini boleh include dalam method F ke?", kemudian "ya" kepada "kekalkan dan gabung ke `main`". Penerokaan pada set 431 (folder sementara): Triple RSI tiada kelebihan lawan rawak (dengan atau tanpa pegang lama); Fibonacci cara iklan (sasaran puncak, henti bawah dasar kaki) sama dengan rawak berkurungan sama. Kod `cs_cs15.py`; sumber angka `hasil/CS15/LAPORAN.md`, `calon.csv`, `bacaan.json`, `zon.csv`.
+
+- **Sejarah cawangan:** mula-mula dibuat sebagai "(r) CS09" dengan peraturan CS07, dan memberi kod sementara `F96`–`F99`. Ia bertembung dengan `main` (CS09 = keluar; `F96` dst. = CS13), jadi kod itu DIBATALKAN semasa gabungan dan pusingan ditulis semula sebagai (y) CS15 dengan peraturan CS13.
+- **Keluarga K26** (`cs_param.grid_k26`, 100 varian; grid K01–K25 tidak berubah). Mesin menarik 12 varian rawak K26 setiap larian (`KELUARGA_MESIN`).
+- **Hasil (peraturan CS13):** 262 calon; 234 cukup belian; **112 lulus** (48 % lawan kawalan rawak CS13 18 % → B1 lulus); lebih baik daripada rawak pada 2025–26: 60.7 % lawan syarat 62.4 % (kawalan 52.4 % + 10) → **B2 gagal tipis → tiada kod F**. 68 calon lulus yang bukan kembar disenaraikan sebagai rekod. Bandingan: calon CS13 lulus 84 %, K3 90 %.
+- **Sumbangan corak di atas prasyarat** (lawan saham lain yang lulus prasyarat dan penapis yang sama, hari dan turun-naik sama): median +1.0 mata; jelas positif bagi 5 daripada 68 calon lulus. Dalam percubaan pertama (peraturan CS07), 4 setup teratas semuanya bergantung pada prasyarat earnings 1–5 sesi, dan corak menyumbang −0.8 hingga +0.6 mata.
+- **Fibonacci istimewa? Ujian lulus (YA) tetapi kecil:** zon 61.8–78.6 % mengatasi zon jiran dalam 13 daripada 20 pasangan; purata kelebihan zon iklan +0.8 mata, zon 38.2–50 % dan 50–61.8 % +1.0.
+- Jana semula: `python3 cs_cari.py panel $K A && python3 cs_cari.py panel $K B`, `lapis.bina($K)`, kemudian `python3 cs_cs15.py semua $K` (< 3 min selepas panel; panel + lapis ~3 min).
+
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 
 Folder kerja (panel indikator, isyarat benih, jadual besar; ~3.4 GB pickle) berada di luar repo dan hilang bersama sesi. Semuanya boleh dijana semula secara deterministik (`cs_atom.BENIH = 20261113`); data mentah set 2000 dimuat turun dari Release `autotune-data-a02` (perlukan `pyarrow`: `pip install pyarrow`; ia tiada dalam fail requirements repo).

@@ -110,8 +110,8 @@ def keluarga_grid(kerja, set_, G):
 
 
 def keluarga_k26(kerja, set_):
-    """Isyarat grid K26 (pindaan 16 Nov 2026 (r)) pada set A/B: cs09_K26_<set>.pkl = {'ev': {nama: indeks bar}, 'grid': [...]}."""
-    f = os.path.join(kerja, f'cs09_K26_{set_}.pkl')
+    """Isyarat grid K26 (pindaan 16 Nov 2026 (y)) pada set A/B: cs15_K26_<set>.pkl = {'ev': {nama: indeks bar}, 'grid': [...]}."""
+    f = os.path.join(kerja, f'cs15_K26_{set_}.pkl')
     if os.path.exists(f):
         return pickle.load(open(f, 'rb'))
     G = kp.grid_k26()
@@ -302,7 +302,7 @@ def pilih(kerja):
 # ---------- kunci (kumpulan B) ----------
 def ev_satu(kerja, set_, nama):
     """Indeks bar isyarat satu pencetus pada set (asal, keluarga K atau varian M CS07)."""
-    if nama[:4] == 'K26.':                                            # pindaan (r): grid K26 berasingan
+    if nama[:4] == 'K26.':                                            # pindaan (y): grid K26 berasingan
         if ('K26', set_) not in _W:
             _W[('K26', set_)] = keluarga_k26(kerja, set_)['ev']
         return _W[('K26', set_)][nama]
