@@ -1276,6 +1276,10 @@ sampel: 86 % ≥ 300 belian, 98 % ≥ 20 belian pada 2025–26). Ambang di bawah
 - **Tiada yang diubah:** `registry_F.csv`, `hasil/CS17/` (senarai dan kod T), `hasil/CS08/papan.csv`, kohort, dashboard.
   Tanda `solid`, `wakil`, `boleh_dibuat` ditulis dalam `hasil/CS18/solid_t.csv.gz` sahaja. "Solid" = paling tahan uji dalam
   backtest, BUKAN bukti; tiada papertrade tanpa keputusan pengguna.
+- **Tambahan sebelum dijalankan (16 Nov 2026, semasa menulis kod; belum ada hasil dilihat):** `T11` dalam papan CS08 memakai
+  stop loss −20 %, bukan 6 × ATR14. Semakan padanan semula (bilangan belian dan kadar `besar` sama dengan papan) dibuat dengan
+  stop loss papan itu sendiri; penilaian SOLID-T bagi kesemua 12 setup lama memakai mekanik lorong (6 × ATR14) seperti setup
+  lain, dan ini dinyatakan dalam laporan.
 
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
