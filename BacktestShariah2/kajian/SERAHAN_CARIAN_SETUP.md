@@ -490,6 +490,18 @@ Peraturan ditulis dan dikomit sebelum dijalankan (komit `9455533`; pembetulan la
 - **Kesan sampingan pendaftaran:** `KADAR_MENANG.md` / `.csv` dan `PRASYARAT/PEMBAHAGIAN_F.*` (cs_ringkas) kini 2,054 baris; `cs_akhir.py` melangkau `pusingan = CS13` (kedudukan akhir kekal 69 setup dengan keluar asal; CS13 ada senarai sendiri). Pepijat paparan dibetulkan dalam `cs_cari12.py` dan laporan CS12: prasyarat "tiada earnings dalam 20 sesi" dahulu terpapar tanpa "tiada" (angka tidak berubah).
 - **Jana semula:** `python3 cs_daftar13.py skor $K && python3 cs_daftar13.py calon $K && python3 cs_daftar13.py kunci $K && python3 cs_daftar13.py lapor $K && python3 cs_daftar13.py daftar $K && python3 cs_ringkas.py && python3 cs_daftar13.py lapor $K` (skor ~6 min, kunci ~5 min; `daftar` tidak mengulang kod yang takrifnya sudah ada).
 
+## 9l. Tinjauan jenis dan tempoh trend menaik setiap saham (pindaan (w), 16 Nov 2026)
+
+Permintaan pengguna 16 Nov 2026 ("berapa jenis trend menaik ... utk satu satu saham? dan berapa lama ianya naik, ada table tak? boleh research tak"). DESKRIPTIF: bukan carian, tiada perubahan registry / senarai utama / kohort. Takrif dikomit sebelum diukur (komit `48a0335`). Kod `cs_jenis_trend.py`; sumber angka `hasil/TREND/JENIS_TREND.md`, `jenis_trend.csv`; ujian `TestJenisTrend`.
+
+- **Takrif:** satu trend = dasar → puncak (zigzag atas harga tutup); tamat bila jatuh ≥ k × ATR14 dari tutup tertinggi. Tiga saiz: kecil k = 2, sederhana k = 4, besar k = 8. 3,260 saham, 2010–2026.
+- **Tempoh (nilai tengah; julat separuh tengah):** kecil 17 sesi (2–6 minggu), +14 %, 6.4 setiap saham setahun; sederhana 44 sesi (5 minggu – 4 bulan), +26 %, 2.4 setahun; besar 140 sesi (4–13 bulan), +58 %, 0.7 setahun. Sepadan dengan kelaziman Teori Dow (kecil < 3 minggu; sekunder 3 minggu – 3 bulan; utama ~setahun atau lebih).
+- **Jenis ikut kelajuan (trend sederhana):** sangat perlahan (< 0.25 % sehari) 11 %, ~5 bulan; perlahan 35 %, ~12 minggu; sederhana 35 %, ~7 minggu; **laju (≥ 1 % sehari ≈ 5 % seminggu) 19 %, ~4 minggu (2–6 minggu), +33 %** — inilah corak sasaran pengguna, dan ia sepadan dengan pegang ~20 sesi. Lebih laju = lebih pendek; jumlah kenaikan hampir sama merentas jenis.
+- **Baki tempoh tidak bergantung pada umur:** trend sederhana yang sudah naik 1, 2, 4, 8 atau 12 minggu semuanya mempunyai baki nilai tengah ~6–8 minggu (besar: ~5–6 bulan). Berapa lama sudah naik tidak memberitahu berapa lama lagi.
+- **Bahagian yang boleh dikenal semasa berlaku** (dari bar pengesahan naik hingga bar pengesahan tamat, tanpa kos): nilai tengah −1.1 % / −2.7 % / −4.7 % (kecil / sederhana / besar), purata +1.4 % / +2.5 % / +10.1 %, 41–44 % berakhir untung. Sebahagian besar kenaikan dasar → puncak berlaku sebelum trend boleh dikenal atau hilang sebelum ia disahkan tamat; hasil datang daripada sebilangan kecil trend panjang.
+- **Kaveat:** dasar dan puncak hanya diketahui selepas berlaku; trend belum tamat pada hujung data dibuang; tiada saham delist; angka bergantung pada takrif.
+- **Jana semula:** `python3 cs_jenis_trend.py $K` (~1 minit; perlukan `panel_A.pkl`, `panel_B.pkl`).
+
 ## 10. Apa yang TIDAK disimpan dalam repo, dan cara menjana semula
 
 Folder kerja (panel indikator, isyarat benih, jadual besar; ~3.4 GB pickle) berada di luar repo dan hilang bersama sesi. Semuanya boleh dijana semula secara deterministik (`cs_atom.BENIH = 20261113`); data mentah set 2000 dimuat turun dari Release `autotune-data-a02` (perlukan `pyarrow`: `pip install pyarrow`; ia tiada dalam fail requirements repo).

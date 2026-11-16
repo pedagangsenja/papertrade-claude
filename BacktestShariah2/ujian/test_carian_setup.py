@@ -1702,6 +1702,67 @@ class TestCS13(unittest.TestCase):
         self.assertIn('Keputusan: carian naik laju BERHASIL', md)
 
 
+class TestJenisTrend(unittest.TestCase):
+    """SPEC pindaan 16 Nov 2026 (w): tinjauan jenis dan tempoh trend menaik (zigzag ATR; deskriptif)."""
+
+    def test_dikunci(self):
+        import cs_jenis_trend as jt
+        self.assertEqual(jt.SAIZ, ((2.0, 'kecil'), (4.0, 'sederhana'), (8.0, 'besar')))
+        self.assertEqual([x[0] for x in jt.LAJU], [0.0025, 0.005, 0.01, np.inf])
+        self.assertEqual((jt.MIN_SESI, jt.BULAN, [x[0] for x in jt.BAKUL][:3]), (5, 21, [21, 63, 126]))
+
+    def test_zigzag_sintetik(self):
+        import cs_jenis_trend as jt
+        lin = lambda a, b, n: list(np.linspace(a, b, n + 1)[1:])
+        c = np.asarray([100.0] + lin(100, 80, 10) + lin(80, 120, 20) + lin(120, 115, 2) + lin(115, 130, 6) + lin(130, 110, 5)
+                       + lin(110, 150, 16) + lin(150, 100, 10))
+        atr = np.full(len(c), 2.0)                                              # had = 4 x 2 = 8 mata
+        T, P, U, D, G, n_awal, n_gantung = jt.zigzag(c, atr, np.asarray([0, len(c)]), 4.0)
+        self.assertEqual((n_awal, n_gantung), (0, 0))
+        self.assertEqual(c[T].tolist(), [80.0, 110.0])                          # dua trend: 80 -> 130 dan 110 -> 150
+        self.assertEqual(c[P].tolist(), [130.0, 150.0])
+        self.assertEqual((P - T).tolist(), [28, 16])
+        self.assertAlmostEqual(G[0], 1 - 115 / 120)                             # turun di tengah jalan (tidak termasuk kejatuhan penamat)
+        self.assertAlmostEqual(G[1], 0.0)
+        self.assertTrue((c[U] >= c[T] + 8).all() and (c[U - 1] < c[T] + 8).all())    # dikenal pada bar pertama yang naik >= had
+        self.assertTrue((c[D] <= c[P] - 8).all() and (c[D - 1] > c[P] - 8).all())    # disahkan tamat pada bar pertama yang jatuh >= had
+        T2 = jt.zigzag(c[11:], atr[11:], np.asarray([0, len(c) - 11]), 4.0)     # bermula di dasar: ayunan pertama terpotong -> dibuang
+        self.assertEqual((len(T2[0]), T2[5]), (1, 1))
+        T3 = jt.zigzag(c[:-10], atr[:-10], np.asarray([0, len(c) - 10]), 4.0)   # trend terakhir belum tamat -> dibuang
+        self.assertEqual((len(T3[0]), T3[6]), (1, 1))
+
+    def test_zigzag_sifat_pada_data_rawak(self):
+        import cs_jenis_trend as jt
+        rng = np.random.default_rng(5)
+        c = 50 * np.exp(np.cumsum(rng.normal(0.0003, 0.02, 3000)))
+        mula = np.asarray([0, 1500, 3000])                                      # dua saham
+        for k in (2.0, 4.0, 8.0):
+            atr = np.full(len(c), 1.0)
+            T, P, U, D, G, _, _ = jt.zigzag(c, atr, mula, k)
+            self.assertGreater(len(T), 3)
+            self.assertTrue((T < U).all() and (U <= P).all() and (P < D).all())
+            self.assertTrue(((T < 1500) == (D < 1500)).all())                   # tiada trend merentas dua saham
+            for t, p, d in zip(T, P, D):
+                self.assertEqual(c[p], c[t:d + 1].max())
+                self.assertEqual(c[t], c[t:p + 1].min())
+            self.assertTrue((G >= 0).all() and (G * c[T] < k * 1.0).all())      # turun di tengah jalan (mata) sentiasa di bawah had
+
+    def test_rekod(self):
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'TREND')
+        J = pd.read_csv(os.path.join(d, 'jenis_trend.csv'))
+        s = J[J.jadual == 'saiz'].set_index('saiz')
+        self.assertEqual(s.index.tolist(), ['kecil', 'sederhana', 'besar'])
+        self.assertTrue(s.sesi_50.is_monotonic_increasing and s.naik_50.is_monotonic_increasing)
+        self.assertTrue(s.setahun.is_monotonic_decreasing)
+        for jd in ('tempoh', 'jenis'):
+            for _, g in J[J.jadual == jd].groupby('saiz'):
+                self.assertAlmostEqual(float(g.bahagian.sum()), 1.0, places=3)
+                self.assertEqual(int(g.n.sum()), int(s.n[g.saiz.iloc[0]]))
+        md = open(os.path.join(d, 'JENIS_TREND.md'), encoding='utf-8').read()
+        self.assertIn('BUKAN isyarat beli atau jual', md)
+        self.assertIn('Bahagian yang boleh dikenal semasa berlaku', md)
+
+
 CAP_F_LAMA = 'e4b8fd20bb8f78a123e32c2eef75c55c42c8f27e1a50ee81ea2b4a7b7001edd5'
 
 
