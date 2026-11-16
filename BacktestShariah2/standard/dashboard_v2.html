@@ -1504,7 +1504,7 @@ const TELEFON=(()=>{try{return matchMedia('(max-width:760px)').matches;}catch(e)
 const S={akhir:{posisi:'posisi',rujukan:'kaedah'},set:'431',tab:'utama',akaun:'cm',sub:{backtest:'keputusan'},docs:{},meta:null,live:false,
   f:{jenis:'semua',kep:new Set(),q:'',best:true,gaya:false,shown:TELEFON?10:40},cmp:[],cmpTouched:false,
   ptm:null,ptmPeta:null,ptc:null,ptcN:{},mae:null,prf:null,watch:null,sektor:null,hst:null,sf:null,wf:{k:'',sk:'',ind:'',q:'',shown:TELEFON?10:25},kat:null,kf:{kel:'semua',q:'',shown:TELEFON?10:25},at:{},af:{lbl:'',q:'',eq:'oos',v:'sar',lane:''},kp:{lihat:'pingat',gaya:false,q:'',langkah:null,shown:TELEFON?10:1e9},b4:'papan',
-  pos:{st:'pegang'},lajur:{},anl:null,af2:{lihat:'swing',q:'',shown:TELEFON?10:25},sf:null,sff:{lihat:'pilihan',asal:'semua',q:'',shown:TELEFON?10:25},kn:null,knf:{paksi:'semua',q:'',shown:TELEFON?10:25},knu:{pra:'semua',q:'',shown:TELEFON?10:25},knp:{keluar:'semua',q:'',shown:TELEFON?10:25}};
+  pos:{st:'pegang'},lajur:{},anl:null,af2:{lihat:'swing',q:'',shown:TELEFON?10:25},sff:{lihat:'pilihan',asal:'semua',q:'',shown:TELEFON?10:25},kn:null,knf:{paksi:'semua',q:'',shown:TELEFON?10:25},knu:{pra:'semua',q:'',shown:TELEFON?10:25},knp:{keluar:'semua',q:'',shown:TELEFON?10:25}};
 try{const t=localStorage.getItem('pbs3_tab');if(MAIN.includes(t))S.tab=t;
   const ak=JSON.parse(localStorage.getItem('pbs4_akhir')||'null');if(ak&&typeof ak==='object')Object.keys(KUMP).forEach(g=>{if(KUMP[g].some(x=>x[0]===ak[g]))S.akhir[g]=ak[g];});const a=localStorage.getItem('pbs3_akaun');if(AKAUN.some(x=>x[0]===a))S.akaun=a;else if(a==='c')S.akaun='cm';
   const s=localStorage.getItem('pbs_set');if(SETSEG.includes(s))S.set=s;const b4=localStorage.getItem('pbs2_b4');if(['papan','ringkasan','banding'].includes(b4))S.b4=b4;
