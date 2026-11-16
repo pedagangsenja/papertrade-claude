@@ -1,6 +1,6 @@
-# CS15: "ujian solid" bagi setup F (backtest; BUKAN bukti)
+# CS16: "ujian solid" bagi setup F (backtest; BUKAN bukti)
 
-Peraturan ditulis dahulu: `kajian/SPEC_CARIAN_SETUP.md` pindaan 16 Nov 2026 (y). Dijana `cs_solid15.py`; jangan sunting.
+Peraturan ditulis dahulu: `kajian/SPEC_CARIAN_SETUP.md` pindaan 16 Nov 2026 (z). Dijana `cs_solid16.py`; jangan sunting.
 
 - Permintaan pengguna 16 Nov 2026: beberapa setup F yang betul-betul solid, diukur dengan "5 % seminggu, 10 % seminggu, 10 % dua minggu". Tiada tapisan saham Shariah dalam pusingan ini (arahan pengguna).
 - Dinilai pada saham yang carian tidak lihat: 4,923 calon CS13, setup lama yang dipercayai, 300 peraturan rawak (kawalan), 300 peraturan rawak dengan prasyarat "laporan kewangan dalam 1–5 hari", dan setiap prasyarat tanpa isyarat beli.
@@ -94,11 +94,11 @@ Peraturan ditulis dahulu: `kajian/SPEC_CARIAN_SETUP.md` pindaan 16 Nov 2026 (y).
 | `F1943` | turun-naik SPY menurun (21 hari < 63 hari) + hasil suku terkini tumbuh >= 20% | K18.002 jatuh >= 8% dalam 2 hari | Supertrend naik + RS >= 70 | **31** (23) | **17** (9) | **25** (16) | **16** (11) | 9/11 | 49 | +1.9 | 34 | 640 | ya | tidak berkenaan |
 | `F103` | earnings dalam 1-5 sesi akan datang | M89 Chande 65sma-3cc (benih M, parameter asal) | MACD > isyarat + volum 10 hari > volum 50 hari | **27** (12) | **12** (3) | **17** (8) | **16** (7) | 15/17 | 57 | +1.9 | 20 | 602 | ya | +6.9 |
 | `F1539` | Mei-Okt + earnings dalam 1-5 sesi akan datang | K13.006 Stochastic(9) silang naik dari bawah 20 | MA50 > MA200 + RSI14 < 40 | **27** (17) | **12** (5) | **17** (11) | **16** (9) | 16/17 | 57 | +2.4 | 21 | 1,122 | ya | +6.0 |
-| … | 164 lagi dalam `solid.csv` | | | | | | | | | | | | | |
+| … | 164 lagi dalam `solid.csv.gz` | | | | | | | | | | | | | |
 
 ## 5. Setup SOLID lain yang serupa dengan wakil di atas: 66
 
-Senarai penuh dalam `solid.csv` (lajur `serupa_dengan`).
+Senarai penuh dalam `solid.csv.gz` (lajur `serupa_dengan`).
 
 ## 6. "Prasyarat sahaja" (tanpa isyarat beli; rujukan)
 

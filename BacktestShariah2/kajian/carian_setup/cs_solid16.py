@@ -1,11 +1,11 @@
-# cs_solid15.py — pusingan CS15 "UJIAN SOLID" (SPEC_CARIAN_SETUP.md pindaan 16 Nov 2026 (y); permintaan pengguna: "beberapa
+# cs_solid16.py — pusingan CS16 "UJIAN SOLID" (SPEC_CARIAN_SETUP.md pindaan 16 Nov 2026 (z); permintaan pengguna: "beberapa
 # methods F yang betul betul solid ... 5 % seminggu, 10 % seminggu, 10 % dua minggu"; "abaikan dahulu saham shariah").
 # Bukan carian: peraturan masuk tidak diubah, tiada kod F baharu. Setiap setup dinilai pada kumpulan B dengan mekanik senarai
 # utama (satu posisi setiap saham, jual hari ke-20, stop loss 4xATR14, asas = saham rawak hari sama x tercile ATR):
 #   tiga angka pengguna (m5, m10, m10d) + takrif SOLID S1-S7 + "boleh dibuat" S8 (tarikh laporan kewangan DITEKA) + senarai
 #   pendek yang berbeza S9; kawalan rawak K1 dan "kawalan laporan kewangan" K2; "prasyarat sahaja" sebagai rujukan.
-#   python3 cs_solid15.py kira <kerja>   -> <kerja>/cs15_solid.pkl
-#   python3 cs_solid15.py lapor <kerja>  -> hasil/CS15/SOLID.md, solid.csv, kawalan.csv, prasyarat.csv, bacaan.json
+#   python3 cs_solid16.py kira <kerja>   -> <kerja>/cs16_solid.pkl
+#   python3 cs_solid16.py lapor <kerja>  -> hasil/CS16/SOLID.md, solid.csv.gz, kawalan.csv, prasyarat.csv, bacaan.json
 import json
 import os
 import pickle
@@ -28,7 +28,7 @@ import cs_semak11 as s11  # noqa: E402
 import cs_tala7 as t7  # noqa: E402
 import cs_teras as teras  # noqa: E402
 
-PUS = 'CS15'
+PUS = 'CS16'
 S_HENTI = k7.HENTI.index('4xATR14')
 LABEL = ('m5', 'terus', 'm10', 'm10d', 'p5', 'p10', 'p10d')         # p* = "pernah capai" (maklumat)
 MIN_N, MIN_TAHUN, MIN_K3 = 300, 10, 20                              # S1
@@ -43,7 +43,7 @@ B1_MAKS, B2_BEZA = 0.05, 0.10                                       # bacaan dik
 Q_F01 = lapis.KUMPULAN.index('QF01 earnings dalam 1-5 sesi akan datang')
 Q_F04 = lapis.KUMPULAN.index('QF04 tiada earnings dalam 20 sesi akan datang')
 Q_TARIKH = (Q_F01, Q_F04)                                           # prasyarat yang memakai tarikh laporan AKAN DATANG
-F_ = lambda kerja: os.path.join(kerja, 'cs15_solid.pkl')
+F_ = lambda kerja: os.path.join(kerja, 'cs16_solid.pkl')
 HASIL = os.path.join(SINI, 'hasil', PUS)
 CS13 = os.path.join(SINI, 'hasil', 'CS13')
 
@@ -300,11 +300,11 @@ def lama_takrif(kerja, K):
 
 
 def kira(kerja):
-    """Nilai semua peraturan -> cs15_solid.pkl {baris: DataFrame, beli: {id_F: bar beli}, prasyarat: DataFrame, tepat}."""
+    """Nilai semua peraturan -> cs16_solid.pkl {baris: DataFrame, beli: {id_F: bar beli}, prasyarat: DataFrame, tepat}."""
     t0 = time.time()
     K = Konteks(kerja)
     P = peraturan(kerja, K)
-    cari.log(f'CS15: {len(P)} peraturan · konteks siap · {time.time() - t0:.0f}s')
+    cari.log(f'CS16: {len(P)} peraturan · konteks siap · {time.time() - t0:.0f}s')
     baris, beli = [], {}
     for j, x in enumerate(P, 1):
         ev = x['ev']
@@ -337,12 +337,12 @@ def kira(kerja):
         if x['id_F']:
             beli[x['id_F']] = e.astype(np.int32)
         if j % 1000 == 0:
-            cari.log(f'  CS15 {j}/{len(P)} · {time.time() - t0:.0f}s')
+            cari.log(f'  CS16 {j}/{len(P)} · {time.time() - t0:.0f}s')
     T = pd.DataFrame(baris)
     pras = pd.DataFrame([dict(q1=k[0], q2=k[1], prasyarat=c5.buang_kod(c5.tk_pra(k[0], k[1])).replace(' DAN ', ' + '), **v, **syarat(v))
                          for k, v in K._bare.items() if v])
     pickle.dump(dict(baris=T, beli=beli, prasyarat=pras, tepat=K.tepat), open(F_(kerja), 'wb'), protocol=4)
-    cari.log(f'CS15 kira: {len(T)} peraturan · solid {int(T.solid.sum())} · {time.time() - t0:.0f}s')
+    cari.log(f'CS16 kira: {len(T)} peraturan · solid {int(T.solid.sum())} · {time.time() - t0:.0f}s')
     return T
 
 
@@ -383,7 +383,7 @@ def bacaan(T):
 
 
 def pariti(U):
-    """Angka CS15 lawan senarai_utama.csv (beza terbesar)."""
+    """Angka CS16 lawan senarai_utama.csv (beza terbesar)."""
     S = pd.read_csv(os.path.join(CS13, 'senarai_utama.csv')).set_index('id').loc[U.id_F]
     f = lambda a, b: float(np.nanmax(np.abs(U[a].to_numpy(float) - S[b].to_numpy(float))))
     return dict(n=f('n', 'n'), terus=f('terus', 'terus'), a_terus=f('a_terus', 'a_terus'), m5=f('m5', 'm5'),
@@ -415,7 +415,7 @@ def lapor_(kerja):
              + [a + nm for nm in LABEL for a in ('', 'a_')] + ['kl_terus', 'kl_m5', 'kl_m10', 'kl_m10d', 'kl_K1', 'kl_K2', 'kl_K3', 'thn_bil',
              'thn_pos', 'kl_baki', 'adik_bil', 'adik_pos', 'kl_prasyarat', 'tambah', 'tarikh', 'n_ramal', 'kl_ramal', 'menang', 'purata', 'rugi8',
              's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 'pilihan'])
-    U[lajur].rename(columns={'id_F': 'id'}).to_csv(os.path.join(HASIL, 'solid.csv'), index=False, float_format='%.5f')
+    U[lajur].rename(columns={'id_F': 'id'}).to_csv(os.path.join(HASIL, 'solid.csv.gz'), index=False, float_format='%.4f')
     kk = ['id', 'jenis', 'pencetus', 'q1', 'q2', 'f1', 'f2', 'n', 'tahun', 'n_K3', 'terus', 'a_terus', 'kl_terus', 'kl_K1', 'kl_K2', 'kl_K3',
           'thn_bil', 'thn_pos', 'kl_baki', 'kl_m5', 'kl_m10', 'kl_m10d', 'kl_prasyarat', 'tambah', 'adik_bil', 'adik_pos', 's1', 's2', 's3', 's4',
           's5', 's6', 's7', 'solid']
@@ -428,7 +428,7 @@ def lapor_(kerja):
     B['prasyarat_solid'] = int(Pr.solid_s1_s5.sum())
     json.dump(_bersih(B), open(os.path.join(HASIL, 'bacaan.json'), 'w'), indent=1)
     open(os.path.join(HASIL, 'SOLID.md'), 'w', encoding='utf-8').write(teks_laporan(U, B, Pr))
-    cari.log(f"CS15 lapor: solid {B['solid_utama']} daripada {B['n_utama']} · wakil {B['wakil']} · kawalan K1 {B['kadar_K1']:.3f} · K2 {B['kadar_K2']:.3f}")
+    cari.log(f"CS16 lapor: solid {B['solid_utama']} daripada {B['n_utama']} · wakil {B['wakil']} · kawalan K1 {B['kadar_K1']:.3f} · K2 {B['kadar_K2']:.3f}")
     return B
 
 
@@ -450,8 +450,8 @@ def teks_laporan(U, B, Pr):
     p = lambda x, d=0, tanda=False: '–' if x is None or x != x else f'{x * 100:{"+" if tanda else ""}.{d}f}'
     ya = lambda x: 'ya' if x else 'TIDAK'
     t = B['tepat']
-    A = ['# CS15: "ujian solid" bagi setup F (backtest; BUKAN bukti)', '',
-         'Peraturan ditulis dahulu: `kajian/SPEC_CARIAN_SETUP.md` pindaan 16 Nov 2026 (y). Dijana `cs_solid15.py`; jangan sunting.', '',
+    A = ['# CS16: "ujian solid" bagi setup F (backtest; BUKAN bukti)', '',
+         'Peraturan ditulis dahulu: `kajian/SPEC_CARIAN_SETUP.md` pindaan 16 Nov 2026 (z). Dijana `cs_solid16.py`; jangan sunting.', '',
          '- Permintaan pengguna 16 Nov 2026: beberapa setup F yang betul-betul solid, diukur dengan "5 % seminggu, 10 % seminggu, 10 % dua '
          'minggu". Tiada tapisan saham Shariah dalam pusingan ini (arahan pengguna).',
          f"- Dinilai pada saham yang carian tidak lihat: {B['n_calon']:,} calon CS13, setup lama yang dipercayai, {B['n_K1']} peraturan rawak "
@@ -500,10 +500,10 @@ def teks_laporan(U, B, Pr):
     A += [f'## 4. Senarai pendek: {len(W):,} setup SOLID yang berbeza (daripada 100 belian; dalam kurungan = saham rawak hari sama)', '', kepala]
     A += [baris(r) for r in W.head(60).itertuples()]
     if len(W) > 60:
-        A.append(f'| … | {len(W) - 60} lagi dalam `solid.csv` | | | | | | | | | | | | | |')
+        A.append(f'| … | {len(W) - 60} lagi dalam `solid.csv.gz` | | | | | | | | | | | | | |')
     S = U[U.solid & ~U.wakil]
     A += ['', f'## 5. Setup SOLID lain yang serupa dengan wakil di atas: {len(S):,}', '',
-          'Senarai penuh dalam `solid.csv` (lajur `serupa_dengan`).', '',
+          'Senarai penuh dalam `solid.csv.gz` (lajur `serupa_dengan`).', '',
           '## 6. "Prasyarat sahaja" (tanpa isyarat beli; rujukan)', '',
           '| Prasyarat | 5 % seminggu (rawak) | 10 % seminggu (rawak) | 10 % dua minggu (rawak) | Naik lagi hingga minggu 4 (rawak) | Kelebihan (mata) | Tahun lebih baik | Belian | Lulus S1–S5 |',
           '|---|---|---|---|---|---|---|---|---|']

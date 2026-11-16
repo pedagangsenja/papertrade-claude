@@ -1879,8 +1879,8 @@ class TestCS14(unittest.TestCase):
         self.assertEqual(sorted(G.n_setup.unique()), [42, 210, 2001])
 
 
-class TestCS15(unittest.TestCase):
-    """SPEC pindaan 16 Nov 2026 (y): "ujian solid" — tiga angka pengguna, takrif SOLID, tarikh laporan diteka, senarai pendek."""
+class TestCS16(unittest.TestCase):
+    """SPEC pindaan 16 Nov 2026 (z): "ujian solid" — tiga angka pengguna, takrif SOLID, tarikh laporan diteka, senarai pendek."""
 
     def _pan(self):
         rng = np.random.default_rng(15)
@@ -1894,7 +1894,7 @@ class TestCS15(unittest.TestCase):
                     hari=np.arange(n), tempoh=np.where(np.arange(n) < 700, 0, np.where(np.arange(n) < 1200, 1, 2)).astype(np.int8))
 
     def test_dikunci(self):
-        import cs_solid15 as s15
+        import cs_solid16 as s15
         self.assertEqual((s15.MIN_N, s15.MIN_TAHUN, s15.MIN_K3, s15.KL_MIN), (300, 10, 20, 0.03))
         self.assertEqual((s15.THN_MIN_N, s15.THN_MIN_BIL, s15.THN_BAHAGIAN, s15.BUANG_HARI, s15.KL_BAKI), (15, 8, 0.70, 10, 0.01))
         self.assertEqual((s15.ADIK_MAKS, s15.ADIK_MIN_N, s15.ADIK_MIN_BIL, s15.ADIK_BAHAGIAN, s15.TAMBAH_MIN), (30, 100, 3, 0.60, 0.01))
@@ -1903,7 +1903,7 @@ class TestCS15(unittest.TestCase):
         self.assertEqual(s15.LABEL[:4], ('m5', 'terus', 'm10', 'm10d'))
 
     def test_label_menyamai_kiraan_naif(self):
-        import cs_solid15 as s15
+        import cs_solid16 as s15
         pan = self._pan()
         ev = np.arange(50, 1400, 3).astype(np.int64)
         L = s15.label15(ev, pan['o'], pan['c'])
@@ -1916,7 +1916,7 @@ class TestCS15(unittest.TestCase):
 
     def test_ukur_menyamai_kiraan_naif(self):
         import cs_semak11 as s11
-        import cs_solid15 as s15
+        import cs_solid16 as s15
         pan = self._pan()
         n = len(pan['c'])
         rng = np.random.default_rng(3)
@@ -1946,7 +1946,7 @@ class TestCS15(unittest.TestCase):
         self.assertEqual(s15.ukur15(pan, Lab, As, np.zeros(0, np.int64))[0]['n'], 0)
 
     def test_syarat(self):
-        import cs_solid15 as s15
+        import cs_solid16 as s15
         baik = dict(n=400, tahun=12, n_K3=25, kl_terus=0.05, kl_K1=0.04, kl_K2=0.06, kl_K3=0.02, thn_bil=10, thn_pos=7, kl_m5=0.03,
                     kl_m10=0.01, kl_m10d=0.02, kl_baki=0.015)
         self.assertEqual(s15.syarat(baik), dict(s1=True, s2=True, s3=True, s4=True, s5=True))
@@ -1960,7 +1960,7 @@ class TestCS15(unittest.TestCase):
         self.assertFalse(any(s15.syarat(dict(n=0, tahun=0)).values()))
 
     def test_tarikh_diteka(self):
-        import cs_solid15 as s15
+        import cs_solid16 as s15
         hari = pd.bdate_range('2015-01-02', periods=700)
         d = (hari.year * 10000 + hari.month * 100 + hari.day).to_numpy().astype(np.int32)
         cari_ = lambda t: int(np.searchsorted(d, int(pd.Timestamp(t).strftime('%Y%m%d'))))
@@ -1974,7 +1974,7 @@ class TestCS15(unittest.TestCase):
         self.assertTrue((p[1:] >= 0).all())
 
     def test_senarai_pendek(self):
-        import cs_solid15 as s15
+        import cs_solid16 as s15
         U = pd.DataFrame({'id_F': ['F1', 'F2', 'F3', 'F4'], 'solid': [True, True, True, False], 'boleh_dibuat': [False, True, True, True],
                           'terus': [0.30, 0.20, 0.25, 0.40], 'kl_terus': [0.1, 0.1, 0.1, 0.1]})
         beli = {'F1': np.arange(0, 100), 'F2': np.arange(0, 60), 'F3': np.arange(40, 140), 'F4': np.arange(500, 600)}
@@ -1985,7 +1985,7 @@ class TestCS15(unittest.TestCase):
         self.assertNotIn('F4', w)                                            # bukan solid -> tidak dinilai
 
     def test_bacaan_dikunci(self):
-        import cs_solid15 as s15
+        import cs_solid16 as s15
         def T(sc, sk1, sk2, sce=None):
             f = lambda bil, m: [True] * int(round(bil * m)) + [False] * (m - int(round(bil * m)))
             c = pd.DataFrame({'jenis': 'calon', 'q2': [8] * 100 + [3] * 100, 'solid': f(sc if sce is None else sce, 100) + f(sc, 100)})
@@ -2005,18 +2005,18 @@ class TestCS15(unittest.TestCase):
 
 
     def test_fail_hasil(self):
-        """Fail hasil CS15 konsisten sesama sendiri dan dengan senarai utama; registry dan senarai utama tidak diubah."""
-        import cs_solid15 as s15
-        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS15')
+        """Fail hasil CS16 konsisten sesama sendiri dan dengan senarai utama; registry dan senarai utama tidak diubah."""
+        import cs_solid16 as s15
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS16')
         B = json.load(open(os.path.join(d, 'bacaan.json'), encoding='utf-8'))
-        U = pd.read_csv(os.path.join(d, 'solid.csv'))
+        U = pd.read_csv(os.path.join(d, 'solid.csv.gz'))
         Kw = pd.read_csv(os.path.join(d, 'kawalan.csv'))
         Pr = pd.read_csv(os.path.join(d, 'prasyarat.csv'))
         S13 = pd.read_csv(os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS13', 'senarai_utama.csv')).set_index('id')
         self.assertEqual((len(U), B['n_utama'], len(S13)), (2001, 2001, 2001))
         self.assertEqual(set(U.id), set(S13.index))
-        self.assertTrue(np.allclose(U.set_index('id').loc[S13.index, 'terus'], S13.terus, atol=2e-5))
-        self.assertTrue(np.allclose(U.set_index('id').loc[S13.index, 'm5'], S13.m5, atol=2e-5))
+        self.assertTrue(np.allclose(U.set_index('id').loc[S13.index, 'terus'], S13.terus, atol=6e-5))       # solid.csv.gz: 4 titik perpuluhan
+        self.assertTrue(np.allclose(U.set_index('id').loc[S13.index, 'm5'], S13.m5, atol=6e-5))
         self.assertEqual((int(U.solid.sum()), int(U.wakil.sum())), (B['solid_utama'], B['wakil']))
         # takrif SOLID dikira semula daripada lajur syarat
         semula = U.s1 & U.s2 & U.s3 & U.s4 & U.s5 & U.s7 & (U.s6 != 'gagal')

@@ -1129,13 +1129,17 @@ tiada had masa" di sebelah cara sekarang; C tambah "jual bila jatuh 4 × ATR dar
   ≥ 15 % tidak berubah); ia dipapar kerana pilihan pengguna, bukan kerana ia lulus. Saham rawak yang dipegang dengan cara
   sama mendapat tambahan purata yang serupa. Carian cara jual kekal DITUTUP: tiada pusingan keluar baharu tanpa sebab baharu.
 
-### Pindaan 16 Nov 2026 (y) — pusingan CS15: "UJIAN SOLID" bagi setup F (sebelum dijalankan)
+### Pindaan 16 Nov 2026 (z) — pusingan CS16: "UJIAN SOLID" bagi setup F (sebelum dijalankan)
+
+**Nota nama (16 Nov 2026, selepas hasil):** pusingan ini ditulis dan dikomit sebagai "CS15 / pindaan (y)" (komit `0adc8ad`, sebelum
+dijalankan). Chat lain pada hari yang sama memakai CS15 / (y) untuk pusingan K26 (cawangan `claude/funny-hopper-p6z9a7`), jadi
+nama di sini ditukar kepada **CS16 / (z)** untuk mengelak pertembungan fail. Kandungan peraturan TIDAK berubah.
 
 Permintaan pengguna 16 Nov 2026: "in the end saya dapat beberapa methods F yang betul betul solid selepas backtest ... 5 %
 seminggu ke, 10% seminggu ke, 10% dua minggu ke ... apa lagi yang perlu"; lima perkara yang kurang dibentang dan pengguna
 bersetuju ("ya"), dengan satu arahan tambahan: **"utk setup sekarang, abaikan dahulu saham shariah"** — tiada tapisan atau
 syarat Shariah dalam pusingan ini. Bukan carian baharu: peraturan masuk tidak diubah dan tiada kod F baharu. Kod
-`carian_setup/cs_solid15.py`; keluaran `hasil/CS15/`.
+`carian_setup/cs_solid16.py`; keluaran `hasil/CS16/`.
 
 **Had yang diketahui sebelum menulis:** senarai utama sudah dipilih dengan kumpulan B (lulus K1, K2, K3), jadi apa-apa
 tapisan lanjut pada kumpulan B ialah pemilihan DALAM sampel; sebab itu kadar lulus kawalan rawak dilaporkan bagi takrif yang
@@ -1175,7 +1179,7 @@ sama. 4,446 daripada 4,923 calon CS13 memakai `QF01` (laporan kewangan dalam 1�
   ÷ kadar lulus calon. (B2) isyarat beli menambah di atas prasyarat laporan kewangan jika kadar lulus SOLID calon ber-`QF01`
   ≥ kadar lulus K2 + 10 mata; jika tidak, dilaporkan terus terang bahawa yang solid ialah PRASYARAT itu, bukan setiap setup.
 - **Pariti:** `terus`, asasnya, `m5`, bilangan belian dan kelebihan K1–K3 setiap setup mesti sama dengan `senarai_utama.csv`.
-- **Selepas pusingan:** laporan `hasil/CS15/SOLID.md` + `solid.csv` (tiga angka dan setiap syarat bagi setiap setup senarai
+- **Selepas pusingan:** laporan `hasil/CS16/SOLID.md` + `solid.csv.gz` (tiga angka dan setiap syarat bagi setiap setup senarai
   utama), `kawalan.csv`, `prasyarat.csv`. Registry, kohort dan susunan senarai utama tidak diubah; tanda "Solid" dan tiga
   angka boleh dipapar dalam dashboard. Tiada papertrade tanpa keputusan pengguna.
 - **Kaveat dikunci:** semua ambang ialah pilihan Claude (keputusan teknikal), ditulis sebelum hasil dilihat; kumpulan B sudah
