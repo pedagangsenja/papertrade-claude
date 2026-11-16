@@ -1,9 +1,9 @@
 {
   "artifact": "https://claude.ai/code/artifact/12bb853e-34ef-4d6c-885d-10f46984437e",
-  "versi_artifact": "1794553577-edb7",
-  "nombor": 211,
-  "sha256": "7c833a45d444991ef573c87f4c772f28eb2778047d07d8510965fcb0c5e24d94",
-  "bait": 801745,
-  "dikemas": "2026-11-13 07:06 UTC",
-  "nota": "v180 (13 Nov 2026, laporan pengguna \"asyik loading dari pagi\"): ringkas_c tumbuh ke 39 bahagian; anak memegang slot langganan sehingga semua tiba (38 + ~24 kekal > had ~60), jadi 3 kamus terakhir tidak pernah dibuka dan Posisi/Akaun/Kombinasi N tersekat. Anak yang induknya sepadan kini dilepaskan serta-merta (subRingkas, subBhg). semak_kolam_langganan.js LULUS pada had 40/52/58 (lama GAGAL pada 58)."
+  "versi_artifact": "1794795050-308f",
+  "nombor": 213,
+  "sha256": "6b4b6010f91efd374e62064d5371c5c2ec8296b5bad3dd274e395d8c47a3e67f",
+  "bait": 812636,
+  "dikemas": "2026-11-16 02:11 UTC",
+  "nota": "v182 (16 Nov 2026, keputusan pengguna B selepas CS14): Setup F memaparkan cara pegang kedua (purata 50 hari, tiada had masa) di sebelah cara sekarang; ayat kotak Menang dibetulkan"
 }

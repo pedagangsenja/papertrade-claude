@@ -108,8 +108,8 @@ def main(kerja):
     XA = k7.siri_set(kerja, 'B')
     calon, langkau = [], []
     for r in reg.itertuples():
-        cs07 = r.pusingan in ('CS07', 'CS09')                        # CS09 (pindaan (r)) memakai takrif format CS07
-        if not cs07 and ('@' in r.takrif or r.pusingan == 'CS04'):
+        cs07 = r.pusingan == 'CS07'
+        if not cs07 and ('@' in r.takrif or r.pusingan in ('CS04', 'CS13')):     # CS13: senarai sendiri (hasil/CS13/SENARAI_UTAMA.md)
             langkau.append(r.id)
             continue
         try:
