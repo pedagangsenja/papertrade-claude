@@ -109,6 +109,17 @@ def keluarga_grid(kerja, set_, G):
     return ev
 
 
+def keluarga_k26(kerja, set_):
+    """Isyarat grid K26 (pindaan 16 Nov 2026 (y)) pada set A/B: cs15_K26_<set>.pkl = {'ev': {nama: indeks bar}, 'grid': [...]}."""
+    f = os.path.join(kerja, f'cs15_K26_{set_}.pkl')
+    if os.path.exists(f):
+        return pickle.load(open(f, 'rb'))
+    G = kp.grid_k26()
+    out = {'ev': keluarga_grid(kerja, set_, G), 'grid': G}
+    pickle.dump(out, open(f, 'wb'), protocol=4)
+    return out
+
+
 def keluarga(kerja, set_):
     """Isyarat grid penuh keluarga K pada set (A/B): cs07_K_<set>.pkl = {'ev': {nama: indeks bar}, 'grid': [...]}."""
     f = os.path.join(kerja, f'cs07_K_{set_}.pkl')
@@ -291,6 +302,10 @@ def pilih(kerja):
 # ---------- kunci (kumpulan B) ----------
 def ev_satu(kerja, set_, nama):
     """Indeks bar isyarat satu pencetus pada set (asal, keluarga K atau varian M CS07)."""
+    if nama[:4] == 'K26.':                                            # pindaan (y): grid K26 berasingan
+        if ('K26', set_) not in _W:
+            _W[('K26', set_)] = keluarga_k26(kerja, set_)['ev']
+        return _W[('K26', set_)][nama]
     if ('asal', set_) not in _W:
         _W[('asal', set_)] = semua_ev(kerja, set_, 'asal')
     if nama in _W[('asal', set_)]:
@@ -368,7 +383,7 @@ def nama7(nama, param):
     import cs_lapor as lapor
     if nama[0] == 'K':
         if not _GRID:
-            _GRID.update({n: (fam, p) for n, fam, p in kp.grid()})
+            _GRID.update({n: (fam, p) for n, fam, p in kp.grid() + kp.grid_k26()})
         return f'{nama} {kp.teks(*_GRID[nama])}'
     return lapor.nama_pencetus(nama, param)
 

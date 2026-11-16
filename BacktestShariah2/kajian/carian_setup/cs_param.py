@@ -1,10 +1,12 @@
-"""Carian setup — keluarga pencetus BERPARAMETER K01-K25 (SPEC pindaan 14 Nov 2026 (n), bahagian (a)).
+"""Carian setup — keluarga pencetus BERPARAMETER K01-K25 (SPEC pindaan 14 Nov 2026 (n), bahagian (a)) dan K26
+"lonjak lalu undur" (pindaan 16 Nov 2026 (y); grid berasingan `grid_k26()` supaya grid K01-K25 yang dikunci tidak berubah).
 
 Setiap keluarga ialah satu syarat indikator dengan grid parameter penuh; ahli yang parameternya sama dengan takrif `P`
 (cs_atom) atau `N` (_nxx) asal ditanda `asal`. Takrif memakai fungsi bantu cs_atom supaya ahli `asal` menghasilkan isyarat
 yang sama dengan pencetus `P` asal (diuji). Tiada pandang hadapan: setiap syarat hanya memakai bar hari itu dan sebelumnya."""
 import numpy as np
 import pandas as pd
+from numba import njit
 
 import cs_atom as atom
 
@@ -118,6 +120,7 @@ NAMA = {
     'K19': 'pecah atas Keltner({n}, {k})', 'K20': 'squeeze lepas ke atas (BB {kb}, KC {kk})', 'K21': 'NR{k}',
     'K22': 'Holy Grail (ADX > {x}, undur EMA{n})', 'K23': 'RS silang atas {x}',
     'K24': 'bar pembalikan (buka <= {a:.0%}, tutup >= {b:.0%} julat)', 'K25': 'pecah julat sempit {n} hari (<= {w:.0%})',
+    'K26': 'lonjak >= {k:.0%} dalam {n} hari lalu undur ke zon {za:.1%}-{zb:.1%} kaki',
 }
 # ahli yang sama dengan takrif asal (P = cs_atom, tepat; N = _nxx, setara)
 ASAL = [
@@ -140,6 +143,47 @@ ASAL = [
 
 
 KELUARGA = tuple(f'K{i:02d}' for i in range(1, 26))
+KELUARGA_MESIN = KELUARGA + ('K26',)               # pindaan (y): mesin menarik varian K26 juga (ditambah di HUJUNG)
+ARAS_FIB = (0.236, 0.382, 0.5, 0.618, 0.786, 1.0)
+ZON_K26 = ((0.382, 0.5), (0.5, 0.618), (0.618, 0.786), (0.786, 1.0), (0.382, 0.786))   # (0.618, 0.786) = zon iklan Fibonacci
+
+
+def grid_k26():
+    """Grid K26 (pindaan (y), dikunci): 5 tempoh x 4 saiz kaki x 5 zon undur = 100 varian; nama K26.<nnn>."""
+    G = [('K26', dict(n=n, k=k, za=za, zb=zb)) for n in (10, 15, 20, 30, 40) for k in (0.20, 0.30, 0.40, 0.50)
+         for za, zb in ZON_K26]
+    return [(f'K26.{i:03d}', fam, p) for i, (fam, p) in enumerate(G, 1)]
+
+
+@njit(cache=True)
+def _undur(h, l, c, n, k, za, zb):
+    """K26 pada bar i (data <= i sahaja): puncak hi = tinggi tertinggi dalam n bar SEBELUM i (yang terkini jika sama), sekurang-
+    kurangnya 3 bar lalu; dasar lo = rendah terendah dalam n bar sehingga puncak; hi/lo - 1 >= k; bar i ialah sentuhan PERTAMA
+    paras hi - za x kaki sejak puncak (rendah <= paras itu) dan tutup masih >= hi - zb x kaki."""
+    N = len(c)
+    out = np.zeros(N, np.bool_)
+    for i in range(2 * n + 1, N):
+        ih = i - n
+        for j in range(i - n, i):
+            if h[j] >= h[ih]:
+                ih = j
+        if i - ih < 3:
+            continue
+        lo = l[ih - n]
+        for j in range(ih - n, ih + 1):
+            if l[j] < lo:
+                lo = l[j]
+        hi = h[ih]
+        if not (lo > 0) or hi / lo - 1 < k:
+            continue
+        a, b = hi - za * (hi - lo), hi - zb * (hi - lo)
+        ok = True
+        for j in range(ih + 1, i):
+            if l[j] <= a:
+                ok = False
+                break
+        out[i] = ok and l[i] <= a and c[i] >= b
+    return out
 
 
 def rawak(fam, rng):
@@ -200,6 +244,9 @@ def rawak(fam, rng):
         return dict(a=ru(0.05, 0.35), b=ru(0.65, 0.95))
     if fam == 'K25':
         return dict(n=ri(8, 80), w=ru(0.05, 0.40), v=pl(0, 1.5, 2.0))
+    if fam == 'K26':
+        za = pl(*ARAS_FIB[:-1])
+        return dict(n=ri(8, 60), k=ru(0.10, 0.60), za=za, zb=pl(*[x for x in ARAS_FIB if x > za]))
     raise ValueError(fam)
 
 
@@ -375,6 +422,9 @@ def syarat(I, fam, p):
         return ((o - l) / jl <= p['a']) & ((c - l) / jl >= p['b'])
     if fam == 'K25':
         return ((I.hh(p['n']) / I.ll(p['n']) - 1) <= p['w']) & (c > I.hh(p['n'])) & I.vol(p['v'])
+    if fam == 'K26':
+        return pd.Series(_undur(h.to_numpy(float), l.to_numpy(float), c.to_numpy(float), int(p['n']), float(p['k']),
+                                float(p['za']), float(p['zb'])), index=I.idx)
     raise ValueError(fam)
 
 

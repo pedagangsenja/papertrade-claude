@@ -1129,6 +1129,47 @@ tiada had masa" di sebelah cara sekarang; C tambah "jual bila jatuh 4 × ATR dar
   ≥ 15 % tidak berubah); ia dipapar kerana pilihan pengguna, bukan kerana ia lulus. Saham rawak yang dipegang dengan cara
   sama mendapat tambahan purata yang serupa. Carian cara jual kekal DITUTUP: tiada pusingan keluar baharu tanpa sebab baharu.
 
+### Pindaan 16 Nov 2026 (y) — pusingan CS15: keluarga pencetus K26 "lonjak lalu undur" (zon Fibonacci sebagai parameter), dinilai dan didaftar dengan peraturan CS13 (sebelum dijalankan dengan peraturan ini)
+
+**Asal (POST-HOC, dilabel begitu):** pengguna 15–16 Nov 2026 menghantar dua tangkapan skrin (Triple RSI "90 % menang";
+kursus "Entry & Exit using Fibonacci", zon masuk 61.8–78.6 %) dan bertanya "ini boleh include dalam method F ke?", kemudian
+"ya" kepada cadangan "kekalkan dan gabung ke `main`". Penerokaan Claude pada set 431 (folder sementara): Triple RSI dan
+Fibonacci cara iklan tiada kelebihan lawan rawak; corak "saham baru melonjak, kemudian undur" menunjukkan kadar `lari`
+sedikit lebih tinggi. **Sejarah cawangan:** pindaan ini mula-mula ditulis sebagai "(r) pusingan CS09" dalam cawangan
+`claude/funny-hopper-p6z9a7` (komit `8d4ceb7`, sebelum dijalankan) semasa `main` belum digabung; huruf (r), nama CS09 dan kod
+`F96`–`F99` ternyata sudah dipakai di `main` (CS09 = keluar; `F96` dst. = CS13). Dalam cawangan itu K26 dinilai dengan
+peraturan CS07 (`X00` + 5×ATR14, "dipercayai" (m)): 4 setup lulus dan diberi kod sementara `F96`–`F99`, yang **DIBATALKAN**
+semasa gabungan (tidak pernah sampai ke `main`). Semakan tambahan di situ: dibanding saham lain yang lulus prasyarat dan
+penapis yang sama pada hari dan tercile ATR % sama, corak K26 menyumbang −0.8 hingga +0.6 mata (semua dalam ralat);
+bacaan "Fibonacci istimewa" YA tetapi kecil. **Hasil K26 pada kumpulan A dan B dengan ukuran CS07 sudah dilihat**; pindaan
+ini menukar peraturan pendaftaran kepada peraturan CS13 yang berkuat kuasa di `main` (pendaftaran tanpa had), bukan kerana
+hasil itu.
+
+- **Keluarga K26** (`cs_param.grid_k26()`, `cs_param._undur`; grid K01–K25 yang dikunci (n) TIDAK berubah). Pada bar i (data
+  ≤ i): puncak `hi` = tinggi tertinggi dalam n bar sebelum i (yang terkini jika sama) dan sekurang-kurangnya 3 bar lalu; dasar
+  `lo` = rendah terendah dalam n bar sehingga puncak; `hi/lo − 1 ≥ k`; bar i ialah sentuhan PERTAMA paras `hi − za × kaki`
+  sejak puncak dan tutup ≥ `hi − zb × kaki`. Grid: n ∈ {10, 15, 20, 30, 40} × k ∈ {20, 30, 40, 50 %} × zon (za, zb) ∈
+  {38.2–50, 50–61.8, **61.8–78.6 (zon iklan)**, 78.6–100, 38.2–78.6 %} = 100 varian. Ujian: sama dengan kiraan kasar, tiada
+  pandang hadapan (`ujian/test_carian_setup.py::TestK26`).
+- **Skor, calon, setup lengkap, "lulus":** SAMA seperti (v): label `terus`; skor kumpulan A = min dua era [kelebihan − 2 ralat
+  piawai], n ≥ 100 setiap era; sehingga 5 peraturan masuk berskor > 0 bagi setiap varian; stop loss 4 × ATR14 (`G6`) + cara
+  pegang B (`PB`); lulus = belian B ≥ 300, ≥ 10 tahun aktif, kelebihan `terus` > 0 dalam K1, K2 DAN K3.
+- **Bacaan "berhasil" (syarat pendaftaran):** B1 dan B2 pindaan (v), dengan kadar kawalan rawak CS13 yang sudah direkod
+  (`hasil/CS13/bacaan.json`: lulus 18.1 %, K3 52.4 %) — ruang dan takrif sama, jadi tiada kawalan baharu.
+- **Kembar:** Jaccard ≥ 0.80 antara calon K26 sahaja (ikut susunan skor A). Pertindihan dengan 2,001 setup senarai utama TIDAK
+  disemak (perlu binaan semula semua isyarat, ~4 jam); corak K26 berbeza daripada pencetus sedia ada (kaveat).
+- **Pendaftaran:** kod selepas kod terakhir dalam registry (`F2055` dst.), ikut susunan skor A; `pusingan = CS15`; takrif dan
+  lajur seperti (v). `cs_akhir` melangkau CS15 seperti CS13.
+- **Dilaporkan (bukan syarat):** semakan sumbangan K26 di atas prasyarat (seperti di atas) bagi setiap kod; bacaan "Fibonacci
+  istimewa" (setiap 20 pasangan (n, k): kelebihan `terus` pencetus sahaja, satu posisi, pegang 20 sesi, zon iklan lawan purata
+  zon 50–61.8 % dan 78.6–100 %; YA jika lebih baik dalam > 10 pasangan DAN positif dalam > 10).
+- **Mesin:** `cs_mesin.kelompok` menarik 12 varian rawak K26 setiap larian (`KELUARGA_MESIN`, di HUJUNG: varian K01–K25 setiap
+  larian tidak berubah; diuji).
+- Kod `carian_setup/cs_cs15.py`; keluaran `carian_setup/hasil/CS15/`. `SENARAI_UTAMA.md` dan dashboard (db `carian/f_utama`)
+  TIDAK dijana semula dalam pusingan ini (perlu fail kerja penuh CS13); kod CS15 disenaraikan dalam laporan sendiri.
+- **Kaveat dikunci:** post-hoc; hasil ukuran lain sudah dilihat (lihat Asal); kumpulan B sudah dilihat dan bertindih dengan
+  set 431; tiada saham delist; tiada papertrade tanpa keputusan pengguna.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
