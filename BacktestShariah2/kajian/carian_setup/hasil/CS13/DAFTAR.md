@@ -48,7 +48,7 @@ Dijana `kajian/carian_setup/cs_daftar13.py`. Peraturan ditulis dahulu: `kajian/S
 - Dengan prasyarat pasaran: 1,854; dengan prasyarat syarikat/kumpulan: 1,945; tanpa apa-apa prasyarat: 0.
 - Prasyarat paling kerap: >= 15% saham dalam 5% dari puncak 52 minggu + earnings dalam 1-5 sesi akan datang (235); Mei-Okt + earnings dalam 1-5 sesi akan datang (157); keluasan naik >= 10 mata dalam 10 sesi + earnings dalam 1-5 sesi akan datang (136); SPY atas SMA200 + earnings dalam 1-5 sesi akan datang (126); turun-naik SPY menurun (21 hari < 63 hari) + earnings dalam 1-5 sesi akan datang (120); QQQ SMA10 > SMA20 + earnings dalam 1-5 sesi akan datang (97); QQQ dalam 3% dari puncak 52 minggu + earnings dalam 1-5 sesi akan datang (93); SPY Peringkat 2 Weinstein (atas SMA150 yang naik) + earnings dalam 1-5 sesi akan datang (89).
 - Isyarat beli: 169 kaedah/keluarga berbeza; paling kerap K01 (195), K03 (109), K02 (91), K17 (87), K09 (77), K18 (70), K07 (69), K13 (61).
-- Kekerapan pada senarai Shariah: 30 setup teratas senarai utama digabung = 569 belian setahun (ada belian dalam 96% bulan); semua 2,001 setup senarai utama = 11072 setahun (100% bulan).
+- Kekerapan pada senarai Shariah: 30 setup teratas senarai utama digabung = 604 belian setahun (ada belian dalam 96% bulan); semua 2,001 setup senarai utama = 11072 setahun (100% bulan).
 - Jualan pada hari beli: 0 (mesti 0).
 
 ## 6b. Sifat kod baharu (analisis SELEPAS hasil; bukan ditetapkan dahulu)

@@ -29,6 +29,7 @@ import cs_teras as teras  # noqa: E402
 
 N_ATAS, N_KAWALAN, BENIH_KAWALAN = 5, 300, 20261116                  # dikunci pindaan (v)
 JACCARD, B1_BEZA, B2_MIN, B2_BEZA = 0.80, 0.20, 0.60, 0.10
+MENANG_PILIH, PURATA_PILIH, MIN_K3, N_LAIN = 0.50, 0.02, 20, 50      # susunan paparan: keputusan pengguna 16 Nov 2026
 S_HENTI = k7.HENTI.index('4xATR14')
 CARA_B = s11.CARA.index('P-MA20')
 KOD_HENTI, KOD_PEGANG = f'G{S_HENTI + 1}', 'PB'
@@ -339,9 +340,24 @@ def senarai_utama(T):
     yakin = set(KA.id[KA.dipercayai.astype(bool)])
     U = T[((T.peranan == 'F') & T.id.isin(yakin)) | ((T.peranan == 'calon') & (T.id_F != ''))].copy()
     U['asal'] = np.where(U.peranan == 'F', 'lama', 'baharu')
-    U = U.sort_values(['terus', 'kl_terus'], ascending=False, kind='stable').reset_index(drop=True)
+    U['pilihan'] = (U.menang_B >= MENANG_PILIH) & (U.purata_B >= PURATA_PILIH)
+    U = U.sort_values(['pilihan', 'terus', 'kl_terus'], ascending=False, kind='stable').reset_index(drop=True)
     U.insert(0, 'kedudukan', np.arange(1, len(U) + 1))
     return U
+
+
+def semak_masa(U):
+    """Semakan ikut masa bagi tapisan "pilihan" (keputusan 16 Nov 2026): setup yang menepati tapisan pada K1 + K2 sahaja lawan
+    setup lain, diukur pada K3 (>= MIN_K3 dagangan). Dilaporkan sahaja."""
+    n12 = (U.n_B_K1 + U.n_B_K2).replace(0, np.nan)
+    w = lambda kol: (U.n_B_K1 * U[f'{kol}_B_K1'].fillna(0) + U.n_B_K2 * U[f'{kol}_B_K2'].fillna(0)) / n12
+    pil = (w('menang') >= MENANG_PILIH) & (w('purata') >= PURATA_PILIH)
+    ok = U.n_B_K3 >= MIN_K3
+    out = {}
+    for nm, X in (('pilih', U[ok & pil]), ('lain', U[ok & ~pil])):
+        out[nm] = dict(n=int(len(X)), menang=float(X.menang_B_K3.median()), purata=float(X.purata_B_K3.median()),
+                       menang50=float((X.menang_B_K3 >= MENANG_PILIH).mean()), positif=float((X.purata_B_K3 > 0).mean()))
+    return out
 
 
 def lapor_(kerja):
@@ -358,11 +374,12 @@ def lapor_(kerja):
     U = senarai_utama(T)
     lajur_u = ['kedudukan', 'id_F', 'asal', 'prasyarat', 'nama', 'penapis', 'n', 'tahun', 'setahun', 'shariah_setahun', 'm5', 'a_m5', 'terus',
                'a_terus', 'kl_terus', 'kl_terus_K1', 'kl_terus_K2', 'kl_terus_K3', 'naik', 'a_naik', 'menang_J20', 'purata_J20',
-               'n_B', 'menang_B', 'purata_B', 'k10_B', 'rugi15_B', 'hari_B', 'jual_hari_beli', 'skor_A', 'takrif']
+               'n_B', 'menang_B', 'purata_B', 'k10_B', 'rugi15_B', 'hari_B', 'jual_hari_beli', 'skor_A', 'takrif', 'pilihan']
+    SM = semak_masa(U)
     U[lajur_u].rename(columns={'id_F': 'id'}).to_csv(os.path.join(d_, 'senarai_utama.csv'), index=False, float_format='%.5f')
     json.dump({k_: (None if isinstance(v, float) and v != v else v) for k_, v in dict(
         B, n_kembar=int((L.kembar_kepada != '').sum()), n_untuk_daftar=len(D), n_berdaftar=int((c.id_F != '').sum()),
-        n_utama=len(U), n_utama_lama=int((U.asal == 'lama').sum())).items()},
+        n_utama=len(U), n_utama_lama=int((U.asal == 'lama').sum()), n_pilihan=int(U.pilihan.sum()), semak_masa=SM).items()},
         open(os.path.join(d_, 'bacaan.json'), 'w'), indent=1, sort_keys=True)
     try:
         sys.path.insert(0, os.path.join(lapor.BS2, 'standard'))
@@ -458,7 +475,7 @@ def lapor_(kerja):
           'tanpa keputusan pengguna; kad skor kekal satu-satunya keputusan wang sebenar.', '']
     open(os.path.join(d_, 'DAFTAR.md'), 'w', encoding='utf-8').write('\n'.join(A))
     tx = lambda s: s if isinstance(s, str) and s.strip() else '–'
-    N_PAPAR = 150
+    Up, Ul = U[U.pilihan], U[~U.pilihan]
     S = ['# Senarai utama: setup F (saham naik laju) dengan cara pegang B (backtest; BUKAN bukti)', '', status, '',
          'Dijana `kajian/carian_setup/cs_daftar13.py` (pindaan 15 Nov 2026 (v), keputusan pengguna (1)). **Jangan sunting secara manual.**', '',
          f"{len(U):,} setup: {int((U.asal == 'lama').sum())} setup F lama yang dipercayai + {int((U.asal == 'baharu').sum()):,} kod baharu CS13. "
@@ -468,14 +485,27 @@ def lapor_(kerja):
          '- **Tangkap** = daripada 100 belian, berapa yang naik ≥ 5 % minggu pertama DAN naik lagi hingga minggu ke-4 (kurungan = saham rawak '
          'pada hari yang sama).',
          '- **Menang** dan **purata** = daripada semua dagangan dengan cara pegang di atas (selepas kos 0.5 %).',
-         '- Disusun ikut kadar tangkap. Lajur "2025–26" = kelebihan atas saham rawak pada tahun yang carian tidak lihat (mata peratus).', '',
-         '| # | ID | Prasyarat | Isyarat beli | Penapis saham | Beli setahun (senarai Shariah) | **Tangkap %** (rawak) | Naik ≥ 5 % minggu 1 % | '
-         '**Menang %** | Purata % | Rugi ≥ 15 % % | Hari pegang | 2025–26 |', '|---' * 13 + '|']
-    for r in U.head(N_PAPAR).itertuples():
-        S.append(f"| {r.kedudukan} | `{r.id_F}` | {tx(r.prasyarat)} | {r.nama} | {tx(r.penapis)} | {r.setahun:.0f} ({r.shariah_setahun:.0f}) | "
-                 f"**{p(r.terus)}** ({p(r.a_terus)}) | {p(r.m5)} | **{p(r.menang_B)}** | {p(r.purata_B, 1, True)} | {p(r.rugi15_B)} | "
-                 f"{r.hari_B:.0f} | {p(r.kl_terus_K3, 1, True)} |")
-    S += ['', (f'Jadual memaparkan {N_PAPAR} teratas; ' if len(U) > N_PAPAR else '') + f'senarai penuh {len(U):,} setup: '
+         '- Lajur "2025–26" = kelebihan atas saham rawak pada tahun yang carian tidak lihat (mata peratus).',
+         f"- **Susunan (keputusan pengguna 16 Nov 2026):** dahulu setup \"pilihan\" — menang ≥ {MENANG_PILIH:.0%} DAN purata ≥ +{PURATA_PILIH:.0%} "
+         'setiap dagangan — kemudian yang lain; dalam setiap kumpulan ikut kadar tangkap.', '']
+    kepala = ['| # | ID | Prasyarat | Isyarat beli | Penapis saham | Beli setahun (senarai Shariah) | **Tangkap %** (rawak) | Naik ≥ 5 % minggu 1 % | '
+              '**Menang %** | Purata % | Rugi ≥ 15 % % | Hari pegang | 2025–26 |', '|---' * 13 + '|']
+    baris_u = lambda r: (f"| {r.kedudukan} | `{r.id_F}` | {tx(r.prasyarat)} | {r.nama} | {tx(r.penapis)} | {r.setahun:.0f} ({r.shariah_setahun:.0f}) | "
+                         f"**{p(r.terus)}** ({p(r.a_terus)}) | {p(r.m5)} | **{p(r.menang_B)}** | {p(r.purata_B, 1, True)} | {p(r.rugi15_B)} | "
+                         f"{r.hari_B:.0f} | {p(r.kl_terus_K3, 1, True)} |")
+    S += [f"## 1. Setup pilihan: {len(Up):,} ({int((Up.asal == 'lama').sum())} lama, {int((Up.asal == 'baharu').sum())} baharu)", '',
+          '**Baca dahulu:** tapisan ini dibuat SELEPAS melihat hasil pada saham yang sama, jadi angka menang dan purata kumpulan ini condong ke '
+          'atas. Semakan ikut masa (ditulis sebelum dikira): setup yang menepati tapisan pada 2010–2024 sahaja, diukur pada 2025–26 '
+          f"(≥ {MIN_K3} dagangan):", '',
+          '| Kumpulan (ikut 2010–2024) | Bilangan | Menang 2025–26 (nilai tengah) | Purata 2025–26 (nilai tengah) | Masih menang ≥ 50 % | Purata masih positif |',
+          '|---' * 6 + '|']
+    for kk, nm in (('pilih', 'Menepati tapisan'), ('lain', 'Tidak menepati')):
+        v = SM[kk]
+        S.append(f"| {nm} | {v['n']:,} | {p(v['menang'])} % | {p(v['purata'], 1, True)} % | {p(v['menang50'])} % | {p(v['positif'])} % |")
+    S += [''] + kepala + [baris_u(r) for r in Up.itertuples()]
+    S += ['', f'## 2. Setup lain: {len(Ul):,} (jadual memaparkan {min(N_LAIN, len(Ul))} teratas ikut kadar tangkap)', ''] + kepala
+    S += [baris_u(r) for r in Ul.head(N_LAIN).itertuples()]
+    S += ['', f'Senarai penuh {len(U):,} setup (lajur `pilihan`): '
           '`hasil/CS13/senarai_utama.csv`. Keluar berdaftar `F01`–`F95` (lajur `keluar` dalam `data/registry_F.csv`) tidak diubah; angka di '
           'sini ialah peraturan beli mereka dengan cara pegang B.', '',
           '- Pangkat backtest pada saham yang sudah dilihat berkali-kali; tiada saham delist. Papertrade hanya dengan keputusan pengguna.', '']

@@ -1593,6 +1593,7 @@ class TestCS13(unittest.TestCase):
         import cs_semak11 as s11
         self.assertEqual((d13.N_ATAS, d13.N_KAWALAN, d13.BENIH_KAWALAN), (5, 300, 20261116))
         self.assertEqual((d13.JACCARD, d13.B1_BEZA, d13.B2_MIN, d13.B2_BEZA), (0.80, 0.20, 0.60, 0.10))
+        self.assertEqual((d13.MENANG_PILIH, d13.PURATA_PILIH, d13.MIN_K3), (0.50, 0.02, 20))
         self.assertEqual((d13.k7.HENTI[d13.S_HENTI], s11.CARA[d13.CARA_B], d13.KOD_HENTI, d13.KOD_PEGANG, d13.ID_MULA),
                          ('4xATR14', 'P-MA20', 'G6', 'PB', 96))
         self.assertEqual(d13.takrif13('K19.011', 2, 0, 8, 16).split('|')[2:4], ['G6', 'PB'])
@@ -1693,7 +1694,12 @@ class TestCS13(unittest.TestCase):
         self.assertTrue(r13.takrif.map(lambda x: x.split('|')[2:4] == ['G6', 'PB'] and len(x.split('|')) == 5).all())
         self.assertEqual(reg.takrif.nunique(), len(reg))
         self.assertEqual(U.kedudukan.tolist(), list(range(1, len(U) + 1)))     # senarai utama
-        self.assertTrue(U.terus.is_monotonic_decreasing)
+        self.assertTrue(U.pilihan.equals((U.menang_B >= d13.MENANG_PILIH) & (U.purata_B >= d13.PURATA_PILIH)))   # keputusan 16 Nov 2026
+        self.assertTrue(U.pilihan.iloc[:int(U.pilihan.sum())].all())            # setup pilihan dipaparkan dahulu
+        self.assertEqual(J['n_pilihan'], int(U.pilihan.sum()))
+        for _, g in U.groupby('pilihan'):                                       # dalam setiap kumpulan: ikut kadar tangkap
+            self.assertTrue(g.terus.is_monotonic_decreasing)
+        self.assertEqual(set(J['semak_masa']), {'pilih', 'lain'})
         self.assertEqual((int((U.asal == 'lama').sum()), int((U.asal == 'baharu').sum())), (42, len(r13)))
         self.assertEqual(set(U.id[U.asal == 'baharu']), set(r13.id))
         self.assertEqual(int(U.jual_hari_beli.sum()), 0)                        # tiada jualan pada hari beli
