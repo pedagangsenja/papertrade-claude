@@ -2133,6 +2133,57 @@ class TestCS17(unittest.TestCase):
         self.assertEqual(T.loc['D1', 'kes'], '20260421@34.0')
         self.assertAlmostEqual(T.loc['D3', 'kl_terus_K3'], -0.01)
 
+    def test_fail_hasil(self):
+        """Fail hasil CS17 konsisten sesama sendiri; kod T baharu bermula T13; papan CS08 dan registry F tidak disentuh."""
+        import cs_trend17 as t17
+        asas = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil')
+        d = os.path.join(asas, 'CS17')
+        B = json.load(open(os.path.join(d, 'bacaan.json'), encoding='utf-8'))
+        C = pd.read_csv(os.path.join(d, 'calon.csv.gz'))
+        Kw = pd.read_csv(os.path.join(d, 'kawalan.csv'))
+        S = pd.read_csv(os.path.join(d, 'senarai_t.csv'))
+        Pr = pd.read_csv(os.path.join(d, 'prasyarat.csv'))
+        self.assertEqual((len(C), len(Kw), len(Kw)), (B['n_calon'], B['n_kawalan'], t17.N_KAWALAN))
+        self.assertTrue(C.id.is_unique and (C.skor_A > 0).all() and (C.groupby('pencetus').size() <= t17.N_ATAS).all())
+        # layak dan lulus dikira semula daripada lajur yang disimpan (5 titik perpuluhan)
+        for X in (C, Kw):
+            layak = (X.n >= t17.MIN_BELIAN) & (X.tahun >= t17.MIN_TAHUN)
+            lulus = layak & (X.kl_K1 > 0) & (X.kl_K2 > 0) & (X.kl_K3 > 0)
+            hampir = X[['kl_K1', 'kl_K2', 'kl_K3']].abs().min(axis=1) < 6e-6
+            self.assertTrue((layak == X.layak).all() and ((lulus == X.lulus) | hampir).all())
+        self.assertEqual((int(C.layak.sum()), int(C.lulus.sum()), int(Kw.layak.sum())), (B['calon_layak'], B['n_lulus'], B['kawalan_layak']))
+        # bacaan dikunci dikira semula
+        lc, lk = C.lulus.sum() / C.layak.sum(), Kw.lulus.sum() / Kw.layak.sum()
+        kc, kk = (C[C.layak].kl_K3 > 0).mean(), (Kw[Kw.layak].kl_K3 > 0).mean()
+        self.assertAlmostEqual(B['lulus_calon'], lc, 5)
+        self.assertAlmostEqual(B['lulus_kawalan'], lk, 5)
+        self.assertEqual(B['b1'], lc >= lk + t17.d13.B1_BEZA)
+        self.assertEqual(B['b2'], kc >= t17.d13.B2_MIN and kc >= kk + t17.d13.B2_BEZA)
+        self.assertEqual(B['ya'], B['b1'] and B['b2'])
+        self.assertTrue(B['ya'])                                                 # dapatan yang dilaporkan
+        # pendaftaran: hanya yang lulus dan bukan kembar; kod T13 dan seterusnya ikut skor carian
+        D = C[C.untuk_daftar]
+        self.assertTrue((D.lulus & D.kembar_kepada.isna() & D.id_T.notna()).all())
+        self.assertTrue(C[C.lulus & ~C.untuk_daftar].kembar_kepada.notna().all() and C[~C.untuk_daftar].id_T.isna().all())
+        self.assertTrue(set(C[C.lulus & ~C.untuk_daftar].kembar_kepada) <= set(D.id))
+        no = D.sort_values('skor_A', ascending=False, kind='stable').id_T.str[1:].astype(int).to_numpy()
+        self.assertTrue((no == np.arange(t17.ID_MULA, t17.ID_MULA + len(D))).all())
+        self.assertEqual((len(D), B['n_daftar'], B['n_kembar'], B['id_akhir']), (len(S), len(S), int((C.lulus & ~C.untuk_daftar).sum()), int(no.max())))
+        self.assertEqual(set(S.id), set(D.id_T))
+        self.assertTrue((S.besar.diff().dropna() <= 1e-9).all())                 # senarai disusun ikut kadar naik besar
+        g = S.set_index('id').join(D.set_index('id_T')[['n', 'besar', 'kl', 'rugi15']], rsuffix='_c')
+        self.assertTrue(np.allclose(g.besar, g.besar_c) and np.allclose(g.kl, g.kl_c) and (g.n == g.n_c).all())
+        self.assertTrue(np.allclose(S.kl, S.besar - S.a_besar, atol=2e-5) and (S.besar100 <= S.besar + 1e-9).all())
+        self.assertTrue(np.allclose(S[S.q1.ge(0) | S.q2.ge(0)].tambah, (S.kl - S.kl_prasyarat)[S.q1.ge(0) | S.q2.ge(0)], atol=2e-5))
+        self.assertAlmostEqual(B['hasil_tumbuh_daftar'], float((S.q2 == t17.Q_HASIL).mean()), 5)
+        # "prasyarat sahaja"
+        self.assertTrue((Pr.lulus == ((Pr.n >= t17.MIN_BELIAN) & (Pr.tahun >= t17.MIN_TAHUN) & (Pr.kl_K1 > 0) & (Pr.kl_K2 > 0) & (Pr.kl_K3 > 0))).all())
+        # papan CS08 dan registry F tidak disentuh oleh pusingan ini
+        L8 = pd.read_csv(os.path.join(asas, 'CS08', 'papan.csv'))
+        self.assertEqual(len(L8), 12)
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'))
+        self.assertFalse(reg.iloc[:, 0].astype(str).str.match(r'^T\d+$').any())
+
 
 class TestJenisTrend(unittest.TestCase):
     """SPEC pindaan 16 Nov 2026 (w): tinjauan jenis dan tempoh trend menaik (zigzag ATR; deskriptif)."""
