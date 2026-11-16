@@ -1844,6 +1844,41 @@ class TestCS14(unittest.TestCase):
         self.assertEqual(p14.bacaan(D)[0]['n_layak'], n - 5)
 
 
+    def test_fail_hasil(self):
+        """Fail hasil CS14 konsisten sesama sendiri; cara sekarang = angka senarai utama; senarai utama tidak diubah."""
+        import cs_pegang14 as p14
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS14')
+        B = json.load(open(os.path.join(d, 'bacaan.json'), encoding='utf-8'))
+        T = pd.read_csv(os.path.join(d, 'cara.csv'))
+        G = pd.read_csv(os.path.join(d, 'tangga.csv'))
+        X = pd.read_csv(os.path.join(d, 'setup.csv.gz'))
+        U = pd.read_csv(os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS13', 'senarai_utama.csv'))
+        self.assertEqual((B['n_setup'], len(X), len(U), len(T), len(G)), (2001, 2001, 2001, 2 * p14.W, 3 * len(p14.TANGGA)))
+        self.assertEqual(B['cara'], p14.CARA)
+        self.assertTrue(B['pariti']['n'] == 0 and B['pariti']['hari'] == 0 and max(B['pariti'][k] for k in ('menang', 'purata', 'rugi15')) < 2e-5)
+        X, U = X.set_index('id'), U.set_index('id')
+        self.assertTrue(np.allclose(X.loc[U.index, 'r0.t1.126:menang'], U.menang_B, atol=1e-4))
+        self.assertTrue(np.allclose(X.loc[U.index, 'r0.t1.126:purata'], U.purata_B, atol=1e-4))
+        tb = T[T.set == 'B'].set_index('cara')
+        for k in ('semua', 'kelas_A', 'kelas_B'):
+            x = B[k]
+            self.assertEqual(x['cara'], p14.CARA[x['w']])
+            self.assertEqual(x['ya'], x['s1'] and x['s2'] and x['s3'] and x['s4'])
+            self.assertAlmostEqual(x['d_purata'], tb.loc[x['cara'], 'd_purata'], 4)
+            self.assertEqual(x['sama'], abs(x['d_purata']) < p14.SAMA)
+        self.assertIn(B['semua']['w'], p14.CALON)
+        self.assertIn(B['kelas_A']['w'], p14.KELAS_A)
+        # dapatan yang dilaporkan: tiada calon yang menaikkan purata >= 0.1 mata tanpa kadar menang jatuh > 2 mata (kumpulan B)
+        c = tb.loc[[p14.CARA[w] for w in p14.CALON]]
+        self.assertFalse(((c.d_purata >= p14.SAMA) & (c.d_menang >= p14.D_MENANG)).any())
+        self.assertTrue(B['semua']['sama'] and not B['kelas_A']['ya'])
+        # kawalan rawak: pegang lebih longgar menaikkan purata saham rawak juga
+        self.assertEqual(B['n_kawalan'], p14.N_KAWALAN)
+        self.assertGreater(tb.loc['r0.t7.0', 'rawak_purata'], tb.loc['r0.t1.126', 'rawak_purata'])
+        self.assertEqual(sorted(G.cara.unique()), sorted(p14.TANGGA))
+        self.assertEqual(sorted(G.n_setup.unique()), [42, 210, 2001])
+
+
 class TestJenisTrend(unittest.TestCase):
     """SPEC pindaan 16 Nov 2026 (w): tinjauan jenis dan tempoh trend menaik (zigzag ATR; deskriptif)."""
 

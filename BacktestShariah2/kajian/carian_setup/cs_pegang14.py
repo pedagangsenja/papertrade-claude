@@ -4,7 +4,8 @@
 # diubah (stop loss 4xATR14 sahaja). Pemilihan pada kumpulan A, bacaan dikunci pada kumpulan B. Laporan dan cadangan sahaja:
 # senarai utama, registry dan kohort TIDAK diubah.
 #   python3 cs_pegang14.py kira <kerja>    -> <kerja>/cs14_stat.pkl (atom setiap isyarat sekali, statistik setiap setup x cara)
-#   python3 cs_pegang14.py lapor <kerja>   -> hasil/CS14/PEGANG.md, cara.csv, setup.csv, bacaan.json
+#   python3 cs_pegang14.py kawalan <kerja> -> tambah kawalan rawak (tambahan post hoc) ke cs14_stat.pkl
+#   python3 cs_pegang14.py lapor <kerja>   -> hasil/CS14/PEGANG.md, cara.csv, tangga.csv, setup.csv.gz, bacaan.json
 import json
 import os
 import pickle
@@ -56,6 +57,8 @@ STAT = ('n', 'purata', 'menang', 'rugi15', 'k10', 'k50', 'sesi_med', 'sesi_purat
 NS = len(STAT)
 IX = {k: i for i, k in enumerate(STAT)}
 MIN_DAG, MIN_K3, D_MENANG, D_RUGI = 30, 20, -0.02, 0.02  # dikunci pindaan (x); dua ambang akhir sama seperti CS11
+N_KAWALAN, BENIH_KAWALAN, SAMA = 300_000, 20261116, 0.001  # tambahan post hoc (x): kawalan rawak; beza < 0.1 mata = "sama"
+TANGGA = ['r0.t1.126', 'r0.t2.0', 'r0.t5.0', 'r0.t4.0', 'r0.t7.0', 'r1.t0.0']
 F_ = lambda kerja: os.path.join(kerja, 'cs14_stat.pkl')
 HASIL = os.path.join(SINI, 'hasil', PUS)
 CS13 = os.path.join(SINI, 'hasil', 'CS13')
@@ -282,6 +285,42 @@ def kira(kerja):
     return out
 
 
+def kawalan(kerja):
+    """Tambahan post hoc (x): bar layak rawak kumpulan B (benih tetap), cara dan mekanik sama -> D['kawalan'][cara, NS]."""
+    D = pickle.load(open(F_(kerja), 'rb'))
+    pan = cari.panel(kerja, 'B')
+    sah = np.flatnonzero(s11.sah126(pan))
+    ev = np.sort(np.random.default_rng(BENIH_KAWALAN).choice(sah, N_KAWALAN, replace=False)).astype(np.int64)
+    R, SK, TB = hasil14(*atom_panel(pan, ev), RW, TW, HW)
+    D['kawalan'] = stat14(ev, pan['tid'][ev].astype(np.int64), pan['tempoh'][ev].astype(np.int64), R, SK, TB)
+    D['n_kawalan'] = int(len(ev))
+    pickle.dump(D, open(F_(kerja), 'wb'), protocol=4)
+    cari.log(f"CS14 kawalan: {len(ev):,} bar rawak · cara sekarang purata {D['kawalan'][SEKARANG, 1]:+.4f}")
+    return D
+
+
+def kumpulan(D):
+    """Tiga kumpulan setup bagi tangga tukar ganti: semua, 42 lama, "pilihan" (senarai utama CS13)."""
+    U = pd.read_csv(os.path.join(CS13, 'senarai_utama.csv')).set_index('id').loc[D['ids']]
+    return (('semua setup', np.ones(len(U), bool)), ('setup lama yang dipercayai', (U.asal == 'lama').to_numpy()),
+            ('setup "pilihan"', U.pilihan.astype(bool).to_numpy()))
+
+
+def tangga(D):
+    """Tambahan post hoc (x): cara sekarang + lima cara wakil bagi tiga kumpulan setup (kumpulan B; nilai tengah)."""
+    S, baris = D['B'], []
+    for nama, g in kumpulan(D):
+        for c in TANGGA:
+            w = CARA.index(c)
+            k3 = g & (S[:, w, IX['n_K3']] >= MIN_K3) & (S[:, SEKARANG, IX['n_K3']] >= MIN_K3)
+            b = dict(kumpulan=nama, n_setup=int(g.sum()), cara=c, teks=teks(w))
+            b.update({st: float(np.nanmedian(S[g, w, IX[st]])) for st in ('n', 'purata', 'menang', 'rugi15', 'k50', 'sesi_med', 'per20')})
+            b.update(d_purata_K3=float(np.nanmedian(S[k3, w, IX['purata_K3']] - S[k3, SEKARANG, IX['purata_K3']])) if k3.any() else np.nan,
+                     d_menang_K3=float(np.nanmedian(S[k3, w, IX['menang_K3']] - S[k3, SEKARANG, IX['menang_K3']])) if k3.any() else np.nan)
+            baris.append(b)
+    return pd.DataFrame(baris)
+
+
 def kes(pan, ticker, tarikh):
     """Satu kes rujukan (contoh, bukan bukti): hasil setiap cara bagi isyarat pada (ticker, tarikh)."""
     t = np.flatnonzero(pan['ticker'] == ticker)
@@ -358,7 +397,7 @@ def jadual_cara(D, ok):
     for set_ in ('A', 'B'):
         S = D[set_]
         for w in range(W):
-            md = lambda st: float(np.nanmedian(S[ok, w, IX[st]]))
+            md = lambda st: float(np.nanmedian(S[ok, w, IX[st]])) if np.isfinite(S[ok, w, IX[st]]).any() else np.nan
             b = dict(set=set_, cara=CARA[w], rugi=f'r{RW[w]}' if HW[w] >= 0 else '', trend=f't{TW[w]}' if HW[w] >= 0 else '',
                      had={-1: 20, 0: 0}.get(int(HW[w]), int(HW[w])), teks=teks(w), calon=w in CALON,
                      kelas='A' if w in KELAS_A else 'B' if w in KELAS_B else '')
@@ -371,55 +410,87 @@ def jadual_cara(D, ok):
 
 
 # ---------- laporan ----------
+def _bersih(x):
+    """NaN -> None dan jenis numpy -> jenis Python, secara rekursif (JSON sah)."""
+    if isinstance(x, dict):
+        return {k: _bersih(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [_bersih(v) for v in x]
+    if isinstance(x, (float, np.floating)):
+        return None if x != x else round(float(x), 6)
+    if isinstance(x, (np.integer,)):
+        return int(x)
+    if isinstance(x, (np.bool_,)):
+        return bool(x)
+    return x
+
+
 def lapor_(kerja):
     D = pickle.load(open(F_(kerja), 'rb'))
     par = pariti(D)
     assert par['n'] == 0 and par['hari'] == 0 and max(par['menang'], par['purata'], par['rugi15']) < 2e-5, f'pariti gagal: {par}'
     B, ok = bacaan(D)
     B['pariti'] = par
+    for k in ('semua', 'kelas_A', 'kelas_B'):
+        B[k]['sama'] = bool(abs(B[k]['d_purata']) < SAMA)                # post hoc: lulus tetapi secara praktikal cara yang sama
     T = jadual_cara(D, ok)
+    if 'kawalan' in D:
+        kw = pd.DataFrame(D['kawalan'], columns=STAT)
+        kw.insert(0, 'cara', CARA)
+        T = T.merge(kw[['cara', 'n', 'purata', 'menang', 'rugi15', 'per20']].rename(columns=lambda c: c if c == 'cara' else 'rawak_' + c), on='cara')
+        B['n_kawalan'] = D['n_kawalan']
+    G = tangga(D)
     os.makedirs(HASIL, exist_ok=True)
     T.to_csv(os.path.join(HASIL, 'cara.csv'), index=False, float_format='%.5f')
-    utama = [SEKARANG] + list(dict.fromkeys(B[k]['w'] for k in ('semua', 'kelas_A', 'kelas_B')))
+    G.to_csv(os.path.join(HASIL, 'tangga.csv'), index=False, float_format='%.5f')
+    utama = list(dict.fromkeys([CARA.index(c) for c in TANGGA] + [B[k]['w'] for k in ('semua', 'kelas_A', 'kelas_B')]))
     lajur = ('n', 'purata', 'menang', 'rugi15', 'k50', 'sesi_med', 'terbuka', 'purata_K3', 'menang_K3')
     Sx = pd.DataFrame({'id': D['ids'], 'layak': ok})
     for w in utama:
         for st in lajur:
             Sx[f'{CARA[w]}:{st}'] = D['B'][:, w, IX[st]]
-    Sx.to_csv(os.path.join(HASIL, 'setup.csv'), index=False, float_format='%.5f')
-    json.dump(dict(B, mxl=D.get('mxl'), cara=CARA, utama=[CARA[w] for w in utama]), open(os.path.join(HASIL, 'bacaan.json'), 'w'),
-              indent=1, default=lambda x: None if isinstance(x, float) and x != x else x)
-    open(os.path.join(HASIL, 'PEGANG.md'), 'w', encoding='utf-8').write(teks_laporan(D, B, T, ok))
-    cari.log(f"CS14 lapor: terpilih {B['semua']['cara']} -> {'MENOLONG' if B['semua']['ya'] else 'TIDAK menolong'}")
+    Sx.to_csv(os.path.join(HASIL, 'setup.csv.gz'), index=False, float_format='%.4f')
+    json.dump(_bersih(dict(B, mxl=D.get('mxl'), cara=CARA, utama=[CARA[w] for w in utama], tangga=G.to_dict('records'))),
+              open(os.path.join(HASIL, 'bacaan.json'), 'w'), indent=1)
+    open(os.path.join(HASIL, 'PEGANG.md'), 'w', encoding='utf-8').write(teks_laporan(D, B, T, G))
+    cari.log(f"CS14 lapor: terpilih {B['semua']['cara']} -> {'MENOLONG' if B['semua']['ya'] else 'TIDAK menolong'}"
+             f"{' (secara praktikal sama dengan cara sekarang)' if B['semua']['sama'] else ''}")
     return B
 
 
-def teks_laporan(D, B, T, ok):
+def teks_laporan(D, B, T, G):
     p = lambda x, d=0, tanda=False: '–' if x is None or x != x else f'{x * 100:{"+" if tanda else ""}.{d}f}'
     TB_ = T[T.set == 'B'].set_index('cara')
     TA_ = T[T.set == 'A'].set_index('cara')
-
-    def baris(w, nama=None):
-        r = TB_.loc[CARA[w]]
-        return (f"| {nama or teks(w)} | {p(r.purata, 1, True)} | {p(r.menang)} | {p(r.rugi15)} | {p(r.k50, 1)} | {r.sesi_med:.0f} | "
-                f"{p(r.per20, 2, True)} | {p(r.terbuka, 1)} | {r.n:.0f} |")
-
-    kepala = ('| Cara pegang | Purata setiap dagangan % | Menang % | Rugi ≥ 15 % % | Untung ≥ 50 % % | Median hari pegang | '
-              'Untung setiap 20 hari pegang % | Masih dipegang pada hujung data % | Dagangan setiap setup |\n|---|---|---|---|---|---|---|---|---|')
+    ada_kw = 'rawak_purata' in T.columns
     s, a, b = B['semua'], B['kelas_A'], B['kelas_B']
     ya = lambda x: 'ya' if x else 'TIDAK'
+    nama_w = lambda w: 'beli dan simpan, stop loss sahaja (rujukan)' if w == SIMPAN else 'pegang 6 bulan, stop loss sahaja' if w == P126 else teks(w)
+
+    def baris(w):
+        r = TB_.loc[CARA[w]]
+        rawak = f" {p(r.rawak_purata, 1, True)} · {p(r.rawak_menang)} · {p(r.rawak_per20, 2, True)} |" if ada_kw else ''
+        return (f"| {nama_w(w)} | {p(r.purata, 1, True)} | {p(r.menang)} | {p(r.rugi15)} | {p(r.k50, 1)} | {r.sesi_med:.0f} | "
+                f"{p(r.per20, 2, True)} | {p(r.terbuka, 1)} | {r.n:.0f} |{rawak}")
+
+    kepala = ('| Cara pegang | Purata setiap dagangan % | Menang % | Rugi ≥ 15 % % | Untung ≥ 50 % % | Median hari pegang | '
+              'Untung setiap 20 hari pegang % | Masih dipegang pada hujung data % | Dagangan setiap setup |'
+              + (' Saham rawak, cara sama: purata % · menang % · setiap 20 hari % |' if ada_kw else '')
+              + '\n|---|---|---|---|---|---|---|---|---|' + ('---|' if ada_kw else ''))
 
     def baca_teks(x, tajuk):
+        nota = (' Beza purata kurang 0.1 mata: **secara praktikal ini cara yang sama dengan cara sekarang**, jadi lulus ujian di sini '
+                'TIDAK bermakna ada pembaikan.' if x['sama'] else '')
         return (f"- **{tajuk}: {teks(x['w'])}** (`{x['cara']}`; {'menepati' if x['menepati_A'] else 'TIADA calon menepati'} syarat pemilihan "
                 f"pada saham carian). Pada saham yang carian tidak lihat, lawan cara sekarang: (1) purata lebih tinggi bagi "
                 f"{x['lebih']:,} daripada {x['n']:,} setup → {ya(x['s1'])}; (2) beza kadar menang {p(x['d_menang'], 1, True)} mata "
                 f"(perlu ≥ −2) → {ya(x['s2'])}; (3) beza rugi ≥ 15 % {p(x['d_rugi15'], 1, True)} mata (perlu ≤ +2) → {ya(x['s3'])}; "
                 f"(4) dagangan 2025–26: beza purata {p(x['d_purata_K3'], 1, True)} mata ({x['lebih_K3']:,} daripada {x['n_K3']:,} setup "
-                f"lebih tinggi; perlu > 0) → {ya(x['s4'])}. **Keputusan: {'MENOLONG' if x['ya'] else 'TIDAK menolong'}.**")
+                f"lebih tinggi; perlu > 0) → {ya(x['s4'])}. **Keputusan: {'MENOLONG' if x['ya'] else 'TIDAK menolong'}.**{nota}")
 
-    A = [f'# CS14: cara pegang "jual yang rugi, pegang yang untung", tanpa had masa (backtest; BUKAN bukti)', '',
+    A = ['# CS14: cara pegang "jual yang rugi, pegang yang untung", tanpa had masa (backtest; BUKAN bukti)', '',
          'Peraturan ditulis dahulu: `kajian/SPEC_CARIAN_SETUP.md` pindaan 16 Nov 2026 (x). Dijana `cs_pegang14.py`; jangan sunting.', '',
-         f"- Permintaan pengguna 16 Nov 2026: pegang selagi untung, jual bila rugi, tiada had 20 hari; keputusan \"ya dan C\".",
+         '- Permintaan pengguna 16 Nov 2026: pegang selagi untung, jual bila rugi, tiada had 20 hari; keputusan "ya dan C".',
          f"- {B['n_setup']:,} setup senarai utama; {B['n_layak']:,} dengan ≥ {MIN_DAG} dagangan dalam kedua-dua kumpulan saham. Peraturan beli dan "
          'stop loss (4×ATR14) tidak diubah; 20 hari pertama tidak diubah. Kadar tangkap tidak terkesan oleh cara pegang.',
          f'- {W - 1} cara diuji: 4 peraturan "rugi" × 9 peraturan "trend tamat" × 3 had masa (126 sesi, 252 sesi, tiada). Cara dipilih pada '
@@ -428,13 +499,33 @@ def teks_laporan(D, B, T, ok):
          f"{B['pariti']['menang']:.6f}, purata {B['pariti']['purata']:.6f}).", '',
          '## 1. Keputusan (ujian ditetapkan dahulu)', '', baca_teks(s, 'Cara terpilih'), baca_teks(a, 'Terbaik tafsiran A (selagi di atas harga beli)'),
          baca_teks(b, 'Terbaik tafsiran B (selagi trend naik)'), '',
-         '## 2. Sebelah-menyebelah (nilai tengah merentas setup; saham yang carian tidak lihat)', '', kepala,
-         baris(0), baris(SEKARANG), baris(P126, 'pegang 6 bulan, stop loss sahaja'), baris(SIMPAN, 'beli dan simpan, stop loss sahaja (rujukan)')]
-    for w in dict.fromkeys([a['w'], b['w'], s['w']]):
+         '**Ringkasnya:** tiada cara yang menaikkan purata setiap dagangan TANPA menurunkan kadar menang. Makin longgar peraturan jual, makin '
+         'besar purata dan makin kurang dagangan yang menang (tangga di bawah). "Jual hanya bila sudah rugi" bermakna hampir setiap dagangan '
+         'yang dijual ialah dagangan rugi: untung yang ada dipulangkan dahulu sebelum jualan.', '',
+         '## 2. Tangga tukar ganti (tambahan selepas hasil dilihat; saham yang carian tidak lihat; nilai tengah setiap kumpulan setup)', '']
+    for nama in G.kumpulan.unique():
+        X = G[G.kumpulan == nama]
+        A += [f'**{nama[0].upper() + nama[1:]} ({int(X.n_setup.iloc[0]):,})**', '',
+              '| Cara pegang | Purata setiap dagangan % | Menang % | Rugi ≥ 15 % % | Untung ≥ 50 % % | Median hari pegang | Untung setiap 20 hari pegang % | '
+              '2025–26: beza purata lawan cara sekarang (mata) | 2025–26: beza menang (mata) |', '|---|---|---|---|---|---|---|---|---|']
+        for r in X.itertuples():
+            A.append(f"| {r.teks} | {p(r.purata, 1, True)} | {p(r.menang)} | {p(r.rugi15)} | {p(r.k50, 1)} | {r.sesi_med:.0f} | {p(r.per20, 2, True)} | "
+                     f"{p(r.d_purata_K3, 1, True)} | {p(r.d_menang_K3, 1, True)} |")
+        A.append('')
+    if ada_kw:
+        A += [f"**Saham rawak, cara sama ({B['n_kawalan']:,} belian rawak mana-mana saham mana-mana hari):** berapa banyak hasil pegang lama "
+              'datang daripada sekadar memegang saham dalam data ini (pasaran naik; tiada saham delist), bukan daripada setup.', '',
+              '| Cara pegang | Purata setiap dagangan % | Menang % | Rugi ≥ 15 % % | Untung setiap 20 hari pegang % |', '|---|---|---|---|---|']
+        for c in TANGGA:
+            r = TB_.loc[c]
+            A.append(f"| {teks(CARA.index(c))} | {p(r.rawak_purata, 1, True)} | {p(r.rawak_menang)} | {p(r.rawak_rugi15)} | {p(r.rawak_per20, 2, True)} |")
+        A.append('')
+    A += ['## 3. Sebelah-menyebelah dengan rujukan (nilai tengah merentas semua setup; saham yang carian tidak lihat)', '', kepala]
+    for w in dict.fromkeys([0, SEKARANG, P126, SIMPAN, a['w'], b['w'], s['w']]):
         A.append(baris(w))
     A += ['', '"Untung setiap 20 hari pegang" = jumlah untung ÷ jumlah hari pegang × 20: pegang lebih lama menaikkan purata setiap dagangan '
           'walaupun tanpa kemahiran, jadi lajur ini menunjukkan untung bagi tempoh pegang yang sama.', '',
-          '## 3. Semua cara tanpa had masa (saham yang carian tidak lihat; beza lawan cara sekarang, nilai tengah)', '',
+          '## 4. Semua cara tanpa had masa (saham yang carian tidak lihat; beza lawan cara sekarang, nilai tengah)', '',
           '| Peraturan rugi | Peraturan trend tamat | Purata % | Menang % | Rugi ≥ 15 % % | Median hari | Δ purata (mata) | Δ menang (mata) | Δ rugi ≥ 15 % (mata) | Setup lebih baik % |',
           '|---|---|---|---|---|---|---|---|---|---|']
     for w in [SIMPAN] + CALON:
@@ -442,30 +533,31 @@ def teks_laporan(D, B, T, ok):
         A.append(f"| {RUGI[f'r{RW[w]}']} | {TREND[f't{TW[w]}']} | {p(r.purata, 1, True)} | {p(r.menang)} | {p(r.rugi15)} | {r.sesi_med:.0f} | "
                  f"{p(r.d_purata, 1, True)} | {p(r.d_menang, 1, True)} | {p(r.d_rugi15, 1, True)} | {p(r.lebih)} |")
     w0 = s['w']
-    A += ['', '## 4. Kesan had masa pada cara terpilih', '', kepala]
+    A += ['', '## 5. Kesan had masa pada cara terpilih', '', kepala]
     for h in HAD:
         A.append(baris(CARA.index(f'r{RW[w0]}.t{TW[w0]}.{h}')))
-    A += ['', '## 5. Pemilihan pada saham carian (kumpulan A; nilai tengah beza lawan cara sekarang)', '',
+    A += ['', '## 6. Pemilihan pada saham carian (kumpulan A; nilai tengah beza lawan cara sekarang)', '',
           '| Cara | Δ purata (mata) | Δ menang (mata) | Δ rugi ≥ 15 % (mata) |', '|---|---|---|---|']
     for w in sorted(CALON, key=lambda w: -TA_.loc[CARA[w]].d_purata)[:12]:
         r = TA_.loc[CARA[w]]
         A.append(f'| {teks(w)} | {p(r.d_purata, 1, True)} | {p(r.d_menang, 1, True)} | {p(r.d_rugi15, 1, True)} |')
     m = D.get('mxl')
     if m:
-        A += ['', f"## 6. Kes rujukan pengguna: {m['ticker']} (satu contoh, bukan bukti)", '',
+        A += ['', f"## 7. Kes rujukan pengguna: {m['ticker']} (satu contoh, bukan bukti)", '',
               f"Beli {m['beli']} pada {m['harga']:.2f}; data hingga {m['hingga']}; tutup tertinggi {p(m['puncak'], 0, True)} %.", '',
               '| Cara pegang | Jual | Hari | Untung % |', '|---|---|---|---|']
-        for w in dict.fromkeys([0, SEKARANG, a['w'], b['w'], s['w'], SIMPAN]):
-            A.append(f"| {teks(w) if w != SIMPAN else 'beli dan simpan, stop loss sahaja'} | "
-                     f"{'masih dipegang' if m['terbuka'][w] else m['jual'][w]} | {m['sesi'][w]} | {p(m['R'][w], 0, True)} |")
-    A += ['', '## 7. Kaveat', '',
-          '- Tiada saham delist dalam data: saham yang gagal hilang, dan bias ini membesar dengan tempoh pegang.',
+        for w in dict.fromkeys([0] + [CARA.index(c) for c in TANGGA] + [SIMPAN]):
+            A.append(f"| {nama_w(w).replace(' (rujukan)', '')} | {'masih dipegang' if m['terbuka'][w] else m['jual'][w]} | {m['sesi'][w]} | {p(m['R'][w], 0, True)} |")
+    A += ['', '## 8. Kaveat', '',
+          '- Tiada saham delist dalam data: saham yang gagal hilang, dan bias ini membesar dengan tempoh pegang. Purata cara yang memegang '
+          'bertahun-tahun (cth. "tutup di bawah harga beli" sahaja) dikuasai beberapa saham yang naik berganda dan TIDAK boleh dipercayai.',
           '- Posisi yang masih dipegang pada hujung data dinilai pada harga terakhir, bukan harga jual.',
           f'- {W - 1} cara dicuba; yang terbaik condong ke atas. Kumpulan saham "tidak dilihat" sudah dilihat berkali-kali; 2025–26 pendek.',
+          '- Tangga tukar ganti dan kawalan rawak ditambah SELEPAS hasil dilihat (maklumat; bukan sebahagian ujian yang ditetapkan dahulu).',
           '- Laporan dan cadangan sahaja: senarai utama, registry dan kohort tidak diubah. Menukar cara pegang ialah keputusan pengguna.', '']
     return '\n'.join(A)
 
 
 if __name__ == '__main__':
     langkah, kerja = sys.argv[1], sys.argv[2]
-    {'kira': kira, 'lapor': lapor_}[langkah](kerja)
+    {'kira': kira, 'kawalan': kawalan, 'lapor': lapor_}[langkah](kerja)
