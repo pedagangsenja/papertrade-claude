@@ -1103,6 +1103,18 @@ cara B +170 %, tutup < SMA50 +149 %, jatuh 4 × ATR dari puncak +109 %, pegang h
   dicuba, jadi yang terbaik condong ke atas — sebab pemilihan dibuat pada kumpulan A dan bacaan pada kumpulan B; kumpulan B
   sudah dilihat berkali-kali; 2025–26 pendek. Pangkat backtest, BUKAN bukti.
 
+**Tambahan 16 Nov 2026 SELEPAS hasil (x) dilihat (post hoc; maklumat sahaja, BUKAN sebahagian bacaan dikunci; ditulis sebelum
+kawalan dikira).** Hasil: tiada cara menaikkan purata tanpa menurunkan kadar menang; cara "terpilih" lulus bacaan hanya
+kerana ia hampir sama dengan cara sekarang (beza < 0.1 mata). Dua tambahan pada laporan supaya angka pegang lama tidak
+disalah tafsir:
+- **Kawalan rawak:** 300,000 bar layak kumpulan B dengan tetingkap 126 sesi lengkap, dicabut rawak (benih 20261116), dinilai
+  dengan enjin, stop loss dan peraturan satu-posisi yang sama bagi setiap cara. Ia menjawab: berapa banyak untung pegang
+  lama datang daripada sekadar memegang mana-mana saham dalam data ini (pasaran naik, tiada saham delist), bukan daripada
+  setup. Dilaporkan di sebelah angka setup; tiada ambang.
+- **Tangga tukar ganti:** bagi cara sekarang dan lima cara wakil (`r0·t2`, `r0·t5`, `r0·t4`, `r0·t7`, `r1·t0`, tanpa had
+  masa), nilai tengah bagi tiga kumpulan setup (semua 2,001; 42 lama; 210 "pilihan") dan beza purata 2025–26. Cara yang
+  bezanya lawan cara sekarang < 0.1 mata ditanda "secara praktikal sama".
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
