@@ -706,6 +706,43 @@ keluaran `hasil/CS08/`. Tiada jejak hadapan, tiada order.
 - **Kaveat dikunci:** tiada saham delist — bagi pegang 6 bulan biasnya LEBIH besar daripada lorong swing; K3 pendek
   (tetingkap 126 sesi berakhir ~April 2026); kumpulan B sudah dilihat untuk label lain; satu kes (MXL) bukan bukti.
 
+### Pindaan 16 Nov 2026 (r) — pusingan CS09: keluarga pencetus K26 "lonjak lalu undur" (zon Fibonacci sebagai parameter) (sebelum dijalankan pada kumpulan A/B)
+
+**Asal (POST-HOC, dilabel begitu):** pengguna 15–16 Nov 2026 menghantar dua tangkapan skrin media sosial (Triple RSI
+"90 % menang"; kursus "Entry & Exit using Fibonacci", zon masuk 61.8–78.6 %). Claude mengukurnya secara PENEROKAAN pada set
+431 (`data_mentah/dataset_S1`–`S4`, 2019–2026; set ini BERTINDIH dengan kumpulan B, lihat (m)) dalam folder sementara:
+Triple RSI tiada kelebihan lawan saham rawak hari sama (dengan atau tanpa pegang lama); Fibonacci cara iklan (sasaran puncak,
+henti bawah dasar kaki) sama dengan rawak berkurungan sama; tetapi "saham yang baru melonjak ≥ 30 % dalam 10–20 hari, kemudian
+undur" menunjukkan kadar `lari` +2 hingga +5 mata atas rawak, dan zon jiran (50–61.8 %, 78.6–100 %) memberi lebihan serupa.
+Pengguna 16 Nov 2026: "ini boleh include dalam method F ke?". Idea dipilih SELEPAS melihat data 431; kumpulan A dan B belum
+dilihat bagi keluarga ini.
+
+- **Keluarga K26** (`cs_param.grid_k26()`, `cs_param._undur`; grid K01–K25 yang dikunci (n) TIDAK berubah). Pada bar i (data
+  ≤ i): puncak `hi` = tinggi tertinggi dalam n bar sebelum i (yang terkini jika sama) dan sekurang-kurangnya 3 bar lalu; dasar
+  `lo` = rendah terendah dalam n bar sehingga puncak; `hi/lo − 1 ≥ k`; bar i ialah sentuhan PERTAMA paras `hi − za × kaki` sejak
+  puncak dan tutup ≥ `hi − zb × kaki`. Grid dikunci: n ∈ {10, 15, 20, 30, 40} × k ∈ {20, 30, 40, 50 %} × zon (za, zb) ∈
+  {38.2–50, 50–61.8, **61.8–78.6 (zon iklan)**, 78.6–100, 38.2–78.6 %} = 100 varian. Ujian: sama dengan kiraan kasar, tiada
+  pandang hadapan (`ujian/test_carian_setup.py::TestCS09`).
+- **Carian (kumpulan A):** enjin (i) seperti (n)(a): setiap varian × [0–1 prasyarat pasaran] × [0–1 prasyarat syarikat] ×
+  [0–2 penapis saham], sasaran `terus`, skor = min dua era [kelebihan atas rawak hari sama × tercile ATR % − 2 ralat piawai],
+  n ≥ had enjin setiap era.
+- **Papan:** sehingga 6 setup, skor A > 0, susun ikut skor A; maks 2 setiap zon; maks 3 setiap pasangan prasyarat.
+- **Henti dan keluar (dikunci SEBELUM hasil dilihat, tiada carian keluar):** `X00` (tiada indikator keluar; jual tutup sesi
+  20) dengan henti `G7` 5×ATR14 — pilihan majoriti CS07 (b) (46 daripada 73 setup memilih `X00`, 62 memilih henti paling
+  longgar). Pegang minimum (p) terpakai. Satu posisi setiap saham.
+- **Pendaftaran F (kumpulan B):** takrif "dipercayai" (m) tanpa ubah: belian ≥ 300, tahun dengan belian ≥ 10, kelebihan
+  `terus` > 0 dalam K1, K2 DAN K3 (mekanik di atas). Yang lulus → kod F seterusnya, pusingan `CS09`, takrif format CS07
+  (`K26.nnn|penapis|G7|X00|prasyarat`), status `BACKTEST`. Yang tidak lulus tidak diberi kod F.
+- **Bacaan dikunci "Fibonacci istimewa?" (kumpulan B):** bagi setiap 20 pasangan (n, k), kelebihan `terus` pencetus sahaja
+  (tanpa prasyarat/penapis; satu posisi, pegang 20 sesi) zon 61.8–78.6 dibanding purata zon 50–61.8 dan 78.6–100. "Istimewa"
+  hanya jika zon iklan lebih baik dalam lebih 10 daripada 20 pasangan DAN kelebihannya sendiri > 0 dalam lebih 10 pasangan.
+- **Mesin:** `cs_mesin.kelompok` menarik 12 varian rawak K26 setiap larian (`KELUARGA_MESIN`, ditambah di HUJUNG: varian
+  K01–K25 setiap larian tidak berubah; diuji). Berkuat kuasa selepas digabung ke `main`.
+- Kod `carian_setup/cs_cs09.py`; keluaran `carian_setup/hasil/CS09/LAPORAN.md|papan.csv`. Kedudukan akhir penuh
+  (`cs_akhir.py`) memerlukan binaan penuh benih/keluar dan dijana semula kemudian; `cs_akhir` membaca takrif CS09 seperti CS07.
+- **Kaveat dikunci:** post-hoc (lihat Asal); kumpulan B sudah dilihat untuk label lain dan bertindih dengan set 431; tiada
+  saham delist; tiada jejak hadapan dan tiada papertrade tanpa keputusan pengguna berasingan.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

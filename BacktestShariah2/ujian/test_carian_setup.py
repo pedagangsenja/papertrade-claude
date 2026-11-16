@@ -1017,7 +1017,14 @@ class TestCS07(unittest.TestCase):
         G1, T1 = ms.kelompok(3, n_m=5)
         G2, T2 = ms.kelompok(3, n_m=5)
         self.assertEqual((G1, T1), (G2, T2))                                    # benih = nombor larian
-        self.assertEqual((len(G1), ms.N_K, ms.N_NILAI_B), (25 * 12, 12, 15))
+        self.assertEqual((len(G1), ms.N_K, ms.N_NILAI_B), (26 * 12, 12, 15))     # pindaan (r): + K26
+        import cs_param as kp
+        asal = kp.KELUARGA_MESIN
+        try:                                                                    # K26 di HUJUNG: varian K01-K25 tidak berubah
+            kp.KELUARGA_MESIN = kp.KELUARGA
+            self.assertEqual(ms.kelompok(3)[0], G1[:25 * 12])
+        finally:
+            kp.KELUARGA_MESIN = asal
         self.assertNotEqual(ms.kelompok(4, n_m=5)[0], G1)
         self.assertTrue(all(t[0].endswith(f'.{ms.V_ASAS + 3}') and t[2] for t in T1))
         self.assertEqual((t7.induk('K07.012'), t7.induk('M73.5s3'), t7.induk('N16')), ('K07', 'M73', 'N16'))
@@ -1108,6 +1115,57 @@ class TestCS08(unittest.TestCase):
         self.assertGreaterEqual(int(D.dipercayai.sum()), len(D) / 2)            # bacaan dikunci: lorong trend ada kelebihan
         self.assertLessEqual(int((D.tb_semua > D.tb_semua_x00).sum()), len(D) / 2)   # keluar TIDAK menolong
         self.assertTrue(os.path.exists(os.path.join(d, 'LAPORAN.md')))
+
+
+class TestCS09(unittest.TestCase):
+    """SPEC pindaan 16 Nov 2026 (r): keluarga K26 "lonjak lalu undur" (zon Fibonacci sebagai parameter)."""
+
+    @staticmethod
+    def _rujuk(h, l, c, n, k, za, zb):
+        """Kiraan kasar bar demi bar (rujukan bebas kernel)."""
+        out = np.zeros(len(c), bool)
+        for i in range(2 * n + 1, len(c)):
+            w = list(range(i - n, i))
+            ih = max(w, key=lambda j: (h[j], j))
+            if i - ih < 3:
+                continue
+            hi, lo = h[ih], min(l[ih - n:ih + 1])
+            if hi / lo - 1 < k:
+                continue
+            a, b = hi - za * (hi - lo), hi - zb * (hi - lo)
+            out[i] = all(l[j] > a for j in range(ih + 1, i)) and l[i] <= a and c[i] >= b
+        return out
+
+    def _liar(self, n, benih):
+        g = _saham(n, benih)
+        r = np.random.default_rng(benih).normal(0.002, 0.045, n)
+        f = np.exp(np.cumsum(r)) / (g.close / g.close.iloc[0])
+        return g.assign(open=g.open * f, high=g.high * f, low=g.low * f, close=g.close * f)
+
+    def test_grid_dan_mesin(self):
+        import cs_param as kp
+        G = kp.grid_k26()
+        self.assertEqual((len(G), len({x[0] for x in G})), (100, 100))
+        self.assertEqual(len(kp.grid()), 656)                                  # grid dikunci (n) tidak berubah
+        self.assertEqual(kp.KELUARGA_MESIN, kp.KELUARGA + ('K26',))
+        self.assertEqual(sum(1 for _, _, p in G if (p['za'], p['zb']) == (0.618, 0.786)), 20)
+
+    def test_k26_sama_rujukan_dan_tiada_pandang_hadapan(self):
+        import cs_param as kp
+        rng = np.random.default_rng(5)
+        G = kp.grid_k26()[::7] + [(f'K26.r{i}', 'K26', kp.rawak('K26', rng)) for i in range(6)]
+        bil = 0
+        for benih in (3, 4):
+            g = self._liar(700, benih)
+            rs = pd.Series(50.0, index=g.index)
+            M = kp.kira(g, rs, G)
+            h, l, c = (g[x].to_numpy() for x in ('high', 'low', 'close'))
+            for i, (_, _, p) in enumerate(G):
+                self.assertTrue((M[i] == self._rujuk(h, l, c, p['n'], p['k'], p['za'], p['zb'])).all(), p)
+            bil += int(M.sum())
+            self.assertTrue((kp.kira(g.iloc[:600], rs.iloc[:600], G) == M[:, :600]).all())
+            self.assertTrue(all(isinstance(kp.teks(f, p), str) for _, f, p in G))
+        self.assertGreater(bil, 0)
 
 
 if __name__ == '__main__':

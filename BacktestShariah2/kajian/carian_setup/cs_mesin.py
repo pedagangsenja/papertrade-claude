@@ -39,7 +39,7 @@ def baca_papan():
 def kelompok(n, n_m=None):
     """(grid K, tugas M) larian ke-n. Benih tetap: larian yang sama sentiasa menarik varian yang sama."""
     rng = np.random.default_rng([atom.BENIH, 77, n])
-    G = [(f'{fam}.r{n}_{i}', fam, kp.rawak(fam, rng)) for fam in kp.KELUARGA for i in range(1, N_K + 1)]
+    G = [(f'{fam}.r{n}_{i}', fam, kp.rawak(fam, rng)) for fam in kp.KELUARGA_MESIN for i in range(1, N_K + 1)]
     pj = pd.read_csv(os.path.join(cari.AKAR, 'AUTOTUNE', 'kaedah', 'param_julat.csv'))
     mid = sorted({t[1] for t in cari.senarai_benih() if t[1].startswith('M')})
     if n_m:
