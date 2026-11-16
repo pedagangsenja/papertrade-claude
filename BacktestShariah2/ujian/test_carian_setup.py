@@ -2298,6 +2298,62 @@ class TestCS18(unittest.TestCase):
         T.loc[T.jenis == 'K2', 'solid'] = [True] * 5 + [False] * 15
         self.assertFalse(s18.bacaan(T)['b2'])                                    # 30 % < 25 % + 10 mata
 
+    def test_fail_hasil(self):
+        """Fail hasil CS18 konsisten sesama sendiri dan dengan senarai lorong T (CS17) + papan CS08; tiada yang lain diubah."""
+        import cs_solid18 as s18
+        asas = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil')
+        d = os.path.join(asas, 'CS18')
+        with open(os.path.join(d, 'bacaan.json'), encoding='utf-8') as f:
+            B = json.load(f)
+        U = pd.read_csv(os.path.join(d, 'solid_t.csv.gz'))
+        Kw = pd.read_csv(os.path.join(d, 'kawalan.csv'))
+        Pr = pd.read_csv(os.path.join(d, 'prasyarat.csv'))
+        S17 = pd.read_csv(os.path.join(asas, 'CS17', 'senarai_t.csv')).set_index('id')
+        P8 = pd.read_csv(os.path.join(asas, 'CS08', 'papan.csv')).set_index('id')
+        self.assertEqual((len(U), B['n_t'], B['n_baharu'], B['n_lama'], B['lama_gagal']), (2576, 2576, len(S17), len(P8), []))
+        self.assertEqual(set(U.id), set(S17.index) | set(P8.index))
+        self.assertEqual(set(U.id[U.asal == 'lama']), set(P8.index))
+        g = U.set_index('id')
+        # pariti: angka sama dengan senarai CS17 (fail ini 4 titik perpuluhan)
+        for a, b in (('besar', 'besar'), ('a_besar', 'a_besar'), ('kl_besar', 'kl'), ('besar100', 'besar100'), ('tb', 'tb'), ('menang', 'menang'),
+                     ('purata', 'purata'), ('rugi15', 'rugi15'), ('kl_K3', 'kl_K3'), ('tambah', 'tambah')):
+            self.assertTrue(np.allclose(g.loc[S17.index, a], S17[b], atol=6e-5, equal_nan=True), a)
+        self.assertTrue((g.loc[S17.index, 'n'] == S17.n).all())
+        self.assertTrue(np.allclose(g.loc[P8.index, 'a_besar'], P8.a_besar, atol=6e-4))      # papan lama: asas hampir sama (T11 stop loss lain)
+        # takrif SOLID dikira semula daripada lajur syarat
+        semula = U.s1 & U.s2 & U.s3 & U.s4 & U.s5 & U.s7 & (U.s6 != 'gagal')
+        self.assertTrue((semula == U.solid).all())
+        self.assertEqual((int(U.solid.sum()), int(U.wakil.sum()), int((U.solid & (U.asal == 'lama')).sum())), (B['solid_t'], B['wakil'], B['solid_lama']))
+        self.assertTrue((U.wakil <= U.solid).all() and (U[U.solid & ~U.wakil].serupa_dengan.fillna('') != '').all())
+        self.assertTrue(set(U[U.solid & ~U.wakil].serupa_dengan) <= set(U[U.wakil].id))
+        self.assertTrue((U.boleh_dibuat == (~U.tarikh | U.s8)).all())
+        hampir = (U.rugi15 - U.a_rugi15).abs() < 6e-5
+        self.assertTrue(((U.rugi_ok == (U.rugi15 <= U.a_rugi15)) | hampir).all())
+        self.assertEqual(int((U.solid & U.rugi_ok).sum()), B['solid_rugi_ok'])
+        s = U[U.solid]
+        self.assertTrue((s.n >= s18.MIN_N).all() and (s.tahun >= s18.MIN_TAHUN).all() and (s.n_K3 >= s18.MIN_K3).all())
+        self.assertTrue((s.kl_besar >= s18.KL_MIN - 6e-5).all() and (s[['kl_K1', 'kl_K2', 'kl_K3']] >= 0).all().all())
+        self.assertTrue((s.thn_bil >= s18.THN_MIN_BIL).all() and (s.thn_pos >= s18.THN_BAHAGIAN * s.thn_bil - 1e-9).all())
+        self.assertTrue((s.kl_besar100 >= 0).all() and (s.kl_tb >= 0).all() and (s.kl_baki >= s18.KL_BAKI - 6e-5).all())
+        self.assertTrue((s.tambah.isna() | (s.tambah >= s18.TAMBAH_MIN - 6e-5)).all())
+        self.assertTrue((U.besar100 <= U.besar + 1e-9).all() and np.allclose(U.kl_besar, U.besar - U.a_besar, atol=2e-4))
+        # senarai disusun: solid yang berbeza dahulu, ikut kadar naik besar
+        w = U[U.wakil]
+        self.assertTrue(U.wakil.iloc[:len(w)].all() and (w[w.boleh_dibuat].besar.diff().dropna() <= 1e-9).all())
+        # kawalan dan bacaan dikunci
+        self.assertEqual((len(Kw[Kw.jenis == 'K1']), len(Kw[Kw.jenis == 'K2']), B['n_K1'], B['n_K2']), (300, 300, 300, 300))
+        self.assertTrue((Kw[Kw.jenis == 'K2'].q2 == s18.Q_HASIL).all())
+        self.assertEqual((int(Kw[Kw.jenis == 'K1'].solid.sum()), int(Kw[Kw.jenis == 'K2'].solid.sum())), (B['solid_K1'], B['solid_K2']))
+        self.assertEqual(B['b1'], B['kadar_K1'] <= s18.B1_MAKS)
+        self.assertEqual(B['b2'], B['kadar_calon_hasil'] >= B['kadar_K2'] + s18.B2_BEZA)
+        self.assertTrue(B['b1'] and B['b2'])                                     # dapatan yang dilaporkan
+        self.assertAlmostEqual(B['nasib'], B['kadar_K1'] / B['kadar_calon'], 5)
+        self.assertEqual(int(Pr.solid_s1_s5.sum()), B['prasyarat_solid'])
+        # tiada yang lain diubah: kod T kekal 2,564 + 12; registry F tiada kod T
+        self.assertEqual((len(S17), len(P8)), (2564, 12))
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'))
+        self.assertFalse(reg.iloc[:, 0].astype(str).str.match(r'^T\d+$').any())
+
 
 class TestJenisTrend(unittest.TestCase):
     """SPEC pindaan 16 Nov 2026 (w): tinjauan jenis dan tempoh trend menaik (zigzag ATR; deskriptif)."""
