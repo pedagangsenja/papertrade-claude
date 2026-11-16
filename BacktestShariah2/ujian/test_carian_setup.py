@@ -2004,6 +2004,45 @@ class TestCS15(unittest.TestCase):
         self.assertTrue(s15.bacaan(T(0.10, 0.02, 0.35, sce=0.50))['b2'])
 
 
+    def test_fail_hasil(self):
+        """Fail hasil CS15 konsisten sesama sendiri dan dengan senarai utama; registry dan senarai utama tidak diubah."""
+        import cs_solid15 as s15
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS15')
+        B = json.load(open(os.path.join(d, 'bacaan.json'), encoding='utf-8'))
+        U = pd.read_csv(os.path.join(d, 'solid.csv'))
+        Kw = pd.read_csv(os.path.join(d, 'kawalan.csv'))
+        Pr = pd.read_csv(os.path.join(d, 'prasyarat.csv'))
+        S13 = pd.read_csv(os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS13', 'senarai_utama.csv')).set_index('id')
+        self.assertEqual((len(U), B['n_utama'], len(S13)), (2001, 2001, 2001))
+        self.assertEqual(set(U.id), set(S13.index))
+        self.assertTrue(np.allclose(U.set_index('id').loc[S13.index, 'terus'], S13.terus, atol=2e-5))
+        self.assertTrue(np.allclose(U.set_index('id').loc[S13.index, 'm5'], S13.m5, atol=2e-5))
+        self.assertEqual((int(U.solid.sum()), int(U.wakil.sum())), (B['solid_utama'], B['wakil']))
+        # takrif SOLID dikira semula daripada lajur syarat
+        semula = U.s1 & U.s2 & U.s3 & U.s4 & U.s5 & U.s7 & (U.s6 != 'gagal')
+        self.assertTrue((semula == U.solid).all())
+        self.assertTrue((U.wakil <= U.solid).all() and (U[U.solid & ~U.wakil].serupa_dengan.fillna('') != '').all())
+        self.assertTrue(set(U[U.solid & ~U.wakil].serupa_dengan) <= set(U[U.wakil].id))
+        self.assertTrue((U.boleh_dibuat == (~U.tarikh | U.s8)).all())
+        s = U[U.solid]
+        self.assertTrue((s.n >= s15.MIN_N).all() and (s.kl_terus >= s15.KL_MIN - 1e-6).all() and (s.kl_K3 > 0).all())
+        self.assertTrue((s.thn_pos >= s15.THN_BAHAGIAN * s.thn_bil - 1e-9).all() and (s.kl_baki >= s15.KL_BAKI - 1e-6).all())
+        self.assertTrue(((s.kl_m5 > 0) & (s.kl_m10 > 0) & (s.kl_m10d > 0)).all())
+        # tiga angka pengguna: label bersarang (10 % seminggu <= 5 % seminggu; "pernah" >= pada tutup)
+        self.assertTrue((U.m10 <= U.m5 + 1e-9).all() and (U.p5 >= U.m5 - 1e-9).all() and (U.p10d >= U.m10d - 1e-9).all())
+        # kawalan dan bacaan dikunci
+        self.assertEqual((len(Kw[Kw.jenis == 'K1']), len(Kw[Kw.jenis == 'K2']), B['n_K1'], B['n_K2']), (300, 300, 300, 300))
+        self.assertTrue((Kw[Kw.jenis == 'K2'].q2 == s15.Q_F01).all())
+        self.assertEqual(int(Kw[Kw.jenis == 'K1'].solid.sum()), B['solid_K1'])
+        self.assertEqual(B['b1'], B['kadar_K1'] <= s15.B1_MAKS)
+        self.assertEqual(B['b2'], B['kadar_calon_earnings'] >= B['kadar_K2'] + s15.B2_BEZA)
+        self.assertTrue(B['b1'] and not B['b2'])                                 # dapatan yang dilaporkan
+        # "prasyarat sahaja": laporan kewangan 1-5 sesi sendiri lulus S1-S5
+        q = Pr[(Pr.q1 == -1) & (Pr.q2 == s15.Q_F01)].iloc[0]
+        self.assertTrue(bool(q.solid_s1_s5) and q.kl_terus > 0.03 and q.thn_pos == q.thn_bil)
+        self.assertGreater(B['ramal']['positif'], 0.9)
+
+
 class TestJenisTrend(unittest.TestCase):
     """SPEC pindaan 16 Nov 2026 (w): tinjauan jenis dan tempoh trend menaik (zigzag ATR; deskriptif)."""
 
