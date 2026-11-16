@@ -1225,12 +1225,6 @@ besar (rawak hari sama 14.1 %), menang 42 %, rugi ≥ 15 % 45 %, purata +5.8 %; 
   lorong ini rugi ≥ 15 % (CS08); beribu calon disemak pada kumpulan B, jadi sebahagian lulus kerana nasib (anggaran dilaporkan);
   kelebihan lawan rawak hari sama mengukur PILIHAN saham; pangkat backtest, BUKAN bukti.
 
-## 8. Apa yang TIDAK dibuat dalam CS01
-
-Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
-≥ 3 indikator keluar, carian pada set 2000 penuh (dirancang melalui Actions selepas keputusan pengguna), dan simulasi
-portfolio berslot. Pusingan seterusnya memerlukan pindaan bertarikh pada fail ini **sebelum** dijalankan.
-
 ### Pindaan 16 Nov 2026 (ab) — pusingan CS18: "UJIAN SOLID" bagi lorong "pegang berbulan-bulan" (T) (sebelum dijalankan)
 
 Keputusan pengguna 16 Nov 2026 ("ya untuk 1 dan 2"; soalan 2: "Buat 'ujian solid' bagi 2,564 setup ini, seperti setup F?").
@@ -1282,3 +1276,9 @@ sampel: 86 % ≥ 300 belian, 98 % ≥ 20 belian pada 2025–26). Ambang di bawah
 - **Tiada yang diubah:** `registry_F.csv`, `hasil/CS17/` (senarai dan kod T), `hasil/CS08/papan.csv`, kohort, dashboard.
   Tanda `solid`, `wakil`, `boleh_dibuat` ditulis dalam `hasil/CS18/solid_t.csv.gz` sahaja. "Solid" = paling tahan uji dalam
   backtest, BUKAN bukti; tiada papertrade tanpa keputusan pengguna.
+
+## 8. Apa yang TIDAK dibuat dalam CS01
+
+Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
+≥ 3 indikator keluar, carian pada set 2000 penuh (dirancang melalui Actions selepas keputusan pengguna), dan simulasi
+portfolio berslot. Pusingan seterusnya memerlukan pindaan bertarikh pada fail ini **sebelum** dijalankan.
