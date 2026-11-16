@@ -1115,6 +1115,20 @@ disalah tafsir:
   masa), nilai tengah bagi tiga kumpulan setup (semua 2,001; 42 lama; 210 "pilihan") dan beza purata 2025–26. Cara yang
   bezanya lawan cara sekarang < 0.1 mata ditanda "secara praktikal sama".
 
+### Keputusan pengguna 16 Nov 2026 selepas CS14 ("B") — cara pegang kedua dipapar di sebelah cara sekarang
+
+Hasil (x) dibentang dengan tiga pilihan (A kekal cara sekarang sahaja; B tambah "pegang selagi tutup di atas purata 50 hari,
+tiada had masa" di sebelah cara sekarang; C tambah "jual bila jatuh 4 × ATR dari tutup tertinggi"). Pengguna memilih **B**.
+
+- Dashboard (Rujukan → Setup F) memaparkan kedua-dua cara sebelah-menyebelah bagi setiap setup: cara sekarang (pegang B,
+  `r0·t1·126`) dan "pegang lebih lama" (`r0·t2·tiada`), daripada `hasil/CS14/setup.csv.gz`.
+- **Yang TIDAK berubah:** susunan dan tapisan "pilihan" senarai utama (kekal ikut cara sekarang), `hasil/CS13/` (rekod),
+  `registry_F.csv` (keluar berdaftar `F96`–`F2054` kekal `PB`), kohort jejak F. Cara pegang untuk papertrade diputuskan
+  apabila pengguna memulakan papertrade (masih ditangguh oleh pengguna).
+- **Kaveat dikunci:** cara kedua GAGAL ujian (x) kerana kadar menang turun (nilai tengah −5.6 mata; purata +0.5 mata; rugi
+  ≥ 15 % tidak berubah); ia dipapar kerana pilihan pengguna, bukan kerana ia lulus. Saham rawak yang dipegang dengan cara
+  sama mendapat tambahan purata yang serupa. Carian cara jual kekal DITUTUP: tiada pusingan keluar baharu tanpa sebab baharu.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
