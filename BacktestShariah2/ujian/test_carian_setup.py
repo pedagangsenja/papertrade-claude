@@ -3347,6 +3347,19 @@ class TestCS24(unittest.TestCase):
         T.loc[T.peranan == 'kawalan', 'kl_t5_K3'] = [0.01] * 7 + [-0.01] * 3
         self.assertFalse(c24.bacaan(T)['b2'])                             # 70 % lawan 70 %: beza < 10 mata
 
+    def test_hasil_direkod(self):
+        """Bacaan dikunci CS24 gagal (B2), jadi tiada kod pusingan CS24 dan tiada senarai_tenang.csv."""
+        d = os.path.join(SINI, '..', 'kajian', 'carian_setup', 'hasil', 'CS24')
+        with open(os.path.join(d, 'bacaan.json'), encoding='utf-8') as f:
+            B = json.load(f)
+        self.assertTrue(B['b1'])
+        self.assertFalse(B['b2'])
+        self.assertFalse(B['ya'])
+        self.assertLess(B['k3_calon'], 0.60)
+        self.assertFalse(os.path.exists(os.path.join(d, 'senarai_tenang.csv')))
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str)
+        self.assertFalse((reg.pusingan == 'CS24').any())
+
 
 if __name__ == '__main__':
     unittest.main()
