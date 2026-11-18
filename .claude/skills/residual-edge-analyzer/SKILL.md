@@ -18,8 +18,8 @@ Treat this as a falsification gate after `backtest-expert`, not as trade authori
 - Use Python 3.9+.
 - Prepare one CSV containing an ISO date, strategy return, and every baseline return on
   the same row.
-- Prepare a JSON specification following the
-  [input contract](https://github.com/tradermonty/claude-trading-skills/blob/main/skills/residual-edge-analyzer/references/input-contract.md).
+- Prepare a JSON specification following `references/input-contract.md` in this skill's folder
+  (copy the JSON example there and change the column names).
 - Supply actual period returns. Do not substitute CAGR, Sharpe, cumulative P&L, or other
   summary metrics.
 
@@ -59,13 +59,20 @@ insufficient rather than inventing observations.
 
 ### 3. Run the analyzer
 
+Run from the repository root:
+
 ```bash
-python3 skills/residual-edge-analyzer/scripts/analyze_residual_edge.py \
+python3 .claude/skills/residual-edge-analyzer/scripts/analyze_residual_edge.py \
   --input reports/strategy_returns.csv \
   --config reports/residual_edge_config.json \
   --output-json reports/residual_edge_report.json \
   --output-markdown reports/residual_edge_report.md
 ```
+
+If the skill is installed elsewhere, replace `.claude/skills/residual-edge-analyzer` with this skill's folder.
+The script prints the two files it wrote and exits 0. If it exits with any other status, read the error,
+fix the CSV or the config, and run it again. Do not write a report by hand.
+Why: a hand-written report has no audit trail.
 
 The script runs the predeclared primary model and all sensitivity models in one execution.
 It uses an intercept OLS model and HAC/Newey-West standard errors. It reports the residual
@@ -89,7 +96,7 @@ Read `decision_eligibility` separately. A statistically interesting result remai
 warnings exist, when rolling evidence is unavailable, or when no alternate baseline was
 tested.
 
-Inspect:
+Inspect all six, in this order, and quote each value from the report:
 
 1. primary and sensitivity-model status;
 2. annualized alpha and HAC t-stat;
@@ -103,7 +110,10 @@ Inspect:
 - Send baseline-choice, OOS, and stability findings back to `backtest-expert`.
 - Send recurring residual failure regimes to `signal-postmortem`.
 - Pass only evidence and operating constraints to `trade-performance-coach`.
+- If one of these skills is not installed, write the finding under a "Hand-off" heading in your answer instead.
+  Why: the finding must not be lost because the receiving skill is missing.
 - Never change position size, exposure, or orders automatically.
+  Why: this skill produces evidence; a person decides what to trade.
 
 ## Boundaries
 
@@ -118,6 +128,40 @@ Inspect:
   confirm findings out of sample.
 - Do not assume high R-squared makes a strategy worthless; capacity, tail behavior, costs,
   and implementation value require separate evidence.
+
+## Example of a Finished Answer
+
+Produced by the command in step 3 on a 300-day daily series with the config from `references/input-contract.md`
+(`universe_data: not_applicable`):
+
+```
+Claim tested: the strategy earns return beyond its market exposure.
+Status: RESIDUAL_EDGE | Decision eligibility: ELIGIBLE
+Period: 2025-01-02 to 2026-02-25 (300 observations) | Primary model: market
+
+1. Model status: market RESIDUAL_EDGE | equal_weight RESIDUAL_EDGE | market_plus_momentum RESIDUAL_EDGE
+2. Annualized alpha 19.72%, HAC t-stat 2.034
+3. Residual edge ratio 2.116 (annualized residual volatility 9.32%)
+4. Rolling alpha stability: alpha positive in 88.7% of 238 rolling windows (threshold 60%)
+5. VIF: 1.000 (market_return loading 0.8209, R-squared 0.6286)
+6. Regimes (volatility_regime): high N=79, active return 21.84% | low N=221, active return 18.96%
+
+Evidence warnings: none.
+Limits: 300 observations is about 14 months; confirm on untouched out-of-sample or live data.
+        This report does not authorize a trade or an exposure change.
+Hand-off: baseline choice and stability findings go to backtest-expert.
+```
+
+## Final Checklist (run before saying you are done)
+
+- [ ] The claimed edge is written in one sentence, and the baselines were chosen before looking at results.
+- [ ] All five declarations are in the config (`baseline_selection`, both return bases, `analysis_scope`, `universe_data`).
+- [ ] The script ran and exited 0; the JSON and Markdown files exist.
+- [ ] `status` and `decision_eligibility` are quoted exactly as the report gives them.
+- [ ] All six inspection items are reported with their values.
+- [ ] Every evidence warning in the report is repeated in the answer.
+- [ ] No rule under "Boundaries" is broken (for example, in-sample edge is not called confirmed alpha).
+- [ ] The answer says the report does not authorize a trade.
 
 ## Resources
 

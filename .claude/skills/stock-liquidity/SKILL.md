@@ -40,6 +40,10 @@ subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "yfinance",
 
 If already installed, skip and proceed.
 
+If a function below returns `None`, or Yahoo Finance cannot be reached, retry once after 5 seconds. If it
+fails again, tell the user "no data returned for <ticker>" with the error text, and stop. Never fill in
+numbers from memory. Why: an invented spread or volume looks exactly like a real one.
+
 ---
 
 ## Step 2: Route to the Correct Sub-Skill
@@ -152,7 +156,12 @@ def liquidity_dashboard(ticker_symbol, period="3mo"):
 
 Present as a summary card. For the Amihud illiquidity ratio, multiply by 1e9 for readability (standard convention).
 
-**Liquidity grade** (use these rough thresholds for US equities):
+**Liquidity grade** (thresholds for US equities). Assign it in three steps:
+
+1. Grade each metric that has a value separately, using its column in the table.
+2. The overall grade is the least liquid of those grades. Why: the weakest dimension sets the real cost of trading.
+3. If a metric is `None` (for example, no bid/ask outside market hours), leave it out and say which metric
+   was missing.
 
 | Grade | Avg Dollar Volume | Spread (%) | Amihud (×10⁹) |
 |---|---|---|---|
@@ -207,7 +216,7 @@ Show:
 - Current quoted spread (absolute, relative %, basis points)
 - Bid/ask sizes if available
 - Near-the-money options spreads for context
-- How the spread compares to typical ranges for this market cap tier
+- Which row of the Spread (%) column in the Sub-Skill A grade table the relative spread falls in
 
 ---
 
@@ -273,7 +282,7 @@ Show:
 - Average daily volume (shares and dollar) with median for comparison
 - Relative volume (RVOL) — today's volume vs. the average. RVOL > 1.5 is elevated; RVOL < 0.5 is unusually quiet
 - Volume trend — is trading activity increasing or declining?
-- Day-of-week pattern (if meaningful variation exists)
+- Day-of-week pattern, only if the busiest weekday's average volume is at least 20% above the quietest weekday's
 - Top 5 highest-volume days with context (earnings? news?)
 
 ---
@@ -478,14 +487,44 @@ After running the appropriate sub-skill:
 - Market impact estimates are **models, not guarantees** — actual execution costs depend on strategy, timing, and market conditions
 - Liquidity can **change rapidly** — a stock that's liquid today may not be tomorrow (especially around events, halts, or during extended hours)
 
-### Practical guidance (mention when relevant)
+### Practical guidance (include a line only when its condition is true)
 
-- **Position sizing**: If estimated impact exceeds ~25 bps, the position may be too large for the stock's liquidity (see the thresholds in Sub-Skill E)
-- **Small/micro-cap warning**: Stocks with < $1M daily dollar volume require careful execution
-- **Spread costs compound**: A 0.10% spread on a round-trip (buy + sell) costs 0.20% — this adds up for active strategies
-- **Illiquidity premium**: Less liquid stocks historically earn higher returns as compensation — but the transaction costs can eat this premium
+- **Position sizing** (condition: estimated impact above 25 bps): the position may be too large for the stock's liquidity (see the thresholds in Sub-Skill E)
+- **Small/micro-cap warning** (condition: average dollar volume below $1M per day): suggest limit orders and splitting the order across days
+- **Spread costs compound** (condition: the user trades the stock often, or asks about strategy costs): a 0.10% spread on a round-trip (buy + sell) costs 0.20%
+- **Illiquidity premium** (condition: overall grade is Low or Very Low): less liquid stocks historically earn higher returns as compensation, but transaction costs can eat this premium
 
 Present liquidity data and let the user make their own decisions; don't recommend specific trades.
+Why: this skill measures trading cost; it does not judge whether a trade is a good idea.
+
+### Example of a finished answer
+
+Request: "How liquid is A (Agilent)?" Sub-Skill A, 3-month lookback. Bid/ask and share counts were not
+available in this run, so spread and turnover are reported as missing.
+
+```
+A (Agilent) liquidity, 2026-08-18 to 2026-11-17 (65 trading days, daily bars)
+
+Price (last close)          172.22
+Average daily volume        2,340,959 shares (median 2,255,860)
+Average dollar volume       $385.8M per day
+Volume variability (CV)     0.284
+Amihud illiquidity (x1e9)   0.0413
+Daily volatility            1.92%
+Impact of 1% of ADV         19.2 bps (23,409 shares, about $4.0M)
+Bid-ask spread              not available
+Turnover ratio              not available
+
+Grade by metric: dollar volume High ($50M to $500M) | Amihud High (0.01 to 0.1) | spread missing
+Overall grade: High (least liquid of the available grades)
+
+Impact curve: 1% of ADV 19.2 bps | 5% of ADV 43.0 bps | 10% of ADV 60.8 bps
+Position sizing: an order above about 1.7% of ADV crosses 25 bps; 10% of ADV is above 50 bps, so consider
+splitting it across days.
+
+Caveats: quotes are delayed about 15 minutes and are snapshots; Level 2 depth is not available from
+Yahoo Finance; impact figures are model estimates, not guarantees; liquidity can change quickly around events.
+```
 
 ---
 
@@ -494,3 +533,14 @@ Present liquidity data and let the user make their own decisions; don't recommen
 - `references/liquidity_reference.md` — Detailed formulas, extended code templates, metric interpretation guides, and academic references for all liquidity measures
 
 Read the reference file when you need exact formulas, edge case handling, or deeper background on liquidity metrics.
+
+## Final Checklist (run before saying you are done)
+
+- [ ] The sub-skill code ran in this session and the answer quotes its output.
+- [ ] Every number in the answer appears in that output; none came from memory.
+- [ ] The lookback period and the data date are stated.
+- [ ] Any metric that came back `None` is reported as "not available", not left out silently.
+- [ ] The grade was assigned with the three-step rule, and the answer says which metrics it used.
+- [ ] All four "Always caveat" points are included.
+- [ ] A practical-guidance line appears only where its condition is true.
+- [ ] The answer does not recommend buying or selling.
