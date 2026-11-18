@@ -119,6 +119,57 @@ class TestPeristiwa(unittest.TestCase):
             self.assertTrue(out[0]['isyarat_keluar'].startswith('Pegang (henti 17.01'))
             self.assertEqual(out[1]['keluar'], 'True')             # henti dilaras 17.46 >= Low 17.421: keluar kekal
 
+    def test_laras_c_henti_keluar_sebelum_ex(self):
+        # TRMD 17 Nov 2026: lorong kaedah masih dipegang, lorong henti keluar 6 Nov, dividen khas ex 16 Nov
+        lajur = ['tarikh_beli', 'saham', 'kaedah', 'harga_beli', 'harga_terkini', 'untung_pct', 'henti', 'sasaran', 'keluar',
+                 'tarikh_keluar', 'harga_keluar', 'untung_akhir_pct', 'nota', 'tidak_dibeli', 'keluar_henti',
+                 'tarikh_keluar_henti', 'harga_keluar_henti', 'untung_henti_pct']
+        r = dict(tarikh_beli='2026-10-13', saham='TRMD', kaedah='M82', harga_beli='40.75', harga_terkini='36.68',
+                 henti='', keluar='False', keluar_henti='True', tarikh_keluar_henti='2026-11-06',
+                 harga_keluar_henti='35.77', untung_henti_pct='-12.22')
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, 'claude_14.csv')
+            with open(p, 'w', newline='') as f:
+                w = csv.DictWriter(f, lajur); w.writeheader(); w.writerow({k: r.get(k, '') for k in lajur})
+            fr = pd.DataFrame([dict(saham='TRMD', tarikh_ex='2026-11-16', jenis='dividen_khas', faktor='0.963195',
+                                    sumber='u', catatan='', ditambah='')])
+            P.laras_c(d, fr)
+            with open(p) as f:
+                o = list(csv.DictReader(f))[0]
+            hb, hk = float(o['harga_beli']), float(o['harga_keluar_henti'])
+            self.assertAlmostEqual(hk, 35.77 * 0.963195, places=3)
+            self.assertEqual(o['untung_henti_pct'], '-12.22')
+            self.assertAlmostEqual((hk / hb - 1) * 100, -12.22, places=1)
+
+    def test_laras_pecahan(self):
+        # SENEA 5:1 (stor dilaras 17 Nov 2026): posisi terbuka dilaras, posisi tertutup kedua-dua lorong tidak disentuh
+        lajur = ['tarikh_beli', 'saham', 'kaedah', 'harga_beli', 'harga_terkini', 'untung_pct', 'henti', 'sasaran', 'keluar',
+                 'tarikh_keluar', 'harga_keluar', 'untung_akhir_pct', 'nota', 'tidak_dibeli', 'keluar_henti']
+        rows = [dict(tarikh_beli='2026-11-12', saham='SS', kaedah='M10', harga_beli='176.56', harga_terkini='176.47',
+                     henti='165.29', keluar='False'),
+                dict(tarikh_beli='2026-11-12', saham='SS', kaedah='M74', harga_beli='176.56', keluar='True',
+                     tarikh_keluar='2026-11-12', harga_keluar='174.7', untung_akhir_pct='-1.05', keluar_henti='False'),
+                dict(tarikh_beli='2026-11-12', saham='SS', kaedah='M99', harga_beli='176.56', keluar='True',
+                     harga_keluar='170', keluar_henti='True')]
+        ix = pd.to_datetime(['2026-11-12', '2026-11-13'])
+        g = pd.DataFrame(dict(open=[35.312, 34.3], high=36.0, low=33.0, close=35.0, volume=1e5), index=ix)
+        log = pd.DataFrame([dict(masa='2026-11-17 08:12 UTC', ticker='SS', nisbah='0.2', bar='9', serak='0.0',
+                                 keputusan='laras', sumber='yfinance')])
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, 'claude_9.csv')
+            with open(p, 'w', newline='') as f:
+                w = csv.DictWriter(f, lajur); w.writeheader()
+                for r in rows:
+                    w.writerow({k: r.get(k, '') for k in lajur})
+            x = P.laras_pecahan(d, {'SS': g}, log)
+            self.assertEqual([y[2] for y in x], ['M10', 'M74'])
+            with open(p) as f:
+                o = list(csv.DictReader(f))
+            self.assertEqual((o[0]['harga_beli'], o[0]['henti'], o[0]['harga_terkini']), ('35.312', '33.058', '35.294'))
+            self.assertEqual((o[1]['harga_beli'], o[1]['harga_keluar'], o[1]['untung_akhir_pct']), ('35.312', '34.94', '-1.05'))
+            self.assertEqual(o[2]['harga_beli'], '176.56')
+            self.assertEqual(P.laras_pecahan(d, {'SS': g}, log), [])
+
 
 if __name__ == '__main__':
     unittest.main()

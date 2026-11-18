@@ -267,14 +267,82 @@ def laras_c(folder, rows=None, frames=None):
                     x['untung_pct'] = f'{(hk / hb2 - 1) * 100:.2f}'
                 if kel and SH.nombor(x.get('harga_keluar')):
                     x['untung_akhir_pct'] = f"{(SH.nombor(x['harga_keluar']) / hb2 - 1) * 100:.2f}"
-                if SH.benar(x.get('keluar_henti')) and SH.nombor(x.get('harga_keluar_henti')) and (x.get('tarikh_keluar_henti') or '') >= r.tarikh_ex:
-                    x['untung_henti_pct'] = f"{(SH.nombor(x['harga_keluar_henti']) / hb2 - 1) * 100:.2f}"
+                hkh = SH.nombor(x.get('harga_keluar_henti'))
+                if SH.benar(x.get('keluar_henti')) and hkh:
+                    if (x.get('tarikh_keluar_henti') or '') >= r.tarikh_ex:
+                        x['untung_henti_pct'] = f"{(hkh / hb2 - 1) * 100:.2f}"
+                    else:
+                        # lorong henti keluar SEBELUM tarikh_ex: harga jualnya ialah harga sebelum peristiwa, jadi ia
+                        # dilaras dengan faktor yang sama (siri dilaras) dan untung_henti_pct kekal (kes TRMD 17 Nov 2026)
+                        x['harga_keluar_henti'] = f'{hkh * f:.4f}'.rstrip('0').rstrip('.')
                 x['nota'] = ((x.get('nota') or '') + f'; {tanda} x{f:g} (harga beli/henti/sasaran dilaras)').lstrip('; ')
                 ubah = True
                 jenis = 'semak' if kel and x.get('tarikh_keluar') == r.tarikh_ex else 'dilaras'
                 if kel and frames is not None and buka_semula_henti(x, frames.get(x['saham']), r.tarikh_ex):
                     jenis = 'dibuka semula'
                 out.append((os.path.basename(p), x['saham'], x.get('kaedah'), tb, r.tarikh_ex, jenis))
+        if ubah:
+            SH.tulis(p, lajur, data)
+    return out
+
+
+def laras_pecahan(folder, frames, log=None, tol=0.03):
+    """Pecahan saham (split) pada posisi Papertrade C yang masih dipegang (18 Nov 2026, kes SENEA 5:1).
+
+    Stor harga melaras sejarah sendiri apabila yfinance menghantar siri dilaras pecahan (`<stor>/log_laras.csv`,
+    keputusan `laras`), tetapi harga_beli/henti/sasaran posisi C kekal pada harga sebelum pecahan; harian_c dan
+    keluar_lorong kemudian melangkau posisi itu ("split/data tidak sepadan — tidak dinilai") dan ia beku. Di sini setiap
+    rekod `laras` dengan nisbah di luar 0.8-1.25 digunakan pada posisi saham itu yang lorong 1 masih terbuka, HANYA jika
+    buka stor pada hari beli = harga_beli x nisbah (dalam `tol`); harga lain (harga_terkini, harga_buka_rujukan) didarab
+    sama. Untung % tidak berubah. Sekali sahaja (penanda dalam nota). Pulang senarai perubahan."""
+    import sahkan as SH
+    if log is None:
+        q = os.path.join(BS2, 'data', 'harga', 'stor', 'log_laras.csv')
+        log = pd.read_csv(q, dtype=str, keep_default_na=False) if os.path.exists(q) else pd.DataFrame()
+    if not len(log):
+        return []
+    pec = {}
+    for r in log.itertuples():
+        try:
+            n = float(r.nisbah)
+        except (TypeError, ValueError):
+            continue
+        if r.keputusan == 'laras' and not (0.8 <= n <= 1.25):
+            pec.setdefault(r.ticker, []).append((str(r.masa)[:10], n))
+    if not pec:
+        return []
+    out = []
+    for p in sorted(os.path.join(folder, f) for f in os.listdir(folder) if f.startswith('claude') and f.endswith('.csv')):
+        lajur, data = SH.baca(p)
+        ubah = False
+        for x in data:
+            t = x.get('saham')
+            # lorong 1 ATAU lorong 2 masih terbuka (posisi yang kedua-dua lorongnya sudah keluar ialah sejarah tetap)
+            if t not in pec or SH.benar(x.get('tidak_dibeli')) or (SH.benar(x.get('keluar')) and SH.benar(x.get('keluar_henti'))):
+                continue
+            g = (frames or {}).get(t)
+            hb = SH.nombor(x.get('harga_beli'))
+            tb = x.get('tarikh_beli') or ''
+            if g is None or not hb or not tb or pd.Timestamp(tb) not in g.index:
+                continue
+            o = float(g.open.loc[pd.Timestamp(tb)])
+            for masa, n in pec[t]:
+                tanda = f'pecahan {t} {masa} x{n:g}'
+                if tanda in (x.get('nota') or '') or abs(o / hb - 1) <= 0.15 or abs(o / (hb * n) - 1) > tol:
+                    continue
+                lajur_h = ['harga_beli', 'henti', 'sasaran', 'harga_terkini', 'harga_buka_rujukan']
+                # harga jual lorong 1 yang direkod SEBELUM pecahan (masih sekitar harga_beli) dilaras sama; untung_akhir_pct kekal
+                hk = SH.nombor(x.get('harga_keluar'))
+                if SH.benar(x.get('keluar')) and hk and abs(hk / hb - 1) < 0.5:
+                    lajur_h.append('harga_keluar')
+                for c in lajur_h:
+                    v = SH.nombor(x.get(c))
+                    if v:
+                        x[c] = f'{v * n:.4f}'.rstrip('0').rstrip('.')
+                x['nota'] = ((x.get('nota') or '') + f'; {tanda} (harga beli/henti/sasaran dilaras)').lstrip('; ')
+                ubah = True
+                out.append((os.path.basename(p), t, x.get('kaedah'), tb, masa, 'pecahan'))
+                break
         if ubah:
             SH.tulis(p, lajur, data)
     return out
