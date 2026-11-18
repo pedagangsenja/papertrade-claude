@@ -1814,6 +1814,14 @@ sudah dijana hanyalah input (panel, lapisan prasyarat, isyarat benih tanpa intai
   awal); kelebihan kecil (kira-kira 0 hingga +2 mata); kemungkinan besar gagal B2 seperti CS12 dan CS22. Pusingan ini
   mengukur kadar "dijual dengan untung", bukan untung akaun, dan tidak dinilai lawan indeks.
 
+### Keputusan pengguna 18 Nov 2026 selepas CS24 ("ya, semua ikut cadangan") — kumpulan saham tenang dihentikan
+
+Hasil CS24 (`hasil/CS24/TENANG.md`): bacaan dikunci GAGAL (B1 lulus; B2: 59.8 % calon lebih baik daripada rawak pada 2025–26,
+perlu ≥ 60 %); tiada kod baharu. Pengguna memilih (a): **berhenti di sini dan kekal dengan kumpulan saham laju**. Carian
+kumpulan saham tenang (alam `ATR% <= 2.5`, jualan 5 % dari tutup tertinggi) tidak diulang tanpa permintaan pengguna.
+**Stop loss kumpulan saham laju tidak ditukar** (4×ATR14 dari harga beli; cara pegang B). Tiada perubahan pada registry F,
+senarai utama, Top 100 atau penjejak.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
