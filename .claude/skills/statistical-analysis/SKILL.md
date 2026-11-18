@@ -31,6 +31,10 @@ Use this skill when:
 ## Installation
 
 Targets Pingouin 0.7.0, SciPy 1.18.1, statsmodels 0.15.0, PyMC 6.3.2 and ArviZ 1.3.0 (reviewed 2026-10-01). Create a separate environment; do not add mutually incompatible scientific stacks to a shared project environment.
+Why: these pinned versions can conflict with the versions a project already pins.
+
+First check whether the environment already exists: `.venv-statistics/bin/python -c "import pingouin; print(pingouin.__version__)"`.
+If it prints `0.7.0`, skip the install commands below.
 
 ```bash
 uv venv --python 3.12 .venv-statistics
@@ -63,6 +67,27 @@ Use the following workflow, documenting prespecified decisions and exploratory d
 6. **Report** using the APA templates below, including descriptives, exact statistics, effect sizes with CIs, and the assumption checks performed.
 
 If the user only needs one step (e.g., "how many participants do I need?"), jump straight to that section — but still confirm the design assumptions the calculation rests on.
+
+### Defaults when the user has not said otherwise
+
+State each default you used in the report. Why: the reader must be able to tell a choice from an accident.
+
+- Significance level: alpha = .05, two-sided.
+- Two independent group means: Welch's t-test (`correction=True`).
+- Three or more independent group means: Welch's ANOVA, then Games-Howell pairwise comparisons.
+- Interval level: 95%.
+- Several tests in one family (other than post-hoc after ANOVA): Holm correction.
+- Missing values: report the count per variable, analyze complete cases, and say so.
+
+### When to stop and ask the user
+
+Ask one short question before running any test if any of these is unknown:
+
+1. whether the observations are independent, paired or clustered;
+2. which variable is the outcome;
+3. whether the analysis was planned before seeing the data (confirmatory) or not (exploratory).
+
+Why: these three change which test is valid, and they cannot be read from the data.
 
 ---
 
@@ -387,6 +412,36 @@ Convergence diagnostics were satisfactory (all R-hat < 1.01, ESS > 1000).
 
 For rank methods, report distribution summaries (often medians/IQRs), the U/W/H statistic, and a rank-based effect size (e.g., rank-biserial correlation, returned by `pg.mwu` as `RBC`).
 
+### Worked example (computed, reproducible)
+
+Unlike the templates above, every number below was produced by running the code with the pinned versions.
+
+```python
+import numpy as np, pingouin as pg
+from scipy import stats
+
+rng = np.random.default_rng(42)
+group_a = rng.normal(75, 8.5, 48)
+group_b = rng.normal(70, 9.2, 52)
+
+res = pg.ttest(group_a, group_b, correction=True)
+d = pg.compute_effsize(group_a, group_b, eftype='cohen')
+ci = pg.compute_esci(stat=d, nx=48, ny=52, eftype='cohen', confidence=0.95)
+print(stats.shapiro(group_a), stats.shapiro(group_b), stats.levene(group_a, group_b))
+```
+
+Finished report:
+
+```
+Design: two independent groups, outcome = score, confirmatory, alpha = .05 two-sided (defaults stated).
+Group A (n = 48, M = 75.68, SD = 6.63) scored higher than Group B (n = 52, M = 68.44, SD = 7.01),
+Welch's t(97.94) = 5.31, p < .001, mean difference 95% CI [4.53, 9.95], d = 1.06, 95% CI [0.64, 1.48].
+Assumption screens: Shapiro-Wilk did not reject normality (A: W = 0.985, p = .791; B: W = 0.971, p = .239);
+Levene's test did not reject equal variances (F = 0.40, p = .527). Non-rejection does not verify either
+assumption; Welch's test was chosen in advance and does not need equal variances.
+Missing values: none. Multiple comparisons: one test, no correction needed.
+```
+
 ---
 
 ## Bayesian Statistics
@@ -434,6 +489,19 @@ These are the practices that keep an analysis defensible. They matter because th
 5. **Statistical significance is not practical importance.** With large n, trivial effects reach p < .001. Lead the interpretation with the effect size.
 6. **Understand missing data before dropping rows.** State which rows were removed and why. Complete-case validity depends on the model and missingness mechanism; MCAR is sufficient in many settings but not necessary universally. Imputation also needs assumptions and sensitivity analysis, especially under MNAR.
 7. **Make it reproducible.** Set random seeds, report library versions for simulation-based methods, and keep the analysis in a runnable script.
+
+## Final Checklist (run before saying you are done)
+
+- [ ] The question, outcome, design and sampling unit are stated before any result.
+- [ ] Each result is labelled confirmatory or exploratory.
+- [ ] The data were inspected first: n, mean, SD, median and missing count per group.
+- [ ] The test matches the design (independent, paired or clustered), and every default used is stated.
+- [ ] Assumption checks were run and reported as screens, not as proof.
+- [ ] Every test has an effect size with a 95% interval and an exact p-value (`p < .001` only below .001).
+- [ ] A multiple-comparison correction is named when more than one test was run in a family.
+- [ ] All planned analyses are reported, including non-significant ones.
+- [ ] Every number in the report came from code run in this session; library versions and the seed are given.
+- [ ] No template number from "Example Report Templates" was copied into the report.
 
 ## Citing Scientific Agent Skills
 

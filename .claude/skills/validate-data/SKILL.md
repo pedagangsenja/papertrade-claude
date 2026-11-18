@@ -6,7 +6,7 @@ argument-hint: "<analysis to review>"
 
 # /validate-data - Validate Analysis Before Sharing
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> If a data source the analysis used cannot be reached from this session, name it and mark the checks that depend on it "not checked". Why: a check that was skipped must not read as a check that passed.
 
 Review an analysis for accuracy, methodology, and potential biases before sharing with stakeholders. Generates a confidence assessment and improvement suggestions.
 
@@ -24,6 +24,15 @@ The analysis can be:
 - A description of methodology and findings
 
 ## Workflow
+
+Do steps 1 to 8 in order. For each step, record a finding or "no issue found". If a step cannot be done
+(for example, there are no charts for step 5), write "not applicable".
+
+Severity, used in every step:
+
+- **High**: the error changes a conclusion or a headline number.
+- **Medium**: the error changes a number but not a conclusion, or an important caveat is missing.
+- **Low**: wording, formatting or presentation only.
 
 ### 1. Review Methodology and Assumptions
 
@@ -45,11 +54,12 @@ Systematically review against the detailed pitfall catalog below (join explosion
 
 ### 4. Verify Calculations and Aggregations
 
-Where possible, spot-check:
+Spot-check when the underlying data or query is available; otherwise write "not checked: no data access".
 
-- Recalculate a few key numbers independently
+- Recalculate at least 3 key numbers independently (all of them if there are fewer than 3), starting with
+  the headline number. Why: one recalculated number can match by luck; three rarely do.
 - Verify that subtotals sum to totals
-- Check that percentages sum to 100% (or close to it) where expected
+- Check that percentages sum to 100% where expected (a gap of up to 1 percentage point from rounding is acceptable)
 - Confirm that YoY/MoM comparisons use the correct base periods
 - Validate that filters are applied consistently across all metrics
 
@@ -86,7 +96,13 @@ Provide specific, actionable suggestions:
 
 ### 8. Generate Confidence Assessment
 
-Rate the analysis on a 3-level scale:
+Rate the analysis on a 3-level scale. Choose the level with this rule, in this order:
+
+1. Any High issue, or any recalculated number that does not match: **Needs revision**.
+2. Otherwise, any Medium issue, or any key check marked "not checked": **Share with noted caveats**.
+3. Otherwise: **Ready to share**.
+
+Why: a fixed rule gives the same rating for the same findings every time.
 
 **Ready to share** -- Analysis is methodologically sound, calculations verified, caveats noted. Minor suggestions for improvement but nothing blocking.
 
@@ -122,6 +138,41 @@ Rate the analysis on a 3-level scale:
 ### Required Caveats for Stakeholders
 - [Caveat that must be communicated]
 - ...
+```
+
+### Example of a finished report
+
+Analysis reviewed: section 2 of `BacktestShariah2/kajian/carian_setup/hasil/CS23/TOP100.md` ("how many setups
+were scored"), checked against `skor.csv.gz` in the same folder.
+
+```
+## Validation Report
+
+### Overall Assessment: Ready to share
+
+### Methodology Review
+Scope of this review: section 2 only; the scoring formula itself was not re-derived.
+The section reports counts and score summaries from one generated file. Population (2,749 setups) and the
+exclusion reason (31 setups whose signal could not be regenerated) are stated. No issue found.
+
+### Issues Found
+1. [Severity: Low] Top 100 median is shown as 78.5; the file gives 78.45. Rounding only, no impact.
+
+### Calculation Spot-Checks
+- Setups in list 2,749 = scored 2,718 + not scored 31: Verified (file has 2,749 rows; 2,718 marked scored)
+- Distinct setups 1,821 = 2,718 - 897 similar: Verified (897 rows carry a "similar to" value)
+- Highest score 88.2, median 59.8: Verified
+- Top 100 lowest score 76.2: Verified
+- Top 100 split: 3 "every week" + 97 "earnings season" = 100: Verified
+
+### Visualization Review
+Not applicable: the section has no charts.
+
+### Suggested Improvements
+1. Show the Top 100 median to two decimals, or say it is rounded, so readers can reproduce it.
+
+### Required Caveats for Stakeholders
+- None beyond the one the file already states: the scores rank setups on data already seen and are not a test or proof.
 ```
 
 ---
@@ -381,3 +432,13 @@ Output:
 - Even quick analyses benefit from a sanity check -- it takes a minute and can save your credibility
 - If the validation finds issues, fix them and re-validate
 - Share the validation output alongside your analysis to build stakeholder confidence
+
+## Final Checklist (run before saying you are done)
+
+- [ ] Steps 1 to 8 each have a finding, "no issue found" or "not applicable".
+- [ ] At least 3 key numbers were recalculated (or all, if fewer), and each is listed as Verified or Discrepancy found.
+- [ ] Every issue has a severity (High, Medium or Low) and states its impact.
+- [ ] The overall assessment follows the rule in step 8.
+- [ ] Every check that could not be run is listed as "not checked", with the reason.
+- [ ] The report uses the Output Format headings, in the same order.
+- [ ] Every number quoted in the report was read or computed in this session.
