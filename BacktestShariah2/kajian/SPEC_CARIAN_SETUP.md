@@ -1822,6 +1822,65 @@ kumpulan saham tenang (alam `ATR% <= 2.5`, jualan 5 % dari tutup tertinggi) tida
 **Stop loss kumpulan saham laju tidak ditukar** (4×ATR14 dari harga beli; cara pegang B). Tiada perubahan pada registry F,
 senarai utama, Top 100 atau penjejak.
 
+### Pindaan 18 Nov 2026 (al) — pusingan CS25: AUDIT PENUH setup F sebelum papertrade (diminta pengguna; sebelum dijalankan)
+
+Permintaan pengguna 18 Nov 2026 ("AUDIT PENUH SETUP F — SEBELUM PAPERTRADE"): pengguna mahu tahu semua kesilapan dan
+kelemahan backtest setup F (2,802 kod), satu cara banding yang adil, dan senarai setup yang sedia untuk papertrade
+("sekitar 200, atau kurang jika itu yang jujur"). **Fasa ini baca dan ukur sahaja:** tiada kod F baharu; registry F, senarai
+utama, Top 100, dashboard, penjejak dan fail `jejak_f2/JEDA` tidak diubah; tiada carian setup baharu; papertrade tidak
+dimulakan. Folder kerja di luar repo; langkah `lapor` pusingan lama TIDAK dijalankan. Pindaan ini ditulis dan dikomit
+sebelum mana-mana kiraan di bawah dijalankan.
+
+**Bahagian A — ukuran audit (deskriptif; tiada pemilihan setup):**
+- **A1 Kiraan semula bebas bagi kod selepas audit CS19.** Sampel rawak 40 kod `F2055`–`F2802` dan 20 kod `F96`–`F2054`
+  (`numpy.random.default_rng(20261118)`, tanpa penggantian, daripada id tersusun). Isyarat benih daripada modul kaedah dalam
+  mod pusingan asal kod itu; bar layak, harga beli, label, asas saham rawak, satu posisi dan cara pegang B dikira dengan kod
+  yang tidak mengimport kernel enjin (`cs_teras`, `cs_semak11`, `cs_tala7`). "Sepadan" = bilangan belian sama dan beza mutlak
+  setiap kadar ≤ 0.0005 (toleransi (ae) A1). Jika sampel dikecilkan kerana masa, saiz sebenar dilaporkan.
+- **A2 Data harga.** Bilangan (i) bar dengan pulangan tutup-ke-tutup |r| ≥ 50 % yang tidak sepadan dengan faktor pecahan;
+  (ii) harga ≤ 0, tinggi < rendah, buka / tutup di luar [rendah, tinggi]; (iii) volum 0 pada bar layak; (iv) bahagian belian
+  setup yang menyentuh bar (i)–(iii) (jika data peringkat dagangan tersedia); (v) konvensyen pelarasan pecahan dan dividen.
+- **A3 Tengok masa depan.** Ujian bar terakhir (isyarat pada data yang dipotong pada hari t lawan data penuh) bagi pencetus,
+  prasyarat dan penapis yang dipakai kod CS20 dan sampel A1; sumber tarikh laporan kewangan dan data syarikat lawan "seperti
+  diketahui pada hari itu".
+- **A4 Pelaksanaan.** Bahagian jualan stop loss yang berlaku apabila harga buka sudah di bawah paras stop, dan harga yang
+  direkodkan; kepekaan purata setiap dagangan kepada kos pusingan 0.5 % (asal), 1.0 % dan 1.5 %, dan kepada harga beli
+  buka + 0.5 %.
+- **A5 Nasib.** Bagi CS13 dan CS20: kadar lulus peraturan rawak ÷ kadar lulus calon (kaedah sedia ada), ditambah
+  (i) kecerunan regresi kelebihan `terus` 2025–26 atas kelebihan 2010–2024 merentas setup (bahagian kelebihan yang bertahan),
+  (ii) korelasi pangkat antara tempoh, (iii) bilangan setup yang kelebihan 2025–26-nya melebihi persentil ke-95 peraturan
+  rawak.
+- **A6 Idea berbeza.** Kelompok ikut pertindihan belian (Jaccard ≥ 0.50 dan ≥ 0.20, pautan tunggal) dan ikut komposisi
+  (keluarga pencetus × prasyarat); bilangan idea dilaporkan pada kedua-dua ambang.
+- **A7 Rekod.** Kod berganda, lajur kosong, setup yang tidak dapat dipadankan semula daripada registry; nombor dalam
+  `CLAUDE.md`, serahan dan dashboard lawan fail sumber.
+
+**Bahagian B — cara banding dan Top N (prinsip dikunci sekarang; butiran formula ditulis sebagai pindaan (am) SELEPAS dapatan
+Bahagian A dan SEBELUM apa-apa kiraan pangkat baharu):**
+- Dua langkah: pintu "sedia papertrade" (lulus / gagal) dahulu, kemudian susun.
+- Ukuran utama kekal kadar tangkap (`terus`) lawan saham rawak hari sama, dipapar bersama jatuh ≥ 5 % minggu pertama, kadar
+  menang dan purata setiap dagangan lawan saham rawak hari sama yang dipegang cara sama. Tiada ukuran indeks, untung akaun
+  atau MDD; tiada tapisan Shariah.
+- **UJIAN JUJUR (dikunci):** setiap formula calon dikira dengan data hingga 31 Dis 2024 SAHAJA (tiada lajur yang memakai
+  2025–26). Top N (N = 20, 30, 50, 100, 200) daripadanya dibandingkan pada 2025–26 dengan 2,000 cabutan rawak N setup
+  daripada kolam yang sama (benih 20261118). Bacaan = persentil nilai tengah kelebihan `terus` 2025–26 bagi Top N dalam
+  taburan cabutan rawak. "Lebih baik daripada pilihan rawak" = persentil ≥ 90 bagi sekurang-kurangnya 3 daripada 5 nilai N.
+  Paling banyak 3 formula calon; semuanya dilaporkan, termasuk yang gagal. Kolam "Setiap minggu" dan "Musim laporan
+  kewangan" diuji berasingan.
+- Jika tiada formula lulus: dilaporkan terus ("susunan tidak lebih baik daripada pilihan rawak") dan Top N diserahkan sebagai
+  susunan paparan sahaja.
+- Top N SEMENTARA yang diserahkan memakai semua data (termasuk 2025–26) dan BUKAN bukti; bukti bersih hanya papertrade.
+- Beban belian Top N: belian sehari dan seminggu (nilai tengah, persentil 90, maksimum), hari paling sibuk, bahagian belian
+  unik (pertindihan), dan bilangan idea berbeza (A6).
+
+**Keluaran:** SATU laporan `kajian/AUDIT_PENUH_F.md`; skrip dan jadual sokongan (jika ada) di `carian_setup/cs_audit25.py`
+dan `hasil/CS25/`.
+
+**Yang dijangka (ditulis dahulu):** kiraan semula sepadan; kelebihan setup "setiap minggu" kecil dan sebahagian besarnya
+tidak dapat dibezakan daripada nasib; bilangan idea berbeza jauh lebih kecil daripada 2,802; susunan Top N berkemungkinan
+tidak jauh lebih baik daripada pilihan rawak pada 2025–26 (CS19: korelasi pangkat antara tempoh ≤ 0.24); bilangan setup
+"sedia papertrade" yang jujur mungkin kurang daripada 200. Audit ini tidak menilai setup dengan indeks, untung akaun atau MDD.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan
