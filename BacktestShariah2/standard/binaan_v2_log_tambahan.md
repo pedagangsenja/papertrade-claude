@@ -667,3 +667,8 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - Watchlist 530 (baharu 263, dibuang 148, ke senarai beli 68). Isyarat direkod: 12500 (data/isyarat/2026-11-18_malam.csv.gz).
 - Ralat kaedah: tiada. Nota: C SENEB M11: buka stor 36.43 lawan harga_beli 184.38 (> 15%; split/data tidak sepadan) — tidak dinilai; C SENEA M99: buka stor 37.14 lawan harga_beli 185.68 (> 15%; split/data tidak sepadan) — tidak dinilai; C SENEA M89: buka stor 36.85 lawan harga_beli 184.25 (> 15%; split/data tidak sepadan) — tidak dinilai; C SUPN M106: buka stor 26.99 lawan harga_beli 42.07 (> 15%; split/data tidak sepadan) — tidak dinilai.
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-19 23:49 MYT — GitHub Actions: beli maya 2026-11-19 (isyarat 2026-11-18)
+- Direkod 1181 (346 saham; belian semula 204; fail claude_252.csv); dilangkau 13. Harga: buka sementara yfinance 10:49 NY.
+- Dilangkau: HAYW M08: buka 16.45 > buka_maks 16.42; WSM M13: buka 243.19 <= henti 244.70; LULU M13: buka 108.66 <= henti 118.67; ULS M14: buka 76.82 <= henti 76.85; VSNT M14: buka 35.87 <= henti 35.87; CRAI M23: buka 214.28 <= henti 215.36; SIG M29: buka 107.46 <= henti 108.26; WSM M32: buka 243.19 <= henti 248.40; WSM M35: buka 243.19 <= henti 248.40; TOL M49: buka 144.18 <= henti 145.57; WSM M125: isyarat batal pada buka (peraturan kaedah); LEN M125: isyarat batal pada buka (peraturan kaedah); WSM M128: isyarat batal pada buka (peraturan kaedah).
+- Tiada order. Tiada wang sebenar.
