@@ -1,37 +1,37 @@
 {
  "RS_10": {
-  "sesi_terakhir": "2026-11-17",
-  "ekuiti": 0.715542,
+  "sesi_terakhir": "2026-11-18",
+  "ekuiti": 0.698663,
   "dipegang": 10,
   "keluar": 10
  },
  "RAWAK_10": {
-  "sesi_terakhir": "2026-11-17",
-  "ekuiti": 0.895912,
+  "sesi_terakhir": "2026-11-18",
+  "ekuiti": 0.900009,
   "dipegang": 10,
-  "keluar": 7
+  "keluar": 9
  },
  "GABUNGAN_10": {
-  "sesi_terakhir": "2026-11-17",
-  "ekuiti": 0.99611,
+  "sesi_terakhir": "2026-11-18",
+  "ekuiti": 1.011318,
   "dipegang": 8,
-  "keluar": 30
+  "keluar": 28
  },
  "TOP1_10": {
-  "sesi_terakhir": "2026-11-17",
-  "ekuiti": 0.974496,
+  "sesi_terakhir": "2026-11-18",
+  "ekuiti": 0.978245,
   "dipegang": 7,
-  "keluar": 34
+  "keluar": 37
  },
  "RAWAK_KAEDAH_10": {
-  "sesi_terakhir": "2026-11-17",
-  "ekuiti": 0.919431,
+  "sesi_terakhir": "2026-11-18",
+  "ekuiti": 0.914064,
   "dipegang": 10,
   "keluar": 4
  },
  "RISIKO_10": {
-  "sesi_terakhir": "2026-11-17",
-  "ekuiti": 0.91723,
+  "sesi_terakhir": "2026-11-18",
+  "ekuiti": 0.916865,
   "dipegang": 10,
   "keluar": 10
  }

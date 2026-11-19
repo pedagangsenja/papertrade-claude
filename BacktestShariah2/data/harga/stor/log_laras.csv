@@ -26,3 +26,5 @@ masa,ticker,nisbah,bar,serak,keputusan,sumber
 2026-11-18 07:46 UTC,SENEB,0.2,40,6e-06,lepas,"kuarantin 2026-11-03: sejarah segar konsisten dengan bar stor dipercayai (< 2026-11-03): nisbah 0.2, serak 0.0000, 40 bar; bar >= 2026-11-03 diganti"
 2026-11-19 07:43 UTC,APC,0.965108,193,0.0,faktor,dividen_khas 2026-11-18 (yfinance dividen)
 2026-11-19 07:43 UTC,SPOK,0.972971,399,0.0,faktor,dividen_khas 2026-11-18 (yfinance dividen)
+2026-11-19 07:42 UTC,APC,0.965108,193,0.0,faktor,dividen_khas 2026-11-18 (yfinance dividen)
+2026-11-19 07:42 UTC,SPOK,0.972971,399,0.0,faktor,dividen_khas 2026-11-18 (yfinance dividen)

@@ -1,16 +1,18 @@
 # Banding Papertrade C dengan Lejar Penuh (fasa 1)
 
-Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-17. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
+Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-18. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
 
-- Posisi C (isyarat >= 2026-10-15): 23818; ada dalam lejar: 15899; tiada: 7919 {'isyarat ada, dipegang lejar': 7519, 'tiada isyarat dalam lejar': 25, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 365, 'saham tidak cair': 4}
-- Posisi lejar: 78732 (C hanya 23818; lejar 3.3×)
-- Harga beli berbeza > 0.5%: 115 daripada 15899
-- Status keluar sama: 15891 daripada 15899; berbeza: 8
+- Posisi C (isyarat >= 2026-10-15): 23816; ada dalam lejar: 16224; tiada: 7592 {'isyarat ada, dipegang lejar': 7520, 'tiada isyarat dalam lejar': 51, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 11, 'saham tidak cair': 4}
+- Posisi lejar: 79642 (C hanya 23816; lejar 3.3×)
+- Harga beli berbeza > 0.5%: 119 daripada 16224
+- Status keluar sama: 16218 daripada 16224; berbeza: 6
 
 ## Harga beli berbeza > 0.5%
 
+- M39 TRMD 2026-10-29: C 42.76 / lejar 41.1862 (+3.82%)
 - M66 GNK 2026-10-29: C 26.25 / lejar 25.1956 (+4.18%)
 - M99 GNK 2026-10-29: C 26.25 / lejar 25.1956 (+4.18%)
+- M100 SPOK 2026-10-29: C 11.8 / lejar 11.4811 (+2.78%)
 - M115 ARLP 2026-10-29: C 27.0 / lejar 26.3428 (+2.49%)
 - M122 GNK 2026-10-29: C 26.25 / lejar 25.1956 (+4.18%)
 - M123 GNK 2026-10-29: C 26.25 / lejar 25.1956 (+4.18%)
@@ -36,7 +38,6 @@ Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir
 - M107 PPIH 2026-10-30: C 30.0 / lejar 29.54 (+1.56%)
 - M118 HOFT 2026-10-30: C 14.314 / lejar 14.4 (-0.60%)
 - M147 CF 2026-10-30: C 118.55 / lejar 120.78 (-1.85%)
-- M156 GIC 2026-10-30: C 43.71 / lejar 42.5102 (+2.82%)
 - N50X17 MPWR 2026-10-30: C 1239.66 / lejar 1231.18 (+0.69%)
 - N56X17 LFST 2026-10-30: C 13.6 / lejar 13.5 (+0.74%)
 - N50X14 MPWR 2026-10-30: C 1239.66 / lejar 1231.18 (+0.69%)
@@ -68,15 +69,12 @@ Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir
 - N07X36 TRMD 2026-10-30: C 42.01 / lejar 40.4638 (+3.82%)
 - M32 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
 - M34 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
-- M49 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
 
 ## Status keluar berbeza
 
-- M151 GIC 2026-11-04: C terbuka / lejar keluar 2026-11-16 henti
-- M13 GNK 2026-11-12: C terbuka / lejar keluar 2026-11-16 henti
-- M124 GNK 2026-11-12: C terbuka / lejar keluar 2026-11-16 henti
-- M19 GNK 2026-10-21: C terbuka / lejar keluar 2026-10-23 henti
-- M26 TRMD 2026-10-21: C keluar 2026-10-26 / lejar keluar 2026-10-28 sasaran
-- M54 GIC 2026-10-21: C terbuka / lejar keluar 2026-10-22 henti
-- M95 GIC 2026-10-21: C terbuka / lejar keluar 2026-10-22 henti
+- N07X16 TRMD 2026-10-30: C keluar 2026-11-05 / lejar keluar 2026-11-06 isyarat keluar
+- M156 TRMD 2026-11-02: C keluar 2026-11-05 / lejar keluar 2026-11-10 henti
+- N36X16 TRMD 2026-11-03: C keluar 2026-11-05 / lejar keluar 2026-11-06 isyarat keluar
+- M73 SPOK 2026-11-04: C keluar 2026-11-10 / lejar terbuka
 - M13 SBH 2026-10-15: C keluar 2026-10-19 / lejar keluar 2026-10-20 henti
+- M18 MHK 2026-10-27: C keluar 2026-11-05 / lejar keluar 2026-11-04 sasaran
