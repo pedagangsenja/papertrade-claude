@@ -1,30 +1,30 @@
 {
- "dikemaskini": "2026-11-18 19:23 UTC",
- "bar_terakhir": 20261117,
+ "dikemaskini": "2026-11-19 06:23 UTC",
+ "bar_terakhir": 20261118,
  "laras": {
   "GIC": 1.028225,
   "GNK": 1.041849,
   "MKTW": 1.020594,
   "MNR": 1.024971,
-  "SUPN": 0.867611,
+  "SUPN": 0.867424,
   "TRMD": 1.038211,
   "TXO": 1.032423,
-  "WLKP": 1.022206
+  "WLKP": 1.022205
  },
  "perlu_sejarah": [
   "SUPN"
  ],
  "harga_A.csv": {
   "ticker_dikemaskini": 429,
-  "bar_terakhir": 20261117
+  "bar_terakhir": 20261118
  },
  "harga_B.csv": {
   "ticker_dikemaskini": 498,
-  "bar_terakhir": 20261117
+  "bar_terakhir": 20261118
  },
  "harga_idx.csv": {
   "ticker_dikemaskini": 2,
-  "bar_terakhir": 20261117
+  "bar_terakhir": 20261118
  },
  "kuarantin": {
   "baru": [],
@@ -35,10 +35,15 @@
   }
  },
  "log_laras": 0,
- "faktor_dividen": [],
- "faktor_calon": [],
+ "faktor_dividen": [
+  "APC 2026-11-18 D=0.5 P=14.33 (3.5%)",
+  "SPOK 2026-11-18 D=0.313 P=11.58 (2.7%)"
+ ],
+ "faktor_calon": [
+  "HY 2026-11-18 -0.2111"
+ ],
  "moomoo": {
-  "ditampal": 22,
+  "ditampal": 18,
   "langkau_skala": [
    "SENEA 20261105: buka_moomoo 147.32 lawan stor 29.464",
    "SENEA 20261110: buka_moomoo 169.78 lawan stor 33.956",
