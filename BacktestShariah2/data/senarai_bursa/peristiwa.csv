@@ -13161,3 +13161,23 @@ tarikh,simbol,peristiwa,nama,bursa,etf,biasa
 2026-11-19,GUER,tambah,"Guerrilla RF, Inc. - Common Stock",NASDAQ,0,1
 2026-11-19,IQQI,tambah,IncomeQ Nasdaq-100 Premium Income ETF,NASDAQ,1,0
 2026-11-19,SDC,tambah,KICK Space Data Center & Infrastructure Index ETF,NASDAQ,1,0
+2026-11-19,ANT,tambah,"Anthropic, PBC - Class A Common Stock",NASDAQ,0,1
+2026-11-19,CGBI,tambah,Capital Group Multi-Asset Income Builder ETF,NYSE Arca,1,0
+2026-11-19,CGMI,tambah,Capital Group Multi-Asset Income ETF,NYSE Arca,1,0
+2026-11-19,ENVXW,tambah,Enovix Corporation - Warrants,NASDAQ,0,0
+2026-11-19,FDGX,tambah,First Digital Acquisition Corp Ltd. - Class A Ordinary Shares,NASDAQ,0,0
+2026-11-19,FDGXU,tambah,First Digital Acquisition Corp Ltd. - Units,NASDAQ,0,0
+2026-11-19,FDGXW,tambah,First Digital Acquisition Corp Ltd. - Warrants,NASDAQ,0,0
+2026-11-19,FMBM,tambah,F&M Bank Corp. Common Stock,NYSE American,0,1
+2026-11-19,GQGG,tambah,GQG Global Equity ETF,NYSE Arca,1,0
+2026-11-19,GSCZ,tambah,Goldman Sachs Securitized Income ETF,NYSE Arca,1,0
+2026-11-19,JALL,tambah,JPMorgan All Country Research Enhanced Equity ETF,NYSE Arca,1,0
+2026-11-19,TFIX,tambah,T. Rowe Price Capital Appreciation Fixed Income ETF,NYSE Arca,1,0
+2026-11-19,GMMA,buang,GammaRoad Market Navigation ETF,NYSE Arca,1,0
+2026-11-19,KOYN,buang,CSLM Digital Asset Acquisition Corp III - Class A Ordinary Shares,NASDAQ,0,0
+2026-11-19,KOYNU,buang,CSLM Digital Asset Acquisition Corp III - Units,NASDAQ,0,0
+2026-11-19,KOYNW,buang,CSLM Digital Asset Acquisition Corp III - Warrants,NASDAQ,0,0
+2026-11-19,LXFR,buang,Luxfer Holdings PLC Ordinary Shares,NYSE,0,1
+2026-11-19,SCKT,buang,"Socket Mobile, Inc. - Common Stock",NASDAQ,0,1
+2026-11-19,SSTI,buang,"SoundThinking, Inc. - Common Stock",NASDAQ,0,1
+2026-11-19,UBT,tukar_nama,ProShares Ultra 20 Year Treasury,NYSE Arca,1,0
