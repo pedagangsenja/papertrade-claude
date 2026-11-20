@@ -2000,6 +2000,13 @@ mengambil senarai itu, kelas indikator CS07 / CS09 (yang hanya diuji pada 69–7
   tanda `QF01` memakai tarikh laporan sebenar; indikator harian diambil daripada panel carian (`pan['X']`). Pangkat backtest,
   BUKAN bukti.
 
+**Hasil (am), 20 Nov 2026 (`hasil/CS26/KELUAR.md`).** 8,280 cara dinilai (75 satu demi satu, 8,000 rawak, 205 naik bukit; naik
+bukit berhenti pada pusingan 3). B1 GAGAL pada syarat (3); sasaran pengguna (nisbah ≥ 2) TIDAK tercapai oleh mana-mana cara
+pada mana-mana kumpulan (tertinggi 1.81); `G` tidak wujud; B3 GAGAL. Pariti dengan CS25: beza ≤ 0.00000002. **Tambahan post
+hoc (maklumat sahaja, daripada jadual yang sudah dijana):** bilangan setup yang nisbahnya ≥ 2 pada kumpulan B (cara sekarang
+29 daripada 2,745; cara `F` 634); cara bernisbah tertinggi antara yang rugi ≥ 15 %-nya ≤ 10 % (`c3|…|b2|…|h252` 1.69;
+`p10|…|b2|…|h252` 1.66 dengan rugi ≥ 15 % 2 %).
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

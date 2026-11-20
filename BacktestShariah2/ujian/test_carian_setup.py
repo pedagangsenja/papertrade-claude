@@ -3661,3 +3661,27 @@ class TestCS26(unittest.TestCase):
         naik = np.arange(1.0, 41.0)
         self.assertFalse(c26.sar_turun(naik + 0.5, naik - 0.5, np.array([0, 40])).any())
         self.assertTrue(c26.sar_turun((naik + 0.5)[::-1].copy(), (naik - 0.5)[::-1].copy(), np.array([0, 40]))[1:].all())
+
+    def test_hasil(self):
+        import cs_keluar26 as c26
+        with open(os.path.join(c26.HASIL, 'bacaan.json'), encoding='utf-8') as f:
+            B = json.load(f)
+        T = pd.read_csv(os.path.join(c26.HASIL, 'setup.csv.gz'))
+        C = pd.read_csv(os.path.join(c26.HASIL, 'cara.csv.gz'))
+        K = pd.read_csv(os.path.join(c26.HASIL, 'komponen.csv'))
+        self.assertTrue(B['pariti']['lulus'])
+        self.assertEqual((len(C), B['n_satu'], B['n_rawak'], len(T), B['ruang']), (B['cara_dinilai'], 75, 8000, B['dinilai'], c26.RUANG))
+        self.assertEqual(len(K), 84)                                   # setiap pilihan setiap komponen sekali
+        self.assertEqual([c26.kod(g) for g in c26.tahap1()[0]], list(C.cara[:8075]))
+        self.assertTrue(all(c26.dari_kod(k) == c26.kanon(c26.dari_kod(k)) for k in C.cara[8075:]))
+        self.assertEqual(B['sekarang']['cara'], c26.kod(c26.kanon(c26.ASAS)))
+        # F = nisbah tertinggi pada saham carian; bacaan dikunci dikira semula daripada syaratnya
+        self.assertEqual(C.cara[C.nisbah_A.idxmax()], B['F']['cara'])
+        self.assertEqual(B['F']['lulus'], B['F']['s1'] and B['F']['s2'] and B['F']['s3'])
+        self.assertEqual(B['F']['s3'], B['F']['d_nisbah'] > B['F']['d_kawalan'])
+        self.assertEqual(B['F']['s4'], B['F']['nisbah'] >= c26.SASARAN)
+        self.assertEqual(B['G'] is None, not (C.nisbah_A >= c26.SASARAN).any())
+        self.assertEqual((B['bil_capai_sasaran_A'], B['bil_capai_sasaran_B']), (int((C.nisbah_A >= 2).sum()), int((C.nisbah_B >= 2).sum())))
+        self.assertAlmostEqual(T.nisbah_sekarang[T.cukup].median(), B['sekarang']['nisbah'], places=4)
+        self.assertAlmostEqual(T.nisbah_F[T.cukup].median(), B['F']['nisbah'], places=4)
+        self.assertEqual(B['laluan'][-1]['cara'], B['F']['cara'])
