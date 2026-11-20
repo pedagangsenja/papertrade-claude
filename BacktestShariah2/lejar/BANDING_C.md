@@ -2,10 +2,10 @@
 
 Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-19. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
 
-- Posisi C (isyarat >= 2026-10-15): 24997; ada dalam lejar: 16941; tiada: 8056 {'isyarat ada, dipegang lejar': 7984, 'tiada isyarat dalam lejar': 51, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 11, 'saham tidak cair': 4}
-- Posisi lejar: 81393 (C hanya 24997; lejar 3.3×)
-- Harga beli berbeza > 0.5%: 152 daripada 16941
-- Status keluar sama: 16237 daripada 16941; berbeza: 704
+- Posisi C (isyarat >= 2026-10-15): 24996; ada dalam lejar: 16941; tiada: 8055 {'isyarat ada, dipegang lejar': 7983, 'tiada isyarat dalam lejar': 51, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 11, 'saham tidak cair': 4}
+- Posisi lejar: 81393 (C hanya 24996; lejar 3.3×)
+- Harga beli berbeza > 0.5%: 119 daripada 16941
+- Status keluar sama: 16934 daripada 16941; berbeza: 7
 
 ## Harga beli berbeza > 0.5%
 
@@ -72,83 +72,10 @@ Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir
 
 ## Status keluar berbeza
 
-- M80 SAP 2026-10-15: C terbuka / lejar keluar 2026-11-19 henti
-- M33 EPAC 2026-10-29: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M35 BSY 2026-10-29: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M36 TTEK 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M48 ACN 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M49 WPP 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M54 NVS 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M67 WPP 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M68 ERIC 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M79 PODD 2026-10-29: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M95 TTC 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M105 EPAC 2026-10-29: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M128 AZN 2026-10-29: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M130 CX 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M149 ACN 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M154 JOYY 2026-10-29: C terbuka / lejar keluar 2026-11-19 henti
-- M161 SAP 2026-10-29: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M08 INTA 2026-10-30: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M08 OLED 2026-10-30: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M15 RDNT 2026-10-30: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M33 NVO 2026-10-30: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M35 ADSK 2026-10-30: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M48 RHI 2026-10-30: C terbuka / lejar keluar 2026-11-19 henti
-- M49 RHI 2026-10-30: C terbuka / lejar keluar 2026-11-19 henti
-- M105 NVO 2026-10-30: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M111 SPB 2026-10-30: C terbuka / lejar keluar 2026-11-19 henti
-- M136 RHI 2026-10-30: C terbuka / lejar keluar 2026-11-19 henti
-- M139 WHR 2026-10-30: C terbuka / lejar keluar 2026-11-19 henti
-- M146 AZN 2026-10-30: C terbuka / lejar keluar 2026-11-19 henti
-- M158 WSM 2026-10-30: C terbuka / lejar keluar 2026-11-19 henti
-- M105 WSM 2026-10-15: C terbuka / lejar keluar 2026-11-19 henti
-- M124 ADSK 2026-10-15: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N22X14 WKC 2026-10-30: C terbuka / lejar keluar 2026-11-19 isyarat keluar
 - N07X16 TRMD 2026-10-30: C keluar 2026-11-05 / lejar keluar 2026-11-06 isyarat keluar
-- M12 ATO 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M14 DXC 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M15 NVO 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M15 XENE 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M18 SNN 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M19 RIVN 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M25 XENE 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M33 WHR 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M35 G 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M54 ATO 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M57 DXC 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M88 SAIA 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M89 JOYY 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M99 BCPC 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M111 RYAAY 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M131 GIB 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M136 TWLO 2026-11-02: C terbuka / lejar keluar 2026-11-19 henti
-- M148 SNY 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
 - M156 TRMD 2026-11-02: C keluar 2026-11-05 / lejar keluar 2026-11-10 henti
-- N09X36 NXT 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M132 SAP 2026-10-15: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M134 ACIW 2026-10-15: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N37X36 NXT 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N38X36 NXT 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N42X36 NXT 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N43X36 NXT 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N64X36 NXT 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N68X36 TRI 2026-11-02: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M13 RIVN 2026-11-03: C terbuka / lejar keluar 2026-11-19 henti
-- M19 LAUR 2026-11-03: C terbuka / lejar keluar 2026-11-19 henti
-- M36 NBIX 2026-11-03: C terbuka / lejar keluar 2026-11-19 henti
-- M57 LFST 2026-11-03: C terbuka / lejar keluar 2026-11-19 henti
-- N07X36 NKE 2026-11-03: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N33X14 WKC 2026-11-03: C terbuka / lejar keluar 2026-11-19 isyarat keluar
 - N36X16 TRMD 2026-11-03: C keluar 2026-11-05 / lejar keluar 2026-11-06 isyarat keluar
-- N38X36 JD 2026-11-03: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N40X36 EMBJ 2026-11-03: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N42X14 OKTA 2026-11-03: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N47X36 EMBJ 2026-11-03: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N57X36 SPB 2026-11-03: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N57X36 MTH 2026-11-03: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- N68X16 ISRG 2026-11-03: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M04 ISRG 2026-11-04: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M10 RGLD 2026-11-04: C terbuka / lejar keluar 2026-11-19 henti
-- M15 MOS 2026-11-04: C terbuka / lejar keluar 2026-11-19 isyarat keluar
-- M23 SWK 2026-11-04: C terbuka / lejar keluar 2026-11-19 henti
+- M73 SPOK 2026-11-04: C keluar 2026-11-10 / lejar terbuka
+- M125 SHEL 2026-11-13: C keluar 2026-11-19 / lejar terbuka
+- M13 SBH 2026-10-15: C keluar 2026-10-19 / lejar keluar 2026-10-20 henti
+- M18 MHK 2026-10-27: C keluar 2026-11-05 / lejar keluar 2026-11-04 sasaran
