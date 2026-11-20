@@ -1,11 +1,10 @@
 {
  "terkini": {
-  "dijana": "2026-11-20 02:36 UTC",
+  "dijana": "2026-11-20 06:22 UTC",
   "sesi": 20261119,
-  "bil_ticker": 928,
+  "bil_ticker": 929,
   "bil_universe": 932,
   "tiada_data": [
-   "AMBA",
    "ATKR",
    "BLFS",
    "QRVO"
@@ -28,6 +27,7 @@
    "ALKT",
    "ALLE",
    "ALRM",
+   "AMBA",
    "AMBQ",
    "AMPL",
    "AMR",
@@ -148,7 +148,6 @@
    "HPE",
    "HQ",
    "HQY",
-   "HUBB",
    "HY",
    "IBEX",
    "ICHR",
@@ -201,6 +200,7 @@
    "NCNO",
    "NE",
    "NESR",
+   "NOVTU",
    "NOW",
    "NRDS",
    "NTR",
@@ -209,11 +209,10 @@
    "NWS",
    "NWSA",
    "NXT",
-   "OKTA",
-   "OLLI"
+   "OSW"
   ],
-  "bil_tiada_bar_sesi": 313,
-  "dividen_baharu": 14
+  "bil_tiada_bar_sesi": 227,
+  "dividen_baharu": 3
  },
  "sejarah": {
   "dijana": "2026-11-19 22:19 UTC",

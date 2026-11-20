@@ -1,16 +1,17 @@
 {
- "dikemaskini": "2026-11-19 19:29 UTC",
- "bar_terakhir": 20261118,
+ "dikemaskini": "2026-11-20 06:22 UTC",
+ "bar_terakhir": 20261119,
  "laras": {
   "APC": 1.036154,
   "GIC": 1.028225,
   "GNK": 1.041848,
   "MKTW": 1.020593,
   "MNR": 1.024971,
+  "SNDK": 0.125,
   "SPOK": 1.027781,
   "SUPN": 0.867424,
   "TRMD": 1.038211,
-  "TXO": 1.032422,
+  "TXO": 1.032423,
   "WLKP": 1.022205
  },
  "perlu_sejarah": [
@@ -18,15 +19,15 @@
  ],
  "harga_A.csv": {
   "ticker_dikemaskini": 429,
-  "bar_terakhir": 20261118
+  "bar_terakhir": 20261119
  },
  "harga_B.csv": {
   "ticker_dikemaskini": 498,
-  "bar_terakhir": 20261118
+  "bar_terakhir": 20261119
  },
  "harga_idx.csv": {
   "ticker_dikemaskini": 2,
-  "bar_terakhir": 20261118
+  "bar_terakhir": 20261119
  },
  "kuarantin": {
   "baru": [],
@@ -36,15 +37,21 @@
    "SUPN": "tidak konsisten: nisbah segar/stor 1.0706, serak 8.42% > 2%"
   }
  },
- "log_laras": 0,
+ "log_laras": 1,
  "faktor_dividen": [],
  "faktor_calon": [],
  "moomoo": {
-  "ditampal": 23,
+  "ditampal": 20,
   "langkau_skala": [
    "SENEA 20261105: buka_moomoo 147.32 lawan stor 29.464",
    "SENEA 20261110: buka_moomoo 169.78 lawan stor 33.956",
-   "SENEA 20261112: buka_moomoo 176.56 lawan stor 35.312"
+   "SENEA 20261112: buka_moomoo 176.56 lawan stor 35.312",
+   "SNDK 20261028: buka_moomoo 1356.6 lawan stor 169.575",
+   "SNDK 20261029: buka_moomoo 1381.49 lawan stor 172.686",
+   "SNDK 20261103: buka_moomoo 1107.53 lawan stor 138.441",
+   "SNDK 20261106: buka_moomoo 898.27 lawan stor 112.284",
+   "SNDK 20261112: buka_moomoo 887.395 lawan stor 110.924",
+   "SNDK 20261118: buka_moomoo 805.87 lawan stor 100.734"
   ]
  }
 }
