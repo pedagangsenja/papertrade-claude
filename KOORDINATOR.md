@@ -1,6 +1,6 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-20 06:25 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-20 09:38 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
@@ -52,12 +52,12 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 
 | Lorong | Ekuiti | Dipegang | Keluar | Sesi terakhir |
 |---|---|---|---|---|
-| RS_10 | 0.698663 | 10 | 10 | 2026-11-18 |
-| RAWAK_10 | 0.900009 | 10 | 9 | 2026-11-18 |
-| GABUNGAN_10 | 1.011318 | 8 | 28 | 2026-11-18 |
-| TOP1_10 | 0.978245 | 7 | 37 | 2026-11-18 |
-| RAWAK_KAEDAH_10 | 0.914064 | 10 | 4 | 2026-11-18 |
-| RISIKO_10 | 0.916865 | 10 | 10 | 2026-11-18 |
+| RS_10 | 0.68812 | 10 | 10 | 2026-11-19 |
+| RAWAK_10 | 0.881741 | 10 | 9 | 2026-11-19 |
+| GABUNGAN_10 | 0.989584 | 9 | 29 | 2026-11-19 |
+| TOP1_10 | 0.955454 | 7 | 39 | 2026-11-19 |
+| RAWAK_KAEDAH_10 | 0.88859 | 10 | 4 | 2026-11-19 |
+| RISIKO_10 | 0.911335 | 10 | 10 | 2026-11-19 |
 
 
 `RISIKO_10` (sejak 28 Okt 2026) dipasangkan dengan `RS_10`: susunan calon sama, hanya saiz berbeza. **MDD-nya mesti dibaca bersama lajur `tunai`** — pendedahannya lebih rendah, jadi sebahagian kelebihan MDD datang daripada pendedahan, bukan saiz. Ia menguji saiz atas **isyarat Mxx** dan bukan ujian ke hadapan dapatan REVERSE fasa 1b (`REVERSE/SPEC_FASA2.md` §9.2).
@@ -79,8 +79,8 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 |---|---|---|---|
 | Stor harga | 20261119 | 1 | OK |
 | Trend D10H2-r2 | 20261119 | 1 | OK |
-| Lejar Penuh | 2026-11-18 | 2 | OK |
-| portfolio_slot | 2026-11-18 | 2 | OK |
+| Lejar Penuh | 2026-11-19 | 1 | OK |
+| portfolio_slot | 2026-11-19 | 1 | OK |
 | Papan Penganalisis | 2026-11-20 | 0 | OK |
 | RS pasaran | 2026-11-19 | 1 | OK |
 | Gred kumpulan | 2026-11-19 | 1 | OK |

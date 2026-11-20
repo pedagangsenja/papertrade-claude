@@ -672,3 +672,11 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - Direkod 1181 (346 saham; belian semula 204; fail claude_252.csv); dilangkau 13. Harga: buka sementara yfinance 10:49 NY.
 - Dilangkau: HAYW M08: buka 16.45 > buka_maks 16.42; WSM M13: buka 243.19 <= henti 244.70; LULU M13: buka 108.66 <= henti 118.67; ULS M14: buka 76.82 <= henti 76.85; VSNT M14: buka 35.87 <= henti 35.87; CRAI M23: buka 214.28 <= henti 215.36; SIG M29: buka 107.46 <= henti 108.26; WSM M32: buka 243.19 <= henti 248.40; WSM M35: buka 243.19 <= henti 248.40; TOL M49: buka 144.18 <= henti 145.57; WSM M125: isyarat batal pada buka (peraturan kaedah); LEN M125: isyarat batal pada buka (peraturan kaedah); WSM M128: isyarat batal pada buka (peraturan kaedah).
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-20 17:15 MYT — GitHub Actions: kemas kini + imbas (sesi AS 2026-11-19)
+- Keluar baharu 972 (C {'isyarat': 579, 'henti': 356, 'sasaran': 1, 'masa': 34}, M {'isyarat': 2}); menunggu buka sesi seterusnya: 765.
+- Harga beli sementara dibetulkan kepada buka rasmi bar harian: 258 (beza > 0.5%: 44). Tidak dibeli baharu: GHC M70.
+- Senarai beli 780 baris (270 saham, 142 kaedah; 39 daripada watchlist; belian semula 134). Ditolak: {'dipegang': 2724, 'had': 6121, 'tidak_cair': 249, 'ambil_alih': 210, 'mingguan': 18, 'kelas_berganda': 24}.
+- Watchlist 479 (baharu 214, dibuang 226, ke senarai beli 39). Isyarat direkod: 10126 (data/isyarat/2026-11-19_malam.csv.gz).
+- Ralat kaedah: tiada. Nota: M SNDK M81: buka stor 208.69 lawan harga_beli 1643.505 (> 15%; split/data tidak sepadan) — tidak dinilai; C SENEB M11: buka stor 36.43 lawan harga_beli 184.38 (> 15%; split/data tidak sepadan) — tidak dinilai; C SENEA M99: buka stor 37.14 lawan harga_beli 185.68 (> 15%; split/data tidak sepadan) — tidak dinilai; C SNDK M73: buka stor 164.21 lawan harga_beli 1313.65 (> 15%; split/data tidak sepadan) — tidak dinilai; C SENEA M89: buka stor 36.85 lawan harga_beli 184.25 (> 15%; split/data tidak sepadan) — tidak dinilai; C SNDK M76: buka stor 178.42 lawan harga_beli 1427.38 (> 15%; split/data tidak sepadan) — tidak dinilai; C SNDK M81: buka stor 178.42 lawan harga_beli 1427.38 (> 15%; split/data tidak sepadan) — tidak dinilai; C SNDK M13: buka stor 169.57 lawan harga_beli 1356.6 (> 15%; split/data tidak sepadan) — tidak dinilai.
+- Tiada order. Tiada wang sebenar.

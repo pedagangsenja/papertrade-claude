@@ -28,44 +28,73 @@
   "buka_lewat": []
  },
  "malam": {
-  "sesi": "2026-11-18",
-  "masa": "2026-11-19 14:24 MYT",
+  "sesi": "2026-11-19",
+  "masa": "2026-11-20 17:15 MYT",
   "ralat_kaedah": [],
   "kaedah_tanpa_modul": [],
-  "masa_kaedah_s": 439,
+  "masa_kaedah_s": 360,
   "keluar_baru": {
-   "M": {},
+   "M": {
+    "isyarat": 2
+   },
    "C": {
-    "isyarat": 703,
-    "henti": 319,
-    "masa": 31,
-    "sasaran": 5
+    "isyarat": 579,
+    "henti": 356,
+    "sasaran": 1,
+    "masa": 34
    }
   },
   "keluar_baru_jumlah": {
-   "M": 0,
-   "C": 1058
+   "M": 2,
+   "C": 970
   },
-  "menunggu": 589,
+  "menunggu": 765,
   "keluar_keluarga": {
-   "M": 639,
-   "N": 419
+   "M": 573,
+   "N": 397
   },
   "menunggu_keluarga": {
-   "M": 187,
-   "N": 400
+   "M": 323,
+   "N": 438
   },
-  "harga_beli_dibetulkan": 148,
-  "harga_beli_beza_besar": 22,
+  "harga_beli_dibetulkan": 258,
+  "harga_beli_beza_besar": 44,
   "tidak_dibeli": [
-   "LNTH M70",
-   "LNTH M125"
+   "GHC M70"
   ],
   "nota": [
+   "M SNDK M81: buka stor 208.69 lawan harga_beli 1643.505 (> 15%; split/data tidak sepadan) — tidak dinilai",
    "C SENEB M11: buka stor 36.43 lawan harga_beli 184.38 (> 15%; split/data tidak sepadan) — tidak dinilai",
    "C SENEA M99: buka stor 37.14 lawan harga_beli 185.68 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK M73: buka stor 164.21 lawan harga_beli 1313.65 (> 15%; split/data tidak sepadan) — tidak dinilai",
    "C SENEA M89: buka stor 36.85 lawan harga_beli 184.25 (> 15%; split/data tidak sepadan) — tidak dinilai",
-   "C SUPN M106: buka stor 26.99 lawan harga_beli 42.07 (> 15%; split/data tidak sepadan) — tidak dinilai"
+   "C SNDK M76: buka stor 178.42 lawan harga_beli 1427.38 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK M81: buka stor 178.42 lawan harga_beli 1427.38 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK M13: buka stor 169.57 lawan harga_beli 1356.6 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK M19: buka stor 169.57 lawan harga_beli 1356.6 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK M73: buka stor 169.57 lawan harga_beli 1356.6 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK M99: buka stor 172.69 lawan harga_beli 1381.49 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SUPN M106: buka stor 26.99 lawan harga_beli 42.07 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N119X13: buka stor 144.75 lawan harga_beli 1158.5 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N75X14: buka stor 144.75 lawan harga_beli 1158.5 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N119X15: buka stor 144.75 lawan harga_beli 1158.5 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N75X13: buka stor 144.75 lawan harga_beli 1158.5 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N75X15: buka stor 144.75 lawan harga_beli 1158.5 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N75X17: buka stor 144.75 lawan harga_beli 1158.5 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N16X13: buka stor 138.44 lawan harga_beli 1107.53 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N16X15: buka stor 138.44 lawan harga_beli 1107.53 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK M01: buka stor 112.28 lawan harga_beli 898.27 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N19X13: buka stor 112.28 lawan harga_beli 898.27 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N73X13: buka stor 112.28 lawan harga_beli 898.27 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N28X14: buka stor 110.92 lawan harga_beli 887.395 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N28X16: buka stor 110.92 lawan harga_beli 887.395 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N28X17: buka stor 110.92 lawan harga_beli 887.395 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N28X36: buka stor 110.92 lawan harga_beli 887.395 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N28X16: buka stor 103.53 lawan harga_beli 828.225 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N28X36: buka stor 103.53 lawan harga_beli 828.225 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK M155: buka stor 100.73 lawan harga_beli 805.87 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N28X16: buka stor 100.73 lawan harga_beli 805.87 (> 15%; split/data tidak sepadan) — tidak dinilai",
+   "C SNDK N28X36: buka stor 100.73 lawan harga_beli 805.87 (> 15%; split/data tidak sepadan) — tidak dinilai"
   ],
   "tidak_layak_posisi": {
    "ambil_alih": {
@@ -87,88 +116,39 @@
     "saham": []
    },
    "faktor": {
-    "dilaras": 16,
-    "semak": [
-     [
-      "claude_107.csv",
-      "SPOK",
-      "M124",
-      "2026-11-02",
-      "2026-11-18"
-     ],
-     [
-      "claude_114.csv",
-      "SPOK",
-      "M89",
-      "2026-11-03",
-      "2026-11-18"
-     ],
-     [
-      "claude_114.csv",
-      "SPOK",
-      "M90",
-      "2026-11-03",
-      "2026-11-18"
-     ],
-     [
-      "claude_195.csv",
-      "SPOK",
-      "M49",
-      "2026-11-11",
-      "2026-11-18"
-     ],
-     [
-      "claude_227.csv",
-      "SPOK",
-      "M09",
-      "2026-11-16",
-      "2026-11-18"
-     ],
-     [
-      "claude_99.csv",
-      "SPOK",
-      "M23",
-      "2026-10-30",
-      "2026-11-18"
-     ]
-    ],
-    "dibuka_semula": [
-     [
-      "claude_183.csv",
-      "SPOK",
-      "M107",
-      "2026-11-10",
-      "2026-11-18"
-     ]
-    ]
+    "dilaras": 0,
+    "semak": [],
+    "dibuka_semula": []
    },
    "pecahan": {
-    "dilaras": 0,
-    "saham": []
+    "dilaras": 20,
+    "saham": [
+     "SNDK"
+    ]
    }
   },
   "dagangan_betul": 0,
-  "senarai_beli": 1194,
-  "saham_unik": 348,
+  "senarai_beli": 780,
+  "saham_unik": 270,
   "senarai_keluarga": {
-   "M": 514,
-   "N": 680
+   "M": 213,
+   "N": 567
   },
   "kaedah_keluarga": {
-   "M": 90,
-   "N": 88
+   "N": 88,
+   "M": 54
   },
-  "kaedah": 178,
-  "belian_semula": 207,
-  "dari_watchlist": 68,
-  "isyarat": 12500,
+  "kaedah": 142,
+  "belian_semula": 134,
+  "dari_watchlist": 39,
+  "isyarat": 10126,
   "ditolak": {
-   "dipegang": 3162,
-   "had": 7546,
-   "tidak_cair": 213,
-   "ambil_alih": 243,
-   "mingguan": 104,
-   "kelas_berganda": 38
+   "dipegang": 2724,
+   "had": 6121,
+   "tidak_cair": 249,
+   "ambil_alih": 210,
+   "mingguan": 18,
+   "kelas_berganda": 24
   },
   "tidak_layak": {
    "ACLS": "ambil alih",
@@ -207,22 +187,22 @@
    "TECH": "ambil alih",
    "WLYB": "tidak cair"
   },
-  "watchlist": 530,
-  "watchlist_baharu": 263,
-  "watchlist_dibuang": 148,
-  "watchlist_ke_senarai": 68,
+  "watchlist": 479,
+  "watchlist_baharu": 214,
+  "watchlist_dibuang": 226,
+  "watchlist_ke_senarai": 39,
   "minggu_akhir": false,
-  "fail_isyarat": "data/isyarat/2026-11-18_malam.csv.gz"
+  "fail_isyarat": "data/isyarat/2026-11-19_malam.csv.gz"
  },
  "gred": {
-  "tarikh": "2026-11-19",
-  "masa": "2026-11-19 20:22 MYT",
+  "tarikh": "2026-11-20",
+  "masa": "2026-11-20 17:22 MYT",
   "pemangkin": {
-   "D": 958,
-   "B": 137,
-   "C": 38,
-   "A": 50,
-   "–": 11
+   "D": 599,
+   "–": 12,
+   "B": 104,
+   "C": 28,
+   "A": 37
   }
  }
 }

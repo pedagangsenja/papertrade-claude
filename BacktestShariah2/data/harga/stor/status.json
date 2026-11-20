@@ -1,11 +1,11 @@
 {
- "dikemaskini": "2026-11-20 07:33 UTC",
+ "dikemaskini": "2026-11-20 09:15 UTC",
  "bar_terakhir": 20261119,
  "laras": {
   "APC": 1.036153,
   "GIC": 1.028224,
-  "GNK": 1.041849,
-  "MKTW": 1.020592,
+  "GNK": 1.041848,
+  "MKTW": 1.010296,
   "MNR": 1.024971,
   "SPOK": 1.02778,
   "SUPN": 0.867237,
@@ -21,7 +21,7 @@
   "bar_terakhir": 20261119
  },
  "harga_B.csv": {
-  "ticker_dikemaskini": 498,
+  "ticker_dikemaskini": 497,
   "bar_terakhir": 20261119
  },
  "harga_idx.csv": {
