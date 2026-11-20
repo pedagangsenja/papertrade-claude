@@ -557,7 +557,6 @@ AMOD,"Alpha Modus Holdings, Inc. - Class A Common Stock",NASDAQ,0,1,2026-10-27
 AMODW,"Alpha Modus Holdings, Inc. - Warrant",NASDAQ,0,0,2026-10-27
 AMP,"Ameriprise Financial, Inc. Common Stock",NYSE,0,1,2026-10-27
 AMPG,"Amplitech Group, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
-AMPGZ,"Amplitech Group, Inc. - Series B Right",NASDAQ,0,0,2026-10-27
 AMPH,"Amphastar Pharmaceuticals, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 AMPL,"Amplitude, Inc. - Class A Common Stock",NASDAQ,0,1,2026-10-27
 AMPU,Defiance Daily Target 2X Long AMPX ETF,Cboe BZX,1,0,2026-10-27
@@ -6279,7 +6278,7 @@ JOBC,Corgi JOBY 2x Daily ETF,Cboe BZX,1,0,2026-10-27
 JOBX,Tradr 2X Long JOBY Daily ETF,Cboe BZX,1,0,2026-10-27
 JOBY,"Joby Aviation, Inc. Common Stock",NYSE,0,1,2026-10-27
 JOE,St. Joe Company (The) Common Stock,NYSE,0,1,2026-10-27
-JOET,Virtus Terranova U.S. Quality Momentum ETF,NYSE Arca,1,0,2026-10-27
+JOET,Virtus NYSE Terranova U.S. Quality Momentum ETF,NYSE Arca,1,0,2026-10-27
 JOF,Japan Smaller Capitalization Fund Inc Common Stock,NYSE,0,0,2026-10-27
 JOJO,ATAC Credit Rotation ETF,NYSE Arca,1,0,2026-10-27
 JONE,Jones Ventures INTL Acquisition1 Corp - Class A Ordinary Shares,NASDAQ,0,1,2026-10-27
@@ -7174,7 +7173,6 @@ MEMS,Matthews Emerging Markets Discovery Active ETF,NASDAQ,1,0,2026-10-27
 MEMX,Matthews Emerging Markets ex China Active ETF,NYSE Arca,1,0,2026-10-27
 MENS,Jyong Biotech Ltd. - Ordinary shares,NASDAQ,0,1,2026-10-27
 MEOH,Methanex Corporation - Common Stock,NASDAQ,0,1,2026-10-27
-MERC,Mercer International Inc. - Common Stock,NASDAQ,0,1,2026-10-27
 MESH,Meshflow Acquisition Corp. - Class A Ordinary Shares,NASDAQ,0,0,2026-10-27
 MESHU,Meshflow Acquisition Corp. - Units,NASDAQ,0,0,2026-10-27
 MESHW,Meshflow Acquisition Corp. - Warrants,NASDAQ,0,0,2026-10-27
@@ -8387,13 +8385,9 @@ OOMA,"Ooma, Inc. Common Stock",NYSE,0,1,2026-10-27
 OOSP,Obra Opportunistic Structured Products ETF,NYSE Arca,1,0,2026-10-27
 OPAD,Offerpad Solutions Inc.  - Class A Common Stock,NASDAQ,0,1,2026-10-27
 OPAL,OPAL Fuels Inc. - Class A Common Stock,NASDAQ,0,1,2026-10-27
-OPAY,"OPay Limited American Depositary Shares, each representing ten Ordinary Shares",NYSE,0,1,2026-11-03
 OPBK,OP Bancorp - Common Stock,NASDAQ,0,1,2026-10-27
 OPCH,"Option Care Health, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 OPEN,Opendoor Technologies Inc  - Common Stock,NASDAQ,0,1,2026-10-27
-OPENL,"Opendoor Technologies Inc  - Series A Warrants, each whole warrant exercisable to purchase one share of Common Stock at an exercise price of $13.00 per warrant",NASDAQ,0,0,2026-10-27
-OPENW,"Opendoor Technologies Inc  - Series K Warrants, each whole warrant exercisable to purchase one share of Common Stock at an exercise price of $9.00 per warrant",NASDAQ,0,0,2026-10-27
-OPENZ,"Opendoor Technologies Inc  - Series Z Warrants, each whole warrant exercisable to purchase one share of Common Stock at an exercise price of $17.00 per warrant",NASDAQ,0,0,2026-10-27
 OPER,ETF ClearShares Ultra-Short Maturity ETF,NYSE Arca,1,0,2026-10-27
 OPEX,Tradr 2X Long OPEN Daily ETF,Cboe BZX,1,0,2026-10-27
 OPFI,OppFi Inc. Class A Common Stock,NYSE,0,1,2026-10-27
@@ -10532,6 +10526,7 @@ SOLZ,Solana ETF,NASDAQ,1,0,2026-10-27
 SOMN,Southern Company (The) 2025 Series A Corporate Units,NYSE,0,0,2026-10-27
 SON,Sonoco Products Company Common Stock,NYSE,0,1,2026-10-27
 SONM,"DNA X, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
+SONN,Southern Company (The) 2026 Series A Corporate Units,NYSE,0,0,2026-11-20
 SONO,"Sonos, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 SONY,Sony Group Corporation American Depositary Shares ,NYSE,0,1,2026-10-27
 SOPH,SOPHiA GENETICS SA - Ordinary Shares,NASDAQ,0,1,2026-10-27
@@ -11814,7 +11809,6 @@ UTSI,UTStarcom Holdings Corp - Ordinary Shares,NASDAQ,0,1,2026-10-27
 UTSL,Direxion Daily Utilities Bull 3X ETF,NYSE Arca,1,0,2026-10-27
 UTWO,US Treasury 2 Year Note ETF,NASDAQ,1,0,2026-10-27
 UTWY,US Treasury 20 Year Bond ETF,NASDAQ,1,0,2026-10-27
-UTZ,Utz Brands Inc Class A Common Stock ,NYSE,0,1,2026-10-27
 UUP,Invesco DB USD Index Bullish Fund ETF,NYSE Arca,1,0,2026-10-27
 UUPP,Principal CLO ETF,Cboe BZX,1,0,2026-10-27
 UUUC,Corgi UUUU 2x Daily ETF,Cboe BZX,1,0,2026-10-27
@@ -12757,6 +12751,7 @@ YJ,Yunji Inc. - American Depository Shares,NASDAQ,0,1,2026-10-27
 YJUN,FT Vest International Equity Moderate Buffer ETF - June,Cboe BZX,1,0,2026-10-27
 YLD,Principal Active High Yield ETF,NYSE Arca,1,0,2026-10-27
 YLDE,Franklin ClearBridge Enhanced Income ETF,NASDAQ,1,0,2026-10-27
+YLDS,Harbor Arena Structured Income ETF,NYSE Arca,1,0,2026-11-20
 YLDW,Westwood Enhanced Income Opportunity ETF,NYSE Arca,1,0,2026-10-27
 YLDY,Horizon High Income ETF,Cboe BZX,1,0,2026-10-27
 YMAG,YieldMax Magnificent 7 Fund of Option Income ETFs,NYSE Arca,1,0,2026-10-27
