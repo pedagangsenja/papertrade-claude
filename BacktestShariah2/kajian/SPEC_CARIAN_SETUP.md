@@ -1973,7 +1973,7 @@ mengambil senarai itu, kelas indikator CS07 / CS09 (yang hanya diuji pada 69–7
   dagangan (selepas kos); sasaran pengguna ≥ 2. Dipapar bersama: purata % setiap dagangan, kadar menang, rugi ≥ 15 %, purata
   untung dagangan menang, purata rugi dagangan kalah, hari pegang.
 - **Carian (ruang terlalu besar untuk dikira habis; tiga peringkat, semuanya ditetapkan di sini):**
-  (i) **satu demi satu:** setiap pilihan setiap komponen dengan sembilan komponen lain kekal seperti cara sekarang (70 cara);
+  (i) **satu demi satu:** setiap pilihan setiap komponen dengan sembilan komponen lain kekal seperti cara sekarang (75 cara; angka "70" dalam komit asal ialah silap kira, dibetulkan sebelum larian);
   (ii) **8,000 cara rawak** seragam daripada seluruh ruang (benih 20261121; `t0` → komponen 4 diabaikan);
   (iii) **naik bukit pada kumpulan A:** bermula daripada cara terbaik (i) + (ii), setiap pusingan menguji semua cara yang berbeza
   SATU komponen, berpindah ke yang terbaik jika nilai tengah nisbah naik ≥ 0.005, paling banyak 8 pusingan.

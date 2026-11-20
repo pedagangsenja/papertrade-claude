@@ -3502,3 +3502,162 @@ class TestCS25(unittest.TestCase):
         self.assertEqual(C.cara[C.d_purata_A.idxmax()].replace('.m10.', '.m3.').replace('.m20.', '.m3.'), B['U']['cara'])
         self.assertAlmostEqual(T.purata_sekarang[T.cukup].median(), B['sekarang']['purata'], places=4)
         self.assertAlmostEqual(T.purata_U[T.cukup].median(), B['U']['purata'], places=4)
+
+
+class TestCS26(unittest.TestCase):
+    """Pusingan CS26 (pindaan 20 Nov 2026 (am)): stop loss x pegang x jual habis-habisan (10 komponen), nisbah untung : rugi."""
+
+    def test_dikunci(self):
+        import cs_keluar26 as c26
+        self.assertEqual((c26.PUS, c26.RUANG, c26.N_RAWAK, c26.BENIH_RAWAK, c26.TAMAK_MIN, c26.TAMAK_MAKS, c26.SASARAN, c26.B3_MIN, c26.MIN_N,
+                          c26.MIN_K3, c26.KOS), ('CS26', 40_734_720, 8000, 20261121, 0.005, 8, 2.0, 0.05, 30, 20, 0.005))
+        self.assertEqual([len(k) for k in c26.KOMPONEN], [13, 5, 34, 8, 4, 8, 3, 3, 2, 4])
+        self.assertEqual(c26.kod(c26.ASAS), 's4|n0|ma20|m20|k0|j0|b0|q0|e0|h126')
+        cara, n_satu = c26.tahap1()
+        self.assertEqual((n_satu, len(cara), len(set(cara)), cara[0]), (75, 8075, 8075, c26.kanon(c26.ASAS)))
+        self.assertTrue(all(g == c26.kanon(g) and c26.dari_kod(c26.kod(g)) == g for g in cara[:300]))
+        with open(os.path.join(SINI, '..', 'kajian', 'SPEC_CARIAN_SETUP.md'), encoding='utf-8') as f:
+            self.assertIn('### Pindaan 20 Nov 2026 (am)', f.read())
+
+    @staticmethod
+    def _panel(benih=11, n_saham=5, n=430):
+        import cs_atom as atom
+        rng = np.random.default_rng(benih)
+        pan = TestCS25._panel(benih, n_saham, n)
+        pan['h'] = np.maximum(pan['o'], pan['c']) * (1 + np.abs(rng.normal(0, 0.012, len(pan['c']))))
+        pan['X'] = (rng.random((len(atom.KELUAR), len(pan['c']))) < 0.08).astype(np.uint8)
+        L = {'L1': (rng.random((33, len(pan['c']))) < 0.04).astype(np.uint8), 'L2': (rng.random((15, len(pan['c']))) < 0.04).astype(np.uint8)}
+        return pan, L
+
+    @staticmethod
+    def _naif(c26, pan, G, D, LI, i, g):
+        """Simulasi hari demi hari satu dagangan bagi cara g (pelaksanaan bebas daripada enjin). -> (pulangan, sesi jual)."""
+        s, pn, t, a, kq, j, bq, p, eq, h = g
+        o, hi, l, c, atr, mula = pan['o'], pan['h'], pan['l'], pan['c'], pan['atr'], pan['mula']
+        akhir = mula[pan['tid'][i] + 1] - 1
+        e = i + 1
+        P, a0, m, cap = o[e], atr[i], akhir - e, c26.HAD[h] - 1
+        jenis, nilai = c26.S_JENIS[s], c26.S_NILAI[s]
+        if jenis == 1:
+            Ls = P * (1 - nilai)
+        elif jenis == 3:
+            paras, lantai = (l[i] if nilai == 0 else LI[int(nilai) - 1, i]), P - c26.G_LANTAI * a0
+            Ls = lantai if (np.isnan(paras) or paras > lantai) else paras
+        else:
+            Ls = P - nilai * a0
+
+        def tamat(q, b, hc, hh):                              # q = indeks tanda trend (0 = tanda harian pertama)
+            cb = c[b]
+            if q < c26.NG:
+                return G[q, b] > 0
+            q -= c26.NG
+            if q < 5:
+                return cb < hc - c26.CH_K[q] * atr[b]
+            if q == 5:
+                return cb < hh - c26.HH_K * atr[b]
+            return cb < c26.TR_X[q - 6] * hc
+
+        naik = [False] * 4
+        separuh, tunggu_separuh, tunggu_jual, sedia, hc, hh, capai20 = None, False, False, False, -np.inf, -np.inf, None
+        siap = lambda x: (0.5 * separuh + 0.5 * x if separuh is not None else x) - 1 - c26.KOS
+        for d in range(m + 1):
+            b = e + d
+            if tunggu_separuh and separuh is None:
+                separuh = o[b] / P
+            if tunggu_jual:
+                return siap(o[b] / P), d
+            if d >= 1:
+                if bq and sedia and o[b] <= P:
+                    return siap(o[b] / P), d
+                if jenis != 2 and o[b] <= Ls:
+                    return siap(o[b] / P), d
+                if bq and sedia and l[b] <= P:
+                    return siap(1.0), d
+                if jenis != 2 and l[b] <= Ls:
+                    return siap(Ls / P), d
+            cb = c[b]
+            hc, hh = max(hc, cb), max(hh, hi[b])
+            if d == cap or d == m:
+                return siap(cb / P), d
+            if (jenis == 2 or d == 0) and cb <= Ls:
+                tunggu_jual = True
+            for q in range(4):
+                naik[q] = naik[q] or cb >= P * c26.A_NAIK[q]
+            if (bq == 1 and cb >= P + c26.BE_ATR * a0) or (bq == 2 and cb >= P * c26.BE_PCT):
+                sedia = True
+            baru20 = d >= 2 and capai20 is None and cb >= P * 1.20
+            if baru20:
+                capai20 = d + 1
+            kecuali = j == 7 and capai20 is not None and capai20 <= c26.ONEIL_SESI
+            if pn and not kecuali:
+                if (pn == 1 and d == 4 and cb < P) or (pn == 2 and d == 9 and cb < P) or (pn == 3 and d == 9 and cb < P + a0) \
+                        or (pn == 4 and d == 19 and cb < P):
+                    tunggu_jual = True
+            if d < 2:
+                continue
+            if t > 0:
+                aktif = d >= 39 if kecuali else (d >= c26.A_HARI[a] if a < 4 else naik[a - 4])
+                if aktif and tamat(t - 1, b, hc, hh):
+                    tunggu_jual = True
+            if kq > 0 and not kecuali and naik[c26.K_A[kq] - 4] and tamat(c26.K_T[kq], b, hc, hh):
+                tunggu_jual = True
+            if (p > 0 and D[1 + p, b] > 0) or (eq > 0 and d >= c26.E_MULA and D[4, b] > 0):
+                tunggu_jual = True
+            if (j == 3 and cb >= P * 1.20) or (j == 4 and cb >= P * 1.50) or (j == 5 and D[0, b] > 0) or (j == 6 and D[1, b] > 0) \
+                    or (j == 7 and baru20 and not kecuali):
+                tunggu_jual = True
+            if j in (1, 2) and cb >= P * c26.J_NAIK[j - 1]:
+                tunggu_separuh = True
+
+    def test_enjin_lawan_simulasi_naif(self):
+        import cs_keluar26 as c26
+        pan, L = self._panel()
+        G, D, LI = c26.siri(pan, L)
+        ev = np.array(sorted(b for t in range(5) for b in range(pan['mula'][t] + 110, pan['mula'][t + 1] - 140, 3)), np.int64)
+        akhir = (pan['mula'][pan['tid'][ev] + 1] - 1).astype(np.int64)
+        A = c26.atom26(ev, pan['o'], pan['h'], pan['l'], pan['c'], pan['atr'], akhir, G, D, LI)
+        cara, n_satu = c26.tahap1()
+        rng = np.random.default_rng(5)
+        pilih = cara[:n_satu] + [cara[q] for q in rng.choice(np.arange(n_satu, len(cara)), 330, replace=False)]
+        S = c26.stat26(ev, pan['tid'][ev].astype(np.int64), pan['tempoh'][ev].astype(np.int64), pan['o'], pan['c'], *A, np.array(pilih, np.int64))
+        for q, g in enumerate(pilih):
+            R, hari, t_akhir, b_akhir = [], [], -1, -1
+            for i in ev:
+                if pan['tid'][i] == t_akhir and i <= b_akhir:
+                    continue
+                r, sk = self._naif(c26, pan, G, D, LI, i, g)
+                t_akhir, b_akhir = pan['tid'][i], i + 1 + sk
+                R.append(r)
+                hari.append(sk + 1)
+            R = np.array(R)
+            self.assertEqual(int(S[q, 0]), len(R), c26.kod(g))
+            np.testing.assert_allclose(S[q, 1], R[R > 0].sum(), rtol=2e-5, atol=1e-5, err_msg=c26.kod(g))
+            np.testing.assert_allclose(S[q, 2], -R[R <= 0].sum(), rtol=2e-5, atol=1e-5, err_msg=c26.kod(g))
+            np.testing.assert_allclose(S[q, 3], (R > 0).mean(), atol=1e-6, err_msg=c26.kod(g))
+            np.testing.assert_allclose(S[q, 6], np.median(hari), atol=1e-6, err_msg=c26.kod(g))
+        self.assertEqual({x for g in pilih for x in c26.kod(g).split('|')}, {x for k in c26.KOMPONEN for x in k})
+
+    def test_siri_harian(self):
+        import cs_keluar26 as c26
+        pan, L = self._panel()
+        G, D, LI = c26.siri(pan, L)
+        c, l, mula = pan['c'], pan['l'], pan['mula']
+        s = int(mula[2])
+        for b in (s + 120, s + 233, s + 400):
+            ma = lambda n, x=b: c[x - n + 1:x + 1].mean()
+            g = lambda k: bool(G[c26.HARIAN.index(k), b])
+            self.assertEqual(g('ma20'), c[b] < ma(20))
+            self.assertEqual(g('2ma50'), c[b] < ma(50) and c[b - 1] < ma(50, b - 1))
+            self.assertEqual(g('ma20-1a'), c[b] < ma(20) - pan['atr'][b])
+            self.assertEqual(g('x2050'), ma(20) < ma(50))
+            self.assertEqual(g('ll10'), c[b] < l[b - 10:b].min())
+            self.assertEqual(g('3dn'), c[b] < c[b - 1] < c[b - 2] < c[b - 3])
+            self.assertAlmostEqual(LI[0, b], l[b - 9:b + 1].min())
+        self.assertFalse(G[:, s:s + 3][[c26.HARIAN.index(k) for k in ('ma10', '2ma20', 'll5', 'piv', '3dn')]].any())   # tiada bocor antara saham
+        # lembah: rendah di bar 5 disahkan pada bar 7; SAR: siri naik lurus tidak pernah bertukar turun
+        lo = np.array([9, 8, 7, 6, 5, 3, 5, 6, 7, 8, 9, 10.0])
+        np.testing.assert_array_equal(np.isnan(c26.lembah(lo, np.array([0, 12]))), [True] * 7 + [False] * 5)
+        self.assertEqual(c26.lembah(lo, np.array([0, 12]))[7], 3.0)
+        naik = np.arange(1.0, 41.0)
+        self.assertFalse(c26.sar_turun(naik + 0.5, naik - 0.5, np.array([0, 40])).any())
+        self.assertTrue(c26.sar_turun((naik + 0.5)[::-1].copy(), (naik - 0.5)[::-1].copy(), np.array([0, 40]))[1:].all())
