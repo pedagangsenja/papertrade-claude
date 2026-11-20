@@ -3363,3 +3363,119 @@ class TestCS24(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class TestCS25(unittest.TestCase):
+    """Pusingan CS25 (pindaan 20 Nov 2026 (al)): stop loss x pegang x jual bagi setiap setup F (4,320 cara)."""
+
+    def test_dikunci(self):
+        import cs_keluar25 as c25
+        self.assertEqual((c25.PUS, c25.W, c25.KOS, c25.MIN_N, c25.MIN_K3, c25.RUGI_MAKS, c25.B3_MIN, c25.N_KAWALAN, c25.BENIH_KAWALAN),
+                         ('CS25', 4320, 0.005, 30, 20, 0.02, 0.001, 300_000, 20261120))
+        self.assertEqual((c25.STOP, c25.BE, c25.MIN, c25.JUAL, c25.HAD, len(c25.TREND)),
+                         (('s2', 's3', 's4', 's6', 'p8', 'p15', 'c3', 'c4'), ('b0', 'b1'), (3, 10, 20), ('j0', 'j1', 'j2'), (126, 252), 15))
+        self.assertEqual(c25.KOD[c25.SEKARANG], 's4.b0.m20.t2.j0.h126')
+        self.assertEqual(len(set(c25.KOD)), c25.W)
+        with open(os.path.join(SINI, '..', 'kajian', 'SPEC_CARIAN_SETUP.md'), encoding='utf-8') as f:
+            self.assertIn('### Pindaan 20 Nov 2026 (al)', f.read())
+
+    @staticmethod
+    def _panel(benih=7, n_saham=5, n=420):
+        rng = np.random.default_rng(benih)
+        o, l, c, tid, mula = [], [], [], [], [0]
+        for t in range(n_saham):
+            cc = 40 * np.exp(np.cumsum(rng.normal(0.001, 0.035, n)))
+            oo = cc * (1 + rng.normal(0, 0.012, n))
+            o.append(oo)
+            c.append(cc)
+            l.append(np.minimum(oo, cc) * (1 - np.abs(rng.normal(0, 0.012, n))))
+            tid.append(np.full(n, t, np.int32))
+            mula.append(mula[-1] + n)
+        o, l, c = (np.concatenate(x) for x in (o, l, c))
+        atr = c * 0.03 * (1 + 0.3 * np.sin(np.arange(len(c)) / 9.0))
+        tempoh = (np.arange(len(c)) % 3).astype(np.int8)
+        return dict(o=o, l=l, c=c, atr=atr, tid=np.concatenate(tid), mula=np.asarray(mula, np.int64), tempoh=tempoh)
+
+    @staticmethod
+    def _naif(c25, pan, i, g):
+        """Simulasi hari demi hari satu dagangan bagi cara g (pelaksanaan bebas daripada enjin). -> (pulangan, sesi jual)."""
+        s, bq, mi, t, j, h = g
+        o, l, c, atr, mula = pan['o'], pan['l'], pan['c'], pan['atr'], pan['mula']
+        awal, akhir = mula[pan['tid'][i]], mula[pan['tid'][i] + 1] - 1
+        e = i + 1
+        P, a0, m, cap = o[e], atr[i], akhir - e, c25.HAD[h] - 1
+        jenis, nilai = c25.S_JENIS[s], c25.S_NILAI[s]
+        Ls = P * (1 - nilai) if jenis == 1 else P - nilai * a0
+        sma = lambda b, n: c[b - n + 1:b + 1].mean() if b - n + 1 >= awal else np.nan
+        rendah = lambda b, n: l[b - n:b].min() if b - n >= awal else np.nan
+
+        def tamat(b, hc):
+            cb = c[b]
+            if t in (1, 2, 3, 4):
+                return cb < sma(b, c25.SMA_N[t - 1])
+            if t in (5, 6):
+                n = c25.SMA_N[t - 4]
+                return cb < sma(b, n) and c[b - 1] < sma(b - 1, n)
+            if t in (7, 8, 9, 10):
+                return cb < hc - c25.CH_K[t - 7] * atr[b]
+            if t in (11, 12):
+                return cb < rendah(b, c25.LL_N[t - 11])
+            return cb < c25.JATUH[t - 13] * hc
+
+        separuh, tunggu_separuh, tunggu_jual, sedia, hc = None, False, False, False, -np.inf
+        siap = lambda x: (0.5 * separuh + 0.5 * x if separuh is not None else x) - 1 - c25.KOS
+        for d in range(m + 1):
+            b = e + d
+            if tunggu_separuh and separuh is None:
+                separuh = o[b] / P
+            if tunggu_jual:
+                return siap(o[b] / P), d
+            if d >= 1:
+                if bq == 1 and sedia and o[b] <= P:
+                    return siap(o[b] / P), d
+                if jenis != 2 and o[b] <= Ls:
+                    return siap(o[b] / P), d
+                if bq == 1 and sedia and l[b] <= P:
+                    return siap(1.0), d
+                if jenis != 2 and l[b] <= Ls:
+                    return siap(Ls / P), d
+            cb = c[b]
+            hc = max(hc, cb)
+            if d == cap or d == m:
+                return siap(cb / P), d
+            if (jenis == 2 or d == 0) and cb <= Ls:
+                tunggu_jual = True
+            if t > 0 and d >= max(2, c25.MIN[mi] - 1) and tamat(b, hc):
+                tunggu_jual = True
+            if j > 0 and d >= 2 and cb >= P * c25.J_NAIK[j - 1]:
+                tunggu_separuh = True
+            if bq == 1 and cb >= P + c25.BE_ATR * a0:
+                sedia = True
+
+    def test_enjin_lawan_simulasi_naif(self):
+        import cs_keluar25 as c25
+        pan = self._panel()
+        ev = np.array(sorted(b for t in range(5) for b in range(pan['mula'][t] + 110, pan['mula'][t + 1] - 140, 3)), np.int64)
+        A = c25.atom_panel(pan, ev)
+        rng = np.random.default_rng(3)
+        cara = np.unique(np.concatenate([[c25.SEKARANG], rng.choice(c25.W, 260, replace=False)]))
+        S = c25.stat_panel(pan, ev, A, cara=cara)
+        dicetus = set()
+        for q, w in enumerate(cara):
+            g = c25._GRID[w]
+            R, hari, t_akhir, b_akhir = [], [], -1, -1
+            for i in ev:
+                if pan['tid'][i] == t_akhir and i <= b_akhir:
+                    continue
+                r, sk = self._naif(c25, pan, i, g)
+                t_akhir, b_akhir = pan['tid'][i], i + 1 + sk
+                R.append(r)
+                hari.append(sk + 1)
+            R = np.array(R)
+            self.assertEqual(int(S[q, 0]), len(R), c25.KOD[w])
+            np.testing.assert_allclose(S[q, 1], R.mean(), atol=2e-6, err_msg=c25.KOD[w])
+            np.testing.assert_allclose(S[q, 2], (R > 0).mean(), atol=1e-6, err_msg=c25.KOD[w])
+            np.testing.assert_allclose(S[q, 3], (R <= -0.15).mean(), atol=1e-6, err_msg=c25.KOD[w])
+            np.testing.assert_allclose(S[q, 5], np.median(hari), atol=1e-6, err_msg=c25.KOD[w])
+            dicetus.update(c25.KOD[w].split('.'))
+        self.assertTrue({'s2', 's6', 'p8', 'c3', 'b1', 't5', 't11', 't14', 'j1', 'j2'} <= dicetus)

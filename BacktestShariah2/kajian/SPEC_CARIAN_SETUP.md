@@ -1894,6 +1894,9 @@ purata 10 / 20 hari); Chandelier / ATR (gandaan lebih besar = kurang terjual awa
 - **Juga dilaporkan:** kesan setiap komponen satu demi satu (lima komponen lain kekal pada cara sekarang, dan pada cara `U`);
   Δmenang, Δrugi15 dan hari pegang bagi setiap cara terpilih; jadual setiap setup (`setup.csv.gz`: cara sekarang, `U`, `S`,
   `Ui`, `Si` pada kumpulan B, dengan ayat peraturannya); taburan pilihan `Ui` ikut komponen.
+- **Ikut kumpulan kegunaan CS23 (maklumat; ditambah 20 Nov 2026 sebelum sebarang larian):** pemilihan `U` dan `S` diulang pada
+  kumpulan A dalam setiap kumpulan (`Setiap minggu`, `Musim laporan kewangan`, `Keadaan tertentu`, `Lain-lain`, dan kod yang
+  tiada dalam senarai CS23) dan dibaca pada kumpulan B, di sebelah cara `U` / `S` sejagat. Tiada ambang.
 - **Selepas pusingan:** laporan dan cadangan sahaja. TIADA perubahan automatik pada `registry_F.csv`, senarai utama, Top 100,
   penjejak atau dashboard: menukar stop loss atau cara jual berdaftar ialah keputusan pengguna, walau apa pun bacaan.
 - **Kaveat dikunci:** tiada saham delist — bias ini membesar dengan tempoh pegang, jadi purata setiap dagangan naik dengan
