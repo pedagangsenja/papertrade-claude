@@ -1,14 +1,14 @@
 {
- "dikemas": "2026-11-19 18:59 UTC",
+ "dikemas": "2026-11-20 07:43 UTC",
  "versi_peraturan": "99797799da",
- "rekod": 79720,
- "tutup_beku": 43687,
- "baharu": 0,
- "tutup_baharu": 0,
+ "rekod": 81471,
+ "tutup_beku": 46025,
+ "baharu": 1751,
+ "tutup_baharu": 2338,
  "hanyut": {
-  "berubah": 249,
+  "berubah": 250,
   "hilang": 51,
-  "dibuka_semula": 11
+  "dibuka_semula": 10
  },
  "contoh": {
   "berubah": [
@@ -47,7 +47,6 @@
   ],
   "dibuka_semula": [
    "M73|SPOK|2026-11-04|1",
-   "M151|GIC|2026-11-04|1",
    "M54|GIC|2026-10-21|1",
    "M95|GIC|2026-10-21|1",
    "M131|GIC|2026-11-04|1",

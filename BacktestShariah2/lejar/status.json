@@ -72,8 +72,8 @@
    "sesi_terakhir_lama": "2026-11-17"
   }
  ],
- "sesi_terakhir": "2026-11-18",
- "kemaskini": "2026-11-19 18:20 MYT",
+ "sesi_terakhir": "2026-11-19",
+ "kemaskini": "2026-11-20 15:43 MYT",
  "bil_kaedah": 232,
  "larian": [
   {
@@ -400,6 +400,43 @@
    "ralat": [],
    "nota": [],
    "masa_s": 394
+  },
+  {
+   "sesi": "2026-11-19",
+   "beli": 1751,
+   "tutup": 1571,
+   "langkau": 27,
+   "isyarat": 10117,
+   "terbuka": 62796,
+   "tunggu": 845,
+   "kaedah_isyarat": 160,
+   "ralat": [],
+   "nota": [
+    "M01 SNDK: laras x0.1250",
+    "M73 SNDK: laras x0.1250",
+    "M73 SNDK: laras x0.1250",
+    "M79 SNDK: laras x0.1250",
+    "M125 SNDK: laras x0.1250",
+    "M136 SNDK: laras x0.1250",
+    "M155 SNDK: laras x0.1250",
+    "N16X13 SNDK: laras x0.1250",
+    "N16X15 SNDK: laras x0.1250",
+    "N19X13 SNDK: laras x0.1250",
+    "N28X14 SNDK: laras x0.1250",
+    "N28X16 SNDK: laras x0.1250",
+    "N28X16 SNDK: laras x0.1250",
+    "N28X17 SNDK: laras x0.1250",
+    "N28X36 SNDK: laras x0.1250",
+    "N28X36 SNDK: laras x0.1250",
+    "N73X13 SNDK: laras x0.1250",
+    "N75X13 SNDK: laras x0.1250",
+    "N75X14 SNDK: laras x0.1250",
+    "N75X15 SNDK: laras x0.1250",
+    "N75X17 SNDK: laras x0.1250",
+    "N119X13 SNDK: laras x0.1250",
+    "N119X15 SNDK: laras x0.1250"
+   ],
+   "masa_s": 567
   }
  ]
 }

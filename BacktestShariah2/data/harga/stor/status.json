@@ -1,18 +1,17 @@
 {
- "dikemaskini": "2026-11-20 06:22 UTC",
+ "dikemaskini": "2026-11-20 07:33 UTC",
  "bar_terakhir": 20261119,
  "laras": {
-  "APC": 1.036154,
-  "GIC": 1.028225,
-  "GNK": 1.041848,
-  "MKTW": 1.020593,
+  "APC": 1.036153,
+  "GIC": 1.028224,
+  "GNK": 1.041849,
+  "MKTW": 1.020592,
   "MNR": 1.024971,
-  "SNDK": 0.125,
-  "SPOK": 1.027781,
-  "SUPN": 0.867424,
-  "TRMD": 1.038211,
-  "TXO": 1.032423,
-  "WLKP": 1.022205
+  "SPOK": 1.02778,
+  "SUPN": 0.867237,
+  "TRMD": 1.03821,
+  "TXO": 1.016211,
+  "WLKP": 1.011103
  },
  "perlu_sejarah": [
   "SUPN"
@@ -37,7 +36,7 @@
    "SUPN": "tidak konsisten: nisbah segar/stor 1.0706, serak 8.42% > 2%"
   }
  },
- "log_laras": 1,
+ "log_laras": 0,
  "faktor_dividen": [],
  "faktor_calon": [],
  "moomoo": {
