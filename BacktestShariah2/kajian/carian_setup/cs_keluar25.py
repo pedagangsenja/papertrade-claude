@@ -57,6 +57,9 @@ NSTAT = len(STAT)
 IX = {k: i for i, k in enumerate(STAT)}
 MIN_N, MIN_K3, RUGI_MAKS, B3_MIN = 30, 20, 0.02, 0.001      # ambang pindaan (al)
 N_KAWALAN, BENIH_KAWALAN = 300_000, 20261120
+# tambahan post hoc (al): lima cara wakil dalam jadual setiap setup, dan kesan komponen bagi senarai kerja rasmi
+TANGGA = ('s4.b0.m20.t3.j0.h126', 's4.b0.m20.t8.j0.h126', 's4.b0.m20.t13.j0.h126', 's4.b0.m20.t10.j0.h126', 's4.b0.m20.t0.j0.h126')
+RASMI = 'Setiap minggu'
 HASIL = os.path.join(SINI, 'hasil', PUS)
 REG_F = os.path.normpath(os.path.join(SINI, '..', '..', 'data', 'registry_F.csv'))
 F_ = lambda kerja, x: os.path.join(kerja, f'cs25_{x}')
@@ -516,7 +519,8 @@ def bacaan(D):
         x = L[i]
         b = dict(id=i, pusingan=x['pusingan'], kegunaan=x['kegunaan'], nama=x['nama'], prasyarat=x['prasyarat'], penapis=x['penapis'],
                  henti_daftar=x['henti'], keluar_daftar=x['keluar'], cukup=bool(ok[j]))
-        for tag, w in (('sekarang', SEKARANG), ('U', U), ('S', S_), ('Ui', int(Ui[j])), ('Si', int(Si[j]))):
+        for tag, w in ((('sekarang', SEKARANG), ('U', U), ('S', S_), ('Ui', int(Ui[j])), ('Si', int(Si[j])))
+                       + tuple((f'T{q + 1}', KOD.index(k)) for q, k in enumerate(TANGGA))):
             if w < 0:
                 continue
             a = np.asarray(SB[j, w], np.float64)
@@ -526,7 +530,13 @@ def bacaan(D):
             b.update({f'{k}_{tag}': float(a[IX[k]]) for k in ('n', 'purata', 'menang', 'rugi15', 'k50', 'sesi_med', 'purata_K3')})
         baris.append(b)
     T = pd.DataFrame(baris)
-    Km = pd.concat([komponen(SB, K, ok, SEKARANG), komponen(SB, K, ok, U)], ignore_index=True)
+    Km = pd.concat([komponen(SB, K, ok, SEKARANG).assign(kumpulan='Semua'), komponen(SB, K, ok, U).assign(kumpulan='Semua'),
+                    komponen(SB, K, ok & (kg == RASMI), SEKARANG).assign(kumpulan=RASMI)], ignore_index=True)
+    B['setup_rasmi'] = int((ok & (kg == RASMI)).sum())
+    B['tangga'] = [dict(tag=f'T{q + 1}', **baca(SB, K, ok, KOD.index(k))) for q, k in enumerate(TANGGA)]
+    B['tangga_rasmi'] = [baca(SB, K, ok & (kg == RASMI), w) for w in [SEKARANG] + [KOD.index(k) for k in TANGGA]]
+    tiada = pd.Series([x['pusingan'] for i, x in L.items() if i not in set(ids)]).value_counts()
+    B['tidak_dinilai_pusingan'] = {str(k): int(v) for k, v in tiada.items()}
     # jadual semua cara (nilai tengah merentas setup, kumpulan A dan B, dan kawalan)
     g = lambda S_, k: np.nanmedian(np.asarray(S_[ok, :, IX[k]], np.float64), axis=0)
     C = pd.DataFrame(dict(cara=KOD, ayat=[teks(w) for w in range(W)], d_purata_A=dpA, d_rugi15_A=drA, per20_A=p20A,
@@ -595,8 +605,9 @@ def teks_laporan(B, T, Km, C):
     L = ['# CS25: stop loss × pegang × jual bagi SETIAP setup F, ikut untung terbesar (backtest; BUKAN bukti)', '',
          'Peraturan ditulis dahulu: `kajian/SPEC_CARIAN_SETUP.md` pindaan 20 Nov 2026 (al). Dijana `cs_keluar25.py`; jangan sunting.', '',
          f"- Permintaan pengguna 20 Nov 2026: kaji stop loss, masa pegang dan masa jual bagi SEMUA setup F, untuk untung terbesar dan rugi terkecil.",
-         f"- {B['kod_registry']:,} kod dalam registry F; {B['dinilai']:,} dinilai ({B['tidak_dinilai']} tidak dapat dijana semula dalam mod tanpa intai); "
-         f"{B['setup_ok']:,} ada ≥ {MIN_N} dagangan dalam kedua-dua kumpulan saham dan masuk bacaan.",
+         f"- {B['kod_registry']:,} kod dalam registry F; {B['dinilai']:,} dinilai ({B['tidak_dinilai']} tidak dapat dijana semula dalam mod tanpa intai: "
+         + ', '.join(f'{k} {v}' for k, v in B['tidak_dinilai_pusingan'].items()) + '); '
+         + f"{B['setup_ok']:,} ada ≥ {MIN_N} dagangan dalam kedua-dua kumpulan saham dan masuk bacaan.",
          f"- {B['cara']:,} cara setiap setup: {NS_} stop loss × {NB} \"naikkan stop loss ke harga beli\" × {NM} pegang minimum × {NT} \"trend tamat\" × "
          f"{NJ} \"jual separuh\" × {NH} had masa. Peraturan beli tidak diubah; kadar tangkap tidak terkesan.",
          f"- Cara dipilih pada saham carian; semua angka di bawah dibaca pada saham yang carian tidak lihat (nilai tengah merentas setup), kos 0.5 %.",
@@ -617,16 +628,26 @@ def teks_laporan(B, T, Km, C):
          f"| `Si` cara tersendiri setiap setup (tanpa menambah rugi besar) | {_p(B['Si']['purata'])} | {_k(B['Si']['menang'])} | {_k(B['Si']['rugi15'])} | – | {_h(B['Si']['sesi'])} | – | – |",
          '', 'Lajur terakhir = 300,000 belian rawak pada saham yang sama, dijual dengan cara yang sama. Jika angka saham rawak naik sama banyak, '
          'tambahan itu datang daripada memegang saham lebih lama dalam data ini (pasaran naik, tiada saham mati), bukan daripada setup.', '']
-    for asas, tajuk in ((B['sekarang']['cara'], '## 3. Kesan setiap komponen, satu demi satu (lima yang lain kekal seperti cara sekarang)'),
-                        (B['U']['cara'], '## 4. Kesan setiap komponen, satu demi satu (lima yang lain kekal seperti cara `U`)')):
+    L += ['## 3. Tangga: jual lebih lewat = purata lebih besar, tetapi rugi besar lebih kerap (stop loss 4×ATR, pegang minimum 20 hari)', '',
+          f"Kiri = semua {B['setup_ok']:,} setup; kanan = {B['setup_rasmi']:,} setup \"{RASMI}\" (senarai kerja rasmi; tambahan selepas hasil dilihat).", '',
+          '| Tanda jual | Semua: purata % · menang % · rugi ≥ 15 % % · hari | Setiap minggu: purata % · menang % · rugi ≥ 15 % % · hari | Saham rawak: purata · menang · rugi ≥ 15 % |',
+          '|---|---|---|---|']
+    for a, r in zip([B['sekarang']] + B['tangga'], B['tangga_rasmi']):
+        L.append(f"| {a['ayat'].split('jual bila ')[-1].split(' · had')[0] if 'jual bila' in a['ayat'] else 'tiada (pegang 6 bulan)'} | "
+                 f"{_p(a['purata'])} · {_k(a['menang'])} · {_k(a['rugi15'])} · {_h(a['sesi'])} | {_p(r['purata'])} · {_k(r['menang'])} · {_k(r['rugi15'])} · {_h(r['sesi'])} | "
+                 f"{_p(a['kawalan_purata'])} · {_k(a['kawalan_menang'])} · {_k(a['kawalan_rugi15'])} |")
+    L.append('')
+    for asas, kump, tajuk in ((B['sekarang']['cara'], 'Semua', '## 4. Kesan setiap komponen, satu demi satu (lima yang lain kekal seperti cara sekarang)'),
+                              (B['sekarang']['cara'], RASMI, f'## 5. Sama, bagi setup "{RASMI}" sahaja (tambahan selepas hasil dilihat; maklumat)'),
+                              (B['U']['cara'], 'Semua', '## 6. Kesan setiap komponen, satu demi satu (lima yang lain kekal seperti cara `U`)')):
         L += [tajuk, '', '| Komponen | Pilihan | Purata % | Menang % | Rugi ≥ 15 % % | Untung ≥ 50 % % | Hari pegang | Setiap 20 hari % | 2025–26: beza purata (mata) | '
               'Saham rawak: purata · menang · rugi ≥ 15 % |', '|---|---|---|---|---|---|---|---|---|---|']
-        for r in Km[Km.asas == asas].itertuples():
+        for r in Km[(Km.asas == asas) & (Km.kumpulan == kump)].itertuples():
             tanda = ' **(asas)**' if r.sama_asas else ''
             L.append(f"| {r.komponen} | {r.pilihan}{tanda} | {_p(r.purata)} | {_k(r.menang)} | {_k(r.rugi15)} | {_k(r.k50, 1)} | {_h(r.sesi)} | {_p(r.per20, 2)} | "
                      f"{_p(r.d_purata_K3)} | {_p(r.kawalan_purata)} · {_k(r.kawalan_menang)} · {_k(r.kawalan_rugi15)} |")
         L.append('')
-    L += ['## 5. Ikut kumpulan setup (maklumat; pemilihan diulang dalam kumpulan itu pada saham carian)', '',
+    L += ['## 7. Ikut kumpulan setup (maklumat; pemilihan diulang dalam kumpulan itu pada saham carian)', '',
           '| Kumpulan | Setup | Cara | Purata % | Menang % | Rugi ≥ 15 % % | Hari pegang | Lebih baik daripada cara sekarang | 2025–26: beza purata (mata) | Saham rawak: purata |',
           '|---|---|---|---|---|---|---|---|---|---|']
     for g in B['kumpulan']:
@@ -636,7 +657,7 @@ def teks_laporan(B, T, Km, C):
             ayat = '' if tag in ('sekarang', 'U_sejagat', 'S_sejagat') else ': ' + b['ayat']
             L.append(f"| {g['kumpulan']} | {g['setup']:,} | {nama}{ayat} | {_p(b['purata'])} | {_k(b['menang'])} | {_k(b['rugi15'])} | {_h(b['sesi'])} | "
                      f"{'–' if tag == 'sekarang' else str(b['lebih_baik']) + ' / ' + str(b['setup'])} | {'–' if tag == 'sekarang' else _p(b['d_purata_K3'])} | {_p(b['kawalan_purata'])} |")
-    L += ['', '## 6. Cara tersendiri setiap setup: apa yang dipilih (`Ui`, pada saham carian)', '',
+    L += ['', '## 8. Cara tersendiri setiap setup: apa yang dipilih (`Ui`, pada saham carian)', '',
           '| Komponen | Bahagian setup yang memilih setiap pilihan |', '|---|---|']
     nama = {'stop': 'Stop loss', 'be': 'Naikkan stop loss ke harga beli', 'min': 'Pegang minimum', 'trend': 'Trend tamat', 'jual': 'Jual separuh',
             'had': 'Had masa'}
@@ -645,12 +666,13 @@ def teks_laporan(B, T, Km, C):
     L += ['', f"Pada saham yang carian tidak lihat, `Ui` memberi purata {_p(B['Ui']['purata'])} % (nilai tengah), lawan cara sekarang "
           f"{_p(B['Ui']['d_purata_sekarang'], 2)} mata ({B['Ui']['lebih_baik_sekarang']:,} daripada {B['Ui']['setup']:,} setup lebih tinggi). "
           'Jadual setiap setup: `setup.csv.gz`.', '',
-          '## 7. Sepuluh cara teratas pada saham carian, dan bacaannya pada saham yang carian tidak lihat', '',
+          '## 9. Sepuluh cara teratas pada saham carian, dan bacaannya pada saham yang carian tidak lihat', '',
+          'Cara tanpa peraturan trend adalah sama bagi tiga pilihan pegang minimum; ia ditunjuk sekali.', '',
           '| Cara | Saham carian: beza purata (mata) | Tidak dilihat: purata % | Menang % | Rugi ≥ 15 % % | Hari pegang | Saham rawak: purata |',
           '|---|---|---|---|---|---|---|']
-    for r in C.sort_values('d_purata_A', ascending=False).head(10).itertuples():
+    for r in C.sort_values('d_purata_A', ascending=False).drop_duplicates('ayat').head(10).itertuples():
         L.append(f"| {r.ayat} | {_p(r.d_purata_A)} | {_p(r.purata_B)} | {_k(r.menang_B)} | {_k(r.rugi15_B)} | {_h(r.sesi_B)} | {_p(r.kawalan_purata)} |")
-    L += ['', 'Semua 4,320 cara: `cara.csv.gz`.', '', '## 8. Kaveat', '',
+    L += ['', 'Semua 4,320 cara: `cara.csv.gz`.', '', '## 10. Kaveat', '',
           '- Tiada saham mati dalam data: untung daripada memegang lama condong ke atas, dan lebih condong bagi cara yang memegang lebih lama.',
           '- 4,320 cara dicuba setiap setup; cara terbaik pada saham carian condong ke atas. Sebab itu bacaan dibuat pada saham yang carian tidak lihat.',
           '- Saham yang carian tidak lihat sudah dipakai berkali-kali; 2025–26 pendek.',

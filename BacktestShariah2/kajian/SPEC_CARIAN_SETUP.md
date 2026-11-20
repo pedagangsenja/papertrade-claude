@@ -1905,6 +1905,19 @@ purata 10 / 20 hari); Chandelier / ATR (gandaan lebih besar = kurang terjual awa
   kumpulan B sudah dilihat berkali-kali; 2025–26 pendek; stop loss ikut tutup boleh rugi lebih daripada parasnya; `b1`
   menganggap jualan tepat pada harga beli; `j1` / `j2` dikenakan kos sekali. Pangkat backtest, BUKAN bukti.
 
+**Tambahan 20 Nov 2026 SELEPAS hasil (al) dilihat (post hoc; maklumat sahaja, BUKAN sebahagian bacaan dikunci).** Hasil
+(`hasil/CS25/KELUAR.md`): B1, B2 dan B3 semuanya GAGAL — cara `U` (`s6.b0.m3.t0.j0.h252`) dan `S` (`p8.b0.m3.t0.j0.h252`)
+menaikkan purata, tetapi saham rawak yang dipegang dengan cara sama naik lebih banyak (syarat (3)); cara tersendiri setiap
+setup tidak mengatasi satu cara untuk semua. Tiga tambahan pada laporan, semuanya daripada statistik yang sudah dikira:
+- **Tangga:** cara sekarang dan lima cara wakil yang hanya menukar tanda jual (`t3`, `t8`, `t13`, `t10`, `t0`; stop loss
+  `s4`, `m20`, `h126`), bagi semua setup dan bagi kumpulan `Setiap minggu` (senarai kerja rasmi), di sebelah kawalan rawak;
+  lajur `T1`–`T5` dalam `setup.csv.gz`.
+- **Kesan setiap komponen bagi kumpulan `Setiap minggu`** (asas = cara sekarang), di sebelah jadual semua setup.
+- **Paparan:** "sepuluh cara teratas" menunjukkan setiap ayat sekali (cara `t0` sama bagi tiga pegang minimum); kod yang
+  tidak dinilai dipecah ikut pusingan.
+Larian: kontena dimulakan semula sekali di tengah `kira` (kumpulan A, setup 2,200 / 2,745); titik semak setiap 200 setup
+ditambah dan larian diulang dari awal. Tiada perubahan pada grid, pemilihan atau ambang.
+
 ## 8. Apa yang TIDAK dibuat dalam CS01
 
 Penalaan Optuna penuh 1,303 parameter kaedah M (hanya dua varian rawak setiap kaedah), gabungan ≥ 3 penapis, gabungan

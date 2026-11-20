@@ -3479,3 +3479,26 @@ class TestCS25(unittest.TestCase):
             np.testing.assert_allclose(S[q, 5], np.median(hari), atol=1e-6, err_msg=c25.KOD[w])
             dicetus.update(c25.KOD[w].split('.'))
         self.assertTrue({'s2', 's6', 'p8', 'c3', 'b1', 't5', 't11', 't14', 'j1', 'j2'} <= dicetus)
+
+    def test_hasil(self):
+        import cs_keluar25 as c25
+        with open(os.path.join(c25.HASIL, 'bacaan.json'), encoding='utf-8') as f:
+            B = json.load(f)
+        T = pd.read_csv(os.path.join(c25.HASIL, 'setup.csv.gz'))
+        C = pd.read_csv(os.path.join(c25.HASIL, 'cara.csv.gz'))
+        reg = pd.read_csv(os.path.join(SINI, '..', 'data', 'registry_F.csv'), dtype=str)
+        self.assertTrue(B['pariti']['lulus'])
+        self.assertEqual((B['kod_registry'], B['dinilai'] + B['tidak_dinilai'], len(T), len(C)), (len(reg), len(reg), B['dinilai'], c25.W))
+        self.assertTrue(set(T.id) <= set(reg.id))
+        self.assertEqual(B['sekarang']['cara'], c25.KOD[c25.SEKARANG])
+        for k in ('U', 'S', 'E'):
+            self.assertIn(B[k]['cara'], c25.KOD)
+        # bacaan dikunci dikira semula daripada syaratnya
+        self.assertEqual(B['U']['lulus'], B['U']['s1'] and B['U']['s2'] and B['U']['s3'])
+        self.assertEqual(B['S']['lulus'], B['S']['s1'] and B['S']['s2'] and B['S']['s3'] and B['S']['s4'])
+        self.assertEqual(B['U']['s3'], B['U']['d_purata'] > B['U']['d_kawalan'])
+        self.assertEqual(B['Ui']['lulus'], B['Ui']['lebih_baik'] > B['Ui']['setup'] / 2 and B['Ui']['d_purata'] >= c25.B3_MIN)
+        # U ialah cara dengan beza purata tertinggi pada saham carian; nilai tengah jadual setup = bacaan
+        self.assertEqual(C.cara[C.d_purata_A.idxmax()].replace('.m10.', '.m3.').replace('.m20.', '.m3.'), B['U']['cara'])
+        self.assertAlmostEqual(T.purata_sekarang[T.cukup].median(), B['sekarang']['purata'], places=4)
+        self.assertAlmostEqual(T.purata_U[T.cukup].median(), B['U']['purata'], places=4)

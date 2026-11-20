@@ -11,14 +11,14 @@ Fail ini sengaja ringkas kerana dimuat dalam setiap chat (keputusan pengguna 18 
 ## Matlamat pengguna (ringkas; penuh: `RUJUKAN_CLAUDE.md` § Matlamat pengguna)
 - Cari setup swing lengkap terbaik (prasyarat → syarat → pegang → keluar, stop loss) yang paling kerap menangkap saham naik ≥ 5 % seminggu kemudian naik lagi 2–4 minggu. **Kayu ukur = KADAR TANGKAP** (dipapar bersama kadar menang dan purata). BUKAN indeks, untung/MDD akaun, atau purata setiap dagangan.
 - **Senarai kerja rasmi = Top 100 "Setiap minggu"** (`BacktestShariah2/kajian/carian_setup/hasil/CS23/TOP100.md` §5); §6 musim laporan kewangan = tambahan bermusim. Tunjuk setup setiap minggu dahulu.
-- Peraturan setup: swing; tiada beli-jual hari sama; pegang ≥ 3 hari; stop loss wajib tetapi longgar (saham laju: 4×ATR14 dari harga beli — jangan tukar); pegang selagi naik.
+- Peraturan setup: swing; tiada beli-jual hari sama; pegang ≥ 3 hari; stop loss wajib tetapi longgar (saham laju: 4×ATR14 dari harga beli — jangan tukar); pegang selagi naik. CS25 (20 Nov 2026) menguji stop loss × pegang × jual bagi semua setup F: baca ayat "WAJIB sebut" CS25 sebelum melaporkannya.
 - **Dihentikan / dijeda atas keputusan pengguna — jangan cadang kecuali diminta:** papertrade (`jejak_f2/JEDA`); kumpulan saham tenang / jual 5 % dari puncak (CS24); carian keluar manual; carian ikut ukuran longgar (CS12, CS22); carian kombinasi indikator pada data lama. Tiada tapisan Shariah buat masa ini pada setup F.
 - **Larangan:** jangan nilai/tolak/cadang berhenti kerja CS ikut indeks, untung akaun atau MDD; jangan cadang ukuran akaun, pembekuan, had calon atau kerja sampingan. Langkah selepas backtest = papertrade setup terbaik, hanya dengan keputusan pengguna.
 - **Sebelum melaporkan setup F atau T**, baca ayat "WAJIB sebut" bagi pusingan berkaitan dalam `RUJUKAN_CLAUDE.md` § Dapatan (grep kod CS). Sebelum menyambung kerja CS: `BacktestShariah2/kajian/SERAHAN_CARIAN_SETUP.md`.
 
 ## Sumber kebenaran utama (senarai penuh: `RUJUKAN_CLAUDE.md` § Sumber kebenaran)
 - Wang sebenar? `BacktestShariah2/laporan/KAD_SKOR.md` · gate: `standard/SPEC_KAD_SKOR.md` · keadaan repo: `KOORDINATOR.md` (dijana) · apa yang sudah diuji: `python3 REVERSE/strategi.py` · penanda aras SPUS, bukan SPY.
-- Setup F: `kajian/carian_setup/hasil/CS13/SENARAI_UTAMA.md`, `CS20/MINGGUAN.md`, `CS23/TOP100.md`; lorong T: `CS17/SENARAI_T.md`, `CS18/SOLID_T.md`; registry `data/registry_F.csv`.
+- Setup F: `kajian/carian_setup/hasil/CS13/SENARAI_UTAMA.md`, `CS20/MINGGUAN.md`, `CS23/TOP100.md`; stop loss / pegang / jual: `CS25/KELUAR.md`; lorong T: `CS17/SENARAI_T.md`, `CS18/SOLID_T.md`; registry `data/registry_F.csv`.
 
 ## Peraturan kritikal (lanjut: `RUJUKAN_CLAUDE.md` § Peraturan, § Struktur)
 - **Tiada order Moomoo, tiada wang sebenar.** Data mesti betul; jangan reka.
