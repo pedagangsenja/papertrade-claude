@@ -10,6 +10,7 @@ Folder kerja perlukan panel_A/B, lapis_A/B, cs07_K_A/B dan benih_A/B.pkl tanpa i
 import itertools
 import json
 import os
+import resource
 import sys
 import time
 
@@ -323,12 +324,25 @@ def kira(kerja, hanya=None):
         cari.log(f'CS25 {set_}: {len(ids)} setup · {len(U):,} isyarat berbeza · {sum(len(E[i]) for i in ids):,} isyarat · {time.time() - t0:.0f}s')
         A = atom_panel(pan, U)
         cari.log(f'CS25 {set_}: atom siap · {time.time() - t0:.0f}s')
-        S = np.full((len(ids), W, NSTAT), np.nan, np.float32)
+        # titik semak setiap 200 setup: kontena boleh dimulakan semula di tengah larian
+        fp, fj = F_(kerja, f'{set_}.bhg.npy'), F_(kerja, f'{set_}.bhg.json')
+        S, mula_j = np.full((len(ids), W, NSTAT), np.nan, np.float32), 0
+        if hanya is None and os.path.exists(fp) and os.path.exists(fj):
+            sedia = json.load(open(fj))
+            if sedia['ids'] == ids:
+                S, mula_j = np.load(fp), sedia['siap']
+                cari.log(f'CS25 {set_}: sambung dari setup {mula_j}')
         for j, i in enumerate(ids):
+            if j < mula_j:
+                continue
             if len(E[i]):
                 S[j] = stat_panel(pan, E[i], A, np.searchsorted(U, E[i]))
             if (j + 1) % 200 == 0:
-                cari.log(f'  CS25 {set_}: {j + 1}/{len(ids)} · {time.time() - t0:.0f}s')
+                if hanya is None:
+                    np.save(fp + '.tmp.npy', S)
+                    os.replace(fp + '.tmp.npy', fp)
+                    json.dump({'ids': ids, 'siap': j + 1}, open(fj, 'w'))
+                cari.log(f'  CS25 {set_}: {j + 1}/{len(ids)} · {time.time() - t0:.0f}s · RSS {resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024} MB')
         if hanya is not None:
             return ids, S
         np.save(f + '.tmp.npy', S)
