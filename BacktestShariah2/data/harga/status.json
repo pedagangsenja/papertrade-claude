@@ -1,7 +1,7 @@
 {
  "terkini": {
-  "dijana": "2026-11-20 19:05 UTC",
-  "sesi": 20261119,
+  "dijana": "2026-11-20 22:22 UTC",
+  "sesi": 20261120,
   "bil_ticker": 929,
   "bil_universe": 932,
   "tiada_data": [
@@ -11,15 +11,40 @@
   ],
   "tiada_bar_sesi": [
    "ACA",
+   "AD",
+   "ADNT",
+   "AMN",
+   "ARW",
+   "BIO.B",
+   "BVN",
+   "DAC",
+   "DELL",
+   "FPS",
    "INDV",
+   "KFRC",
    "KVUE",
-   "RAMP"
+   "LUXE",
+   "MAYS",
+   "MGRT",
+   "MHO",
+   "MUR",
+   "NCEW",
+   "ODC",
+   "PHOE",
+   "RAMP",
+   "RVTY",
+   "SPB",
+   "UI",
+   "USPH",
+   "WFG",
+   "WLYB",
+   "WST"
   ],
-  "bil_tiada_bar_sesi": 4,
+  "bil_tiada_bar_sesi": 29,
   "dividen_baharu": 0
  },
  "sejarah": {
-  "dijana": "2026-11-20 19:05 UTC",
+  "dijana": "2026-11-20 22:22 UTC",
   "bil_ticker": 1,
   "diminta": [
    "SUPN"
