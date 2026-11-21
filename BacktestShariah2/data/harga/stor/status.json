@@ -1,32 +1,29 @@
 {
- "dikemaskini": "2026-11-20 09:15 UTC",
- "bar_terakhir": 20261119,
+ "dikemaskini": "2026-11-21 06:22 UTC",
+ "bar_terakhir": 20261120,
  "laras": {
   "APC": 1.036153,
   "GIC": 1.028224,
-  "GNK": 1.041848,
-  "MKTW": 1.010296,
+  "GNK": 1.041847,
   "MNR": 1.024971,
   "SPOK": 1.02778,
-  "SUPN": 0.867237,
-  "TRMD": 1.03821,
-  "TXO": 1.016211,
-  "WLKP": 1.011103
+  "SUPN": 0.866171,
+  "TRMD": 1.03821
  },
  "perlu_sejarah": [
   "SUPN"
  ],
  "harga_A.csv": {
   "ticker_dikemaskini": 429,
-  "bar_terakhir": 20261119
+  "bar_terakhir": 20261120
  },
  "harga_B.csv": {
-  "ticker_dikemaskini": 497,
-  "bar_terakhir": 20261119
+  "ticker_dikemaskini": 498,
+  "bar_terakhir": 20261120
  },
  "harga_idx.csv": {
   "ticker_dikemaskini": 2,
-  "bar_terakhir": 20261119
+  "bar_terakhir": 20261120
  },
  "kuarantin": {
   "baru": [],
@@ -37,10 +34,14 @@
   }
  },
  "log_laras": 0,
- "faktor_dividen": [],
- "faktor_calon": [],
+ "faktor_dividen": [
+  "BVN 2026-11-20 D=0.551 P=21.23 (2.6%)"
+ ],
+ "faktor_calon": [
+  "BKHA 2026-11-20 -0.6543"
+ ],
  "moomoo": {
-  "ditampal": 20,
+  "ditampal": 16,
   "langkau_skala": [
    "SENEA 20261105: buka_moomoo 147.32 lawan stor 29.464",
    "SENEA 20261110: buka_moomoo 169.78 lawan stor 33.956",
