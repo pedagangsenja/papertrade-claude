@@ -1,11 +1,11 @@
 # Banding Papertrade C dengan Lejar Penuh (fasa 1)
 
-Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-19. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
+Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-20. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
 
-- Posisi C (isyarat >= 2026-10-15): 25748; ada dalam lejar: 16941; tiada: 8807 {'isyarat ada, dipegang lejar': 8394, 'tiada isyarat dalam lejar': 51, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 352, 'saham tidak cair': 4}
-- Posisi lejar: 81393 (C hanya 25748; lejar 3.2×)
-- Harga beli berbeza > 0.5%: 119 daripada 16941
-- Status keluar sama: 16934 daripada 16941; berbeza: 7
+- Posisi C (isyarat >= 2026-10-15): 25746; ada dalam lejar: 17279; tiada: 8467 {'isyarat ada, dipegang lejar': 8393, 'tiada isyarat dalam lejar': 53, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 11, 'saham tidak cair': 4}
+- Posisi lejar: 82179 (C hanya 25746; lejar 3.2×)
+- Harga beli berbeza > 0.5%: 124 daripada 17279
+- Status keluar sama: 17273 daripada 17279; berbeza: 6
 
 ## Harga beli berbeza > 0.5%
 
@@ -76,6 +76,5 @@ Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir
 - M156 TRMD 2026-11-02: C keluar 2026-11-05 / lejar keluar 2026-11-10 henti
 - N36X16 TRMD 2026-11-03: C keluar 2026-11-05 / lejar keluar 2026-11-06 isyarat keluar
 - M73 SPOK 2026-11-04: C keluar 2026-11-10 / lejar terbuka
-- M125 SHEL 2026-11-13: C keluar 2026-11-19 / lejar terbuka
 - M13 SBH 2026-10-15: C keluar 2026-10-19 / lejar keluar 2026-10-20 henti
-- M18 MHK 2026-10-27: C keluar 2026-11-05 / lejar keluar 2026-11-04 sasaran
+- M18 MHK 2026-10-27: C keluar 2026-11-05 / lejar keluar 2026-11-02 sasaran
