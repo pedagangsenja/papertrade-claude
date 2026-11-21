@@ -1,10 +1,10 @@
 # CANTAS — calon berhenti direkod (label maklumat bulanan; bukan tindakan)
 
-Dijana 2026-11-20 18:39 UTC oleh `standard/cantas.py` atas `kad_skor.json` harga 2026-11-19. Pradaftar `standard/SPEC_CANTAS.md`. **Tiada Lejar atau kad skor diubah**; cantas sebenar = keputusan pengguna dalam `koordinator/keputusan.csv`.
+Dijana 2026-11-21 09:56 UTC oleh `standard/cantas.py` atas `kad_skor.json` harga 2026-11-20. Pradaftar `standard/SPEC_CANTAS.md`. **Tiada Lejar atau kad skor diubah**; cantas sebenar = keputusan pengguna dalam `koordinator/keputusan.csv`.
 
-> **Status keputusan (kad skor, harga 2026-11-19):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 225 · GAGAL 1 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
+> **Status keputusan (kad skor, harga 2026-11-20):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 226 · GAGAL 1 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
-**Calon cantas: 15 daripada 226 kaedah.** Dicadangkan untuk keputusan (calon ≥ 2 bulan berturut): **0** — tiada.
+**Calon cantas: 15 daripada 227 kaedah.** Dicadangkan untuk keputusan (calon ≥ 2 bulan berturut): **0** — tiada.
 
 | Peraturan | Bilangan |
 |---|---|
@@ -16,20 +16,20 @@ Dijana 2026-11-20 18:39 UTC oleh `standard/cantas.py` atas `kad_skor.json` harga
 
 | Kaedah | Status kad | Peraturan | Sebab | Bulan berturut |
 |---|---|---|---|---|
-| `M102` Stockbee SLTB | BELUM CUKUP | C1 | henti hari-0 30% daripada 442 posisi | 1 |
-| `M123` CCI Correction (Lambert, Chart | BELUM CUKUP | C1 | henti hari-0 31% daripada 191 posisi | 1 |
+| `M102` Stockbee SLTB | BELUM CUKUP | C1 | henti hari-0 30% daripada 444 posisi | 1 |
+| `M123` CCI Correction (Lambert, Chart | BELUM CUKUP | C1 | henti hari-0 32% daripada 194 posisi | 1 |
 | `M127` Slingshot Bullish | BELUM CUKUP | C1 | henti hari-0 21% daripada 112 posisi | 1 |
-| `M14` Walking with the Whales | BELUM CUKUP | C1 | henti hari-0 23% daripada 1052 posisi | 1 |
-| `M18` EMA9/21 Pullback | BELUM CUKUP | C1 | henti hari-0 25% daripada 473 posisi | 1 |
+| `M14` Walking with the Whales | BELUM CUKUP | C1 | henti hari-0 24% daripada 1056 posisi | 1 |
+| `M18` EMA9/21 Pullback | BELUM CUKUP | C1 | henti hari-0 25% daripada 477 posisi | 1 |
 | `M20` EMA10/15 Crossover + Sudut | GAGAL | C2, C4 | pantau BERSARA; GAGAL 2 larian berturut | 1 |
 | `M23` Breitstein Kapitulasi + Kesina | BELUM CUKUP | C1 | henti hari-0 37% daripada 130 posisi | 1 |
 | `M28` VWAP Separator + Kiss Pivot | BELUM CUKUP | C1 | henti hari-0 21% daripada 136 posisi | 1 |
-| `M29` EMA3 + RSI75 + Stokastik | BELUM CUKUP | C1 | henti hari-0 38% daripada 40 posisi | 1 |
-| `M35` Pocket Pivot Morales & Kacher | BELUM CUKUP | C1 | henti hari-0 23% daripada 330 posisi | 1 |
+| `M29` EMA3 + RSI75 + Stokastik | BELUM CUKUP | C1 | henti hari-0 39% daripada 41 posisi | 1 |
+| `M35` Pocket Pivot Morales & Kacher | BELUM CUKUP | C1 | henti hari-0 23% daripada 333 posisi | 1 |
 | `M46` Jurang Naik Boleh Beli (Buyabl | BELUM CUKUP | C1 | henti hari-0 36% daripada 36 posisi | 1 |
-| `M49` Ichimoku (Tutup Atas Awan + Te | BELUM CUKUP | C1 | henti hari-0 22% daripada 331 posisi | 1 |
-| `M70` Pecahan Hari Dalam | BELUM CUKUP | C1 | henti hari-0 48% daripada 500 posisi | 1 |
-| `M74` Lulus Baharu Trend Template Mi | BELUM CUKUP | C1 | henti hari-0 25% daripada 106 posisi | 1 |
+| `M49` Ichimoku (Tutup Atas Awan + Te | BELUM CUKUP | C1 | henti hari-0 22% daripada 333 posisi | 1 |
+| `M70` Pecahan Hari Dalam | BELUM CUKUP | C1 | henti hari-0 48% daripada 507 posisi | 1 |
+| `M74` Lulus Baharu Trend Template Mi | BELUM CUKUP | C1 | henti hari-0 25% daripada 107 posisi | 1 |
 | `M77` Undercut & Rally pada Purata B | BELUM CUKUP | C1 | henti hari-0 20% daripada 55 posisi | 1 |
 
 Peraturan: C1 henti hari-0 struktur (G4 pasti gagal) · C2 pantau BERSARA/GANTUNG · C3 NEGATIF · C4 GAGAL dua larian · C5 lorong T4 ≥ 63 sesi kalah SPUS ≥ 5 mata dengan MDD ≤ -10%. Nxx dikecualikan C1.
