@@ -1,10 +1,12 @@
 {
- "hari_terakhir": "2026-11-19",
- "dijana": "2026-11-21 00:20 UTC",
- "hari": [],
+ "hari_terakhir": "2026-11-20",
+ "dijana": "2026-11-21 03:59 UTC",
+ "hari": [
+  "2026-11-20"
+ ],
  "ditambah": [],
  "ditamatkan": [],
- "calon": 0,
+ "calon": 1,
  "gagal": [],
  "ua_rahsia": true
 }
