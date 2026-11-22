@@ -4,8 +4,8 @@
 
 Dijana `kajian/carian_setup/cs_mesin.py` (workflow `mesin_carian.yml`). Peraturan dikunci dalam `kajian/SPEC_CARIAN_SETUP.md` pindaan 14 Nov 2026 (n)(c). **Jangan sunting secara manual; `papan.csv` tambah-sahaja.**
 
-- Larian setakat ini: **5** (terakhir 2026-11-22); varian berskor terkumpul: **2,066** (602 kaedah M, 1,464 keluarga indikator).
-- Skor A > 0: 1,827. Dinilai pada saham tidak dilihat (15 terbaik setiap larian): 75; mengatasi rawak dalam K1, K2 DAN K3 dengan belian ≥ 300: **64**.
+- Larian setakat ini: **6** (terakhir 2026-11-22); varian berskor terkumpul: **2,474** (724 kaedah M, 1,750 keluarga indikator).
+- Skor A > 0: 2,188. Dinilai pada saham tidak dilihat (15 terbaik setiap larian): 90; mengatasi rawak dalam K1, K2 DAN K3 dengan belian ≥ 300: **78**.
 - Skor A = min dua era carian bagi [kelebihan kadar "naik lagi" atas saham rawak hari sama − 2 ralat piawai]. Semakin banyak varian dicuba, semakin melambung skor A terbaik; lajur B yang dibaca.
 
 ## 30 teratas ikut skor A (maks 2 setiap induk)
@@ -38,7 +38,7 @@ Dijana `kajian/carian_setup/cs_mesin.py` (workflow `mesin_carian.yml`). Peratura
 | 24 | 4 | `K17.r4_7` undur ke ema107 yang naik (tol 2.5%) | QC03+QF01 | F14 ADX < 20 DAN F16 RS >= 70 | +6.4 | 398 | 15.1 (8.7) | +4.2 / +9.5 / +1.6 |
 | 25 | 3 | `K24.r3_9` bar pembalikan (buka <= 11%, tutup >= 85% julat) | QC01+QF01 | F17 RS >= 90 DAN F18 dalam 15% dari puncak 52 minggu | +6.4 | 447 | 10.1 (6.4) | +1.4 / +7.3 / +5.6 |
 | 26 | 2 | `K07.r2_5` tutup silang atas ema35 | QC05+QF01 | F17 RS >= 90 DAN F29 tutup dalam 25% teratas julat hari | +6.4 | 377 | 15.1 (8.3) | +6.4 / +5.6 / +13.0 |
-| 27 | 3 | `K07.r3_3` tutup silang atas ema33 | QC05+QF01 | F02 tutup > MA50 DAN F17 RS >= 90 | +6.3 | 457 | 13.8 (7.9) | +5.2 / +6.6 / +7.1 |
+| 27 | 6 | `K07.r6_8` tutup silang atas ema37 | QC05+QF01 | F02 tutup > MA50 DAN F17 RS >= 90 | +6.4 | 370 | 14.3 (8.1) | +5.1 / +8.1 / +7.2 |
 | 28 | 4 | `K01.r4_8` RSI(3) < 21 | QA09+QF01 | F05 MA50 > MA200 DAN F14 ADX < 20 | +6.3 | 966 | 15.3 (8.2) | +6.5 / +7.2 / +11.5 |
 | 29 | 4 | `K01.r4_10` RSI(12) < 43 | QA09+QF01 | F15 Supertrend naik DAN F18 dalam 15% dari puncak 52 minggu | +6.3 | 367 | 16.3 (7.6) | +7.0 / +9.9 / +17.4 |
 | 30 | 3 | `M159.1003` kaedah M159 (varian rawak) | QH02+QF01 | F14 ADX < 20 DAN F30 hari naik (tutup > buka) | +6.3 | 659 | 10.3 (5.2) | +5.3 / +4.9 / -3.8 |
@@ -52,5 +52,6 @@ Dijana `kajian/carian_setup/cs_mesin.py` (workflow `mesin_carian.yml`). Peratura
 | 3 | 2026-11-15 | 419 | 370 | +7.0 | 15 | 14 |
 | 4 | 2026-11-15 | 418 | 374 | +7.1 | 15 | 14 |
 | 5 | 2026-11-22 | 412 | 359 | +7.8 | 15 | 10 |
+| 6 | 2026-11-22 | 408 | 361 | +6.6 | 15 | 14 |
 
 Kaveat: kumpulan B sudah dilihat berkali-kali (bukan tahanan bersih); tiada saham delist; setup di sini BUKAN calon papertrade tanpa keputusan pengguna berasingan.
