@@ -217,11 +217,11 @@
   "fail_isyarat": "data/isyarat/2026-11-20_malam.csv.gz"
  },
  "gred": {
-  "tarikh": "2026-11-21",
-  "masa": "2026-11-21 14:31 MYT",
+  "tarikh": "2026-11-23",
+  "masa": "2026-11-23 20:22 MYT",
   "pemangkin": {
-   "D": 665,
-   "C": 14,
+   "D": 666,
+   "C": 13,
    "B": 50,
    "A": 48,
    "–": 15
