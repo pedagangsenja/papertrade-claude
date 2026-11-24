@@ -2480,7 +2480,6 @@ COPR,Idaho Copper Corporation Common Stock,NYSE American,0,1,2026-10-27
 COPR.W,Idaho Copper Corporation Common Stock Purchase Warrant,NYSE American,0,0,2026-10-27
 COPX,Global X Copper Miners ETF,NYSE Arca,1,0,2026-10-27
 COPY,"Tweedy, Browne Insider + Value ETF",NYSE Arca,1,0,2026-10-27
-COPZ,Defiance Daily Target 2X Long Copper Miners ETF,NYSE Arca,1,0,2026-10-27
 COR,"Cencora, Inc. Common Stock",NYSE,0,1,2026-10-27
 CORB,AB Core Bond ETF,NYSE Arca,1,0,2026-10-27
 CORD,T-REX 2X Inverse CRWV Daily Target ETF,Cboe BZX,1,0,2026-10-27
@@ -2516,7 +2515,6 @@ CPER,United States Copper Index Fund ETV,NYSE Arca,1,0,2026-10-27
 CPF,Central Pacific Financial Corp New,NYSE,0,1,2026-10-27
 CPHC,Canterbury Park Holding Corporation - Common Stock,NASDAQ,0,1,2026-10-27
 CPHI,"China Pharma Holdings, Inc. Common Stock",NYSE American,0,1,2026-10-27
-CPHY,F/m Compoundr High Yield Bond ETF,NASDAQ,1,0,2026-10-27
 CPII,American Beacon Ionic Inflation Protection ETF,NYSE Arca,1,0,2026-10-27
 CPIX,Cumberland Pharmaceuticals Inc. - Common Stock,NASDAQ,0,1,2026-10-27
 CPK,Chesapeake Utilities Corporation Common Stock,NYSE,0,1,2026-10-27
@@ -3363,7 +3361,6 @@ EBF,"Ennis, Inc. Common Stock",NYSE,0,1,2026-10-27
 EBI,Longview Advantage ETF,NASDAQ,1,0,2026-10-27
 EBIT,Harbor AlphaEdge Small Cap Earners ETF,NYSE Arca,1,0,2026-10-27
 EBIZ,Global X E-commerce ETF,NASDAQ,1,0,2026-10-27
-EBMT,"Eagle Bancorp Montana, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 EBND,State Street SPDR Bloomberg Emerging Markets Local Bond ETF,NYSE Arca,1,0,2026-10-27
 EBON,Ebang International Holdings Inc. - Class A Ordinary Shares,NASDAQ,0,1,2026-10-27
 EBS,Emergent BioSolutions Inc. Common Stock,NYSE,0,1,2026-10-27
@@ -5941,9 +5938,6 @@ IPAV,Global X Infrastructure Development ex-U.S. ETF,Cboe BZX,1,0,2026-10-27
 IPAY,Amplify Digital Payments ETF,NYSE Arca,1,0,2026-10-27
 IPB,"Merrill Lynch & Co., Inc. 6.0518% Index Plus Trust Certificates Series 2003-1",NYSE,1,0,2026-10-27
 IPDN,"Professional Diversity Network, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
-IPFX,Inflection Point Acquisition Corp. VI - Class A Ordinary Shares,NASDAQ,0,0,2026-10-27
-IPFXU,Inflection Point Acquisition Corp. VI - Units,NASDAQ,0,0,2026-10-27
-IPFXW,Inflection Point Acquisition Corp. VI - Warrant,NASDAQ,0,0,2026-10-27
 IPGP,IPG Photonics Corporation - Common Stock,NASDAQ,0,1,2026-10-27
 IPHA,Innate Pharma S.A. - American Depositary Shares,NASDAQ,0,1,2026-10-27
 IPHX,Inflection Point Acquisition Corp. VIII - Class A Ordinary Shares,NASDAQ,0,0,2026-10-27
@@ -6085,6 +6079,7 @@ IVAL,Alpha Architect International Quantitative Value ETF,NASDAQ,1,0,2026-10-27
 IVDA,"Iveda Solutions, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 IVDAW,"Iveda Solutions, Inc. - Warrant",NASDAQ,0,0,2026-10-27
 IVE,iShares S&P 500 Value ETF,NYSE Arca,1,0,2026-10-27
+IVEA,Dan IVES Wedbush AI Autocallable Income ETF,NYSE Arca,1,0,2026-11-24
 IVEP,Dan IVES Wedbush AI Power & Infrastructure ETF,NYSE Arca,1,0,2026-10-27
 IVES,Dan IVES Wedbush AI Revolution ETF,NYSE Arca,1,0,2026-10-27
 IVF,"INVO Fertility, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
@@ -6439,7 +6434,6 @@ KDVD,Keeley Dividend ETF,NYSE Arca,1,0,2026-10-27
 KE,"Kimball Electronics, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 KEAT,Keating Active ETF,NASDAQ,1,0,2026-10-27
 KEEL,Keel Infrastructure Corp. - Common Stock,NASDAQ,0,1,2026-10-27
-KEEX,Defiance Daily Target 2x Long KEEL ETF,Cboe BZX,1,0,2026-10-27
 KELYA,"Kelly Services, Inc. - Class A Common Stock",NASDAQ,0,1,2026-10-27
 KELYB,"Kelly Services, Inc. - Class B Common Stock",NASDAQ,0,1,2026-10-27
 KEMQ,KraneShares Public-Private Emerging Markets Internet and Technology ETF,NYSE Arca,1,0,2026-10-27
@@ -8241,6 +8235,7 @@ OBE,Obsidian Energy Ltd. Common Shares,NYSE American,0,1,2026-10-27
 OBIL,US Treasury 12 Month Bill ETF,NASDAQ,1,0,2026-10-27
 OBIO,"Orchestra BioMed Holdings, Inc. - Ordinary Shares",NASDAQ,0,1,2026-10-27
 OBK,"Origin Bancorp, Inc. Common Stock",F,0,1,2026-10-27
+OBMT,"Opportunity Bancorp, Inc. - Common Stock",NASDAQ,0,1,2026-11-24
 OBND,State Street Loomis Sayles Opportunistic Bond ETF,Cboe BZX,1,0,2026-10-27
 OBOR,KraneShares MSCI One Belt One Road Index ETF,NYSE Arca,1,0,2026-10-27
 OBT,"Orange County Bancorp, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
@@ -9392,6 +9387,8 @@ QSIG,WisdomTree U.S. Short Term Corporate Bond Fund,Cboe BZX,1,0,2026-10-27
 QSIX,Pacer Metaurus Nasdaq 100 Dividend Multiplier 600 ETF,NASDAQ,1,0,2026-10-27
 QSML,WisdomTree U.S. SmallCap Quality Growth Fund,NASDAQ,1,0,2026-10-27
 QSOL,Invesco Galaxy Solana ETF,Cboe BZX,1,0,2026-10-27
+QSPC,"Quantum Space, Inc. Class A-1 Common Stock",NYSE,0,1,2026-11-24
+QSPC.W,"Quantum Space, Inc. Warrants, each whole warrant exercisable for one share of Class A-1 Common Stock at an exercise price of $11.50 per share",NYSE American,0,0,2026-11-24
 QSPT,FT Vest Nasdaq-100 Buffer ETF - September,Cboe BZX,1,0,2026-10-27
 QSR,Restaurant Brands International Inc. Common Shares,NYSE,0,1,2026-10-27
 QSU,Defiance Daily Target 2X Long QS ETF,NYSE Arca,1,0,2026-10-27
@@ -9494,7 +9491,6 @@ RBTX,iShares Future Robotics and Related Technologies Active ETF,NYSE Arca,1,0,2
 RBUF,Innovator U.S. Small Cap 10 Buffer ETF - Quarterly,Cboe BZX,1,0,2026-10-27
 RC,Ready Capital Corporation Common Stock,NYSE,0,1,2026-10-27
 RCAT,"Red Cat Holdings, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
-RCAX,Defiance Daily Target 2x Long RCAT ETF,NASDAQ,1,0,2026-10-27
 RCBC,River City Bank - Common stock,NASDAQ,0,1,2026-10-27
 RCD,Ready Capital Corporation 9.00% Senior Notes due 2029,NYSE,0,0,2026-10-27
 RCEL,"Avita Medical, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
@@ -12727,6 +12723,7 @@ YAAS,Youxin Technology Ltd - Class A Ordinary shares,NASDAQ,0,1,2026-10-27
 YALA,"Yalla Group Limited American Depositary Shares, each representing one Class A Ordinary Share",NYSE,0,1,2026-10-27
 YALL,Truth Social God Bless America ETF,NYSE Arca,1,0,2026-10-27
 YANG,Direxion Daily FTSE China Bear 3X ETF,NYSE Arca,1,0,2026-10-27
+YANT,YieldMax ANT Option Income Strategy ETF,NYSE Arca,1,0,2026-11-24
 YARW,"Yarrow Bioscience, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 YASX,Yorkville America Space Index ETF,NYSE Arca,1,0,2026-11-18
 YB,Yuanbao Inc. - American Depositary Shares,NASDAQ,0,1,2026-10-27
