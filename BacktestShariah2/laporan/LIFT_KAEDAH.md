@@ -1,6 +1,6 @@
 # Lift MASUK setiap kaedah (gate G3)
 
-Dijana 2026-11-21 17:33 UTC oleh `standard/lift_kaedah.py` (Actions `analisis.yml`). Pradaftar: `standard/SPEC_KAD_SKOR.md` pindaan 7 Nov 2026. Rekod analisis sahaja: tiada order, tiada wang sebenar.
+Dijana 2026-11-24 13:54 UTC oleh `standard/lift_kaedah.py` (Actions `analisis.yml`). Pradaftar: `standard/SPEC_KAD_SKOR.md` pindaan 7 Nov 2026. Rekod analisis sahaja: tiada order, tiada wang sebenar.
 
 ## Apa yang diukur
 
@@ -10,43 +10,43 @@ Versi lama (padanan baldi hari pegang, SE ikut hari beli) dibuang kerana ia melu
 
 ## Data
 
-Hari beli LANGSUNG sahaja (Mxx sejak isyarat 2026-10-15, Nxx/GB sejak 2026-11-03). **30,488 saham-hari** dengan ufuk 10 sesi lengkap, 17 hari beli, 223 kaedah. Rejim (QQQ > SMA50 dan SMA10 > SMA20) pada hari beli ini: ON 1 · OFF 16.
+Hari beli LANGSUNG sahaja (Mxx sejak isyarat 2026-10-15, Nxx/GB sejak 2026-11-03). **34,519 saham-hari** dengan ufuk 10 sesi lengkap, 18 hari beli, 223 kaedah. Rejim (QQQ > SMA50 dan SMA10 > SMA20) pada hari beli ini: ON 1 · OFF 17.
 
 ## Keputusan
 
-Diuji (≥ 30 saham-hari, ≥ 5 minggu): **83** kaedah. Lift positif lulus BH-FDR: **0**. Lift negatif lulus BH-FDR: **0**.
+Diuji (≥ 30 saham-hari, ≥ 5 minggu): **94** kaedah. Lift positif lulus BH-FDR: **0**. Lift negatif lulus BH-FDR: **0**.
 
 | Kaedah | Saham-hari | Hari beli | Minggu | Pulangan 10 sesi % | **Lift mata** | t | p | BH | Status |
 |---|---|---|---|---|---|---|---|---|---|
-| `M133` Bull Hook (Crabel) | 47 | 12 | 5 | +1.92 | **+3.91** | +2.65 | 0.0572 | tidak | BELUM CUKUP |
-| `M15` Break & Retest + Henti ATR | 265 | 17 | 5 | +0.98 | **+2.08** | +2.26 | 0.0866 | tidak | BELUM CUKUP |
-| `M150` Trend Bar Failure (Brooks) | 82 | 16 | 5 | +1.05 | **+1.86** | +2.15 | 0.0979 | tidak | BELUM CUKUP |
-| `M80` Radge Saluran Purata Bergerak  | 251 | 17 | 5 | +0.64 | **+1.82** | +2.27 | 0.0855 | tidak | BELUM CUKUP |
-| `M18` EMA9/21 Pullback | 314 | 17 | 5 | -0.11 | **+1.71** | +1.57 | 0.1904 | tidak | BELUM CUKUP |
-| `M158` Doubly Adaptive Profit Targets | 337 | 17 | 5 | +0.61 | **+1.49** | +2.07 | 0.1077 | tidak | BELUM CUKUP |
-| `M93` Bollinger Kaedah II: %b + MFI | 247 | 17 | 5 | +0.63 | **+1.47** | +2.00 | 0.1157 | tidak | BELUM CUKUP |
-| `M10` EMA3 + CCI + MACD | 102 | 17 | 5 | -0.34 | **+1.36** | +1.30 | 0.2640 | tidak | BELUM CUKUP |
-| `M137` Livermore System | 151 | 17 | 5 | -0.33 | **+1.16** | +1.65 | 0.1738 | tidak | BELUM CUKUP |
-| `M25` VWAP Wave (proksi harian) | 169 | 16 | 5 | -0.96 | **+1.13** | +1.58 | 0.1902 | tidak | BELUM CUKUP |
-| `M145` Yum-Yum Continuation | 279 | 17 | 5 | -0.41 | **+1.00** | +1.74 | 0.1572 | tidak | BELUM CUKUP |
-| `M33` Supertrend + SMA10 | 203 | 17 | 5 | -0.73 | **+0.92** | +0.49 | 0.6469 | tidak | BELUM CUKUP |
-| `M01` Bollinger Band + RSI | 107 | 17 | 5 | -2.25 | **+0.84** | +0.39 | 0.7188 | tidak | BELUM CUKUP |
-| `M23` Breitstein Kapitulasi + Kesina | 111 | 17 | 5 | -1.87 | **+0.83** | +0.76 | 0.4905 | tidak | BELUM CUKUP |
-| `M161` EMA 10/21 + Supertrend (10,3) | 421 | 17 | 5 | -0.54 | **+0.72** | +1.37 | 0.2417 | tidak | BELUM CUKUP |
-| `M118` Expansion Pivot (Cooper) | 72 | 17 | 5 | -1.55 | **+0.71** | +0.41 | 0.7006 | tidak | BELUM CUKUP |
-| `M127` Slingshot Bullish | 95 | 15 | 5 | -1.12 | **+0.69** | +0.60 | 0.5809 | tidak | BELUM CUKUP |
-| `M155` Market Cycle Strategy | 599 | 17 | 5 | -0.22 | **+0.66** | +1.37 | 0.2415 | tidak | BELUM CUKUP |
-| `M82` Arthur Hill Rotasi Sasaran 10% | 544 | 17 | 5 | +0.07 | **+0.62** | +1.29 | 0.2676 | tidak | BELUM CUKUP |
-| `M35` Pocket Pivot Morales & Kacher | 291 | 17 | 5 | -0.58 | **+0.61** | +1.00 | 0.3748 | tidak | BELUM CUKUP |
-| `M31` Band Walk (BB 20/2) | 373 | 17 | 5 | -0.41 | **+0.60** | +0.46 | 0.6711 | tidak | BELUM CUKUP |
-| `M105` Supertrend tulen | 319 | 17 | 5 | -0.86 | **+0.60** | +0.39 | 0.7192 | tidak | BELUM CUKUP |
-| `M91` Stochastic Pop (Bernstein/Stec | 34 | 12 | 5 | -1.52 | **+0.58** | +0.18 | 0.8653 | tidak | BELUM CUKUP |
-| `M08` SMA20 + SMA200 | 154 | 15 | 5 | -1.75 | **+0.55** | +0.52 | 0.6310 | tidak | BELUM CUKUP |
-| `M36` Turtle 55/20 | 304 | 17 | 5 | -1.01 | **+0.52** | +0.66 | 0.5478 | tidak | BELUM CUKUP |
+| `M133` Bull Hook (Crabel) | 47 | 12 | 5 | +1.92 | **+3.90** | +2.65 | 0.0570 | tidak | BELUM CUKUP |
+| `M146` 3-Bar Momentum Pattern | 76 | 17 | 5 | +1.15 | **+2.60** | +2.50 | 0.0666 | tidak | BELUM CUKUP |
+| `M46` Jurang Naik Boleh Beli (Buyabl | 34 | 11 | 5 | -0.92 | **+2.41** | +1.20 | 0.2973 | tidak | BELUM CUKUP |
+| `M117` Landry Pullback (high 2 bulan) | 126 | 15 | 5 | -0.06 | **+2.41** | +2.81 | 0.0481 | tidak | BELUM CUKUP |
+| `M93` Bollinger Kaedah II: %b + MFI | 255 | 18 | 5 | +0.90 | **+1.86** | +2.17 | 0.0960 | tidak | BELUM CUKUP |
+| `M15` Break & Retest + Henti ATR | 284 | 18 | 5 | +0.39 | **+1.76** | +1.53 | 0.2002 | tidak | BELUM CUKUP |
+| `M80` Radge Saluran Purata Bergerak  | 259 | 18 | 5 | +0.46 | **+1.75** | +2.13 | 0.1002 | tidak | BELUM CUKUP |
+| `M18` EMA9/21 Pullback | 324 | 18 | 5 | -0.20 | **+1.73** | +1.67 | 0.1711 | tidak | BELUM CUKUP |
+| `M150` Trend Bar Failure (Brooks) | 99 | 17 | 5 | +0.23 | **+1.68** | +2.30 | 0.0826 | tidak | BELUM CUKUP |
+| `M158` Doubly Adaptive Profit Targets | 349 | 18 | 5 | +0.45 | **+1.48** | +2.12 | 0.1010 | tidak | BELUM CUKUP |
+| `M137` Livermore System | 162 | 18 | 5 | -0.54 | **+1.15** | +1.71 | 0.1621 | tidak | BELUM CUKUP |
+| `M25` VWAP Wave (proksi harian) | 169 | 16 | 5 | -0.96 | **+1.13** | +1.58 | 0.1900 | tidak | BELUM CUKUP |
+| `M145` Yum-Yum Continuation | 291 | 18 | 5 | -0.44 | **+1.11** | +1.98 | 0.1188 | tidak | BELUM CUKUP |
+| `M161` EMA 10/21 + Supertrend (10,3) | 447 | 18 | 5 | -0.40 | **+1.08** | +1.48 | 0.2133 | tidak | BELUM CUKUP |
+| `M127` Slingshot Bullish | 105 | 16 | 5 | -0.99 | **+1.06** | +0.86 | 0.4367 | tidak | BELUM CUKUP |
+| `M77` Undercut & Rally pada Purata B | 53 | 16 | 5 | -2.05 | **+0.94** | +0.61 | 0.5734 | tidak | BELUM CUKUP |
+| `M119` 180 Bullish (Cooper) | 146 | 17 | 5 | -1.19 | **+0.78** | +1.13 | 0.3218 | tidak | BELUM CUKUP |
+| `M01` Bollinger Band + RSI | 109 | 18 | 5 | -2.37 | **+0.76** | +0.35 | 0.7432 | tidak | BELUM CUKUP |
+| `M35` Pocket Pivot Morales & Kacher | 303 | 18 | 5 | -0.61 | **+0.72** | +1.22 | 0.2901 | tidak | BELUM CUKUP |
+| `M153` Range Leader | 1212 | 18 | 5 | -1.79 | **+0.70** | +0.95 | 0.3953 | tidak | BELUM CUKUP |
+| `M160` Measured Move Up | 105 | 16 | 5 | -2.10 | **+0.69** | +0.68 | 0.5346 | tidak | BELUM CUKUP |
+| `M91` Stochastic Pop (Bernstein/Stec | 35 | 13 | 5 | -1.49 | **+0.67** | +0.21 | 0.8406 | tidak | BELUM CUKUP |
+| `M33` Supertrend + SMA10 | 216 | 18 | 5 | -1.18 | **+0.67** | +0.37 | 0.7277 | tidak | BELUM CUKUP |
+| `M23` Breitstein Kapitulasi + Kesina | 117 | 18 | 5 | -2.13 | **+0.66** | +0.66 | 0.5454 | tidak | BELUM CUKUP |
+| `M31` Band Walk (BB 20/2) | 391 | 18 | 5 | -0.54 | **+0.65** | +0.52 | 0.6307 | tidak | BELUM CUKUP |
 
 ## Bila jadual ini boleh dipercayai
 
-Hari beli diperlukan untuk melihat lift 2 mata merentas kaedah diuji: **107** (dikira semula setiap larian). Ada 17. Kad skor juga mewajibkan ≥ 10 hari beli dalam setiap rejim (G1), supaya keputusan tidak datang daripada satu fasa pasaran.
+Hari beli diperlukan untuk melihat lift 2 mata merentas kaedah diuji: **114** (dikira semula setiap larian). Ada 18. Kad skor juga mewajibkan ≥ 10 hari beli dalam setiap rejim (G1), supaya keputusan tidak datang daripada satu fasa pasaran.
 
 ## Had
 
