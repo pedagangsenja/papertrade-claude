@@ -79,7 +79,7 @@ ARCB,tiada_maklumat,,0,0,1,1
 ARGX,tiada_maklumat,,0,0,1,1
 ARHS,tiada_maklumat,,0,0,1,1
 ARLO,tiada_maklumat,,0,0,1,1
-ARLP,tiada_maklumat,,0,0,1,0
+ARLP,tiada_maklumat,,0,0,1,1
 ARM,tiada_maklumat,,0,0,1,1
 ARQT,tiada_maklumat,,0,0,1,1
 ARTNA,tiada_maklumat,,0,0,1,1
@@ -88,7 +88,7 @@ AS,tiada_maklumat,,0,0,1,1
 ASAN,tiada_maklumat,,0,0,1,1
 ASC,tiada_maklumat,,0,0,1,1
 ASH,tiada_maklumat,,0,0,1,1
-ASIX,tiada_maklumat,,0,0,1,0
+ASIX,tiada_maklumat,,0,0,1,1
 ASML,tiada_maklumat,,0,0,1,1
 ASND,tiada_maklumat,,0,0,1,1
 ASO,tiada_maklumat,,0,0,1,1
@@ -156,7 +156,7 @@ BOOT,tiada_maklumat,,0,0,1,1
 BRC,tiada_maklumat,,0,0,1,0
 BROS,tiada_maklumat,,0,0,1,1
 BRZE,tiada_maklumat,,0,0,1,1
-BSM,tiada_maklumat,,0,0,1,0
+BSM,tiada_maklumat,,0,0,1,1
 BSX,disahkan_etf,SPUS,1,1,1,1
 BSY,tiada_maklumat,,0,0,1,1
 BTU,tiada_maklumat,,0,0,1,1
@@ -191,7 +191,7 @@ CHRD,tiada_maklumat,,0,0,1,1
 CHRN,tiada_maklumat,,0,0,1,0
 CHRW,disahkan_etf,SPUS,1,1,1,1
 CHT,tiada_maklumat,,0,0,1,1
-CHWY,tiada_maklumat,,0,0,1,1
+CHWY,tiada_maklumat,,0,0,1,0
 CIEN,disahkan_etf,SPTE+SPUS,1,1,1,1
 CLMB,tiada_maklumat,,0,0,1,1
 CLS,tiada_maklumat,,0,0,1,1
@@ -200,7 +200,7 @@ CMC,tiada_maklumat,,0,0,1,1
 CMDB,tiada_maklumat,,0,0,1,1
 CMI,disahkan_etf,SPUS,1,1,1,1
 CNQ,tiada_maklumat,,0,0,1,1
-CNR,tiada_maklumat,,0,0,1,0
+CNR,tiada_maklumat,,0,0,1,1
 CNX,tiada_maklumat,,0,0,1,1
 CNXN,tiada_maklumat,,0,0,1,1
 COHR,disahkan_etf,SPTE+SPUS,1,1,1,1
@@ -214,7 +214,7 @@ CRAI,tiada_maklumat,,0,0,1,1
 CRC,tiada_maklumat,,0,0,1,0
 CRM,disahkan_etf,SPTE+SPUS,1,1,1,1
 CRS,tiada_maklumat,,0,0,1,1
-CRSR,tiada_maklumat,,0,0,1,0
+CRSR,tiada_maklumat,,0,0,1,1
 CRTO,tiada_maklumat,,0,0,1,0
 CSCO,disahkan_etf,SPTE+SPUS,1,1,1,1
 CSGP,disahkan_etf,SPUS,1,1,1,1
@@ -329,7 +329,7 @@ FRPT,tiada_maklumat,,0,0,1,1
 FSLR,disahkan_etf,SPTE+SPUS,1,1,1,1
 FSLY,tiada_maklumat,,0,0,1,1
 FSM,tiada_maklumat,,0,0,0,1
-FSS,tiada_maklumat,,0,0,1,1
+FSS,tiada_maklumat,,0,0,1,0
 FSTR,tiada_maklumat,,0,0,1,1
 FTI,tiada_maklumat,,0,0,1,1
 FTK,tiada_maklumat,,0,0,1,1
@@ -398,7 +398,7 @@ HY,tiada_maklumat,,0,0,1,1
 IAG,tiada_maklumat,,0,0,1,1
 IBEX,tiada_maklumat,,0,0,1,1
 ICCC,tiada_maklumat,,0,0,1,0
-ICFI,tiada_maklumat,,0,0,1,0
+ICFI,tiada_maklumat,,0,0,1,1
 ICHR,tiada_maklumat,,0,0,1,1
 ICLR,tiada_maklumat,,0,0,1,1
 IDXX,disahkan_etf,SPUS,1,1,1,1
@@ -433,7 +433,7 @@ JBHT,disahkan_etf,SPUS,1,1,1,1
 JBL,disahkan_etf,SPTE+SPUS,1,1,1,1
 JBSS,tiada_maklumat,,0,0,1,1
 JBTM,tiada_maklumat,,0,0,1,1
-JCI,disahkan_etf,SPUS,1,1,1,0
+JCI,disahkan_etf,SPUS,1,1,1,1
 JD,tiada_maklumat,,0,0,1,1
 JJSF,tiada_maklumat,,0,0,1,1
 JKHY,sp500_tiada_spus,,0,1,1,1
@@ -522,7 +522,7 @@ MOS,sp500_tiada_spus,,0,1,1,1
 MOV,tiada_maklumat,,0,0,1,0
 MPAA,tiada_maklumat,,0,0,1,0
 MPWR,disahkan_etf,SPTE+SPUS,1,1,1,1
-MRTN,tiada_maklumat,,0,0,1,0
+MRTN,tiada_maklumat,,0,0,1,1
 MRVL,disahkan_etf,SPTE+SPUS,1,1,1,1
 MSA,tiada_maklumat,,0,0,1,1
 MSEX,tiada_maklumat,,0,0,1,1
@@ -543,7 +543,7 @@ MUX,tiada_maklumat,,0,0,1,1
 MWA,tiada_maklumat,,0,0,1,1
 MWH,tiada_maklumat,,0,0,1,1
 MXL,tiada_maklumat,,0,0,1,1
-MYRG,tiada_maklumat,,0,0,1,0
+MYRG,tiada_maklumat,,0,0,1,1
 MZTI,tiada_maklumat,,0,0,1,1
 NBIX,tiada_maklumat,,0,0,1,1
 NC,tiada_maklumat,,0,0,1,0
@@ -642,7 +642,7 @@ PPC,tiada_maklumat,,0,0,1,1
 PPIH,tiada_maklumat,,0,0,1,1
 PR,tiada_maklumat,,0,0,1,1
 PRDO,tiada_maklumat,,0,0,1,1
-PRIM,tiada_maklumat,,0,0,1,0
+PRIM,tiada_maklumat,,0,0,1,1
 PRLB,tiada_maklumat,,0,0,1,1
 PRPO,tiada_maklumat,,0,0,1,0
 PRVA,tiada_maklumat,,0,0,1,1
@@ -654,7 +654,7 @@ PTC,disahkan_etf,SPTE+SPUS,1,1,1,1
 PTEN,tiada_maklumat,,0,0,1,1
 PVH,tiada_maklumat,,0,0,1,1
 PWR,disahkan_etf,SPUS,1,1,1,1
-Q,disahkan_etf,SPTE+SPUS,1,1,1,0
+Q,disahkan_etf,SPTE+SPUS,1,1,1,1
 QCOM,disahkan_etf,SPTE+SPUS,1,1,1,1
 QGEN,tiada_maklumat,,0,0,1,1
 QLYS,tiada_maklumat,,0,0,1,1
@@ -668,7 +668,7 @@ RDNT,tiada_maklumat,,0,0,1,1
 RDY,tiada_maklumat,,0,0,1,1
 REF,tiada_maklumat,,0,0,1,1
 REGN,disahkan_etf,SPUS,1,1,1,1
-RELL,tiada_maklumat,,0,0,1,0
+RELL,tiada_maklumat,,0,0,1,1
 REX,tiada_maklumat,,0,0,1,1
 REYN,tiada_maklumat,,0,0,1,1
 RGEN,tiada_maklumat,,0,0,1,1
@@ -792,7 +792,7 @@ TER,disahkan_etf,SPTE+SPUS,1,1,1,1
 TFPM,tiada_maklumat,,0,0,1,0
 TGLS,tiada_maklumat,,0,0,1,1
 TGTX,tiada_maklumat,,0,0,1,1
-THO,tiada_maklumat,,0,0,1,1
+THO,tiada_maklumat,,0,0,1,0
 THRM,tiada_maklumat,,0,0,1,1
 TILE,tiada_maklumat,,0,0,1,0
 TIMB,tiada_maklumat,,0,0,1,1
@@ -851,8 +851,8 @@ VLO,sp500_tiada_spus,,0,1,1,1
 VMC,disahkan_etf,SPUS,1,1,1,1
 VMI,tiada_maklumat,,0,0,1,0
 VNOM,tiada_maklumat,,0,0,1,1
-VPG,tiada_maklumat,,0,0,1,0
-VRT,disahkan_etf,SPUS,1,1,1,0
+VPG,tiada_maklumat,,0,0,1,1
+VRT,disahkan_etf,SPUS,1,1,1,1
 VRTX,disahkan_etf,SPUS,1,1,1,1
 VSEC,tiada_maklumat,,0,0,1,1
 VSECU,tiada_maklumat,,0,0,1,0
@@ -872,12 +872,12 @@ WFG,tiada_maklumat,,0,0,1,1
 WFRD,tiada_maklumat,,0,0,1,1
 WGO,tiada_maklumat,,0,0,1,1
 WGS,tiada_maklumat,,0,0,1,1
-WHD,tiada_maklumat,,0,0,1,1
+WHD,tiada_maklumat,,0,0,1,0
 WHR,tiada_maklumat,,0,0,1,0
 WK,tiada_maklumat,,0,0,1,1
 WKC,tiada_maklumat,,0,0,1,1
 WLDN,tiada_maklumat,,0,0,1,1
-WLK,tiada_maklumat,,0,0,1,0
+WLK,tiada_maklumat,,0,0,1,1
 WLKP,tiada_maklumat,,0,0,1,1
 WLY,tiada_maklumat,,0,0,1,1
 WLYB,tiada_maklumat,,0,0,1,0
