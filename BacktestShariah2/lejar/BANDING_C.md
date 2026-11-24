@@ -1,16 +1,17 @@
 # Banding Papertrade C dengan Lejar Penuh (fasa 1)
 
-Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-20. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
+Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-23. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
 
-- Posisi C (isyarat >= 2026-10-15): 25746; ada dalam lejar: 17279; tiada: 8467 {'isyarat ada, dipegang lejar': 8393, 'tiada isyarat dalam lejar': 53, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 11, 'saham tidak cair': 4}
-- Posisi lejar: 82179 (C hanya 25746; lejar 3.2×)
-- Harga beli berbeza > 0.5%: 124 daripada 17279
-- Status keluar sama: 17273 daripada 17279; berbeza: 6
+- Posisi C (isyarat >= 2026-10-15): 26520; ada dalam lejar: 17564; tiada: 8956 {'isyarat ada, dipegang lejar': 8870, 'tiada isyarat dalam lejar': 65, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 11, 'saham tidak cair': 4}
+- Posisi lejar: 82957 (C hanya 26520; lejar 3.1×)
+- Harga beli berbeza > 0.5%: 135 daripada 17564
+- Status keluar sama: 17558 daripada 17564; berbeza: 6
 
 ## Harga beli berbeza > 0.5%
 
 - M39 TRMD 2026-10-29: C 42.76 / lejar 41.1862 (+3.82%)
 - M66 GNK 2026-10-29: C 26.25 / lejar 25.1956 (+4.18%)
+- M70 DHT 2026-10-29: C 24.91 / lejar 23.2362 (+7.20%)
 - M99 GNK 2026-10-29: C 26.25 / lejar 25.1956 (+4.18%)
 - M100 SPOK 2026-10-29: C 11.8 / lejar 11.4811 (+2.78%)
 - M115 ARLP 2026-10-29: C 27.0 / lejar 26.3428 (+2.49%)
@@ -68,7 +69,6 @@ Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir
 - N07X36 LFST 2026-10-30: C 13.6 / lejar 13.5 (+0.74%)
 - N07X36 TRMD 2026-10-30: C 42.01 / lejar 40.4638 (+3.82%)
 - M32 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
-- M34 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
 
 ## Status keluar berbeza
 
