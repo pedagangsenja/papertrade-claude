@@ -1,9 +1,10 @@
 {
- "dikemaskini": "2026-11-24 10:10 UTC",
+ "dikemaskini": "2026-11-24 20:08 UTC",
  "bar_terakhir": 20261123,
  "laras": {
   "APC": 1.036151,
   "BVN": 1.026644,
+  "DHT": 1.072032,
   "SPOK": 1.027778,
   "SUPN": 0.866171
  },
@@ -30,11 +31,11 @@
    "SUPN": "tidak konsisten: nisbah segar/stor 1.0706, serak 8.42% > 2%"
   }
  },
- "log_laras": 1,
+ "log_laras": 0,
  "faktor_dividen": [],
  "faktor_calon": [],
  "moomoo": {
-  "ditampal": 29,
+  "ditampal": 20,
   "langkau_skala": [
    "SENEA 20261105: buka_moomoo 147.32 lawan stor 29.464",
    "SENEA 20261110: buka_moomoo 169.78 lawan stor 33.956",
