@@ -13194,3 +13194,40 @@ tarikh,simbol,peristiwa,nama,bursa,etf,biasa
 2026-11-21,AAUD,tambah,Alpha Architect US Equity 5 ETF,NASDAQ,1,0
 2026-11-21,CZZL,tambah,Cizzle Brands Corporation - Common Stock,NASDAQ,0,1
 2026-11-21,ISMH,tambah,xETFs International Semiconductor ETF,NASDAQ,1,0
+2026-11-24,AIL,tambah,GraniteShares 2x Long Anthropic Daily ETF,NASDAQ,1,0
+2026-11-24,ALLZ,tambah,Zacks All-Cap Core ETF,Cboe BZX,1,0
+2026-11-24,ANDD,tambah,Leverage Shares 2X Short Anthropic Daily ETF,Cboe BZX,1,0
+2026-11-24,ANS,tambah,GraniteShares 2x Short Anthropic Daily ETF,NASDAQ,1,0
+2026-11-24,ANSS,tambah,Leverage Shares 1X Short Anthropic Daily ETF,Cboe BZX,1,0
+2026-11-24,ANTC,tambah,Defiance 2X ANT Long Daily ETF,NASDAQ,1,0
+2026-11-24,ANTD,tambah,Direxion Daily Anthropic Bear 2X ETF,NASDAQ,1,0
+2026-11-24,ANTO,tambah,Direxion Daily Anthropic Bull 2X ETF,NASDAQ,1,0
+2026-11-24,ANTQ,tambah,Defiance 2X ANT Short Daily ETF,NASDAQ,1,0
+2026-11-24,ANTT,tambah,Tradr 2X Long Anthropic Daily ETF,Cboe BZX,1,0
+2026-11-24,ANTU,tambah,ProShares Ultra Anthropic,NASDAQ,1,0
+2026-11-24,ANTY,tambah,ProShares UltraShort Anthropic,NASDAQ,1,0
+2026-11-24,ANTZ,tambah,Tradr 2X Short Anthropic Daily ETF,Cboe BZX,1,0
+2026-11-24,ANUU,tambah,Leverage Shares 2X Long Anthropic Daily ETF,Cboe BZX,1,0
+2026-11-24,ATHX,tambah,2x Anthropic ETF,Cboe BZX,1,0
+2026-11-24,AVZO,tambah,"Avenzo Therapeutics, Inc. - Common Stock",NASDAQ,0,1
+2026-11-24,CLAU,tambah,T-REX 2X Long Anthropic Daily Target ETF,Cboe BZX,1,0
+2026-11-24,CLYD,tambah,"Clywedog Therapeutics Holdings, Inc. - Common Stock",NASDAQ,0,1
+2026-11-24,DIVA,tambah,AB Equity Income ETF,NYSE Arca,1,0
+2026-11-24,ENHV,tambah,iShares Enhanced Large Cap Value Active ETF,NASDAQ,1,0
+2026-11-24,EVRL,tambah,Everli Global Holdings - Class A Ordinary Shares,NASDAQ,0,1
+2026-11-24,EVRLW,tambah,Everli Global Holdings - Warrant,NASDAQ,0,0
+2026-11-24,VESI,tambah,"Vesicor Therapeutics Holdings, Inc. - Class A Ordinary Shares",NASDAQ,0,1
+2026-11-24,ZCAP,tambah,Zacks Small-Cap Core ETF,Cboe BZX,1,0
+2026-11-24,ZECX,tambah,2x ZCSH ETF,NYSE Arca,1,0
+2026-11-24,BIPC,buang,Brookfield Infrastructure Corporation Brookfield Infrastructure Corporation,NYSE,0,1
+2026-11-24,BKHA,buang,Black Hawk Acquisition Corporation - Class A Ordinary Shares,NASDAQ,0,0
+2026-11-24,BKHAR,buang,Black Hawk Acquisition Corporation - Rights,NASDAQ,0,0
+2026-11-24,BKHAU,buang,Black Hawk Acquisition Corporation - Units,NASDAQ,0,0
+2026-11-24,MACI,buang,Melar Acquisition Corp. I - Class A Ordinary Shares,NASDAQ,0,0
+2026-11-24,MACIU,buang,Melar Acquisition Corp. I - Unit,NASDAQ,0,0
+2026-11-24,MACIW,buang,Melar Acquisition Corp. I - Warrant,NASDAQ,0,0
+2026-11-24,RKNG,buang,Defiance Retail Kings ETF,NASDAQ,1,0
+2026-11-24,RLYB,buang,Rallybio Corporation - Common Stock,NASDAQ,0,1
+2026-11-24,SROI,buang,Calamos Antetokounmpo Global Sustainable Equities ETF,NYSE Arca,1,0
+2026-11-24,BIP,tukar_nama,Brookfield Infrastructure Partners Inc. Class A Subordinate Voting Shares,NYSE,0,1
+2026-11-24,GFAI,tukar_nama,"Guardforce AI Co., Limited - Class A Ordinary Shares",NASDAQ,0,1

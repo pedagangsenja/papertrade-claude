@@ -379,6 +379,7 @@ AIIA.U,"AI Infrastructure Acquisition Corp. Units, each consisting of one Class 
 AIIO,Robo.ai Inc. - Class B Ordinary Shares,NASDAQ,0,1,2026-10-27
 AIIOW,Robo.ai Inc. - Warrant,NASDAQ,0,0,2026-10-27
 AIIR,Air Global PLC - Ordinary shares,NASDAQ,0,1,2026-10-27
+AIL,GraniteShares 2x Long Anthropic Daily ETF,NASDAQ,1,0,2026-11-24
 AIM,AIM ImmunoTech Inc. Common Stock,NYSE American,0,1,2026-10-27
 AIMD,"Ainos, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 AIMDW,"Ainos, Inc. - warrants",NASDAQ,0,0,2026-10-27
@@ -474,6 +475,7 @@ ALLR,"Allarity Therapeutics, Inc. - Common stock",NASDAQ,0,1,2026-10-27
 ALLT,Allot Ltd. - Ordinary Shares,NASDAQ,0,1,2026-10-27
 ALLW,State Street Bridgewater All Weather ETF,NASDAQ,1,0,2026-10-27
 ALLY,Ally Financial Inc. Common Stock,NYSE,0,1,2026-10-27
+ALLZ,Zacks All-Cap Core ETF,Cboe BZX,1,0,2026-11-24
 ALM,Almonty Industries Inc. - Common Shares,NASDAQ,0,1,2026-10-27
 ALMR,"Alamar Biosciences, Inc. - Class A common stock",NASDAQ,0,1,2026-10-27
 ALMS,Alumis Inc. - Common Stock,NASDAQ,0,1,2026-10-27
@@ -598,6 +600,7 @@ AMZY,YieldMax AMZN Option Income Strategy ETF,NYSE Arca,1,0,2026-10-27
 AMZZ,GraniteShares 2x Long AMZN Daily ETF,NASDAQ,1,0,2026-10-27
 AN,"AutoNation, Inc. Common Stock",NYSE,0,1,2026-10-27
 ANAB,"AnaptysBio, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
+ANDD,Leverage Shares 2X Short Anthropic Daily ETF,Cboe BZX,1,0,2026-11-24
 ANDE,"The Andersons, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 ANDG,Andersen Group Inc. Class A Common Stock,NYSE,0,1,2026-10-27
 ANEL,Defiance Daily Target 2x Long ANET ETF,NASDAQ,1,0,2026-10-27
@@ -620,10 +623,21 @@ ANNAW,"AleAnna, Inc. - Warrant",NASDAQ,0,0,2026-10-27
 ANNX,"Annexon, Inc. - common stock",NASDAQ,0,1,2026-10-27
 ANPA,Rich Sparkle Holdings Limited - Ordinary Shares,NASDAQ,0,1,2026-10-27
 ANRO,"Alto Neuroscience, Inc. Common Stock",NYSE,0,1,2026-10-27
+ANS,GraniteShares 2x Short Anthropic Daily ETF,NASDAQ,1,0,2026-11-24
+ANSS,Leverage Shares 1X Short Anthropic Daily ETF,Cboe BZX,1,0,2026-11-24
 ANT,"Anthropic, PBC - Class A Common Stock",NASDAQ,0,1,2026-11-19
 ANTA,Antalpha Platform Holding Company - Class A Ordinary Shares,NASDAQ,0,1,2026-10-27
+ANTC,Defiance 2X ANT Long Daily ETF,NASDAQ,1,0,2026-11-24
+ANTD,Direxion Daily Anthropic Bear 2X ETF,NASDAQ,1,0,2026-11-24
+ANTO,Direxion Daily Anthropic Bull 2X ETF,NASDAQ,1,0,2026-11-24
+ANTQ,Defiance 2X ANT Short Daily ETF,NASDAQ,1,0,2026-11-24
+ANTT,Tradr 2X Long Anthropic Daily ETF,Cboe BZX,1,0,2026-11-24
+ANTU,ProShares Ultra Anthropic,NASDAQ,1,0,2026-11-24
 ANTW,Anthropic AI Lab Ecosystem ETF,NYSE Arca,1,0,2026-10-27
 ANTX,"AN2 Therapeutics, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
+ANTY,ProShares UltraShort Anthropic,NASDAQ,1,0,2026-11-24
+ANTZ,Tradr 2X Short Anthropic Daily ETF,Cboe BZX,1,0,2026-11-24
+ANUU,Leverage Shares 2X Long Anthropic Daily ETF,Cboe BZX,1,0,2026-11-24
 ANV,GraniteShares Autocallable NVDA ETF,NASDAQ,1,0,2026-10-27
 ANVS,"Annovis Bio, Inc. Common Stock",NYSE,0,1,2026-10-27
 AOA,iShares Core 80/20 Aggressive Allocation ETF,NYSE Arca,1,0,2026-10-27
@@ -876,6 +890,7 @@ ATHE,Alterity Therapeutics Limited - American Depositary Shares,NASDAQ,0,1,2026-
 ATHM,"Autohome Inc. American Depositary Shares, each representing four class A ordinary shares.",NYSE,0,1,2026-10-27
 ATHR,"Aether Holdings, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 ATHS,Athene Holding Ltd. 7.250% Fixed-Rate Reset Junior Subordinated Debentures due 2064,NYSE,0,0,2026-10-27
+ATHX,2x Anthropic ETF,Cboe BZX,1,0,2026-11-24
 ATI,ATI Inc. Common Stock,NYSE,0,1,2026-10-27
 ATLC,Atlanticus Holdings Corporation - Common Stock,NASDAQ,0,1,2026-10-27
 ATLCL,Atlanticus Holdings Corporation - 6.125% Senior Notes due 2026,NASDAQ,0,0,2026-10-27
@@ -1002,6 +1017,7 @@ AVXC,Avantis Emerging Markets ex-China Equity ETF,NASDAQ,1,0,2026-10-27
 AVXL,Anavex Life Sciences Corp. - Common Stock,NASDAQ,0,1,2026-10-27
 AVXX,Defiance Daily Target 2x Long AVAV ETF,NASDAQ,1,0,2026-10-27
 AVY,Avery Dennison Corporation Common Stock,NYSE,0,1,2026-10-27
+AVZO,"Avenzo Therapeutics, Inc. - Common Stock",NASDAQ,0,1,2026-11-24
 AWAY,Amplify Travel Tech ETF,NYSE Arca,1,0,2026-10-27
 AWF,Alliancebernstein Global High Income Fund,NYSE,0,0,2026-10-27
 AWI,Armstrong World Industries Inc Common Stock,NYSE,0,1,2026-10-27
@@ -1389,8 +1405,7 @@ BIOT,Instinct Bio Technical Company Holdings Inc. - Common stock,NASDAQ,0,1,2026
 BIOTW,Instinct Bio Technical Company Holdings Inc. - Warrants,NASDAQ,0,0,2026-10-27
 BIOX,Bioceres Crop Solutions Corp. - Ordinary Shares,NASDAQ,0,1,2026-10-27
 BIOY,GraniteShares YieldBOOST Biotech ETF,NASDAQ,1,0,2026-10-27
-BIP,Brookfield Infrastructure Partners LP Limited Partnership Units,NYSE,0,0,2026-10-27
-BIPC,Brookfield Infrastructure Corporation Brookfield Infrastructure Corporation,NYSE,0,1,2026-10-27
+BIP,Brookfield Infrastructure Partners Inc. Class A Subordinate Voting Shares,NYSE,0,1,2026-10-27
 BIPH,Brookfield Infrastructure Corporation 5.000% Subordinated Notes due 2081,NYSE,0,0,2026-10-27
 BIPI,BIP Bermuda Holdings I Limited 5.125% Perpetual Subordinated Notes,NYSE,0,0,2026-10-27
 BIPJ,Brookfield Infrastructure Corporation 7.250% Subordinated Notes due 2084,NYSE,0,0,2026-10-27
@@ -1434,9 +1449,6 @@ BKEM,BNY Mellon Emerging Markets Equity ETF,NYSE Arca,1,0,2026-10-27
 BKF,iShares MSCI BIC ETF,NYSE Arca,1,0,2026-10-27
 BKFI,BNY Mellon Active Core Bond ETF,NYSE Arca,1,0,2026-10-27
 BKGI,BNY Mellon Global Infrastructure Income ETF,Cboe BZX,1,0,2026-10-27
-BKHA,Black Hawk Acquisition Corporation - Class A Ordinary Shares,NASDAQ,0,0,2026-10-27
-BKHAR,Black Hawk Acquisition Corporation - Rights,NASDAQ,0,0,2026-10-27
-BKHAU,Black Hawk Acquisition Corporation - Units,NASDAQ,0,0,2026-10-27
 BKHY,BNY Mellon High Yield ETF,NYSE Arca,1,0,2026-10-27
 BKIE,BNY Mellon International Equity ETF,NYSE Arca,1,0,2026-10-27
 BKKT,"Bakkt, Inc. Class A Common Stock",NYSE,0,1,2026-10-27
@@ -2280,6 +2292,7 @@ CJUN,Corgi U.S. Equities 15% Structured Buffer ETF - June Series,Cboe BZX,1,0,20
 CKX,"CKX Lands, Inc. Common Stock",NYSE American,0,1,2026-10-27
 CL,Colgate-Palmolive Company Common Stock,NYSE,0,1,2026-10-27
 CLAR,Clarus Corporation - Common Stock,NASDAQ,0,1,2026-10-27
+CLAU,T-REX 2X Long Anthropic Daily Target ETF,Cboe BZX,1,0,2026-11-24
 CLB,Core Laboratories Inc. Common Stock,NYSE,0,1,2026-10-27
 CLBK,"Columbia Financial, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 CLBR,Colombier Acquisition Corp. III Class A Ordinary Shares,NYSE,0,0,2026-10-27
@@ -2332,6 +2345,7 @@ CLVT,Clarivate Plc Ordinary Shares,NYSE,0,1,2026-10-27
 CLW,Clearwater Paper Corporation Common Stock,NYSE,0,1,2026-10-27
 CLWT,Euro Tech Holdings Company Limited - Ordinary Shares,NASDAQ,0,1,2026-10-27
 CLX,Clorox Company (The) Common Stock,NYSE,0,1,2026-10-27
+CLYD,"Clywedog Therapeutics Holdings, Inc. - Common Stock",NASDAQ,0,1,2026-11-24
 CLYM,"Climb Bio, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 CM,Canadian Imperial Bank of Commerce Common Stock,NYSE,0,1,2026-10-27
 CMAG,Corgi Mag 7 ETF,Cboe BZX,1,0,2026-10-27
@@ -3059,6 +3073,7 @@ DISK,Tema Memory ETF,NYSE Arca,1,0,2026-10-27
 DISV,Dimensional International Small Cap Value ETF,Cboe BZX,1,0,2026-10-27
 DIT,AMCON Distributing Company Common Stock,NYSE American,0,1,2026-10-27
 DIV,Global X Super Dividend ETF,NYSE Arca,1,0,2026-10-27
+DIVA,AB Equity Income ETF,NYSE Arca,1,0,2026-11-24
 DIVB,iShares Core Dividend ETF,Cboe BZX,1,0,2026-10-27
 DIVD,Altrius Global Dividend ETF,NASDAQ,1,0,2026-10-27
 DIVE,Dana Concentrated Dividend ETF,NYSE Arca,1,0,2026-10-27
@@ -3586,6 +3601,7 @@ ENHA,Enhanced Group Inc. Class A Common Stock,NYSE,0,1,2026-10-27
 ENHE,iShares Enhanced Emerging Markets Active ETF,NASDAQ,1,0,2026-10-27
 ENHI,iShares Enhanced International Active ETF,NASDAQ,1,0,2026-10-27
 ENHU,iShares Enhanced Large Cap Core Active ETF,NASDAQ,1,0,2026-10-27
+ENHV,iShares Enhanced Large Cap Value Active ETF,NASDAQ,1,0,2026-11-24
 ENIC,Enel Chile S.A. American Depositary Shares (Each representing 50 shares of Common Stock),NYSE,0,1,2026-10-27
 ENJ,"Entergy New Orleans, LLC First Mortgage Bonds, 5.0% Series due December 1, 2052",NYSE,0,1,2026-10-27
 ENLT,Enlight Renewable Energy Ltd. - Ordinary Shares,NASDAQ,0,1,2026-10-27
@@ -3806,6 +3822,8 @@ EVOXW,Evolution Global Acquisition Corp - Warrants,NASDAQ,0,0,2026-10-27
 EVPF,Eaton Vance Preferred Securities and Income ETF,NASDAQ,1,0,2026-10-27
 EVR,Evercore Inc. Class A Common Stock,NYSE,0,1,2026-10-27
 EVRG,"Evergy, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
+EVRL,Everli Global Holdings - Class A Ordinary Shares,NASDAQ,0,1,2026-11-24
+EVRLW,Everli Global Holdings - Warrant,NASDAQ,0,0,2026-11-24
 EVSB,Eaton Vance Ultra-Short Income ETF,NYSE Arca,1,0,2026-10-27
 EVSD,Eaton Vance Short Duration Income ETF,NASDAQ,1,0,2026-10-27
 EVSM,Eaton Vance Short Duration Municipal Income ETF,NYSE Arca,1,0,2026-10-27
@@ -4709,7 +4727,7 @@ GEVO,"Gevo, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 GEVX,Tradr 2X Long GEV Daily ETF,Cboe BZX,1,0,2026-10-27
 GEW,Cambria Global EW ETF,NASDAQ,1,0,2026-10-27
 GF,"New Germany Fund, Inc. (The) Common Stock",NYSE,0,0,2026-10-27
-GFAI,"Guardforce AI Co., Limited - Ordinary Shares",NASDAQ,0,1,2026-10-27
+GFAI,"Guardforce AI Co., Limited - Class A Ordinary Shares",NASDAQ,0,1,2026-10-27
 GFEB,FT Vest U.S. Equity Moderate Buffer ETF - February,Cboe BZX,1,0,2026-10-27
 GFF,Griffon Corporation Common Stock,NYSE,0,1,2026-10-27
 GFI,Gold Fields Limited American Depositary Shares,NYSE,0,1,2026-10-27
@@ -7004,9 +7022,6 @@ MAA,"Mid-America Apartment Communities, Inc. Common Stock",NYSE,0,1,2026-10-27
 MAAS,Maase Inc. - Class A Ordinary Shares,NASDAQ,0,1,2026-10-27
 MAAY,GraniteShares YieldBOOST MARA ETF,NASDAQ,1,0,2026-10-27
 MAC,Macerich Company (The) Common Stock,NYSE,0,1,2026-10-27
-MACI,Melar Acquisition Corp. I - Class A Ordinary Shares,NASDAQ,0,0,2026-10-27
-MACIU,Melar Acquisition Corp. I - Unit,NASDAQ,0,0,2026-10-27
-MACIW,Melar Acquisition Corp. I - Warrant,NASDAQ,0,0,2026-10-27
 MADE,iShares U.S. Manufacturing ETF,NYSE Arca,1,0,2026-10-27
 MAGA,Truth Social America First ETF,NYSE Arca,1,0,2026-10-27
 MAGC,Roundhill China Magnificent Seven ETF,Cboe BZX,1,0,2026-10-27
@@ -9669,7 +9684,6 @@ RJVI,RJ Eagle Vertical Income ETF,NYSE Arca,1,0,2026-10-27
 RKDA,"Arcadia Biosciences, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 RKLB,Rocket Lab Corporation - Common Stock,NASDAQ,0,1,2026-10-27
 RKLX,Defiance Daily Target 2X Long RKLB ETF,NASDAQ,1,0,2026-10-27
-RKNG,Defiance Retail Kings ETF,NASDAQ,1,0,2026-10-27
 RKSG,Ruk Strategic Growth ETF,NYSE Arca,1,0,2026-10-27
 RKT,"Rocket Companies, Inc. Class A Common Stock",NYSE,0,1,2026-10-27
 RKTO,Rocket One Inc. - Common Stock,NASDAQ,0,1,2026-10-27
@@ -9683,7 +9697,6 @@ RLMD,"Relmada Therapeutics, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 RLTY,Cohen & Steers Real Estate Opportunities and Income Fund Common Shares of Beneficial Interest,NYSE,0,0,2026-10-27
 RLX,"RLX Technology Inc. American Depositary Shares, each representing the right to receive one (1) Class A ordinary share",NYSE,0,0,2026-10-27
 RLY,State Street Multi-Asset Real Return ETF,NYSE Arca,1,0,2026-10-27
-RLYB,Rallybio Corporation - Common Stock,NASDAQ,0,1,2026-10-27
 RM,Regional Management Corp. Common Stock,NYSE,0,1,2026-10-27
 RMBC,Corgi RMBS 2x Daily ETF,Cboe BZX,1,0,2026-10-27
 RMBI,"Richmond Mutual Bancorporation, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
@@ -10704,7 +10717,6 @@ SRI,"Stoneridge, Inc. Common Stock",NYSE,0,1,2026-10-27
 SRJN,Spire Inc. 6.375% Junior Subordinated Notes due 2086,NYSE,0,0,2026-10-27
 SRL,Scully Royalty Ltd.,NYSE,0,1,2026-10-27
 SRLN,State Street Blackstone Senior Loan ETF,NYSE Arca,1,0,2026-10-27
-SROI,Calamos Antetokounmpo Global Sustainable Equities ETF,NYSE Arca,1,0,2026-10-27
 SRPT,"Sarepta Therapeutics, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 SRRK,Scholar Rock Holding Corporation - Common Stock,NASDAQ,0,1,2026-10-27
 SRS,ProShares UltraShort Real Estate,NYSE Arca,1,0,2026-10-27
@@ -11930,6 +11942,7 @@ VERA,"Vera Therapeutics, Inc. - Class A Common Stock",NASDAQ,0,1,2026-10-27
 VERI,"Veritone, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 VERU,Veru Inc. - Common Stock,NASDAQ,0,1,2026-10-27
 VERX,"Vertex, Inc. - Class A Common Stock",NASDAQ,0,1,2026-10-27
+VESI,"Vesicor Therapeutics Holdings, Inc. - Class A Ordinary Shares",NASDAQ,0,1,2026-11-24
 VET,Vermilion Energy Inc. Common (Canada),NYSE,0,1,2026-10-27
 VETZ,Academy Veteran Bond ETF,NYSE Arca,1,0,2026-10-27
 VEU,Vanguard FTSE All World Ex US ETF,NYSE Arca,1,0,2026-10-27
@@ -12803,6 +12816,7 @@ ZBAO,Zhibao Technology Inc. - Class A Ordinary Shares,NASDAQ,0,1,2026-10-27
 ZBH,"Zimmer Biomet Holdings, Inc. Common Stock",NYSE,0,1,2026-10-27
 ZBIO,"Zenas BioPharma, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 ZBRA,Zebra Technologies Corporation - Class A Common Stock,NASDAQ,0,1,2026-10-27
+ZCAP,Zacks Small-Cap Core ETF,Cboe BZX,1,0,2026-11-24
 ZCBA,Global X Zero Coupon Bond 2030 ETF,NYSE Arca,1,0,2026-10-27
 ZCBB,Global X Zero Coupon Bond 2031 ETF,NYSE Arca,1,0,2026-10-27
 ZCBC,Global X Zero Coupon Bond 2032 ETF,NYSE Arca,1,0,2026-10-27
@@ -12818,6 +12832,7 @@ ZDEK,Innovator Equity Defined Protection ETF - 1 Yr December,Cboe BZX,1,0,2026-1
 ZDGE,"Zedge, Inc. Class B Common Stock ",NYSE American,0,1,2026-10-27
 ZDIS,Virtus Zevenbergen Discovery Growth ETF,NYSE Arca,1,0,2026-10-27
 ZECP,Zacks Earnings Consistent Portfolio ETF,Cboe BZX,1,0,2026-10-27
+ZECX,2x ZCSH ETF,NYSE Arca,1,0,2026-11-24
 ZENA,"ZenaTech, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 ZEO,Zeo Energy Corporation - Class A Common Stock,NASDAQ,0,1,2026-10-27
 ZEOWW,Zeo Energy Corporation - Warrants,NASDAQ,0,0,2026-10-27
