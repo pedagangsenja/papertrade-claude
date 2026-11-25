@@ -4,111 +4,114 @@ Dibina semula daripada Lejar Penuh oleh `standard/portfolio_slot.py`; kajian `ka
 
 > **Status keputusan (kad skor, harga 2026-11-23):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 226 · GAGAL 1 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
-Tempoh: 2026-10-16 hingga 2026-11-23 (27 sesi). SPY dalam tempoh sama: -6.59% (rujukan sahaja; penanda aras yang sah ialah SPUS: `laporan/BANDING_SPUS.md`).
+Tempoh: 2026-10-16 hingga 2026-11-24 (28 sesi). SPY dalam tempoh sama: -7.04% (rujukan sahaja; penanda aras yang sah ialah SPUS: `laporan/BANDING_SPUS.md`).
 
 | Portfolio | Pulangan % | MDD % | Posisi dipegang | Dagangan keluar | Kadar menang % | Purata untung keluar % |
 |---|---|---|---|---|---|---|
-| RS_10 — RS pasaran tertinggi | -31.03 | -32.97 | 10 | 11 | 0 | -29.25 |
-| RAWAK_10 — Rawak (kawalan) | -7.41 | -10.66 | 10 | 9 | 0 | -10.57 |
-| GABUNGAN_10 — Gabungan kaedah beku | -0.99 | -8.23 | 9 | 34 | 3 | -2.11 |
-| TOP1_10 — Kaedah #1 sahaja | -3.79 | -6.67 | 9 | 47 | 2 | -1.77 |
-| RAWAK_KAEDAH_10 — Kaedah rawak (kawalan gabungan) | -10.28 | -15.34 | 9 | 9 | 11 | -13.04 |
-| RISIKO_10 — RS pasaran tertinggi, saiz berskala risiko | -8.23 | -9.69 | 10 | 11 | 0 | -29.25 |
+| RS_10 — RS pasaran tertinggi | -31.69 | -32.97 | 10 | 12 | 0 | -27.52 |
+| RAWAK_10 — Rawak (kawalan) | -6.93 | -12.20 | 10 | 9 | 0 | -12.93 |
+| GABUNGAN_10 — Gabungan kaedah beku | -0.72 | -8.22 | 10 | 32 | 3 | -2.15 |
+| TOP1_10 — Kaedah #1 sahaja | -1.97 | -7.29 | 10 | 56 | 0 | -1.89 |
+| RAWAK_KAEDAH_10 — Kaedah rawak (kawalan gabungan) | -9.81 | -16.96 | 10 | 10 | 10 | -13.33 |
+| RISIKO_10 — RS pasaran tertinggi, saiz berskala risiko | -8.42 | -9.69 | 10 | 12 | 0 | -27.52 |
 
 ## RS_10 — posisi dipegang
 
 | Saham | Kaedah | RS | Beli | Harga beli | Terkini | Untung % |
 |---|---|---|---|---|---|---|
-| AGL | M125 | 98 | 2026-10-16 | 88.90 | 81.73 | -8.07 |
-| ANL | M73 | 99 | 2026-10-16 | 11.89 | 9.00 | -24.31 |
-| XNCR | M158 | 98 | 2026-11-05 | 35.57 | 35.17 | -1.12 |
-| APPN | M116 | 96 | 2026-11-06 | 53.91 | 54.69 | +1.45 |
-| LFST | M158 | 96 | 2026-11-06 | 13.41 | 14.44 | +7.64 |
-| XERS | M100 | 95 | 2026-11-06 | 13.79 | 17.52 | +27.05 |
-| AXTI | M73 | 99 | 2026-11-09 | 39.30 | 38.02 | -3.26 |
+| ANL | M73 | 99 | 2026-10-16 | 11.89 | 9.22 | -22.46 |
+| XNCR | M158 | 98 | 2026-11-05 | 35.57 | 38.18 | +7.34 |
+| APPN | M116 | 96 | 2026-11-06 | 53.91 | 54.80 | +1.65 |
+| LFST | M158 | 96 | 2026-11-06 | 13.41 | 14.16 | +5.55 |
+| XERS | M100 | 95 | 2026-11-06 | 13.79 | 17.69 | +28.28 |
+| AXTI | M73 | 99 | 2026-11-09 | 39.30 | 31.58 | -19.64 |
 | MGRT | M08 | 99 | 2026-11-16 | 120.00 | 136.05 | +13.38 |
 | SNDK | M73 | 98 | 2026-11-17 | 101.23 | 94.39 | -6.75 |
-| AAOI | M155 | 98 | 2026-11-23 | 42.25 | 38.70 | -8.40 |
+| AAOI | M155 | 98 | 2026-11-23 | 42.25 | 38.40 | -9.11 |
+| MXL | M13 | 99 | 2026-11-24 | 47.15 | 41.89 | -11.16 |
 
 ## RAWAK_10 — posisi dipegang
 
 | Saham | Kaedah | RS | Beli | Harga beli | Terkini | Untung % |
 |---|---|---|---|---|---|---|
-| COR | M36 | 59 | 2026-10-16 | 343.31 | 338.04 | -1.54 |
-| SGU | M161 | 51 | 2026-10-16 | 13.17 | 13.16 | -0.08 |
-| USPH | M14 | 54 | 2026-10-16 | 86.37 | 96.85 | +12.13 |
-| JKHY | M158 | 52 | 2026-11-02 | 161.44 | 171.62 | +6.31 |
-| TGLS | M145 | 21 | 2026-11-06 | 44.33 | 50.56 | +14.05 |
-| TTWO | M92 | 18 | 2026-11-06 | 210.63 | 209.36 | -0.60 |
-| SLVM | M161 | 37 | 2026-11-09 | 39.59 | 35.32 | -10.79 |
-| VHI | M33 | 53 | 2026-11-09 | 16.67 | 15.15 | -9.12 |
-| AEO | M70 | 88 | 2026-11-18 | 21.04 | 22.18 | +5.42 |
-| TANH | M73 | 97 | 2026-11-20 | 39.04 | 40.17 | +2.89 |
+| COR | M36 | 59 | 2026-10-16 | 343.31 | 349.68 | +1.86 |
+| SGU | M161 | 51 | 2026-10-16 | 13.17 | 13.24 | +0.53 |
+| USPH | M14 | 54 | 2026-10-16 | 86.37 | 98.05 | +13.52 |
+| GMED | M158 | 71 | 2026-11-06 | 74.10 | 70.55 | -4.79 |
+| OMC | M158 | 59 | 2026-11-06 | 85.04 | 89.23 | +4.93 |
+| TGLS | M148 | 21 | 2026-11-06 | 44.33 | 55.48 | +25.15 |
+| TXO | M01 | 27 | 2026-11-06 | 12.45 | 12.44 | -0.05 |
+| ASND | M35 | 66 | 2026-11-09 | 257.34 | 274.59 | +6.70 |
+| UI | M154 | 28 | 2026-11-09 | 612.00 | 632.03 | +3.27 |
+| WLKP | M49 | 54 | 2026-11-18 | 21.25 | 20.74 | -2.40 |
 
 ## GABUNGAN_10 — posisi dipegang
 
 | Saham | Kaedah | RS | Beli | Harga beli | Terkini | Untung % |
 |---|---|---|---|---|---|---|
-| BDC | M03 | 40 | 2026-10-22 | 105.50 | 100.78 | -4.47 |
-| JBTM | M03 | 15 | 2026-10-22 | 106.16 | 124.16 | +16.96 |
-| ATMU | M18 | 33 | 2026-10-30 | 45.64 | 54.35 | +19.08 |
-| ESCA | M70 | 81 | 2026-11-02 | 19.60 | 21.12 | +7.76 |
-| LIVN | M70 | 78 | 2026-11-03 | 80.40 | 92.11 | +14.56 |
-| REGN | M18 | 81 | 2026-11-09 | 922.35 | 942.24 | +2.16 |
-| BKE | M03 | 24 | 2026-11-23 | 44.93 | 45.38 | +1.00 |
-| IBEX | M18 | 95 | 2026-11-23 | 54.55 | 56.71 | +3.96 |
-| SENEA | M70 | 75 | 2026-11-23 | 34.98 | 35.42 | +1.26 |
+| BDC | M03 | 40 | 2026-10-22 | 105.50 | 99.27 | -5.91 |
+| JBTM | M03 | 15 | 2026-10-22 | 106.16 | 123.05 | +15.91 |
+| ATMU | M18 | 33 | 2026-10-30 | 45.64 | 53.55 | +17.33 |
+| ESCA | M70 | 81 | 2026-11-02 | 19.60 | 21.72 | +10.82 |
+| LIVN | M70 | 78 | 2026-11-03 | 80.40 | 93.93 | +16.83 |
+| REGN | M18 | 81 | 2026-11-09 | 922.35 | 987.09 | +7.02 |
+| BKE | M03 | 24 | 2026-11-23 | 44.93 | 44.93 | +0.00 |
+| IBEX | M18 | 95 | 2026-11-23 | 54.55 | 55.53 | +1.80 |
+| SENEA | M70 | 75 | 2026-11-23 | 34.98 | 34.33 | -1.86 |
+| CTAS | M70 | 70 | 2026-11-24 | 223.32 | 225.76 | +1.09 |
 
 ## TOP1_10 — posisi dipegang
 
 | Saham | Kaedah | RS | Beli | Harga beli | Terkini | Untung % |
 |---|---|---|---|---|---|---|
-| QGEN | M70 | 66 | 2026-10-22 | 50.50 | 49.30 | -2.38 |
-| CLMB | M70 | 70 | 2026-10-29 | 36.13 | 42.84 | +18.57 |
-| CP | M70 | 58 | 2026-11-02 | 89.59 | 90.63 | +1.16 |
-| LIVN | M70 | 78 | 2026-11-03 | 80.40 | 92.11 | +14.56 |
-| AXGN | M70 | 92 | 2026-11-09 | 50.92 | 58.66 | +15.20 |
+| KIDS | M70 | 82 | 2026-10-28 | 24.94 | 33.18 | +33.04 |
+| CLMB | M70 | 70 | 2026-10-29 | 36.13 | 41.62 | +15.20 |
+| CP | M70 | 58 | 2026-11-02 | 89.59 | 92.82 | +3.61 |
+| LIVN | M70 | 78 | 2026-11-03 | 80.40 | 93.93 | +16.83 |
+| AXGN | M70 | 92 | 2026-11-09 | 50.92 | 59.83 | +17.50 |
 | MGRT | M70 | 99 | 2026-11-19 | 144.50 | 136.05 | -5.85 |
-| RDY | M70 | 70 | 2026-11-20 | 14.88 | 15.11 | +1.55 |
-| PNRG | M70 | 86 | 2026-11-23 | 212.19 | 218.86 | +3.14 |
-| SENEA | M70 | 75 | 2026-11-23 | 34.98 | 35.42 | +1.26 |
+| RDY | M70 | 70 | 2026-11-20 | 14.88 | 15.17 | +1.95 |
+| PNRG | M70 | 86 | 2026-11-23 | 212.19 | 217.70 | +2.60 |
+| SENEA | M70 | 75 | 2026-11-23 | 34.98 | 34.33 | -1.86 |
+| PHM | M70 | 52 | 2026-11-24 | 126.38 | 130.23 | +3.05 |
 
 ## RAWAK_KAEDAH_10 — posisi dipegang
 
 | Saham | Kaedah | RS | Beli | Harga beli | Terkini | Untung % |
 |---|---|---|---|---|---|---|
-| ALLE | M111 | 32 | 2026-10-22 | 170.00 | 189.26 | +11.33 |
-| ICLR | M111 | 62 | 2026-10-22 | 180.09 | 195.45 | +8.53 |
-| CP | M11 | 58 | 2026-10-28 | 91.03 | 90.63 | -0.44 |
-| DASH | M11 | 18 | 2026-11-05 | 190.71 | 161.35 | -15.40 |
-| ASO | M11 | 94 | 2026-11-17 | 70.06 | 69.28 | -1.11 |
-| AXON | M11 | 7 | 2026-11-20 | 303.81 | 307.60 | +1.25 |
-| PANW | M148 | 93 | 2026-11-20 | 359.04 | 353.43 | -1.56 |
-| DHT | M11 | 88 | 2026-11-23 | 20.45 | 20.91 | +2.25 |
-| TGLS | M11 | 67 | 2026-11-23 | 48.10 | 50.56 | +5.11 |
+| ALLE | M111 | 32 | 2026-10-22 | 170.00 | 189.96 | +11.74 |
+| ICLR | M111 | 62 | 2026-10-22 | 180.09 | 198.27 | +10.09 |
+| DASH | M11 | 18 | 2026-11-05 | 190.71 | 160.13 | -16.03 |
+| ADP | M11 | 76 | 2026-11-17 | 309.87 | 310.79 | +0.30 |
+| ASO | M11 | 94 | 2026-11-17 | 70.06 | 72.24 | +3.11 |
+| AXON | M11 | 7 | 2026-11-20 | 303.81 | 319.32 | +5.11 |
+| PANW | M148 | 92 | 2026-11-20 | 359.04 | 352.99 | -1.69 |
+| DHT | M11 | 88 | 2026-11-23 | 20.45 | 21.32 | +4.25 |
+| TGLS | M11 | 67 | 2026-11-23 | 48.10 | 55.48 | +15.34 |
+| APG | M111 | 73 | 2026-11-24 | 45.06 | 45.04 | -0.04 |
 
 ## RISIKO_10 — posisi dipegang
 
 | Saham | Kaedah | RS | Beli | Harga beli | Terkini | Untung % |
 |---|---|---|---|---|---|---|
-| AGL | M125 | 98 | 2026-10-16 | 88.90 | 81.73 | -8.07 |
-| ANL | M73 | 99 | 2026-10-16 | 11.89 | 9.00 | -24.31 |
-| XNCR | M158 | 98 | 2026-11-05 | 35.57 | 35.17 | -1.12 |
-| APPN | M116 | 96 | 2026-11-06 | 53.91 | 54.69 | +1.45 |
-| LFST | M158 | 96 | 2026-11-06 | 13.41 | 14.44 | +7.64 |
-| XERS | M100 | 95 | 2026-11-06 | 13.79 | 17.52 | +27.05 |
-| AXTI | M73 | 99 | 2026-11-09 | 39.30 | 38.02 | -3.26 |
+| ANL | M73 | 99 | 2026-10-16 | 11.89 | 9.22 | -22.46 |
+| XNCR | M158 | 98 | 2026-11-05 | 35.57 | 38.18 | +7.34 |
+| APPN | M116 | 96 | 2026-11-06 | 53.91 | 54.80 | +1.65 |
+| LFST | M158 | 96 | 2026-11-06 | 13.41 | 14.16 | +5.55 |
+| XERS | M100 | 95 | 2026-11-06 | 13.79 | 17.69 | +28.28 |
+| AXTI | M73 | 99 | 2026-11-09 | 39.30 | 31.58 | -19.64 |
 | MGRT | M08 | 99 | 2026-11-16 | 120.00 | 136.05 | +13.38 |
 | SNDK | M73 | 98 | 2026-11-17 | 101.23 | 94.39 | -6.75 |
-| AAOI | M155 | 98 | 2026-11-23 | 42.25 | 38.70 | -8.40 |
+| AAOI | M155 | 98 | 2026-11-23 | 42.25 | 38.40 | -9.11 |
+| MXL | M13 | 99 | 2026-11-24 | 47.15 | 41.89 | -11.16 |
 
 ## Gabungan beku (jejak hadapan sejak 2026-10-22; data/analisis/gabungan_beku.json)
 
 | Portfolio | Kaedah (slot, lorong) | Sesi | Pulangan % | SPY tempoh sama % |
 |---|---|---|---|---|
-| GABUNGAN_10 | M70 (4, kaedah), M03 (3, henti), M18 (3, kaedah) | 23 | -0.99 | -5.75 |
-| TOP1_10 | M70 (10, kaedah) | 23 | -3.79 | -5.75 |
-| RAWAK_KAEDAH_10 | M11 (4, henti), M111 (3, henti), M148 (3, henti) | 23 | -10.28 | -5.75 |
+| GABUNGAN_10 | M70 (4, kaedah), M03 (3, henti), M18 (3, kaedah) | 24 | -0.72 | -6.21 |
+| TOP1_10 | M70 (10, kaedah) | 24 | -1.97 | -6.21 |
+| RAWAK_KAEDAH_10 | M11 (4, henti), M111 (3, henti), M148 (3, henti) | 24 | -9.81 | -6.21 |
 
 Penilaian adil memerlukan sekurang-kurangnya 6–12 bulan (KAJIAN_PORTFOLIO.md). Kelebihan yang dicari: RS_10 mengatasi RAWAK_10 dan SPY dengan MDD yang setanding; GABUNGAN_10 mengatasi TOP1_10, RAWAK_KAEDAH_10 dan SPY.
 
@@ -116,18 +119,18 @@ RISIKO_10 dipasangkan dengan RS_10: susunan calon SAMA, hanya saiz berbeza (risi
 
 **Baca MDD RISIKO_10 bersama lajur `tunai`.** Kerana saham momentum Shariah kebanyakannya ber-ATR tinggi, saiznya kecil (2%–5%) dan 10 slot tidak menghabiskan tunai: sebahagian daripada MDD yang lebih baik datang daripada **pendedahan yang lebih rendah**, bukan daripada saiz yang lebih bijak. Perbandingan yang adil ialah MDD bagi setiap unit pendedahan; lihat `RISIKO_10_ekuiti.csv` lajur `tunai`.
 
-### Jalur kawalan rawak (20 cabutan, sesi 2026-11-23)
+### Jalur kawalan rawak (20 cabutan, sesi 2026-11-24)
 
-Jalur: min 0.8570 | p10 0.9349 | median 0.9955 | p90 1.0468 | maks 1.0672
+Jalur: min 0.9244 | p10 0.9405 | median 1.0019 | p90 1.0408 | maks 1.0675
 
 | Lorong | Ekuiti | Persentil dalam jalur | Di luar jalur? |
 |---|---|---|---|
-| GABUNGAN_10 | 0.9901 | 50 | tidak |
-| RAWAK_10 | 0.9259 | 10 | tidak |
-| RAWAK_KAEDAH_10 | 0.8972 | 5 | tidak |
-| RISIKO_10 | 0.9177 | 5 | tidak |
-| RS_10 | 0.6897 | 0 | YA (bawah) |
-| TOP1_10 | 0.9621 | 30 | tidak |
+| GABUNGAN_10 | 0.9928 | 45 | tidak |
+| RAWAK_10 | 0.9307 | 5 | tidak |
+| RAWAK_KAEDAH_10 | 0.9019 | 0 | YA (bawah) |
+| RISIKO_10 | 0.9158 | 0 | YA (bawah) |
+| RS_10 | 0.6831 | 0 | YA (bawah) |
+| TOP1_10 | 0.9803 | 30 | tidak |
 
 **Cara membaca:** lorong yang berada DALAM jalur tidak dapat dibezakan daripada pemilihan rawak — jurangnya hingar, bukan dapatan. Hanya lorong di luar jalur (dan kekal di luar apabila jalur memanjang) bermakna apa-apa. Pada 10 slot hingar pemilihan besar: `REVERSE/KEPEKATAN_BENIH.md` mengukur SD 4.15 mata setahun pada 8 slot, jadi ambang 95% ialah ~9.7 mata antara dua lorong dan ~7.0 mata lawan median jalur. (Angka 17.3 yang pernah disebut ialah JULAT 20 cabutan, bukan ambang: julat berkembang dengan bilangan cabutan.)
 

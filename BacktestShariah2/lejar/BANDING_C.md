@@ -1,11 +1,11 @@
 # Banding Papertrade C dengan Lejar Penuh (fasa 1)
 
-Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-23. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
+Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir 2026-11-24. Kunci: kaedah + saham + tarikh_isyarat. Beza dijangka: sumber harga (C: Moomoo; lejar: yfinance), had 10 sekaedah dan keutamaan 431 dalam C (lejar membeli semua isyarat).
 
-- Posisi C (isyarat >= 2026-10-15): 27654; ada dalam lejar: 17564; tiada: 10090 {'isyarat ada, dipegang lejar': 9334, 'tiada isyarat dalam lejar': 65, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 681, 'saham tidak cair': 4}
-- Posisi lejar: 82957 (C hanya 27654; lejar 3.0×)
-- Harga beli berbeza > 0.5%: 135 daripada 17564
-- Status keluar sama: 17558 daripada 17564; berbeza: 6
+- Posisi C (isyarat >= 2026-10-15): 27653; ada dalam lejar: 18198; tiada: 9455 {'isyarat ada, dipegang lejar': 9321, 'tiada isyarat dalam lejar': 112, 'isyarat batal pada buka (peraturan kaedah)': 6, 'isyarat ada, belum diproses': 12, 'saham tidak cair': 4}
+- Posisi lejar: 84756 (C hanya 27653; lejar 3.1×)
+- Harga beli berbeza > 0.5%: 157 daripada 18198
+- Status keluar sama: 18189 daripada 18198; berbeza: 9
 
 ## Harga beli berbeza > 0.5%
 
@@ -21,6 +21,7 @@ Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir
 - M08 INTA 2026-10-30: C 41.78 / lejar 42.03 (-0.59%)
 - M20 CF 2026-10-30: C 118.55 / lejar 120.78 (-1.85%)
 - M20 PAYX 2026-10-30: C 112.02 / lejar 112.71 (-0.61%)
+- M25 TS 2026-10-30: C 59.6 / lejar 58.3181 (+2.20%)
 - M25 HQY 2026-10-30: C 104.08 / lejar 102.85 (+1.20%)
 - M26 CF 2026-10-30: C 118.55 / lejar 120.78 (-1.85%)
 - M28 ZBRA 2026-10-30: C 366.23 / lejar 363.12 (+0.86%)
@@ -68,13 +69,15 @@ Dijana oleh `standard/lejar.py banding`. Lejar bermula 2026-10-15; sesi terakhir
 - N75X17 AUGO 2026-10-30: C 67.62 / lejar 68.005 (-0.57%)
 - N07X36 LFST 2026-10-30: C 13.6 / lejar 13.5 (+0.74%)
 - N07X36 TRMD 2026-10-30: C 42.01 / lejar 40.4638 (+3.82%)
-- M32 MKTW 2026-11-02: C 20.4783 / lejar 20.9 (-2.02%)
 
 ## Status keluar berbeza
 
 - N07X16 TRMD 2026-10-30: C keluar 2026-11-05 / lejar keluar 2026-11-06 isyarat keluar
 - M156 TRMD 2026-11-02: C keluar 2026-11-05 / lejar keluar 2026-11-10 henti
 - N36X16 TRMD 2026-11-03: C keluar 2026-11-05 / lejar keluar 2026-11-06 isyarat keluar
-- M73 SPOK 2026-11-04: C keluar 2026-11-10 / lejar terbuka
+- M73 SPOK 2026-11-04: C keluar 2026-11-10 / lejar keluar 2026-11-24 isyarat keluar
+- M92 TS 2026-11-05: C keluar 2026-11-18 / lejar keluar 2026-11-17 isyarat keluar
+- M49 TS 2026-11-06: C keluar 2026-11-18 / lejar keluar 2026-11-10 henti
+- M124 TS 2026-11-09: C keluar 2026-11-20 / lejar keluar 2026-11-23 isyarat keluar
 - M13 SBH 2026-10-15: C keluar 2026-10-19 / lejar keluar 2026-10-20 henti
 - M18 MHK 2026-10-27: C keluar 2026-11-05 / lejar keluar 2026-11-02 sasaran
