@@ -1,6 +1,6 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-25 08:59 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-25 12:26 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
@@ -52,12 +52,12 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 
 | Lorong | Ekuiti | Dipegang | Keluar | Sesi terakhir |
 |---|---|---|---|---|
-| RS_10 | 0.689656 | 10 | 11 | 2026-11-23 |
-| RAWAK_10 | 0.925919 | 10 | 9 | 2026-11-23 |
-| GABUNGAN_10 | 0.990136 | 9 | 34 | 2026-11-23 |
-| TOP1_10 | 0.96209 | 9 | 47 | 2026-11-23 |
-| RAWAK_KAEDAH_10 | 0.897214 | 9 | 9 | 2026-11-23 |
-| RISIKO_10 | 0.917741 | 10 | 11 | 2026-11-23 |
+| RS_10 | 0.683088 | 10 | 12 | 2026-11-24 |
+| RAWAK_10 | 0.930731 | 10 | 9 | 2026-11-24 |
+| GABUNGAN_10 | 0.992752 | 10 | 32 | 2026-11-24 |
+| TOP1_10 | 0.980288 | 10 | 56 | 2026-11-24 |
+| RAWAK_KAEDAH_10 | 0.901941 | 10 | 10 | 2026-11-24 |
+| RISIKO_10 | 0.915772 | 10 | 12 | 2026-11-24 |
 
 
 `RISIKO_10` (sejak 28 Okt 2026) dipasangkan dengan `RS_10`: susunan calon sama, hanya saiz berbeza. **MDD-nya mesti dibaca bersama lajur `tunai`** — pendedahannya lebih rendah, jadi sebahagian kelebihan MDD datang daripada pendedahan, bukan saiz. Ia menguji saiz atas **isyarat Mxx** dan bukan ujian ke hadapan dapatan REVERSE fasa 1b (`REVERSE/SPEC_FASA2.md` §9.2).
@@ -68,9 +68,9 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 | Status pantau | Bilangan |
 |---|---|
 | AMARAN | 1 |
-| BELUM CUKUP | 99 |
+| BELUM CUKUP | 98 |
 | BERSARA | 1 |
-| OK | 131 |
+| OK | 132 |
 
 
 ## 4. Kesegaran data
@@ -79,8 +79,8 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 |---|---|---|---|
 | Stor harga | 20261124 | 1 | OK |
 | Trend D10H2-r2 | 20261124 | 1 | OK |
-| Lejar Penuh | 2026-11-23 | 2 | OK |
-| portfolio_slot | 2026-11-23 | 2 | OK |
+| Lejar Penuh | 2026-11-24 | 1 | OK |
+| portfolio_slot | 2026-11-24 | 1 | OK |
 | Papan Penganalisis | 2026-11-25 | 0 | OK |
 | RS pasaran | 2026-11-24 | 1 | OK |
 | Gred kumpulan | 2026-11-24 | 1 | OK |
