@@ -1,12 +1,14 @@
 {
- "dikemaskini": "2026-11-25 08:55 UTC",
+ "dikemaskini": "2026-11-25 20:28 UTC",
  "bar_terakhir": 20261124,
  "laras": {
   "APC": 1.018075,
   "BVN": 1.026644,
+  "COST": 1.028093,
   "DHT": 1.072031,
   "SPOK": 1.013889,
-  "SUPN": 0.866171
+  "SUPN": 0.866171,
+  "TS": 1.021982
  },
  "perlu_sejarah": [
   "SUPN"
@@ -16,7 +18,7 @@
   "bar_terakhir": 20261124
  },
  "harga_B.csv": {
-  "ticker_dikemaskini": 496,
+  "ticker_dikemaskini": 497,
   "bar_terakhir": 20261124
  },
  "harga_idx.csv": {
@@ -32,11 +34,11 @@
    "SUPN": "tidak konsisten: nisbah segar/stor 1.0706, serak 8.42% > 2%"
   }
  },
- "log_laras": 2,
+ "log_laras": 0,
  "faktor_dividen": [],
  "faktor_calon": [],
  "moomoo": {
-  "ditampal": 50,
+  "ditampal": 30,
   "langkau_skala": [
    "SENEA 20261105: buka_moomoo 147.32 lawan stor 29.464",
    "SENEA 20261110: buka_moomoo 169.78 lawan stor 33.956",
