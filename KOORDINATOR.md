@@ -1,6 +1,6 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-25 15:35 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-25 17:59 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
@@ -81,7 +81,7 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 | Trend D10H2-r2 | 20261124 | 1 | OK |
 | Lejar Penuh | 2026-11-24 | 1 | OK |
 | portfolio_slot | 2026-11-24 | 1 | OK |
-| Papan Penganalisis | 2026-11-25 | 0 | OK |
+| Papan Penganalisis | 2026-11-26 | -1 | OK |
 | RS pasaran | 2026-11-24 | 1 | OK |
 | Gred kumpulan | 2026-11-25 | 0 | OK |
 | SEC fundamental | fail diubah | 0 | OK |
