@@ -1306,6 +1306,7 @@ BFIX,Build Bond Innovation ETF,NYSE Arca,1,0,2026-10-27
 BFJA,FT Vest Bitcoin Strategy Floor15 ETF - January,NYSE Arca,1,0,2026-10-27
 BFJL,FT Vest Bitcoin Strategy Floor15 ETF July,NYSE Arca,1,0,2026-10-27
 BFLB,BufferLABS US Equity Dynamic Buffer ETF,Cboe BZX,1,0,2026-10-27
+BFLR,"BlueFlare, Inc. - Common Stock",NASDAQ,0,1,2026-11-25
 BFLX,iShares Flexible Equity Active ETF,NASDAQ,1,0,2026-10-27
 BFLY,"Butterfly Network, Inc. Class A Common Stock",NYSE,0,1,2026-10-27
 BFOC,FT Vest Bitcoin Strategy Floor15 ETF - October,NYSE Arca,1,0,2026-10-27
@@ -2515,6 +2516,7 @@ CPER,United States Copper Index Fund ETV,NYSE Arca,1,0,2026-10-27
 CPF,Central Pacific Financial Corp New,NYSE,0,1,2026-10-27
 CPHC,Canterbury Park Holding Corporation - Common Stock,NASDAQ,0,1,2026-10-27
 CPHI,"China Pharma Holdings, Inc. Common Stock",NYSE American,0,1,2026-10-27
+CPHY,F/m Compoundr High Yield Bond ETF,NASDAQ,1,0,2026-11-25
 CPII,American Beacon Ionic Inflation Protection ETF,NYSE Arca,1,0,2026-10-27
 CPIX,Cumberland Pharmaceuticals Inc. - Common Stock,NASDAQ,0,1,2026-10-27
 CPK,Chesapeake Utilities Corporation Common Stock,NYSE,0,1,2026-10-27
@@ -4330,7 +4332,6 @@ FNG,Leverage Shares 2X Long FN Daily ETF,Cboe BZX,1,0,2026-10-27
 FNGD,"MicroSectors FANG  Index -3X Inverse Leveraged ETNs due January 8, 2038",NYSE Arca,0,1,2026-10-27
 FNGG,Direxion Daily NYSE FANG+ Bull 2X ETF,NYSE Arca,1,0,2026-10-27
 FNGO,"MicroSectors FANG  Index 2X Leveraged ETNs due January 8, 2038",NYSE Arca,0,1,2026-10-27
-FNGR,"FingerMotion, Inc. - common stock",NASDAQ,0,1,2026-10-27
 FNGS,"MicroSectors FANG  ETNs due January 8, 2038",NYSE Arca,1,0,2026-10-27
 FNGU,MicroSectors FANG+ 3X Leveraged ETNs,NYSE Arca,1,0,2026-10-27
 FNK,First Trust Mid Cap Value AlphaDEX Fund,NASDAQ,1,0,2026-10-27
@@ -8579,7 +8580,6 @@ PARA,"Parabolic Technologies, Inc. - Class A Common Stock",NASDAQ,0,1,2026-10-27
 PARAW,"Parabolic Technologies, Inc. - Warrant",NASDAQ,0,0,2026-10-27
 PARK,"Park Dental Partners, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 PARR,"Par Pacific Holdings, Inc.  Common Stock",NYSE,0,1,2026-10-27
-PASG,"Passage Bio, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 PASW,"Ping An Biomedical Co., Ltd. - Class A Ordinary Shares",NASDAQ,0,1,2026-10-27
 PATH,"UiPath, Inc. Class A Common Stock",NYSE,0,1,2026-10-27
 PATK,"Patrick Industries, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
@@ -9719,6 +9719,7 @@ RMSG,Real Messenger Corporation - Ordinary Shares,NASDAQ,0,1,2026-10-27
 RMSGW,Real Messenger Corporation - Warrants,NASDAQ,0,0,2026-10-27
 RMT,"Royce Micro-Cap Trust, Inc. Common Stock",NYSE,0,1,2026-10-27
 RMTI,"Rockwell Medical, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
+RMTX,"Remix Therapeutics, Inc. - Common Stock",NASDAQ,0,1,2026-11-25
 RNA,"Atrium Therapeutics, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 RNAC,"Cartesian Therapeutics, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
 RNAQ,Rainier Acquisition Corporation - Class A Ordinary Shares,NASDAQ,0,0,2026-10-27
@@ -9930,7 +9931,6 @@ SACH,Sachem Capital Corp. Common Shares,NYSE American,0,1,2026-10-27
 SAEN,Genenta Science S.p.A. - American Depositary Shares,NASDAQ,0,1,2026-11-04
 SAFE,Safehold Inc. New Common Stock ,NYSE,0,1,2026-10-27
 SAFT,"Safety Insurance Group, Inc. - Common Stock",NASDAQ,0,1,2026-10-27
-SAFX,"XCF Global, Inc. - Class A Common Stock",NASDAQ,0,1,2026-10-27
 SAGP,Strategas Global Policy Opportunities ETF,NYSE Arca,1,0,2026-10-27
 SAGT,SAGTEC GLOBAL LIMITED - Class A Ordinary shares,NASDAQ,0,1,2026-10-27
 SAGU,Shreya Acquisition Group Class A Ordinary Shares,NYSE,0,1,2026-10-27
