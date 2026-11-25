@@ -1,41 +1,50 @@
 {
- "dikemaskini": "2026-11-24 20:08 UTC",
- "bar_terakhir": 20261123,
+ "dikemaskini": "2026-11-25 06:22 UTC",
+ "bar_terakhir": 20261124,
  "laras": {
   "APC": 1.036151,
   "BVN": 1.026644,
-  "DHT": 1.072032,
-  "SPOK": 1.027778,
+  "DHT": 1.072031,
+  "SPOK": 1.027777,
   "SUPN": 0.866171
  },
  "perlu_sejarah": [
   "SUPN"
  ],
  "harga_A.csv": {
-  "ticker_dikemaskini": 429,
-  "bar_terakhir": 20261123
+  "ticker_dikemaskini": 428,
+  "bar_terakhir": 20261124
  },
  "harga_B.csv": {
   "ticker_dikemaskini": 497,
-  "bar_terakhir": 20261123
+  "bar_terakhir": 20261124
  },
  "harga_idx.csv": {
   "ticker_dikemaskini": 2,
-  "bar_terakhir": 20261123
+  "bar_terakhir": 20261124
  },
  "kuarantin": {
-  "baru": [],
+  "baru": [
+   [
+    "BKHA",
+    "2026-11-11",
+    "direktori Nasdaq buang 2026-11-24 dalam tetingkap bar baharu 20261111..20261124; bar stor tidak ditimpa"
+   ]
+  ],
   "dilepaskan": [],
   "kekal_beku": {
    "INDV": "sejarah segar bertindih 1 bar < 20 sebelum 2026-11-03",
    "SUPN": "tidak konsisten: nisbah segar/stor 1.0706, serak 8.42% > 2%"
   }
  },
- "log_laras": 0,
- "faktor_dividen": [],
+ "log_laras": 1,
+ "faktor_dividen": [
+  "COST 2026-11-24 D=30 P=1097.91 (2.7%)",
+  "TS 2026-11-24 D=1.18 P=54.86 (2.2%)"
+ ],
  "faktor_calon": [],
  "moomoo": {
-  "ditampal": 20,
+  "ditampal": 16,
   "langkau_skala": [
    "SENEA 20261105: buka_moomoo 147.32 lawan stor 29.464",
    "SENEA 20261110: buka_moomoo 169.78 lawan stor 33.956",
