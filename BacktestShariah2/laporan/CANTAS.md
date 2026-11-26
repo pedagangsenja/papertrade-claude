@@ -1,6 +1,6 @@
 # CANTAS — calon berhenti direkod (label maklumat bulanan; bukan tindakan)
 
-Dijana 2026-11-26 08:51 UTC oleh `standard/cantas.py` atas `kad_skor.json` harga 2026-11-25. Pradaftar `standard/SPEC_CANTAS.md`. **Tiada Lejar atau kad skor diubah**; cantas sebenar = keputusan pengguna dalam `koordinator/keputusan.csv`.
+Dijana 2026-11-26 11:09 UTC oleh `standard/cantas.py` atas `kad_skor.json` harga 2026-11-25. Pradaftar `standard/SPEC_CANTAS.md`. **Tiada Lejar atau kad skor diubah**; cantas sebenar = keputusan pengguna dalam `koordinator/keputusan.csv`.
 
 > **Status keputusan (kad skor, harga 2026-11-25):** TERBUKTI 0 · CALON 0 · BELUM CUKUP 225 · GAGAL 2 · NEGATIF 0. Rejim QQQ OFF sejak 2026-10-16. Hanya **TERBUKTI** layak untuk wang sebenar (`laporan/KAD_SKOR.md`); nombor dalam laporan ini BUKAN keputusan dan tidak boleh dibaca sebagai pangkat untuk wang sebenar.
 
@@ -11,7 +11,7 @@ Dijana 2026-11-26 08:51 UTC oleh `standard/cantas.py` atas `kad_skor.json` harga
 | C1 | 12 |
 | C2 | 2 |
 | C3 | 0 |
-| C4 | 1 |
+| C4 | 2 |
 | C5 | 0 |
 
 | Kaedah | Status kad | Peraturan | Sebab | Bulan berturut |
@@ -23,7 +23,7 @@ Dijana 2026-11-26 08:51 UTC oleh `standard/cantas.py` atas `kad_skor.json` harga
 | `M18` EMA9/21 Pullback | BELUM CUKUP | C1 | henti hari-0 24% daripada 501 posisi | 1 |
 | `M20` EMA10/15 Crossover + Sudut | GAGAL | C2, C4 | pantau BERSARA; GAGAL 2 larian berturut | 1 |
 | `M23` Breitstein Kapitulasi + Kesina | BELUM CUKUP | C1 | henti hari-0 37% daripada 133 posisi | 1 |
-| `M28` VWAP Separator + Kiss Pivot | GAGAL | C2 | pantau BERSARA | 1 |
+| `M28` VWAP Separator + Kiss Pivot | GAGAL | C2, C4 | pantau BERSARA; GAGAL 2 larian berturut | 1 |
 | `M29` EMA3 + RSI75 + Stokastik | BELUM CUKUP | C1 | henti hari-0 29% daripada 65 posisi | 1 |
 | `M35` Pocket Pivot Morales & Kacher | BELUM CUKUP | C1 | henti hari-0 23% daripada 365 posisi | 1 |
 | `M46` Jurang Naik Boleh Beli (Buyabl | BELUM CUKUP | C1 | henti hari-0 35% daripada 37 posisi | 1 |
