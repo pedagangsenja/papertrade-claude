@@ -1,9 +1,9 @@
 {
- "dikemaskini": "2026-11-26 06:22 UTC",
+ "dikemaskini": "2026-11-26 08:41 UTC",
  "bar_terakhir": 20261125,
  "laras": {
   "BVN": 1.026644,
-  "COST": 1.028092,
+  "COST": 1.028091,
   "DHT": 1.072031,
   "SUPN": 0.866171,
   "TS": 1.021982
@@ -16,7 +16,7 @@
   "bar_terakhir": 20261125
  },
  "harga_B.csv": {
-  "ticker_dikemaskini": 496,
+  "ticker_dikemaskini": 497,
   "bar_terakhir": 20261125
  },
  "harga_idx.csv": {
