@@ -732,3 +732,8 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - Watchlist 574 (baharu 293, dibuang 112, ke senarai beli 124). Isyarat direkod: 11190 (data/isyarat/2026-11-25_malam.csv.gz).
 - Ralat kaedah: tiada. Nota: M SNDK M81: buka stor 208.69 lawan harga_beli 1643.505 (> 15%; split/data tidak sepadan) — tidak dinilai; C SENEB M11: buka stor 36.43 lawan harga_beli 184.38 (> 15%; split/data tidak sepadan) — tidak dinilai; C SENEA M99: buka stor 37.14 lawan harga_beli 185.68 (> 15%; split/data tidak sepadan) — tidak dinilai; C SNDK M73: buka stor 164.21 lawan harga_beli 1313.65 (> 15%; split/data tidak sepadan) — tidak dinilai; C SENEA M89: buka stor 36.85 lawan harga_beli 184.25 (> 15%; split/data tidak sepadan) — tidak dinilai; C SNDK M76: buka stor 178.42 lawan harga_beli 1427.38 (> 15%; split/data tidak sepadan) — tidak dinilai; C SNDK M81: buka stor 178.42 lawan harga_beli 1427.38 (> 15%; split/data tidak sepadan) — tidak dinilai; C SNDK M13: buka stor 169.57 lawan harga_beli 1356.6 (> 15%; split/data tidak sepadan) — tidak dinilai.
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-26 23:10 MYT — GitHub Actions: beli maya 2026-11-26 (isyarat -)
+- pasaran AS tutup (cuti/hujung minggu): tak beli
+- Dilangkau: tiada.
+- Tiada order. Tiada wang sebenar.
