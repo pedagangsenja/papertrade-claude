@@ -1,5 +1,5 @@
 {
- "dijana": "2026-11-26 03:48 UTC",
+ "dijana": "2026-11-26 22:22 UTC",
  "sumber": "https://scanner.tradingview.com/america/scan",
  "tv": {
   "baris": 4046,
@@ -19,7 +19,7 @@
    "pegangan": 217
   },
   "SPTE": {
-   "pegangan": 108
+   "pegangan": 107
   }
  },
  "sp500": {
@@ -40,7 +40,7 @@
   "tiada_maklumat": 725,
   "sp500_tiada_spus": 52,
   "univ_moomoo": 912,
-  "papertrade": 791,
+  "papertrade": 795,
   "papertrade_sp500_tiada_spus": [
    "ADP",
    "AEP",
