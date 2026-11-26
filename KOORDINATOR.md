@@ -1,12 +1,12 @@
 # KOORDINATOR — keadaan repo dalam satu halaman
 
-Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-25 20:31 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
+Dijana `BacktestShariah2/standard/koordinator.py` pada 2026-11-26 06:52 (waktu pelayan). Tiada rangkaian, tiada LLM, tiada penalaan — semuanya dibaca daripada fail keadaan repo. **Jangan ubah manual.**
 
 ## 0. Salinan kerja
 
 | Cawangan | HEAD | Commit di belakang origin/main | origin/main (fetch terakhir) |
 |---|---|---|---|
-| main | 2026-11-25 | 0 | 2026-11-25 |
+| main | 2026-11-26 | 0 | 2026-11-26 |
 
 
 Selari dengan `origin/main` pada fetch terakhir — angka kesegaran di bawah boleh dipercayai.
@@ -31,10 +31,10 @@ REVERSE menguji **signal dan indikator** untuk ENTRY/HOLD/EXIT. Ia **tidak** men
 
 | Sumber | Hari dagangan | Mula | Akhir | Suku (anggaran) | Baris | Cukup? |
 |---|---|---|---|---|---|---|
-| RS pasaran | 30 | 2026-10-14 | 2026-11-24 | 0.5 |  | tidak |
+| RS pasaran | 30 | 2026-10-15 | 2026-11-25 | 0.5 |  | tidak |
 | Gred kumpulan | 44 | 2026-09-25 | 2026-11-25 | 0.7 |  | tidak |
-| SEC EPS/hasil | 4113 | 2009-04-15 | 2026-11-25 | 65.3 | 272107 | ya |
-| SEC earnings 8-K | 5466 | 2004-08-23 | 2026-11-25 | 86.8 | 180316 | ya |
+| SEC EPS/hasil | 4113 | 2009-04-15 | 2026-11-25 | 65.3 | 272123 | ya |
+| SEC earnings 8-K | 5466 | 2004-08-23 | 2026-11-25 | 86.8 | 180317 | ya |
 
 
 Leg **RS/gred**: terbaik **44 / 250** hari dagangan. Peristiwa sah ialah fungsi deterministik stor harga, jadi join peristiwa × data titik-masa boleh dibuat **retrospektif** — yang perlu ditunggu ialah masa, bukan kod.
@@ -77,16 +77,16 @@ Jejak berasingan daripada §2. Semua di bawah ini dipacu oleh isyarat kaedah **M
 
 | Sumber | Terakhir | Umur (hari) | Status |
 |---|---|---|---|
-| Stor harga | 20261124 | 1 | OK |
-| Trend D10H2-r2 | 20261124 | 1 | OK |
-| Lejar Penuh | 2026-11-24 | 1 | OK |
-| portfolio_slot | 2026-11-24 | 1 | OK |
-| Papan Penganalisis | 2026-11-26 | -1 | OK |
-| RS pasaran | 2026-11-24 | 1 | OK |
-| Gred kumpulan | 2026-11-25 | 0 | OK |
+| Stor harga | 20261125 | 1 | OK |
+| Trend D10H2-r2 | 20261125 | 1 | OK |
+| Lejar Penuh | 2026-11-24 | 2 | OK |
+| portfolio_slot | 2026-11-24 | 2 | OK |
+| Papan Penganalisis | 2026-11-26 | 0 | OK |
+| RS pasaran | 2026-11-25 | 1 | OK |
+| Gred kumpulan | 2026-11-25 | 1 | OK |
 | SEC fundamental | fail diubah | 0 | OK |
 | Senarai bursa | fail diubah | 0 | OK |
-| Senarai Shariah (skrin Moomoo manual) | 2026-10-26 | 30 | OK (had 35 hari) |
+| Senarai Shariah (skrin Moomoo manual) | 2026-10-26 | 31 | OK (had 35 hari) |
 
 
 Ambang LEWAT: > 3 hari. Dua sebab biasa **bukan** kerosakan: hujung minggu atau cuti pasaran, dan salinan kerja yang lama (lihat §0). Periksa kedua-duanya, kemudian `penjaga_jadual` dan log workflow, sebelum menganggap saluran rosak.

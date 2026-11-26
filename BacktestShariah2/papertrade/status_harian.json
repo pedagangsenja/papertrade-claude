@@ -82,39 +82,49 @@
   ]
  },
  "malam": {
-  "sesi": "2026-11-24",
-  "masa": "2026-11-25 14:23 MYT",
+  "sesi": "2026-11-25",
+  "masa": "2026-11-26 14:22 MYT",
   "ralat_kaedah": [],
   "kaedah_tanpa_modul": [],
-  "masa_kaedah_s": 246,
+  "masa_kaedah_s": 524,
   "keluar_baru": {
    "M": {
     "sasaran": 1
    },
    "C": {
-    "isyarat": 312,
-    "sasaran": 8,
-    "henti": 81,
-    "masa": 24
+    "isyarat": 359,
+    "henti": 197,
+    "sasaran": 7,
+    "masa": 22
    }
   },
   "keluar_baru_jumlah": {
    "M": 1,
-   "C": 425
+   "C": 585
   },
-  "menunggu": 357,
+  "menunggu": 278,
   "keluar_keluarga": {
-   "M": 178,
-   "N": 247
-  },
-  "menunggu_keluarga": {
-   "M": 70,
+   "M": 298,
    "N": 287
   },
-  "harga_beli_dibetulkan": 178,
-  "harga_beli_beza_besar": 37,
+  "menunggu_keluarga": {
+   "M": 62,
+   "N": 215
+  },
+  "harga_beli_dibetulkan": 902,
+  "harga_beli_beza_besar": 635,
   "tidak_dibeli": [
-   "MGRT N54X36"
+   "YOU M14",
+   "DD M18",
+   "UI M18",
+   "GLOB M19",
+   "A M23",
+   "CCJ M28",
+   "IR M70",
+   "ITT M70",
+   "RPM M70",
+   "MWA M139",
+   "A M153"
   ],
   "nota": [
    "M SNDK M81: buka stor 208.69 lawan harga_beli 1643.505 (> 15%; split/data tidak sepadan) — tidak dinilai",
@@ -129,31 +139,20 @@
    "C SNDK M73: buka stor 169.57 lawan harga_beli 1356.6 (> 15%; split/data tidak sepadan) — tidak dinilai",
    "C SNDK M99: buka stor 172.69 lawan harga_beli 1381.49 (> 15%; split/data tidak sepadan) — tidak dinilai",
    "C SUPN M106: buka stor 26.99 lawan harga_beli 42.07 (> 15%; split/data tidak sepadan) — tidak dinilai",
-   "C SNDK N119X13: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N75X14: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N119X15: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N75X13: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N75X15: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N75X17: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N16X13: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N16X15: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK M01: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N19X13: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N73X13: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N28X14: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C SNDK N28X17: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C ASML N16X13: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C ASML N16X15: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C ASML N75X13: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C ASML N75X14: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C ASML N75X15: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C ASML N75X17: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C ASML N119X13: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C ASML N119X15: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C ASML M155: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C SNDK M155: tiada bar 2026-11-24 (harga terkini 2026-11-19)",
-   "C ASML N19X13: tiada bar 2026-11-24 (harga terkini 2026-11-23)",
-   "C ASML N73X13: tiada bar 2026-11-24 (harga terkini 2026-11-23)"
+   "C SNDK N119X13: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N75X14: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N119X15: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N75X13: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N75X15: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N75X17: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N16X13: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N16X15: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK M01: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N19X13: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N73X13: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N28X14: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK N28X17: tiada bar 2026-11-25 (harga terkini 2026-11-19)",
+   "C SNDK M155: tiada bar 2026-11-25 (harga terkini 2026-11-19)"
   ],
   "tidak_layak_posisi": {
    "ambil_alih": {
@@ -165,7 +164,7 @@
     "ditutup": 0,
     "saham": [],
     "ditahan_tersenarai": [
-     "SUPN (12 sesi tanpa bar; masih tersenarai (asas 2026-10-27))"
+     "SUPN (13 sesi tanpa bar; masih tersenarai (asas 2026-10-27))"
     ]
    },
    "tidak_cair": {
@@ -177,73 +176,9 @@
     "saham": []
    },
    "faktor": {
-    "dilaras": 94,
+    "dilaras": 0,
     "semak": [],
-    "dibuka_semula": [
-     [
-      "claude_100.csv",
-      "TS",
-      "M39",
-      "2026-10-30",
-      "2026-11-24"
-     ],
-     [
-      "claude_170.csv",
-      "TS",
-      "M125",
-      "2026-11-09",
-      "2026-11-24"
-     ],
-     [
-      "claude_171.csv",
-      "TS",
-      "M154",
-      "2026-11-09",
-      "2026-11-24"
-     ],
-     [
-      "claude_208.csv",
-      "COST",
-      "M102",
-      "2026-11-12",
-      "2026-11-24"
-     ],
-     [
-      "claude_239.csv",
-      "TS",
-      "M156",
-      "2026-11-17",
-      "2026-11-24"
-     ],
-     [
-      "claude_269.csv",
-      "COST",
-      "M50",
-      "2026-11-23",
-      "2026-11-24"
-     ],
-     [
-      "claude_269.csv",
-      "COST",
-      "M57",
-      "2026-11-23",
-      "2026-11-24"
-     ],
-     [
-      "claude_270.csv",
-      "COST",
-      "M119",
-      "2026-11-23",
-      "2026-11-24"
-     ],
-     [
-      "claude_37.csv",
-      "TS",
-      "M81",
-      "2026-10-20",
-      "2026-11-24"
-     ]
-    ]
+    "dibuka_semula": []
    },
    "pecahan": {
     "dilaras": 0,
@@ -251,26 +186,26 @@
    }
   },
   "dagangan_betul": 1,
-  "senarai_beli": 1255,
-  "saham_unik": 355,
+  "senarai_beli": 1231,
+  "saham_unik": 382,
   "senarai_keluarga": {
-   "M": 518,
-   "N": 737
+   "M": 550,
+   "N": 681
   },
   "kaedah_keluarga": {
-   "M": 91,
-   "N": 93
+   "M": 90,
+   "N": 92
   },
-  "kaedah": 184,
-  "belian_semula": 254,
-  "dari_watchlist": 137,
-  "isyarat": 10595,
+  "kaedah": 182,
+  "belian_semula": 320,
+  "dari_watchlist": 124,
+  "isyarat": 11190,
   "ditolak": {
-   "dipegang": 3417,
-   "had": 5366,
-   "tidak_cair": 251,
-   "ambil_alih": 273,
-   "kelas_berganda": 22,
+   "dipegang": 3670,
+   "had": 5732,
+   "ambil_alih": 288,
+   "tidak_cair": 230,
+   "kelas_berganda": 28,
    "mingguan": 11
   },
   "tidak_layak": {
@@ -312,22 +247,22 @@
    "WLYB": "tidak cair",
    "ZS": "ambil alih"
   },
-  "watchlist": 517,
-  "watchlist_baharu": 283,
-  "watchlist_dibuang": 157,
-  "watchlist_ke_senarai": 137,
+  "watchlist": 574,
+  "watchlist_baharu": 293,
+  "watchlist_dibuang": 112,
+  "watchlist_ke_senarai": 124,
   "minggu_akhir": false,
-  "fail_isyarat": "data/isyarat/2026-11-24_malam.csv.gz"
+  "fail_isyarat": "data/isyarat/2026-11-25_malam.csv.gz"
  },
  "gred": {
-  "tarikh": "2026-11-25",
-  "masa": "2026-11-25 20:27 MYT",
+  "tarikh": "2026-11-26",
+  "masa": "2026-11-26 14:33 MYT",
   "pemangkin": {
-   "D": 1002,
-   "B": 107,
-   "A": 88,
-   "C": 33,
-   "–": 25
+   "D": 1069,
+   "C": 30,
+   "–": 17,
+   "A": 41,
+   "B": 74
   }
  }
 }
