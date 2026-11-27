@@ -1,9 +1,9 @@
 {
- "dijana": "2026-11-27 03:48 UTC",
+ "dijana": "2026-11-27 22:18 UTC",
  "sumber": "https://scanner.tradingview.com/america/scan",
  "tv": {
-  "baris": 4046,
-  "jumlah_padan": 4046,
+  "baris": 4056,
+  "jumlah_padan": 4056,
   "harga_min": 5.0,
   "medan_tiada_data": [
    "is_shariah_compliant"
@@ -11,7 +11,7 @@
   "is_shariah_compliant": {
    "benar": 0,
    "salah": 0,
-   "tiada": 4046
+   "tiada": 4056
   }
  },
  "etf": {
