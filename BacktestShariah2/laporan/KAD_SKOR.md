@@ -1,6 +1,6 @@
 # Kad skor keputusan (satu jawapan)
 
-Dijana 2026-11-26 oleh `standard/kad_skor.py` (Actions `analisis.yml`). Gate: `standard/SPEC_KAD_SKOR.md` (pradaftar 2026-11-06; pindaan 2026-11-07). Rekod analisis sahaja: tiada order, tiada wang sebenar.
+Dijana 2026-11-27 oleh `standard/kad_skor.py` (Actions `analisis.yml`). Gate: `standard/SPEC_KAD_SKOR.md` (pradaftar 2026-11-06; pindaan 2026-11-07). Rekod analisis sahaja: tiada order, tiada wang sebenar.
 
 ## Tiada kaedah lulus. Kematangan paling awal ~2027-04-01 dan ≥ 10 hari beli dalam setiap rejim (kini ON 1, OFF 28; bergantung pasaran); portfolio lawan SPUS pada MDD -10% ~2027-04-09
 
