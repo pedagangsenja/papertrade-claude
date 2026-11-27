@@ -737,3 +737,8 @@ Audit akhir (semua tab, 1900px dan 1600px, mod Padat): **tiada kegagalan berat**
 - pasaran AS tutup (cuti/hujung minggu): tak beli
 - Dilangkau: tiada.
 - Tiada order. Tiada wang sebenar.
+
+## 2026-11-27 23:02 MYT — GitHub Actions: beli maya 2026-11-27 (isyarat 2026-11-25)
+- Direkod 1217 (380 saham; belian semula 313; fail claude_295.csv); dilangkau 14. Harga: buka sementara yfinance 10:02 NY.
+- Dilangkau: APP M08: buka 397.38 > buka_maks 370.45; AAON M08: buka 78.00 > buka_maks 75.75; GNRC M08: buka 208.51 > buka_maks 203.84; CLMB M08: buka 44.03 > buka_maks 43.89; ATMU M08: buka 55.19 > buka_maks 54.51; WWD M08: buka 350.31 > buka_maks 342.49; JKHY M13: buka 182.24 <= henti 190.01; SONY M23: buka 27.64 <= henti 28.30; VRTX M89: buka 517.37 <= henti 529.91; SONY M102: buka 27.64 <= henti 28.02; JJSF M143: isyarat batal pada buka (peraturan kaedah); RDY M153: isyarat batal pada buka (peraturan kaedah); CHD M153: isyarat batal pada buka (peraturan kaedah); INFY M153: isyarat batal pada buka (peraturan kaedah).
+- Tiada order. Tiada wang sebenar.

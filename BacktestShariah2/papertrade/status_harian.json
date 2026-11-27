@@ -1,9 +1,46 @@
 {
  "beli": {
-  "tarikh": "2026-11-26",
-  "masa": "2026-11-26 23:10 MYT",
-  "direkod": 0,
-  "nota": "pasaran AS tutup (cuti/hujung minggu): tak beli"
+  "tarikh": "2026-11-27",
+  "masa": "2026-11-27 23:02 MYT",
+  "isyarat": "2026-11-25",
+  "calon": 1231,
+  "direkod": 1217,
+  "dilangkau": 14,
+  "langkau": [
+   "APP M08: buka 397.38 > buka_maks 370.45",
+   "AAON M08: buka 78.00 > buka_maks 75.75",
+   "GNRC M08: buka 208.51 > buka_maks 203.84",
+   "CLMB M08: buka 44.03 > buka_maks 43.89",
+   "ATMU M08: buka 55.19 > buka_maks 54.51",
+   "WWD M08: buka 350.31 > buka_maks 342.49",
+   "JKHY M13: buka 182.24 <= henti 190.01",
+   "SONY M23: buka 27.64 <= henti 28.30",
+   "VRTX M89: buka 517.37 <= henti 529.91",
+   "SONY M102: buka 27.64 <= henti 28.02",
+   "JJSF M143: isyarat batal pada buka (peraturan kaedah)",
+   "RDY M153: isyarat batal pada buka (peraturan kaedah)",
+   "CHD M153: isyarat batal pada buka (peraturan kaedah)",
+   "INFY M153: isyarat batal pada buka (peraturan kaedah)"
+  ],
+  "saham_unik": 380,
+  "sumber_buka": "buka sementara yfinance 10:02 NY",
+  "fail": "claude_295.csv",
+  "belian_semula": 313,
+  "buka_lewat": [
+   "MKTW M29",
+   "EXLS M95",
+   "EXLS M100",
+   "EXLS M111",
+   "EXLS M159",
+   "STRS M160",
+   "EXLS N22X14",
+   "EXLS N22X16",
+   "EXLS N22X36",
+   "EXLS N33X14",
+   "MGRT N45X36",
+   "MGRT N54X36",
+   "EXLS N66X36"
+  ]
  },
  "malam": {
   "sesi": "2026-11-25",
