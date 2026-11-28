@@ -1,13 +1,13 @@
 {
- "dikemas": "2026-11-27 19:28 UTC",
- "versi_peraturan": "14d51ce551",
- "rekod": 86863,
- "tutup_beku": 54702,
- "baharu": 0,
- "tutup_baharu": 0,
+ "dikemas": "2026-11-28 11:39 UTC",
+ "versi_peraturan": "3b167cb583",
+ "rekod": 89021,
+ "tutup_beku": 55776,
+ "baharu": 2158,
+ "tutup_baharu": 1074,
  "hanyut": {
-  "berubah": 377,
-  "hilang": 114,
+  "berubah": 418,
+  "hilang": 116,
   "dibuka_semula": 6
  },
  "contoh": {
@@ -32,6 +32,7 @@
    "M153|GNK|2026-11-05|1",
    "N33X14|TS|2026-10-27|2",
    "N47X36|TRMD|2026-11-03|1",
+   "M09|EQT|2026-10-26|1",
    "N31X36|TRMD|2026-10-29|1",
    "N33X36|TRMD|2026-10-29|1",
    "N41X36|TRMD|2026-10-22|1",
@@ -42,8 +43,7 @@
    "M73|COST|2026-11-10|3",
    "M133|GNK|2026-11-10|1",
    "N29X16|TS|2026-11-10|2",
-   "N41X16|GNK|2026-11-10|2",
-   "N41X36|GNK|2026-11-10|2"
+   "N41X16|GNK|2026-11-10|2"
   ],
   "dibuka_semula": [
    "M54|GIC|2026-10-21|1",
