@@ -112,8 +112,10 @@ def siri(C, peta, spy):
 def snapshot(S, peta, dibina, pada=None):
     """Gred setiap kumpulan pada sesi terakhir (atau sesi `pada`, Timestamp, untuk isi sejarah)."""
     rows = []
+    # satu tarikh bagi semua jenis: sesi pendek (cth. separuh hari) boleh mengosongkan Industri sahaja
+    t_sama = min(d['skor'].dropna(how='all').index.max() for d in S.values())
     for jenis, d in S.items():
-        t = d['skor'].dropna(how='all').index.max() if pada is None else pada
+        t = t_sama if pada is None else pada
         if t not in d['skor'].index:
             continue
         if pd.isna(t):
